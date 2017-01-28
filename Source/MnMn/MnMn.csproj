@@ -229,7 +229,7 @@
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
-    <Compile Include="Define\BrowserContextMenuKey.cs" />
+    <Compile Include="Define\WebNavigatorContextMenuKey.cs" />
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
@@ -396,7 +396,9 @@
     <Compile Include="Data\SpaghettiPreparationData.cs" />
     <Compile Include="Model\SpaghettiSourceModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
-    <Compile Include="Model\WebNavigatorBridgeModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorBridgeModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuItemModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />

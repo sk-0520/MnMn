@@ -14,11 +14,11 @@
 			</extends>
 		</element>
 	</click>
-	<contextmenu>
-		<element key="">
-			<extends>
-				<extend key="" value="" />
-			</extends>
+	<context-menu>
+		<element key="" allow-service="*" send-service="common">
+			<words>
+				<word key="ja-jp" value="基本" />
+			</words>
 		</element>
-	</contextmenu>
+	</context-menu>
 </web-navigator>

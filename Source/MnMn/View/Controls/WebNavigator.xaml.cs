@@ -796,11 +796,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         IEnumerable<BrowserContextMenuBase> CreateNavigationContextMenuItems()
         {
             return new BrowserContextMenuBase[] {
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserBack, ServiceType.Common) {
+                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserBack, ServiceType.Common) {
                     Header = Properties.Resources.String_App_Browser_Common_Back,
                     Command = BackCommand
                 },
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserForward, ServiceType.Common) {
+                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserForward, ServiceType.Common) {
                     Header = Properties.Resources.String_App_Browser_Common_Forward,
                     Command = ForwardCommand
                 },
@@ -810,7 +810,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         IEnumerable<BrowserContextMenuBase> CreateCommonEditContextMenuItems()
         {
             return new BrowserContextMenuBase[] {
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserCopySelection, ServiceType.Common) {
+                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserCopySelection, ServiceType.Common) {
                     Header = Properties.Resources.String_App_Browser_Common_CopySelection,
                     Command = new DelegateCommand(
                         o => DoAction(
@@ -823,7 +823,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                         )
                     ),
                 },
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserSelerctAll, ServiceType.Common){
+                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserSelerctAll, ServiceType.Common){
                     Header = Properties.Resources.String_App_Browser_Common_AllSelect,
                     Command = new DelegateCommand(o => DoAction(
                         b => { /* not impl */ },
@@ -836,14 +836,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         IEnumerable<BrowserContextMenuBase> CreateCommonPageContextMenuItems()
         {
             return new BrowserContextMenuBase[] {
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserSource, ServiceType.Common) {
+                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserSource, ServiceType.Common) {
                     Header = Properties.Resources.String_App_Browser_Common_Source,
                     Command = new DelegateCommand(o => DoAction(
                         b => { /* not impl */ },
                         b => b.ViewSource()
                     )),
                 },
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserProperty, ServiceType.Common){
+                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserProperty, ServiceType.Common){
                     Header = Properties.Resources.String_App_Browser_Common_Property,
                     Command = new DelegateCommand(o => DoAction(
                         b => { /* not impl */ },
@@ -864,11 +864,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             var menuItems = new[] {
                 CreateNavigationContextMenuItems(),
-                new [] { new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common) },
+                new [] { new BrowserContextMenuSeparator(WebNavigatorContextMenuKey.browserSeparator, ServiceType.Common) },
                 CreateSmileContextMenuItems(),
-                new [] { new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common) },
+                new [] { new BrowserContextMenuSeparator(WebNavigatorContextMenuKey.browserSeparator, ServiceType.Common) },
                 CreateCommonEditContextMenuItems(),
-                new [] { new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common) },
+                new [] { new BrowserContextMenuSeparator(WebNavigatorContextMenuKey.browserSeparator, ServiceType.Common) },
                 CreateCommonPageContextMenuItems(),
             };
 

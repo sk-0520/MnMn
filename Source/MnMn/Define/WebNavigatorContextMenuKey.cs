@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public static class BrowserContextMenuKey
+    public static class WebNavigatorContextMenuKey
     {
         public const string browserBack = "browser-back";
         public const string browserForward = "browser-forward";
