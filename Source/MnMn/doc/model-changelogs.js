@@ -85,6 +85,81 @@
 	},
 	*/
 	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.46.1',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/01/29',
 		'version': '0.46.0',
 		'isRc': false,
