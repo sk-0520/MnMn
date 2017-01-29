@@ -3,7 +3,7 @@
 	<navigating>
 		<element key="smile-video-open-player" allow-service="*" send-service="smile-video">
 			<conditions>
-				<condition uri="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+				<condition uri="//www.nicovideo.jp/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" param="${VIDEO_ID}" />
 			</conditions>
 		</element>
 	</navigating>
@@ -40,17 +40,17 @@
 					<base>//www\.nicovideo\.jp</base>
 					<tag>.*/a</tag>
 					<targets>
-						<target attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+						<target attribute="href" value="\.*/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" />
 					</targets>
-					<parameter attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+					<parameter attribute="href" value="\.*/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" param="${VIDEO_ID}" />
 				</condition>
 				<condition visible="false">
 					<base />
 					<tag>.*/a</tag>
 					<targets>
-						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" />
 					</targets>
-					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" param="${VIDEO_ID}" />
 				</condition>
 			</conditions>
 		</element>
@@ -64,17 +64,17 @@
 					<base>//www\.nicovideo\.jp</base>
 					<tag>.*/a</tag>
 					<targets>
-						<target attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+						<target attribute="href" value="\.*/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" />
 					</targets>
-					<parameter attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+					<parameter attribute="href" value="\.*/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" param="${VIDEO_ID}" />
 				</condition>
 				<condition visible="false">
 					<base />
 					<tag>.*/a</tag>
 					<targets>
-						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" />
 					</targets>
-					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" param="${VIDEO_ID}" />
 				</condition>
 			</conditions>
 		</element>
@@ -88,17 +88,17 @@
 					<base>//www\.nicovideo\.jp</base>
 					<tag>.*/a</tag>
 					<targets>
-						<target attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+						<target attribute="href" value="\.*/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" />
 					</targets>
-					<parameter attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+					<parameter attribute="href" value="\.*/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" param="${VIDEO_ID}" />
 				</condition>
 				<condition visible="false">
 					<base />
 					<tag>.*/a</tag>
 					<targets>
-						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" />
 					</targets>
-					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" param="${VIDEO_ID}" />
 				</condition>
 			</conditions>
 		</element>
