@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -125,16 +126,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         /// <summary>
         /// GeckFxのブラウザ生成。
-        /// <para><see cref="Engine"/>には影響されない。</para>
-        /// <para>あくまで呼び出し側で<see cref="WebNavigatorEngine.GeckoFx"/>を保証すること</para>
         /// </summary>
         /// <returns></returns>
-        public static ServiceGeckoWebBrowser CreateBrowser()
+        public static ServiceGeckoWebBrowser CreateGeckoBrowser()
         {
             ServiceGeckoWebBrowser browser = null;
 
             Application.Current.Dispatcher.Invoke(() => {
-                browser = new ServiceGeckoWebBrowser() {
+                browser = new ServiceGeckoWebBrowser(Mediation) {
                     Dock = System.Windows.Forms.DockStyle.Fill,
                 };
                 browser.Disposed += GeckoBrowser_Disposed;
@@ -143,6 +142,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             return browser;
         }
+
+        public static IEnumerable<GeckoElement> GetRootElementsGeckoFx(GeckoElement lastElement)
+        {
+            var parent = lastElement.ParentElement;
+
+            if(parent == null) {
+                return Enumerable.Empty<GeckoElement>();
+            }
+
+            var result = new List<GeckoElement>();
+
+            while(parent != null) {
+                result.Add(parent);
+
+                parent = parent.ParentElement;
+            };
+
+            result.Reverse();
+
+            return result;
+        }
+
+        public static SimpleHtmlElement ConvertSimleHtmlElementGeckoFx(GeckoElement element)
+        {
+            var result = new SimpleHtmlElement() {
+                Name = element.TagName,
+                Attributes = element.Attributes
+                    .GroupBy(a => a.NodeName)
+                    .ToDictionary(a => a.Key, a => a.First().NodeValue)
+                ,
+            };
+
+            return result;
+        }
+
 
         #endregion
 
