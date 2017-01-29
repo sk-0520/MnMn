@@ -42,6 +42,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
             }
         }
 
+        public bool IsEnabledTagName => !string.IsNullOrEmpty(Model.TagNamePattern);
+
         public Regex TagNameRegex
         {
             get

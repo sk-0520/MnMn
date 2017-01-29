@@ -245,6 +245,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         showMenuItem = condition.BaseUriRegex.IsMatch(parameter.CurrentUri.OriginalString);
                     }
 
+                    if(!condition.IsEnabledTagName) {
+                        continue;
+                    }
+
                     var elementList = new SimleHtmlElementList(condition.TagNameRegex, parameter.RootNodes, parameter.Element);
 
                     var hitElements = condition.TargetItems
