@@ -350,6 +350,7 @@
     <Compile Include="Model\Request\Parameter\WebNavigator\WebNavigatorParameterModel.cs" />
     <Compile Include="Model\Response\WebNavigatorContextMenuItemResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorContextMenuDefineResultModel.cs" />
+    <Compile Include="Model\Response\WebNavigatorNavigatingResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorResultModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveChannelModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveGuidModel.cs" />

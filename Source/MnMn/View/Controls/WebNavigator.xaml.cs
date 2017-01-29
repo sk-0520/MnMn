@@ -947,8 +947,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             } else {
                 var processParameter = new WebNavigatorProcessParameterModel() {
                     ParameterVaule = (string)parameter,
-                    MenuItem = (WebNavigatorContextMenuItemViewModel)menuItem.DataContext,
+                    Key = ((WebNavigatorContextMenuItemViewModel)menuItem.DataContext).Key,
                 };
+
                 var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
                 DoAction(
                     b => { ((Mediation)b.Tag).Request(processRequest); },
@@ -1061,6 +1062,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(!e.Cancel) {
                 this.location.Text = e.Uri?.ToString() ?? string.Empty;
                 IsNavigating = true;
+            } else {
+                var navigatingResult = (WebNavigatorNavigatingResultModel)result;
+                var processParameter = new WebNavigatorProcessParameterModel() {
+                    Key = navigatingResult.NavigatingItem.Key,
+                    ParameterVaule = navigatingResult.Parameter,
+                };
+                var processRequest = new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter);
+                var processResult = BrowserGeckoFx.Mediation.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
             }
         }
 

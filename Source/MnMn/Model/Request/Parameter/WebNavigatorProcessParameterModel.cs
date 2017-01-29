@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter
     {
         #region property
 
+        public string Key { get; set; }
         public string ParameterVaule { get; set; }
-        public WebNavigatorContextMenuItemViewModel MenuItem { get; set; }
 
         #endregion
     }

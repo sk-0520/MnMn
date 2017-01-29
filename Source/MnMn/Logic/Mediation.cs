@@ -287,8 +287,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 if(hitCondition != null) {
                     var match = hitCondition.UriRegex.Match(uriText);
                     var param = match.Result(hitCondition.ParameterSource);
-
-                    return new WebNavigatorResultModel(true);
+                    
+                    return new WebNavigatorNavigatingResultModel(true, item, param);
                 }
             }
             
