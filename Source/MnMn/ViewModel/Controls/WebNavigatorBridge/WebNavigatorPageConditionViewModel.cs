@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         public string ParameterSource => Model.ParameterSource;
 
-        Regex UriRegex
+        public Regex UriRegex
         {
             get
             {

@@ -84,7 +84,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 .Select(i => new WebNavigatorNavigatingItemViewModel(i))
                 .ToList()
             ;
-            WebNavigatorNavigatingMap = WebNavigatorNavigatingItems.ToDictionary(i => i.Key, i => i);
 
             WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items
                 .Select(i => new WebNavigatorContextMenuItemViewModel(i))
@@ -102,7 +101,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         WebNavigatorBridgeModel WebNavigatorBridge { get; }
         IReadOnlyList<WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingItems { get; }
-        IReadOnlyDictionary<string, WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingMap { get; }
         IReadOnlyList<WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
         IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuMap { get; }
 
@@ -279,6 +277,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return new WebNavigatorContextMenuItemResultModel(false, false, false, null);
         }
 
+        WebNavigatorResultModel Request_WebNavigatorFromNavigating(WebNavigatorRequestModel request, WebNavigatorNavigatingParameterModel parameter)
+        {
+            var uriText = parameter.NextUri.OriginalString;
+
+            foreach(var item in WebNavigatorNavigatingItems) {
+                // 二重...
+                var hitCondition = item.Conditions.FirstOrDefault(c => c.UriRegex.IsMatch(uriText));
+                if(hitCondition != null) {
+                    var match = hitCondition.UriRegex.Match(uriText);
+                    var param = match.Result(hitCondition.ParameterSource);
+
+                    return new WebNavigatorResultModel(true);
+                }
+            }
+            
+
+            return new WebNavigatorResultModel(false);
+        }
+
         private ResponseModel Request_WebNavigator(WebNavigatorRequestModel request)
         {
             switch(request.Parameter.Kind) {
@@ -289,8 +306,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case WebNavigatorParameterKind.Navigating: {
                         var parameter = (WebNavigatorNavigatingParameterModel)request.Parameter;
+                        var navigatingResult = Request_WebNavigatorFromNavigating(request, parameter);
+                        return new ResponseModel(request, navigatingResult);
                     }
-                    break;
 
                 case WebNavigatorParameterKind.Click: {
                         var parameter = (WebNavigatorClickParameterModel)request.Parameter;
