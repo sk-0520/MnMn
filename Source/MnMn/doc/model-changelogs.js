@@ -87,7 +87,7 @@
 	{
 		'date': '2017/01/29',
 		'version': '0.46.0',
-		'isRc': true,
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
