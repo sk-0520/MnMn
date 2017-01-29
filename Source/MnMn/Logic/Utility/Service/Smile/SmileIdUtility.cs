@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
     /// <summary>
     /// 各種IDに関する処理。
-    /// <para>IConvertCompatibility.ConvertValueから呼び出される想定で直接使用すべきではない。</para>
+    /// <para><see cref="ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility.ConvertValue"/>から呼び出される想定で直接使用すべきではない。</para>
     /// </summary>
     internal static class SmileIdUtility
     {

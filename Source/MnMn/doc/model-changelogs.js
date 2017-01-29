@@ -85,6 +85,73 @@
 	},
 	*/
 	{
+		'date': '2017/01/29',
+		'version': '0.46.0',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
+						'comments': [
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '#240 により内臓ブラウザと MnMn が少しお話しできるようになりました',
+						'comments': [
+							'課題自体はまだ閉じていないので追々設定との連動等も行っていきます',
+							'遷移先の URI やコンテキストメニュー表示時の HTML 要素判定云々で制御するイメージなので、こういう時(こういうサイトでは)はこうじゃねーのってのがあれば教えてください',
+							"定義ファイル: <MnMn>\\etc\\define\\web-navigator.xml (ソース上での管理は web-navigator.tt)",
+							'↑でなんなり出来るかと'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '884d979ac54e66274b33e44208873d9526a683ae',
+						'class': 'open',
+						'subject': '#240: 内部ブラウザの制御をそろそろやりましょうぜ',
+						'comments': [
+							'基本的にはインフラ構築',
+							'以下挙動は未制御というか未調査',
+							'-> 動画が新規ウィンドウ表示の際の制御',
+							'-> 動的(iframe?)生成される要素に対するコンテキストメニュー制御'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '80d3da69bcdca352ab78a57e1119abca8a42f6ef',
+						'subject': '#386: DMCダウンロード後にプレイヤーのステータスがダウンロード失敗になる',
+						'comments': [
+							'再現できないからわかんないけど多分OKなんじゃないかな'
+						]
+					},
+					{
+						'revision': '7079ab81735167df2000716ff01b5f58046a506a',
+						'subject': '#385: コメントグラフが拡縮できちゃう'
+					},
+					{
+						'revision': '4d899cb94f23bd874f382efe6c29abfadda25183',
+						'subject': '#389: ナビゲータのつまみの視認性が悪い気がする'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/01/22',
 		'version': '0.45.0',
 		'isRc': false,

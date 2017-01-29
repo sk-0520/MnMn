@@ -878,7 +878,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation.Logger.Error(e.Exception);
 
             if(e.Cancel) {
-                VideoLoadState = LoadState.Failure;
+                if(VideoLoadState != LoadState.Loaded) {
+                    // スレッド間のあれな動作であれになる抑制
+                    VideoLoadState = LoadState.Failure;
+                }
                 if(UsingDmc.Value) {
                     StopDmcDownloadAsync();
                 }

@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -96,6 +97,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                     throw new NotImplementedException();
             }
         }
+
+        public static Regex CreateConditionRegex(string pattern)
+        {
+            var result = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture);
+
+            return result;
+        }
+
         #endregion
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ContentTypeTextNet.MnMn.Library.Bridging.Attribute;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.Define
@@ -13,24 +14,36 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Define
     public enum ServiceType
     {
         /// <summary>
+        /// 全て。
+        /// <para>ブラウザの橋渡し用。</para>
+        /// </summary>
+        [XmlEnum("*")]
+        All,
+        /// <summary>
+        /// 共通。
+        /// <para>これなんかやだなぁ。</para>
+        /// </summary>
+        [XmlEnum("common")]
+        Common,
+        /// <summary>
         /// 本体。
         /// </summary>
-        //[TextDisplay(Constants.applicationName)]
+        [XmlEnum("app")]
         Application,
         /// <summary>
         /// ニコニコ。
         /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_Smile))]
+        [XmlEnum("smile")]
         Smile,
         /// <summary>
         /// ニコニコ動画。
         /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileVideo))]
+        [XmlEnum("smile-video")]
         SmileVideo,
         /// <summary>
         /// ニコニコ生放送。
         /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileLive))]
+        [XmlEnum("smile-live")]
         SmileLive,
     }
 }

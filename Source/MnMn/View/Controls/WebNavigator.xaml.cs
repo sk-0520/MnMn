@@ -22,12 +22,21 @@ using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
+using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
+using ContentTypeTextNet.MnMn.MnMn.Model.Response;
+using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
@@ -37,10 +46,95 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// </summary>
     public partial class WebNavigator: UserControl
     {
+        #region variable
+
+        ICommand _copySelectionCommand;
+        ICommand _selectAllCommand;
+
+        ICommand _showSourceCommand;
+        ICommand _showPropertyCommand;
+
+        #endregion
+
         public WebNavigator()
         {
             InitializeComponent();
         }
+
+        #region BridgeClickProperty
+
+        public static readonly DependencyProperty BridgeClickProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(BridgeClickProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnBridgeClickChanged))
+        );
+
+        private static void OnBridgeClickChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.BridgeClick = (bool)e.NewValue;
+            }
+        }
+
+        public bool BridgeClick
+        {
+            get { return (bool)GetValue(BridgeClickProperty); }
+            set { SetValue(BridgeClickProperty, value); }
+        }
+
+        #endregion
+
+        #region BridgeNavigatingProperty
+
+        public static readonly DependencyProperty BridgeNavigatingProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(BridgeNavigatingProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnBridgeNavigatingChanged))
+        );
+
+        private static void OnBridgeNavigatingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.BridgeNavigating = (bool)e.NewValue;
+            }
+        }
+
+        public bool BridgeNavigating
+        {
+            get { return (bool)GetValue(BridgeNavigatingProperty); }
+            set { SetValue(BridgeNavigatingProperty, value); }
+        }
+
+        #endregion
+
+        #region BridgeContextMenuProperty
+
+        public static readonly DependencyProperty BridgeContextMenuProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(BridgeContextMenuProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnBridgeContextMenuChanged))
+        );
+
+        private static void OnBridgeContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.BridgeContextMenu = (bool)e.NewValue;
+            }
+        }
+
+        public bool BridgeContextMenu
+        {
+            get { return (bool)GetValue(BridgeContextMenuProperty); }
+            set { SetValue(BridgeContextMenuProperty, value); }
+        }
+
+        #endregion
 
         #region IsVisibleToolbarProperty
 
@@ -509,6 +603,70 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        ICommand CopySelectionCommand
+        {
+            get
+            {
+                if(this._copySelectionCommand == null) {
+                    this._copySelectionCommand = new DelegateCommand(
+                        o => DoAction(
+                            b => { /* not impl */ },
+                            b => b.CopySelection()
+                        ),
+                        o => DoFunction(
+                            b => true,
+                            b => b.CanCopySelection
+                        )
+                    );
+                }
+                return this._copySelectionCommand;
+            }
+        }
+
+        ICommand SelectAllCommand
+        {
+            get
+            {
+                if(this._selectAllCommand == null) {
+                    this._selectAllCommand = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.SelectAll()
+                    ));
+                }
+                return this._selectAllCommand;
+            }
+        }
+
+        ICommand ShowSourceCommand
+        {
+            get
+            {
+                if(this._showSourceCommand == null) {
+                    this._showSourceCommand = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.ViewSource()
+                    ));
+                }
+
+                return this._showSourceCommand;
+            }
+        }
+
+        ICommand ShowPropertyCommand
+        {
+            get
+            {
+                if(this._showPropertyCommand == null) {
+                    this._showPropertyCommand = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.ShowPageProperties()
+                    ));
+                }
+
+                return this._showPropertyCommand;
+            }
+        }
+
         #endregion
 
         #region function
@@ -534,7 +692,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// </summary>
         /// <param name="defaultAction">標準ブラウザ使用時の処理。</param>
         /// <param name="geckoFxAction">Gecko版使用時の処理。</param>
-        void DoAction(Action<WebBrowser> defaultAction, Action<GeckoWebBrowser> geckoFxAction)
+        void DoAction(Action<WebBrowser> defaultAction, Action<ServiceGeckoWebBrowser> geckoFxAction)
         {
             WebNavigatorUtility.DoAction(
                 WebNavigatorCore.Engine,
@@ -632,7 +790,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void InitializedDefault()
         {
-            BrowserDefault = new WebBrowser();
+            BrowserDefault = WebNavigatorCore.CreateDefaultBrowser();
 
             BrowserDefault.Loaded += Browser_Loaded;
             BrowserDefault.Loaded += BrowserDefault_Loaded;
@@ -648,8 +806,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void InitializedGeckoFx()
         {
-            BrowserGeckoFx = WebNavigatorCore.CreateBrowser();
+            BrowserGeckoFx = WebNavigatorCore.CreateGeckoBrowser();
             BrowserGeckoFx.CreateControl();
+
+            BrowserGeckoFx.NoDefaultContextMenu = true;
 
             BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;
             BrowserGeckoFx.Navigating += BrowserGeckoFx_Navigating;
@@ -657,6 +817,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.CreateWindow += BrowserGeckoFx_CreateWindow;
             BrowserGeckoFx.Load += BrowserGeckoFx_Load;
             BrowserGeckoFx.DOMContentLoaded += BrowserGeckoFx_DOMContentLoaded;
+            BrowserGeckoFx.DomClick += BrowserGeckoFx_DomClick;
+            BrowserGeckoFx.DomContextMenu += BrowserGeckoFx_DomContextMenu;
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
@@ -677,6 +839,139 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             } catch(Exception ex) {
                 Debug.WriteLine(ex);
             }
+        }
+
+        void SetClickParameterGeckoFx(WebNavigatorClickParameterModel model, DomMouseEventArgs e)
+        {
+            switch(e.Button) {
+                case GeckoMouseButton.Left:
+                    model.MouseButton = MouseButton.Left;
+                    break;
+
+                case GeckoMouseButton.Middle:
+                    model.MouseButton = MouseButton.Middle;
+                    break;
+
+                case GeckoMouseButton.Right:
+                    model.MouseButton = MouseButton.Right;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var element = e.Target.CastToGeckoElement();
+
+            model.Element = WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(element);
+            var rootElements = WebNavigatorCore.GetRootElementsGeckoFx(element);
+            model.RootNodes = rootElements
+                .Select(elm => WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(elm))
+                .ToList()
+            ;
+        }
+
+        Separator MakeContextMenuItemSeparator(WebNavigatorContextMenuItemViewModel contextMenuItem)
+        {
+            var result = new Separator() {
+                DataContext = contextMenuItem,
+            };
+
+            return result;
+        }
+
+        MenuItem MakeContextMenuItemCore(WebNavigatorContextMenuItemViewModel contextMenuItem)
+        {
+            var result = new MenuItem() {
+                DataContext = contextMenuItem,
+
+                Header = contextMenuItem.DisplayText,
+            };
+            result.Command = new DelegateCommand(
+                o => DoContextMenuItemCommand(result, o),
+                o => CanDoContextMenuItemCommand(result, o)
+            );
+
+            return result;
+        }
+
+        Control MakeContextMenuItem(WebNavigatorContextMenuItemViewModel contextMenuItem)
+        {
+            if(contextMenuItem.IsSeparator) {
+                return MakeContextMenuItemSeparator(contextMenuItem);
+            } else {
+                return MakeContextMenuItemCore(contextMenuItem);
+            }
+        }
+
+        ICommand GetCommonCommand(string key)
+        {
+            switch(key) {
+                case WebNavigatorContextMenuKey.commonBack:
+                    return BackCommand;
+
+                case WebNavigatorContextMenuKey.commonForward:
+                    return ForwardCommand;
+
+                case WebNavigatorContextMenuKey.commonCopySelection:
+                    return CopySelectionCommand;
+
+                case WebNavigatorContextMenuKey.commonSelerctAll:
+                    return SelectAllCommand;
+
+                case WebNavigatorContextMenuKey.commonSource:
+                    return ShowSourceCommand;
+
+                case WebNavigatorContextMenuKey.commonProperty:
+                    return ShowPropertyCommand;
+
+                default:
+                    return null;
+            }
+        }
+
+        void ExecuteCommonCommand(WebNavigatorContextMenuItemViewModel contextMenuItem, object parameter)
+        {
+            Debug.Assert(contextMenuItem.SendService == ServiceType.Common);
+
+            var command = GetCommonCommand(contextMenuItem.Key);
+            if(command != null) {
+                command.TryExecute(parameter);
+            }
+        }
+
+        void DoContextMenuItemCommand(MenuItem menuItem, object parameter)
+        {
+            var contextMenuItem = (WebNavigatorContextMenuItemViewModel)menuItem.DataContext;
+            if(contextMenuItem.SendService == ServiceType.Common) {
+                ExecuteCommonCommand(contextMenuItem, parameter);
+            } else {
+                var processParameter = new WebNavigatorProcessParameterModel() {
+                    ParameterVaule = (string)parameter,
+                    Key = ((WebNavigatorContextMenuItemViewModel)menuItem.DataContext).Key,
+                };
+
+                var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
+                DoAction(
+                    b => { ((Mediation)b.Tag).Request(processRequest); },
+                    b => { (b.Mediation).Request(processRequest); }
+                );
+            }
+        }
+
+        bool CanDoContextMenuItemCommand(MenuItem menuItem, object parameter)
+        {
+            var contextMenuItem = (WebNavigatorContextMenuItemViewModel)menuItem.DataContext;
+            if(contextMenuItem.SendService == ServiceType.Common) {
+                // 共通処理は特殊
+                var command = GetCommonCommand(contextMenuItem.Key);
+                if(command != null) {
+                    return command.CanExecute(parameter);
+                } else {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         #endregion
@@ -744,6 +1039,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.CreateWindow -= BrowserGeckoFx_CreateWindow;
             BrowserGeckoFx.Load -= BrowserGeckoFx_Load;
             BrowserGeckoFx.DOMContentLoaded -= BrowserGeckoFx_DOMContentLoaded;
+            BrowserGeckoFx.DomClick -= BrowserGeckoFx_DomClick;
+            BrowserGeckoFx.DomContextMenu -= BrowserGeckoFx_DomContextMenu;
         }
 
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -754,10 +1051,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
-            this.location.Text = e.Uri?.ToString() ?? string.Empty;
-            IsNavigating = true;
-        }
+            var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
+                NextUri = e.Uri,
+            };
 
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+
+            e.Cancel = result.Cancel;
+
+            if(!e.Cancel) {
+                this.location.Text = e.Uri?.ToString() ?? string.Empty;
+                IsNavigating = true;
+            } else {
+                var navigatingResult = (WebNavigatorNavigatingResultModel)result;
+                var processParameter = new WebNavigatorProcessParameterModel() {
+                    Key = navigatingResult.NavigatingItem.Key,
+                    ParameterVaule = navigatingResult.Parameter,
+                };
+                var processRequest = new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter);
+                var processResult = BrowserGeckoFx.Mediation.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
+            }
+        }
 
         private void BrowserDefault_Navigated(object sender, NavigationEventArgs e)
         {
@@ -803,6 +1117,67 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        private void BrowserGeckoFx_DomClick(object sender, DomMouseEventArgs e)
+        {
+            var parameter = new WebNavigatorClickParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
+            SetClickParameterGeckoFx(parameter, e);
 
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+
+            if(e.Cancelable) {
+                e.Handled = result.Cancel;
+            }
+        }
+
+        private void BrowserGeckoFx_DomContextMenu(object sender, DomMouseEventArgs e)
+        {
+            if(ContextMenu.ItemsSource == null) {
+                //var menuItems = CreateContextMenu();
+                var contextMenuDefineParameter = new WebNavigatorParameterModel(null, null, WebNavigatorEngine.GeckoFx, WebNavigatorParameterKind.ContextMenuDefine);
+                var contextMenuDefineResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuDefineResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuDefineParameter));
+                //ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
+                ContextMenu.ItemsSource = contextMenuDefineResult.Items.Select(MakeContextMenuItem).ToList();
+            } 
+
+            var contextMenuParameter = new WebNavigatorContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
+            SetClickParameterGeckoFx(contextMenuParameter, e);
+
+            var contextMenuResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuParameter));
+            if(e.Cancelable) {
+                e.Handled = contextMenuResult.Cancel;
+            }
+
+            if(!e.Handled) {
+                var contextMenuItemParameter = new WebNavigatorContextMenuItemParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
+                SetClickParameterGeckoFx(contextMenuItemParameter, e);
+
+                var menuItems = ContextMenu.Items
+                    .Cast<Control>()
+                    .Select(c => new { View = c, Define = (WebNavigatorContextMenuItemViewModel)c.DataContext })
+                    .ToList()
+                ;
+                foreach(var menuItem in menuItems) {
+                    contextMenuItemParameter.Key = menuItem.Define.Key;
+                    var contextMenuItemResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuItemResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuItemParameter));
+
+                    if(contextMenuItemResult.Cancel) {
+                        // 基本的にここでキャンセルは通さないけど一応例外投げておく(必要になったら対応する)
+                        throw new NotImplementedException();
+                    }
+
+                    menuItem.View.IsEnabled = contextMenuItemResult.IsEnabled;
+                    menuItem.View.Visibility = contextMenuItemResult.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+                    if(!menuItem.Define.IsSeparator) {
+                        var viewMenuItem = (MenuItem)menuItem.View;
+                        viewMenuItem.CommandParameter = contextMenuItemResult.Parameter;
+                    }
+                }
+
+                //TODO: 重複するセパレータの除外とかとか
+
+                ContextMenu.IsOpen = true;
+            }
+        }
+        
     }
 }

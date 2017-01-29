@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -134,18 +135,61 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return new ResponseModel(request, windowViewModels);
         }
 
-        ResponseModel Request_Process(SmileVideoProcessRequestModel request)
+        ResponseModel Request_Process(ProcessRequestModelBase request)
         {
-            switch(request.Parameter.Process) {
-                case SmileVideoProcess.CheckItLater: {
-                        var param = (SmileVideoProcessCheckItLaterParameterModel)request.Parameter;
-                        var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem, param.IsForce);
-                        return new ResponseModel(request, result);
-                    }
+            var smileProcessRequest = request as SmileVideoProcessRequestModel;
+            if(smileProcessRequest != null) {
+                switch(smileProcessRequest.Parameter.Process) {
+                    case SmileVideoProcess.CheckItLater: {
+                            var param = (SmileVideoProcessCheckItLaterParameterModel)smileProcessRequest.Parameter;
+                            var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem, param.IsForce);
+                            return new ResponseModel(request, result);
+                        }
 
-                default:
-                    throw new NotImplementedException();
+                    default:
+                        throw new NotImplementedException();
+                }
             }
+
+            var webProcessRequest = request as WebNavigatorProcessRequestModel;
+            if(webProcessRequest != null) {
+                switch(webProcessRequest.Parameter.Key) {
+                    case WebNavigatorContextMenuKey.smileVideoOpenPlayer:
+                    case WebNavigatorContextMenuKey.smileVideoAddCheckItlater:
+                    case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark: {
+                            var videoId = webProcessRequest.Parameter.ParameterVaule;
+                            var videoInformationRequest = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
+                            Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(videoInformationRequest).ContinueWith(t => {
+                                var videoInformation = t.Result;
+
+                                switch(webProcessRequest.Parameter.Key) {
+                                    case WebNavigatorContextMenuKey.smileVideoOpenPlayer:
+                                        videoInformation.OpenVideoDefaultAsync(false);
+                                        break;
+
+                                    case WebNavigatorContextMenuKey.smileVideoAddCheckItlater:
+                                        Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(videoInformation.ToVideoItemModel(), true)));
+                                        break;
+
+                                    case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark:
+                                        ManagerPack.BookmarkManager.Node.VideoItems.Add(videoInformation.ToVideoItemModel());
+                                        break;
+
+                                    default:
+                                        throw new NotImplementedException();
+                                }
+                            }, TaskScheduler.FromCurrentSynchronizationContext());
+
+                            return new ResponseModel(request, videoId);
+                        }
+
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
+            throw new NotImplementedException();
         }
 
         ResponseModel RequestCore(RequestModel request)
@@ -173,7 +217,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return Request_WindowViewModels(request);
 
                 case RequestKind.Process:
-                    return Request_Process((SmileVideoProcessRequestModel)request);
+                    return Request_Process((ProcessRequestModelBase)request);
 
                 default:
                     throw new NotImplementedException();
