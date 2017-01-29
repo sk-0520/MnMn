@@ -135,7 +135,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#385: コメントグラフが拡縮できちゃう'
 					},
 					{
 						'revision': '',
