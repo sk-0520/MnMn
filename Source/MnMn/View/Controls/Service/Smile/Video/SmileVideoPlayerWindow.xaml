@@ -1647,6 +1647,19 @@
               </TabControl>
             </Grid>
           </TabItem>
+          <TabItem Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TabItem.Header>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource MinimumItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource MinimumDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>プレイリスト</TextBlock>
+              </StackPanel>
+            </TabItem.Header>
+
+          </TabItem>
           <TabItem>
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
