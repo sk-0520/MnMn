@@ -1731,7 +1731,7 @@
 
               </Grid>
 
-              <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
+              <ScrollViewer x:Name="listPlaylist" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
                 <ItemsControl ItemsSource="{Binding Source={StaticResource PlayListItems}}">
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -1779,6 +1779,7 @@
                           </ContentControl>
 
                           <Button 
+                            Focusable="False"
                             Grid.Column="1" 
                             Content="{Binding Title}" 
                             Command="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
