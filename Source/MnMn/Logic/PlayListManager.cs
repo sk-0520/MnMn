@@ -208,4 +208,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
     }
+
+    public class PlayListManager2<TModel>
+        where TModel : class
+    {
+        public PlayListManager2()
+            : this(Environment.TickCount)
+        { }
+
+        public PlayListManager2(int seed)
+            : base()
+        {
+            Seed = seed;
+        }
+
+        #region property
+
+        CollectionModel<TModel> List = new CollectionModel<TModel>();
+
+        public int Seed { get; }
+
+        public bool IsRandom { get; set; }
+
+        public TModel CurrenItem { get; private set; }
+
+        public bool CanItemChange { get { return List.Any(); } }
+
+        #endregion
+
+        #region function
+        #endregion
+    }
 }

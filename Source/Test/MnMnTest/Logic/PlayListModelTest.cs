@@ -120,4 +120,22 @@ namespace MnMnTest.Logic
 
         //}
     }
+
+    [TestClass]
+    public class PlayListManager2ModelTest
+    {
+        public class Item
+        {
+            public Item(int number)
+            {
+                Number = number;
+            }
+            public int Number { get; }
+
+            public override string ToString()
+            {
+                return Number.ToString();
+            }
+        }
+    }
 }
