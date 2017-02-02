@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public TModel CurrenItem { get; private set; }
 
-        public bool CanItemChange { get { return List.Any(); } }
+        public bool CanItemChange { get { return 1 < List.Count; } }
 
         #endregion
 
