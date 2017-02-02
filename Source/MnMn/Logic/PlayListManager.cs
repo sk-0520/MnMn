@@ -219,14 +219,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public PlayListManager2(int seed)
             : base()
         {
-            Seed = seed;
+            Random = new Random(seed);
         }
 
         #region property
 
-        CollectionModel<TModel> List = new CollectionModel<TModel>();
+        Random Random { get; }
 
-        public int Seed { get; }
+        CollectionModel<TModel> List = new CollectionModel<TModel>();
 
         public bool IsRandom { get; set; }
 
