@@ -24,6 +24,7 @@
   Background="{DynamicResource WindowBackgroundBrush}"
   BorderBrush="{DynamicResource AccentColorBrush}"
   BorderThickness="2"
+  Loaded="Window_Loaded"
 >
   <Grid Margin="8">
     <Grid.RowDefinitions>
