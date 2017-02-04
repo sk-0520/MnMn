@@ -14,6 +14,7 @@
   Width="600"
   Height="280" 
   
+  AllowsTransparency="True"
   WindowStyle="None"
   ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
@@ -47,7 +48,7 @@
       <mamc:ProgressRing Grid.Row="1" Grid.Column="0" Width="80" Height="80"></mamc:ProgressRing>
     </Grid>
 
-    <Button VerticalAlignment="Top" Width="40" Height="40" HorizontalAlignment="Right" Style="{DynamicResource MetroCircleButtonStyle}" Click="Button_Click">
+    <Button x:Name="commandClose" VerticalAlignment="Top" Width="40" Height="40" HorizontalAlignment="Right" Style="{DynamicResource MetroCircleButtonStyle}" Click="Button_Click">
       <Viewbox>
         <Canvas Width="24" Height="24">
           <!-- https://materialdesignicons.com/icon/close-outline -->

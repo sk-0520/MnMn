@@ -26,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
@@ -293,9 +294,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppManager.InitializeView(View);
             Exit += App_Exit;
             MainWindow.Show();
-            //SplashWindow.Close();
-        }
 
+            SplashWindow.commandClose.Visibility = Visibility.Collapsed;
+            var splashWindowAnimation = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(2.5));
+            splashWindowAnimation.Completed += (splashSender, splashEvent) => SplashWindow.Close();
+            SplashWindow.BeginAnimation(UIElement.OpacityProperty, splashWindowAnimation);
+        }
+ 
         protected override void OnExit(ExitEventArgs e)
         {
             Mutex.Dispose();
