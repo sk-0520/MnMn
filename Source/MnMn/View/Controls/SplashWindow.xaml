@@ -15,12 +15,15 @@
   Height="280" 
   
   WindowStyle="None"
+  ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
   Topmost="True"
   
   FontSize="24"
   Foreground="{DynamicResource TextBrush}"
   Background="{DynamicResource WindowBackgroundBrush}"
+  BorderBrush="{DynamicResource AccentColorBrush}"
+  BorderThickness="2"
 >
   <Grid Margin="8">
     <Grid.RowDefinitions>
@@ -35,10 +38,10 @@
     <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="/Resources/MnMn.png" Width="256" Height="255" />
 
     <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-      <TextBlock Text="{x:Static app:Constants.ApplicationName}"/>
-      <TextBlock Text="{x:Static app:Constants.BuildType}" />
-      <TextBlock Text="{x:Static app:Constants.ApplicationVersionNumberText}" />
-      <TextBlock Text="{x:Static app:Constants.ApplicationVersionRevision}" />
+      <TextBlock FontSize="40" FontWeight="Bold" Text="{x:Static app:Constants.ApplicationName}"/>
+      <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.BuildType}" />
+      <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.ApplicationVersionNumberText}" />
+      <TextBlock Margin="16,1,0,0"  Text="{x:Static app:Constants.ApplicationVersionRevision}" />
     </StackPanel>
 
     <mamc:ProgressRing Grid.Row="1" Grid.Column="0" Width="80" Height="80"></mamc:ProgressRing>
