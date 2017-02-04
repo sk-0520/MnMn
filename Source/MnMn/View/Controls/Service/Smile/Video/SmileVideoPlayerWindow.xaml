@@ -1008,13 +1008,13 @@
                           <Setter Property="Template">
                             <Setter.Value>
                               <ControlTemplate TargetType="ListBoxItem">
-                                <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}">
-                                  <Rectangle Width="16" Height="16">
+                                <RadioButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}" Style="{StaticResource {x:Type ToggleButton}}">
+                                  <Rectangle Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}">
                                     <Rectangle.Fill>
                                       <SolidColorBrush Color="{Binding}" />
                                     </Rectangle.Fill>
                                   </Rectangle>
-                                </ToggleButton>
+                                </RadioButton>
                               </ControlTemplate>
                             </Setter.Value>
                           </Setter>
