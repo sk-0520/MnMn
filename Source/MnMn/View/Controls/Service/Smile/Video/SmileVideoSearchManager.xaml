@@ -138,11 +138,11 @@
                       <Setter Property="HorizontalAlignment" Value="Stretch" />
                     </Style>
                   </Button.Style>
-                  <Button.Template>
+                  <!--<Button.Template>
                     <ControlTemplate TargetType="Button">
                       <TextBlock FontWeight="Bold" TextDecorations="Underline" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"/>
                     </ControlTemplate>
-                  </Button.Template>
+                  </Button.Template>-->
                 </Button>
               </Grid>
 
