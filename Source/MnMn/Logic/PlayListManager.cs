@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -28,7 +29,6 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class PlayListManager<TModel>: CollectionModel<TModel>
-        where TModel : class
     {
         #region variable
         #endregion
@@ -206,37 +206,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanItemChange)));
         }
 
-        #endregion
-    }
-
-    public class PlayListManager2<TModel>
-        where TModel : class
-    {
-        public PlayListManager2()
-            : this(Environment.TickCount)
-        { }
-
-        public PlayListManager2(int seed)
-            : base()
-        {
-            Random = new Random(seed);
-        }
-
-        #region property
-
-        Random Random { get; }
-
-        CollectionModel<TModel> List = new CollectionModel<TModel>();
-
-        public bool IsRandom { get; set; }
-
-        public TModel CurrenItem { get; private set; }
-
-        public bool CanItemChange { get { return 1 < List.Count; } }
-
-        #endregion
-
-        #region function
         #endregion
     }
 }

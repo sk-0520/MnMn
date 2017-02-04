@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,23 +42,27 @@ namespace MnMnTest.Logic
             }
         }
 
-        //[TestMethod]
-        //public void SequenceNextTest()
-        //{
-        //    var list = new PlayListManager<Item>() {
-        //        IsRandom = false,
-        //    };
+        [TestMethod]
+        public void SequenceNextTest()
+        {
+            var list = new PlayListManager<Item>() {
+                IsRandom = false,
+            };
 
-        //    list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
-        //    for(var i = 0; i < 10; i++) {
-        //        var item = list.ChangeNextItem();
-        //        Assert.IsTrue(i + 1 == item.Number);
-        //    }
-        //    for(var i = 0; i < 10; i++) {
-        //        var item = list.ChangeNextItem();
-        //        Assert.IsTrue(i + 1 == item.Number);
-        //    }
-        //}
+            list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
+            for(var i = 0; i < 10; i++) {
+
+                var item = i == 0
+                    ? list.GetFirstItem()
+                    : list.ChangeNextItem()
+                ;
+                Assert.IsTrue(i + 1 == item.Number);
+            }
+            for(var i = 0; i < 10; i++) {
+                var item = list.ChangeNextItem();
+                Assert.IsTrue(i + 1 == item.Number);
+            }
+        }
         [TestMethod]
         public void SequencePrevTest()
         {
@@ -105,36 +110,26 @@ namespace MnMnTest.Logic
                 }
             }
         }
-        //[TestMethod]
-        //public void RandomPrevTest()
-        //{
-        //    var list = new PlayListModel<Item>() {
-        //        IsRandom = true,
-        //    };
-
-        //    list.AddRange(Enumerable.Range(1, 3).Select(i => new Item(i)));
-
-        //    var item1 = list.GetFirstItem();
-        //    var prev1 = list.ChangePrevItem();
-        //    Assert.IsTrue(item1 == prev1);
-
-        //}
-    }
-
-    [TestClass]
-    public class PlayListManager2ModelTest
-    {
-        public class Item
+        [TestMethod]
+        public void RandomNext2Test()
         {
-            public Item(int number)
-            {
-                Number = number;
-            }
-            public int Number { get; }
+            var list = new PlayListManager<Item>() {
+                IsRandom = true,
+            };
 
-            public override string ToString()
-            {
-                return Number.ToString();
+            list.AddRange(Enumerable.Range(1, 3).Select(i => new Item(i)));
+
+            var item1 = list.GetFirstItem();
+            var item2 = list.ChangeNextItem();
+            var item3 = list.ChangeNextItem();
+            var items = new[] { item1, item2, item3 };
+
+            foreach(var _ in Enumerable.Range(1, 100)) {
+                var next1 = list.ChangeNextItem();
+                var next2 = list.ChangeNextItem();
+                var next3 = list.ChangeNextItem();
+                var nexts = new[] { next1, next2, next3 };
+                CollectionAssert.AreEqual(items, nexts);
             }
         }
     }
