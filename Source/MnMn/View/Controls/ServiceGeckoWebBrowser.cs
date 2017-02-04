@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -30,6 +32,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
     public class ServiceGeckoWebBrowser: GeckoWebBrowser
     {
+        #region define
+
+        const int WM_XBUTTONUP = 0x020C;
+        const int XBUTTON1 = 0x10000;
+        const int XBUTTON2 = 0x20000;
+
+        #endregion
+
         public ServiceGeckoWebBrowser(Mediation mediation)
             : base()
         {
@@ -49,6 +59,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         #endregion
 
         #region function
+
+        #endregion
+
+        #region GeckoWebBrowser
+
+        public override bool PreProcessMessage(ref Message msg)
+        {
+            if(msg.Msg == WM_XBUTTONUP) {
+                var wParam = msg.WParam.ToInt32();
+
+                if(wParam == XBUTTON1 && CanGoBack) {
+                    GoBack();
+                } else if(wParam == XBUTTON2 && CanGoForward) {
+                    GoForward();
+                }
+            }
+
+            return base.PreProcessMessage(ref msg);
+        }
 
         #endregion
     }

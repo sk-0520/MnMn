@@ -119,7 +119,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#286: ブラウザのマウス処理でXBUTTONを考慮する'
 					},
 					{
 						'revision': '',
