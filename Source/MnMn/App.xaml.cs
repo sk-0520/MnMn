@@ -295,7 +295,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             Exit += App_Exit;
             MainWindow.Show();
 
+            // スプラッシュスクリーンさよなら～
             SplashWindow.commandClose.Visibility = Visibility.Collapsed;
+            await Task.Delay(Constants.AppMainWorkerSetupTime);
+            SplashWindow.Topmost = false;
             var splashWindowAnimation = new DoubleAnimation(0, Constants.AppSplashCloseTime);
             splashWindowAnimation.Completed += (splashSender, splashEvent) => SplashWindow.Close();
             SplashWindow.BeginAnimation(UIElement.OpacityProperty, splashWindowAnimation);
