@@ -19,7 +19,7 @@
   ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
   Topmost="True"
-  
+  ShowInTaskbar="False"
   FontSize="24"
   Foreground="{DynamicResource TextBrush}"
   Background="{DynamicResource WindowBackgroundBrush}"
