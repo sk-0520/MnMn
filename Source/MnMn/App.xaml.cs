@@ -293,7 +293,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppManager.InitializeView(View);
             Exit += App_Exit;
             MainWindow.Show();
-            SplashWindow.Close();
+            //SplashWindow.Close();
         }
 
         protected override void OnExit(ExitEventArgs e)
