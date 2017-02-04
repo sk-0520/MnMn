@@ -123,7 +123,11 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'open',
+						'subject': '#240: 内部ブラウザの制御をそろそろやりましょうぜ',
+						'comments': [
+							'iframe内でのコンテキストメニューを制御'
+						]
 					}
 				]
 			},
