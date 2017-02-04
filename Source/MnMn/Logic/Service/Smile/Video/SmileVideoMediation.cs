@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                                         break;
 
                                     case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark:
-                                        ManagerPack.BookmarkManager.Node.VideoItems.Add(videoInformation.ToVideoItemModel());
+                                        Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(videoInformation.ToVideoItemModel())));
                                         break;
 
                                     default:
