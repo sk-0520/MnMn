@@ -132,7 +132,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#387: プレイリストの遷移方法の仕様を確定する',
+						'comments': [
+							'MnMnTest.Logic.PlayListManagerTestに全て委ねた'
+						]
 					},
 					{
 						'revision': '',
