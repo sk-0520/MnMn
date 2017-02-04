@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -24,11 +25,11 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class PlayListManager<TModel>: CollectionModel<TModel>
-        where TModel : class
     {
         #region variable
         #endregion
@@ -181,6 +182,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             return CurrenItem;
         }
+
+        public void ChangeCurrentItem(TModel item)
+        {
+            var index = Items.IndexOf(item);
+            if(index != -1) {
+                ChangeItem(index);
+            }
+        }
+
 
         #endregion
 

@@ -135,13 +135,14 @@
                 <Button Grid.Column="1" Content="{Binding Query, Mode=OneTime}" Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
                   <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource Hyperlink}">
+                      <Setter Property="HorizontalAlignment" Value="Stretch" />
                     </Style>
                   </Button.Style>
-                  <Button.Template>
+                  <!--<Button.Template>
                     <ControlTemplate TargetType="Button">
                       <TextBlock FontWeight="Bold" TextDecorations="Underline" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"/>
                     </ControlTemplate>
-                  </Button.Template>
+                  </Button.Template>-->
                 </Button>
               </Grid>
 

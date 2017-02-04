@@ -146,6 +146,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                             return new ResponseModel(request, result);
                         }
 
+                    case SmileVideoProcess.UnorganizedBookmark: {
+                            var param = (SmileVideoProcessUnorganizedBookmarkParameterModel)smileProcessRequest.Parameter;
+                            var result = ManagerPack.BookmarkManager.AddUnorganizedBookmark(param.VideoItem);
+                            return new ResponseModel(request, result);
+                        }
+
                     default:
                         throw new NotImplementedException();
                 }
@@ -172,7 +178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                                         break;
 
                                     case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark:
-                                        ManagerPack.BookmarkManager.Node.VideoItems.Add(videoInformation.ToVideoItemModel());
+                                        Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(videoInformation.ToVideoItemModel())));
                                         break;
 
                                     default:

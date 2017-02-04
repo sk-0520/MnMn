@@ -807,6 +807,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         void InitializedGeckoFx()
         {
             BrowserGeckoFx = WebNavigatorCore.CreateGeckoBrowser();
+            BrowserGeckoFx.FrameEventsPropagateToMainWindow = true;
             BrowserGeckoFx.CreateControl();
 
             BrowserGeckoFx.NoDefaultContextMenu = true;

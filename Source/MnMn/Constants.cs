@@ -118,6 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// バージョン番号。
         /// </summary>
         public static Version ApplicationVersionNumber { get; } = Assembly.GetExecutingAssembly().GetName().Version;
+        public static string ApplicationVersionNumberText { get; } = ApplicationVersionNumber.ToString();
         /// <summary>
         /// バージョンリビジョン。
         /// </summary>
