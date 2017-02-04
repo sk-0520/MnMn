@@ -296,7 +296,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Show();
 
             SplashWindow.commandClose.Visibility = Visibility.Collapsed;
-            var splashWindowAnimation = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(2.5));
+            var splashWindowAnimation = new DoubleAnimation(0, Constants.AppSplashCloseTime);
             splashWindowAnimation.Completed += (splashSender, splashEvent) => SplashWindow.Close();
             SplashWindow.BeginAnimation(UIElement.OpacityProperty, splashWindowAnimation);
         }
