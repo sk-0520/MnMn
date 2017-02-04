@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -181,6 +182,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             return CurrenItem;
         }
+
+        public void ChangeCurrentItem(TModel item)
+        {
+            var index = Items.IndexOf(item);
+            if(index != -1) {
+                ChangeItem(index);
+            }
+        }
+
 
         #endregion
 

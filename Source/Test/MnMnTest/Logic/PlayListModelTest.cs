@@ -132,5 +132,22 @@ namespace MnMnTest.Logic
                 CollectionAssert.AreEqual(items, nexts);
             }
         }
+
+        [TestMethod]
+        public void ChangeCurrentItemTest()
+        {
+            var list = new PlayListManager<Item>();
+            list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
+
+            var prevItem = list[4];
+            var selectItem = list[5];
+            var nextItem = list[6];
+
+            list.ChangeCurrentItem(selectItem);
+            Assert.IsTrue(list.CurrenItem == selectItem);
+            Assert.IsTrue(list.ChangePrevItem() == prevItem);
+            Assert.IsTrue(list.ChangeNextItem() == selectItem);
+            Assert.IsTrue(list.ChangeNextItem() == nextItem);
+        }
     }
 }
