@@ -26,7 +26,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MnMnTest.Logic
 {
     [TestClass]
-    public class PlayListModelTest
+    public class PlayListManagerTest
     {
         public class Item
         {
