@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
 
-        SplashWindow SplashWindow { get; }
+        SplashWindow SplashWindow { get; set; }
 
         Mediation Mediation { get; set; }
         MainWindow View { get; set; }
@@ -293,17 +293,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Closed += MainWindow_Closed;
             AppManager.InitializeView(View);
             Exit += App_Exit;
-            MainWindow.Show();
-
-            // スプラッシュスクリーンさよなら～
+            MainWindow.Loaded += MainWindow_Loaded;
             SplashWindow.commandClose.Visibility = Visibility.Collapsed;
-            await Task.Delay(Constants.AppMainWorkerSetupTime);
-            SplashWindow.Topmost = false;
-            var splashWindowAnimation = new DoubleAnimation(0, Constants.AppSplashCloseTime);
-            splashWindowAnimation.Completed += (splashSender, splashEvent) => SplashWindow.Close();
-            SplashWindow.BeginAnimation(UIElement.OpacityProperty, splashWindowAnimation);
+            MainWindow.Show();
         }
- 
+
         protected override void OnExit(ExitEventArgs e)
         {
             Mutex.Dispose();
@@ -345,5 +339,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             await AppManager.UninitializeAsync();
         }
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Loaded -= MainWindow_Loaded;
+
+            // スプラッシュスクリーンさよなら～
+            SplashWindow.Topmost = false;
+            var splashWindowAnimation = new DoubleAnimation(0, Constants.AppSplashCloseTime);
+            splashWindowAnimation.Completed += (splashSender, splashEvent) => {
+                SplashWindow.Close();
+                SplashWindow = null;
+            };
+            SplashWindow.BeginAnimation(UIElement.OpacityProperty, splashWindowAnimation);
+        }
+
     }
 }
