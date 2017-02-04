@@ -26,26 +26,35 @@
   BorderThickness="2"
   Loaded="Window_Loaded"
 >
-  <Grid Margin="8">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
-    
-    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="/Resources/MnMn.png" Width="256" Height="255" />
+  <Grid>
+    <Grid Margin="8">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
 
-    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-      <TextBlock FontSize="40" FontWeight="Bold" Text="{x:Static app:Constants.ApplicationName}"/>
-      <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.BuildType}" />
-      <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.ApplicationVersionNumberText}" />
-      <TextBlock Margin="16,1,0,0"  Text="{x:Static app:Constants.ApplicationVersionRevision}" />
-    </StackPanel>
+      <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="/Resources/MnMn.png" Width="256" Height="255" />
+      <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+        <TextBlock FontSize="40" FontWeight="Bold" Text="{x:Static app:Constants.ApplicationName}"/>
+        <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.BuildType}" />
+        <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.ApplicationVersionNumberText}" />
+        <TextBlock Margin="16,1,0,0"  Text="{x:Static app:Constants.ApplicationVersionRevision}" />
+      </StackPanel>
+      <mamc:ProgressRing Grid.Row="1" Grid.Column="0" Width="80" Height="80"></mamc:ProgressRing>
+    </Grid>
 
-    <mamc:ProgressRing Grid.Row="1" Grid.Column="0" Width="80" Height="80"></mamc:ProgressRing>
-    
+    <Button VerticalAlignment="Top" Width="40" Height="40" HorizontalAlignment="Right" Style="{DynamicResource MetroCircleButtonStyle}" Click="Button_Click">
+      <Viewbox>
+        <Canvas Width="24" Height="24">
+          <!-- https://materialdesignicons.com/icon/close-outline -->
+          <Path Data="M3,16.74L7.76,12L3,7.26L7.26,3L12,7.76L16.74,3L21,7.26L16.24,12L21,16.74L16.74,21L12,16.24L7.26,21L3,16.74M12,13.41L16.74,18.16L18.16,16.74L13.41,12L18.16,7.26L16.74,5.84L12,10.59L7.26,5.84L5.84,7.26L10.59,12L5.84,16.74L7.26,18.16L12,13.41Z" Fill="{DynamicResource TextBrush}" />
+        </Canvas>
+      </Viewbox>
+    </Button>
+
   </Grid>
 </Window>
