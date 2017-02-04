@@ -85,24 +85,21 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.46.1',
-		'isRc': true,
+		'date': '2017/02/04',
+		'version': '0.47.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
+						'comments': [
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
+						]
 					}
 				]
 			},
@@ -110,7 +107,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '63c56735e8dffd148f3bd80fa91bd491b5b67a8a',
 						'subject': '#388: プレイリストの一覧をUI上に固定表示する',
 						'comments': [
 							'プレイヤーの「フィルタ」と「設定」の間に「プレイリスト」を追加',
@@ -118,11 +115,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '5b31b1ba555ffa91edd44542bd3e8e28a9b1d662',
 						'subject': '#286: ブラウザのマウス処理でXBUTTONを考慮する'
 					},
 					{
-						'revision': '',
+						'revision': '2b1c61afc6bfed0310c7c074a6737aa169662a44',
 						'class': 'open',
 						'subject': '#240: 内部ブラウザの制御をそろそろやりましょうぜ',
 						'comments': [
@@ -130,7 +127,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '0f0216978d6ebba562ffc97a8290d74e7c20ea52',
 						'subject': '#9: スプラッシュスクリーンを設定'
 					},
 				]
@@ -139,47 +136,30 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '5de0b94663ab2efd04f02e738c6194d0d9c89a9e',
 						'subject': '#387: プレイリストの遷移方法の仕様を確定する',
 						'comments': [
 							'MnMnTest.Logic.PlayListManagerTestに全て委ねた'
 						]
 					},
 					{
-						'revision': '',
-						'subject': '検索履歴のハイパーリンクのテンプレートをテーマに合わせた'
+						'revision': '7f15c88b1166d5934b995b32a48ad5ad4a9664d4',
+						'subject': '検索履歴のハイパーリンクのテンプレートをテーマに合わせた',
+						'comments': [
+							'どうなんだろうねこれ',
+							'視認性を犠牲にした感があるからフィードバックでまずければ戻す'
+						]
 					},
 					{
-						'revision': '',
+						'revision': 'bc06e4f00995f58321253914d2a3e1e8a755ceff',
 						'subject': '#393: コメント入力コマンドで色に対してユーザー操作で容易にバインドエラーさせられる'
 					},
 					{
-						'revision': '',
+						'revision': 'a1e130a4e436f1dcaaeaab7ec37505dad8679090',
 						'subject': '#392: 未整理のブックマーク追加処理を内部通信規約に準拠する',
 						'comments': [
 							'ダメだダメだと分かってても時間とかの都合でコードが重複してた'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
