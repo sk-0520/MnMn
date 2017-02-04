@@ -366,10 +366,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)
         {
-            //TODO: ISmileDescription.MenuAddUnorganizedBookmarkVideoIdCommandが重複してる。リクエスト形式に変更すべき
             var information = finderItem.Information;
             var item = information.ToVideoItemModel();
-            Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.Node.VideoItems.Add(item);
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(item)));
         }
 
         protected virtual bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
