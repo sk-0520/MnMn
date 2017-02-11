@@ -56,4 +56,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
     }
+
+    public class DefinedElementViewModelBase<TDefinedElementModel>: DefinedElementViewModelBase
+        where TDefinedElementModel : DefinedElementModel
+    {
+        public DefinedElementViewModelBase(TDefinedElementModel model) : base(model)
+        {
+            DefinedModel = model;
+        }
+
+        #region property
+
+        protected TDefinedElementModel DefinedModel { get; }
+
+        #endregion
+    }
 }

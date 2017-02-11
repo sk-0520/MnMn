@@ -86,7 +86,7 @@
 	*/
 	{
 		'date': 'YYYY/MM/DD',
-		'version': '0.44.1',
+		'version': '0.47.1',
 		'isRc': true,
 		'contents': [
 			{
@@ -94,10 +94,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '更新履歴に画像を表示できるようにしたよ！',
-						'comments': [
-							['そうなんだ、すごいね！', '0.45.0/issue294.png']
-						]
+						'subject': ''
 					},
 					{
 						'revision': '',
@@ -114,11 +111,9 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '#294: 更新履歴に画像を表示する',
+						'subject': '#394: WebブラウザのUXに合わせてF11でもフルスクリーンを切り替える',
 						'comments': [
-							'更新履歴表示の際に画像があると説明が楽なのだよ',
-							'ヘルプの更新履歴はただの画像だけどアップデート時の更新履歴は base64 にしたのだよ',
-							'作り終わってから思ったけどなんで base64 で頑張ったんだろうね'
+							'コメント入力時に IME 操作のための F11 はフルスクリーンになる素敵実装'
 						]
 					},
 					{
@@ -136,18 +131,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '#381: 動画の背景色をデフォルトでは黒にしておく',
-						'comments': [
-							'既存ユーザーは影響なし'
-						]
+						'subject': ''
 					},
 					{
 						'revision': '',
-						'subject': '#301: シークバーのつまみをそろそろテーマに合わせる',
-						'comments': [
-							'使える色がない',
-							'もともと位置表示だけの役割だからつまみを狭くした'
-						]
+						'subject': ''
 					},
 					{
 						'revision': '',
@@ -160,17 +148,260 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '#354: コメントアウトしたソース全部殺せ'
+						'subject': '#368: コメントのテキスト描画方法を初期値では「影(シンプル)」にする',
+						'comments': [
+							'既存ユーザーは影響なし'
+						]
 					},
 					{
 						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
+		'date': '2017/02/04',
+		'version': '0.47.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
+						'comments': [
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '63c56735e8dffd148f3bd80fa91bd491b5b67a8a',
+						'subject': '#388: プレイリストの一覧をUI上に固定表示する',
+						'comments': [
+							'プレイヤーの「フィルタ」と「設定」の間に「プレイリスト」を追加',
+							'メニューのプレイリストと今のところ機能は同じ'
+						]
+					},
+					{
+						'revision': '5b31b1ba555ffa91edd44542bd3e8e28a9b1d662',
+						'subject': '#286: ブラウザのマウス処理でXBUTTONを考慮する'
+					},
+					{
+						'revision': '2b1c61afc6bfed0310c7c074a6737aa169662a44',
+						'class': 'open',
+						'subject': '#240: 内部ブラウザの制御をそろそろやりましょうぜ',
+						'comments': [
+							'iframe内でのコンテキストメニューを制御'
+						]
+					},
+					{
+						'revision': '0f0216978d6ebba562ffc97a8290d74e7c20ea52',
+						'subject': '#9: スプラッシュスクリーンを設定'
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '5de0b94663ab2efd04f02e738c6194d0d9c89a9e',
+						'subject': '#387: プレイリストの遷移方法の仕様を確定する',
+						'comments': [
+							'MnMnTest.Logic.PlayListManagerTestに全て委ねた'
+						]
+					},
+					{
+						'revision': '7f15c88b1166d5934b995b32a48ad5ad4a9664d4',
+						'subject': '検索履歴のハイパーリンクのテンプレートをテーマに合わせた',
+						'comments': [
+							'どうなんだろうねこれ',
+							'視認性を犠牲にした感があるからフィードバックでまずければ戻す'
+						]
+					},
+					{
+						'revision': 'bc06e4f00995f58321253914d2a3e1e8a755ceff',
+						'subject': '#393: コメント入力コマンドで色に対してユーザー操作で容易にバインドエラーさせられる'
+					},
+					{
+						'revision': 'a1e130a4e436f1dcaaeaab7ec37505dad8679090',
+						'subject': '#392: 未整理のブックマーク追加処理を内部通信規約に準拠する',
+						'comments': [
+							'ダメだダメだと分かってても時間とかの都合でコードが重複してた'
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		'date': '2017/01/29',
+		'version': '0.46.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
+						'comments': [
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '#240 により内臓ブラウザと MnMn が少しお話しできるようになりました',
+						'comments': [
+							'課題自体はまだ閉じていないので追々設定との連動等も行っていきます',
+							'遷移先の URI やコンテキストメニュー表示時の HTML 要素判定云々で制御するイメージなので、こういう時(こういうサイトでは)はこうじゃねーのってのがあれば教えてください',
+							"定義ファイル: <MnMn>\\etc\\define\\web-navigator.xml (ソース上での管理は web-navigator.tt)",
+							'↑でなんなり出来るかと'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '884d979ac54e66274b33e44208873d9526a683ae',
+						'class': 'open',
+						'subject': '#240: 内部ブラウザの制御をそろそろやりましょうぜ',
+						'comments': [
+							'基本的にはインフラ構築',
+							'以下挙動は未制御というか未調査',
+							'-> 動画が新規ウィンドウ表示の際の制御',
+							'-> 動的(iframe?)生成される要素に対するコンテキストメニュー制御'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '80d3da69bcdca352ab78a57e1119abca8a42f6ef',
+						'subject': '#386: DMCダウンロード後にプレイヤーのステータスがダウンロード失敗になる',
+						'comments': [
+							'再現できないからわかんないけど多分OKなんじゃないかな'
+						]
+					},
+					{
+						'revision': '7079ab81735167df2000716ff01b5f58046a506a',
+						'subject': '#385: コメントグラフが拡縮できちゃう'
+					},
+					{
+						'revision': '4d899cb94f23bd874f382efe6c29abfadda25183',
+						'subject': '#389: ナビゲータのつまみの視認性が悪い気がする'
+					}
+				]
+			}
+		]
+	},
+	{
+		'date': '2017/01/22',
+		'version': '0.45.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
+						'comments': [
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '更新履歴に画像が表示できるようになったよ！',
+						'comments': [
+							['そうなんだ、すごいね！', '0.45.0/issue294.png']
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '3591b8025bb6920d7cfa588387b3e602cca3aac6',
+						'subject': '#294: 更新履歴に画像を表示する',
+						'comments': [
+							'更新履歴表示の際に画像があると説明が楽なのだよ',
+							'ヘルプの更新履歴はただの画像だけどアップデート時の更新履歴は base64 にしたのだよ',
+							'アップデート時の更新履歴は速度の関係で完全な単独ファイルにしないとレスポンス悪いのだよ'
+						]
+					},
+					{
+						'revision': '66eed2be1c4d955ddfdc479f66049a6d3f7dc994',
+						'subject': '#378: プレイヤーのコメント一覧表示切替にキーバインドを設定する',
+						'comments': [
+							'Ctrl + L: コメント一覧切り替え',
+							'Ctrl + I: 動画情報切り替え'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '53299460f20db21830332f64b157b10f29a4958d',
+						'subject': '#381: 動画の背景色をデフォルトでは黒にしておく',
+						'comments': [
+							'既存ユーザーは影響なし'
+						]
+					},
+					{
+						'revision': '3eae93125b17ce584131b58a67e9d56c8c4375c0',
+						'subject': '#301: シークバーのつまみをそろそろテーマに合わせる',
+						'comments': [
+							'使える色がない',
+							'もともと位置表示だけの役割だからつまみを狭くした',
+							'本対応により 0.01.0 から酷使した初代つまみが長い眠りにつきました'
+						]
+					},
+					{
+						'revision': '29379dae19cf7946164a909db9cc90b460a851ab',
+						'subject': '#383: ストレージのGC結果出力で単位が重複してる(n,nnn KB byte)'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '932afb56a537c1f76469d57099ce3a900cb2036e',
+						'subject': '#354: コメントアウトしたソース全部殺せ'
+					},
+					{
+						'revision': '78e1f874c5fb2dcf4aa07d28f17f1335a7c54dfe',
 						'subject': '#382: いつ古くなるかわからない新形式を DMC に名称変更する',
 						'comments': [
 							'配信サーバーであってフォーマットの話じゃないと思うけど浸透してそうなので DMC形式 で統一した'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '954fb64dbabad126d6f113f0eea8d5cb4da8c499',
 						'subject': '#45: ヘルプファイルの整備',
 						'comments': [
 							'最低限だけ',

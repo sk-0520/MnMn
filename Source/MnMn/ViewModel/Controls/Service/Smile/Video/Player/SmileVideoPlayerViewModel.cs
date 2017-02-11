@@ -605,6 +605,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand SwitchPlayerShowCommentAreaCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    PlayerShowCommentArea = !PlayerShowCommentArea;
+                });
+            }
+        }
+
+        public ICommand SwicthPlayerShowDetailAreaCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    PlayerShowDetailArea = !PlayerShowDetailArea;
+                });
+            }
+        }
+
         #endregion
 
         #region function
@@ -1844,6 +1864,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PlayListItems.Add(videoInformation);
                 //#371
                 CanPlayNextVieo.Value = false;
+            } else {
+                // プレイリストに存在するのであればカレントを設定
+                PlayListItems.ChangeCurrentItem(videoInformation);
             }
 
             videoInformation.IsPlaying = true;

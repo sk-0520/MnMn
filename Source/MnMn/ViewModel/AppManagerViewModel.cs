@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         void OutputLogGarbageCollection(long gcSize)
         {
-            Mediation.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)} byte", $"{gcSize:n0} byte");
+            Mediation.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)}", $"{gcSize:n0} byte");
         }
 
         #endregion

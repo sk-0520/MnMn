@@ -118,6 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// バージョン番号。
         /// </summary>
         public static Version ApplicationVersionNumber { get; } = Assembly.GetExecutingAssembly().GetName().Version;
+        public static string ApplicationVersionNumberText { get; } = ApplicationVersionNumber.ToString();
         /// <summary>
         /// バージョンリビジョン。
         /// </summary>
@@ -327,6 +328,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string DefineDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, DefineName);
 
         public static string ApplicationThemeDefinePath { get; } = Path.Combine(DefineDirectoryPath, "theme.xml");
+        public static string ApplicationWebNavigatorBridgePath { get; } = Path.Combine(DefineDirectoryPath, "web-navigator.xml");
 
         /// <summary>
         /// etc/define/service

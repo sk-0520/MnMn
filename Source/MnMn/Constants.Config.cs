@@ -55,6 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
         public static Uri AppUriGeneralBrowserHome => new Uri(appConfig.Get("app-uri-general-browser"));
 
+        public static TimeSpan AppSplashCloseTime => appConfig.Get("app-splash-close-time", TimeSpan.Parse);
+        
         public static WebNavigatorEngine WebNavigatorEngine => appConfig.Get("web_navigator-engine", s => EnumUtility.Parse<WebNavigatorEngine>(s, false));
         public static string WebNavigatorGeckoFxLibraryDirectoryName => appConfig.Get("web_navigator-geckofx-lib-dir-name");
         public static string WebNavigatorGeckoFxProfileDirectoryName => appConfig.Get("web_navigator-geckofx-profile-dir-name");

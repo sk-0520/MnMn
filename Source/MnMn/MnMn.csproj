@@ -220,11 +220,14 @@
     <Compile Include="Constants.Xaml.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\WebNavigatorBridge\MatchSmileHtmlElement.cs" />
+    <Compile Include="Data\WebNavigatorBridge\SimpleHtmlElement.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuItem.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuBase.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
+    <Compile Include="Define\WebNavigatorContextMenuKey.cs" />
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
@@ -277,6 +280,7 @@
     <Compile Include="Define\ShowViewState.cs" />
     <Compile Include="Define\SourceLoadState.cs" />
     <Compile Include="Define\TextShowMode.cs" />
+    <Compile Include="Define\WebNavigatorParameterKind.cs" />
     <Compile Include="IF\Control\ICaptionCommand.cs" />
     <Compile Include="IF\Control\IDraggable.cs" />
     <Compile Include="IF\Control\IDropable.cs" />
@@ -309,11 +313,15 @@
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
+    <Compile Include="Logic\WebNavigatorBridge\SimleHtmlElementList.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoBookmarkUtility.cs" />
     <Compile Include="Logic\View\CursorHider.cs" />
+    <Compile Include="Logic\WebNavigatorCore.Default.cs">
+      <DependentUpon>WebNavigatorCore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logic\WebNavigatorCore.GeckoFx.cs">
       <DependentUpon>WebNavigatorCore.cs</DependentUpon>
     </Compile>
@@ -326,12 +334,25 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
+    <Compile Include="Model\Request\Parameter\WebNavigatorProcessParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessUnorganizedBookmarkParameterModel.cs" />
+    <Compile Include="Model\Request\WebNavigatorProcessRequestModel.cs" />
+    <Compile Include="Model\Request\WebNavigatorRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
+    <Compile Include="Model\Request\Parameter\WebNavigator\WebNavigatorClickParameterModel.cs" />
+    <Compile Include="Model\Request\Parameter\WebNavigator\WebNavigatorContextMenuItemParameterModel.cs" />
+    <Compile Include="Model\Request\Parameter\WebNavigator\WebNavigatorContextMenuParameterModel.cs" />
+    <Compile Include="Model\Request\Parameter\WebNavigator\WebNavigatorNavigatingParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\ProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\ProcessRequestModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessCheckItLaterParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoProcessRequestModel.cs" />
+    <Compile Include="Model\Request\Parameter\WebNavigator\WebNavigatorParameterModel.cs" />
+    <Compile Include="Model\Response\WebNavigatorContextMenuItemResultModel.cs" />
+    <Compile Include="Model\Response\WebNavigatorContextMenuDefineResultModel.cs" />
+    <Compile Include="Model\Response\WebNavigatorNavigatingResultModel.cs" />
+    <Compile Include="Model\Response\WebNavigatorResultModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveChannelModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveGuidModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveItemModel.cs" />
@@ -379,6 +400,16 @@
     <Compile Include="Data\SpaghettiPreparationData.cs" />
     <Compile Include="Model\SpaghettiSourceModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorBridgeModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorDefinedElementModelBase.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionItemModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuItemModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionParameterModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionTagModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingItemModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorPageConditionModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
@@ -416,6 +447,14 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Variable.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorContextMenuItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorDefinedElementViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionParameterViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorNavigatingItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorPageConditionViewModel.cs" />
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
     <Compile Include="View\Attachment\HtmlDescriptionBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
@@ -496,6 +535,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\image\changelog\0.45.0\issue294.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\web-navigator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>web-navigator.xml</LastGenOutput>
+    </Content>
+    <Content Include="etc\define\web-navigator.xml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>web-navigator.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\image\common-file.png">
@@ -865,6 +914,7 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToIdConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
+    <Resource Include="Resources\MnMn.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <None Include="Properties\app.manifest" />
     <None Include="Resources\File\Xaml\DescriptionLink.xaml">
@@ -1405,6 +1455,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />

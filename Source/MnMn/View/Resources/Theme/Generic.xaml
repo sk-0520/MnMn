@@ -655,7 +655,7 @@
     <Setter Property="Opacity" Value="0.8" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="Background" Value="Transparent" />
-
+    <Setter Property="HorizontalAlignment" Value="Left" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="Template">
       <Setter.Value>
@@ -688,17 +688,19 @@
               </Style>
             </ContentControl.Style>
             <ContentControl.Content>
-              <Grid HorizontalAlignment="Left" >
-                <ContentControl
-                  x:Name="HyperLink"
-                  VerticalAlignment="Center"
-                  Content="{TemplateBinding Content}"
-                  Foreground="{Binding Foreground, ElementName=Content}"
-                  FontWeight="Bold"
-                  Margin="0"
-                  Padding="0"
-                />
-                <Rectangle VerticalAlignment="Bottom" Height="1" Fill="{Binding Foreground, ElementName=Content}" Width="{Binding ActualWidth, ElementName=HyperLink}" />
+              <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Background="Transparent" >
+                <Grid HorizontalAlignment="Left">
+                  <ContentControl
+                    x:Name="HyperLink"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    Foreground="{Binding Foreground, ElementName=Content}"
+                    FontWeight="Bold"
+                    Margin="0"
+                    Padding="0"
+                  />
+                  <Rectangle VerticalAlignment="Bottom" Height="1" Fill="{Binding Foreground, ElementName=Content}" Width="{Binding ActualWidth, ElementName=HyperLink}" />
+                </Grid>
               </Grid>
             </ContentControl.Content>
           </ContentControl>

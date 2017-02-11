@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             var videoInformation = await GetVideoInformationAsync(videoId, communicator);
             if(videoInformation != null) {
                 var item = videoInformation.ToVideoItemModel();
-                bookmarkManager.Node.VideoItems.Add(item);
+                communicator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(item)));
             }
         }
 

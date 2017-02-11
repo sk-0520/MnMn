@@ -1,0 +1,129 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".xml" #>
+<#
+	var smileVideoIdName = "VIDEO_ID";
+	var smileVideoIdInOfficialPattern = convertXml(@"\.*/watch/(?<VIDEO_ID>(sm|nm|so)?\d+)");
+	var smileVideoIdInPublicPattern = convertXml(@"//www.nicovideo.jp/watch/(?<VIDEO_ID>(sm|nm|so)?\d+)");
+	var smileVideoIdOfficialBaseUrlPattern = convertXml(@"//www\.nicovideo\.jp");
+	var smileVideoIdTagPattern = convertXml(@".*/a");
+#>
+<?xml version="1.0" encoding="utf-8" ?>
+<web-navigator>
+	<navigating>
+		<element key="smile-video-open-player" allow-service="*" send-service="smile-video">
+			<conditions>
+				<condition uri="<#= smileVideoIdInPublicPattern #>" param="${<#= smileVideoIdName #>}" />
+			</conditions>
+		</element>
+	</navigating>
+	<!--
+	使い道が分からんくなった
+	<click>
+		<element key="">
+			<extends>
+				<extend key="" value="" />
+			</extends>
+		</element>
+	</click>
+	-->
+	<context-menu>
+		<element key="common-back" separator="false" allow-service="*" send-service="common">
+			<words>
+				<word key="ja-jp" value="戻る" />
+			</words>
+		</element>
+		<element key="common-forward" separator="false" allow-service="*" send-service="common">
+			<words>
+				<word key="ja-jp" value="進む" />
+			</words>
+		</element>
+		
+		<element key="common-separator" separator="true" allow-service="*" send-service="common" />
+			
+		<element key="smile-video-open-player" separator="false" allow-service="*" send-service="smile-video">
+			<words>
+				<word key="ja-jp" value="プレイヤーで開く" />
+			</words>
+			<conditions>
+				<condition visible="true">
+					<base><#= smileVideoIdOfficialBaseUrlPattern #></base>
+					<tag><#= smileVideoIdTagPattern #></tag>
+					<targets>
+						<target attribute="href" value="<#= smileVideoIdInOfficialPattern #>" />
+					</targets>
+					<parameter attribute="href" value="<#= smileVideoIdInOfficialPattern #>" param="${<#= smileVideoIdName #>}" />
+				</condition>
+				<condition visible="false">
+					<base />
+					<base><#= smileVideoIdOfficialBaseUrlPattern #></base>
+					<targets>
+						<target attribute="href" value="<#= smileVideoIdInPublicPattern #>" />
+					</targets>
+					<parameter attribute="href" value="<#= smileVideoIdInPublicPattern #>" param="${<#= smileVideoIdName #>}" />
+				</condition>
+			</conditions>
+		</element>
+		
+		<element key="smile-video-add-checkItlater" separator="false" allow-service="*" send-service="smile-video">
+			<words>
+				<word key="ja-jp" value="あとで見る" />
+			</words>
+			<conditions>
+				<condition visible="true">
+					<base><#= smileVideoIdOfficialBaseUrlPattern #></base>
+					<tag><#= smileVideoIdTagPattern #></tag>
+					<targets>
+						<target attribute="href" value="<#= smileVideoIdInOfficialPattern #>" />
+					</targets>
+					<parameter attribute="href" value="<#= smileVideoIdInOfficialPattern #>" param="${<#= smileVideoIdName #>}" />
+				</condition>
+				<condition visible="false">
+					<base />
+					<tag><#= smileVideoIdTagPattern #></tag>
+					<targets>
+						<target attribute="href" value="<#= smileVideoIdInPublicPattern #>" />
+					</targets>
+					<parameter attribute="href" value="<#= smileVideoIdInPublicPattern #>" param="${<#= smileVideoIdName #>}" />
+				</condition>
+			</conditions>
+		</element>
+		
+		<element key="smile-video-add-unorganized-bookmark" separator="false" allow-service="*" send-service="smile-video">
+			<words>
+				<word key="ja-jp" value="未整理のブックマークに入れておく" />
+			</words>
+			<conditions>
+				<condition visible="true">
+					<base><#= smileVideoIdOfficialBaseUrlPattern #></base>
+					<tag><#= smileVideoIdTagPattern #></tag>
+					<targets>
+						<target attribute="href" value="<#= smileVideoIdInOfficialPattern #>" />
+					</targets>
+					<parameter attribute="href" value="<#= smileVideoIdInOfficialPattern #>" param="${<#= smileVideoIdName #>}" />
+				</condition>
+				<condition visible="false">
+					<base />
+					<tag><#= smileVideoIdTagPattern #></tag>
+					<targets>
+						<target attribute="href" value="<#= smileVideoIdInPublicPattern #>" />
+					</targets>
+					<parameter attribute="href" value="<#= smileVideoIdInPublicPattern #>" param="${<#= smileVideoIdName #>}" />
+				</condition>
+			</conditions>
+		</element>
+	</context-menu>
+</web-navigator>
+<#+
+	string convertXml(string s)
+	{
+		return s
+			.Replace("&", "&amp;")
+			.Replace("<", "&lt;")
+			.Replace(">", "&gt;")
+		;
+	}
+#>

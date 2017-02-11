@@ -79,5 +79,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// 何かする。
         /// </summary>
         Process,
+        /// <summary>
+        /// 内臓ブラウザ処理。
+        /// </summary>
+        WebNavigator,
     }
 }

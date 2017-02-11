@@ -26,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
 
-        SplashWindow SplashWindow { get; }
+        SplashWindow SplashWindow { get; set; }
 
         Mediation Mediation { get; set; }
         MainWindow View { get; set; }
@@ -292,8 +293,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Closed += MainWindow_Closed;
             AppManager.InitializeView(View);
             Exit += App_Exit;
+            MainWindow.Loaded += MainWindow_Loaded;
+            SplashWindow.commandClose.Visibility = Visibility.Collapsed;
             MainWindow.Show();
-            SplashWindow.Close();
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -337,5 +339,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             await AppManager.UninitializeAsync();
         }
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Loaded -= MainWindow_Loaded;
+
+            // スプラッシュスクリーンさよなら～
+            SplashWindow.Topmost = false;
+            var splashWindowAnimation = new DoubleAnimation(0, Constants.AppSplashCloseTime);
+            splashWindowAnimation.Completed += (splashSender, splashEvent) => {
+                SplashWindow.Close();
+                SplashWindow = null;
+            };
+            SplashWindow.BeginAnimation(UIElement.OpacityProperty, splashWindowAnimation);
+        }
+
     }
 }

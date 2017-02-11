@@ -23,6 +23,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,19 +34,25 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
+using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
+using ContentTypeTextNet.MnMn.MnMn.Model.Response;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
+using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -72,6 +79,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             Script = CreateScript();
 
+            WebNavigatorBridge = LoadModelFromFile<WebNavigatorBridgeModel>(Constants.ApplicationWebNavigatorBridgePath);
+            WebNavigatorNavigatingItems = WebNavigatorBridge.Navigating.Items
+                .Select(i => new WebNavigatorNavigatingItemViewModel(i))
+                .ToList()
+            ;
+
+            WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items
+                .Select(i => new WebNavigatorContextMenuItemViewModel(i))
+                .ToList()
+            ;
+            WebNavigatorContextMenuMap = WebNavigatorContextMenuItems.ToDictionary(i => i.Key, i => i);
+
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
         }
@@ -79,6 +98,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region property
 
         AppSettingModel Setting { get; }
+
+        WebNavigatorBridgeModel WebNavigatorBridge { get; }
+        IReadOnlyList<WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingItems { get; }
+        IReadOnlyList<WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
+        IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuMap { get; }
 
         /// <summary>
         /// ニコニコ関係。
@@ -202,6 +226,117 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             throw new NotImplementedException();
+        }
+
+        WebNavigatorContextMenuItemResultModel Request_WebNavigatorFromContextMenuItem(WebNavigatorRequestModel request, WebNavigatorContextMenuItemParameterModel parameter)
+        {
+            WebNavigatorContextMenuItemViewModel menuItemResult;
+            if(WebNavigatorContextMenuMap.TryGetValue(parameter.Key, out menuItemResult)) {
+                if(!menuItemResult.Conditions.Any()) {
+                    return new WebNavigatorContextMenuItemResultModel(false, true, true, null);
+                }
+
+                foreach(var condition in menuItemResult.Conditions) {
+                    var showMenuItem = false;
+                    var enabledMenuItem = false;
+
+                    if(condition.IsEnabledBaseUri) {
+                        // メニュー表示可能サイト判定
+                        showMenuItem = condition.BaseUriRegex.IsMatch(parameter.CurrentUri.OriginalString);
+                    }
+
+                    if(!condition.IsEnabledTagName) {
+                        continue;
+                    }
+
+                    var elementList = new SimleHtmlElementList(condition.TagNameRegex, parameter.RootNodes, parameter.Element);
+
+                    var hitElements = condition.TargetItems
+                        .Select(i => elementList.MatchElement(i))
+                    ;
+
+                    if(elementList.HitTagNameInNodesPath && hitElements.All(h => h.IsHit)) {
+                        if(showMenuItem) {
+                            enabledMenuItem = true;
+                        } else {
+                            showMenuItem = true;
+                            enabledMenuItem = true;
+                        }
+                    }
+
+                    if(showMenuItem) {
+                        var param = string.Empty;
+                        if(enabledMenuItem) {
+                            var hit = elementList.MatchElement(condition.Parameter);
+                            if(hit.IsHit) {
+                                param = hit.Match.Result(condition.Parameter.ParameterSource);
+                            }
+                        }
+
+                        return new WebNavigatorContextMenuItemResultModel(false, enabledMenuItem, showMenuItem, param);
+                    }
+                }
+            }
+
+            return new WebNavigatorContextMenuItemResultModel(false, false, false, null);
+        }
+
+        WebNavigatorResultModel Request_WebNavigatorFromNavigating(WebNavigatorRequestModel request, WebNavigatorNavigatingParameterModel parameter)
+        {
+            var uriText = parameter.NextUri.OriginalString;
+
+            foreach(var item in WebNavigatorNavigatingItems) {
+                // 二重...
+                var hitCondition = item.Conditions.FirstOrDefault(c => c.UriRegex.IsMatch(uriText));
+                if(hitCondition != null) {
+                    var match = hitCondition.UriRegex.Match(uriText);
+                    var param = match.Result(hitCondition.ParameterSource);
+                    
+                    return new WebNavigatorNavigatingResultModel(true, item, param);
+                }
+            }
+            
+
+            return new WebNavigatorResultModel(false);
+        }
+
+        private ResponseModel Request_WebNavigator(WebNavigatorRequestModel request)
+        {
+            switch(request.Parameter.Kind) {
+                case WebNavigatorParameterKind.ContextMenuDefine: {
+                        var contextMenuDefineResult = new WebNavigatorContextMenuDefineResultModel(WebNavigatorContextMenuItems);
+                        return new ResponseModel(request, contextMenuDefineResult);
+                    }
+
+                case WebNavigatorParameterKind.Navigating: {
+                        var parameter = (WebNavigatorNavigatingParameterModel)request.Parameter;
+                        var navigatingResult = Request_WebNavigatorFromNavigating(request, parameter);
+                        return new ResponseModel(request, navigatingResult);
+                    }
+
+                case WebNavigatorParameterKind.Click: {
+                        var parameter = (WebNavigatorClickParameterModel)request.Parameter;
+                    }
+                    break;
+
+                case WebNavigatorParameterKind.ContextMenu: {
+                        var parameter = (WebNavigatorContextMenuParameterModel)request.Parameter;
+                    }
+                    break;
+
+                case WebNavigatorParameterKind.ContextMenuItem: {
+                        //todo:parameter
+                        var parameter = (WebNavigatorContextMenuItemParameterModel)request.Parameter;
+                        var contextMenuItemResult = Request_WebNavigatorFromContextMenuItem(request, parameter);
+                        return new ResponseModel(request, contextMenuItemResult);
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var result = new WebNavigatorResultModel(false);
+            return new ResponseModel(request, result);
         }
 
         public void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
@@ -341,6 +476,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             if(request.RequestKind == RequestKind.ShowView) {
                 return Request_ShowView((ShowViewRequestModel)request);
+            }
+
+            if(request.RequestKind == RequestKind.WebNavigator) {
+                return Request_WebNavigator((WebNavigatorRequestModel)request);
             }
 
             switch(request.ServiceType) {
