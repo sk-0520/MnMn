@@ -186,6 +186,7 @@
     <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding SwicthPlayerShowDetailAreaCommand}" />
 
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
+    <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding PlayerKeySpaceCommand}" />
     <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
 
     <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
