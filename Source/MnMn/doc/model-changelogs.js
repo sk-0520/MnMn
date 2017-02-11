@@ -94,7 +94,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#374: Xceed.Wpf.Toolkit.SplitButton を MahApps.Metro でいい感じにする'
 					},
 					{
 						'revision': '',

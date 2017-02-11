@@ -952,7 +952,7 @@
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">
               <xctk:DropDownButton.DropDownContent>
-                <Border Padding="{StaticResource BasePadding}" Background="{DynamicResource WindowBackgroundBrush}">
+                <Border Padding="{StaticResource BasePadding}">
                   <Border.Resources>
                     <Style TargetType="RadioButton" BasedOn="{StaticResource HorizontalRadioButton}" />
                   </Border.Resources>
