@@ -94,10 +94,6 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '#374: Xceed.Wpf.Toolkit.SplitButton を MahApps.Metro でいい感じにする'
-					},
-					{
-						'revision': '',
 						'subject': ''
 					},
 					{
@@ -115,6 +111,10 @@
 						'comments': [
 							'コメント入力時に IME 操作のための F11 はフルスクリーンになる素敵実装'
 						]
+					},
+					{
+						'revision': '',
+						'subject': '#374: Xceed.Wpf.Toolkit.SplitButton を MahApps.Metro でいい感じにする'
 					},
 					{
 						'revision': '',
