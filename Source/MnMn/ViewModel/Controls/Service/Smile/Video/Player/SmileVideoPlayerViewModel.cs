@@ -910,8 +910,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             ShowingCommentList.Clear();
 
-            NormalCommentArea.Children.Clear();
-            OriginalPosterCommentArea.Children.Clear();
+            NormalCommentArea?.Children.Clear();
+            OriginalPosterCommentArea?.Children.Clear();
+        }
+
+        void ClearResidualComments()
+        {
+            var commentItems = NormalCommentArea.Children.Cast<SmileVideoCommentElement>()
+                .Select(c => new { Area = NormalCommentArea, View = c, ViewModel = (SmileVideoCommentViewModel)c.DataContext })
+                .Concat(
+                    OriginalPosterCommentArea.Children.Cast<SmileVideoCommentElement>()
+                    .Select(c => new { Area = OriginalPosterCommentArea, View = c, ViewModel = (SmileVideoCommentViewModel)c.DataContext })
+                )
+                .Where(i => i.ViewModel.NowShowing)
+                .Where(i => i.ViewModel.ElapsedTime + Setting.Comment.StyleSetting.ShowTime < PlayTime)
+                .ToList()
+            ;
+
+            foreach(var commentItem in commentItems) {
+                var showComment = ShowingCommentList.FirstOrDefault(c => c.ViewModel == commentItem.ViewModel);
+                if(showComment != null) {
+                    showComment.Clock.Controller.SkipToFill();
+                    showComment.Clock.Controller.Remove();
+                }
+                commentItem.Area.Children.Remove(commentItem.View);
+            }
         }
 
         /// <summary>
@@ -2302,7 +2325,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PlayTime = Player.Time;
                 FireShowComments();
                 ScrollCommentList();
+
                 PrevPlayedTime = PlayTime;
+
+                ClearResidualComments();
             }
         }
 
