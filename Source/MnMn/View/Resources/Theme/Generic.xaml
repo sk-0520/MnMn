@@ -830,7 +830,9 @@
             </ToggleButton>
             <!-- MENU -->
             <Popup x:Name="PART_Popup" StaysOpen="False" IsOpen="{TemplateBinding IsOpen}">
-              <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+              <Border Background="{DynamicResource WindowBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}" BorderThickness="1">
+                <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+              </Border>
             </Popup>
           </Grid>
         </ControlTemplate>
@@ -989,7 +991,9 @@
               PopupAnimation="Fade"
               StaysOpen="True"
             >
-              <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+              <Border Background="{DynamicResource WindowBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}" BorderThickness="1">
+                <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+              </Border>
             </Popup>
           </Grid>
           <!--<ControlTemplate.Triggers>
