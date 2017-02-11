@@ -909,6 +909,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 data.Clock.Controller.Remove();
             }
             ShowingCommentList.Clear();
+
+            NormalCommentArea.Children.Clear();
+            OriginalPosterCommentArea.Children.Clear();
         }
 
         /// <summary>
