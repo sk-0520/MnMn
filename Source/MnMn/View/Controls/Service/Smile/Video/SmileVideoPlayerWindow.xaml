@@ -180,11 +180,14 @@
   <mamc:MetroWindow.InputBindings>
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" CommandParameter="{StaticResource False}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
+    <KeyBinding Key="F11" Command="{Binding SwitchFullScreenCommand}" />
 
     <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding SwitchPlayerShowCommentAreaCommand}" />
     <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding SwicthPlayerShowDetailAreaCommand}" />
 
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
+    <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding PlayerKeySpaceCommand}" />
+    <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding StopCommand}" />
     <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
 
     <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
@@ -951,7 +954,7 @@
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">
               <xctk:DropDownButton.DropDownContent>
-                <Border Padding="{StaticResource BasePadding}" Background="{DynamicResource WindowBackgroundBrush}">
+                <Border Padding="{StaticResource BasePadding}">
                   <Border.Resources>
                     <Style TargetType="RadioButton" BasedOn="{StaticResource HorizontalRadioButton}" />
                   </Border.Resources>

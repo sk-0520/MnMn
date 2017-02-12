@@ -346,6 +346,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             // スプラッシュスクリーンさよなら～
             SplashWindow.Topmost = false;
+            SplashWindow.IsHitTestVisible = false;
             var splashWindowAnimation = new DoubleAnimation(0, Constants.AppSplashCloseTime);
             splashWindowAnimation.Completed += (splashSender, splashEvent) => {
                 SplashWindow.Close();

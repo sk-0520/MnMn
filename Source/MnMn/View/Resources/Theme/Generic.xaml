@@ -324,7 +324,7 @@
   </Style>
 
   <Style x:Key="ToolbarMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}" />
-  
+
   <!-- toolbar -->
   <Style TargetType="ToolBar" BasedOn="{StaticResource {x:Type ToolBar}}">
     <Setter Property="ToolBarTray.IsLocked" Value="True" />
@@ -737,14 +737,14 @@
                 <GradientStop Color="{DynamicResource AccentColor3}" Offset="1" />
               </RadialGradientBrush>
             </Border.Background>
-              
+
             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
           </Border>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <!--CheckBox-->
   <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
     <Setter Property="VerticalAlignment" Value="Center" />
@@ -830,12 +830,194 @@
             </ToggleButton>
             <!-- MENU -->
             <Popup x:Name="PART_Popup" StaysOpen="False" IsOpen="{TemplateBinding IsOpen}">
-              <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+              <Border Background="{DynamicResource WindowBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}" BorderThickness="1">
+                <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+              </Border>
             </Popup>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+  </Style>
+
+  <Style TargetType="xctk:SplitButton">
+    <Style.Resources>
+      <Style x:Key="ButtonSplitFocusVisual">
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate>
+              <Rectangle Margin="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeThickness="1"
+                               SnapsToDevicePixels="true"
+                               StrokeDashArray="1 2" />
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+    </Style.Resources>
+    <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type xctk:SplitButton}">
+          <Grid UseLayoutRounding="True">
+            <Border 
+              x:Name="PART_Border"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+            >
+              <Grid 
+                x:Name="PART_Container"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+              >
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button 
+                  x:Name="PART_Button"
+                  Grid.Column="0"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  HorizontalContentAlignment="Stretch"
+                  VerticalContentAlignment="Stretch"
+                  Style="{DynamicResource ButtonSplitStyle}"
+                  Background="{TemplateBinding Background}"
+                  Foreground="{TemplateBinding Foreground}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  Command="{TemplateBinding Command}"
+                  CommandParameter="{TemplateBinding CommandParameter}"
+                  CommandTarget="{TemplateBinding CommandTarget}"
+                  FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                >
+                  <StackPanel 
+                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                    Orientation="Horizontal"
+                  >
+                    <mamc:ContentControlEx 
+                      x:Name="PART_ButtonContent"
+                      Margin="2"
+                      Padding="{TemplateBinding Padding}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mamc:ControlsHelper.ContentCharacterCasing)}"
+                      Content="{TemplateBinding Content}"
+                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                      RecognizesAccessKey="True"
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                      UseLayoutRounding="False" 
+                    />
+                  </StackPanel>
+                </Button>
+                <ToggleButton
+                  x:Name="PART_Expander"
+                  Grid.Column="1"
+                  Width="20"
+                  Background="{TemplateBinding Background}"
+                  Foreground="{TemplateBinding Foreground}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                  IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                >
+                  <ToggleButton.Style>
+                    <Style BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" TargetType="{x:Type ToggleButton}">
+                      <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+                      <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
+                      <Setter Property="BorderThickness" Value="0" />
+                      <Setter Property="Padding" Value="2" />
+                      <Setter Property="SnapsToDevicePixels" Value="True" />
+                      <Setter Property="HorizontalAlignment" Value="Stretch" />
+                      <Setter Property="VerticalAlignment" Value="Stretch" />
+                      <Setter Property="HorizontalContentAlignment" Value="Center" />
+                      <Setter Property="VerticalContentAlignment" Value="Center" />
+                      <Setter Property="Template">
+                        <Setter.Value>
+                          <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="0"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              >
+                              <ContentPresenter 
+                                  x:Name="PART_ContentPresenter"
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  RecognizesAccessKey="True" 
+                                />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                              <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
+                              </Trigger>
+                              <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush8}" />
+                              </Trigger>
+                              <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                              </Trigger>
+                              <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
+                              </Trigger>
+                            </ControlTemplate.Triggers>
+                          </ControlTemplate>
+                        </Setter.Value>
+                      </Setter>
+                    </Style>
+                  </ToggleButton.Style>
+                  <!-- Material - ChevronDown -->
+                  <ContentControl Style="{DynamicResource PathIconContentControlStyle}" Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" Width="9" Height="9" />
+                </ToggleButton>
+              </Grid>
+            </Border>
+            <Popup 
+              x:Name="PART_Popup"
+              AllowsTransparency="True"
+              Focusable="False"
+              MinWidth="{TemplateBinding ActualWidth}"
+              IsOpen="{Binding IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+              PlacementTarget="{Binding ElementName=PART_Border}"
+              PopupAnimation="Fade"
+              StaysOpen="True"
+            >
+              <Border Background="{DynamicResource WindowBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}" BorderThickness="1">
+                <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+              </Border>
+            </Popup>
+          </Grid>
+          <!--<ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
+            </Trigger>
+            <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
+              <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+            </Trigger>
+          </ControlTemplate.Triggers>-->
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="IsFocused" Value="True">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+      </Trigger>
+      <Trigger Property="IsKeyboardFocusWithin" Value="True">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Opacity" Value=".55" />
+      </Trigger>
+    </Style.Triggers>
   </Style>
 
   <!-- ToggleButton -->
@@ -884,9 +1066,9 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="PlayerDescriptionDocument" TargetType="FlowDocumentScrollViewer" x:Shared="false" BasedOn="{StaticResource HtmlDescriptionDocument}">
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
   </Style>
-  
+
 </ResourceDictionary>

@@ -85,6 +85,87 @@
 	},
 	*/
 	{
+		'date': '2017/02/12',
+		'version': '0.48.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': 'f2b0ccd66d4c8d4db27b8ed85b8e6c1f21d4f95a',
+						'subject': 'ちょっと気になる挙動があるのでデバッグ用コード仕込んでリリース',
+						'comments': [
+							'DMC形式のダウンロード完了がOKだけどNGになる対策の #386 がダメっぽいのよね'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#394: WebブラウザのUXに合わせてF11でもフルスクリーンを切り替える',
+						'comments': [
+							'コメント入力時に IME 操作のための F11 はフルスクリーンになる素敵実装'
+						]
+					},
+					{
+						'revision': 'c4380e0e27bad8773280b13af008e7fbbc5770da',
+						'subject': '#374: Xceed.Wpf.Toolkit.SplitButton を MahApps.Metro でいい感じにする',
+						'comments': [
+							'長かったけど #48(0.24.0) 以前の操作方法に戻せた'
+						]
+					},
+					{
+						'revision': 'c66abcc314fdc97dc638104ec9b8fb6c3052af48',
+						'subject': '#402: スペースキーでポーズ状態に遷移しないときあるし別のキーバインドも追加しときゃいいんじゃないすかね',
+						'comments': [
+							'Ctrl + P'
+						]
+					},
+					{
+						'revision': '908ee46d5568d4295a2c7a435479364407f63170',
+						'subject': '#404: キーバインドから動画の停止',
+						'comments': [
+							'Ctrl + S'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': 'a7567c4efbf6055d872ea7cfd88d9ece2168967f',
+						'subject': '#398: 一部コメントがアニメーションを停止して画面に残り続ける',
+						'comments': [
+							'まぁあれよね、計算のための負荷は上がるよね',
+							'負荷って言ってもマウス動かす方が負荷かかるレベルだけど'
+						]
+					},
+					{
+						'revision': 'f37351cfb9f1500f3f0c2abd96f3a2a851ffce86',
+						'subject': '#401: スプラッシュスクリーンフェードアウト時にはマウスをキャプチャしないようにする'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#368: コメントのテキスト描画方法を初期値では「影(シンプル)」にする',
+						'comments': [
+							'既存ユーザーは影響なし'
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/02/04',
 		'version': '0.47.0',
 		'isRc': false,
