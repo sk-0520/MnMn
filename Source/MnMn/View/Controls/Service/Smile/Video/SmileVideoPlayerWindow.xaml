@@ -187,6 +187,7 @@
 
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
     <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding PlayerKeySpaceCommand}" />
+    <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding StopCommand}" />
     <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
 
     <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
