@@ -300,6 +300,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 if(Information.DmcItems[role].IsLoaded) {
                                     VideoLoadState = LoadState.Loaded;
                                 } else {
+                                    Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
                                     VideoLoadState = LoadState.Failure;
                                 }
                             } else {
@@ -313,6 +314,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             Information.SaveSetting(false);
                         } else {
                             VideoLoadState = LoadState.Failure;
+                            Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
                         }
                         if(!downloader.Canceled) {
                             OnLoadVideoEnd();
@@ -320,6 +322,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     } catch(Exception ex) {
                         Mediation.Logger.Error(ex);
                         VideoLoadState = LoadState.Failure;
+                        Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
                     } finally {
                         downloader.DownloadStart -= Downloader_DownloadStart;
                         downloader.DownloadingError -= Downloader_DownloadingError;
@@ -881,6 +884,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 if(VideoLoadState != LoadState.Loaded) {
                     // スレッド間のあれな動作であれになる抑制
                     VideoLoadState = LoadState.Failure;
+                    Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
                 }
                 if(UsingDmc.Value) {
                     StopDmcDownloadAsync();
