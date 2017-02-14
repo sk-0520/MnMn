@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#405: どうせパースする気ないしニワン語は非表示にする'
 					},
 					{
 						'revision': '',
