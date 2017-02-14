@@ -976,13 +976,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void FireShowComments()
         {
-            SmileVideoCommentUtility.FireShowCommentsCore(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
-            SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
+            SmileVideoCommentUtility.FireShowComments(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, false, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
+            SmileVideoCommentUtility.FireShowComments(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, true, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
         }
 
-        protected Size GetCommentArea(bool OriginalPoster)
+        protected Size GetCommentArea(bool isOriginalPoster)
         {
-            if(OriginalPoster && !IsEnabledOriginalPosterCommentArea) {
+            if(isOriginalPoster && !IsEnabledOriginalPosterCommentArea) {
                 return new Size(OriginalPosterCommentArea.ActualWidth, OriginalPosterCommentArea.ActualHeight);
             }
 

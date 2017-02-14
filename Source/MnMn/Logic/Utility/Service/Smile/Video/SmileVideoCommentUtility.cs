@@ -277,7 +277,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return prevTime <= (comment.ElapsedTime - correction) && (comment.ElapsedTime - correction) <= nowTime;
         }
 
-        public static void FireShowCommentsCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
+        public static void FireShowComments(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, bool isOriginalPoster, IList<SmileVideoCommentDataModel> showingCommentList,bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
         {
             var list = commentViewModelList.ToArray();
             // 現在時間から-1秒したものを表示対象とする
