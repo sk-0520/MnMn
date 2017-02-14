@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
         }
 
-        public static void FireShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)
+        public static void ShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)
         {
             var element = CreateCommentElement(commentViewModel, commentArea, setting);
 
@@ -277,19 +277,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return prevTime <= (comment.ElapsedTime - correction) && (comment.ElapsedTime - correction) <= nowTime;
         }
 
-        public static void FireShowCommentsCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
+        public static IList<SmileVideoCommentViewModel> ShowComments(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, bool isOriginalPoster, IList<SmileVideoCommentDataModel> showingCommentList,bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
         {
-            var list = commentViewModelList.ToArray();
             // 現在時間から-1秒したものを表示対象とする
-            var newComments = list
+            var newComments = commentViewModelList
                 .Where(c => c.Approval)
                 .Where(c => !c.NowShowing)
+                .Where(c => !c.IsNiwanLanguage) // #405
                 .Where(c => InShowTime(c, prevTime, nowTime))
-                .ToArray()
+                .ToList()
             ;
             if(newComments.Any()) {
                 foreach(var commentViewModel in newComments) {
-                    FireShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting);
+                    ShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting);
                }
                 // 超過分のコメントを破棄
                 if(isEnabledDisplayCommentLimit && 0 < displayCommentLimitCount) {
@@ -304,6 +304,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                     }
                 }
             }
+
+            return newComments;
         }
 
         /// <summary>
