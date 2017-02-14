@@ -976,10 +976,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PrevPlayedTime = Player.Time;
         }
 
-        void FireShowComments()
+        void ShowComments()
         {
-            SmileVideoCommentUtility.FireShowComments(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, false, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
-            SmileVideoCommentUtility.FireShowComments(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, true, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
+            SmileVideoCommentUtility.ShowComments(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, false, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
+            SmileVideoCommentUtility.ShowComments(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, true, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
         }
 
         protected Size GetCommentArea(bool isOriginalPoster)
@@ -1514,7 +1514,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected void AppendComment(SmileVideoCommentViewModel comment, bool isShow)
         {
             if(isShow) {
-                SmileVideoCommentUtility.FireShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
+                SmileVideoCommentUtility.ShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
             }
 
             NormalCommentList.Add(comment);
@@ -2325,7 +2325,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
-                FireShowComments();
+                ShowComments();
                 ScrollCommentList();
 
                 PrevPlayedTime = PlayTime;
