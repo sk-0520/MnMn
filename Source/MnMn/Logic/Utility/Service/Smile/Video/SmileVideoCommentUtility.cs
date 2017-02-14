@@ -402,8 +402,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         static TimeSpan GetEnabledTimeInCommentScript(string command)
         {
             if(string.IsNullOrEmpty(command)) {
-                return TimeSpan.Zero;
+                return TimeSpan.MaxValue;
             }
+
             if(command[0] != '@') {
                 return TimeSpan.Zero;
             }
@@ -423,25 +424,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 ScriptType = SmileVideoCommentScriptType.Default,
             };
 
-            for(var i = 0; i < commands.Count; i++) {
-                switch(i) {
-                    case 0: // 有効秒数
-                        result.IsEnabledTime = GetEnabledTimeInCommentScript(commands[i]);
-                        break;
-
-                    case 1: // カラー
-                        result.Color = SmileVideoMsgUtility.GetForeColor(commands[i], true);
-                        break;
-
-                    case 2: // サイズ
-
-
-                    case 3: // 位置
-
-                    default:
-                        break;
-                }
+            var enabledTime = GetEnabledTimeInCommentScript(commands[0]);
+            if(enabledTime == TimeSpan.Zero) {
+                return null;
             }
+
+            result.IsEnabledTime = enabledTime;
+
+            result.ForeColor = SmileVideoMsgUtility.GetForeColor(commands, true);
+            result.FontSize = SmileVideoMsgUtility.GetFontSize(commands);
+            result.VerticalAlign = SmileVideoMsgUtility.GetVerticalAlign(commands);
 
             return result;
         }
@@ -463,7 +455,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
             switch(scriptType) {
                 case SmileVideoCommentScriptType.Default:
-                    return GetCommentScriptDefault(comments, commands);
+                    if(commands.Any()) {
+                        return GetCommentScriptDefault(comments, commands);
+                    } else {
+                        return null;
+                    }
 
                 default:
                     throw new NotImplementedException();

@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return ms.ToString();
         }
 
-        public static SmileVideoCommentVertical GetVerticalAlign(string command)
+        public static SmileVideoCommentVertical GetVerticalAlign(IEnumerable<string> commands)
         {
             var map = new Dictionary<string, SmileVideoCommentVertical>() {
                 { "naka", SmileVideoCommentVertical.Normal },
@@ -143,21 +143,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 { "shita", SmileVideoCommentVertical.Bottom },
             };
 
-            SmileVideoCommentVertical resultValue;
-            if(map.TryGetValue(command, out resultValue)) {
-                return resultValue;
-            }
-
-            return SmileVideoCommentVertical.Unknown;
-        }
-
-        public static SmileVideoCommentVertical GetVerticalAlign(IEnumerable<string> commands)
-        {
-
             foreach(var command in commands) {
-                var align = GetVerticalAlign(command);
-                if(align != SmileVideoCommentVertical.Unknown) {
-                    return align;
+                foreach(var pair in map) {
+                    SmileVideoCommentVertical resultValue;
+                    if(map.TryGetValue(command, out resultValue)) {
+                        return resultValue;
+                    }
                 }
             }
 
@@ -175,7 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return map[verticalAlign];
         }
 
-        public static SmileVideoCommentSize GetFontSize(string command)
+        public static SmileVideoCommentSize GetFontSize(IEnumerable<string> commands)
         {
             var map = new Dictionary<string, SmileVideoCommentSize>() {
                 { "medium", SmileVideoCommentSize.Medium },
@@ -183,20 +174,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 { "big", SmileVideoCommentSize.Big},
             };
 
-            SmileVideoCommentSize resultValue;
-            if(map.TryGetValue(command, out resultValue)) {
-                return resultValue;
-            }
-
-            return SmileVideoCommentSize.Unknown;
-        }
-
-        public static SmileVideoCommentSize GetFontSize(IEnumerable<string> commands)
-        {
             foreach(var command in commands) {
-                var size = GetFontSize(command);
-                if(size != SmileVideoCommentSize.Unknown) {
-                    return size;
+                foreach(var pair in map) {
+                    SmileVideoCommentSize resultValue;
+                    if(map.TryGetValue(command, out resultValue)) {
+                        return resultValue;
+                    }
                 }
             }
 
@@ -214,7 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return map[fontSize];
         }
 
-        public static Color GetForeColor(string command, bool isPremium)
+        public static Color GetForeColor(IEnumerable<string> commands, bool isPremium)
         {
             var colorMap = new Dictionary<string, Color>() {
                 { "white",  Colors.White },
@@ -260,28 +243,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 regColorCode = new Regex("^(?<COLOR>#[a-z0-9]{6})$", RegexOptions.ExplicitCapture);
             }
 
-            Color resultColor;
-            if(colorMap.TryGetValue(command, out resultColor)) {
-                return resultColor;
-            }
-            if(regColorCode != null) {
-                var match = regColorCode.Match(command);
-                if(match.Success) {
-                    var rawColor = match.Groups["COLOR"].Value;
-
-                    return (Color)ColorConverter.ConvertFromString(rawColor);
-                }
-            }
-
-            return Colors.Transparent;
-        }
-
-        public static Color GetForeColor(IEnumerable<string> commands, bool isPremium)
-        {
             foreach(var command in commands) {
-                var color = GetForeColor(command, isPremium);
-                if(color != Colors.Transparent) {
-                    return color;
+                Color resultColor;
+                if(colorMap.TryGetValue(command, out resultColor)) {
+                    return resultColor;
+                }
+                if(regColorCode != null) {
+                    var match = regColorCode.Match(command);
+                    if(match.Success) {
+                        var rawColor = match.Groups["COLOR"].Value;
+
+                        return (Color)ColorConverter.ConvertFromString(rawColor);
+                    }
                 }
             }
 

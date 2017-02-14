@@ -15,7 +15,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public SmileVideoCommentScriptType ScriptType { get; set; }
 
         public TimeSpan IsEnabledTime { get; set; }
-        public Color Color { get; set; }
+        public Color ForeColor { get; set; }
+        public SmileVideoCommentSize FontSize { get; set; }
+        public SmileVideoCommentVertical VerticalAlign { get; set; }
 
         #endregion
     }
