@@ -227,6 +227,8 @@
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
     <Compile Include="Define\WebNavigatorContextMenuKey.cs" />
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />

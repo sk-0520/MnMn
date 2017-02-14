@@ -95,10 +95,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
 
             if(IsOriginalPoster) {
-                IsNiwanLanguage = string.IsNullOrEmpty(Content) && Content.Length > 0
-                    ? false
-                    : Content[0] == '/'
+                var hasComment = !string.IsNullOrEmpty(Content) && 0 < Content.Length;
+                IsNiwanLanguage = hasComment
+                    ? Content[0] == '/'
+                    : false
                 ;
+
+                if(!IsNiwanLanguage && hasComment) {
+                    if(Content[0] == '＠' || Content[0] == '@') {
+                        var script = SmileVideoCommentUtility.GetCommentScript(Content, Commands);
+                    }
+                }
             }
         }
 

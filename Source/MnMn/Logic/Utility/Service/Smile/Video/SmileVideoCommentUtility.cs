@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
                 if(dupLine == null && !calculationWidth) {
                     // 誰もいないっぽいけど入る余地はあるのか
-                    dupLine = lineList.FirstOrDefault(ls => y < ls.Key && ls.Key  < y + myHeight);
+                    dupLine = lineList.FirstOrDefault(ls => y < ls.Key && ls.Key < y + myHeight);
                 }
 
                 if(dupLine == null) {
@@ -277,7 +277,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return prevTime <= (comment.ElapsedTime - correction) && (comment.ElapsedTime - correction) <= nowTime;
         }
 
-        public static IList<SmileVideoCommentViewModel> ShowComments(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, bool isOriginalPoster, IList<SmileVideoCommentDataModel> showingCommentList,bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
+        public static IList<SmileVideoCommentViewModel> ShowComments(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, bool isOriginalPoster, IList<SmileVideoCommentDataModel> showingCommentList, bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
         {
             // 現在時間から-1秒したものを表示対象とする
             var newComments = commentViewModelList
@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             if(newComments.Any()) {
                 foreach(var commentViewModel in newComments) {
                     ShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting);
-               }
+                }
                 // 超過分のコメントを破棄
                 if(isEnabledDisplayCommentLimit && 0 < displayCommentLimitCount) {
                     var removeList = showingCommentList
@@ -397,6 +397,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             };
 
             return result;
+        }
+
+        static SmileVideoCommentScriptModel GetCommentScriptDefault(IEnumerable<string> comments, IList<string> command)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public static SmileVideoCommentScriptModel GetCommentScript(string comment, IList<string> command)
+        {
+            var comments = comment.Split();
+
+            var head = comments.First();
+            // 外部化してぇなぁ
+            var map = new Dictionary<string, SmileVideoCommentScriptType>() {
+                ["＠デフォルト"] = SmileVideoCommentScriptType.Default,
+            };
+
+            SmileVideoCommentScriptType scriptType;
+            if(!map.TryGetValue(head, out scriptType)) {
+                return null;
+            }
+            switch(scriptType) {
+                case SmileVideoCommentScriptType.Default:
+                    return GetCommentScriptDefault(comments, command);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion
