@@ -399,13 +399,55 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return result;
         }
 
-        static SmileVideoCommentScriptModel GetCommentScriptDefault(IEnumerable<string> comments, IList<string> command)
+        static TimeSpan GetEnabledTimeInCommentScript(string command)
         {
-            throw new NotImplementedException();
+            if(string.IsNullOrEmpty(command)) {
+                return TimeSpan.Zero;
+            }
+            if(command[0] != '@') {
+                return TimeSpan.Zero;
+            }
+
+            var rawSeconds = command.Substring(1);
+            var seconds = RawValueUtility.ConvertInteger(rawSeconds);
+            if(seconds == RawValueUtility.UnknownInteger) {
+                return TimeSpan.Zero;
+            }
+
+            return TimeSpan.FromSeconds(seconds);
+        }
+
+        static SmileVideoCommentScriptModel GetCommentScriptDefault(string[] comments, IList<string> commands)
+        {
+            var result = new SmileVideoCommentScriptModel() {
+                ScriptType = SmileVideoCommentScriptType.Default,
+            };
+
+            for(var i = 0; i < commands.Count; i++) {
+                switch(i) {
+                    case 0: // 有効秒数
+                        result.IsEnabledTime = GetEnabledTimeInCommentScript(commands[i]);
+                        break;
+
+                    case 1: // カラー
+                        result.Color = SmileVideoMsgUtility.GetForeColor(commands[i], true);
+                        break;
+
+                    case 2: // サイズ
+
+
+                    case 3: // 位置
+
+                    default:
+                        break;
+                }
+            }
+
+            return result;
         }
 
 
-        public static SmileVideoCommentScriptModel GetCommentScript(string comment, IList<string> command)
+        public static SmileVideoCommentScriptModel GetCommentScript(string comment, IList<string> commands)
         {
             var comments = comment.Split();
 
@@ -421,7 +463,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
             switch(scriptType) {
                 case SmileVideoCommentScriptType.Default:
-                    return GetCommentScriptDefault(comments, command);
+                    return GetCommentScriptDefault(comments, commands);
 
                 default:
                     throw new NotImplementedException();

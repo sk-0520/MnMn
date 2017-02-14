@@ -25,6 +25,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
     public enum SmileVideoCommentSize
     {
         /// <summary>
+        /// 不明。
+        /// </summary>
+        Unknown,
+        /// <summary>
         /// 通常。
         /// </summary>
         Medium,
