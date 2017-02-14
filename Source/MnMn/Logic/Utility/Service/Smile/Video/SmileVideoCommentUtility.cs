@@ -424,7 +424,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 ScriptType = SmileVideoCommentScriptType.Default,
             };
 
-            var enabledTime = GetEnabledTimeInCommentScript(commands[0]);
+            var enabledTime = TimeSpan.Zero;
+            foreach(var command in commands) {
+                var time = GetEnabledTimeInCommentScript(command);
+                if(time == TimeSpan.Zero) {
+                    continue;
+                }
+                enabledTime = time;
+            }
             if(enabledTime == TimeSpan.Zero) {
                 return null;
             }

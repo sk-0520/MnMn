@@ -102,8 +102,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 ;
 
                 if(!IsNiwanLanguage && hasComment) {
-                    if(Content[0] == '＠' || Content[0] == '@') {
-                        var script = SmileVideoCommentUtility.GetCommentScript(Content, Commands);
+                    if(Content[0] == '＠') {
+                        CommentScript = SmileVideoCommentUtility.GetCommentScript(Content, Commands);
                     }
                 }
             }
@@ -254,6 +254,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// ニワン語か。
         /// </summary>
         public bool IsNiwanLanguage { get; }
+
+        public bool HasCommentScript => CommentScript != null && CommentScript.ScriptType != SmileVideoCommentScriptType.Unknown;
+        public SmileVideoCommentScriptModel CommentScript { get; }
 
         /// <summary>
         /// フォントサイズ。
