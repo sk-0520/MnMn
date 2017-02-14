@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -346,15 +347,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-        public void ChangeDefaultCommand(Brush foreground, Color backcolor)
+        public void ApplyDefaultCommentScript(SmileVideoCommentScriptModel commentScript)
         {
-            // not imple
+            Debug.Assert(commentScript.ScriptType == SmileVideoCommentScriptType.Default);
+
+            var color = commentScript.ForeColor;
+
+            if(ForegroundColor == Colors.White) {
+                ActualForeground = new SolidColorBrush(color);
+                var cutlineColor = MediaUtility.GetAutoColor(color);
+                ActualShadow = new SolidColorBrush(cutlineColor);
+                var strokeColor = Color.FromArgb(0x80, cutlineColor.R, cutlineColor.G, cutlineColor.B);
+                ActualStroke = new SolidColorBrush(strokeColor);
+            } else {
+                ActualForeground = new SolidColorBrush(ForegroundColor);
+                ActualShadow = new SolidColorBrush(ShadowColor);
+                ActualStroke = new SolidColorBrush(StrokeColor);
+            }
+            
+            FreezableUtility.SafeFreeze(ActualForeground);
+            FreezableUtility.SafeFreeze(ActualShadow);
+            FreezableUtility.SafeFreeze(ActualStroke);
         }
 
         public void ChangeActualContent()
         {
             var propertyNames = new[] {
                 nameof(ActualContent),
+            };
+            CallOnPropertyChange(propertyNames);
+        }
+
+        public void ChangeActualStyle()
+        {
+            var propertyNames = new[] {
+                nameof(ActualForeground),
+                nameof(ActualShadow),
+                nameof(ActualStroke),
             };
             CallOnPropertyChange(propertyNames);
         }

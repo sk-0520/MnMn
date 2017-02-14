@@ -288,7 +288,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .ToList()
             ;
             if(newComments.Any()) {
-                foreach(var commentViewModel in newComments) {
+                foreach(var commentViewModel in newComments.Where(c => !c.HasCommentScript)) {
                     ShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting);
                 }
                 // 超過分のコメントを破棄
