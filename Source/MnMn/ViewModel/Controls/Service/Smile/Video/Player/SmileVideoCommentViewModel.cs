@@ -93,6 +93,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             FontSize = GetFontSize(Setting.FontSize, Commands);
 
             Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
+
+            if(IsOriginalPoster) {
+                IsNiwanLanguage = string.IsNullOrEmpty(Content) && Content.Length > 0
+                    ? false
+                    : Content[0] == '/'
+                ;
+            }
         }
 
         #region property
@@ -235,6 +242,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// 投稿者コメントか。
         /// </summary>
         public bool IsOriginalPoster { get; }
+
+        /// <summary>
+        /// ニワン語か。
+        /// </summary>
+        public bool IsNiwanLanguage { get; }
 
         /// <summary>
         /// フォントサイズ。

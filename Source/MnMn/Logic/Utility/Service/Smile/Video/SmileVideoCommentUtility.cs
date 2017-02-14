@@ -284,6 +284,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var newComments = list
                 .Where(c => c.Approval)
                 .Where(c => !c.NowShowing)
+                .Where(c => !c.IsNiwanLanguage) // #405
                 .Where(c => InShowTime(c, prevTime, nowTime))
                 .ToArray()
             ;

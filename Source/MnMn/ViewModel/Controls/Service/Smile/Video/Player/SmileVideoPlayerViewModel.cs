@@ -910,8 +910,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             ShowingCommentList.Clear();
 
-            NormalCommentArea?.Children.Clear();
-            OriginalPosterCommentArea?.Children.Clear();
+            Application.Current?.Dispatcher.Invoke(() => {
+                NormalCommentArea?.Children.Clear();
+                OriginalPosterCommentArea?.Children.Clear();
+            });
         }
 
         void ClearResidualComments()
