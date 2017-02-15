@@ -439,7 +439,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             result.IsEnabledTime = enabledTime;
 
             result.ForeColor = SmileVideoMsgUtility.GetForeColor(commands, true);
-            result.FontSize = SmileVideoMsgUtility.GetFontSize(commands);
+            result.CommentSize = SmileVideoMsgUtility.GetFontSize(commands);
             result.VerticalAlign = SmileVideoMsgUtility.GetVerticalAlign(commands);
 
             return result;

@@ -78,18 +78,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Commands = SmileVideoMsgUtility.ConvertCommands(Model.Mail);
             Score = SmileVideoMsgUtility.ConvertScore(Model.Score);
 
+            CommentSize = SmileVideoMsgUtility.GetFontSize(Commands);
+            ActualCommentSize = CommentSize;
+            Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
+
             ForegroundColor = SmileVideoMsgUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
             OutlineColor = GetOoutlineColor(ForegroundColor);
             ShadowColor = GetShadowColor(OutlineColor);
             StrokeColor = GetStrokeColor(OutlineColor);
 
-            ApplyFontStyle(ForegroundColor, ShadowColor, StrokeColor);
-
-            CommentSize = SmileVideoMsgUtility.GetFontSize(Commands);
-
-            FontSize = GetFontSize(Setting.FontSize, CommentSize);
-
-            Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
+            ApplyFontStyle(ForegroundColor, ShadowColor, StrokeColor, ActualCommentSize);
 
             if(IsOriginalPoster) {
                 var hasComment = !string.IsNullOrEmpty(Content) && 0 < Content.Length;
@@ -365,11 +363,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return s;
         }
 
-        void ApplyFontStyle(Color foreColor, Color shadowColor, Color strokeColor)
+        void ApplyFontStyle(Color foreColor, Color shadowColor, Color strokeColor, SmileVideoCommentSize commentSize)
         {
             ActualForeground = new SolidColorBrush(foreColor);
             ActualShadow = new SolidColorBrush(shadowColor);
             ActualStroke = new SolidColorBrush(strokeColor);
+
+            FontSize = GetFontSize(Setting.FontSize, commentSize);
 
             FreezableUtility.SafeFreeze(ActualForeground);
             FreezableUtility.SafeFreeze(ActualShadow);
@@ -380,23 +380,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Debug.Assert(commentScript.ScriptType == SmileVideoCommentScriptType.Default);
 
-            var color = commentScript.ForeColor;
 
+            Color foregroundColor, shadowColor, strokeColor;
             if(ForegroundColor == Colors.White) {
-                ActualForeground = new SolidColorBrush(color);
-                var cutlineColor = MediaUtility.GetAutoColor(color);
-                ActualShadow = new SolidColorBrush(cutlineColor);
-                var strokeColor = Color.FromArgb(0x80, cutlineColor.R, cutlineColor.G, cutlineColor.B);
-                ActualStroke = new SolidColorBrush(strokeColor);
+                foregroundColor = commentScript.ForeColor;
+                var outlineColor = GetOoutlineColor(foregroundColor);
+                shadowColor = GetShadowColor(outlineColor);
+                strokeColor = GetStrokeColor(outlineColor);
             } else {
-                ActualForeground = new SolidColorBrush(ForegroundColor);
-                ActualShadow = new SolidColorBrush(ShadowColor);
-                ActualStroke = new SolidColorBrush(StrokeColor);
+                foregroundColor = ForegroundColor;
+                shadowColor = ShadowColor;
+                strokeColor = StrokeColor;
             }
-            
-            FreezableUtility.SafeFreeze(ActualForeground);
-            FreezableUtility.SafeFreeze(ActualShadow);
-            FreezableUtility.SafeFreeze(ActualStroke);
+
+            SmileVideoCommentSize commentSize;
+            if(CommentSize == SmileVideoCommentSize.Medium) {
+                commentSize = commentScript.CommentSize;
+            } else {
+                commentSize = CommentSize;
+            }
+
+            ApplyFontStyle(foregroundColor, shadowColor, strokeColor, commentSize);
+
+            var propertyNames = new[] {
+                nameof(ActualForeground),
+                nameof(ActualShadow),
+                nameof(ActualStroke),
+                nameof(FontSize ),
+            };
+            CallOnPropertyChange(propertyNames);
         }
 
         public void ChangeActualContent()
