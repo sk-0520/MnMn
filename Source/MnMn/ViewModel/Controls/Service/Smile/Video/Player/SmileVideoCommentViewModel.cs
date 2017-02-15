@@ -320,6 +320,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region function
 
+        static Color GetOoutlineColor(Color foregroundColor)
+        {
+            return MediaUtility.GetAutoColor(foregroundColor);
+        }
+        static Color GetShadowColor(Color outlineColor)
+        {
+            return outlineColor;
+        }
+        static Color GetStrokeColor(Color outlineColor)
+        {
+            return Color.FromArgb(0x80, outlineColor.R, outlineColor.G, outlineColor.B);
+        }
+
         static double GetFontSize(double baseSize, IList<string> commands)
         {
             switch(SmileVideoMsgUtility.GetFontSize(commands)) {
