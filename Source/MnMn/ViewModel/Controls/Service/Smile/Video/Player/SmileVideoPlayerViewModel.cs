@@ -979,22 +979,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ShowComments()
         {
             if(CommentScriptDefault != null) {
-                if(CommentScriptDefault.ElapsedTime + CommentScriptDefault.CommentScript.IsEnabledTime < PlayTime) {
+                // 先に最大かどうか見ておかないとオーバーフローする
+                var isInfinity = CommentScriptDefault.CommentScript.IsEnabledTime == TimeSpan.MaxValue;
+                if(!isInfinity && CommentScriptDefault.ElapsedTime + CommentScriptDefault.CommentScript.IsEnabledTime < PlayTime) {
                     CommentScriptDefault = null;
                 }
             }
 
-            var normalComments = SmileVideoCommentUtility.ShowComments(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, false, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
-            foreach(var comment in normalComments) {
-                if(CommentScriptDefault != null) {
-                    comment.ApplyDefaultCommentScript(CommentScriptDefault.CommentScript);
-                    comment.ChangeActualStyle();
-                }
-            }
+            var normalComments = SmileVideoCommentUtility.ShowComments(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, false, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting, CommentScriptDefault?.CommentScript);
 
-            var opComments = SmileVideoCommentUtility.ShowComments(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, true, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
+            var opComments = SmileVideoCommentUtility.ShowComments(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, true, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting, null);
             if(opComments.Any()) {
-
                 var commentScriptDefault = opComments.LastOrDefault(c => c.HasCommentScript && c.CommentScript.ScriptType == SmileVideoCommentScriptType.Default);
                 if(commentScriptDefault != null) {
                     CommentScriptDefault = commentScriptDefault;
@@ -1534,7 +1529,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected void AppendComment(SmileVideoCommentViewModel comment, bool isShow)
         {
             if(isShow) {
-                SmileVideoCommentUtility.ShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
+                SmileVideoCommentUtility.ShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting, null);
             }
 
             NormalCommentList.Add(comment);
@@ -2109,6 +2104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BufferingVideoTime = TimeSpan.Zero;
             SafeShowTime = TimeSpan.Zero;
             SafeDownloadedSize = 0;
+            CommentScriptDefault = null;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;

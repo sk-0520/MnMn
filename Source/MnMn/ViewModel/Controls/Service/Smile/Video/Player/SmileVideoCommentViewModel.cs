@@ -80,7 +80,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             CommentSize = SmileVideoMsgUtility.GetFontSize(Commands);
             ActualCommentSize = CommentSize;
-            Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
+            CommentVertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
+            ActualCommentVertical = CommentVertical;
 
             ForegroundColor = SmileVideoMsgUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
             OutlineColor = GetOoutlineColor(ForegroundColor);
@@ -316,7 +317,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public double Opacity { get { return Setting.FontAlpha; } }
 
-        public SmileVideoCommentVertical Vertical { get; }
+        /// <summary>
+        /// 縦位置。
+        /// </summary>
+        public SmileVideoCommentVertical CommentVertical { get; }
+        /// <summary>
+        /// 実際に使用する縦位置。
+        /// </summary>
+        public SmileVideoCommentVertical ActualCommentVertical { get; private set; }
 
         public int Fps { get { return Setting.Fps; } }
 
@@ -380,10 +388,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Debug.Assert(commentScript.ScriptType == SmileVideoCommentScriptType.Default);
 
-
             Color foregroundColor, shadowColor, strokeColor;
             if(ForegroundColor == Colors.White) {
-                foregroundColor = commentScript.ForeColor;
+                foregroundColor = commentScript.ForegroundColor;
                 var outlineColor = GetOoutlineColor(foregroundColor);
                 shadowColor = GetShadowColor(outlineColor);
                 strokeColor = GetStrokeColor(outlineColor);
@@ -400,13 +407,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 commentSize = CommentSize;
             }
 
+            SmileVideoCommentVertical commentVertical;
+            if(CommentVertical == SmileVideoCommentVertical.Normal) {
+                commentVertical = commentScript.CommentVertical;
+            }else {
+                commentVertical = CommentVertical;
+            }
+            ActualCommentVertical = commentVertical;
+
             ApplyFontStyle(foregroundColor, shadowColor, strokeColor, commentSize);
 
             var propertyNames = new[] {
                 nameof(ActualForeground),
                 nameof(ActualShadow),
                 nameof(ActualStroke),
-                nameof(FontSize ),
+                nameof(FontSize),
             };
             CallOnPropertyChange(propertyNames);
         }
