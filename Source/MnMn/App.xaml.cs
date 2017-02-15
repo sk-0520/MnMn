@@ -29,6 +29,8 @@ using System.Windows.Markup;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -345,8 +347,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Loaded -= MainWindow_Loaded;
 
             // スプラッシュスクリーンさよなら～
-            SplashWindow.Topmost = false;
+            var hSplashWnd = HandleUtility.GetWindowHandle(SplashWindow);
+            var exStyle = WindowsUtility.GetWindowLong(hSplashWnd, (int)GWL.GWL_EXSTYLE);
+            WindowsUtility.SetWindowLong(hSplashWnd, (int)GWL.GWL_EXSTYLE, new IntPtr((int)exStyle | (int)WS_EX.WS_EX_TRANSPARENT));
             SplashWindow.IsHitTestVisible = false;
+            SplashWindow.Topmost = false;
+
             var splashWindowAnimation = new DoubleAnimation(0, Constants.AppSplashCloseTime);
             splashWindowAnimation.Completed += (splashSender, splashEvent) => {
                 SplashWindow.Close();

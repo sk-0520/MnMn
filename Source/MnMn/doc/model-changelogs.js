@@ -136,7 +136,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#406: あぁ #401 動いてない',
+						'comments': [
+							'もうさぁ WPF ですらすら行ってたところで Windows API 使わなならんのどうにかなんないですかね'
+						]
 					},
 					{
 						'revision': '',
