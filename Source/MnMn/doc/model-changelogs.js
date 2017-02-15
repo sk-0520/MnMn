@@ -131,7 +131,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '3bf2b669ecd63efb4ad2a8396b23e005798a8e3b',
 						'subject': '#405: どうせパースする気ないしニワン語は非表示にする'
 					},
 					{
