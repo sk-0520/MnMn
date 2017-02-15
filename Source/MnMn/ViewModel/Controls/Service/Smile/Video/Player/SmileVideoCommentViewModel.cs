@@ -79,19 +79,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Score = SmileVideoMsgUtility.ConvertScore(Model.Score);
 
             ForegroundColor = SmileVideoMsgUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
-            ActualForeground = new SolidColorBrush(ForegroundColor);
-            FreezableUtility.SafeFreeze(ActualForeground);
+            OutlineColor = GetOoutlineColor(ForegroundColor);
+            ShadowColor = GetShadowColor(OutlineColor);
+            StrokeColor = GetStrokeColor(OutlineColor);
 
-            OutlineColor = MediaUtility.GetAutoColor(ForegroundColor);
-            ShadowColor = OutlineColor;
-            StrokeColor = Color.FromArgb(0x80, OutlineColor.R, OutlineColor.G, OutlineColor.B);
+            ApplyFontStyle(ForegroundColor, ShadowColor, StrokeColor);
 
-            ActualShadow = new SolidColorBrush(ShadowColor);
-            ActualStroke = new SolidColorBrush(StrokeColor);
-            FreezableUtility.SafeFreeze(ActualShadow);
-            FreezableUtility.SafeFreeze(ActualStroke);
+            CommentSize = SmileVideoMsgUtility.GetFontSize(Commands);
 
-            FontSize = GetFontSize(Setting.FontSize, Commands);
+            FontSize = GetFontSize(Setting.FontSize, CommentSize);
 
             Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
 
@@ -257,7 +253,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool IsNiwanLanguage { get; }
 
         public bool HasCommentScript => CommentScript != null && CommentScript.ScriptType != SmileVideoCommentScriptType.Unknown;
+
         public SmileVideoCommentScriptModel CommentScript { get; }
+
+        /// <summary>
+        /// コメントサイズ。
+        /// </summary>
+        public SmileVideoCommentSize CommentSize { get; }
+        /// <summary>
+        /// 実際に使用するコメントサイズ。
+        /// </summary>
+        public SmileVideoCommentSize ActualCommentSize { get; private set; }
 
         /// <summary>
         /// フォントサイズ。
@@ -333,9 +339,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return Color.FromArgb(0x80, outlineColor.R, outlineColor.G, outlineColor.B);
         }
 
-        static double GetFontSize(double baseSize, IList<string> commands)
+        static double GetFontSize(double baseSize, SmileVideoCommentSize commentSize)
         {
-            switch(SmileVideoMsgUtility.GetFontSize(commands)) {
+            switch(commentSize) {
                 case SmileVideoCommentSize.Medium:
                     return baseSize;
 
@@ -359,6 +365,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return s;
         }
 
+        void ApplyFontStyle(Color foreColor, Color shadowColor, Color strokeColor)
+        {
+            ActualForeground = new SolidColorBrush(foreColor);
+            ActualShadow = new SolidColorBrush(shadowColor);
+            ActualStroke = new SolidColorBrush(strokeColor);
+
+            FreezableUtility.SafeFreeze(ActualForeground);
+            FreezableUtility.SafeFreeze(ActualShadow);
+            FreezableUtility.SafeFreeze(ActualStroke);
+        }
 
         public void ApplyDefaultCommentScript(SmileVideoCommentScriptModel commentScript)
         {
@@ -403,7 +419,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public void ChangeFontStyle()
         {
-            FontSize = GetFontSize(Setting.FontSize, Commands);
+            FontSize = GetFontSize(Setting.FontSize, ActualCommentSize);
 
             var propertyNames = new[] {
                 nameof(FontSize),
