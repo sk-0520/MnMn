@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <param name="nodes"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        static List<SmileVideoBookmarkNodeViewModel> ConvertFlatBookmarkItemsCore(IList<SmileVideoBookmarkNodeViewModel> nodes, int level)
+        static List<SmileVideoBookmarkNodeViewModel> ConvertFlatBookmarkItemsCore(IEnumerable<SmileVideoBookmarkNodeViewModel> nodes, int level)
         {
             var result = new List<SmileVideoBookmarkNodeViewModel>();
 
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// </summary>
         /// <param name="nodes">ブックマーク。</param>
         /// <returns>平坦なブックマーク。</returns>
-        public static List<SmileVideoBookmarkNodeViewModel> ConvertFlatBookmarkItems(IList<SmileVideoBookmarkNodeViewModel> nodes)
+        public static List<SmileVideoBookmarkNodeViewModel> ConvertFlatBookmarkItems(IEnumerable<SmileVideoBookmarkNodeViewModel> nodes)
         {
             var result = new List<SmileVideoBookmarkNodeViewModel>();
 
