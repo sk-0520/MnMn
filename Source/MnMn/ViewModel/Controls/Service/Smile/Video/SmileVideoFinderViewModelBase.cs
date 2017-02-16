@@ -119,7 +119,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool ShowContinuousPlaybackMenu
         {
             get { return this._showContinuousPlaybackMenu; }
-            set { SetVariableValue(ref this._showContinuousPlaybackMenu, value); }
+            set
+            {
+                if(SetVariableValue(ref this._showContinuousPlaybackMenu, value)) {
+                    if(ShowContinuousPlaybackMenu) {
+                        CallOnPropertyChange(nameof(BookmarkItems));
+                    }
+                }
+            }
         }
 
         /// <summary>

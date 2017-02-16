@@ -986,7 +986,7 @@
               AllowsTransparency="True"
               Focusable="False"
               MinWidth="{TemplateBinding ActualWidth}"
-              IsOpen="{Binding IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+              IsOpen="{TemplateBinding IsOpen}"
               PlacementTarget="{Binding ElementName=PART_Border}"
               PopupAnimation="Fade"
               StaysOpen="True"

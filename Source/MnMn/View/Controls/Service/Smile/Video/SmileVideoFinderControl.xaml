@@ -110,7 +110,7 @@
           </Canvas>
         </Viewbox>
       </Button>
-      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
+      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu, Mode=TwoWay}">
         <xctk:SplitButton.Content>連続再生(_P)</xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
           <StackPanel>
