@@ -104,9 +104,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 
         #endregion
 
+        #region function
+
+        void OpenSubMenu(MenuItem menuItem)
+        {
+            if(menuItem.IsEnabled) {
+                menuItem.IsSubmenuOpen = true;
+            }
+        }
+
+        #endregion
+
         private void UIElement_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void MenuItem_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            OpenSubMenu(menuItem);
+        }
+
+        private void MenuItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            OpenSubMenu(menuItem);
         }
     }
 }

@@ -115,10 +115,7 @@
         <xctk:SplitButton.DropDownContent>
           <StackPanel>
             <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" />
-            <MenuItem Header="ブックマーク追加" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}" />
-            <MenuItem Header="A">
-              <MenuItem Header="B" />
-            </MenuItem>
+            <MenuItem Header="ブックマーク追加" MouseEnter="MenuItem_MouseEnter" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}" />
           </StackPanel>
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>
