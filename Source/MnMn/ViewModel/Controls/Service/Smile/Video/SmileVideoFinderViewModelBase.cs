@@ -46,6 +46,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
@@ -131,6 +132,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public virtual bool IsEnabledUnorganizedBookmarkMenu { get; } = true;
 
         /// <summary>
+        /// チェックメニューからブックマークメニューを使用可能にするか。
+        /// </summary>
+        public virtual bool IsEnabledBookmarkMenu { get; } = true;
+
+        /// <summary>
         /// 動画再生方法。
         /// </summary>
         public virtual ExecuteOrOpenMode OpenMode => Setting.Execute.OpenMode;
@@ -143,6 +149,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return Setting.Search.FinderSearchType; }
             set { SetPropertyValue(Setting.Search, value, nameof(Setting.Search.FinderSearchType)); }
+        }
+
+        public IEnumerable<SmileVideoBookmarkNodeViewModel> BookmarkItems
+        {
+            get
+            {
+                if(!IsEnabledBookmarkMenu) {
+                    return Enumerable.Empty<SmileVideoBookmarkNodeViewModel>();
+                }
+                var result = Mediation.GetResultFromRequest<SmileVideoBookmarkResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Bookmark));
+                var bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(result.UserNodes);
+                return bookmarkItems;
+            }
         }
 
         #endregion
