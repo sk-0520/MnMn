@@ -101,6 +101,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     var filter = GlobalFiltering;
                     return new ResponseModel(request, new SmileVideoFilteringResultModel(filter));
 
+                case SmileVideoCustomSettingKind.Bookmark:
+                    var sysNodes = ManagerPack.BookmarkManager.SystemNodes;
+                    var userNodes = ManagerPack.BookmarkManager.UserNodes;
+                    return new ResponseModel(request, new SmileVideoBookmarkResultModel(sysNodes, userNodes));
+
                 default:
                     throw new NotImplementedException();
             }
