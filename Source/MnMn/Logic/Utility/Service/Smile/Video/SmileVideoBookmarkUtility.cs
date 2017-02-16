@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// </summary>
         /// <param name="nodes">ブックマーク。</param>
         /// <returns>平坦なブックマーク。</returns>
-        public static List<SmileVideoBookmarkNodeViewModel> ConvertFlatBookmarkItems(IEnumerable<SmileVideoBookmarkNodeViewModel> nodes)
+        public static IReadOnlyList<SmileVideoBookmarkNodeViewModel> ConvertFlatBookmarkItems(IEnumerable<SmileVideoBookmarkNodeViewModel> nodes)
         {
             var result = new List<SmileVideoBookmarkNodeViewModel>();
 
