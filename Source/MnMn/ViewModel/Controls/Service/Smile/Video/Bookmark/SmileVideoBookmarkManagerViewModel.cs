@@ -317,6 +317,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             pair.ViewModel.IsSelected = true;
         }
 
+        public IEnumerable<SmileVideoVideoItemModel> AddBookmarkItems(SmileVideoBookmarkNodeViewModel targetNodeViewModel, IEnumerable<SmileVideoVideoItemModel> videoItems)
+        {
+            var index = targetNodeViewModel.VideoItems.Count;
+            targetNodeViewModel.VideoItems.AddRange(videoItems);
+
+            return targetNodeViewModel.VideoItems.Skip(index);
+        }
+
         public SmileVideoVideoItemModel AddUnorganizedBookmark(SmileVideoVideoItemModel videoItem)
         {
             Node.VideoItems.Add(videoItem);

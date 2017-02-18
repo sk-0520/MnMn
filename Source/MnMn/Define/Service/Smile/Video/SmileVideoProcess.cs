@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
     public enum SmileVideoProcess
     {
         CheckItLater,
+        Bookmark,
         UnorganizedBookmark,
     }
 }

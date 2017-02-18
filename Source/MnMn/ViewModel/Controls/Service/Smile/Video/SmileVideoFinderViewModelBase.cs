@@ -260,6 +260,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand AddBookmarkCheckedItemCommand
+        {
+            get {
+                return CreateCommand(
+                    o => AddBookmarkCheckedItem((SmileVideoBookmarkNodeViewModel)o)
+                );
+            }
+        }
+
+
         #endregion
 
         #region function
@@ -388,6 +398,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var information = finderItem.Information;
             var item = information.ToVideoItemModel();
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
+        }
+
+        void AddBookmarkCheckedItem(SmileVideoBookmarkNodeViewModel bookmark)
+        {
+            var checkedItems = GetCheckedItems();
+            if(!checkedItems.Any()) {
+                return;
+            }
+
+            var items = checkedItems
+                .Select(i => i.Information.ToVideoItemModel())
+                .ToList()
+            ;
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items)));
+            ShowContinuousPlaybackMenu = false;
         }
 
         void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)

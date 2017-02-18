@@ -337,6 +337,7 @@
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
     <Compile Include="Model\Request\Parameter\WebNavigatorProcessParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessUnorganizedBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoBookmarkResultModel.cs" />
     <Compile Include="Model\Request\WebNavigatorProcessRequestModel.cs" />
@@ -499,7 +500,6 @@
     <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\SmileUserHasBookmarkConverter.cs" />
-    <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelNameConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\ThumbnailPredominantColorConverter.cs" />
     <Compile Include="View\Converter\TextToColorConverter.cs" />
     <Compile Include="View\Resources\TabDictionary.xaml.cs">

@@ -45,7 +45,6 @@
       <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
-      <app_view_converter_service_smile_video:BookmarkLevelNameConverter x:Key="BookmarkLevelNameConverter" />
 
 
       <Thickness x:Key="ValueCell">8,2</Thickness>
@@ -131,6 +130,8 @@
               </MenuItem.Resources>
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCheckedItemCommand, ElementName=root}" />
+                  <Setter Property="CommandParameter" Value="{Binding}" />
                 </Style>
               </MenuItem.ItemContainerStyle>
               <MenuItem.ItemTemplate>
