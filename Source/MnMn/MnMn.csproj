@@ -499,7 +499,7 @@
     <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\SmileUserHasBookmarkConverter.cs" />
-    <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelToPaddingConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelNameConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\ThumbnailPredominantColorConverter.cs" />
     <Compile Include="View\Converter\TextToColorConverter.cs" />
     <Compile Include="View\Resources\TabDictionary.xaml.cs">

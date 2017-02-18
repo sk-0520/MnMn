@@ -45,7 +45,7 @@
       <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
-      <app_view_converter_service_smile_video:BookmarkLevelToPaddingConverter x:Key="BookmarkLevelToPaddingConverter" />
+      <app_view_converter_service_smile_video:BookmarkLevelNameConverter x:Key="BookmarkLevelNameConverter" />
       
 
       <Thickness x:Key="ValueCell">8,2</Thickness>
@@ -131,13 +131,15 @@
               </MenuItem.Resources>
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                  <Setter Property="Header" Value="{Binding Name}" />
-                  <!--<Setter Property="Header">
+                  <!--<Setter Property="Header" Value="{Binding Name, Converter={StaticResource BookmarkLevelNameConverter}}" />-->
+                  <Setter Property="Header">
                     <Setter.Value>
-                      <TextBlock Text="{Binding Name}" />
+                      <MultiBinding Converter="{StaticResource BookmarkLevelNameConverter}">
+                        <Binding Path="Name" />
+                        <Binding Path="Level" />
+                      </MultiBinding>
                     </Setter.Value>
-                  </Setter>-->
-                  <Setter Property="Margin" Value="{Binding Level, Converter={StaticResource BookmarkLevelToPaddingConverter}, ConverterParameter={StaticResource MenuIndentWidth}}" />
+                  </Setter>
                   <!--<Setter Property="Header">
                     <Setter.Value>
                       <StackPanel Orientation="Horizontal">
