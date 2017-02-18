@@ -981,8 +981,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(CommentScriptDefault != null) {
                 // 先に最大かどうか見ておかないとオーバーフローする
                 var isInfinity = CommentScriptDefault.CommentScript.IsEnabledTime == TimeSpan.MaxValue;
-                if(!isInfinity && CommentScriptDefault.ElapsedTime + CommentScriptDefault.CommentScript.IsEnabledTime < PlayTime) {
-                    CommentScriptDefault = null;
+                if(isInfinity) {
+                    if(PlayTime + SmileVideoCommentUtility.correctionTime < CommentScriptDefault.ElapsedTime) {
+                        CommentScriptDefault = null;
+                    }
+                } else {
+                    if(CommentScriptDefault.ElapsedTime + CommentScriptDefault.ElapsedTime + CommentScriptDefault.CommentScript.IsEnabledTime < PlayTime) {
+                        CommentScriptDefault = null;
+                    }
                 }
             }
 
