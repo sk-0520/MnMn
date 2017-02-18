@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
@@ -654,8 +655,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 if(this._bookmarkItems == null) {
-                    var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.UserNodes;
-                    this._bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(treeItems);
+                    var result = Mediation.GetResultFromRequest<SmileVideoBookmarkResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Bookmark));
+                    //var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.UserNodes;
+                    this._bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(result.UserNodes);
                 }
 
                 return this._bookmarkItems;

@@ -28,6 +28,7 @@
   <sys:Double x:Key="BaseMarginWidth">8</sys:Double>
   <sys:Double x:Key="SeparatorWidth">4</sys:Double>
   <sys:Double x:Key="SeparatorHeight">4</sys:Double>
+  <sys:Double x:Key="MenuIndentWidth">8</sys:Double>
   <sys:Double x:Key="SmallIndentWidth">10</sys:Double>
   <sys:Double x:Key="NormalIndentWidth">20</sys:Double>
   <sys:Double x:Key="BigIndentWidth">40</sys:Double>
@@ -340,6 +341,10 @@
   <Style x:Key="ItemPanel" TargetType="StackPanel">
     <Style.Resources>
       <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Left" />
+      </Style>
+      <Style TargetType="AccessText" >
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="TextAlignment" Value="Left" />
       </Style>
@@ -986,7 +991,7 @@
               AllowsTransparency="True"
               Focusable="False"
               MinWidth="{TemplateBinding ActualWidth}"
-              IsOpen="{Binding IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+              IsOpen="{TemplateBinding IsOpen}"
               PlacementTarget="{Binding ElementName=PART_Border}"
               PopupAnimation="Fade"
               StaysOpen="True"

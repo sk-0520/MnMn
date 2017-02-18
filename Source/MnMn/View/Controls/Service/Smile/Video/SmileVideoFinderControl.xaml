@@ -44,6 +44,8 @@
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
       <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+      <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
+
 
       <Thickness x:Key="ValueCell">8,2</Thickness>
 
@@ -94,7 +96,7 @@
     <Grid Grid.Row="1" Style="{StaticResource BodyContentVisibility}" Grid.ColumnSpan="2">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="100" />
+        <ColumnDefinition Width="130" />
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -110,10 +112,66 @@
           </Canvas>
         </Viewbox>
       </Button>
-      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
-        <xctk:SplitButton.Content>連続再生(_P)</xctk:SplitButton.Content>
+      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu, Mode=TwoWay}">
+        <xctk:SplitButton.Content>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource SmallItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Play-Sequential}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <AccessText>連続再生(_P)</AccessText>
+          </StackPanel>
+        </xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
-          <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" />
+          <StackPanel>
+            <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Play-Random}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="ブックマーク追加" MouseEnter="MenuItem_MouseEnter" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
+              <MenuItem.Resources>
+                <StackPanel x:Key="Content" Orientation="Horizontal">
+                  <Border>
+                    <Border.Width>
+                      <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}" ConverterParameter="{StaticResource MenuIndentWidth}" />
+                    </Border.Width>
+                  </Border>
+                  <TextBlock Text="{Binding Name}" />
+                </StackPanel>
+              </MenuItem.Resources>
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+              <MenuItem.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCheckedItemCommand, ElementName=root}" />
+                  <Setter Property="CommandParameter" Value="{Binding}" />
+                </Style>
+              </MenuItem.ItemContainerStyle>
+              <MenuItem.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal">
+                    <Border>
+                      <Border.Width>
+                        <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}" ConverterParameter="{StaticResource MenuIndentWidth}" />
+                      </Border.Width>
+                    </Border>
+                    <TextBlock Text="{Binding Name}" />
+                  </StackPanel>
+                </DataTemplate>
+              </MenuItem.ItemTemplate>
+            </MenuItem>
+          </StackPanel>
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>
       <!--<mamc:SplitButton Grid.Column="1" SelectedItem="{Binding SelectedCheckedProcess}" ItemsSource="{Binding CheckedProcessItems}" Command="{Binding CheckedProcessCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Self}}">
@@ -351,7 +409,7 @@
                   </Canvas>
                 </Viewbox>
               </MenuItem.Icon>
-              
+
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Setter Property="Header" Value="{Binding TagName, Converter={StaticResource EscapeAccessKeyConverter}}"/>
@@ -376,7 +434,7 @@
 
                 </CompositeCollection>
               </MenuItem.ItemsSource>
-              
+
 
             </MenuItem>
             <MenuItem Header="検索" IsEnabled="{Binding SelectedFinderItem.Information.TagList, Converter={StaticResource IsNotEmptyCollectionConverter}}">
@@ -417,7 +475,7 @@
                   </Canvas>
                 </Viewbox>
               </MenuItem.Icon>
-              
+
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Setter Property="Header" Value="{Binding TagName, Converter={StaticResource EscapeAccessKeyConverter}}" />
@@ -433,7 +491,7 @@
                   <Setter Property="Icon" Value="{StaticResource Icon_Tag}" />
                 </Style>
               </MenuItem.ItemContainerStyle>
-              
+
               <MenuItem.ItemsSource>
                 <CompositeCollection>
                   <MenuItem Header="動画ID" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">

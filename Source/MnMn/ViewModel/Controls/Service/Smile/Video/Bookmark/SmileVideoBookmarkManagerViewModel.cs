@@ -317,6 +317,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             pair.ViewModel.IsSelected = true;
         }
 
+        public IEnumerable<SmileVideoVideoItemModel> AddBookmarkItems(SmileVideoBookmarkNodeViewModel targetNodeViewModel, IEnumerable<SmileVideoVideoItemModel> videoItems)
+        {
+            var index = targetNodeViewModel.VideoItems.Count;
+            targetNodeViewModel.VideoItems.AddRange(videoItems);
+
+            return targetNodeViewModel.VideoItems.Skip(index);
+        }
+
         public SmileVideoVideoItemModel AddUnorganizedBookmark(SmileVideoVideoItemModel videoItem)
         {
             Node.VideoItems.Add(videoItem);
@@ -443,7 +451,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         e.Effects = DragDropEffects.None;
                     }
                 }
-            } else if(e.Data.GetDataPresent(typeof(SmileVideoFinderItemViewModel))) {
+            } else if(e.Data.GetDataPresent(typeof(SmileVideoFinderItemViewModel)) || e.Data.GetDataPresent(typeof(IEnumerable<SmileVideoFinderItemViewModel>))) {
                 var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
                 if(dstNode != null && dstNode != SelectedBookmarkNode) {
                     e.Effects = DragDropEffects.Move;
@@ -490,14 +498,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     var item = dstNode.NodeList.Add(srcModel, null);
                     item.ViewModel.IsSelected = true;
                 }
-            } else if(e.Data.GetDataPresent(typeof(SmileVideoFinderItemViewModel))) {
-                var finderItem = (SmileVideoFinderItemViewModel)e.Data.GetData(typeof(SmileVideoFinderItemViewModel));
-                var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
-                if(dstNode != null) {
-                    var videoItem = finderItem.Information.ToVideoItemModel();
-                    dstNode.VideoItems.Add(videoItem);
-                    SelectedBookmarkNodeFinder.RemoveItem(SelectedBookmarkNodeFinder.SelectedFinderItem);
-                    SelectedBookmarkNodeFinder.SelectedFinderItem = SelectedBookmarkNodeFinder.FinderItems.Cast<SmileVideoFinderItemViewModel>().FirstOrDefault();
+            } else {
+                if(e.Data.GetDataPresent(typeof(SmileVideoFinderItemViewModel))) {
+                    var finderItem = (SmileVideoFinderItemViewModel)e.Data.GetData(typeof(SmileVideoFinderItemViewModel));
+                    var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
+                    if(dstNode != null) {
+                        var videoItem = finderItem.Information.ToVideoItemModel();
+                        dstNode.VideoItems.Add(videoItem);
+                        SelectedBookmarkNodeFinder.RemoveItem(SelectedBookmarkNodeFinder.SelectedFinderItem);
+                        SelectedBookmarkNodeFinder.SelectedFinderItem = SelectedBookmarkNodeFinder.FinderItems.Cast<SmileVideoFinderItemViewModel>().FirstOrDefault();
+                    }
+                } else if(e.Data.GetDataPresent(typeof(IEnumerable<SmileVideoFinderItemViewModel>))) {
+                    var finderItems = (IEnumerable<SmileVideoFinderItemViewModel>)e.Data.GetData(typeof(IEnumerable<SmileVideoFinderItemViewModel>));
+                    var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
+                    if(dstNode != null) {
+                        var videoItems = finderItems.Select(i => i.Information.ToVideoItemModel());
+                        dstNode.VideoItems.AddRange(videoItems);
+                        foreach(var item in finderItems.ToList()) {
+                            SelectedBookmarkNodeFinder.RemoveItem(item);
+                        }
+                        SelectedBookmarkNodeFinder.SelectedFinderItem = SelectedBookmarkNodeFinder.FinderItems.Cast<SmileVideoFinderItemViewModel>().FirstOrDefault();
+                    }
                 }
             }
         }

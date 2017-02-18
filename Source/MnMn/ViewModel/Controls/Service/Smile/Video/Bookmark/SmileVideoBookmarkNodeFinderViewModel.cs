@@ -145,7 +145,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
-
         #endregion
 
         #region SmileVideoFeedFinderViewModelBase
@@ -205,7 +204,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         protected override CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
         {
-            var data = new DataObject(SelectedFinderItem.GetType(), SelectedFinderItem);
+            DataObject data;
+            if(SelectedFinderItem.IsChecked.GetValueOrDefault()) {
+                var items = GetCheckedItems().ToList();
+                data = new DataObject(typeof(IEnumerable<SmileVideoFinderItemViewModel>), items);
+            } else {
+                data = new DataObject(SelectedFinderItem.GetType(), SelectedFinderItem);
+            }
 
             var param = new DragParameterModel() {
                 Data = data,
