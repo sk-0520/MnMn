@@ -46,7 +46,7 @@
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelNameConverter x:Key="BookmarkLevelNameConverter" />
-      
+
 
       <Thickness x:Key="ValueCell">8,2</Thickness>
 
@@ -131,33 +131,20 @@
               </MenuItem.Resources>
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                  <!--<Setter Property="Header" Value="{Binding Name, Converter={StaticResource BookmarkLevelNameConverter}}" />-->
-                  <Setter Property="Header">
-                    <Setter.Value>
-                      <MultiBinding Converter="{StaticResource BookmarkLevelNameConverter}">
-                        <Binding Path="Name" />
-                        <Binding Path="Level" />
-                      </MultiBinding>
-                    </Setter.Value>
-                  </Setter>
-                  <!--<Setter Property="Header">
-                    <Setter.Value>
-                      <StackPanel Orientation="Horizontal">
-                        <Border>
-                          <Border.Width>
-                            <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}" ConverterParameter="{StaticResource MenuIndentWidth}" />
-                          </Border.Width>
-                        </Border>
-                        <TextBlock Text="{Binding Name}" />
-                      </StackPanel>
-                    </Setter.Value>
-                  </Setter>-->
-
-
-                  <!---->
-
                 </Style>
               </MenuItem.ItemContainerStyle>
+              <MenuItem.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal">
+                    <Border>
+                      <Border.Width>
+                        <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}" ConverterParameter="{StaticResource MenuIndentWidth}" />
+                      </Border.Width>
+                    </Border>
+                    <TextBlock Text="{Binding Name}" />
+                  </StackPanel>
+                </DataTemplate>
+              </MenuItem.ItemTemplate>
             </MenuItem>
           </StackPanel>
         </xctk:SplitButton.DropDownContent>
@@ -397,7 +384,7 @@
                   </Canvas>
                 </Viewbox>
               </MenuItem.Icon>
-              
+
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Setter Property="Header" Value="{Binding TagName, Converter={StaticResource EscapeAccessKeyConverter}}"/>
@@ -422,7 +409,7 @@
 
                 </CompositeCollection>
               </MenuItem.ItemsSource>
-              
+
 
             </MenuItem>
             <MenuItem Header="検索" IsEnabled="{Binding SelectedFinderItem.Information.TagList, Converter={StaticResource IsNotEmptyCollectionConverter}}">
@@ -463,7 +450,7 @@
                   </Canvas>
                 </Viewbox>
               </MenuItem.Icon>
-              
+
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Setter Property="Header" Value="{Binding TagName, Converter={StaticResource EscapeAccessKeyConverter}}" />
@@ -479,7 +466,7 @@
                   <Setter Property="Icon" Value="{StaticResource Icon_Tag}" />
                 </Style>
               </MenuItem.ItemContainerStyle>
-              
+
               <MenuItem.ItemsSource>
                 <CompositeCollection>
                   <MenuItem Header="動画ID" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
