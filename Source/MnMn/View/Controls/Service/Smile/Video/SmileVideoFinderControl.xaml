@@ -44,6 +44,9 @@
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
       <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+      <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
+      <app_view_converter_service_smile_video:BookmarkLevelToPaddingConverter x:Key="BookmarkLevelToPaddingConverter" />
+      
 
       <Thickness x:Key="ValueCell">8,2</Thickness>
 
@@ -115,7 +118,45 @@
         <xctk:SplitButton.DropDownContent>
           <StackPanel>
             <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" />
-            <MenuItem Header="ブックマーク追加" MouseEnter="MenuItem_MouseEnter" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}" />
+            <MenuItem Header="ブックマーク追加" MouseEnter="MenuItem_MouseEnter" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
+              <MenuItem.Resources>
+                <StackPanel x:Key="Content" Orientation="Horizontal">
+                  <Border>
+                    <Border.Width>
+                      <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}" ConverterParameter="{StaticResource MenuIndentWidth}" />
+                    </Border.Width>
+                  </Border>
+                  <TextBlock Text="{Binding Name}" />
+                </StackPanel>
+              </MenuItem.Resources>
+              <MenuItem.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Setter Property="Header" Value="{Binding Name}" />
+                  <!--<Setter Property="Header">
+                    <Setter.Value>
+                      <TextBlock Text="{Binding Name}" />
+                    </Setter.Value>
+                  </Setter>-->
+                  <Setter Property="Margin" Value="{Binding Level, Converter={StaticResource BookmarkLevelToPaddingConverter}, ConverterParameter={StaticResource MenuIndentWidth}}" />
+                  <!--<Setter Property="Header">
+                    <Setter.Value>
+                      <StackPanel Orientation="Horizontal">
+                        <Border>
+                          <Border.Width>
+                            <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}" ConverterParameter="{StaticResource MenuIndentWidth}" />
+                          </Border.Width>
+                        </Border>
+                        <TextBlock Text="{Binding Name}" />
+                      </StackPanel>
+                    </Setter.Value>
+                  </Setter>-->
+
+
+                  <!---->
+
+                </Style>
+              </MenuItem.ItemContainerStyle>
+            </MenuItem>
           </StackPanel>
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>

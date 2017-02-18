@@ -379,11 +379,7 @@
               <StackPanel Orientation="Horizontal">
                 <Border>
                   <Border.Width>
-                    <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}">
-                      <Binding.ConverterParameter>
-                        <sys:Int32>8</sys:Int32>
-                      </Binding.ConverterParameter>
-                    </Binding>
+                    <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}" ConverterParameter="{StaticResource MenuIndentWidth}" />
                   </Border.Width>
                 </Border>
                 <TextBlock Text="{Binding Name}" />

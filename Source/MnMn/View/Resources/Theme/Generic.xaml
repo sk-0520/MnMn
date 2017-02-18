@@ -28,6 +28,7 @@
   <sys:Double x:Key="BaseMarginWidth">8</sys:Double>
   <sys:Double x:Key="SeparatorWidth">4</sys:Double>
   <sys:Double x:Key="SeparatorHeight">4</sys:Double>
+  <sys:Double x:Key="MenuIndentWidth">8</sys:Double>
   <sys:Double x:Key="SmallIndentWidth">10</sys:Double>
   <sys:Double x:Key="NormalIndentWidth">20</sys:Double>
   <sys:Double x:Key="BigIndentWidth">40</sys:Double>

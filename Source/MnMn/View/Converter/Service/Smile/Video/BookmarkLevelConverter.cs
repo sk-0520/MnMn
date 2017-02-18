@@ -29,10 +29,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
     {
         #region IValueConverter
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var level = (int)value;
-            var baseWidth = (int)parameter;
+            var baseWidth = (double)parameter;
 
             return baseWidth * level;
         }
