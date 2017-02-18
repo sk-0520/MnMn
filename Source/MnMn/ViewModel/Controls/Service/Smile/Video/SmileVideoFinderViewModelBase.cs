@@ -402,6 +402,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void AddBookmarkCheckedItem(SmileVideoBookmarkNodeViewModel bookmark)
         {
+            ShowContinuousPlaybackMenu = false;
+
             var checkedItems = GetCheckedItems();
             if(!checkedItems.Any()) {
                 return;
@@ -412,7 +414,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .ToList()
             ;
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items)));
-            ShowContinuousPlaybackMenu = false;
         }
 
         void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)
