@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// チェックメニューからブックマークメニューを使用可能にするか。
         /// </summary>
-        public virtual bool IsEnabledBookmarkMenu { get; } = true;
+        public virtual bool IsEnabledBookmarkMenu => IsEnabledUnorganizedBookmarkMenu;
 
         /// <summary>
         /// 動画再生方法。
