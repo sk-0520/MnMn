@@ -96,7 +96,7 @@
     <Grid Grid.Row="1" Style="{StaticResource BodyContentVisibility}" Grid.ColumnSpan="2">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="100" />
+        <ColumnDefinition Width="120" />
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -112,11 +112,28 @@
           </Canvas>
         </Viewbox>
       </Button>
-      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu, Mode=TwoWay}">
-        <xctk:SplitButton.Content>連続再生(_P)</xctk:SplitButton.Content>
+      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu, Mode=TwoWay}">
+        <xctk:SplitButton.Content>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource SmallItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Play-Sequential}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <AccessText>連続再生(_P)</AccessText>
+          </StackPanel>
+        </xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
           <StackPanel>
-            <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" />
+            <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Play-Random}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+            </MenuItem>
             <MenuItem Header="ブックマーク追加" MouseEnter="MenuItem_MouseEnter" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
               <MenuItem.Resources>
                 <StackPanel x:Key="Content" Orientation="Horizontal">
@@ -128,6 +145,13 @@
                   <TextBlock Text="{Binding Name}" />
                 </StackPanel>
               </MenuItem.Resources>
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCheckedItemCommand, ElementName=root}" />

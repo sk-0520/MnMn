@@ -344,6 +344,10 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="TextAlignment" Value="Left" />
       </Style>
+      <Style TargetType="AccessText" >
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Left" />
+      </Style>
     </Style.Resources>
     <Setter Property="Orientation" Value="Horizontal" />
     <Setter Property="VerticalAlignment" Value="Center" />
