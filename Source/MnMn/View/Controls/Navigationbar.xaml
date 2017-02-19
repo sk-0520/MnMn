@@ -22,6 +22,7 @@
       <sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
+      <app_view_converter:TimespanHasHourToBooleanConverter x:Key="TimespanHasHourToBooleanConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -187,9 +188,31 @@
     </Slider>
     <StackPanel Grid.Column="3" Orientation="Horizontal" Margin="0,0,8,0">
       <TextBlock VerticalAlignment="Center">
-        <Run Text="{Binding PlayTime, StringFormat=hh\\:mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <Run>
+          <Run.Style>
+            <Style TargetType="Run">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding TotalTime, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource TimespanHasHourToBooleanConverter}}" Value="True">
+                  <Setter Property="Text" Value="{Binding PlayTime, StringFormat=hh\\:mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Text" Value="{Binding PlayTime, StringFormat=mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            </Style>
+          </Run.Style>
+        </Run>
         <Run>/</Run>
-        <Run Text="{Binding TotalTime, StringFormat=hh\\:mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <Run>
+          <Run.Style>
+            <Style TargetType="Run">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding TotalTime, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource TimespanHasHourToBooleanConverter}}" Value="True">
+                  <Setter Property="Text" Value="{Binding TotalTime, StringFormat=hh\\:mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Text" Value="{Binding TotalTime, StringFormat=mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            </Style>
+          </Run.Style>
+        </Run>
       </TextBlock>
     </StackPanel>
     <Grid Grid.Column="4">
