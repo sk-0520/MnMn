@@ -42,7 +42,7 @@
 			</words>
 		</element>
 		
-		<element key="common-separator" separator="true" allow-service="*" send-service="common" />
+		<element key="separator:move" separator="true" allow-service="*" send-service="common" />
 			
 		<element key="smile-video-open-player" separator="false" allow-service="*" send-service="smile-video">
 			<words>
@@ -116,6 +116,7 @@
 			</conditions>
 		</element>
 
+		<element key="separator:command" separator="true" allow-service="*" send-service="common" />
 		<element key="common-copy-selection" separator="false" allow-service="*" send-service="common">
 			<words>
 				<word key="ja-jp" value="コピー" />
