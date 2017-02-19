@@ -85,32 +85,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.48.1',
-		'isRc': true,
+		'date': '2017/02/19',
+		'version': '0.49.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '4fc5e919c01e64807e01988c0a147b2df70d78c3',
 						'subject': '#5: 投稿者コマンドの反映@デフォルト',
 						'comments': [
 							'#5ってすっげー古参！',
@@ -118,7 +101,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '7410f05eec73e72305c0e607b0d071f2c06f6420',
 						'subject': '#399: ファインダー複数項目を特定ブックマークへの移動',
 						'comments': [
 							'ファインダーの左上メニューにブックマーク用メニューの追加(活性条件は未整理のブックマークと同じ)',
@@ -128,11 +111,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '75d2e6ec69656464e965a944370baae3b56cac90',
 						'subject': '#407: スプラッシュスクリーンを移動可能にする'
 					},
 					{
-						'revision': '',
+						'revision': '6783afa8798e91f738bc16b64718ef037b203c7b',
 						'class': 'open',
 						'subject': '#240: 内部ブラウザの制御をそろそろやりましょうぜ',
 						'comments': [
@@ -141,7 +124,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '6fa68be6713b2d2e5173c809b03dd454d0be0c08',
 						'subject': '#409: プレイヤーのナビゲーションバーの時間表示で1時間未満の動画は時間部分の表記をなくす'
 					}
 				]
@@ -154,15 +137,11 @@
 						'subject': '#405: どうせパースする気ないしニワン語は非表示にする'
 					},
 					{
-						'revision': '',
+						'revision': '4566322e58c10cfc16ac23fda2822f195d84181f',
 						'subject': '#406: あぁ #401 動いてない',
 						'comments': [
 							'もうさぁ WPF ですらすら行ってたところで Windows API 使わなならんのどうにかなんないですかね'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -170,16 +149,8 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '53378e8501751dbf2417f3f6c07ea238e83a965e',
 						'subject': 'ダウンロードできない印はストリーム閉じる前のファイルリフレッシュじゃないかと思ってみた'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
