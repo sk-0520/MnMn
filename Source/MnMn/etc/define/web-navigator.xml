@@ -102,5 +102,11 @@
 				</condition>
 			</conditions>
 		</element>
+
+		<element key="common-copy-selection" separator="false" allow-service="*" send-service="common">
+			<words>
+				<word key="ja-jp" value="コピー" />
+			</words>
+		</element>
 	</context-menu>
 </web-navigator>
