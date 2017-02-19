@@ -56,5 +56,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             Application.Current.Shutdown();
         }
+
+        /// <summary>
+        /// MSDNコピペ！
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            // Begin dragging the window
+            this.DragMove();
+        }
     }
 }

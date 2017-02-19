@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 {
     public enum SmileVideoCommentVertical
     {
+        Unknown,
         /// <summary>
         /// 通常。
         /// </summary>

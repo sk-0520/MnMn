@@ -910,8 +910,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             ShowingCommentList.Clear();
 
-            NormalCommentArea?.Children.Clear();
-            OriginalPosterCommentArea?.Children.Clear();
+            Application.Current?.Dispatcher.Invoke(() => {
+                NormalCommentArea?.Children.Clear();
+                OriginalPosterCommentArea?.Children.Clear();
+            });
         }
 
         void ClearResidualComments()
@@ -974,15 +976,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PrevPlayedTime = Player.Time;
         }
 
-        void FireShowComments()
+        void ShowComments()
         {
-            SmileVideoCommentUtility.FireShowCommentsCore(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
-            SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
+            if(CommentScriptDefault != null) {
+                // 先に最大かどうか見ておかないとオーバーフローする
+                var isInfinity = CommentScriptDefault.CommentScript.IsEnabledTime == TimeSpan.MaxValue;
+                if(isInfinity) {
+                    if(PlayTime + SmileVideoCommentUtility.correctionTime < CommentScriptDefault.ElapsedTime) {
+                        CommentScriptDefault = null;
+                    }
+                } else {
+                    if(CommentScriptDefault.ElapsedTime + CommentScriptDefault.ElapsedTime + CommentScriptDefault.CommentScript.IsEnabledTime < PlayTime) {
+                        CommentScriptDefault = null;
+                    }
+                }
+            }
+
+            var normalComments = SmileVideoCommentUtility.ShowComments(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, false, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting, CommentScriptDefault?.CommentScript);
+
+            var opComments = SmileVideoCommentUtility.ShowComments(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, true, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting, null);
+            if(opComments.Any()) {
+                var commentScriptDefault = opComments.LastOrDefault(c => c.HasCommentScript && c.CommentScript.ScriptType == SmileVideoCommentScriptType.Default);
+                if(commentScriptDefault != null) {
+                    CommentScriptDefault = commentScriptDefault;
+                }
+            }
         }
 
-        protected Size GetCommentArea(bool OriginalPoster)
+        protected Size GetCommentArea(bool isOriginalPoster)
         {
-            if(OriginalPoster && !IsEnabledOriginalPosterCommentArea) {
+            if(isOriginalPoster && !IsEnabledOriginalPosterCommentArea) {
                 return new Size(OriginalPosterCommentArea.ActualWidth, OriginalPosterCommentArea.ActualHeight);
             }
 
@@ -1512,7 +1535,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected void AppendComment(SmileVideoCommentViewModel comment, bool isShow)
         {
             if(isShow) {
-                SmileVideoCommentUtility.FireShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
+                SmileVideoCommentUtility.ShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting, null);
             }
 
             NormalCommentList.Add(comment);
@@ -2087,6 +2110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BufferingVideoTime = TimeSpan.Zero;
             SafeShowTime = TimeSpan.Zero;
             SafeDownloadedSize = 0;
+            CommentScriptDefault = null;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
@@ -2323,7 +2347,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
-                FireShowComments();
+                ShowComments();
                 ScrollCommentList();
 
                 PrevPlayedTime = PlayTime;

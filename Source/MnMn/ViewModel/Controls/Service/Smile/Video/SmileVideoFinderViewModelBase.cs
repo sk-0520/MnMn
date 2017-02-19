@@ -46,6 +46,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
@@ -118,7 +119,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool ShowContinuousPlaybackMenu
         {
             get { return this._showContinuousPlaybackMenu; }
-            set { SetVariableValue(ref this._showContinuousPlaybackMenu, value); }
+            set
+            {
+                if(SetVariableValue(ref this._showContinuousPlaybackMenu, value)) {
+                    if(ShowContinuousPlaybackMenu) {
+                        CallOnPropertyChange(nameof(BookmarkItems));
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -129,6 +137,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// 「未整理のブックマーク」メニューを有効にするか。
         /// </summary>
         public virtual bool IsEnabledUnorganizedBookmarkMenu { get; } = true;
+
+        /// <summary>
+        /// チェックメニューからブックマークメニューを使用可能にするか。
+        /// </summary>
+        public virtual bool IsEnabledBookmarkMenu => IsEnabledUnorganizedBookmarkMenu;
 
         /// <summary>
         /// 動画再生方法。
@@ -143,6 +156,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return Setting.Search.FinderSearchType; }
             set { SetPropertyValue(Setting.Search, value, nameof(Setting.Search.FinderSearchType)); }
+        }
+
+        public IEnumerable<SmileVideoBookmarkNodeViewModel> BookmarkItems
+        {
+            get
+            {
+                if(!IsEnabledBookmarkMenu) {
+                    return Enumerable.Empty<SmileVideoBookmarkNodeViewModel>();
+                }
+                var result = Mediation.GetResultFromRequest<SmileVideoBookmarkResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Bookmark));
+                var bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(result.UserNodes);
+                return bookmarkItems;
+            }
         }
 
         #endregion
@@ -233,6 +259,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 );
             }
         }
+
+        public ICommand AddBookmarkCheckedItemCommand
+        {
+            get {
+                return CreateCommand(
+                    o => AddBookmarkCheckedItem((SmileVideoBookmarkNodeViewModel)o)
+                );
+            }
+        }
+
 
         #endregion
 
@@ -362,6 +398,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var information = finderItem.Information;
             var item = information.ToVideoItemModel();
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
+        }
+
+        void AddBookmarkCheckedItem(SmileVideoBookmarkNodeViewModel bookmark)
+        {
+            ShowContinuousPlaybackMenu = false;
+
+            var checkedItems = GetCheckedItems();
+            if(!checkedItems.Any()) {
+                return;
+            }
+
+            var items = checkedItems
+                .Select(i => i.Information.ToVideoItemModel())
+                .ToList()
+            ;
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items)));
         }
 
         void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)

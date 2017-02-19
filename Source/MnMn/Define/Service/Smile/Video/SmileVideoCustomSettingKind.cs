@@ -37,5 +37,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// 全体設定フィルタリング。
         /// </summary>
         CommentFiltering,
+        /// <summary>
+        /// 動画ブックマークデータ。
+        /// </summary>
+        Bookmark,
     }
 }

@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
     {
         #region define
 
-        static readonly TimeSpan correctionTime = Constants.ServiceSmileVideoCommentCorrectionTime;
+        public static readonly TimeSpan correctionTime = Constants.ServiceSmileVideoCommentCorrectionTime;
 
         #endregion
 
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 element.DataContext = commentViewModel;
             }
 
-            if(commentViewModel.Vertical != SmileVideoCommentVertical.Normal) {
+            if(commentViewModel.CommentVertical != SmileVideoCommentVertical.Normal) {
                 element.Width = commentArea.Width;
             }
 
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var isAsc = orderBy == OrderBy.Ascending;
             // 空いている部分に放り込む, 今から表示するコメントの同一条件全行を取得する
             var lineList = showingCommentList
-                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
+                .Where(i => i.ViewModel.CommentVertical == commentViewModel.CommentVertical)
                 .GroupBy(i => (int)Canvas.GetTop(i.Element))
                 .IfOrderByAsc(g => g.Key, isAsc)
                 .ToArray()
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
                 if(dupLine == null && !calculationWidth) {
                     // 誰もいないっぽいけど入る余地はあるのか
-                    dupLine = lineList.FirstOrDefault(ls => y < ls.Key && ls.Key  < y + myHeight);
+                    dupLine = lineList.FirstOrDefault(ls => y < ls.Key && ls.Key < y + myHeight);
                 }
 
                 if(dupLine == null) {
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)
         {
-            switch(commentViewModel.Vertical) {
+            switch(commentViewModel.ActualCommentVertical) {
                 case SmileVideoCommentVertical.Normal:
                     SetMarqueeCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
                     break;
@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         static AnimationTimeline CreateCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
         {
-            switch(commentViewModel.Vertical) {
+            switch(commentViewModel.ActualCommentVertical) {
                 case SmileVideoCommentVertical.Normal:
                     return CreateMarqueeCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
 
@@ -231,8 +231,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
         }
 
-        public static void FireShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)
+        public static void ShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting, SmileVideoCommentScriptModel defaultCommentScript)
         {
+            if(defaultCommentScript != null) {
+                commentViewModel.ApplyDefaultCommentScript(defaultCommentScript);
+            }
             var element = CreateCommentElement(commentViewModel, commentArea, setting);
 
             commentViewModel.NowShowing = true;
@@ -277,20 +280,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return prevTime <= (comment.ElapsedTime - correction) && (comment.ElapsedTime - correction) <= nowTime;
         }
 
-        public static void FireShowCommentsCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
+        // TODO: 引数がもう限界。。。
+        public static IList<SmileVideoCommentViewModel> ShowComments(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, bool isOriginalPoster, IList<SmileVideoCommentDataModel> showingCommentList, bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting, SmileVideoCommentScriptModel defaultCommentScript)
         {
-            var list = commentViewModelList.ToArray();
             // 現在時間から-1秒したものを表示対象とする
-            var newComments = list
+            var newComments = commentViewModelList
                 .Where(c => c.Approval)
                 .Where(c => !c.NowShowing)
+                .Where(c => !c.IsNiwanLanguage) // #405
                 .Where(c => InShowTime(c, prevTime, nowTime))
-                .ToArray()
+                .ToList()
             ;
             if(newComments.Any()) {
-                foreach(var commentViewModel in newComments) {
-                    FireShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting);
-               }
+                foreach(var commentViewModel in newComments.Where(c => !c.HasCommentScript)) {
+                    ShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting, defaultCommentScript);
+                }
                 // 超過分のコメントを破棄
                 if(isEnabledDisplayCommentLimit && 0 < displayCommentLimitCount) {
                     var removeList = showingCommentList
@@ -304,6 +308,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                     }
                 }
             }
+
+            return newComments;
         }
 
         /// <summary>
@@ -395,6 +401,76 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             };
 
             return result;
+        }
+
+        static TimeSpan GetEnabledTimeInCommentScript(string command)
+        {
+            if(string.IsNullOrEmpty(command) || command[0] != '@') {
+                return TimeSpan.MaxValue;
+            }
+
+            var rawSeconds = command.Substring(1);
+            var seconds = RawValueUtility.ConvertInteger(rawSeconds);
+            if(seconds == RawValueUtility.UnknownInteger) {
+                return TimeSpan.Zero;
+            }
+
+            return TimeSpan.FromSeconds(seconds);
+        }
+
+        static SmileVideoCommentScriptModel GetCommentScriptDefault(string[] comments, IList<string> commands)
+        {
+            var result = new SmileVideoCommentScriptModel() {
+                ScriptType = SmileVideoCommentScriptType.Default,
+            };
+
+            var enabledTime = TimeSpan.Zero;
+            foreach(var command in commands) {
+                var time = GetEnabledTimeInCommentScript(command);
+                if(time == TimeSpan.Zero) {
+                    continue;
+                }
+                enabledTime = time;
+            }
+            if(enabledTime == TimeSpan.Zero) {
+                return null;
+            }
+
+            result.IsEnabledTime = enabledTime;
+
+            result.ForegroundColor = SmileVideoMsgUtility.GetForeColor(commands, true);
+            result.CommentSize = SmileVideoMsgUtility.GetFontSize(commands);
+            result.CommentVertical = SmileVideoMsgUtility.GetVerticalAlign(commands);
+
+            return result;
+        }
+
+
+        public static SmileVideoCommentScriptModel GetCommentScript(string comment, IList<string> commands)
+        {
+            var comments = comment.Split();
+
+            var head = comments.First();
+            // 外部化してぇなぁ
+            var map = new Dictionary<string, SmileVideoCommentScriptType>() {
+                ["＠デフォルト"] = SmileVideoCommentScriptType.Default,
+            };
+
+            SmileVideoCommentScriptType scriptType;
+            if(!map.TryGetValue(head, out scriptType)) {
+                return null;
+            }
+            switch(scriptType) {
+                case SmileVideoCommentScriptType.Default:
+                    if(commands.Any()) {
+                        return GetCommentScriptDefault(comments, commands);
+                    } else {
+                        return null;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion

@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -77,22 +78,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Commands = SmileVideoMsgUtility.ConvertCommands(Model.Mail);
             Score = SmileVideoMsgUtility.ConvertScore(Model.Score);
 
+            CommentSize = SmileVideoMsgUtility.GetFontSize(Commands);
+            ActualCommentSize = CommentSize;
+            CommentVertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
+            ActualCommentVertical = CommentVertical;
+
             ForegroundColor = SmileVideoMsgUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
-            ActualForeground = new SolidColorBrush(ForegroundColor);
-            FreezableUtility.SafeFreeze(ActualForeground);
+            OutlineColor = GetOoutlineColor(ForegroundColor);
+            ShadowColor = GetShadowColor(OutlineColor);
+            StrokeColor = GetStrokeColor(OutlineColor);
 
-            OutlineColor = MediaUtility.GetAutoColor(ForegroundColor);
-            ShadowColor = OutlineColor;
-            StrokeColor = Color.FromArgb(0x80, OutlineColor.R, OutlineColor.G, OutlineColor.B);
+            ApplyFontStyle(ForegroundColor, ShadowColor, StrokeColor, ActualCommentSize);
 
-            ActualShadow = new SolidColorBrush(ShadowColor);
-            ActualStroke = new SolidColorBrush(StrokeColor);
-            FreezableUtility.SafeFreeze(ActualShadow);
-            FreezableUtility.SafeFreeze(ActualStroke);
+            if(IsOriginalPoster) {
+                var hasComment = !string.IsNullOrEmpty(Content) && 0 < Content.Length;
+                IsNiwanLanguage = hasComment
+                    ? Content[0] == '/'
+                    : false
+                ;
 
-            FontSize = GetFontSize(Setting.FontSize, Commands);
-
-            Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
+                if(!IsNiwanLanguage && hasComment) {
+                    if(Content[0] == '＠') {
+                        CommentScript = SmileVideoCommentUtility.GetCommentScript(Content, Commands);
+                    }
+                }
+            }
         }
 
         #region property
@@ -237,6 +247,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool IsOriginalPoster { get; }
 
         /// <summary>
+        /// ニワン語か。
+        /// </summary>
+        public bool IsNiwanLanguage { get; }
+
+        public bool HasCommentScript => CommentScript != null && CommentScript.ScriptType != SmileVideoCommentScriptType.Unknown;
+
+        public SmileVideoCommentScriptModel CommentScript { get; }
+
+        /// <summary>
+        /// コメントサイズ。
+        /// </summary>
+        public SmileVideoCommentSize CommentSize { get; }
+        /// <summary>
+        /// 実際に使用するコメントサイズ。
+        /// </summary>
+        public SmileVideoCommentSize ActualCommentSize { get; private set; }
+
+        /// <summary>
         /// フォントサイズ。
         /// </summary>
         public double FontSize { get; private set; }
@@ -289,7 +317,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public double Opacity { get { return Setting.FontAlpha; } }
 
-        public SmileVideoCommentVertical Vertical { get; }
+        /// <summary>
+        /// 縦位置。
+        /// </summary>
+        public SmileVideoCommentVertical CommentVertical { get; }
+        /// <summary>
+        /// 実際に使用する縦位置。
+        /// </summary>
+        public SmileVideoCommentVertical ActualCommentVertical { get; private set; }
 
         public int Fps { get { return Setting.Fps; } }
 
@@ -297,9 +332,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region function
 
-        static double GetFontSize(double baseSize, IList<string> commands)
+        static Color GetOoutlineColor(Color foregroundColor)
         {
-            switch(SmileVideoMsgUtility.GetFontSize(commands)) {
+            return MediaUtility.GetAutoColor(foregroundColor);
+        }
+        static Color GetShadowColor(Color outlineColor)
+        {
+            return outlineColor;
+        }
+        static Color GetStrokeColor(Color outlineColor)
+        {
+            return Color.FromArgb(0x80, outlineColor.R, outlineColor.G, outlineColor.B);
+        }
+
+        static double GetFontSize(double baseSize, SmileVideoCommentSize commentSize)
+        {
+            switch(commentSize) {
                 case SmileVideoCommentSize.Medium:
                     return baseSize;
 
@@ -323,10 +371,59 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return s;
         }
 
-
-        public void ChangeDefaultCommand(Brush foreground, Color backcolor)
+        void ApplyFontStyle(Color foreColor, Color shadowColor, Color strokeColor, SmileVideoCommentSize commentSize)
         {
-            // not imple
+            ActualForeground = new SolidColorBrush(foreColor);
+            ActualShadow = new SolidColorBrush(shadowColor);
+            ActualStroke = new SolidColorBrush(strokeColor);
+
+            FontSize = GetFontSize(Setting.FontSize, commentSize);
+
+            FreezableUtility.SafeFreeze(ActualForeground);
+            FreezableUtility.SafeFreeze(ActualShadow);
+            FreezableUtility.SafeFreeze(ActualStroke);
+        }
+
+        public void ApplyDefaultCommentScript(SmileVideoCommentScriptModel commentScript)
+        {
+            Debug.Assert(commentScript.ScriptType == SmileVideoCommentScriptType.Default);
+
+            Color foregroundColor, shadowColor, strokeColor;
+            if(ForegroundColor == Colors.White) {
+                foregroundColor = commentScript.ForegroundColor;
+                var outlineColor = GetOoutlineColor(foregroundColor);
+                shadowColor = GetShadowColor(outlineColor);
+                strokeColor = GetStrokeColor(outlineColor);
+            } else {
+                foregroundColor = ForegroundColor;
+                shadowColor = ShadowColor;
+                strokeColor = StrokeColor;
+            }
+
+            SmileVideoCommentSize commentSize;
+            if(CommentSize == SmileVideoCommentSize.Medium) {
+                commentSize = commentScript.CommentSize;
+            } else {
+                commentSize = CommentSize;
+            }
+
+            SmileVideoCommentVertical commentVertical;
+            if(CommentVertical == SmileVideoCommentVertical.Normal) {
+                commentVertical = commentScript.CommentVertical;
+            }else {
+                commentVertical = CommentVertical;
+            }
+            ActualCommentVertical = commentVertical;
+
+            ApplyFontStyle(foregroundColor, shadowColor, strokeColor, commentSize);
+
+            var propertyNames = new[] {
+                nameof(ActualForeground),
+                nameof(ActualShadow),
+                nameof(ActualStroke),
+                nameof(FontSize),
+            };
+            CallOnPropertyChange(propertyNames);
         }
 
         public void ChangeActualContent()
@@ -337,9 +434,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CallOnPropertyChange(propertyNames);
         }
 
+        public void ChangeActualStyle()
+        {
+            var propertyNames = new[] {
+                nameof(ActualForeground),
+                nameof(ActualShadow),
+                nameof(ActualStroke),
+            };
+            CallOnPropertyChange(propertyNames);
+        }
+
         public void ChangeFontStyle()
         {
-            FontSize = GetFontSize(Setting.FontSize, Commands);
+            FontSize = GetFontSize(Setting.FontSize, ActualCommentSize);
 
             var propertyNames = new[] {
                 nameof(FontSize),

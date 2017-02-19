@@ -294,13 +294,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             if(UsingDmc.Value) {
                                 var mux = DmcMultiplexer;
                                 var role = SmileVideoInformationUtility.GetDmcRoleKey(mux.VideoSrcIds.First(), mux.AudioSrcIds.First());
+                                VideoStream.Flush();
                                 VideoFile.Refresh();
                                 // 理屈で言えばここは絶対に存在する
                                 Information.SetDmcLoaded(mux.VideoSrcIds.First(), mux.AudioSrcIds.First(), VideoFile.Length == Information.DmcItems[role].Length);
                                 if(Information.DmcItems[role].IsLoaded) {
                                     VideoLoadState = LoadState.Loaded;
                                 } else {
-                                    Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
+                                    Mediation.Logger.Debug($"{VideoId}: LoadState.Failure, {mux.VideoSrcIds.First()}, {mux.AudioSrcIds.First()}, {VideoFile.Length == Information.DmcItems[role].Length}, {role}");
                                     VideoLoadState = LoadState.Failure;
                                 }
                             } else {

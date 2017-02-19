@@ -101,6 +101,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     var filter = GlobalFiltering;
                     return new ResponseModel(request, new SmileVideoFilteringResultModel(filter));
 
+                case SmileVideoCustomSettingKind.Bookmark:
+                    var sysNodes = ManagerPack.BookmarkManager.SystemNodes;
+                    var userNodes = ManagerPack.BookmarkManager.UserNodes;
+                    return new ResponseModel(request, new SmileVideoBookmarkResultModel(sysNodes, userNodes));
+
                 default:
                     throw new NotImplementedException();
             }
@@ -143,6 +148,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     case SmileVideoProcess.CheckItLater: {
                             var param = (SmileVideoProcessCheckItLaterParameterModel)smileProcessRequest.Parameter;
                             var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem, param.IsForce);
+                            return new ResponseModel(request, result);
+                        }
+
+                    case SmileVideoProcess.Bookmark: {
+                            var param = (SmileVideoProcessBookmarkParameterModel)smileProcessRequest.Parameter;
+                            var result = ManagerPack.BookmarkManager.AddBookmarkItems(param.Bookmark, param.VideoItems);
                             return new ResponseModel(request, result);
                         }
 
