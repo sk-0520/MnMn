@@ -1174,7 +1174,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     }
                 }
 
-                //TODO: 重複するセパレータの除外とかとか
+                // 自身がセパレータで自身より前もセパレータなら前を非表示にする
+                var showMenuItems = menuItems
+                    .SelectValueIndex()
+                    .Where(i => i.Value.View.Visibility == Visibility.Visible)
+                    .ToList()
+                ;
+                foreach(var showMenuItem in showMenuItems.SelectValueIndex()) {
+                    if(0 < showMenuItem.Index && showMenuItem.Value.Value.Define.IsSeparator) {
+                        if(menuItems[showMenuItem.Index - 1].Define.IsSeparator) {
+                            menuItems[showMenuItem.Index - 1].View.Visibility = Visibility.Collapsed;
+                        }
+                    }
+                }
 
                 ContextMenu.IsOpen = true;
             }
