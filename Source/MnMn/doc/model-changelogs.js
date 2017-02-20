@@ -132,7 +132,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#411: リンクの下線がMVVMから操作したときにびよーん',
+						'comments': [
+							'単純に XAML だけの問題で MVVM 全然関係なかった'
+						]
 					},
 					{
 						'revision': '',

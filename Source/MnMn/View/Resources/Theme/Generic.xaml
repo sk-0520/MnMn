@@ -698,6 +698,7 @@
                   <ContentControl
                     x:Name="HyperLink"
                     VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
                     Content="{TemplateBinding Content}"
                     Foreground="{Binding Foreground, ElementName=Content}"
                     FontWeight="Bold"
