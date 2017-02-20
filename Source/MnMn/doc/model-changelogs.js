@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#412: ヘルプのFlashに関するあれな記述内容の真偽が逆'
 					},
 					{
 						'revision': '',
