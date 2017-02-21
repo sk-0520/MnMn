@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 
         #region function
 
-        public static RawSmileLiveGetPlayerStatusModel ConvertFromGetPlayerStatusText(string getPlayerStatusText)
+        public static RawSmileLiveGetPlayerStatusModel ConvertFromRawStream(Stream stream)
         {
-            using(var stream = StreamUtility.ToUtf8Stream(getPlayerStatusText)) {
-                var result = SerializeUtility.LoadXmlSerializeFromStream<RawSmileLiveGetPlayerStatusModel>(stream);
-                result.Raw = getPlayerStatusText;
+            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileLiveGetPlayerStatusModel>(stream);
+        }
+
+        public static RawSmileLiveGetPlayerStatusModel ConvertFromRawData(string s)
+        {
+            using(var stream = StreamUtility.ToUtf8Stream(s)) {
+                var result = ConvertFromRawStream(stream);
+                result.Raw = s;
 
                 return result;
             }
@@ -46,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
                 if(!response.IsSuccess) {
                     return default(RawSmileLiveGetPlayerStatusModel);
                 } else {
-                    var result = ConvertFromGetPlayerStatusText(response.Result);
+                    var result = ConvertFromRawData(response.Result);
                     return result;
                 }
             });

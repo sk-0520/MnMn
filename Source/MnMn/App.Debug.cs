@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             //var getPlayerStatus = new GetPlayerStatus(mediation);
             await Task.Delay(0);
-            var mmm = GetPlayerStatus.ConvertFromGetPlayerStatusText(File.ReadAllText(@"x:\stat.xml"));
+            var mmm = GetPlayerStatus.ConvertFromRawData(File.ReadAllText(@"x:\stat.xml"));
         }
 
     }

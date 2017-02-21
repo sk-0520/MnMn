@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
@@ -106,13 +107,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override Task LoadInformationAsync(IEnumerable<SmileLiveInformationViewModel> informationItems, CacheSpan informationCacheSpan)
         {
-            var loader = new SmileLiveInformationLoader(informationItems);
+            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var loader = new SmileLiveInformationLoader(informationItems, session);
             return loader.LoadInformationAsync(informationCacheSpan);
         }
 
         protected override Task LoadImageAsync(IEnumerable<SmileLiveInformationViewModel> informationItems, CacheSpan imageCacheSpan)
         {
-            var loader = new SmileLiveInformationLoader(informationItems);
+            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var loader = new SmileLiveInformationLoader(informationItems, session);
             return loader.LoadThumbnaiImageAsync(imageCacheSpan);
         }
 

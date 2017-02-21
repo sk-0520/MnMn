@@ -30,9 +30,11 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player;
@@ -69,8 +71,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         Mediation Mediation { get; }
         SmileLiveSettingModel Setting { get; }
 
-        public SmileLiveInformationSource InformationSource { get; }
+        public SmileLiveInformationSource InformationSource { get; protected set; }
 
+        RawSmileLiveGetPlayerStatusModel PlayerStatus { get; set; }
         FeedSmileLiveItemModel Feed { get; }
 
         #region file
@@ -336,7 +339,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
-            return Task.FromResult(true);
+            var playerStatus = new GetPlayerStatus(Mediation);
+            return SmileLiveInformationUtility.LoadGetPlayerStatusAsync(Mediation, Id, cacheSpan).ContinueWith(t => {
+                var model = t.Result;
+                if(!SmileLiveGetPlayerStatusUtility.IsSuccessResponse(model)) {
+                    return false;
+                }
+
+                PlayerStatus = model;
+                InformationSource = SmileLiveInformationSource.PlayerStatus;
+
+                return true;
+            });
         }
 
         protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
