@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     /// <summary>
     /// 動画IDとそれに紐付く情報を保持。
     /// </summary>
-    public class SmileVideoInformationCaching: Caching<string, SmileVideoInformationViewModel>
+    public class SmileVideoInformationCaching: InformationCacherBase<SmileVideoInformationViewModel>
     {
         #region define
 
@@ -48,19 +48,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #endregion
 
-        object checker = new object();
-
         public SmileVideoInformationCaching(Mediation mediation)
-            : base(true)
-        {
-            Mediation = mediation;
-        }
-
-        #region property
-
-        Mediation Mediation { get; }
-
-        #endregion
+            : base(mediation)
+        { }
 
         #region function
 

@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //liverss();
             //dmc();
             //src();
-            livestatus();
+            //livestatus();
         }
 
         async void login()
