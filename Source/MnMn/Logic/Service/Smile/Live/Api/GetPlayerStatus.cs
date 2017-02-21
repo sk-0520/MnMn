@@ -24,7 +24,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
         public static RawSmileLiveGetPlayerStatusModel ConvertFromGetPlayerStatusText(string getPlayerStatusText)
         {
             using(var stream = StreamUtility.ToUtf8Stream(getPlayerStatusText)) {
-                return SerializeUtility.LoadXmlSerializeFromStream<RawSmileLiveGetPlayerStatusModel>(stream);
+                var result = SerializeUtility.LoadXmlSerializeFromStream<RawSmileLiveGetPlayerStatusModel>(stream);
+                result.Raw = getPlayerStatusText;
+
+                return result;
             }
         }
 
@@ -32,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
         {
             var userAgent = Session.CreateHttpUserAgent();
 
-            var page = new PageLoader(Mediation, Session, SmileLiveMediationKey.getPlayerStatus, ServiceType.Smile);
+            var page = new PageLoader(Mediation, Session, SmileLiveMediationKey.getPlayerStatus, ServiceType.SmileLive);
             page.ReplaceUriParameters["live-id"] = liveId;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {

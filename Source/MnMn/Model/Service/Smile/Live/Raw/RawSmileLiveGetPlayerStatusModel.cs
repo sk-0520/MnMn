@@ -9,7 +9,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw
 {
     [Serializable, XmlRoot("getplayerstatus")]
-    public class RawSmileLiveGetPlayerStatusModel: ModelBase
+    public class RawSmileLiveGetPlayerStatusModel: RawModelBase
     {
         #region property
 

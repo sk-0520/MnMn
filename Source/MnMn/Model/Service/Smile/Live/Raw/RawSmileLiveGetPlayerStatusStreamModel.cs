@@ -65,39 +65,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw
         /// 0: 生放送, 1: タイムシフト。
         /// </summary>
         [XmlElement("archive")]
-        public bool Archive { get; set; }
+        public string Archive { get; set; }
 
         [XmlElement("ichiba_notice_enable")]
-        public bool IchibaNoticeEnable { get; set; }
+        public string IchibaNoticeEnable { get; set; }
 
         [XmlElement("comment_lock")]
-        public bool CommentLock { get; set; }
+        public string CommentLock { get; set; }
 
         [XmlElement("background_comment")]
-        public bool BackgroundComment { get; set; }
+        public string BackgroundComment { get; set; }
 
         [XmlElement("telop")]
         public RawSmileLiveGetPlayerStatusStreamTelopModel Telop { get; set; } = new RawSmileLiveGetPlayerStatusStreamTelopModel();
 
         [XmlElement("base_time")]
-        public bool BaseTime { get; set; }
+        public string BaseTime { get; set; }
         [XmlElement("open_time")]
-        public bool OpenTime { get; set; }
+        public string OpenTime { get; set; }
         [XmlElement("start_time")]
-        public bool StartTime { get; set; }
+        public string StartTime { get; set; }
         [XmlElement("end_time")]
-        public bool EndTime { get; set; }
+        public string EndTime { get; set; }
 
         [XmlArray("contents_list"), XmlArrayItem("contents")]
         public CollectionModel<RawSmileLiveGetPlayerStatusStreamContentModel> Content { get; set; } = new CollectionModel<RawSmileLiveGetPlayerStatusStreamContentModel>();
 
         [XmlElement("picture_url")]
-        public bool PictureUrl { get; set; }
+        public string PictureUrl { get; set; }
         [XmlElement("thumb_url")]
-        public bool ThumbUrl { get; set; }
+        public string ThumbUrl { get; set; }
 
         [XmlElement("is_priority_prefecture")]
-        public bool IsPriorityPrefecture { get; set; }
+        public string IsPriorityPrefecture { get; set; }
 
         #endregion
     }
