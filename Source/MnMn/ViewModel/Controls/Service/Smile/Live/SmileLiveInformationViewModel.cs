@@ -104,6 +104,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                     case SmileLiveInformationSource.Feed:
                         return Feed.Guid.Uri;
 
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return PlayerStatus.Stream.Id;
+
                     default:
                         throw new NotImplementedException();
                 }
@@ -117,6 +120,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 switch(InformationSource) {
                     case SmileLiveInformationSource.Feed:
                         return Feed.Title;
+
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return PlayerStatus.Stream.Title;
 
                     default:
                         throw new NotImplementedException();
@@ -132,6 +138,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                     case SmileLiveInformationSource.Feed:
                         return RawValueUtility.ConvertUri(Feed.Link);
 
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return SmileLiveGetPlayerStatusUtility.GetWatchUrl(PlayerStatus);
+
                     default:
                         throw new NotImplementedException();
                 }
@@ -145,6 +154,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 switch(InformationSource) {
                     case SmileLiveInformationSource.Feed:
                         return RawValueUtility.ConvertUri(Feed.Thumbnail.Url);
+
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return RawValueUtility.ConvertUri(PlayerStatus.Stream.PictureUrl);
 
                     default:
                         throw new NotImplementedException();
@@ -160,6 +172,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                     case SmileLiveInformationSource.Feed:
                         return Feed.OwnerName;
 
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return PlayerStatus.Stream.OwnerName;
+
                     default:
                         throw new NotImplementedException();
                 }
@@ -173,6 +188,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 switch(InformationSource) {
                     case SmileLiveInformationSource.Feed:
                         return Feed.PubDate;
+
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return RawValueUtility.ConvertUnixTime(PlayerStatus.Stream.OpenTime);
 
                     default:
                         throw new NotImplementedException();
@@ -188,6 +206,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                     case SmileLiveInformationSource.Feed:
                         return RawValueUtility.ConvertInteger(Feed.View);
 
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return RawValueUtility.ConvertInteger(PlayerStatus.Stream.WatchCount);
+
                     default:
                         throw new NotImplementedException();
                 }
@@ -201,6 +222,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 switch(InformationSource) {
                     case SmileLiveInformationSource.Feed:
                         return RawValueUtility.ConvertInteger(Feed.NumRes);
+
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return RawValueUtility.ConvertInteger(PlayerStatus.Stream.CommentCount);
 
                     default:
                         throw new NotImplementedException();
@@ -216,6 +240,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                     case SmileLiveInformationSource.Feed:
                         return SmileLiveFeedUtility.ConvertType(Feed.Type);
 
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        return SmileLiveGetPlayerStatusUtility.ConvertType(PlayerStatus.Stream.ProviderType);
+
                     default:
                         throw new NotImplementedException();
                 }
@@ -229,6 +256,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 switch(InformationSource) {
                     case SmileLiveInformationSource.Feed:
                         return RawValueUtility.ConvertBoolean(Feed.MemberOnly);
+
+                    case SmileLiveInformationSource.GetPlayerStatus:
+                        if(Feed != null) {
+                            return RawValueUtility.ConvertBoolean(Feed.MemberOnly);
+                        }
+                        //TODO: どうしよっかねぇ。
+                        return false;
 
                     default:
                         throw new NotImplementedException();
@@ -347,7 +381,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 }
 
                 PlayerStatus = model;
-                InformationSource = SmileLiveInformationSource.PlayerStatus;
+                InformationSource = SmileLiveInformationSource.GetPlayerStatus;
 
                 return true;
             });

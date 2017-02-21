@@ -16,6 +16,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw
         [XmlElement("id")]
         public string Id { get; set; }
 
+        [XmlElement("title")]
+        public string Title { get; set; }
+
         [XmlElement("provider_type")]
         public string ProviderType { get; set; }
 
@@ -91,6 +94,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw
         [XmlArray("contents_list"), XmlArrayItem("contents")]
         public CollectionModel<RawSmileLiveGetPlayerStatusStreamContentModel> Content { get; set; } = new CollectionModel<RawSmileLiveGetPlayerStatusStreamContentModel>();
 
+        /// <summary>
+        /// こっちの方が大きい。
+        /// </summary>
         [XmlElement("picture_url")]
         public string PictureUrl { get; set; }
         [XmlElement("thumb_url")]

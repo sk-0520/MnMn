@@ -31,6 +31,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live
         /// <summary>
         /// GetPlayerStatusから取得。
         /// </summary>
-        PlayerStatus,
+        GetPlayerStatus,
     }
 }
