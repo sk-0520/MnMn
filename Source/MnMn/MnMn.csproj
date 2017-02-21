@@ -362,7 +362,16 @@
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveItemModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveThumbnailModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusErrorModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusMsModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusRtmpModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusStreamModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusStreamContentModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusStreamTelopModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusUserModel.cs" />
     <Compile Include="Model\Service\Smile\Live\SmileLiveCategoryModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileTwitterInfoModel.cs" />
     <Compile Include="Model\Service\Smile\SmileUserDefinedModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcClientInformationModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthInfoModel.cs" />
