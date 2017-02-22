@@ -311,6 +311,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
     <Compile Include="Logic\SpaghettiScript.cs" />
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
+    <Compile Include="Logic\Utility\HtmlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveGetPlayerStatusUtility.cs" />
     <Compile Include="Logic\Utility\StreamUtility.cs" />
     <Compile Include="Logic\Utility\ItemsControlUtility.cs" />
@@ -366,6 +367,7 @@
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveItemModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveThumbnailModel.cs" />
+    <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveFeedDetailModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusErrorModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusMsModel.cs" />

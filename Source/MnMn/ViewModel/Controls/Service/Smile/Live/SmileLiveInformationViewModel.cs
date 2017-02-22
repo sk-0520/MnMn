@@ -60,6 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             : this(mediation)
         {
             Feed = feed;
+            FeedDetail = SmileLiveFeedUtility.ConvertRawDescription(Feed.Description);
 
             InformationSource = SmileLiveInformationSource.Feed;
 
@@ -74,7 +75,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public SmileLiveInformationSource InformationSource { get; protected set; }
 
         RawSmileLiveGetPlayerStatusModel PlayerStatus { get; set; }
+
         FeedSmileLiveItemModel Feed { get; }
+        RawSmileLiveFeedDetailModel FeedDetail { get; set; }
 
         #region file
 
