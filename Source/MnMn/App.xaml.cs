@@ -275,6 +275,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
 
             SplashWindow.Show();
+#if DEBUG
+            SplashWindow.Topmost = false;
+            SplashWindow.ShowInTaskbar = true; // 非最前面化でどっかいっちゃう対策
+#endif
 
             var initializeTasks = new [] {
                 InitializeCrashReportAsync(),
