@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
@@ -56,6 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //liverss();
             //dmc();
             //src();
+            //livestatus();
         }
 
         async void login()
@@ -163,6 +165,25 @@ namespace ContentTypeTextNet.MnMn.MnMn
             model.Parameter.AssemblyNames.Add("123");
             var path = @"X:\src.xml";
             SerializeUtility.SaveXmlSerializeToFile(path, model);
+        }
+
+        async void livestatus()
+        {
+            //var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            //var cmd = new CommandLine();
+            //var account = cmd.GetValue("smile-login-name");
+            //var password = cmd.GetValue("smile-login-pass");
+
+            //var model = new SmileUserAccountModel() {
+            //    Name = account,
+            //    Password = password,
+            //};
+            //var vm = new SmileSessionViewModel(mediation, model);
+            //await vm.LoginAsync();
+
+            //var getPlayerStatus = new GetPlayerStatus(mediation);
+            await Task.Delay(0);
+            var mmm = GetPlayerStatus.ConvertFromRawData(File.ReadAllText(@"x:\stat.xml"));
         }
 
     }

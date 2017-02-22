@@ -7,5 +7,8 @@
 		<item key="p" value="${page}" />
 		<item key="order" value="${order}" />
 	</param>
+	<param key="live-getplayerstatus">
+		<item key="v" value="${live-id}" />
+	</param>
 
 </parameters>

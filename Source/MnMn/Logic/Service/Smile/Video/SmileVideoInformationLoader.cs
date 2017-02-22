@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     public class SmileVideoInformationLoader: InformationLoader<SmileVideoInformationViewModel>
     {
         public SmileVideoInformationLoader(IEnumerable<SmileVideoInformationViewModel> informations)
-            : base(informations)
+            : base(informations, new HttpUserAgentHost())
         { }
 
         public override Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             ;
             foreach(var group in groups) {
                 var groupTask = Task.Run(() => {
-                    var client = new HttpClient();
+                    var client = CreateHttpUserAgent.CreateHttpUserAgent();
 
                     var childTasks = new List<Task>();
                     foreach(var item in group) {
