@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
@@ -1172,6 +1173,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                         var viewMenuItem = (MenuItem)menuItem.View;
                         viewMenuItem.CommandParameter = contextMenuItemResult.Parameter;
                     }
+                }
+
+                // #418
+                if(Constants.WebNavigatorContextMenuShowHtmlSource) {
+                    var showSourceMenuItem = menuItems.LastOrDefault(i => i.Define.Key == WebNavigatorContextMenuKey.commonSource);
+                    if(showSourceMenuItem == null) {
+                        var sourceViewModel = new WebNavigatorContextMenuItemViewModel(new WebNavigatorContextMenuItemModel() {
+                            AllowService = ServiceType.All,
+                            SendService = ServiceType.Common,
+                            Key = WebNavigatorContextMenuKey.commonSource,
+                            _Words = {
+                                //TODO: ローカライズ
+                                new DefinedKeyValuePairModel() {
+                                    Key = "js-jp",
+                                    Value = "source",
+                                },
+                            },
+                            IsSeparator = false,
+                        });
+                        var menuItemControl = MakeContextMenuItem(sourceViewModel);
+                        ((List<Control>)ContextMenu.ItemsSource).Add(menuItemControl);
+                        showSourceMenuItem = new { View = menuItemControl, Define = (WebNavigatorContextMenuItemViewModel)menuItemControl.DataContext };
+                        menuItems.Add(showSourceMenuItem);
+                    }
+                    showSourceMenuItem.View.IsEnabled = true;
+                    showSourceMenuItem.View.Visibility = Visibility.Visible;
                 }
 
                 // 自身がセパレータで自身より前もセパレータなら前を非表示にする

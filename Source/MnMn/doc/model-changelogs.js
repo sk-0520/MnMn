@@ -111,7 +111,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#418: デバッグ時にHTMLソースを表示できるようにする',
+						'comments': [
+							'一応開発用機能なんだけどデバッグ時に限定するのもあれなんで App.config で制御するようにした',
+							'App.config: web_navigator-context_menu-show-html_source'
+						]
 					},
 					{
 						'revision': '',

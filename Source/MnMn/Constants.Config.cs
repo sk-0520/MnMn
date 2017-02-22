@@ -63,6 +63,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string WebNavigatorGeckoFxPreferencesFileName => appConfig.Get("web_navigator-geckofx-preferences-name");
         public static string WebNavigatorGeckoFxPluginsDirectoryName => appConfig.Get("web_navigator-geckofx-plugin-dir-name");
         public static string WebNavigatorGeckoFxExtensionsDirectoryName => appConfig.Get("web_navigator-geckofx-extension-dir-name");
+        public static bool WebNavigatorContextMenuShowHtmlSource => appConfig.Get("web_navigator-context_menu-show-html_source", bool.Parse);
+        
 
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 
