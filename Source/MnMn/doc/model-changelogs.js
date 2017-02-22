@@ -160,7 +160,8 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': '#415: Geckofx 45.0.28 -> 45.0.30'
 					},
 					{
 						'revision': '',
