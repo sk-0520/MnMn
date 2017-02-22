@@ -373,18 +373,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
-            var playerStatus = new GetPlayerStatus(Mediation);
-            return SmileLiveInformationUtility.LoadGetPlayerStatusAsync(Mediation, Id, cacheSpan).ContinueWith(t => {
-                var model = t.Result;
-                if(!SmileLiveGetPlayerStatusUtility.IsSuccessResponse(model)) {
-                    return false;
-                }
+            return Task.FromResult(true);
+            // 全部取得するのまずいんじゃないすかねぇ。。。
+            //var playerStatus = new GetPlayerStatus(Mediation);
+            //return SmileLiveInformationUtility.LoadGetPlayerStatusAsync(Mediation, Id, cacheSpan).ContinueWith(t => {
+            //    var model = t.Result;
+            //    if(!SmileLiveGetPlayerStatusUtility.IsSuccessResponse(model)) {
+            //        return false;
+            //    }
 
-                PlayerStatus = model;
-                InformationSource = SmileLiveInformationSource.GetPlayerStatus;
+            //    PlayerStatus = model;
+            //    InformationSource = SmileLiveInformationSource.GetPlayerStatus;
 
-                return true;
-            });
+            //    return true;
+            //});
         }
 
         protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
