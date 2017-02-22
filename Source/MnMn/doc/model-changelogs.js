@@ -165,6 +165,11 @@
 					},
 					{
 						'revision': '',
+						'class': 'nuget',
+						'subject': '#416: MahApps.Metro 1.4.1 -> 1.4.3'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
