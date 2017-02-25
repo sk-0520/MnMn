@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ContentTypeTextNet.MnMn.Applications.CrashSender.Properties {
+namespace ContentTypeTextNet.MnMn.Applications.CrashReporter.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashSender.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ContentTypeTextNet.MnMn.Applications.CrashSender.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ContentTypeTextNet.MnMn.Applications.CrashReporter.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

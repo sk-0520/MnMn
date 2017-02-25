@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridging", "Library\Bridgin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{2F06848C-2B2E-4029-BA62-6A817F8ED50C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrashSender", "Applications\bin\CrashSender\CrashSender.csproj", "{F8C7551B-E65E-41FA-BF14-D52C1B23F247}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrashReporter", "Applications\bin\CrashReporter\CrashReporter.csproj", "{F8C7551B-E65E-41FA-BF14-D52C1B23F247}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

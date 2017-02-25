@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.Applications.CrashSender
+namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 {
     public static class Constants
     {

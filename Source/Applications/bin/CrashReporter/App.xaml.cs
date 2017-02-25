@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ContentTypeTextNet.MnMn.Applications.CrashSender
+namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 {
     /// <summary>
     /// App.xaml の相互作用ロジック

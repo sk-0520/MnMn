@@ -1,5 +1,5 @@
 ﻿<mamc:MetroWindow 
-  x:Class="ContentTypeTextNet.MnMn.Applications.CrashSender.MainWindow"
+  x:Class="ContentTypeTextNet.MnMn.Applications.CrashReporter.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
@@ -15,7 +15,7 @@
   BorderBrush="{DynamicResource AccentColorBrush}"
   BorderThickness="1"
   ShowCloseButton="False"
-  Icon="/Resources/Icon/MnMn-CrashSender.ico"
+  Icon="/Resources/Icon/MnMn-CrashReporter.ico"
 
   Title="MainWindow"
   Width="460"

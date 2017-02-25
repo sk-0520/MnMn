@@ -14,7 +14,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using Newtonsoft.Json.Linq;
 
-namespace ContentTypeTextNet.MnMn.Applications.CrashSender
+namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 {
     public class MainWorkerViewModel: ViewModelBase
     {

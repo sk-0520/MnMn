@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
-namespace ContentTypeTextNet.MnMn.Applications.CrashSender
+namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
