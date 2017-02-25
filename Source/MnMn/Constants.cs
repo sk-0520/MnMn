@@ -318,6 +318,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string BinaryDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "bin"); } }
 
+        public static string CrashReporterApplicationPath { get; } = Path.Combine(BinaryDirectoryPath, "CrashReporter", "CrashReporter.exe");
         public static string FfmpegApplicationPath { get; } = Path.Combine(BinaryDirectoryPath, "ffmpeg", "ffmpeg.exe");
 
         public static string DefineName { get; } = "define";

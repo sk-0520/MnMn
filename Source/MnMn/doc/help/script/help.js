@@ -159,6 +159,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'others-crash',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'クラッシュレポート'
+		}
+	},
+	{
 		name: 'others-flash',
 		localize: true,
 		level: 1,

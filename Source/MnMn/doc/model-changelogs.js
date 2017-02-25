@@ -119,7 +119,16 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#275: クラッシュ時の出力ファイルを何かしらの手段で開発側にブン投げる',
+						'comments': [
+							'Google Apps Script と Google Drive を用いてなんちゃって Web サービス構築',
+							'GAS側のソースコードはリポジトリに格納できないため確認するには↓の URI を参照してください',
+							'https://drive.google.com/open?id=11vzOl_EH5DdRO_aER12bXcp1bDYfRZzayCoXGI59nUFCshu7Znxp1ddi',
+							'MnMn が異常終了した際に #140 でクラッシュレポートが出力されるので出力されたタイミングで本件の送信プログラムが立ち上がるイメージ',
+							'メモリ不足でクラッシュレポート自体が生成できない場合はなんもできないと思う',
+							'送信プログラム起動は App.config: `app-send-crash-report` で制御',
+							'こういう Web サービスなんぞ自分で作らず巨人の肩に乗るのが一番楽ですわ'
+						]
 					},
 					{
 						'revision': '',
