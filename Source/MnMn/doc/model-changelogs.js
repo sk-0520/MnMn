@@ -85,24 +85,19 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.49.1',
-		'isRc': true,
+		'date': '2017/02/25',
+		'version': '0.50.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': 'クラッシュレポートを開発側に送信する機能を付けたので 0.50.0 初回起動時に使用許諾が表示されます',
+						'comments': [
+							['CrashReporter！', '0.50.0/crash-reporter.png']
+						]
 					}
 				]
 			},
@@ -110,7 +105,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'd542fae59348e981e11ae14e6967579fc6ff637c',
 						'subject': '#418: デバッグ時にHTMLソースを表示できるようにする',
 						'comments': [
 							'一応開発用機能なんだけどデバッグ時に限定するのもあれなんで App.config で制御するようにした',
@@ -118,7 +113,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '8b6fb62670773bcc5d906768d6bf40fe88ed0b13',
 						'subject': '#275: クラッシュ時の出力ファイルを何かしらの手段で開発側にブン投げる',
 						'comments': [
 							'Google Apps Script と Google Drive を用いてなんちゃって Web サービス構築',
@@ -131,16 +126,12 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '071b23d1dfb2b79d7a7adadba9f678bdfff4d9b8',
 						'subject': '#419: 音声ON/OFF周りをキーバインドする',
 						'comments': [
 							'F7 キーで切り替え',
 							'問い合わせたまにもらうんだけど、キーバインドの決め方は別段 私の趣味ってわけじゃなくて Windows Media Player に合わせてるのよ'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -148,34 +139,30 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '28bb68c9dee4c0d85c6cdfd75611e7e32be92a53',
 						'subject': '#412: ヘルプのFlashに関するあれな記述内容の真偽が逆'
 					},
 					{
-						'revision': '',
+						'revision': '963e0be5ce30cb5b5331e39225ef8446fc99063e',
 						'subject': '#411: リンクの下線がMVVMから操作したときにびよーん',
 						'comments': [
 							'単純に XAML だけの問題で MVVM 全然関係なかった'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '232ed7f83fb535b5a5e4c921a756388a08afe738',
 						'subject': '#413: スプラッシュスクリーンのリビジョンが読まないけど若干読みにくい'
 					},
 					{
-						'revision': '',
+						'revision': '1067d4b0a7fbf1195efe98bbf078c1511ae55e43',
 						'subject': '#420: マウスホイール選択切り替え可能なタブコントロールで非表示タブが選択できる'
 					},
 					{
-						'revision': '',
+						'revision': 'c2d1b9a928be951edc897b14d0510ffdb0058f30',
 						'subject': '#421: コメント速度を変更した際に途中でコメントが消える',
 						'comments': [
 							'本格的にやるとめんどいから ゆっくり → 速い に切り替えた際はまぁあれよ、気にすんな'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -183,7 +170,7 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '9bd92539a09abdf03151ea783dd0c9c8408ad787',
 						'class': 'open',
 						'subject': 'インフラ整備 -> #161: ニコ生の閲覧',
 						'comments': [
@@ -191,17 +178,17 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'ecf86f64ac13f6e8034a8741759aba6fcf5bf2df',
 						'class': 'nuget',
 						'subject': '#415: Geckofx 45.0.28 -> 45.0.30'
 					},
 					{
-						'revision': '',
+						'revision': '7002060becc3ed7a8d5acb222db26d4e623615fe',
 						'class': 'nuget',
 						'subject': '#416: MahApps.Metro 1.4.1 -> 1.4.3'
 					},
 					{
-						'revision': '',
+						'revision': 'c16488466dbecb88ed2ff09e07b71177ffad105a',
 						'class': 'nuget',
 						'subject': '#417: SlowCheetah 2.5.15 -> 2.5.48',
 						'comments': [
@@ -210,12 +197,8 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '0b4deef13bb49a1b90683f822020fabc9722f723',
 						'subject': '#414: デバッグ時にスプラッシュスクリーンが最前面だと邪魔なのだよ'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
