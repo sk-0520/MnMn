@@ -59,5 +59,15 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashSender.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   MnMn クラッシュ時に起動するプログラムです。
+        ///直接起動はできません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Execute_Fail_StartMode {
+            get {
+                return ResourceManager.GetString("String_Execute_Fail_StartMode", resourceCulture);
+            }
+        }
     }
 }

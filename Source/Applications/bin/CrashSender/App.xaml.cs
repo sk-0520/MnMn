@@ -27,6 +27,13 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashSender
             base.OnStartup(e);
 
             var viewModel = new MainWorkerViewModel();
+            try {
+                viewModel.Initialize();
+            } catch(Exception ex) {
+                MessageBox.Show(ex.Message);
+                Shutdown(1);
+            }
+
             var mainWindow = new MainWindow() {
                 DataContext = viewModel,
             };
