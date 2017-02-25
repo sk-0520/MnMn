@@ -15,6 +15,7 @@
   BorderBrush="{DynamicResource AccentColorBrush}"
   BorderThickness="1"
   ShowCloseButton="False"
+  Icon="/Resources/Icon/MnMn-CrashSender.ico"
 
   Title="MainWindow"
   Width="460"
