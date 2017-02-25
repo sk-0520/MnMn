@@ -20,6 +20,8 @@
   Height="550" 
 >
   <mamc:MetroWindow.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    
     <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
       <Style.Triggers>
         <Trigger Property="IsReadOnly" Value="True">
@@ -38,7 +40,6 @@
       <Setter Property="Margin" Value="2" />
       <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
-    
   </mamc:MetroWindow.Resources>
   
   <Grid Margin="8">
@@ -91,8 +92,12 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}">レポートを送信</Button>
+      <Button Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding SendCommand}">レポートを送信</Button>
       <Button Grid.Column="1" Style="{StaticResource SquareButtonStyle}" Click="Close_Click">終了</Button>
     </Grid>
+    
+    <Border Grid.Row="0" Grid.RowSpan="3" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
+    </Border>
+
   </Grid>
 </mamc:MetroWindow>
