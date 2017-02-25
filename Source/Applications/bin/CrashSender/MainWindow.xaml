@@ -16,16 +16,56 @@
   BorderThickness="1"
 
   Title="MainWindow"
-  Width="300"
-  Height="450" 
+  Width="460"
+  Height="550" 
 >
+  <mamc:MetroWindow.Resources>
+    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+      <Style.Triggers>
+        <Trigger Property="IsReadOnly" Value="True">
+          <Setter Property="IsUndoEnabled" Value="False" />
+          <Setter Property="UndoLimit" Value="0" />
+          <Setter Property="IsReadOnlyCaretVisible" Value="True" />
+          <Setter Property="Background" Value="{DynamicResource ControlsDisabledBrush}" />
+        </Trigger>
+        <Trigger Property="AcceptsReturn" Value="True">
+          <Setter Property="VerticalContentAlignment" Value="Top" />
+          <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+          <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        </Trigger>
+      </Style.Triggers>
+      <Setter Property="Padding" Value="2" />
+      <Setter Property="Margin" Value="2" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    
+  </mamc:MetroWindow.Resources>
+  
   <Grid Margin="8">
-    <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0" Margin="8">
+      <TextBlock FontSize="14">
+        MnMn は死にました。
+        <LineBreak />
+        このレポートを送信することにより今後の改善につながるかもです。
+        <LineBreak />
+        送信されたレポートは Google Drive に格納され、開発側でのみ共有されます。
+        <LineBreak />
+        <TextBlock FontSize="12">※受信側プログラムはリポジトリに格納セれていないため<Hyperlink Command="{Binding OpenReceiveProgramCommand}">こちら</Hyperlink>を確認してください。</TextBlock>
+      </TextBlock>
+    </Grid>
+    
+    <Grid Grid.Row="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition />
         <RowDefinition />
-        <RowDefinition />
+        <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -33,17 +73,26 @@
       </Grid.ColumnDefinitions>
 
       <Label Grid.Row="0" Grid.Column="0" Content="クラッシュレポート" />
-      <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ReportFilePath}" />
+      <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.SelectAllOnFocus="True"  IsReadOnly="True" Text="{Binding ReportFilePath}" />
 
       <Label Grid.Row="1" Grid.Column="0" Content="レポート内容" />
-      <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ReportFileData}" />
+      <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" AcceptsReturn="True" Text="{Binding ReportFileData}" />
 
       <Label Grid.Row="2" Grid.Column="0" Content="追加情報" />
-      <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ReportInformation}" />
+      <TextBox Grid.Row="2" Grid.Column="1" mamc:TextBoxHelper.Watermark="追加情報があれば入力してください" AcceptsReturn="True" Text="{Binding ReportInformation}" />
 
       <Label Grid.Row="3" Grid.Column="0" Content="連絡先" />
-      <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ContactAddress}" />
+      <TextBox Grid.Row="3" Grid.Column="1" mamc:TextBoxHelper.Watermark="開発側から連絡をしてもよい場合に入力してください" Text="{Binding ContactAddress}" />
+    </Grid>
 
+    <Grid Grid.Row="2" TextElement.FontSize="24" Margin="0,20,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}">レポートを送信</Button>
+      <Button Grid.Column="1" Style="{StaticResource SquareButtonStyle}" Click="Close_Click">終了</Button>
     </Grid>
   </Grid>
 </mamc:MetroWindow>

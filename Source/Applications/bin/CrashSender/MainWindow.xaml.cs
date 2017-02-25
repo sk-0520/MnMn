@@ -25,5 +25,10 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashSender
         {
             InitializeComponent();
         }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
