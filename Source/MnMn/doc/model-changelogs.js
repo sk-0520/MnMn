@@ -132,6 +132,14 @@
 					},
 					{
 						'revision': '',
+						'subject': '#419: 音声ON/OFF周りをキーバインドする',
+						'comments': [
+							'F7 キーで切り替え',
+							'問い合わせたまにもらうんだけど、キーバインドの決め方は別段 私の趣味ってわけじゃなくて Windows Media Player に合わせてるのよ'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
