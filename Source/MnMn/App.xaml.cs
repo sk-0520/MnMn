@@ -57,10 +57,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             SplashWindow = new SplashWindow();
 
-            var t = new DispatcherTimer();
-            t.Interval = TimeSpan.FromSeconds(10);
-            t.Tick += (sender, e) => { throw new Exception("しんだ！"); };
-            t.Start();
+            //var t = new DispatcherTimer();
+            //t.Interval = TimeSpan.FromSeconds(10);
+            //t.Tick += (sender, e) => { throw new Exception("しんだ！"); };
+            //t.Start();
         }
 
         #region property
@@ -87,8 +87,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             var reportPath = CreateCrashReport(ex, callerUiThread);
-
-            Process.Start(Constants.CrashSenderApplicationPath, $"/crash /report=\"{reportPath}\"");
+            if(Constants.AppSendCrashReport) {
+                Process.Start(Constants.CrashSenderApplicationPath, $"/crash /report=\"{reportPath}\"");
+            }
 
             Shutdown();
         }
