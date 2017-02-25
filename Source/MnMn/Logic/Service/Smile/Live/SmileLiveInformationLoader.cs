@@ -20,14 +20,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
     public class SmileLiveInformationLoader: InformationLoader<SmileLiveInformationViewModel>
     {
-        public SmileLiveInformationLoader(IEnumerable<SmileLiveInformationViewModel> informations)
-            : base(informations)
+        public SmileLiveInformationLoader(IEnumerable<SmileLiveInformationViewModel> informations, ICreateHttpUserAgent createHttpUserAgent)
+            : base(informations, createHttpUserAgent)
         { }
     }
 }

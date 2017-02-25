@@ -454,6 +454,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region live
 
+        public static Uri ServiceSmileLiveQatchUrlBase => appConfig.Get("service-smile-smilelive-watch-url-base", s => new Uri(s));
+
         public static ExecuteOrOpenMode SettingServiceSmileLiveExecuteOpenMode => appConfig.Get("setting-service-smile-smilelive-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
         public static bool SettingServiceSmileLiveExecuteOpenPlayerInNewWindow => appConfig.Get("setting-service-smile-smilelive-execute-open-player-in-new-window", bool.Parse);
 

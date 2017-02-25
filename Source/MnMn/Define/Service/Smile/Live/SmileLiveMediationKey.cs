@@ -27,5 +27,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live
         public const string watchPage = "live-watch-page";
         public const string broadcast = "live-broadcast";
         public const string category = "live-category";
+        public const string getPlayerStatus = "live-getplayerstatus";
     }
 }

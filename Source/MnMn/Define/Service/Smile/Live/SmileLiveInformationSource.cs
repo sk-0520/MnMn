@@ -28,5 +28,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live
         /// フィードから取得。
         /// </summary>
         Feed,
+        /// <summary>
+        /// GetPlayerStatusから取得。
+        /// </summary>
+        GetPlayerStatus,
     }
 }

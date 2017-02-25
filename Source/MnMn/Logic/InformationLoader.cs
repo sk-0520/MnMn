@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -26,14 +27,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     public class InformationLoader<TInformationViewModel>
         where TInformationViewModel : InformationViewModelBase
     {
-        public InformationLoader(IEnumerable<TInformationViewModel> informations)
+        public InformationLoader(IEnumerable<TInformationViewModel> informations, ICreateHttpUserAgent createHttpUserAgent)
         {
             InformationItems = new List<TInformationViewModel>(informations);
+            CreateHttpUserAgent = createHttpUserAgent;
         }
 
         #region property
 
         protected IReadOnlyList<TInformationViewModel> InformationItems { get; }
+        protected ICreateHttpUserAgent CreateHttpUserAgent { get; }
 
         #endregion
 

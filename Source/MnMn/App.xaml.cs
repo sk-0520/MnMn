@@ -56,6 +56,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         App()
         {
             SplashWindow = new SplashWindow();
+
+            //var t = new DispatcherTimer();
+            //t.Interval = TimeSpan.FromSeconds(10);
+            //t.Tick += (sender, e) => { throw new Exception("しんだ！"); };
+            //t.Start();
         }
 
         #region property
@@ -81,7 +86,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 Debug.WriteLine(ex);
             }
 
-            CreateCrashReport(ex, callerUiThread);
+            var reportPath = CreateCrashReport(ex, callerUiThread);
+            if(Constants.AppSendCrashReport) {
+                Process.Start(Constants.CrashReporterApplicationPath, $"/crash /report=\"{reportPath}\"");
+            }
 
             Shutdown();
         }
@@ -178,12 +186,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
             });
         }
 
-        void CreateCrashReport(Exception ex, bool callerUiThread)
+        string CreateCrashReport(Exception ex, bool callerUiThread)
         {
             var crashReport = new CrashReportModel(ex, callerUiThread);
             var dir = VariableConstants.GetCrashReportDirectory();
             var path = Path.Combine(dir.FullName, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.CrashReportFileExtension));
             SerializeUtility.SaveXmlDataToFile(path, crashReport);
+
+            return path;
         }
 
         bool ShowBetaMessageIfNoBetaFlag()
@@ -205,9 +215,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
-        #endregion
+#endregion
 
-        #region Application
+#region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
@@ -216,7 +226,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 Shutdown();
             }
 #endif
-
             var logger = new Pe.PeMain.Logic.AppLogger();
             logger.IsStock = true;
 
@@ -275,6 +284,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
 
             SplashWindow.Show();
+#if DEBUG
+            SplashWindow.Topmost = false;
+            SplashWindow.ShowInTaskbar = true; // 非最前面化でどっかいっちゃう対策
+#endif
 
             var initializeTasks = new [] {
                 InitializeCrashReportAsync(),

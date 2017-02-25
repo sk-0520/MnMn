@@ -550,6 +550,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => ChangeVolume((bool)o)); }
         }
 
+        public ICommand SwitchMuteCommand
+        {
+            get { return CreateCommand(o => SwitchMute()); }
+        }
+
         public ICommand SetFilteringUserIdCommand
         {
             get
@@ -925,7 +930,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     .Select(c => new { Area = OriginalPosterCommentArea, View = c, ViewModel = (SmileVideoCommentViewModel)c.DataContext })
                 )
                 .Where(i => i.ViewModel.NowShowing)
-                .Where(i => i.ViewModel.ElapsedTime + Setting.Comment.StyleSetting.ShowTime < PlayTime)
+                .Where(i => i.ViewModel.ElapsedTime + CommentStyleSetting.ShowTime < PlayTime)
                 .ToList()
             ;
 
@@ -1691,6 +1696,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var step = isUp ? PlayerSetting.VolumeOperationStep : -PlayerSetting.VolumeOperationStep;
             var setVolume = Volume + step;
             Volume = RangeUtility.Clamp(setVolume, Constants.NavigatorVolumeRange);
+        }
+
+        void SwitchMute()
+        {
+            IsMute = !IsMute;
         }
 
         void ChangeSeekVideoPosition(bool isNext, bool isPercent, int stepValue)

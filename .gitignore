@@ -216,3 +216,4 @@ DTAR_*/
 /Changelog/
 
 /*.lnk
+!/Source/Applications/bin/
