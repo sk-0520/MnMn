@@ -14,6 +14,7 @@
   ResizeMode="NoResize" 
   BorderBrush="{DynamicResource AccentColorBrush}"
   BorderThickness="1"
+  ShowCloseButton="False"
 
   Title="MainWindow"
   Width="460"
@@ -21,7 +22,7 @@
 >
   <mamc:MetroWindow.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    
+
     <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
       <Style.Triggers>
         <Trigger Property="IsReadOnly" Value="True">
@@ -41,7 +42,7 @@
       <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
   </mamc:MetroWindow.Resources>
-  
+
   <Grid Margin="8">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -60,7 +61,7 @@
         <TextBlock FontSize="12">※受信側プログラムはリポジトリに格納セれていないため<Hyperlink Command="{Binding OpenReceiveProgramCommand}">こちら</Hyperlink>を確認してください。</TextBlock>
       </TextBlock>
     </Grid>
-    
+
     <Grid Grid.Row="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -95,9 +96,25 @@
       <Button Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding SendCommand}">レポートを送信</Button>
       <Button Grid.Column="1" Style="{StaticResource SquareButtonStyle}" Click="Close_Click">終了</Button>
     </Grid>
-    
-    <Border Grid.Row="0" Grid.RowSpan="3" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
-    </Border>
 
+    <Border Grid.Row="0" Grid.RowSpan="3" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#80ffffff" TextElement.FontSize="16">
+      <!-- 状態持たすのかったるいのね -->
+      <Border BorderBrush="{DynamicResource AccentColorBrush3}" BorderThickness="5" Background="White" VerticalAlignment="Center" Margin="20" Padding="20">
+        <StackPanel VerticalAlignment="Center">
+          <ProgressBar IsIndeterminate="True" Visibility="{Binding Sending, Converter={StaticResource BooleanToVisibilityConverter}}" />
+          <TextBlock TextAlignment="Center" Visibility="{Binding Sending, Converter={StaticResource BooleanToVisibilityConverter}}">送信中</TextBlock>
+          <TextBlock TextAlignment="Center" Visibility="{Binding SendSuccess, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Run>送信完了</Run>
+            <LineBreak />
+            <Hyperlink Click="Close_Click">終了</Hyperlink>
+          </TextBlock>
+          <TextBlock TextAlignment="Center" Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Hyperlink Command="{Binding ReInputCommand}">再入力</Hyperlink>
+            <LineBreak />
+            <Run Text="{Binding Message, Mode=OneWay}"  />
+          </TextBlock>
+        </StackPanel>
+      </Border>
+    </Border>
   </Grid>
 </mamc:MetroWindow>

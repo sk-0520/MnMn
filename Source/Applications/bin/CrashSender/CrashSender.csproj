@@ -149,6 +149,13 @@
   <ItemGroup>
     <Folder Include="Resources\Icon\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\Bridging\Bridging.csproj">
+      <Project>{89A67E67-827B-44D6-A237-BE50813883AC}</Project>
+      <Name>Bridging</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
