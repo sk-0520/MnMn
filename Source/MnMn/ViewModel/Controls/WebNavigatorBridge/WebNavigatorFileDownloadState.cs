@@ -14,7 +14,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 {
-    public class WebNavigatorFileDownloadState: ViewModelBase, IDownloadState
+    public class WebNavigatorFileDownloadState: ViewModelBase, IDownloadItem
     {
         #region variable
 
@@ -114,6 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         {
             DownLoadState = LoadState.Preparation;
 
+            EnabledTotalSize = false;
             DownloadedSize = DownloadTotalSize = 0;
             WriteStream = DownloadFile.Create();
 

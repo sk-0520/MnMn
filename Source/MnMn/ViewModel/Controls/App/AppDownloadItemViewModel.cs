@@ -19,18 +19,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppDownloadItemViewModel(ServiceType serviceType, IDownloadState downloadState)
+        public AppDownloadItemViewModel(ServiceType serviceType, IDownloadItem downloadState)
         {
             ServiceType = serviceType;
-            State = downloadState;
+            Item = downloadState;
 
-            State.DownloadingProgress = new Progress<double>(ChangedDownloadProgress);
+            Item.DownloadingProgress = new Progress<double>(ChangedDownloadProgress);
         }
 
         #region property
 
         public ServiceType ServiceType { get; }
-        public IDownloadState State { get; }
+        public IDownloadItem Item { get; }
 
         CancellationTokenSource DonwloadCancel { get; set; }
 
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(
                     o => StartAsync(),
-                    o => State.DownLoadState == Define.LoadState.Failure
+                    o => Item.DownLoadState == Define.LoadState.Failure
                 );
             }
         }
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     o => {
                         DonwloadCancel.Cancel();
                     },
-                    o => State.DownLoadState == Define.LoadState.Loading
+                    o => Item.DownLoadState == Define.LoadState.Loading
                 );
             }
         }
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             DonwloadCancel = new CancellationTokenSource();
 
-            return State.StartAsync(DonwloadCancel.Token);
+            return Item.StartAsync(DonwloadCancel.Token);
         }
 
         #endregion

@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
     /// <summary>
     /// ダウンロード情報表示データ。
     /// </summary>
-    public interface IDownloadState: INotifyPropertyChanged, IDisplayText
+    public interface IDownloadItem: INotifyPropertyChanged, IDisplayText
     {
         #region property
 

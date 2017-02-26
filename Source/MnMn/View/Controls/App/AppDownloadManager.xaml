@@ -30,16 +30,16 @@
                   <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding State.DisplayText}" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Item.DisplayText}" />
 
                 <ProgressBar Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="1">
                   <ProgressBar.Style>
                     <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
                       <Style.Triggers>
-                        <DataTrigger Binding="{Binding State.EnabledTotalSize}" Value="False">
+                        <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="False">
                           <Setter Property="IsIndeterminate" Value="True" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding State.DownLoadState}" Value="Loaded">
+                        <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
                           <Setter Property="Visibility" Value="Collapsed" />
                           <Setter Property="Value" Value="1" />
                         </DataTrigger>
@@ -51,15 +51,15 @@
                 </ProgressBar>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
-                  <TextBlock Text="{Binding State.DownLoadState}" />
+                  <TextBlock Text="{Binding Item.DownLoadState}" />
                   
-                  <TextBlock Text="{Binding State.DownloadedSize}" />
+                  <TextBlock Text="{Binding Item.DownloadedSize}" />
                   <TextBlock>
                     <TextBlock.Style>
                       <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Style.Triggers>
-                          <DataTrigger Binding="{Binding State.EnabledTotalSize}" Value="True">
-                            <Setter Property="Text" Value="{Binding State.DownloadTotalSize}" />
+                          <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="True">
+                            <Setter Property="Text" Value="{Binding Item.DownloadTotalSize}" />
                           </DataTrigger>
                         </Style.Triggers>
                         
@@ -68,7 +68,7 @@
                     </TextBlock.Style>
                   </TextBlock>
 
-                  <TextBlock Text="{Binding State.DownloadUri}" />
+                  <TextBlock Text="{Binding Item.DownloadUri}" />
                 </StackPanel>
 
                 <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
@@ -76,12 +76,12 @@
                     <Button.Style>
                       <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
-                          <DataTrigger Binding="{Binding State.DownLoadState}" Value="Failure">
+                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Failure">
                             <Setter Property="Command" Value="{Binding StartDownloadCommand}" />
                             <Setter Property="Content" Value="retry" />
                             <Setter Property="Visibility" Value="Visible" />
                           </DataTrigger>
-                          <DataTrigger Binding="{Binding State.DownLoadState}" Value="Loading">
+                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loading">
                             <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
                             <Setter Property="Content" Value="cancel" />
                             <Setter Property="Visibility" Value="Visible" />
@@ -93,11 +93,11 @@
                     </Button.Style>
 
                   </Button>
-                  <Button Grid.Row="1" Grid.Column="0" Content="open" Command="{Binding State.ExecuteTargetCommand}">
+                  <Button Grid.Row="1" Grid.Column="0" Content="open" Command="{Binding Item.ExecuteTargetCommand}">
                     <Button.Style>
                       <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
-                          <DataTrigger Binding="{Binding State.DownLoadState}" Value="Loaded">
+                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
                             <Setter Property="Visibility" Value="Visible" />
                           </DataTrigger>
                         </Style.Triggers>
@@ -106,11 +106,11 @@
                       </Style>
                     </Button.Style>
                   </Button>
-                  <Button Grid.Row="2" Grid.Column="0" Content="dir" Command="{Binding State.OpenDirectoryCommand}">
+                  <Button Grid.Row="2" Grid.Column="0" Content="dir" Command="{Binding Item.OpenDirectoryCommand}">
                     <Button.Style>
                       <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
-                          <DataTrigger Binding="{Binding State.DownLoadState}" Value="Loaded">
+                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
                             <Setter Property="Visibility" Value="Visible" />
                           </DataTrigger>
                         </Style.Triggers>

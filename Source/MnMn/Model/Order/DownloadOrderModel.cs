@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
         /// <param name="downloadState"></param>
         /// <param name="canManagement">管理権限を譲渡するか。</param>
         /// <param name="serviceType"></param>
-        public DownloadOrderModel(IDownloadState downloadState, bool canManagement, ServiceType serviceType) 
+        public DownloadOrderModel(IDownloadItem downloadState, bool canManagement, ServiceType serviceType) 
             : base(OrderKind.Donwload, serviceType)
         {
             DownloadState = downloadState;
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
 
         #region property
 
-        public IDownloadState DownloadState { get; }
+        public IDownloadItem DownloadState { get; }
 
         public bool CanManagement { get; }
 

@@ -290,7 +290,7 @@
     <Compile Include="IF\Control\ISelectable.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IDescription.cs" />
-    <Compile Include="IF\IDownloadState.cs" />
+    <Compile Include="IF\IDownloadItem.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
