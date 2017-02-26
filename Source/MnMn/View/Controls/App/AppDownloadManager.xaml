@@ -67,61 +67,60 @@
                       </Style>
                     </TextBlock.Style>
                   </TextBlock>
-
                   <TextBlock Text="{Binding Item.DownloadUri}" />
                 </StackPanel>
 
-                <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
-                  <Button Grid.Row="0" Grid.Column="0">
-                    <Button.Style>
-                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Failure">
-                            <Setter Property="Command" Value="{Binding StartDownloadCommand}" />
-                            <Setter Property="Content" Value="retry" />
-                            <Setter Property="Visibility" Value="Visible" />
-                          </DataTrigger>
-                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loading">
-                            <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
-                            <Setter Property="Content" Value="cancel" />
-                            <Setter Property="Visibility" Value="Visible" />
-                          </DataTrigger>
-                        </Style.Triggers>
+                <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Center">
+                  <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <Button Grid.Row="0" Grid.Column="0">
+                      <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Failure">
+                              <Setter Property="Command" Value="{Binding StartDownloadCommand}" />
+                              <Setter Property="Content" Value="retry" />
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loading">
+                              <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
+                              <Setter Property="Content" Value="cancel" />
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                          </Style.Triggers>
 
-                        <Setter Property="Visibility" Value="Collapsed" />
-                      </Style>
-                    </Button.Style>
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                      </Button.Style>
 
-                  </Button>
-                  <Button Grid.Row="1" Grid.Column="0" Content="open" Command="{Binding Item.ExecuteTargetCommand}">
-                    <Button.Style>
-                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
-                            <Setter Property="Visibility" Value="Visible" />
-                          </DataTrigger>
-                        </Style.Triggers>
+                    </Button>
+                    <Button Grid.Row="1" Grid.Column="0" Content="open" Command="{Binding Item.ExecuteTargetCommand}">
+                      <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                          </Style.Triggers>
 
-                        <Setter Property="Visibility" Value="Collapsed" />
-                      </Style>
-                    </Button.Style>
-                  </Button>
-                  <Button Grid.Row="2" Grid.Column="0" Content="dir" Command="{Binding Item.OpenDirectoryCommand}">
-                    <Button.Style>
-                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
-                            <Setter Property="Visibility" Value="Visible" />
-                          </DataTrigger>
-                        </Style.Triggers>
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                      </Button.Style>
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="0" Content="dir" Command="{Binding Item.OpenDirectoryCommand}">
+                      <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                          </Style.Triggers>
 
-                        <Setter Property="Visibility" Value="Collapsed" />
-                      </Style>
-                    </Button.Style>
-                  </Button>
-                </StackPanel>
-
-
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                      </Button.Style>
+                    </Button>
+                  </StackPanel>
+                </Grid>
               </Grid>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
