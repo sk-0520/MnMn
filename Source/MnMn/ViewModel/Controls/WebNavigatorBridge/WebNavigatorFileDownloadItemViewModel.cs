@@ -11,6 +11,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 {
@@ -30,8 +31,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         /// </summary>
         /// <param name="uri"></param>
         /// <param name="userAgentCreator"></param>
-        public WebNavigatorFileDownloadItemViewModel(Uri uri, FileInfo downloadFile, ICreateHttpUserAgent userAgentCreator)
+        public WebNavigatorFileDownloadItemViewModel(Mediation mediation, Uri uri, FileInfo downloadFile, ICreateHttpUserAgent userAgentCreator)
         {
+            Mediation = mediation;
+
             DownloadUri = uri;
             Downloader = new Downloader(DownloadUri, userAgentCreator);
             DownloadFile = downloadFile;
@@ -45,6 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         }
 
         #region property
+
+        Mediation Mediation { get; }
 
         Downloader Downloader { get; }
         Stream WriteStream { get; set; }
@@ -92,8 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
             get
             {
                 return CreateCommand(
-                    o => {
-                    }
+                    o => ShellUtility.OpenFileInDirectory(DownloadFile, Mediation.Logger)
                 );
             }
         }
@@ -103,8 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
             get
             {
                 return CreateCommand(
-                    o => {
-                    }
+                    o => ShellUtility.ExecuteFile(DownloadFile, Mediation.Logger)
                 );
             }
         }

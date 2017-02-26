@@ -225,7 +225,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var downloadFilePath = dialog.FileName;
             var downloadFile = new FileInfo(downloadFilePath);
 
-            var download = new WebNavigatorFileDownloadItemViewModel(downloadUri, downloadFile, new HttpUserAgentHost());
+            var download = new WebNavigatorFileDownloadItemViewModel(Mediation, downloadUri, downloadFile, new HttpUserAgentHost());
 
             Mediation.Order(new DownloadOrderModel(download, true, ServiceType.Application));
             e.Cancel();
