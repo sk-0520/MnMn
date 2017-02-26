@@ -290,6 +290,7 @@
     <Compile Include="IF\Control\ISelectable.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IDescription.cs" />
+    <Compile Include="IF\IDownloadState.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
@@ -340,6 +341,7 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
+    <Compile Include="Model\Order\DownloadOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
     <Compile Include="Model\Request\Parameter\WebNavigatorProcessParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
@@ -472,6 +474,7 @@
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionParameterViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorFileDownloadState.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorNavigatingItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorPageConditionViewModel.cs" />
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />

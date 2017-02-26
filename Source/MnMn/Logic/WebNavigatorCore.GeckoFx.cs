@@ -29,6 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 using Gecko;
 using Gecko.Cache;
 
@@ -104,10 +105,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             foreach(var targetDirPath in Directory.GetDirectories(Constants.WebNavigatorGeckoFxExtensionsDirectoryPath)) {
                 InitializeGeckoExtension(targetDirPath);
             }
+
+            LauncherDialog.Download += LauncherDialog_Download;
         }
 
         static void UninitializeGecko()
         {
+            LauncherDialog.Download -= LauncherDialog_Download;
+
             foreach(var browser in CreatedGeckoBrowsers) {
                 browser.Disposed -= GeckoBrowser_Disposed;
                 try {
@@ -185,5 +190,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             browser.Disposed -= GeckoBrowser_Disposed;
             CreatedGeckoBrowsers.Remove(browser);
         }
+
+        private static void LauncherDialog_Download(object sender, LauncherDialogEvent e)
+        {
+            var uri = new Uri(e.Url);
+            var stream = new FileStream(@"X:\donwload.file", FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            var donwload = new WebNavigatorFileDownloadState(uri, new HttpUserAgentHost(), stream);
+            donwload.StartAsync();
+
+            //Mediation.Order()
+        }
+
     }
 }
