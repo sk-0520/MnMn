@@ -19,8 +19,8 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     
-    <Grid>
-      <ScrollViewer>
+    <Grid Grid.Row="1">
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
         <ItemsControl ItemsSource="{Binding DownloadStateItems}">
           <ItemsControl.ItemTemplate>
             <DataTemplate>
@@ -59,6 +59,15 @@
                 <Grid Grid.Row="2" Grid.Column="1">
                   <Grid.Resources>
                     <GridLength x:Key="SizeLength">85</GridLength>
+                    
+                    <Style x:Key="ShowDownloadingTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                    
                   </Grid.Resources>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />
@@ -69,8 +78,8 @@
                   </Grid.ColumnDefinitions>
                   
                   <TextBlock Grid.Column="0" Text="{Binding Item.DownLoadState, Converter={StaticResource EnumDisplayConverter}}" />
-                  <TextBlock Grid.Column="1" TextAlignment="Center" Text="{Binding Item.DownloadedSize, Converter={StaticResource HumanLikeByteConverter}}" />
-                  <TextBlock Grid.Column="2" Text="/" />
+                  <TextBlock Grid.Column="1" TextAlignment="Center" Text="{Binding Item.DownloadedSize, Converter={StaticResource HumanLikeByteConverter}}" Style="{StaticResource ShowDownloadingTextStyle}" />
+                  <TextBlock Grid.Column="2" Text="/" Style="{StaticResource ShowDownloadingTextStyle}" />
                   <TextBlock Grid.Column="3" TextAlignment="Center">
                     <TextBlock.Style>
                       <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -84,7 +93,7 @@
                       </Style>
                     </TextBlock.Style>
                   </TextBlock>
-                  <TextBlock Grid.Column="4" Text="{Binding Item.DownloadUri.Host}" />
+                  <TextBlock Grid.Column="4" TextTrimming="CharacterEllipsis" Text="{Binding Item.DownloadUri.Host}" />
                 </Grid>
 
                 <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Center">
