@@ -115,9 +115,16 @@
 
   <!-- https://materialdesignicons.com/icon/eye-outline -->
   <Geometry x:Key="Image_CheckItLater">M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M3.93,12C5.5,14.97 8.58,16.83 12,16.83C15.42,16.83 18.5,14.97 20.07,12C18.5,9.03 15.42,7.17 12,7.17C8.58,7.17 5.5,9.03 3.93,12M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5Z</Geometry>
-  
+
   <!-- https://materialdesignicons.com/icon/folder -->
   <Geometry x:Key="Image_Folder">M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/file-outline -->
+  <Geometry x:Key="Image_File">M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M11,4H6V20H11L18,20V11H11V4Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/restart -->
+  <Geometry x:Key="Image_Retry">M11,4C13.05,4 15.09,4.77 16.65,6.33C19.78,9.46 19.77,14.5 16.64,17.64C14.81,19.5 12.3,20.24 9.91,19.92L10.44,17.96C12.15,18.12 13.93,17.54 15.24,16.23C17.58,13.89 17.58,10.09 15.24,7.75C14.06,6.57 12.53,6 11,6V10.58L6.04,5.63L11,0.68V4M5.34,17.65C2.7,15 2.3,11 4.11,7.94L5.59,9.41C4.5,11.64 4.91,14.39 6.75,16.23C7.27,16.75 7.87,17.16 8.5,17.45L8,19.4C7,19 6.12,18.43 5.34,17.65Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/cancel -->
+  <Geometry x:Key="Image_Cancel">M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12C4,13.85 4.63,15.55 5.68,16.91L16.91,5.68C15.55,4.63 13.85,4 12,4M12,20A8,8 0 0,0 20,12C20,10.15 19.37,8.45 18.32,7.09L7.09,18.32C8.45,19.37 10.15,20 12,20Z</Geometry>
 
   <!-- https://materialdesignicons.com/icon/fullscreen -->
   <Geometry x:Key="Image_FullScreen">M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z</Geometry>

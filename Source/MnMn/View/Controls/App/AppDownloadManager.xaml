@@ -33,7 +33,7 @@
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="48" />
                   <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="120" />
+                  <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Item.DisplayText}" />
@@ -97,19 +97,35 @@
                 </Grid>
 
                 <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Center">
-                  <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                  <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Grid.Row="0" Grid.Column="0">
                       <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Failure">
                               <Setter Property="Command" Value="{Binding StartDownloadCommand}" />
-                              <Setter Property="Content" Value="retry" />
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <Viewbox Style="{StaticResource SmallIconBox}">
+                                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                      <Path Data="{StaticResource Image_Retry}" Style="{StaticResource SmallDefaultIconPath}" />
+                                    </Canvas>
+                                  </Viewbox>
+                                </Setter.Value>
+                              </Setter>
                               <Setter Property="Visibility" Value="Visible" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loading">
                               <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
-                              <Setter Property="Content" Value="cancel" />
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <Viewbox Style="{StaticResource SmallIconBox}">
+                                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                      <Path Data="{StaticResource Image_Cancel}" Style="{StaticResource SmallDefaultIconPath}" />
+                                    </Canvas>
+                                  </Viewbox>
+                                </Setter.Value>
+                              </Setter>
                               <Setter Property="Visibility" Value="Visible" />
                             </DataTrigger>
                           </Style.Triggers>
@@ -117,11 +133,10 @@
                           <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
                       </Button.Style>
-
                     </Button>
-                    <Button Grid.Row="1" Grid.Column="0" Content="open" Command="{Binding Item.ExecuteTargetCommand}">
+                    <Button Grid.Row="1" Grid.Column="0" Command="{Binding Item.ExecuteTargetCommand}">
                       <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
                               <Setter Property="Visibility" Value="Visible" />
@@ -131,10 +146,18 @@
                           <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
                       </Button.Style>
+                      <Button.Content>
+                        <Viewbox Style="{StaticResource SmallIconBox}">
+                          <Canvas Style="{StaticResource IconCanvas-24x24}">
+                            <Path Data="{StaticResource Image_File}" Style="{StaticResource SmallAccentIconPath}" />
+                          </Canvas>
+                        </Viewbox>
+                      </Button.Content>
                     </Button>
-                    <Button Grid.Row="2" Grid.Column="0" Content="dir" Command="{Binding Item.OpenDirectoryCommand}">
+                    
+                    <Button Grid.Row="2" Grid.Column="0" Command="{Binding Item.OpenDirectoryCommand}">
                       <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
                               <Setter Property="Visibility" Value="Visible" />
@@ -144,6 +167,13 @@
                           <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
                       </Button.Style>
+                      <Button.Content>
+                        <Viewbox Style="{StaticResource SmallIconBox}">
+                          <Canvas Style="{StaticResource IconCanvas-24x24}">
+                            <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
+                          </Canvas>
+                        </Viewbox>
+                      </Button.Content>
                     </Button>
                   </StackPanel>
                 </Grid>
