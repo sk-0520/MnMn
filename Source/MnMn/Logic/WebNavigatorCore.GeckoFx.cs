@@ -28,6 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -198,6 +199,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             Uri downloadUri;
             if(!Uri.TryCreate(e.Url, UriKind.RelativeOrAbsolute, out downloadUri)) {
+                e.Cancel();
                 return;
             }
             var uriFileName = downloadUri.Segments.LastOrDefault();
@@ -213,16 +215,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             };
 
             if(!dialog.ShowDialog().GetValueOrDefault()) {
+                e.Cancel();
                 return;
             }
 
             var downloadFilePath = dialog.FileName;
 
             var stream = new FileStream(downloadFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-            var donwload = new WebNavigatorFileDownloadState(downloadUri, new HttpUserAgentHost(), stream);
-            donwload.StartAsync();
+            var download = new WebNavigatorFileDownloadState(downloadUri, new HttpUserAgentHost(), stream);
 
-            //Mediation.Order()
+            Mediation.Order(new DownloadOrderModel(download, true, ServiceType.Application));
+            e.Cancel();
         }
 
     }

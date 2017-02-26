@@ -31,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
@@ -428,6 +429,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
+        bool Order_Donwload(DownloadOrderModel order)
+        {
+            var downloadState = order.DownloadState;
+            //DownloadStatus.Insert(0, downloadState);
+
+            if(order.CanManagement) {
+                downloadState.StartAsync();
+            }
+
+            return true;
+        }
+
         bool OrderCore(OrderModel order)
         {
             switch(order.OrderKind) {
@@ -500,6 +513,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override bool Order(OrderModel order)
         {
             CheckUtility.DebugEnforceNotNull(order);
+
+            if(order.OrderKind == OrderKind.Donwload) {
+                return Order_Donwload((DownloadOrderModel)order);
+            }
 
             switch(order.ServiceType) {
                 case ServiceType.Application:
