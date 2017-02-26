@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        public CancellationToken? CancelToken { get; }
+        public CancellationToken? CancelToken { get; private set; }
 
         public Uri DownloadUri { get; protected set; }
         protected ICreateHttpUserAgent UserAgentCreator { get; set; }
@@ -198,8 +198,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
-        public virtual Task StartAsync()
+        public virtual Task StartAsync(CancellationToken? cancelToken = null)
         {
+            if(cancelToken.HasValue) {
+                CancelToken = cancelToken;
+            }
             return GetStreamAsync().ContinueWith(task => {
                 if(task.Result == null) {
                     Canceled = true;

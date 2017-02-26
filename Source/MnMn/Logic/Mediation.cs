@@ -434,9 +434,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var downloadState = order.DownloadState;
             //DownloadStatus.Insert(0, downloadState);
 
-            if(order.CanManagement) {
-                downloadState.StartAsync();
-            }
+            var downloadItem = new AppDownloadItemViewModel(order.ServiceType, order.DownloadState);
+
+            ManagerPack.AppManager.AppDownloadManager.AddDonwloadItem(downloadItem, order.CanManagement);
 
             return true;
         }

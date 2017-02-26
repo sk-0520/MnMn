@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -64,11 +66,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         public LoadState DownLoadState { get; private set; }
 
-        public Task StartAsync()
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             DownLoadState = LoadState.Preparation;
 
-            return Downloader.StartAsync();
+            return Downloader.StartAsync(cancellationToken);
         }
 
         #endregion

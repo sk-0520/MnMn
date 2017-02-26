@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
@@ -48,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 
         #region function
 
-        Task StartAsync();
+        Task StartAsync(CancellationToken cancellationToken);
 
         #endregion
     }
