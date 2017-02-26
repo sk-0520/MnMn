@@ -24,160 +24,174 @@
         <ItemsControl ItemsSource="{Binding DownloadStateItems}">
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <Grid>
-                <Grid.RowDefinitions>
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="48" />
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Item.DisplayText}" />
-
-                <ProgressBar Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="1">
-                  <ProgressBar.Style>
-                    <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="False">
-                          <Setter Property="IsIndeterminate" Value="True" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
-                          <Setter Property="Visibility" Value="Collapsed" />
-                          <Setter Property="Value" Value="1" />
-                        </DataTrigger>
-                      </Style.Triggers>
-
-                      <Setter Property="Value" Value="{Binding DownloadingProgress, Mode=OneWay}" />
-                    </Style>
-                  </ProgressBar.Style>
-                </ProgressBar>
-
-                <Grid Grid.Row="2" Grid.Column="1">
-                  <Grid.Resources>
-                    <GridLength x:Key="SizeLength">85</GridLength>
-                    
-                    <Style x:Key="ShowDownloadingTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
-                          <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                    
-                  </Grid.Resources>
+              <StackPanel>
+                <Separator x:Name="separator" />
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                  </Grid.RowDefinitions>
                   <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="{StaticResource SizeLength}" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="{StaticResource SizeLength}" />
+                    <ColumnDefinition Width="48" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                   </Grid.ColumnDefinitions>
-                  
-                  <TextBlock Grid.Column="0" Text="{Binding Item.DownLoadState, Converter={StaticResource EnumDisplayConverter}}" />
-                  <TextBlock Grid.Column="1" TextAlignment="Center" Text="{Binding Item.DownloadedSize, Converter={StaticResource HumanLikeByteConverter}}" Style="{StaticResource ShowDownloadingTextStyle}" />
-                  <TextBlock Grid.Column="2" Text="/" Style="{StaticResource ShowDownloadingTextStyle}" />
-                  <TextBlock Grid.Column="3" TextAlignment="Center">
-                    <TextBlock.Style>
-                      <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+
+                  <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Item.DisplayText}" />
+
+                  <ProgressBar Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="1">
+                    <ProgressBar.Style>
+                      <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
                         <Style.Triggers>
-                          <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="True">
-                            <Setter Property="Text" Value="{Binding Item.DownloadTotalSize, Converter={StaticResource HumanLikeByteConverter}}" />
+                          <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="False">
+                            <Setter Property="IsIndeterminate" Value="True" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Setter Property="Value" Value="1" />
                           </DataTrigger>
                         </Style.Triggers>
-                        
-                        <Setter Property="Text" Value="サイズ不明" />
+
+                        <Setter Property="Value" Value="{Binding DownloadingProgress, Mode=OneWay}" />
                       </Style>
-                    </TextBlock.Style>
-                  </TextBlock>
-                  <TextBlock Grid.Column="4" TextTrimming="CharacterEllipsis" Text="{Binding Item.DownloadUri.Host}" />
+                    </ProgressBar.Style>
+                  </ProgressBar>
+
+                  <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.Resources>
+                      <GridLength x:Key="SizeLength">85</GridLength>
+
+                      <Style x:Key="ShowDownloadingTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="80" />
+                      <ColumnDefinition Width="{StaticResource SizeLength}" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="{StaticResource SizeLength}" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="{Binding Item.DownLoadState, Converter={StaticResource EnumDisplayConverter}}" />
+                    <TextBlock Grid.Column="1" TextAlignment="Center" Text="{Binding Item.DownloadedSize, Converter={StaticResource HumanLikeByteConverter}}" Style="{StaticResource ShowDownloadingTextStyle}" />
+                    <TextBlock Grid.Column="2" Text="/" Style="{StaticResource ShowDownloadingTextStyle}" />
+                    <TextBlock Grid.Column="3" TextAlignment="Center">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="True">
+                              <Setter Property="Text" Value="{Binding Item.DownloadTotalSize, Converter={StaticResource HumanLikeByteConverter}}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+
+                          <Setter Property="Text" Value="サイズ不明" />
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Grid.Column="4" TextTrimming="CharacterEllipsis" Text="{Binding Item.DownloadUri.Host}" />
+                  </Grid>
+
+                  <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                      <StackPanel.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
+                          <Setter Property="Width" Value="{StaticResource BigIconWidth}" />
+                          <Setter Property="Height" Value="{StaticResource BigIconHeight}" />
+                        </Style>
+                      </StackPanel.Resources>
+                      <Button Grid.Row="0" Grid.Column="0">
+                        <Button.Style>
+                          <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Failure">
+                                <Setter Property="Command" Value="{Binding StartDownloadCommand}" />
+                                <Setter Property="Content">
+                                  <Setter.Value>
+                                    <Viewbox Style="{StaticResource SmallIconBox}">
+                                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                        <Path Data="{StaticResource Image_Retry}" Style="{StaticResource SmallDefaultIconPath}" />
+                                      </Canvas>
+                                    </Viewbox>
+                                  </Setter.Value>
+                                </Setter>
+                                <Setter Property="Visibility" Value="Visible" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loading">
+                                <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
+                                <Setter Property="Content">
+                                  <Setter.Value>
+                                    <Viewbox Style="{StaticResource SmallIconBox}">
+                                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                        <Path Data="{StaticResource Image_Cancel}" Style="{StaticResource SmallDefaultIconPath}" />
+                                      </Canvas>
+                                    </Viewbox>
+                                  </Setter.Value>
+                                </Setter>
+                                <Setter Property="Visibility" Value="Visible" />
+                              </DataTrigger>
+                            </Style.Triggers>
+
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </Style>
+                        </Button.Style>
+                      </Button>
+                      <Button Grid.Row="1" Grid.Column="0" Command="{Binding Item.ExecuteTargetCommand}">
+                        <Button.Style>
+                          <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                                <Setter Property="Visibility" Value="Visible" />
+                              </DataTrigger>
+                            </Style.Triggers>
+
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </Style>
+                        </Button.Style>
+                        <Button.Content>
+                          <Viewbox Style="{StaticResource SmallIconBox}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}">
+                              <Path Data="{StaticResource Image_File}" Style="{StaticResource SmallAccentIconPath}" />
+                            </Canvas>
+                          </Viewbox>
+                        </Button.Content>
+                      </Button>
+                      <Button Grid.Row="2" Grid.Column="0" Command="{Binding Item.OpenDirectoryCommand}">
+                        <Button.Style>
+                          <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                                <Setter Property="Visibility" Value="Visible" />
+                              </DataTrigger>
+                            </Style.Triggers>
+
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </Style>
+                        </Button.Style>
+                        <Button.Content>
+                          <Viewbox Style="{StaticResource SmallIconBox}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}">
+                              <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
+                            </Canvas>
+                          </Viewbox>
+                        </Button.Content>
+                      </Button>
+                    </StackPanel>
+                  </Grid>
                 </Grid>
-
-                <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Center">
-                  <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Grid.Row="0" Grid.Column="0">
-                      <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
-                          <Style.Triggers>
-                            <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Failure">
-                              <Setter Property="Command" Value="{Binding StartDownloadCommand}" />
-                              <Setter Property="Content">
-                                <Setter.Value>
-                                  <Viewbox Style="{StaticResource SmallIconBox}">
-                                    <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                      <Path Data="{StaticResource Image_Retry}" Style="{StaticResource SmallDefaultIconPath}" />
-                                    </Canvas>
-                                  </Viewbox>
-                                </Setter.Value>
-                              </Setter>
-                              <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loading">
-                              <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
-                              <Setter Property="Content">
-                                <Setter.Value>
-                                  <Viewbox Style="{StaticResource SmallIconBox}">
-                                    <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                      <Path Data="{StaticResource Image_Cancel}" Style="{StaticResource SmallDefaultIconPath}" />
-                                    </Canvas>
-                                  </Viewbox>
-                                </Setter.Value>
-                              </Setter>
-                              <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                          </Style.Triggers>
-
-                          <Setter Property="Visibility" Value="Collapsed" />
-                        </Style>
-                      </Button.Style>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="0" Command="{Binding Item.ExecuteTargetCommand}">
-                      <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
-                          <Style.Triggers>
-                            <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
-                              <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                          </Style.Triggers>
-
-                          <Setter Property="Visibility" Value="Collapsed" />
-                        </Style>
-                      </Button.Style>
-                      <Button.Content>
-                        <Viewbox Style="{StaticResource SmallIconBox}">
-                          <Canvas Style="{StaticResource IconCanvas-24x24}">
-                            <Path Data="{StaticResource Image_File}" Style="{StaticResource SmallAccentIconPath}" />
-                          </Canvas>
-                        </Viewbox>
-                      </Button.Content>
-                    </Button>
-                    
-                    <Button Grid.Row="2" Grid.Column="0" Command="{Binding Item.OpenDirectoryCommand}">
-                      <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
-                          <Style.Triggers>
-                            <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
-                              <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                          </Style.Triggers>
-
-                          <Setter Property="Visibility" Value="Collapsed" />
-                        </Style>
-                      </Button.Style>
-                      <Button.Content>
-                        <Viewbox Style="{StaticResource SmallIconBox}">
-                          <Canvas Style="{StaticResource IconCanvas-24x24}">
-                            <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
-                          </Canvas>
-                        </Viewbox>
-                      </Button.Content>
-                    </Button>
-                  </StackPanel>
-                </Grid>
-              </Grid>
+              </StackPanel>
+              
+              <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                  <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
+                </DataTrigger>
+              </DataTemplate.Triggers>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
