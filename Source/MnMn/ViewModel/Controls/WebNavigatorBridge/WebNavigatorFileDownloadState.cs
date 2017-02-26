@@ -64,7 +64,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         public LoadState DownLoadState { get; private set; }
 
-        public Task StartAsync() => Downloader.StartAsync();
+        public Task StartAsync()
+        {
+            DownLoadState = LoadState.Preparation;
+
+            return Downloader.StartAsync();
+        }
 
         #endregion
 

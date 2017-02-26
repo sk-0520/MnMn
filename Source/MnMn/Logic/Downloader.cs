@@ -177,13 +177,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             UserAgent = UserAgentCreator.CreateHttpUserAgent();
             IfUsingSetRangeHeader();
 
-            var response = CancelToken.HasValue
-                ? UserAgent.GetAsync(DownloadUri, CancelToken.Value).Result
-                : UserAgent.GetAsync(DownloadUri).Result
+            var responseTask = CancelToken.HasValue
+                ? UserAgent.GetAsync(DownloadUri, CancelToken.Value)
+                : UserAgent.GetAsync(DownloadUri)
             ;
 
-            ResponseHeaders = response.Content.Headers;
-            return response.Content.ReadAsStreamAsync();
+            return responseTask.ContinueWith(t => {
+                var response = t.Result;
+                ResponseHeaders = response.Content.Headers;
+                return response.Content.ReadAsStreamAsync();
+            }).Unwrap();
+
+            //ResponseHeaders = response.Content.Headers;
+            //return response.Content.ReadAsStreamAsync();
             //return UserAgent.GetStreamAsync();
         }
 

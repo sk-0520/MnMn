@@ -21,6 +21,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -32,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 using Gecko;
 using Gecko.Cache;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -193,9 +196,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         private static void LauncherDialog_Download(object sender, LauncherDialogEvent e)
         {
-            var uri = new Uri(e.Url);
-            var stream = new FileStream(@"X:\donwload.file", FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-            var donwload = new WebNavigatorFileDownloadState(uri, new HttpUserAgentHost(), stream);
+            Uri downloadUri;
+            if(!Uri.TryCreate(e.Url, UriKind.RelativeOrAbsolute, out downloadUri)) {
+                return;
+            }
+            var uriFileName = downloadUri.Segments.LastOrDefault();
+            var mimeExtension = e.Mime.GetFileExtensions();
+
+            var filter = new DialogFilterList();
+            filter.Add(new DialogFilterItem("*.*", "*.*"));
+
+            var dialog = new SaveFileDialog() {
+                Filter = filter.FilterText,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                FileName = uriFileName,
+            };
+
+            if(!dialog.ShowDialog().GetValueOrDefault()) {
+                return;
+            }
+
+            var downloadFilePath = dialog.FileName;
+
+            var stream = new FileStream(downloadFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            var donwload = new WebNavigatorFileDownloadState(downloadUri, new HttpUserAgentHost(), stream);
             donwload.StartAsync();
 
             //Mediation.Order()
