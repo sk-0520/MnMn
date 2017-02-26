@@ -205,6 +205,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var uriFileName = downloadUri.Segments.LastOrDefault();
             var mimeExtension = e.Mime.GetFileExtensions();
 
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+
+            var baseDownloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
+
             var filter = new DialogFilterList();
             filter.Add(new DialogFilterItem("*.*", "*.*"));
 
