@@ -15,7 +15,34 @@
     
     <Grid>
       <ListBox ItemsSource="{Binding DownloadStateItems}">
-        
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel>
+              <TextBlock Text="{Binding State.DownloadUri}" />
+              <TextBlock Text="{Binding State.DownLoadState}" />
+              <TextBlock Text="{Binding State.CompleteSize}" />
+              <TextBlock Text="{Binding State.DownloadedSize}" />
+              <ProgressBar Minimum="0" Maximum="1">
+                <ProgressBar.Style>
+                  <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding State.EnabledCompleteSize}" Value="False">
+                        <Setter Property="IsIndeterminate" Value="True" />
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding State.DownLoadState}" Value="Loaded">
+                        <Setter Property="Visibility" Value="Hidden" />
+                        <Setter Property="Value" Value="1" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                    
+                    <Setter Property="Value" Value="{Binding DownloadingProgress, Mode=OneWay}" />
+                  </Style>
+                </ProgressBar.Style>
+              </ProgressBar>
+              
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
       </ListBox>
     </Grid>
   </Grid>

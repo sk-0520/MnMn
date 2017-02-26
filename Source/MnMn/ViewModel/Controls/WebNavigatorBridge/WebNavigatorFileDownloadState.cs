@@ -15,6 +15,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 {
     public class WebNavigatorFileDownloadState: ViewModelBase, IDownloadState
     {
+        #region variable
+
+        bool _enabledCompleteSize;
+        long _completeSize;
+        long _downloadedSize;
+        LoadState _downLoadState;
+
+        #endregion
+
         /// <summary>
         /// 
         /// </summary>
@@ -56,15 +65,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         public Uri DownloadUri { get; }
 
-        public bool EnabledCompleteSize { get; private set; }
+        public bool EnabledCompleteSize
+        {
+            get { return this._enabledCompleteSize; }
+            private set { SetVariableValue(ref this._enabledCompleteSize, value); }
+        }
 
-        public long CompleteSize { get; private set; }
+        public long CompleteSize
+        {
+            get { return this._completeSize; }
+            private set { SetVariableValue(ref this._completeSize, value); }
+        }
 
-        public long DownloadedSize => Downloader.DownloadedSize;
+        public long DownloadedSize
+        {
+            get { return this._downloadedSize; }
+            private set { SetVariableValue(ref this._downloadedSize, value); }
+        }
 
         public IProgress<double> DownloadingProgress { get; set; }
 
-        public LoadState DownLoadState { get; private set; }
+        public LoadState DownLoadState
+        {
+            get { return this._downLoadState; }
+            private set { SetVariableValue(ref this._downLoadState, value); }
+        }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -108,6 +133,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
             DownLoadState = LoadState.Loading;
 
             WriteStream.Write(e.Data.Array, 0, e.Data.Count);
+            DownloadedSize = Downloader.DownloadedSize;
 
             if(EnabledCompleteSize && DownloadingProgress != null) {
                 var percent = Downloader.DownloadedSize / (double)CompleteSize;

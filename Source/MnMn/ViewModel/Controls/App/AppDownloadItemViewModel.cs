@@ -21,15 +21,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppDownloadItemViewModel(ServiceType serviceType, IDownloadState downloadState)
         {
             ServiceType = serviceType;
-            DownloadState = downloadState;
+            State = downloadState;
 
-            DownloadState.DownloadingProgress = new Progress<double>(ChangedDownloadProgress);
+            State.DownloadingProgress = new Progress<double>(ChangedDownloadProgress);
         }
 
         #region property
 
         public ServiceType ServiceType { get; }
-        IDownloadState DownloadState { get; }
+        public IDownloadState State { get; }
 
         CancellationTokenSource DonwloadCancel { get; set; }
 
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             DonwloadCancel = new CancellationTokenSource();
 
-            return DownloadState.StartAsync(DonwloadCancel.Token);
+            return State.StartAsync(DonwloadCancel.Token);
         }
 
         #endregion
