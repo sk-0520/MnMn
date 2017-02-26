@@ -178,8 +178,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             IfUsingSetRangeHeader();
 
             var responseTask = CancelToken.HasValue
-                ? UserAgent.GetAsync(DownloadUri, CancelToken.Value)
-                : UserAgent.GetAsync(DownloadUri)
+                ? UserAgent.GetAsync(DownloadUri, HttpCompletionOption.ResponseHeadersRead, CancelToken.Value)
+                : UserAgent.GetAsync(DownloadUri, HttpCompletionOption.ResponseHeadersRead)
             ;
 
             return responseTask.ContinueWith(t => {

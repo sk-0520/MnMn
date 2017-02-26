@@ -145,6 +145,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         {
             DownLoadState = LoadState.Loaded;
 
+            DownloadedSize = Downloader.DownloadedSize;
             DownloadingProgress?.Report(1);
 
             if(!LeaveOpen) {

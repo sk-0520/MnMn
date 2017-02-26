@@ -213,6 +213,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
                 FileName = uriFileName,
             };
+#if DEBUG
+            dialog.InitialDirectory = @"x:\";
+#endif
 
             if(!dialog.ShowDialog().GetValueOrDefault()) {
                 e.Cancel();
