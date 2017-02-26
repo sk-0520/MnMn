@@ -18,10 +18,11 @@
         <ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel>
+              <TextBlock Text="{Binding State.DisplayText}" />
               <TextBlock Text="{Binding State.DownloadUri}" />
               <TextBlock Text="{Binding State.DownLoadState}" />
-              <TextBlock Text="{Binding State.CompleteSize}" />
               <TextBlock Text="{Binding State.DownloadedSize}" />
+              <TextBlock Text="{Binding State.DownloadTotalSize}" />
               <ProgressBar Minimum="0" Maximum="1">
                 <ProgressBar.Style>
                   <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">

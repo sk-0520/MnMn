@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
     /// <summary>
     /// ダウンロード情報表示データ。
     /// </summary>
-    public interface IDownloadState: INotifyPropertyChanged
+    public interface IDownloadState: INotifyPropertyChanged, IDisplayText
     {
         #region property
 
@@ -31,9 +32,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 
         /// <summary>
         /// ダウンロード完了を示すサイズ。
-        /// <para><see cref="HasRange"/>が真であれば有効。</para>
+        /// <para><see cref="EnabledCompleteSize"/>が真であれば有効。</para>
         /// </summary>
-        long CompleteSize { get; }
+        long DownloadTotalSize { get; }
 
         /// <summary>
         /// ダウンロード済みサイズ。

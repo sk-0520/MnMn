@@ -17,8 +17,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
     {
         #region variable
 
+        string _displayText;
+
         bool _enabledCompleteSize;
-        long _completeSize;
+        long _downloadTotalSize;
         long _downloadedSize;
         LoadState _downLoadState;
 
@@ -31,10 +33,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         /// <param name="userAgentCreator"></param>
         /// <param name="writeStream"></param>
         /// <param name="leaveOpen"> <see cref="WebNavigatorFileDownloadState"/> オブジェクトを破棄した後に<see cref="writeStream"/>を開いたままにする場合は true、それ以外の場合は false。</param>
-        public WebNavigatorFileDownloadState(Uri uri, ICreateHttpUserAgent userAgentCreator, Stream writeStream, bool leaveOpen = false)
+        public WebNavigatorFileDownloadState(Uri uri, string displayText, ICreateHttpUserAgent userAgentCreator, Stream writeStream, bool leaveOpen = false)
         {
             DownloadUri = uri;
             Downloader = new Downloader(DownloadUri, userAgentCreator);
+            this._displayText = displayText;
             WriteStream = writeStream;
             LeaveOpen = leaveOpen;
 
@@ -71,10 +74,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
             private set { SetVariableValue(ref this._enabledCompleteSize, value); }
         }
 
-        public long CompleteSize
+        public long DownloadTotalSize
         {
-            get { return this._completeSize; }
-            private set { SetVariableValue(ref this._completeSize, value); }
+            get { return this._downloadTotalSize; }
+            private set { SetVariableValue(ref this._downloadTotalSize, value); }
         }
 
         public long DownloadedSize
@@ -102,6 +105,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         #region ViewModelBase
 
+        public override string DisplayText => this._displayText;
+
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
@@ -124,7 +129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
             EnabledCompleteSize = Downloader.ResponseHeaders.ContentLength.HasValue;
             if(EnabledCompleteSize) {
-                CompleteSize = Downloader.ResponseHeaders.ContentLength.Value;
+                DownloadTotalSize = Downloader.ResponseHeaders.ContentLength.Value;
             }
         }
 
@@ -136,7 +141,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
             DownloadedSize = Downloader.DownloadedSize;
 
             if(EnabledCompleteSize && DownloadingProgress != null) {
-                var percent = Downloader.DownloadedSize / (double)CompleteSize;
+                var percent = Downloader.DownloadedSize / (double)DownloadTotalSize;
                 DownloadingProgress.Report(percent);
             }
         }
