@@ -14,7 +14,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 {
-    public class WebNavigatorFileDownloadState: ViewModelBase, IDownloadItem
+    public class WebNavigatorFileDownloadItemViewModel: ViewModelBase, IDownloadItem
     {
         #region variable
 
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         /// </summary>
         /// <param name="uri"></param>
         /// <param name="userAgentCreator"></param>
-        public WebNavigatorFileDownloadState(Uri uri, FileInfo downloadFile, ICreateHttpUserAgent userAgentCreator)
+        public WebNavigatorFileDownloadItemViewModel(Uri uri, FileInfo downloadFile, ICreateHttpUserAgent userAgentCreator)
         {
             DownloadUri = uri;
             Downloader = new Downloader(DownloadUri, userAgentCreator);

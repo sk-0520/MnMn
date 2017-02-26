@@ -476,7 +476,7 @@
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionParameterViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModel.cs" />
-    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorFileDownloadState.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorFileDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorNavigatingItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorPageConditionViewModel.cs" />
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
