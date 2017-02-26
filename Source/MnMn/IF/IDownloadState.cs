@@ -29,11 +29,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// <summary>
         /// ダウンロードするサイズは判明しているか。
         /// </summary>
-        bool EnabledCompleteSize { get; }
+        bool EnabledTotalSize { get; }
 
         /// <summary>
         /// ダウンロード完了を示すサイズ。
-        /// <para><see cref="EnabledCompleteSize"/>が真であれば有効。</para>
+        /// <para><see cref="EnabledTotalSize"/>が真であれば有効。</para>
         /// </summary>
         long DownloadTotalSize { get; }
 

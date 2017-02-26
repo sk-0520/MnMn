@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         public Uri DownloadUri { get; }
 
-        public bool EnabledCompleteSize
+        public bool EnabledTotalSize
         {
             get { return this._enabledCompleteSize; }
             private set { SetVariableValue(ref this._enabledCompleteSize, value); }
@@ -114,6 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         {
             DownLoadState = LoadState.Preparation;
 
+            DownloadedSize = DownloadTotalSize = 0;
             WriteStream = DownloadFile.Create();
 
             return Downloader.StartAsync(cancellationToken);
@@ -148,8 +149,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
             DownloadingProgress?.Report(0);
 
-            EnabledCompleteSize = Downloader.ResponseHeaders.ContentLength.HasValue;
-            if(EnabledCompleteSize) {
+            EnabledTotalSize = Downloader.ResponseHeaders.ContentLength.HasValue;
+            if(EnabledTotalSize) {
                 DownloadTotalSize = Downloader.ResponseHeaders.ContentLength.Value;
             }
         }
@@ -171,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
             WriteStream.Write(e.Data.Array, 0, e.Data.Count);
             DownloadedSize = Downloader.DownloadedSize;
 
-            if(EnabledCompleteSize && DownloadingProgress != null) {
+            if(EnabledTotalSize && DownloadingProgress != null) {
                 var percent = Downloader.DownloadedSize / (double)DownloadTotalSize;
                 DownloadingProgress.Report(percent);
             }

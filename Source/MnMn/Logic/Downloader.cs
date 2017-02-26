@@ -203,6 +203,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(cancelToken.HasValue) {
                 CancelToken = cancelToken;
             }
+            DownloadedSize = 0;
             return GetStreamAsync().ContinueWith(task => {
                 if(task.Result == null) {
                     Canceled = true;

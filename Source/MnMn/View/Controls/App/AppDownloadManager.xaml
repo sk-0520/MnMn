@@ -40,9 +40,54 @@
                   </Style>
                 </ProgressBar.Style>
               </ProgressBar>
-              <Button Command="{Binding CancelDownloadCommand}">cancel</Button>
-              <Button>open</Button>
-              <Button>dir</Button>
+              <Button>
+                <Button.Style>
+                  <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding State.DownLoadState}" Value="Failure">
+                        <Setter Property="Command" Value="{Binding StartDownloadCommand}" />
+                        <Setter Property="Content" Value="retry" />
+                        <Setter Property="Visibility" Value="Visible" />
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding State.DownLoadState}" Value="Loading">
+                        <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
+                        <Setter Property="Content" Value="cancel" />
+                        <Setter Property="Visibility" Value="Visible" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                    
+                    <Setter Property="Visibility" Value="Collapsed" />
+                  </Style>
+                </Button.Style>
+                
+              </Button>
+
+              <Button Content="open" Command="{Binding State.ExecuteTargetCommand}">
+                <Button.Style>
+                  <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding State.DownLoadState}" Value="Loaded">
+                        <Setter Property="Visibility" Value="Visible" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                    
+                    <Setter Property="Visibility" Value="Collapsed" />
+                  </Style>
+                </Button.Style>
+              </Button>
+              <Button Content="dir" Command="{Binding State.OpenDirectoryCommand}">
+                <Button.Style>
+                  <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding State.DownLoadState}" Value="Loaded">
+                        <Setter Property="Visibility" Value="Visible" />
+                      </DataTrigger>
+                    </Style.Triggers>
+
+                    <Setter Property="Visibility" Value="Collapsed" />
+                  </Style>
+                </Button.Style>
+              </Button>
 
             </StackPanel>
           </DataTemplate>

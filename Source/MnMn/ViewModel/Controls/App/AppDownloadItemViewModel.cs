@@ -44,6 +44,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region command
 
+        public ICommand StartDownloadCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => StartAsync(),
+                    o => State.DownLoadState == Define.LoadState.Failure
+                );
+            }
+        }
+
         public ICommand CancelDownloadCommand
         {
             get
