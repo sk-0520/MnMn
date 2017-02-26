@@ -12,28 +12,58 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppDownloadItemViewModel:ViewModelBase
     {
+        #region variable
+
+        double _downloadingProgress;
+
+        #endregion
+
         public AppDownloadItemViewModel(ServiceType serviceType, IDownloadState downloadState)
         {
             ServiceType = serviceType;
             DownloadState = downloadState;
+
+            DownloadState.DownloadingProgress = new Progress<double>(ChangedDownloadProgress);
         }
 
         #region property
 
         public ServiceType ServiceType { get; }
-        public IDownloadState DownloadState { get; }
+        IDownloadState DownloadState { get; }
 
         CancellationTokenSource DonwloadCancel { get; set; }
+
+        public double DownloadingProgress
+        {
+            get { return this._downloadingProgress; }
+            private set { SetVariableValue(ref this._downloadingProgress, value); }
+        }
 
         #endregion
 
         #region function
+
+        void ChangedDownloadProgress(double value)
+        {
+            DownloadingProgress = value;
+        }
 
         public Task StartAsync()
         {
             DonwloadCancel = new CancellationTokenSource();
 
             return DownloadState.StartAsync(DonwloadCancel.Token);
+        }
+
+        #endregion
+
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+            }
+            base.Dispose(disposing);
         }
 
         #endregion
