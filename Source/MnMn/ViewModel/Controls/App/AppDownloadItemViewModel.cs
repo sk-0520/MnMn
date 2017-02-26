@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -37,6 +38,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return this._downloadingProgress; }
             private set { SetVariableValue(ref this._downloadingProgress, value); }
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand CancelDownloadCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        DonwloadCancel.Cancel();
+                    },
+                    o => State.DownLoadState == Define.LoadState.Loading
+                );
+            }
         }
 
         #endregion

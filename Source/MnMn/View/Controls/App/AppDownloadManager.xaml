@@ -40,7 +40,10 @@
                   </Style>
                 </ProgressBar.Style>
               </ProgressBar>
-              
+              <Button Command="{Binding CancelDownloadCommand}">cancel</Button>
+              <Button>open</Button>
+              <Button>dir</Button>
+
             </StackPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>

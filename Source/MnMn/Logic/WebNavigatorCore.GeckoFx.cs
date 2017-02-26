@@ -223,10 +223,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             var downloadFilePath = dialog.FileName;
-            var displayText = Path.GetFileName(downloadFilePath);
+            var downloadFile = new FileInfo(downloadFilePath);
 
-            var stream = new FileStream(downloadFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-            var download = new WebNavigatorFileDownloadState(downloadUri, displayText, new HttpUserAgentHost(), stream);
+            var download = new WebNavigatorFileDownloadState(downloadUri, downloadFile, new HttpUserAgentHost());
 
             Mediation.Order(new DownloadOrderModel(download, true, ServiceType.Application));
             e.Cancel();

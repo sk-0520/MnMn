@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -16,8 +17,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
     public class WebNavigatorFileDownloadState: ViewModelBase, IDownloadState
     {
         #region variable
-
-        string _displayText;
 
         bool _enabledCompleteSize;
         long _downloadTotalSize;
@@ -31,19 +30,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         /// </summary>
         /// <param name="uri"></param>
         /// <param name="userAgentCreator"></param>
-        /// <param name="writeStream"></param>
-        /// <param name="leaveOpen"> <see cref="WebNavigatorFileDownloadState"/> オブジェクトを破棄した後に<see cref="writeStream"/>を開いたままにする場合は true、それ以外の場合は false。</param>
-        public WebNavigatorFileDownloadState(Uri uri, string displayText, ICreateHttpUserAgent userAgentCreator, Stream writeStream, bool leaveOpen = false)
+        public WebNavigatorFileDownloadState(Uri uri, FileInfo downloadFile, ICreateHttpUserAgent userAgentCreator)
         {
             DownloadUri = uri;
             Downloader = new Downloader(DownloadUri, userAgentCreator);
-            this._displayText = displayText;
-            WriteStream = writeStream;
-            LeaveOpen = leaveOpen;
+            DownloadFile = downloadFile;
 
             Downloader.DownloadStart += Downloader_DownloadStart;
             Downloader.Downloading += Downloader_Downloading;
             Downloader.Downloaded += Downloader_Downloaded;
+            Downloader.DownloadingError += Downloader_DownloadingError;
 
             DownLoadState = LoadState.None;
         }
@@ -51,12 +47,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         #region property
 
         Downloader Downloader { get; }
-        Stream WriteStream { get; }
+        Stream WriteStream { get; set; }
 
-        /// <summary>
-        /// <see cref="WebNavigatorFileDownloadState"/> オブジェクトを破棄した後に<see cref="WriteStream"/>を開いたままにする場合は true、それ以外の場合は false。
-        /// </summary>
-        bool LeaveOpen { get; }
+        FileInfo DownloadFile { get; }
 
         #endregion
 
@@ -94,9 +87,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
             private set { SetVariableValue(ref this._downLoadState, value); }
         }
 
+        public ICommand OpenDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                    }
+                );
+            }
+        }
+
+        public ICommand ExecuteTargetCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                    }
+                );
+            }
+        }
+
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             DownLoadState = LoadState.Preparation;
+
+            WriteStream = DownloadFile.Create();
 
             return Downloader.StartAsync(cancellationToken);
         }
@@ -105,7 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         #region ViewModelBase
 
-        public override string DisplayText => this._displayText;
+        public override string DisplayText => DownloadFile.Name;
 
         protected override void Dispose(bool disposing)
         {
@@ -114,6 +132,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
                 Downloader.Downloading -= Downloader_Downloading;
                 Downloader.Downloaded -= Downloader_Downloaded;
                 Downloader.Dispose();
+
+                WriteStream?.Dispose();
+                WriteStream = null;
             }
 
             base.Dispose(disposing);
@@ -135,6 +156,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         private void Downloader_Downloading(object sender, Define.Event.DownloadingEventArgs e)
         {
+            var downloader = (Downloader)sender;
+            if(e.Cancel) {
+                if(!downloader.Completed) {
+                    DownLoadState = LoadState.Failure;
+                    WriteStream?.Dispose();
+                    WriteStream = null;
+                    return;
+                }
+            }
+
             DownLoadState = LoadState.Loading;
 
             WriteStream.Write(e.Data.Array, 0, e.Data.Count);
@@ -148,15 +179,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         private void Downloader_Downloaded(object sender, Define.Event.DownloaderEventArgs e)
         {
-            DownLoadState = LoadState.Loaded;
+            var downloader = (Downloader)sender;
+            if(downloader.Completed) {
+                DownLoadState = LoadState.Loaded;
+                DownloadingProgress?.Report(1);
+            } else {
+                DownLoadState = LoadState.Failure;
+            }
 
             DownloadedSize = Downloader.DownloadedSize;
-            DownloadingProgress?.Report(1);
 
-            if(!LeaveOpen) {
-                WriteStream.Dispose();
-            }
+            WriteStream?.Dispose();
+            WriteStream = null;
         }
+
+        private void Downloader_DownloadingError(object sender, Define.Event.DownloadingErrorEventArgs e)
+        {
+            DownLoadState = LoadState.Failure;
+
+            WriteStream?.Dispose();
+            WriteStream = null;
+        }
+
 
     }
 }
