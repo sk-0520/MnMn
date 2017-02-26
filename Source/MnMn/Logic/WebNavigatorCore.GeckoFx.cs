@@ -99,13 +99,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             //CacheService.Clear(new CacheStoragePolicy());
             ImageCache.ClearCache(true);
             ImageCache.ClearCache(false);
-            CookieManager.RemoveAll();
 
             // 拡張機能
             foreach(var targetDirPath in Directory.GetDirectories(Constants.WebNavigatorGeckoFxExtensionsDirectoryPath)) {
                 InitializeGeckoExtension(targetDirPath);
             }
-
         }
 
         static void UninitializeGecko()
