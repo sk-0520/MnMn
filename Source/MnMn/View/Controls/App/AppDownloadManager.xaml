@@ -70,7 +70,7 @@
                     
                   </Grid.Resources>
                   <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="{StaticResource SizeLength}" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="{StaticResource SizeLength}" />

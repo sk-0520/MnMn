@@ -206,20 +206,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var mimeExtension = e.Mime.GetFileExtensions();
 
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
-
-            var baseDownloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
+            var downloadDirPath = setting.WebNavigator.DownloadDirectoryPath;
+            if(!string.IsNullOrWhiteSpace(downloadDirPath)) {
+                downloadDirPath = Environment.ExpandEnvironmentVariables(downloadDirPath);
+            } else {
+                downloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
+            }
+            try {
+                Directory.CreateDirectory(downloadDirPath);
+            } catch(Exception ex) {
+                Mediation.Logger.Warning(ex);
+                downloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
+            }
 
             var filter = new DialogFilterList();
             filter.Add(new DialogFilterItem("*.*", "*.*"));
 
             var dialog = new SaveFileDialog() {
                 Filter = filter.FilterText,
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                InitialDirectory = downloadDirPath,
                 FileName = uriFileName,
             };
-#if DEBUG
-            dialog.InitialDirectory = @"x:\";
-#endif
 
             if(!dialog.ShowDialog().GetValueOrDefault()) {
                 e.Cancel();
