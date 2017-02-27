@@ -197,6 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         }
 
         // TODO: セッションがぁぁぁぁ。直接ストリームほしいなぁぁぁ。
+        // TODO: ブラウザ自体がほしいなぁぁぁ。
         private static void LauncherDialog_Download(object sender, LauncherDialogEvent e)
         {
             Uri downloadUri;
