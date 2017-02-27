@@ -139,7 +139,7 @@
 						'revision': '',
 						'subject': '#426: 自動セットアップからアーカイブ取得時にヘッダを先に読み込むようにする',
 						'comments': [
-							'実運用: 2017/01/18, git tag: setup-1.20',
+							'実運用: 2017/02/27, git tag: setup-1.20',
 							'更新履歴やコミットログで HttpClient.GetAsync の挙動について直感的じゃないと散々悪態ついたけどいざ調べてみたら HttpCompletionOption.ResponseHeadersRead を指定してないワタクシのミスでございました',
 						]
 					},
