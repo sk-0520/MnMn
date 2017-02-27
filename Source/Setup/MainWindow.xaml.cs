@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.Setup
 
             var client = CreateHttpClient();
 
-            var response = await client.GetAsync(Constants.UpdateUri);
+            var response = await client.GetAsync(Constants.UpdateUri, HttpCompletionOption.ResponseHeadersRead);
             AddMessageLog(
                 string.Format(
                     Properties.Resources.String_Http_Response_Header_Format,
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.MnMn.Setup
 
             var downloadTotalSize = 0;
 
-            var response = await client.GetAsync(uri);
+            var response = await client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead);
             AddMessageLog(
                 string.Format(
                     Properties.Resources.String_Http_Response_Header_Format, 
