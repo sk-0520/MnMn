@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 size = size / 1024;
             }
 
-            return $"{size:0.##} {terms[order]}";
+            return $"{size:0.00} {terms[order]}";
         }
 
         public static string ConvertHumanLikeByte(long byteSize)
