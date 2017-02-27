@@ -228,6 +228,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             var downloadDir = GetDownloadDirectory();
 
+            downloadDir.Refresh();
+            if(downloadDir.Exists) {
+                // TODO: ワイルドカードは若干の妥協
+                var files = downloadDir.EnumerateFiles(filter.First().Wildcard.First(), SearchOption.TopDirectoryOnly)
+                    .Select(f => f.Name)
+                    .ToList()
+                ;
+                usingFileName = TextUtility.ToUnique(usingFileName, files, (n, i) => {
+                    var name = Path.GetFileNameWithoutExtension(n);
+                    var ext = Path.GetExtension(n);
+
+                    return $"{name}_{i}{ext}";
+                });
+            }
+
             var dialog = new SaveFileDialog() {
                 Filter = filter.FilterText,
                 InitialDirectory = downloadDir.FullName,
