@@ -96,6 +96,10 @@
       <HintPath>..\..\packages\SharpAvi.2.1.0\lib\net45\SharpAvi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Syroot.Windows.IO.KnownFolders">
+      <HintPath>..\..\packages\Syroot.Windows.IO.KnownFolders.1.0.2\lib\net40\Syroot.Windows.IO.KnownFolders.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

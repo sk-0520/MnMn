@@ -34,6 +34,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public bool GeckoFxScanPlugin { get; set; } = Constants.SettingApplicationWebNavigatorGeckoFxScanPlugin;
 
+        /// <summary>
+        /// ブラウザからのファイルダウンロード先。
+        /// </summary>
+        [DataMember]
+        public string DownloadDirectoryPath { get; set; } = Syroot.Windows.IO.KnownFolders.Downloads.Path;
+
         #endregion
     }
 }

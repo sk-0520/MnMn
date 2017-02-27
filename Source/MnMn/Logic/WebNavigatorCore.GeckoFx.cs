@@ -21,16 +21,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 using Gecko;
 using Gecko.Cache;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -104,10 +110,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             foreach(var targetDirPath in Directory.GetDirectories(Constants.WebNavigatorGeckoFxExtensionsDirectoryPath)) {
                 InitializeGeckoExtension(targetDirPath);
             }
+
+            LauncherDialog.Download += LauncherDialog_Download;
         }
 
         static void UninitializeGecko()
         {
+            LauncherDialog.Download -= LauncherDialog_Download;
+
             foreach(var browser in CreatedGeckoBrowsers) {
                 browser.Disposed -= GeckoBrowser_Disposed;
                 try {
@@ -185,5 +195,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             browser.Disposed -= GeckoBrowser_Disposed;
             CreatedGeckoBrowsers.Remove(browser);
         }
+
+        // TODO: セッションがぁぁぁぁ。直接ストリームほしいなぁぁぁ。
+        // TODO: ブラウザ自体がほしいなぁぁぁ。
+        private static void LauncherDialog_Download(object sender, LauncherDialogEvent e)
+        {
+            Uri downloadUri;
+            if(!Uri.TryCreate(e.Url, UriKind.RelativeOrAbsolute, out downloadUri)) {
+                e.Cancel();
+                return;
+            }
+
+            var downloadDirectory = GetDownloadDirectory();
+            var baseFileName = GetDownloadFileName(e.Filename, downloadUri);
+            var extension = GetDownloadFileExtension(baseFileName);
+
+            var dialog = GetDownloadFileSaveDialog(downloadDirectory, baseFileName, extension);
+            if(!dialog.ShowDialog().GetValueOrDefault()) {
+                e.Cancel();
+                return;
+            }
+
+            var downloadFilePath = dialog.FileName;
+            var downloadFile = new FileInfo(downloadFilePath);
+
+            var download = new WebNavigatorFileDownloadItemViewModel(Mediation, downloadUri, downloadFile, new HttpUserAgentHost());
+            download.LoadImageAsync();
+
+            Mediation.Order(new DownloadOrderModel(download, true, ServiceType.Application));
+            e.Cancel();
+        }
+
     }
 }

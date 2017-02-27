@@ -141,6 +141,11 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Syroot.Windows.IO.KnownFolders">
+      <HintPath>..\packages\Syroot.Windows.IO.KnownFolders.1.0.2\lib\net40\Syroot.Windows.IO.KnownFolders.dll</HintPath>
+      <Private>True</Private>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -290,6 +295,7 @@
     <Compile Include="IF\Control\ISelectable.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IDescription.cs" />
+    <Compile Include="IF\IDownloadItem.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
@@ -311,6 +317,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
     <Compile Include="Logic\SpaghettiScript.cs" />
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
+    <Compile Include="Logic\Utility\ShellUtility.cs" />
     <Compile Include="Logic\Utility\HtmlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveGetPlayerStatusUtility.cs" />
     <Compile Include="Logic\Utility\StreamUtility.cs" />
@@ -340,6 +347,7 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
+    <Compile Include="Model\Order\DownloadOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
     <Compile Include="Model\Request\Parameter\WebNavigatorProcessParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
@@ -430,6 +438,8 @@
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorPageConditionModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppDownloadManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
@@ -472,11 +482,15 @@
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionParameterViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorFileDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorNavigatingItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorPageConditionViewModel.cs" />
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
     <Compile Include="View\Attachment\HtmlDescriptionBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\App\AppDownloadManager.xaml.cs">
+      <DependentUpon>AppDownloadManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\App\AppGeneralBrowserManager.xaml.cs">
       <DependentUpon>AppGeneralBrowserManager.xaml</DependentUpon>
     </Compile>
@@ -959,6 +973,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </None>
+    <Page Include="View\Controls\App\AppDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoLaboratoryManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
