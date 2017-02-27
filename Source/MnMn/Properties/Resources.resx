@@ -485,4 +485,10 @@
   <data name="String_App_Browser_Common_Source" xml:space="preserve">
     <value>ソース</value>
   </data>
+  <data name="String_App_Browser_Download_AllFile_Display" xml:space="preserve">
+    <value>全てのファイル</value>
+  </data>
+  <data name="String_App_Browser_Download_AllFile_Pattern" xml:space="preserve">
+    <value>*.*</value>
+  </data>
 </root>

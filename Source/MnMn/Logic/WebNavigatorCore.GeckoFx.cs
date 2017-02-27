@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -195,6 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             CreatedGeckoBrowsers.Remove(browser);
         }
 
+        // TODO: セッションがぁぁぁぁ。直接ストリームほしいなぁぁぁ。
         private static void LauncherDialog_Download(object sender, LauncherDialogEvent e)
         {
             Uri downloadUri;
@@ -202,30 +204,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 e.Cancel();
                 return;
             }
-            var uriFileName = downloadUri.Segments.LastOrDefault();
-            var mimeExtension = e.Mime.GetFileExtensions();
-
-            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
-            var downloadDirPath = setting.WebNavigator.DownloadDirectoryPath;
-            if(!string.IsNullOrWhiteSpace(downloadDirPath)) {
-                downloadDirPath = Environment.ExpandEnvironmentVariables(downloadDirPath);
-            } else {
-                downloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
+            var usingFileName = e.Filename;
+            if(string.IsNullOrWhiteSpace(usingFileName)) {
+                usingFileName = downloadUri.Segments.LastOrDefault();
             }
-            try {
-                Directory.CreateDirectory(downloadDirPath);
-            } catch(Exception ex) {
-                Mediation.Logger.Warning(ex);
-                downloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
+            if(string.IsNullOrWhiteSpace(usingFileName)) {
+                usingFileName = downloadUri.OriginalString;
+            }
+            usingFileName = PathUtility.ToSafeNameDefault(usingFileName);
+            var dotExt = Path.GetExtension(usingFileName);
+            var usingExtension = "*";
+            if(!string.IsNullOrEmpty( dotExt) && 1 < dotExt.Length) {
+                usingExtension = PathUtility.ToSafeNameDefault(dotExt.Substring(1));
             }
 
             var filter = new DialogFilterList();
-            filter.Add(new DialogFilterItem("*.*", "*.*"));
+            if(usingExtension != "*") {
+                var pattern = $"*.{usingExtension}";
+                filter.Add(new DialogFilterItem(usingExtension, pattern));
+            }
+            filter.Add(new DialogFilterItem(Properties.Resources.String_App_Browser_Download_AllFile_Display, Properties.Resources.String_App_Browser_Download_AllFile_Pattern));
+
+            var downloadDir = GetDownloadDirectory();
 
             var dialog = new SaveFileDialog() {
                 Filter = filter.FilterText,
-                InitialDirectory = downloadDirPath,
-                FileName = uriFileName,
+                InitialDirectory = downloadDir.FullName,
+                FileName = usingFileName,
             };
 
             if(!dialog.ShowDialog().GetValueOrDefault()) {

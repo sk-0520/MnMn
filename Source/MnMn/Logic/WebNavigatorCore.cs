@@ -25,6 +25,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -265,6 +266,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return new ExecuteData(executeData.ApplicationPath, arguments);
         }
 
+        static DirectoryInfo GetDownloadDirectory()
+        {
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+            var downloadDirPath = setting.WebNavigator.DownloadDirectoryPath;
+            if(!string.IsNullOrWhiteSpace(downloadDirPath)) {
+                downloadDirPath = Environment.ExpandEnvironmentVariables(downloadDirPath);
+            } else {
+                downloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
+            }
+
+            try {
+                return Directory.CreateDirectory(downloadDirPath);
+            } catch(Exception ex) {
+                Mediation.Logger.Warning(ex);
+            }
+
+            downloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
+
+            try {
+                return Directory.CreateDirectory(downloadDirPath);
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+            }
+            // ここまで頑張って無理ならいっそ清々しい
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            return new DirectoryInfo(desktopPath);
+        }
 
         #endregion
     }
