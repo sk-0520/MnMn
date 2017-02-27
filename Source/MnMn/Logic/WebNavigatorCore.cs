@@ -24,6 +24,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
@@ -46,6 +48,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// </summary>
     public static partial class WebNavigatorCore
     {
+        #region define
+
+        const string allFilterExtension = "*";
+
+        #endregion
+
         #region property
 
         static Mediation Mediation { get; set; }
@@ -292,6 +300,69 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             // ここまで頑張って無理ならいっそ清々しい
             var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             return new DirectoryInfo(desktopPath);
+        }
+
+        static string GetDownloadFileName(string baseFIleName, Uri downloadUri)
+        {
+            var usingFileName = baseFIleName;
+
+            if(string.IsNullOrWhiteSpace(usingFileName)) {
+                usingFileName = downloadUri.Segments.LastOrDefault();
+            }
+            if(string.IsNullOrWhiteSpace(usingFileName)) {
+                usingFileName = downloadUri.OriginalString;
+            }
+            return PathUtility.ToSafeNameDefault(usingFileName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns>.なし</returns>
+        static string GetDownloadFileExtension(string fileName)
+        {
+            var dotExt = Path.GetExtension(fileName);
+            var usingExtension = allFilterExtension;
+            if(!string.IsNullOrEmpty(dotExt) && 1 < dotExt.Length) {
+                usingExtension = PathUtility.ToSafeNameDefault(dotExt.Substring(1));
+            }
+
+            return usingExtension;
+        }
+
+        static SaveFileDialog GetDownloadFileSaveDialog(DirectoryInfo directory, string baseFileName, string baseExtension)
+        {
+            var filter = new DialogFilterList();
+            if(baseExtension != "*") {
+                var pattern = $"*.{baseExtension}";
+                filter.Add(new DialogFilterItem(baseExtension, pattern));
+            }
+            filter.Add(new DialogFilterItem(Properties.Resources.String_App_Browser_Download_AllFile_Display, Properties.Resources.String_App_Browser_Download_AllFile_Pattern));
+
+            var downladFileName = baseFileName;
+            directory.Refresh();
+            if(directory.Exists) {
+                // TODO: ワイルドカードは若干の妥協
+                var files = directory.EnumerateFiles(filter.First().Wildcard.First(), SearchOption.TopDirectoryOnly)
+                    .Select(f => f.Name)
+                    .ToList()
+                ;
+                downladFileName = TextUtility.ToUnique(downladFileName, files, (n, i) => {
+                    var name = Path.GetFileNameWithoutExtension(n);
+                    var ext = Path.GetExtension(n);
+
+                    return $"{name}_{i}{ext}";
+                });
+            }
+
+            var dialog = new SaveFileDialog() {
+                Filter = filter.FilterText,
+                InitialDirectory = directory.FullName,
+                FileName = downladFileName,
+            };
+
+            return dialog;
         }
 
         #endregion

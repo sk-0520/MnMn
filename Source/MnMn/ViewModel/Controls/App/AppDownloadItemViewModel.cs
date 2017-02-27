@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -43,6 +44,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #endregion
 
         #region command
+
+        public ICommand ExecuteTargetCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => Item.ExecuteTargetCommand.TryExecute(o),
+                    o => Item.DownLoadState == Define.LoadState.Loaded
+                );
+            }
+        }
 
         public ICommand StartDownloadCommand
         {

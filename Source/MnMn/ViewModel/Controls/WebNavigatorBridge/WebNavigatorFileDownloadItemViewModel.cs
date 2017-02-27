@@ -5,7 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -23,6 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         long _downloadTotalSize;
         long _downloadedSize;
         LoadState _downLoadState;
+        ImageSource _image;
 
         #endregion
 
@@ -60,6 +64,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         #region function
 
+        public Task LoadImageAsync()
+        {
+            return Task.Run(() => {
+                Application.Current.Dispatcher.Invoke(() => {
+                    var icon = IconUtility.Load(DownloadFile.FullName, ContentTypeTextNet.Library.SharedLibrary.Define.IconScale.Big, 0, Mediation.Logger);
+                    FreezableUtility.SafeFreeze(icon);
+                    Image = icon;
+                });
+            });
+        }
+
         #endregion
 
         #region IDownloader
@@ -90,6 +105,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         {
             get { return this._downLoadState; }
             private set { SetVariableValue(ref this._downLoadState, value); }
+        }
+
+        public ImageSource Image
+        {
+            get { return this._image; }
+            private set { SetVariableValue(ref this._image, value); }
         }
 
         public ICommand OpenDirectoryCommand

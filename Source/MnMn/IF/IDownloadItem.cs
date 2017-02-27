@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -47,6 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// <para>0-1</para>
         /// </summary>
         IProgress<double> DownloadingProgress { get; set; }
+
+        ImageSource Image { get; }
 
         #endregion
 

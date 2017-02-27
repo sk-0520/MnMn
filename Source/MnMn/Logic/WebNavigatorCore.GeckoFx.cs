@@ -205,50 +205,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 e.Cancel();
                 return;
             }
-            var usingFileName = e.Filename;
-            if(string.IsNullOrWhiteSpace(usingFileName)) {
-                usingFileName = downloadUri.Segments.LastOrDefault();
-            }
-            if(string.IsNullOrWhiteSpace(usingFileName)) {
-                usingFileName = downloadUri.OriginalString;
-            }
-            usingFileName = PathUtility.ToSafeNameDefault(usingFileName);
-            var dotExt = Path.GetExtension(usingFileName);
-            var usingExtension = "*";
-            if(!string.IsNullOrEmpty( dotExt) && 1 < dotExt.Length) {
-                usingExtension = PathUtility.ToSafeNameDefault(dotExt.Substring(1));
-            }
 
-            var filter = new DialogFilterList();
-            if(usingExtension != "*") {
-                var pattern = $"*.{usingExtension}";
-                filter.Add(new DialogFilterItem(usingExtension, pattern));
-            }
-            filter.Add(new DialogFilterItem(Properties.Resources.String_App_Browser_Download_AllFile_Display, Properties.Resources.String_App_Browser_Download_AllFile_Pattern));
+            var downloadDirectory = GetDownloadDirectory();
+            var baseFileName = GetDownloadFileName(e.Filename, downloadUri);
+            var extension = GetDownloadFileExtension(baseFileName);
 
-            var downloadDir = GetDownloadDirectory();
-
-            downloadDir.Refresh();
-            if(downloadDir.Exists) {
-                // TODO: ワイルドカードは若干の妥協
-                var files = downloadDir.EnumerateFiles(filter.First().Wildcard.First(), SearchOption.TopDirectoryOnly)
-                    .Select(f => f.Name)
-                    .ToList()
-                ;
-                usingFileName = TextUtility.ToUnique(usingFileName, files, (n, i) => {
-                    var name = Path.GetFileNameWithoutExtension(n);
-                    var ext = Path.GetExtension(n);
-
-                    return $"{name}_{i}{ext}";
-                });
-            }
-
-            var dialog = new SaveFileDialog() {
-                Filter = filter.FilterText,
-                InitialDirectory = downloadDir.FullName,
-                FileName = usingFileName,
-            };
-
+            var dialog = GetDownloadFileSaveDialog(downloadDirectory, baseFileName, extension);
             if(!dialog.ShowDialog().GetValueOrDefault()) {
                 e.Cancel();
                 return;
@@ -258,6 +220,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var downloadFile = new FileInfo(downloadFilePath);
 
             var download = new WebNavigatorFileDownloadItemViewModel(Mediation, downloadUri, downloadFile, new HttpUserAgentHost());
+            download.LoadImageAsync();
 
             Mediation.Order(new DownloadOrderModel(download, true, ServiceType.Application));
             e.Cancel();
