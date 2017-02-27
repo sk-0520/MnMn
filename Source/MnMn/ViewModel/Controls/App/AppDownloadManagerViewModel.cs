@@ -25,11 +25,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region function
 
-        internal void AddDonwloadItem(AppDownloadItemViewModel downloadItem, bool canManagement)
+        internal void AddDonwloadItem(AppDownloadItemViewModel downloadItem, bool startDownload)
         {
             DownloadStateItems.Insert(0, downloadItem);
 
-            if(canManagement) {
+            if(startDownload) {
                 downloadItem.StartAsync();
             }
         }
@@ -51,6 +51,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override Task UninitializeAsync()
         {
+            foreach(var download in DownloadStateItems) {
+                // 列挙中に終わるかもしんないから逐次実行。
+                if(download.Item.DownLoadState == LoadState.Loading || download.Item.DownLoadState == LoadState.Preparation) {
+                    download.CancelDownload();
+                }
+            }
+
             return Task.CompletedTask;
         }
 

@@ -183,6 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 AppUpdateManager,
                 AppInformationManager,
                 AppBrowserManager,
+                AppDownloadManager,
                 SmileManager,
             };
         }

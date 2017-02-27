@@ -72,9 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(
-                    o => {
-                        DonwloadCancel.Cancel();
-                    },
+                    o => CancelDownload(),
                     o => Item.DownLoadState == Define.LoadState.Loading
                 );
             }
@@ -94,6 +92,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             DonwloadCancel = new CancellationTokenSource();
 
             return Item.StartAsync(DonwloadCancel.Token);
+        }
+
+        public void CancelDownload()
+        {
+            DonwloadCancel.Cancel();
         }
 
         #endregion
