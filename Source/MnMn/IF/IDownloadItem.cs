@@ -62,7 +62,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 
         #region function
 
-        Task StartAsync(CancellationToken cancellationToken);
+        Task StartAsync();
+        void Cancel();
 
         #endregion
     }

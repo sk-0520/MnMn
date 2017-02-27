@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         FileInfo DownloadFile { get; }
 
+        CancellationTokenSource Cancellation { get; set; }
+
         #endregion
 
         #region function
@@ -134,16 +136,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         }
 
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync()
         {
+            Cancellation = new CancellationTokenSource();
+            
             DownLoadState = LoadState.Preparation;
 
             EnabledTotalSize = false;
             DownloadedSize = DownloadTotalSize = 0;
             WriteStream = DownloadFile.Create();
 
-            return Downloader.StartAsync(cancellationToken);
+            return Downloader.StartAsync(Cancellation.Token);
         }
+
+        public void Cancel()
+        {
+            Cancellation.Cancel();
+        }
+
 
         #endregion
 

@@ -33,8 +33,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public ServiceType ServiceType { get; }
         public IDownloadItem Item { get; }
 
-        CancellationTokenSource DonwloadCancel { get; set; }
-
         public double DownloadingProgress
         {
             get { return this._downloadingProgress; }
@@ -89,14 +87,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public Task StartAsync()
         {
-            DonwloadCancel = new CancellationTokenSource();
-
-            return Item.StartAsync(DonwloadCancel.Token);
+            return Item.StartAsync();
         }
 
         public void CancelDownload()
         {
-            DonwloadCancel.Cancel();
+            Item.Cancel();
         }
 
         #endregion
