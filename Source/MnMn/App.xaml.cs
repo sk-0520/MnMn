@@ -35,6 +35,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -195,7 +196,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
         }
 
         void SetCrashReportSetting(CrashReportSettingModel target)
-        { }
+        {
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+
+            target.CacheDirectoryPath = setting.CacheDirectoryPath;
+            target.UsingCacheDirectoryPath = cacheDirectory.FullName;
+            target.CacheLifeTime = setting.CacheLifeTime;
+
+            target.FirstVersion = setting.RunningInformation.FirstVersion;
+            target.FirstTimestamp = setting.RunningInformation.FirstTimestamp;
+
+            target.GeckoFxScanPlugin = setting.WebNavigator.GeckoFxScanPlugin;
+        }
 
         string CreateCrashReport(Exception ex, bool callerUiThread)
         {

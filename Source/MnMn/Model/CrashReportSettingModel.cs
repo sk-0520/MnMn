@@ -13,7 +13,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         #region property
 
         public string CacheDirectoryPath { get; set; }
+        public string UsingCacheDirectoryPath { get; set; }
         public TimeSpan CacheLifeTime { get; set; }
+
+        #region RunningInformation
+
+        public Version FirstVersion { get; set; }
+        public DateTime FirstTimestamp { get; set; }
+
+        #endregion
+
+        #region WebNavigator
+
+        public bool GeckoFxScanPlugin { get; set; }
+
+        #endregion
 
         #endregion
     }
