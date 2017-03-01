@@ -162,7 +162,11 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#428: 公開内臓ブラウザのHPを別のサイトにする',
+						'comments': [
+							'「いのちのクリック」は閉鎖するとのこと',
+							'am͜a͉zon'
+						]
 					},
 					{
 						'revision': '',
