@@ -92,7 +92,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var reportPath = CreateCrashReport(ex, callerUiThread);
             if(Constants.AppSendCrashReport) {
-                Process.Start(Constants.CrashReporterApplicationPath, $"/crash /report=\"{reportPath}\"");
+                var args = $"/crash /report=\"{reportPath}\"";
+                if(Constants.AppCrashReportIsDebug) {
+                    args += " /debug";
+                }
+                Process.Start(Constants.CrashReporterApplicationPath, args);
             }
 
             Shutdown();
