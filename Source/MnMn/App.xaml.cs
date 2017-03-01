@@ -202,9 +202,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             target.CacheDirectoryPath = setting.CacheDirectoryPath;
             target.UsingCacheDirectoryPath = cacheDirectory.FullName;
-            target.CacheLifeTime = setting.CacheLifeTime;
+            target.CacheLifeTime = setting.CacheLifeTime.ToString();
 
-            target.FirstVersion = setting.RunningInformation.FirstVersion;
+            target.FirstVersion = setting.RunningInformation.FirstVersion?.ToString();
             target.FirstTimestamp = setting.RunningInformation.FirstTimestamp;
 
             target.GeckoFxScanPlugin = setting.WebNavigator.GeckoFxScanPlugin;

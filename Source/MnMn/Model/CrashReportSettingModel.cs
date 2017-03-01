@@ -14,11 +14,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         public string CacheDirectoryPath { get; set; }
         public string UsingCacheDirectoryPath { get; set; }
-        public TimeSpan CacheLifeTime { get; set; }
+        public string CacheLifeTime { get; set; }
 
         #region RunningInformation
 
-        public Version FirstVersion { get; set; }
+        public string FirstVersion { get; set; }
         public DateTime FirstTimestamp { get; set; }
 
         #endregion
