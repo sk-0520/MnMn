@@ -68,7 +68,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #endif
         }
 
-#region property
+        #region property
+
+        DateTime WakeUpTimestamp { get; } = DateTime.Now;
 
         Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
 
@@ -78,9 +80,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         MainWindow View { get; set; }
         AppManagerViewModel AppManager { get; set; }
 
-#endregion
+        #endregion
 
-#region function
+        #region function
 
         void CatchUnhandleException(Exception ex, bool callerUiThread)
         {
@@ -197,11 +199,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void SetCrashReportSetting(CrashReportSettingModel target)
         {
+            target.WakeUpTimestamp = WakeUpTimestamp;
+            target.RunningTime = (DateTime.Now - WakeUpTimestamp).ToString();
+
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
-            var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+            //var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
 
             target.CacheDirectoryPath = setting.CacheDirectoryPath;
-            target.UsingCacheDirectoryPath = cacheDirectory.FullName;
+            //target.UsingCacheDirectoryPath = cacheDirectory.FullName;
             target.CacheLifeTime = setting.CacheLifeTime.ToString();
 
             target.FirstVersion = setting.RunningInformation.FirstVersion?.ToString();
@@ -239,7 +244,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             var dialogResult = MessageBox.Show(
-                MnMn.Properties.Resources.String_App_ExecuteBetaVersion_Warning, 
+                MnMn.Properties.Resources.String_App_ExecuteBetaVersion_Warning,
                 $"{Constants.ApplicationName}:{Constants.ApplicationVersion}",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning,
@@ -250,9 +255,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
-#endregion
+        #endregion
 
-#region Application
+        #region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
@@ -324,7 +329,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             SplashWindow.ShowInTaskbar = true; // 非最前面化でどっかいっちゃう対策
 #endif
 
-            var initializeTasks = new [] {
+            var initializeTasks = new[] {
                 InitializeCrashReportAsync(),
                 AppManager.InitializeAsync(),
             };
@@ -357,7 +362,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             base.OnExit(e);
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// UIスレッド

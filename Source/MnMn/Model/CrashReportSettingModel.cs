@@ -12,8 +12,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     {
         #region property
 
+        public DateTime WakeUpTimestamp { get; set; }
+        public string RunningTime { get; set; }
+
         public string CacheDirectoryPath { get; set; }
-        public string UsingCacheDirectoryPath { get; set; }
+        //public string UsingCacheDirectoryPath { get; set; }
         public string CacheLifeTime { get; set; }
 
         #region RunningInformation
