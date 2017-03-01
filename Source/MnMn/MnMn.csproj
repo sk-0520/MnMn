@@ -349,6 +349,7 @@
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\Order\DownloadOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
+    <Compile Include="Model\Request\Parameter\AppLoggingParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\WebNavigatorProcessParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessUnorganizedBookmarkParameterModel.cs" />
