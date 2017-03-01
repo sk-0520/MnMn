@@ -35,6 +35,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -67,7 +68,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #endif
         }
 
-#region property
+        #region property
+
+        DateTime WakeUpTimestamp { get; } = DateTime.Now;
 
         Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
 
@@ -77,9 +80,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         MainWindow View { get; set; }
         AppManagerViewModel AppManager { get; set; }
 
-#endregion
+        #endregion
 
-#region function
+        #region function
 
         void CatchUnhandleException(Exception ex, bool callerUiThread)
         {
@@ -194,6 +197,24 @@ namespace ContentTypeTextNet.MnMn.MnMn
             });
         }
 
+        void SetCrashReportSetting(CrashReportSettingModel target)
+        {
+            target.WakeUpTimestamp = WakeUpTimestamp;
+            target.RunningTime = (DateTime.Now - WakeUpTimestamp).ToString();
+
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            //var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+
+            target.CacheDirectoryPath = setting.CacheDirectoryPath;
+            //target.UsingCacheDirectoryPath = cacheDirectory.FullName;
+            target.CacheLifeTime = setting.CacheLifeTime.ToString();
+
+            target.FirstVersion = setting.RunningInformation.FirstVersion?.ToString();
+            target.FirstTimestamp = setting.RunningInformation.FirstTimestamp;
+
+            target.GeckoFxScanPlugin = setting.WebNavigator.GeckoFxScanPlugin;
+        }
+
         string CreateCrashReport(Exception ex, bool callerUiThread)
         {
             var logParam = new AppLoggingParameterModel() {
@@ -206,6 +227,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var crashReport = new CrashReportModel(ex, callerUiThread);
             crashReport.Logs.Text = string.Join(Environment.NewLine, logs);
+            SetCrashReportSetting(crashReport.Setting);
+
             var dir = VariableConstants.GetCrashReportDirectory();
             var path = Path.Combine(dir.FullName, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.CrashReportFileExtension));
             SerializeUtility.SaveXmlSerializeToFile(path, crashReport);
@@ -221,7 +244,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             var dialogResult = MessageBox.Show(
-                MnMn.Properties.Resources.String_App_ExecuteBetaVersion_Warning, 
+                MnMn.Properties.Resources.String_App_ExecuteBetaVersion_Warning,
                 $"{Constants.ApplicationName}:{Constants.ApplicationVersion}",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning,
@@ -232,9 +255,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
-#endregion
+        #endregion
 
-#region Application
+        #region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
@@ -306,7 +329,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             SplashWindow.ShowInTaskbar = true; // 非最前面化でどっかいっちゃう対策
 #endif
 
-            var initializeTasks = new [] {
+            var initializeTasks = new[] {
                 InitializeCrashReportAsync(),
                 AppManager.InitializeAsync(),
             };
@@ -339,7 +362,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             base.OnExit(e);
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// UIスレッド
