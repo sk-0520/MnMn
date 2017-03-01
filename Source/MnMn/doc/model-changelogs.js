@@ -85,9 +85,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.50.1',
-		'isRc': true,
+		'date': '2017/03/01',
+		'version': '0.51.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -111,10 +111,6 @@
 							'> 初回実行バージョンと時間',
 							'> GeckoFx: プラグインスキャンフラグ'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -122,14 +118,14 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'bbee0de706db7c4dbe9d8826b953bb23250d08ec',
 						'subject': '#424: Cookie を永続化する',
 						'comments': [
 							'サービスログイン周りと相性よくないから変になったら再起動で直るんじゃないですかね'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '60e1d8e5ca608321ca2d3fae15b373f3ed0c842b',
 						'subject': '#240: 内部ブラウザの制御をそろそろやりましょうぜ',
 						'comments': [
 							'新規ウィンドウで開く指定が HTML 側で行われた場合も通常のページ遷移と同じく URI のパターンマッチから MnMn のサポートするサービスで開くようにした',
@@ -137,10 +133,6 @@
 							'なんでこんなもん自分で作らなきゃならんのだと思いつつ将来用の #362 にも流用できるように interface を小手先で頑張った',
 							'内臓ブラウザの制御に関する本件としてはこれでおしまい。今後の機能拡張・修正は個別課題で対応していく'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -148,20 +140,12 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '25dbf95900ff00f465b85d50b78b09104744dc03',
 						'subject': '#426: 自動セットアップからアーカイブ取得時にヘッダを先に読み込むようにする',
 						'comments': [
 							'実運用: 2017/02/27, git tag: setup-1.20',
 							'更新履歴やコミットログで HttpClient.GetAsync の挙動について直感的じゃないと散々悪態ついたけどいざ調べてみたら HttpCompletionOption.ResponseHeadersRead を指定してないワタクシのミスでございました',
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -169,11 +153,11 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '9432df3c32b794bfa9677c7eb4efcef22c76bbba',
 						'subject': '#422: クラッシュレポート生成時に直近のログがないときっつい！'
 					},
 					{
-						'revision': '',
+						'revision': 'db7c7d5aeebf74d999b0814d38579fde81f755c7',
 						'subject': '#428: 公開内臓ブラウザのHPを別のサイトにする',
 						'comments': [
 							'「いのちのクリック」は閉鎖するとのこと',
@@ -181,12 +165,8 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '27377896c4c50f66cb85a36e2641a1d146831567',
 						'subject': '#427: クラッシュレポートに設定の一部を含める'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
