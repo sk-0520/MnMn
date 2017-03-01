@@ -58,13 +58,13 @@
 
     <Grid Grid.Row="0" Margin="8" IsEnabled="{Binding IsBusy, Converter={StaticResource LogicalNotConverter}}">
       <TextBlock FontSize="14" TextWrapping="Wrap">
-        MnMn は死にました。
+        <Run FontWeight="Bold">MnMn は死にました。</Run>
         <LineBreak />
-        このレポートを送信することにより今後の改善につながるかもです。
+        このレポートを送信することで今後の改善につながるかもです。
         <LineBreak />
         送信されたレポートは Google Drive に格納され、開発側でのみ共有されます。
         <LineBreak />
-        <TextBlock FontSize="11">※受信側プログラムは開発リポジトリには格納していないため<Hyperlink Command="{Binding OpenReceiveProgramCommand}">こちら</Hyperlink>を確認してください。</TextBlock>
+        <TextBlock FontSize="11">※受信側プログラムは開発リポジトリに格納していないため<Hyperlink Command="{Binding OpenReceiveProgramCommand}">こちら</Hyperlink>を確認してください。</TextBlock>
       </TextBlock>
     </Grid>
 
