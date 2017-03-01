@@ -31,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
@@ -291,11 +292,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 if(hitCondition != null) {
                     var match = hitCondition.UriRegex.Match(uriText);
                     var param = match.Result(hitCondition.ParameterSource);
-                    
+
                     return new WebNavigatorNavigatingResultModel(true, item, param);
                 }
             }
-            
+
 
             return new WebNavigatorResultModel(false);
         }
@@ -428,6 +429,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
+        bool Order_Donwload(DownloadOrderModel order)
+        {
+            var downloadState = order.DownloadState;
+            //DownloadStatus.Insert(0, downloadState);
+
+            var downloadItem = new AppDownloadItemViewModel(order.ServiceType, order.DownloadState);
+
+            ManagerPack.AppManager.AppDownloadManager.AddDonwloadItem(downloadItem, order.CanManagement);
+
+            return true;
+        }
+
         bool OrderCore(OrderModel order)
         {
             switch(order.OrderKind) {
@@ -466,6 +479,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return script;
         }
 
+        ResponseModel RequestCore_Process(ProcessRequestModelBase request)
+        {
+            var appLoggingParameter = request.ParameterBase as AppLoggingParameterModel;
+            if(appLoggingParameter != null) {
+                var logs = ManagerPack.AppManager.AppInformationManager.AppLoggingManager.LogListViewer;
+                if(appLoggingParameter.GetClone) {
+                    logs = logs.ToList();
+                }
+
+                return new ResponseModel(request, logs);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        ResponseModel RequestCore(RequestModel request)
+        {
+            switch(request.RequestKind) {
+                case RequestKind.Setting:
+                    return new ResponseModel(request, Setting);
+
+                case RequestKind.Process:
+                    return RequestCore_Process((ProcessRequestModelBase)request);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public override ResponseModel Request(RequestModel request)
         {
             CheckUtility.DebugEnforceNotNull(request);
@@ -484,7 +526,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             switch(request.ServiceType) {
                 case ServiceType.Application:
-                    return new ResponseModel(request, Setting);
+                    return RequestCore(request);
 
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
@@ -500,6 +542,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override bool Order(OrderModel order)
         {
             CheckUtility.DebugEnforceNotNull(order);
+
+            if(order.OrderKind == OrderKind.Donwload) {
+                return Order_Donwload((DownloadOrderModel)order);
+            }
 
             switch(order.ServiceType) {
                 case ServiceType.Application:

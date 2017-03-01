@@ -243,6 +243,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   全てのファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Download_AllFile_Display {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Download_AllFile_Display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   *.* に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Download_AllFile_Pattern {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Download_AllFile_Pattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ランダム再生 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_CheckedProcessType_RandomPlay {

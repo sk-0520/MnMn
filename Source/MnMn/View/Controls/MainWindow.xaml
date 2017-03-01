@@ -142,6 +142,10 @@
       <TabItem Header="ブラウザ" DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_app:AppGeneralBrowserManager x:Name="general" />
       </TabItem>
+      <TabItem Header="ダウンロード" DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_app:AppDownloadManager x:Name="download" />
+      </TabItem>
+      
     </TabControl>
   </DockPanel>
 </mamc:MetroWindow>

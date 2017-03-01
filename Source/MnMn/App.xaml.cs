@@ -34,12 +34,15 @@ using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
@@ -57,13 +60,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             SplashWindow = new SplashWindow();
 
-            //var t = new DispatcherTimer();
-            //t.Interval = TimeSpan.FromSeconds(10);
-            //t.Tick += (sender, e) => { throw new Exception("しんだ！"); };
-            //t.Start();
+#if DEBUG && KILL
+            var t = new DispatcherTimer();
+            t.Interval = TimeSpan.FromSeconds(10);
+            t.Tick += (sender, e) => { throw new Exception("しんだ！"); };
+            t.Start();
+#endif
         }
 
         #region property
+
+        DateTime WakeUpTimestamp { get; } = DateTime.Now;
 
         Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
 
@@ -88,7 +95,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var reportPath = CreateCrashReport(ex, callerUiThread);
             if(Constants.AppSendCrashReport) {
-                Process.Start(Constants.CrashReporterApplicationPath, $"/crash /report=\"{reportPath}\"");
+                var args = $"/crash /report=\"{reportPath}\"";
+                if(Constants.AppCrashReportIsDebug) {
+                    args += " /debug";
+                }
+                Process.Start(Constants.CrashReporterApplicationPath, args);
             }
 
             Shutdown();
@@ -186,12 +197,41 @@ namespace ContentTypeTextNet.MnMn.MnMn
             });
         }
 
+        void SetCrashReportSetting(CrashReportSettingModel target)
+        {
+            target.WakeUpTimestamp = WakeUpTimestamp;
+            target.RunningTime = (DateTime.Now - WakeUpTimestamp).ToString();
+
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            //var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+
+            target.CacheDirectoryPath = setting.CacheDirectoryPath;
+            //target.UsingCacheDirectoryPath = cacheDirectory.FullName;
+            target.CacheLifeTime = setting.CacheLifeTime.ToString();
+
+            target.FirstVersion = setting.RunningInformation.FirstVersion?.ToString();
+            target.FirstTimestamp = setting.RunningInformation.FirstTimestamp;
+
+            target.GeckoFxScanPlugin = setting.WebNavigator.GeckoFxScanPlugin;
+        }
+
         string CreateCrashReport(Exception ex, bool callerUiThread)
         {
+            var logParam = new AppLoggingParameterModel() {
+                GetClone = true,
+            };
+
+            var logs = Mediation.GetResultFromRequest<IEnumerable<LogItemModel>>(new AppLogingProcessRequestModel(logParam))
+                .Select(i => $"[{i.Timestamp:yyyy-MM-ddThh:mm:ss.fff}] {i.Message} {i.CallerMember} ({i.CallerLine})")
+            ;
+
             var crashReport = new CrashReportModel(ex, callerUiThread);
+            crashReport.Logs.Text = string.Join(Environment.NewLine, logs);
+            SetCrashReportSetting(crashReport.Setting);
+
             var dir = VariableConstants.GetCrashReportDirectory();
             var path = Path.Combine(dir.FullName, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.CrashReportFileExtension));
-            SerializeUtility.SaveXmlDataToFile(path, crashReport);
+            SerializeUtility.SaveXmlSerializeToFile(path, crashReport);
 
             return path;
         }
@@ -204,7 +244,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             var dialogResult = MessageBox.Show(
-                MnMn.Properties.Resources.String_App_ExecuteBetaVersion_Warning, 
+                MnMn.Properties.Resources.String_App_ExecuteBetaVersion_Warning,
                 $"{Constants.ApplicationName}:{Constants.ApplicationVersion}",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning,
@@ -215,9 +255,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
-#endregion
+        #endregion
 
-#region Application
+        #region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
@@ -289,7 +329,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             SplashWindow.ShowInTaskbar = true; // 非最前面化でどっかいっちゃう対策
 #endif
 
-            var initializeTasks = new [] {
+            var initializeTasks = new[] {
                 InitializeCrashReportAsync(),
                 AppManager.InitializeAsync(),
             };
@@ -322,7 +362,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             base.OnExit(e);
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// UIスレッド

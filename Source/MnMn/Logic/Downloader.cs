@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        public CancellationToken? CancelToken { get; }
+        public CancellationToken? CancelToken { get; private set; }
 
         public Uri DownloadUri { get; protected set; }
         protected ICreateHttpUserAgent UserAgentCreator { get; set; }
@@ -177,13 +177,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             UserAgent = UserAgentCreator.CreateHttpUserAgent();
             IfUsingSetRangeHeader();
 
-            var response = CancelToken.HasValue
-                ? UserAgent.GetAsync(DownloadUri, CancelToken.Value).Result
-                : UserAgent.GetAsync(DownloadUri).Result
+            var responseTask = CancelToken.HasValue
+                ? UserAgent.GetAsync(DownloadUri, HttpCompletionOption.ResponseHeadersRead, CancelToken.Value)
+                : UserAgent.GetAsync(DownloadUri, HttpCompletionOption.ResponseHeadersRead)
             ;
 
-            ResponseHeaders = response.Content.Headers;
-            return response.Content.ReadAsStreamAsync();
+            return responseTask.ContinueWith(t => {
+                var response = t.Result;
+                ResponseHeaders = response.Content.Headers;
+                return response.Content.ReadAsStreamAsync();
+            }).Unwrap();
+
+            //ResponseHeaders = response.Content.Headers;
+            //return response.Content.ReadAsStreamAsync();
             //return UserAgent.GetStreamAsync();
         }
 
@@ -192,8 +198,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
-        public virtual Task StartAsync()
+        public virtual Task StartAsync(CancellationToken? cancelToken = null)
         {
+            if(cancelToken.HasValue) {
+                CancelToken = cancelToken;
+            }
+            DownloadedSize = 0;
             return GetStreamAsync().ContinueWith(task => {
                 if(task.Result == null) {
                     Canceled = true;

@@ -42,6 +42,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// メモリのGC。
         /// </summary>
-        CleanMemory
+        CleanMemory,
+        /// <summary>
+        /// ダウンロードマネージャに登録
+        /// </summary>
+        Donwload,
     }
 }
