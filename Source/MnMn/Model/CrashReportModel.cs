@@ -4,39 +4,41 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    [Serializable, DataContract]
+    [Serializable, XmlRoot("crash")]
     public class CrashReportModel: ModelBase
     {
         CrashReportModel()
         {
-            Environments = new AppInformationCollection().ToString();
+            Environments.Text = new AppInformationCollection().ToString();
         }
 
         public CrashReportModel(Exception ex, bool callerUiThread)
             : this()
         {
-            CrashString = ex.ToString();
+            Message.Text = ex.ToString();
             CallerUiThread = callerUiThread;
         }
 
         #region property
 
-        [DataMember]
-        public string CrashString { get; set; }
-
-        [DataMember]
+        [XmlElement("ui-thread")]
         public bool CallerUiThread { get; set; }
 
-        [DataMember]
-        public string Environments { get; set; }
+        [XmlElement("message")]
+        public CDataModel Message { get; set; } = new CDataModel();
 
-        [DataMember]
-        public string LogList { get; set; }
+        [XmlElement("env")]
+        public CDataModel Environments { get; set; } = new CDataModel();
+
+        [XmlElement("log")]
+        public CDataModel Logs { get; set; } = new CDataModel();
 
         #endregion
     }

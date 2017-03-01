@@ -201,10 +201,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             ;
 
             var crashReport = new CrashReportModel(ex, callerUiThread);
-            crashReport.LogList = string.Join(Environment.NewLine, logs);
+            crashReport.Logs.Text = string.Join(Environment.NewLine, logs);
             var dir = VariableConstants.GetCrashReportDirectory();
             var path = Path.Combine(dir.FullName, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.CrashReportFileExtension));
-            SerializeUtility.SaveXmlDataToFile(path, crashReport);
+            SerializeUtility.SaveXmlSerializeToFile(path, crashReport);
 
             return path;
         }
