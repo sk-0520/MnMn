@@ -194,6 +194,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             });
         }
 
+        void SetCrashReportSetting(CrashReportSettingModel target)
+        { }
+
         string CreateCrashReport(Exception ex, bool callerUiThread)
         {
             var logParam = new AppLoggingParameterModel() {
@@ -206,6 +209,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var crashReport = new CrashReportModel(ex, callerUiThread);
             crashReport.Logs.Text = string.Join(Environment.NewLine, logs);
+            SetCrashReportSetting(crashReport.Setting);
+
             var dir = VariableConstants.GetCrashReportDirectory();
             var path = Path.Combine(dir.FullName, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.CrashReportFileExtension));
             SerializeUtility.SaveXmlSerializeToFile(path, crashReport);

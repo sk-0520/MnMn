@@ -40,6 +40,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlElement("log")]
         public CDataModel Logs { get; set; } = new CDataModel();
 
+        [XmlElement("setting")]
+        public CrashReportSettingModel Setting { get; set; } = new CrashReportSettingModel();
+
         #endregion
     }
 }
