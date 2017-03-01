@@ -292,11 +292,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 if(hitCondition != null) {
                     var match = hitCondition.UriRegex.Match(uriText);
                     var param = match.Result(hitCondition.ParameterSource);
-                    
+
                     return new WebNavigatorNavigatingResultModel(true, item, param);
                 }
             }
-            
+
 
             return new WebNavigatorResultModel(false);
         }
@@ -479,6 +479,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return script;
         }
 
+        ResponseModel RequestCore_Process(ProcessRequestModelBase request)
+        {
+            var appLoggingParameter = request.ParameterBase as AppLoggingParameterModel;
+            if(appLoggingParameter != null) {
+                var logs = ManagerPack.AppManager.AppInformationManager.AppLoggingManager.LogListViewer;
+                if(appLoggingParameter.GetClone) {
+                    logs = logs.ToList();
+                }
+
+                return new ResponseModel(request, logs);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        ResponseModel RequestCore(RequestModel request)
+        {
+            switch(request.RequestKind) {
+                case RequestKind.Setting:
+                    return new ResponseModel(request, Setting);
+
+                case RequestKind.Process:
+                    return RequestCore_Process((ProcessRequestModelBase)request);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public override ResponseModel Request(RequestModel request)
         {
             CheckUtility.DebugEnforceNotNull(request);
@@ -497,7 +526,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             switch(request.ServiceType) {
                 case ServiceType.Application:
-                    return new ResponseModel(request, Setting);
+                    return RequestCore(request);
 
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:

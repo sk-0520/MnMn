@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region property
 
         FixedSizeCollectionModel<LogItemModel> LogList { get; }
+        public IReadOnlyList<LogItemModel> LogListViewer => LogList;
         public ICollectionView LogItems { get; }
 
         ListBox LogListBox { get; set; }

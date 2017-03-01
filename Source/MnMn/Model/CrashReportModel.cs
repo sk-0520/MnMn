@@ -35,6 +35,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [DataMember]
         public string Environments { get; set; }
 
+        [DataMember]
+        public string LogList { get; set; }
+
         #endregion
     }
 }
