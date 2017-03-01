@@ -93,6 +93,8 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
             set { SetVariableValue(ref this._sendSuccess, value); }
         }
 
+        bool IsDebug { get; set; }
+
         #endregion
 
         #region command
@@ -145,6 +147,8 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
                     ReportFileData = File.ReadAllText(usingFilePath);
                 }
             }
+
+            IsDebug = commandLine.HasOption("debug");
         }
 
         public void Initialize()
@@ -165,7 +169,9 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
                 [ConfigurationManager.AppSettings.Get("send-param-data")] = ReportFileData,
                 [ConfigurationManager.AppSettings.Get("send-param-addr")] = ContactAddress,
                 [ConfigurationManager.AppSettings.Get("send-param-info")] = ReportInformation,
+                [ConfigurationManager.AppSettings.Get("send-param-debug")] = IsDebug.ToString().ToLower(),
             };
+
             var content = new FormUrlEncodedContent(map);
             var client = new HttpClient();
             return client.PostAsync(ConfigurationManager.AppSettings.Get("send-url"), content).ContinueWith(t => {

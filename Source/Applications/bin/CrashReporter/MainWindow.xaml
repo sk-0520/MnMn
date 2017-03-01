@@ -117,7 +117,7 @@
           <TextBlock TextAlignment="Center" Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Hyperlink Command="{Binding ReInputCommand}">再入力</Hyperlink>
             <LineBreak />
-            <Run Text="{Binding Message, Mode=OneWay}"  />
+            <TextBox Width="320" TextAlignment="Left"  MaxHeight="250" AcceptsReturn="True" IsReadOnly="True" Text="{Binding Message, Mode=OneWay}" />
           </TextBlock>
         </StackPanel>
       </Border>

@@ -34,12 +34,14 @@ using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
@@ -57,13 +59,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             SplashWindow = new SplashWindow();
 
-            //var t = new DispatcherTimer();
-            //t.Interval = TimeSpan.FromSeconds(10);
-            //t.Tick += (sender, e) => { throw new Exception("しんだ！"); };
-            //t.Start();
+#if DEBUG && KILL
+            var t = new DispatcherTimer();
+            t.Interval = TimeSpan.FromSeconds(10);
+            t.Tick += (sender, e) => { throw new Exception("しんだ！"); };
+            t.Start();
+#endif
         }
 
-        #region property
+#region property
 
         Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
 
@@ -73,9 +77,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         MainWindow View { get; set; }
         AppManagerViewModel AppManager { get; set; }
 
-        #endregion
+#endregion
 
-        #region function
+#region function
 
         void CatchUnhandleException(Exception ex, bool callerUiThread)
         {
@@ -88,7 +92,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var reportPath = CreateCrashReport(ex, callerUiThread);
             if(Constants.AppSendCrashReport) {
-                Process.Start(Constants.CrashReporterApplicationPath, $"/crash /report=\"{reportPath}\"");
+                var args = $"/crash /report=\"{reportPath}\"";
+                if(Constants.AppCrashReportIsDebug) {
+                    args += " /debug";
+                }
+                Process.Start(Constants.CrashReporterApplicationPath, args);
             }
 
             Shutdown();
@@ -188,10 +196,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         string CreateCrashReport(Exception ex, bool callerUiThread)
         {
+            var logParam = new AppLoggingParameterModel() {
+                GetClone = true,
+            };
+
+            var logs = Mediation.GetResultFromRequest<IEnumerable<LogItemModel>>(new AppLogingProcessRequestModel(logParam))
+                .Select(i => $"[{i.Timestamp:yyyy-MM-ddThh:mm:ss.fff}] {i.Message} {i.CallerMember} ({i.CallerLine})")
+            ;
+
             var crashReport = new CrashReportModel(ex, callerUiThread);
+            crashReport.Logs.Text = string.Join(Environment.NewLine, logs);
             var dir = VariableConstants.GetCrashReportDirectory();
             var path = Path.Combine(dir.FullName, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.CrashReportFileExtension));
-            SerializeUtility.SaveXmlDataToFile(path, crashReport);
+            SerializeUtility.SaveXmlSerializeToFile(path, crashReport);
 
             return path;
         }
