@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             };
 
             var logs = Mediation.GetResultFromRequest<IEnumerable<LogItemModel>>(new AppLogingProcessRequestModel(logParam))
-                .Select(i => $"[{i.Timestamp:yyyy-MM-ddThh:mm:ss.fff}] {i.Message} {i.CallerMember} ({i.CallerLine})")
+                .Select(i => $"[{i.Timestamp:yyyy-MM-ddTHH:mm:ss.fff}] {i.Message} {i.CallerMember} ({i.CallerLine})")
             ;
 
             var crashReport = new CrashReportModel(ex, callerUiThread);
