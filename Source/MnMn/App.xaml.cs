@@ -326,12 +326,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 }
                 setting.RunningInformation.Accept = true;
 
-                var isFirst = settingResult.IsSuccess;
+                var isFirst = !settingResult.IsSuccess;
                 if(isFirst) {
                     setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
                     setting.RunningInformation.FirstTimestamp = DateTime.Now;
                 }
             }
+            if(setting.RunningInformation.FirstVersion == null) {
+                setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
+                setting.RunningInformation.FirstTimestamp = DateTime.Now;
+            }
+
             setting.RunningInformation.LastExecuteVersion = Constants.ApplicationVersionNumber;
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
 
