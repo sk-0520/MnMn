@@ -1118,28 +1118,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
         {
-            if(!BridgeNewWindow) {
-                return;
-            }
-
-            // 先に内部制御を試す
-            Uri nextUri;
-            if(Uri.TryCreate(e.Uri, UriKind.RelativeOrAbsolute, out nextUri)) {
-                var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
-                    NextUri = nextUri,
-                };
-                var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
-
-                e.Cancel = result.Cancel;
-                if(e.Cancel) {
-                    var navigatingResult = (WebNavigatorNavigatingResultModel)result;
-                    var processParameter = new WebNavigatorProcessParameterModel() {
-                        Key = navigatingResult.NavigatingItem.Key,
-                        ParameterVaule = navigatingResult.Parameter,
+            if(BridgeNewWindow) {
+                // 先に内部制御を試す
+                Uri nextUri;
+                if(Uri.TryCreate(e.Uri, UriKind.RelativeOrAbsolute, out nextUri)) {
+                    var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
+                        NextUri = nextUri,
                     };
-                    var processRequest = new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter);
-                    var processResult = BrowserGeckoFx.Mediation.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
-                    return;
+                    var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+
+                    e.Cancel = result.Cancel;
+                    if(e.Cancel) {
+                        var navigatingResult = (WebNavigatorNavigatingResultModel)result;
+                        var processParameter = new WebNavigatorProcessParameterModel() {
+                            Key = navigatingResult.NavigatingItem.Key,
+                            ParameterVaule = navigatingResult.Parameter,
+                        };
+                        var processRequest = new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter);
+                        var processResult = BrowserGeckoFx.Mediation.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
+                        return;
+                    }
                 }
             }
 
