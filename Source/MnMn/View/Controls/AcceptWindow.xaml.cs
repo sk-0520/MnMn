@@ -15,7 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using Gecko;
 using MahApps.Metro.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
@@ -40,12 +43,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region command
 
-        public ICommand OpenWebLinkCommand
+        public ICommand DomLoadedCommand
         {
             get
             {
                 return new DelegateCommand(
-                    o => { }
+                    o => {
+                        var e = (WebNavigatorEventDataBase)o;
+                        switch(e.Engine) {
+                            case Define.WebNavigatorEngine.Default:
+                                break;
+
+                            case Define.WebNavigatorEngine.GeckoFx: {
+                                    var ex = (WebNavigatorEventData<DomEventArgs>)e;
+                                    var browser = (GeckoWebBrowser)ex.Sender;
+                                    using(var context = new AutoJSContext(browser.Window)) {
+                                        context.EvaluateScript(Properties.Resources.File_JavaScript_GeckoFx_AcceptLink);
+                                    }
+                                }
+                                break;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                );
+            }
+        }
+
+        public ICommand NewWindowCommand
+        {
+            get {
+                return new DelegateCommand(
+                    o => {
+                        var data = (WebNavigatorEventDataBase)o;
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                    }
                 );
             }
         }

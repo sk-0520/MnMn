@@ -112,6 +112,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region BridgeNewWindowProperty
+
+        public static readonly DependencyProperty BridgeNewWindowProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(BridgeNewWindowProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnBridgeNewWindowPropertyChanged))
+        );
+
+        private static void OnBridgeNewWindowPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.BridgeNewWindow = (bool)e.NewValue;
+            }
+        }
+
+        public bool BridgeNewWindow
+        {
+            get { return (bool)GetValue(BridgeNewWindowProperty); }
+            set { SetValue(BridgeNewWindowProperty, value); }
+        }
+
+        #endregion
+
         #region BridgeContextMenuProperty
 
         public static readonly DependencyProperty BridgeContextMenuProperty = DependencyProperty.Register(
@@ -1053,6 +1078,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
+            if(!BridgeNavigating) {
+                return;
+            }
+
             var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
                 NextUri = e.Uri,
             };
@@ -1089,24 +1118,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
         {
-            // 先に内部制御を試す
-            Uri nextUri;
-            if(Uri.TryCreate(e.Uri, UriKind.RelativeOrAbsolute, out nextUri)) {
-                var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
-                    NextUri = nextUri,
-                };
-                var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
-
-                e.Cancel = result.Cancel;
-                if(e.Cancel) {
-                    var navigatingResult = (WebNavigatorNavigatingResultModel)result;
-                    var processParameter = new WebNavigatorProcessParameterModel() {
-                        Key = navigatingResult.NavigatingItem.Key,
-                        ParameterVaule = navigatingResult.Parameter,
+            if(BridgeNewWindow) {
+                // 先に内部制御を試す
+                Uri nextUri;
+                if(Uri.TryCreate(e.Uri, UriKind.RelativeOrAbsolute, out nextUri)) {
+                    var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
+                        NextUri = nextUri,
                     };
-                    var processRequest = new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter);
-                    var processResult = BrowserGeckoFx.Mediation.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
-                    return;
+                    var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+
+                    e.Cancel = result.Cancel;
+                    if(e.Cancel) {
+                        var navigatingResult = (WebNavigatorNavigatingResultModel)result;
+                        var processParameter = new WebNavigatorProcessParameterModel() {
+                            Key = navigatingResult.NavigatingItem.Key,
+                            ParameterVaule = navigatingResult.Parameter,
+                        };
+                        var processRequest = new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter);
+                        var processResult = BrowserGeckoFx.Mediation.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
+                        return;
+                    }
                 }
             }
 
@@ -1154,6 +1185,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_DomContextMenu(object sender, DomMouseEventArgs e)
         {
+            if(!BridgeContextMenu) {
+                if(e.Cancelable) {
+                    e.Handled = true;
+                }
+
+                return;
+            }
+
             if(ContextMenu.ItemsSource == null) {
                 //var menuItems = CreateContextMenu();
                 var contextMenuDefineParameter = new WebNavigatorParameterModel(null, null, WebNavigatorEngine.GeckoFx, WebNavigatorParameterKind.ContextMenuDefine);

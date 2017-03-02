@@ -102,6 +102,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///    に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_JavaScript_GeckoFx_AcceptLink {
+            get {
+                return ResourceManager.GetString("File_JavaScript_GeckoFx_AcceptLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   &lt;UserControl 
         ///  x:Name=&quot;dummy&quot;
         ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
