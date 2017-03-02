@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#410: コメントのアニメーション破棄に秒補完を考慮する'
 					},
 					{
 						'revision': '',
