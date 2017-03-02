@@ -1,4 +1,5 @@
 ﻿//#define FORCE_ACCEPT
+//#define KILL
 
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,9 @@ using Gecko;
 #if !DEBUG && !BETA
 #if FORCE_ACCEPT
 #error FORCE_ACCEPT
+#endif
+#if KILL
+#error KILL
 #endif
 #endif
 
@@ -86,7 +90,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             var reportPath = CreateCrashReport(ex, callerUiThread);
-            if(Constants.AppSendCrashReport) {
+            var sendCrash = Constants.AppSendCrashReport;
+#if KILL
+            sendCrash = true;
+#endif
+            if(sendCrash) {
                 var args = $"/crash /report=\"{reportPath}\"";
                 if(Constants.AppCrashReportIsDebug) {
                     args += " /debug";
@@ -217,7 +225,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             };
 
             var logs = Mediation.GetResultFromRequest<IEnumerable<LogItemModel>>(new AppLogingProcessRequestModel(logParam))
-                .Select(i => $"[{i.Timestamp:yyyy-MM-ddTHH:mm:ss.fff}] {i.Message} {i.CallerMember} ({i.CallerLine})")
+                .Select(i => $"[{i.Timestamp:yyyy-MM-ddTHH:mm:ss.fff}] {i.Message}:  {i.CallerMember} ({i.CallerLine})" + (i.HasDetail ? (Environment.NewLine + i.DetailText): string.Empty) )
             ;
 
             var crashReport = new CrashReportModel(ex, callerUiThread);
