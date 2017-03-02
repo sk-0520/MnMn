@@ -1,19 +1,5 @@
-﻿/*
-This file is part of MnMn.
+﻿#define FORCE_ACCEPT
 
-MnMn is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-MnMn is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
-*/
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -48,6 +34,12 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
+
+#if !DEBUG && !BETA
+#if FORCE_ACCEPT
+#error FORCE_ACCEPT
+#endif
+#endif
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -118,6 +110,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static bool CheckAccept(RunningInformationSettingModel model, ILogger logger)
         {
+#if FORCE_ACCEPT
+            var a = true; if(a) return false;
+#endif
             if(!model.Accept) {
                 // 完全に初回
                 logger.Debug("first");
@@ -255,9 +250,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
-        #endregion
+#endregion
 
-        #region Application
+#region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
@@ -362,7 +357,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             base.OnExit(e);
         }
 
-        #endregion
+#endregion
 
         /// <summary>
         /// UIスレッド
