@@ -1078,6 +1078,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
+            if(!BridgeNavigating) {
+                return;
+            }
 
             var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
                 NextUri = e.Uri,
@@ -1115,6 +1118,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
         {
+            if(!BridgeNewWindow) {
+                return;
+            }
+
             // 先に内部制御を試す
             Uri nextUri;
             if(Uri.TryCreate(e.Uri, UriKind.RelativeOrAbsolute, out nextUri)) {
@@ -1180,6 +1187,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_DomContextMenu(object sender, DomMouseEventArgs e)
         {
+            if(!BridgeContextMenu) {
+                if(e.Cancelable) {
+                    e.Handled = true;
+                }
+
+                return;
+            }
+
             if(ContextMenu.ItemsSource == null) {
                 //var menuItems = CreateContextMenu();
                 var contextMenuDefineParameter = new WebNavigatorParameterModel(null, null, WebNavigatorEngine.GeckoFx, WebNavigatorParameterKind.ContextMenuDefine);
