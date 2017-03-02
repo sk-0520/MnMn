@@ -112,6 +112,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region BridgeNewWindowProperty
+
+        public static readonly DependencyProperty BridgeNewWindowProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(BridgeNewWindowProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnBridgeNewWindowPropertyChanged))
+        );
+
+        private static void OnBridgeNewWindowPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.BridgeNewWindow = (bool)e.NewValue;
+            }
+        }
+
+        public bool BridgeNewWindow
+        {
+            get { return (bool)GetValue(BridgeNewWindowProperty); }
+            set { SetValue(BridgeNewWindowProperty, value); }
+        }
+
+        #endregion
+
         #region BridgeContextMenuProperty
 
         public static readonly DependencyProperty BridgeContextMenuProperty = DependencyProperty.Register(
@@ -1053,6 +1078,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
+
             var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
                 NextUri = e.Uri,
             };
