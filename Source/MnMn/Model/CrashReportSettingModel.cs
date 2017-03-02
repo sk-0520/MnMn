@@ -19,6 +19,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         //public string UsingCacheDirectoryPath { get; set; }
         public string CacheLifeTime { get; set; }
 
+        public CrashReportSessionModel SmileSession { get; set; } = new CrashReportSessionModel();
+
         #region RunningInformation
 
         public string FirstVersion { get; set; }

@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
 
@@ -216,6 +217,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
             target.FirstTimestamp = setting.RunningInformation.FirstTimestamp;
 
             target.GeckoFxScanPlugin = setting.WebNavigator.GeckoFxScanPlugin;
+
+            // セッション
+            var smileSession = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            target.SmileSession.LoginState = smileSession.LoginState;
+            if(smileSession.IsLoggedIn) {
+                target.SmileSession.Extension.Text = $"{nameof(smileSession.IsPremium)} = {smileSession.IsPremium}, {nameof(smileSession.IsOver18)} = {smileSession.IsOver18}";
+            }
+            //SmileSession
         }
 
         string CreateCrashReport(Exception ex, bool callerUiThread)
