@@ -551,6 +551,13 @@
         </StatusBarItem.Style>
         <ResizeGrip />
       </StatusBarItem>
+
+      <StatusBarItem DockPanel.Dock="Right" >
+        <StackPanel Orientation="Horizontal">
+          <Slider x:Name="scale" Minimum="0.5" Maximum="2" Value="1" Width="100" />
+        </StackPanel>
+      </StatusBarItem>
+
       <ToggleButton x:Name="switchInformation">
         <ToggleButton.Style>
           <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
@@ -717,6 +724,9 @@
     </StatusBar>
 
     <Grid>
+      <Grid.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
+      </Grid.LayoutTransform>
       <Grid.RowDefinitions>
         <RowDefinition Height="*"  />
         <RowDefinition Height="Auto" />
