@@ -299,7 +299,10 @@
   <mamc:MetroWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
-        <Slider x:Name="scale" Minimum="0.5" Maximum="2" Value="1" Width="100" />
+        <TextBlock Text="#440 試験運用中: " />
+        <TextBlock Text="{Binding Value, ElementName=scale, StringFormat=x0.00}" />
+        <Slider x:Name="scale" Style="{StaticResource ScaleSlider}" />
+        <Button Click="Button_Click">リセット</Button>
       </StackPanel>
     </mamc:WindowCommands>
   </mamc:MetroWindow.RightWindowCommands>
