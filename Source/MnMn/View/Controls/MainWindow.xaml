@@ -51,12 +51,8 @@
       </StackPanel>
     </mamc:WindowCommands>
   </mamc:MetroWindow.RightWindowCommands>
-  
+
   <DockPanel>
-    <DockPanel.LayoutTransform>
-      <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
-    </DockPanel.LayoutTransform>
-    
     <StatusBar DockPanel.Dock="Bottom">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
         <StatusBarItem.Style>
@@ -81,6 +77,10 @@
     </StatusBar>
 
     <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
+      <TabControl.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
+      </TabControl.LayoutTransform>
+      
       <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>

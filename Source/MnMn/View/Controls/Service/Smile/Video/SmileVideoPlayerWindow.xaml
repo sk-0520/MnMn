@@ -296,12 +296,16 @@
       <Setter Property="ShowMinButton" Value="{Binding IsNormalWindow}" />
     </Style>
   </mamc:MetroWindow.Style>
+  <mamc:MetroWindow.RightWindowCommands>
+    <mamc:WindowCommands>
+      <StackPanel Orientation="Horizontal">
+        <Slider x:Name="scale" Minimum="0.5" Maximum="2" Value="1" Width="100" />
+      </StackPanel>
+    </mamc:WindowCommands>
+  </mamc:MetroWindow.RightWindowCommands>
 
   <DockPanel>
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
-      <ToolBar.LayoutTransform>
-        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
-      </ToolBar.LayoutTransform>
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
           <!--<Image Source="/Resources/Common/Action/FolderOpen.png" Style="{StaticResource SmallItemImage}" />-->
@@ -553,12 +557,6 @@
           </Style>
         </StatusBarItem.Style>
         <ResizeGrip />
-      </StatusBarItem>
-
-      <StatusBarItem DockPanel.Dock="Right" >
-        <StackPanel Orientation="Horizontal">
-          <Slider x:Name="scale" Minimum="0.5" Maximum="2" Value="1" Width="100" />
-        </StackPanel>
       </StatusBarItem>
 
       <ToggleButton x:Name="switchInformation">
