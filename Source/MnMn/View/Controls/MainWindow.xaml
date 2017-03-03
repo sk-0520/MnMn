@@ -44,6 +44,18 @@
     <!-- 大元のスタイルが適用されない対応 -->
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}" />
   </mamc:MetroWindow.Style>
+  <mamc:MetroWindow.RightWindowCommands>
+    <mamc:WindowCommands>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="#440 試験運用中: " />
+        <TextBlock Text="{Binding Value, ElementName=scale, StringFormat=x0.00}" />
+        <Slider x:Name="scale" Style="{StaticResource ScaleSlider}" />
+        <CheckBox x:Name="selectScale">ファインダーメニューも適用</CheckBox>
+        <Button Click="Button_Click">リセット</Button>
+      </StackPanel>
+    </mamc:WindowCommands>
+  </mamc:MetroWindow.RightWindowCommands>
+
   <DockPanel>
     <StatusBar DockPanel.Dock="Bottom">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
@@ -59,13 +71,20 @@
         </StatusBarItem.Style>
         <ResizeGrip />
       </StatusBarItem>
-
+      
+      <StatusBarItem DockPanel.Dock="Right" >
+      </StatusBarItem>
+      
       <Image Source="/Resources/Service/Smile/Smile.png" Style="{StaticResource SmallItemImage}" />
       <TextBlock Text="{Binding SmileSession.LoginState, Converter={StaticResource EnumDisplayConverter}, Mode=OneWay}" />
       <TextBlock Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
     </StatusBar>
 
     <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
+      <TabControl.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
+      </TabControl.LayoutTransform>
+      
       <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>

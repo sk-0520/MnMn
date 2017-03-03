@@ -256,6 +256,7 @@
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
         ScrollViewer.CanContentScroll="True"
+        ContextMenuOpening="PART_List_ContextMenuOpening"
       >
         <i:Interaction.Behaviors>
           <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
@@ -281,7 +282,13 @@
         </ListBox.ItemContainerStyle>
         <ListBox.ContextMenu>
           <!-- http://stackoverflow.com/questions/2617122/wpf-menuitem-command-binding-to-elementname-results-to-system-windows-data-error?answertab=votes#tab-top -->
-          <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}">
+          <ContextMenu x:Name="contextMenuFinder" DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}"
+                       >
+            <!--<ContextMenu.LayoutTransform>-->
+              <!--<ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />-->
+              <!--<ScaleTransform ScaleX="{Binding Value, ElementName=scale}" />-->
+            <!--</ContextMenu.LayoutTransform>-->
+
             <ContextMenu.Resources>
               <CollectionViewSource x:Key="TagList" Source="{Binding SelectedFinderItem.Information.TagList}" />
             </ContextMenu.Resources>
