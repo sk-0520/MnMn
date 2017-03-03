@@ -59,13 +59,23 @@
         </StatusBarItem.Style>
         <ResizeGrip />
       </StatusBarItem>
-
+      
+      <StatusBarItem DockPanel.Dock="Right" >
+        <StackPanel Orientation="Horizontal">
+          <Slider x:Name="scale" Minimum="0.5" Maximum="2" Value="1" Width="100" />
+        </StackPanel>
+      </StatusBarItem>
+      
       <Image Source="/Resources/Service/Smile/Smile.png" Style="{StaticResource SmallItemImage}" />
       <TextBlock Text="{Binding SmileSession.LoginState, Converter={StaticResource EnumDisplayConverter}, Mode=OneWay}" />
       <TextBlock Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
     </StatusBar>
 
     <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
+      <TabControl.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
+      </TabControl.LayoutTransform>
+      
       <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
