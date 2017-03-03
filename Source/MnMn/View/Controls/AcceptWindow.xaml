@@ -26,6 +26,12 @@
   <mamc:MetroWindow.Resources>
     <Style TargetType="app_view_controls:WebNavigator">
       <Setter Property="IsEnabledUserChangeSource" Value="False" />
+      <Setter Property="BridgeClick" Value="False" />
+      <Setter Property="BridgeNavigating" Value="False" />
+      <Setter Property="BridgeNewWindow" Value="False" />
+      <Setter Property="BridgeContextMenu" Value="False" />
+      <Setter Property="DomLoadedCommand" Value="{Binding DomLoadedCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+      <Setter Property="NewWindowCommand" Value="{Binding NewWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
     </Style>
   </mamc:MetroWindow.Resources>
   <i:Interaction.Behaviors>

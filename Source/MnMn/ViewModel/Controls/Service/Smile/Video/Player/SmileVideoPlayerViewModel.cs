@@ -930,7 +930,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     .Select(c => new { Area = OriginalPosterCommentArea, View = c, ViewModel = (SmileVideoCommentViewModel)c.DataContext })
                 )
                 .Where(i => i.ViewModel.NowShowing)
-                .Where(i => i.ViewModel.ElapsedTime + CommentStyleSetting.ShowTime < PlayTime)
+                .Where(i => i.ViewModel.ElapsedTime + SmileVideoCommentUtility.correctionTime + CommentStyleSetting.ShowTime < PlayTime)
                 .ToList()
             ;
 

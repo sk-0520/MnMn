@@ -296,6 +296,16 @@
       <Setter Property="ShowMinButton" Value="{Binding IsNormalWindow}" />
     </Style>
   </mamc:MetroWindow.Style>
+  <mamc:MetroWindow.RightWindowCommands>
+    <mamc:WindowCommands>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="#440 試験運用中: " />
+        <TextBlock Text="{Binding Value, ElementName=scale, StringFormat=x0.00}" />
+        <Slider x:Name="scale" Style="{StaticResource ScaleSlider}" />
+        <Button Click="Button_Click">リセット</Button>
+      </StackPanel>
+    </mamc:WindowCommands>
+  </mamc:MetroWindow.RightWindowCommands>
 
   <DockPanel>
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -551,6 +561,7 @@
         </StatusBarItem.Style>
         <ResizeGrip />
       </StatusBarItem>
+
       <ToggleButton x:Name="switchInformation">
         <ToggleButton.Style>
           <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
@@ -717,6 +728,9 @@
     </StatusBar>
 
     <Grid>
+      <Grid.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
+      </Grid.LayoutTransform>
       <Grid.RowDefinitions>
         <RowDefinition Height="*"  />
         <RowDefinition Height="Auto" />
