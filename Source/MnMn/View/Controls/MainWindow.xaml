@@ -47,7 +47,8 @@
   <mamc:MetroWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
-        <Slider x:Name="scale" Minimum="0.5" Maximum="2" Value="1" Width="100" />
+        <Slider x:Name="scale" Minimum="0.5" Maximum="4" Value="1" Width="100" />
+        <CheckBox x:Name="selectScale">ファインダーメニューも適用</CheckBox>
       </StackPanel>
     </mamc:WindowCommands>
   </mamc:MetroWindow.RightWindowCommands>

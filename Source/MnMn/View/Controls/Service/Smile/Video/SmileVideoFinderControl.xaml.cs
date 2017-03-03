@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
@@ -130,6 +131,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         {
             var menuItem = (MenuItem)sender;
             OpenSubMenu(menuItem);
+        }
+
+        private void PART_List_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            var mainWindow = (MainWindow)UIUtility.GetVisualClosest<MainWindow>(this);
+            if(mainWindow.selectScale.IsChecked.GetValueOrDefault()) {
+                var element = (FrameworkElement)sender;
+                element.ContextMenu.LayoutTransform = new ScaleTransform(mainWindow.scale.Value, mainWindow.scale.Value);
+            }
         }
     }
 }
