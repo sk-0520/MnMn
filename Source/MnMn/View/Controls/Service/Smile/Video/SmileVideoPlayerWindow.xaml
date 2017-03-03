@@ -299,6 +299,9 @@
 
   <DockPanel>
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <ToolBar.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
+      </ToolBar.LayoutTransform>
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
           <!--<Image Source="/Resources/Common/Action/FolderOpen.png" Style="{StaticResource SmallItemImage}" />-->
