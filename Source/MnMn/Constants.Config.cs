@@ -65,6 +65,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string WebNavigatorGeckoFxPreferencesFileName => appConfig.Get("web_navigator-geckofx-preferences-name");
         public static string WebNavigatorGeckoFxPluginsDirectoryName => appConfig.Get("web_navigator-geckofx-plugin-dir-name");
         public static string WebNavigatorGeckoFxExtensionsDirectoryName => appConfig.Get("web_navigator-geckofx-extension-dir-name");
+        public static bool WebNavigatorGeckoFxShowLog => appConfig.Get("web_navigator-geckofx-show-log", bool.Parse);
+        public static bool WebNavigatorGeckoFxShowEngineLog => appConfig.Get("web_navigator-geckofx-show-engine-log", bool.Parse);
+        public static string[] WebNavigatorGeckoFxIgnoreEngineLogs => appConfig.Get("web_navigator-geckofx-ignore-engine-logs", s => s.Split('\t'));
+        
         public static bool WebNavigatorContextMenuShowHtmlSource => appConfig.Get("web_navigator-context_menu-show-html_source", bool.Parse);
         
 

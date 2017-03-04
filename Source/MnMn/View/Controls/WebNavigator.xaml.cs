@@ -39,6 +39,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 using Gecko;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
@@ -47,6 +48,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// </summary>
     public partial class WebNavigator: UserControl
     {
+        #region define
+
+        readonly string[] ignoreGeckoFxLogs = Constants.WebNavigatorGeckoFxIgnoreEngineLogs;
+
+        #endregion
+
         #region variable
 
         ICommand _copySelectionCommand;
@@ -846,6 +853,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.DOMContentLoaded += BrowserGeckoFx_DOMContentLoaded;
             BrowserGeckoFx.DomClick += BrowserGeckoFx_DomClick;
             BrowserGeckoFx.DomContextMenu += BrowserGeckoFx_DomContextMenu;
+            if(Constants.WebNavigatorGeckoFxShowLog) {
+                BrowserGeckoFx.ConsoleMessage += BrowserGeckoFx_ConsoleMessage;
+            }
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
@@ -1068,6 +1078,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.DOMContentLoaded -= BrowserGeckoFx_DOMContentLoaded;
             BrowserGeckoFx.DomClick -= BrowserGeckoFx_DomClick;
             BrowserGeckoFx.DomContextMenu -= BrowserGeckoFx_DomContextMenu;
+            BrowserGeckoFx.ConsoleMessage -= BrowserGeckoFx_ConsoleMessage;
         }
 
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -1278,6 +1289,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 ContextMenu.IsOpen = true;
             }
         }
-        
+
+        private void BrowserGeckoFx_ConsoleMessage(object sender, ConsoleMessageEventArgs e)
+        {
+            if(!Constants.WebNavigatorGeckoFxShowEngineLog) {
+                if(ignoreGeckoFxLogs.Any(s => e.Message.IndexOf(s) != -1)) {
+                    return;
+                }
+            }
+
+            var browser = (ServiceGeckoWebBrowser)sender;
+            browser.Mediation.Logger.Trace(e.Message);
+        }
+
     }
 }

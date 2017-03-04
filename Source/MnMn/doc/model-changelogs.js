@@ -145,7 +145,14 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#441: JavaScript エラーを MnMn 側でハンドリングする',
+						'comments': [
+							'デバッグ環境だからかもしれないけど標準出力に吐くとえっらい重いしなんか多いいから基本的にこの機能はOFF状態',
+							'内部エラーの制御は App.config の以下キーで行う',
+							'`web_navigator-geckofx-show-log`: ログ表示そのものの実施',
+							'`web_navigator-geckofx-show-engine-log`: 内部制御表示有無',
+							'`web_navigator-geckofx-ignore-engine-logs`: 内部制御中に無視対象とする文字列(TSV形式)'
+						]
 					},
 					{
 						'revision': '',
