@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.View;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
@@ -67,6 +68,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public WebNavigator()
         {
             InitializeComponent();
+
+            MouseGestureManager = new MouseGestureManager(this);
         }
 
         #region BridgeClickProperty
@@ -482,6 +485,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         #endregion
 
         #region property
+
+        MouseGestureManager MouseGestureManager { get; } 
 
         /// <summary>
         /// 標準ブラウザ。
