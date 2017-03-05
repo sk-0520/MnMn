@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -51,6 +52,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     {
         #region define
 
+        const int WM_XBUTTONUP = 0x020C;
+        const int XBUTTON1 = 0x10000;
+        const int XBUTTON2 = 0x20000;
+
         readonly string[] ignoreGeckoFxLogs = Constants.WebNavigatorGeckoFxIgnoreEngineLogs;
 
         #endregion
@@ -68,8 +73,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public WebNavigator()
         {
             InitializeComponent();
-
-            MouseGestureManager = new MouseGestureManager(this);
         }
 
         #region BridgeClickProperty
@@ -486,8 +489,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region property
 
-        MouseGestureManager MouseGestureManager { get; } 
-
         /// <summary>
         /// 標準ブラウザ。
         /// </summary>
@@ -848,6 +849,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.FrameEventsPropagateToMainWindow = true;
             BrowserGeckoFx.CreateControl();
 
+            BrowserGeckoFx.SetNavigator(this);
+
             BrowserGeckoFx.NoDefaultContextMenu = true;
 
             BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;
@@ -1014,6 +1017,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             return true;
+        }
+
+        internal bool PreProcessMessage(IWindowMessage windowMessage, ref System.Windows.Forms.Message msg, ref bool handled)
+        {
+            if(msg.Msg == WM_XBUTTONUP) {
+                var wParam = msg.WParam.ToInt32();
+
+                if(wParam == XBUTTON1 && CanGoBack) {
+                    GoBack();
+                    handled = true;
+                    return true;
+                } else if(wParam == XBUTTON2 && CanGoForward) {
+                    GoForward();
+                    handled = true;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
@@ -1215,7 +1237,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 var contextMenuDefineResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuDefineResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuDefineParameter));
                 //ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
                 ContextMenu.ItemsSource = contextMenuDefineResult.Items.Select(MakeContextMenuItem).ToList();
-            } 
+            }
 
             var contextMenuParameter = new WebNavigatorContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(contextMenuParameter, e);

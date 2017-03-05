@@ -294,6 +294,7 @@
     <Compile Include="IF\Control\IDropable.cs" />
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\ISelectable.cs" />
+    <Compile Include="IF\Control\IWindowMessage.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IDescription.cs" />
     <Compile Include="IF\IDownloadItem.cs" />
@@ -328,7 +329,6 @@
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
-    <Compile Include="Logic\View\MouseGestureManager.cs" />
     <Compile Include="Logic\WebNavigatorBridge\SimleHtmlElementList.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
