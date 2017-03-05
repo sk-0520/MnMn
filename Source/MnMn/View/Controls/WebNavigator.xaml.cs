@@ -18,10 +18,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
@@ -52,7 +55,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     {
         #region define
 
+        const int WM_RBUTTONDOWN = 0x0204;
         const int WM_XBUTTONUP = 0x020C;
+        const int MK_RBUTTON = 0x0002;
+        const int WM_MOUSEMOVE = 0x0200;
         const int XBUTTON1 = 0x10000;
         const int XBUTTON2 = 0x20000;
 
@@ -497,6 +503,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// Gecko版。
         /// </summary>
         ServiceGeckoWebBrowser BrowserGeckoFx { get; set; }
+
+        PointingGesture PointingGesture { get; } = new PointingGesture();
 
         /// <summary>
         /// サービス種別。
@@ -1032,6 +1040,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     GoForward();
                     handled = true;
                     return true;
+                }
+            } else if(msg.Msg == WM_RBUTTONDOWN) {
+                var devicePodPos = WindowsUtility.ConvertPOINTFromLParam(msg.LParam);
+                var devicePos = PodStructUtility.Convert(devicePodPos);
+                var logicalPos = UIUtility.ToLogicalPixel(this, devicePos);
+
+                PointingGesture.StartPreparation(logicalPos);
+            } else if(msg.Msg == WM_MOUSEMOVE) {
+                if(PointingGesture.State != PointingGestureState.None) {
+                    var devicePodPos = WindowsUtility.ConvertPOINTFromLParam(msg.LParam);
+                    var devicePos = PodStructUtility.Convert(devicePodPos);
+                    var logicalPos = UIUtility.ToLogicalPixel(this, devicePos);
+
+                    PointingGesture.Move(logicalPos);
                 }
             }
 

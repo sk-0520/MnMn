@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public enum MouseGestureState
+    public enum PointingGestureState
     {
         None,
         Preparation,
