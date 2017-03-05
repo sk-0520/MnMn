@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         #region define
 
         const int WM_RBUTTONDOWN = 0x0204;
+        const int WM_NCRBUTTONDOWN = 0x00A4;
         const int WM_RBUTTONUP = 0x0205;
         const int WM_XBUTTONUP = 0x020C;
         const int MK_RBUTTON = 0x0002;
@@ -1047,6 +1048,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     return true;
                 }
             } else if(msg.Msg == WM_RBUTTONDOWN) {
+                //Debug.WriteLine("click!");
                 var devicePodPos = WindowsUtility.ConvertPOINTFromLParam(msg.LParam);
                 var devicePos = PodStructUtility.Convert(devicePodPos);
                 var logicalPos = UIUtility.ToLogicalPixel(this, devicePos);
@@ -1059,10 +1061,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     var logicalPos = UIUtility.ToLogicalPixel(this, devicePos);
 
                     PointingGesture.Move(logicalPos);
+                } else {
+                    PointingGesture.Cancel();
                 }
             } else if(msg.Msg == WM_RBUTTONUP) {
                 handled = PointingGesture.State == PointingGestureState.Action;
-                PointingGesture.Finish();
+                if(handled) {
+                    PointingGesture.Finish();
+                } else {
+                    PointingGesture.Cancel();
+                }
                 return true;
             }
 
@@ -1281,6 +1289,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                 return;
             }
+
+            if(this.popupGesture.IsOpen) {
+                return;
+            }
+
+            PointingGesture.Cancel();
 
             if(ContextMenu.ItemsSource == null) {
                 //var menuItems = CreateContextMenu();
