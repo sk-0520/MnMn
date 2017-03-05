@@ -231,7 +231,7 @@
 
   <Style x:Key="ScaleSlider" TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
     <Setter Property="Minimum" Value="0.5" />
-    <Setter Property="Maximum" Value="4" />
+    <Setter Property="Maximum" Value="2" />
     <Setter Property="Value" Value="1" />
     <Setter Property="Width" Value="100" />
     <Setter Property="TickPlacement" Value="BottomRight" />
