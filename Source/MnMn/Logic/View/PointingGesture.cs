@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 {
     public class PointingGesture
     {
+        #region event
+
+        public event EventHandler<PointingGestureChangedEventArgs> Changed;
+
+        #endregion
+
         #region property
 
         public PointingGestureState State { get; set; }
@@ -26,6 +33,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         #endregion
 
         #region function
+
+        protected void OnChanged(PointingGestureChangeKind changeKind)
+        {
+            var changed = Changed;
+            if(changed != null) {
+                if(changeKind == PointingGestureChangeKind.Start) {
+                    Changed(this, PointingGestureChangedEventArgs.StartEvent);
+                } else {
+                    Changed(this, new PointingGestureChangedEventArgs(changeKind, Items));
+                }
+            }
+        }
 
         PointingGestureDirection GetDirection(Point prev, Point now, Size size)
         {
@@ -65,15 +84,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
                 if(direction != PointingGestureDirection.None) {
                     State = PointingGestureState.Action;
                     Items.Add(new PointingGestureItem(point, direction));
-                    Debug.WriteLine(Items.Last());
+                    OnChanged(PointingGestureChangeKind.Start);
                 }
             } else {
                 Debug.Assert(State == PointingGestureState.Action);
                 var prev = Items.Last();
                 var direction = GetDirection(prev.Point, point, ActionSize);
-                if(direction != PointingGestureDirection.None) {
+                if(prev.Direction != direction && direction != PointingGestureDirection.None) {
                     Items.Add(new PointingGestureItem(point, direction));
-                    Debug.WriteLine(Items.Last());
+                    OnChanged(PointingGestureChangeKind.Add);
                 }
             }
         }

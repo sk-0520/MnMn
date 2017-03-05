@@ -79,6 +79,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public WebNavigator()
         {
             InitializeComponent();
+
+            PointingGesture.Changed += PointingGesture_Changed;
         }
 
         #region BridgeClickProperty
@@ -1110,6 +1112,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserDefault_Unloaded(object sender, RoutedEventArgs e)
         {
+            PointingGesture.Changed -= PointingGesture_Changed;
+
             BrowserDefault.Unloaded -= BrowserDefault_Unloaded;
             BrowserDefault.Loaded -= BrowserDefault_Loaded;
             BrowserDefault.Navigating -= BrowserDefault_Navigating;
@@ -1119,6 +1123,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Disposed(object sender, EventArgs e)
         {
+            PointingGesture.Changed -= PointingGesture_Changed;
+
             BrowserGeckoFx.Disposed -= BrowserGeckoFx_Disposed;
             BrowserGeckoFx.Navigating -= BrowserGeckoFx_Navigating;
             BrowserGeckoFx.Navigated -= BrowserGeckoFx_Navigated;
@@ -1349,6 +1355,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
             var browser = (ServiceGeckoWebBrowser)sender;
             browser.Mediation.Logger.Trace(e.Message);
+        }
+
+
+        private void PointingGesture_Changed(object sender, Define.Event.PointingGestureChangedEventArgs e)
+        {
+            Debug.WriteLine($"{e.ChangeKind}: {(e.Items != null ? string.Join(",", e.Items): "")}");
         }
 
     }

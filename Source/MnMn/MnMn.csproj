@@ -233,6 +233,8 @@
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
+    <Compile Include="Define\Event\PointingGestureChangedEventArgs.cs" />
+    <Compile Include="Define\PointingGestureChangeKind.cs" />
     <Compile Include="Define\PointingGestureDirection.cs" />
     <Compile Include="Define\PointingGestureState.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
