@@ -11,22 +11,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
     {
         #region define
 
-        public static PointingGestureChangedEventArgs StartEvent { get; } = new PointingGestureChangedEventArgs(PointingGestureChangeKind.Start, null);
-        public static PointingGestureChangedEventArgs CancelEvent { get; } = new PointingGestureChangedEventArgs(PointingGestureChangeKind.Cancel, null);
+        public static PointingGestureChangedEventArgs CancelEvent { get; } = new PointingGestureChangedEventArgs(PointingGestureChangeKind.Cancel, default(PointingGestureItem));
 
         #endregion
 
-        public PointingGestureChangedEventArgs(PointingGestureChangeKind changeKind, IReadOnlyList<PointingGestureItem> items)
+        public PointingGestureChangedEventArgs(PointingGestureChangeKind changeKind, PointingGestureItem item)
         {
             ChangeKind = changeKind;
-            Items = items;
+            Item = item;
         }
 
         #region property
 
         public PointingGestureChangeKind ChangeKind { get; }
 
-        public IReadOnlyList<PointingGestureItem> Items { get; }
+        public PointingGestureItem Item { get; }
 
         #endregion
     }

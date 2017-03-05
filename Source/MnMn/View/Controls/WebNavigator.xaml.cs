@@ -514,6 +514,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// </summary>
         public ServiceType ServiceType { get; set; }
 
+        public CollectionModel<PointingGestureItem> GestureItems { get; } = new CollectionModel<PointingGestureItem>();
+
         /// <summary>
         /// 現在ページ。
         /// </summary>
@@ -1363,7 +1365,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void PointingGesture_Changed(object sender, Define.Event.PointingGestureChangedEventArgs e)
         {
-            Debug.WriteLine($"{e.ChangeKind}: {(e.Items != null ? string.Join(",", e.Items) : "")}");
+            popupGesture.IsOpen = true;
+            if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
+                GestureItems.Add(e.Item);
+            } else {
+                GestureItems.Clear();
+            }
         }
 
     }

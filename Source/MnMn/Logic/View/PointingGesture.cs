@@ -39,17 +39,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
             var changed = Changed;
             if(changed != null) {
                 switch(changeKind) {
-                    case PointingGestureChangeKind.Start:
-                        Changed(this, PointingGestureChangedEventArgs.StartEvent);
-                        break;
-
                     case PointingGestureChangeKind.Cancel:
                         Changed(this, PointingGestureChangedEventArgs.CancelEvent);
                         break;
 
+                    case PointingGestureChangeKind.Start:
                     case PointingGestureChangeKind.Add:
                     case PointingGestureChangeKind.Finish:
-                        Changed(this, new PointingGestureChangedEventArgs(changeKind, Items));
+                        Changed(this, new PointingGestureChangedEventArgs(changeKind, Items.Last()));
                         break;
 
                     default:
@@ -58,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
             }
         }
 
-        PointingGestureDirection GetDirection(Point prev, Point now, Size size)
+        static PointingGestureDirection GetDirection(Point prev, Point now, Size size)
         {
             var diffX = now.X - prev.X;
             if(size.Width < Math.Abs(diffX)) {
@@ -69,12 +66,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
                 }
             }
 
-            var diffY = prev.Y - now.Y;
+            var diffY = now.Y - prev.Y;
             if(size.Height < Math.Abs(diffY)) {
                 if(0 < diffY) {
-                    return PointingGestureDirection.Up;
-                } else {
                     return PointingGestureDirection.Down;
+                } else {
+                    return PointingGestureDirection.Up;
                 }
             }
 
@@ -97,14 +94,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
                     State = PointingGestureState.Action;
                     Items.Add(new PointingGestureItem(point, direction));
                     OnChanged(PointingGestureChangeKind.Start);
+                    Debug.WriteLine($"{string.Join(",", Items.Select(i => i.Direction))}");
                 }
             } else {
                 Debug.Assert(State == PointingGestureState.Action);
                 var prev = Items.Last();
                 var direction = GetDirection(prev.Point, point, ActionSize);
-                if(prev.Direction != direction && direction != PointingGestureDirection.None) {
+                    Debug.WriteLine($"{prev.Point} x {point}");
+                if(direction != PointingGestureDirection.None) {
                     Items.Add(new PointingGestureItem(point, direction));
-                    OnChanged(PointingGestureChangeKind.Add);
+                    if(prev.Direction != direction) {
+                        OnChanged(PointingGestureChangeKind.Add);
+                    }
+                    Debug.WriteLine($"{string.Join(",", Items.Select(i => i.Direction))}");
                 }
             }
         }
