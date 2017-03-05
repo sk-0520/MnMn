@@ -1394,7 +1394,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 var pos = new Point(e.ClientX, e.ClientY);
 
                 PointingGesture.Move(pos);
-            }else {
+            } else {
                 PointingGesture.Cancel();
             }
         }
@@ -1415,7 +1415,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
                 this.popupGesture.IsOpen = true;
                 GestureItems.Add(e.Item);
-                var gestureCommand=GetGestureCommand(GestureItems);
+                var gestureCommand = GetGestureCommand(GestureItems);
                 textGesture.Text = gestureCommand.Message;
             } else {
                 if(e.ChangeKind == PointingGestureChangeKind.Finish) {
