@@ -1073,15 +1073,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             //TODO: 今のところ固定だけど将来的に設定を提供するならここかな
             var gestureItems = new[] {
-                new { Text = "back", Command = BackCommand, Directions = new [] { PointingGestureDirection.Left } },
-                new { Text = "funknown", Command = ForwardCommand, Directions = new [] { PointingGestureDirection.Right } },
+                new { Text = Properties.Resources.String_App_Browser_Common_Back, Command = BackCommand, Directions = new [] { PointingGestureDirection.Left } },
+                new { Text = Properties.Resources.String_App_Browser_Common_Forward, Command = ForwardCommand, Directions = new [] { PointingGestureDirection.Right } },
             };
             var target = gestureItems.FirstOrDefault(gi => gi.Directions.SequenceEqual(items.Select(i => i.Direction)));
 
             if(target != null) {
                 return new CheckResultModel<ICommand>(true, target.Command, null, target.Text);
             } else {
-                return CheckResultModel.Failure<ICommand>("unknown");
+                return CheckResultModel.Failure<ICommand>(Properties.Resources.String_App_Unknown_Gesture);
             }
         }
 
