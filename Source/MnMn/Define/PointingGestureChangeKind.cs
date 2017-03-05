@@ -11,5 +11,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         Start,
         Add,
         Finish,
+        Cancel,
     }
 }

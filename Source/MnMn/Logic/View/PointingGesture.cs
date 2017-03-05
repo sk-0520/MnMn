@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         public PointingGestureState State { get; set; }
 
         Size StartSize { get; set; } = new Size(10, 10);
-        Size ActionSize { get; set; } = new Size(10, 10);
+        Size ActionSize { get; set; } = new Size(30, 30);
 
         Point PreparationPoint { get; set; }
 
@@ -38,10 +38,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         {
             var changed = Changed;
             if(changed != null) {
-                if(changeKind == PointingGestureChangeKind.Start) {
-                    Changed(this, PointingGestureChangedEventArgs.StartEvent);
-                } else {
-                    Changed(this, new PointingGestureChangedEventArgs(changeKind, Items));
+                switch(changeKind) {
+                    case PointingGestureChangeKind.Start:
+                        Changed(this, PointingGestureChangedEventArgs.StartEvent);
+                        break;
+
+                    case PointingGestureChangeKind.Cancel:
+                        Changed(this, PointingGestureChangedEventArgs.CancelEvent);
+                        break;
+
+                    case PointingGestureChangeKind.Add:
+                    case PointingGestureChangeKind.Finish:
+                        Changed(this, new PointingGestureChangedEventArgs(changeKind, Items));
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
                 }
             }
         }
@@ -95,6 +107,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
                     OnChanged(PointingGestureChangeKind.Add);
                 }
             }
+        }
+
+        public void Finish()
+        {
+            if(State == PointingGestureState.Action) {
+                OnChanged(PointingGestureChangeKind.Finish);
+            }
+            State = PointingGestureState.None;
+        }
+
+        public void Cancel()
+        {
+            OnChanged(PointingGestureChangeKind.Cancel);
+            State = PointingGestureState.None;
         }
 
         #endregion

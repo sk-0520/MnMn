@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         #region define
 
         const int WM_RBUTTONDOWN = 0x0204;
+        const int WM_RBUTTONUP = 0x0205;
         const int WM_XBUTTONUP = 0x020C;
         const int MK_RBUTTON = 0x0002;
         const int WM_MOUSEMOVE = 0x0200;
@@ -1057,6 +1058,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                     PointingGesture.Move(logicalPos);
                 }
+            } else if(msg.Msg == WM_RBUTTONUP) {
+                PointingGesture.Finish();
             }
 
             return false;
@@ -1360,7 +1363,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void PointingGesture_Changed(object sender, Define.Event.PointingGestureChangedEventArgs e)
         {
-            Debug.WriteLine($"{e.ChangeKind}: {(e.Items != null ? string.Join(",", e.Items): "")}");
+            Debug.WriteLine($"{e.ChangeKind}: {(e.Items != null ? string.Join(",", e.Items) : "")}");
         }
 
     }

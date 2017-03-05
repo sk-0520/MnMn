@@ -12,6 +12,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
         #region define
 
         public static PointingGestureChangedEventArgs StartEvent { get; } = new PointingGestureChangedEventArgs(PointingGestureChangeKind.Start, null);
+        public static PointingGestureChangedEventArgs CancelEvent { get; } = new PointingGestureChangedEventArgs(PointingGestureChangeKind.Cancel, null);
 
         #endregion
 
