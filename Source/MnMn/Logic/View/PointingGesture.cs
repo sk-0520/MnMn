@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 
         #region function
 
-        protected void OnChanged(PointingGestureChangeKind changeKind)
+        protected virtual void OnChanged(PointingGestureChangeKind changeKind)
         {
             var changed = Changed;
             if(changed != null) {

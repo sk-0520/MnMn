@@ -334,6 +334,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\View\PointingGesture.cs" />
+    <Compile Include="Logic\View\WebNavigatorPointingGesture.cs" />
     <Compile Include="Logic\WebNavigatorBridge\SimleHtmlElementList.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
