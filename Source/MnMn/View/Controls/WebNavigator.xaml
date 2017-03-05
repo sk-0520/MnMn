@@ -9,6 +9,7 @@
   xmlns:app_logic="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Logic"
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_data_browser="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -18,6 +19,7 @@
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <app_view_converter:DoublePercentConverter x:Key="DoublePercentConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <UserControl.ContextMenu>
@@ -129,21 +131,43 @@
 
     <ContentControl x:Name="container" Grid.Row="1" />
 
-    <Popup x:Name="popupGesture" PlacementTarget="{Binding ElementName=container}">
-      <Border Background="Red" TextElement.Foreground="Black">
+    <Popup x:Name="popupGesture" IsHitTestVisible="False" Placement="Center" AllowsTransparency="True" PlacementTarget="{Binding ElementName=container}" MaxWidth="{Binding ActualWidth, ElementName=container, Converter={StaticResource DoublePercentConverter}, ConverterParameter=0.5}">
+      <Border CornerRadius="5" Padding="{StaticResource BasePadding}" Background="{DynamicResource AccentColorBrush}" TextElement.Foreground="{DynamicResource TextBrush}">
         <StackPanel>
-          <TextBlock x:Name="textGesture" />
-          <ItemsControl ItemsSource="{Binding GestureItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <TextBlock x:Name="textGesture" FontSize="14" FontWeight="Bold" TextAlignment="Center" Padding="{StaticResource BasePadding}" Background="{DynamicResource AccentBaseColorBrush}" />
+          
+          <ItemsControl Margin="{StaticResource AllMargin}" ItemsSource="{Binding GestureItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal" />
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
               <DataTemplate>
-                <StackPanel>
-                  <TextBlock Text="{Binding Direction}" />
-                </StackPanel>
+                <Viewbox Style="{StaticResource NormalIconBox}" Margin="{StaticResource IndependentMargin}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path>
+                      <Path.Style>
+                        <Style TargetType="Path" BasedOn="{StaticResource NormalDefaultIconPath}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Direction}" Value="Up">
+                              <Setter Property="Data" Value="{StaticResource Image_Arrow-Up}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Direction}" Value="Down">
+                              <Setter Property="Data" Value="{StaticResource Image_Arrow-Down}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Direction}" Value="Left">
+                              <Setter Property="Data" Value="{StaticResource Image_Arrow-Left}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Direction}" Value="Right">
+                              <Setter Property="Data" Value="{StaticResource Image_Arrow-Right}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </Path.Style>
+                    </Path>
+                  </Canvas>
+                </Viewbox>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
