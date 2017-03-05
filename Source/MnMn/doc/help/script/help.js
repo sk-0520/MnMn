@@ -55,6 +55,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'general-browser',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '内臓ブラウザ'
+		}
+	},
+	{
 		name: '*smile',
 		localize: true,
 		level: 0,
