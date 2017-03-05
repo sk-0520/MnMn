@@ -83,6 +83,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             InitializeComponent();
 
             PointingGesture.Changed += PointingGesture_Changed;
+            SuppressionRestoreTimer = new DispatcherTimer();
+            SuppressionRestoreTimer.Tick += SuppressionRestoreTimer_Tick;
+            SuppressionRestoreTimer.Interval = Constants.WebNavigatorGeckoFxGestureWaitTime;
         }
 
         #region BridgeClickProperty
@@ -509,6 +512,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         ServiceGeckoWebBrowser BrowserGeckoFx { get; set; }
 
         PointingGesture PointingGesture { get; } = new PointingGesture();
+        bool SuppressionContextMenu { get; set; }
+        DispatcherTimer SuppressionRestoreTimer { get; } 
 
         /// <summary>
         /// サービス種別。
@@ -875,6 +880,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.DOMContentLoaded += BrowserGeckoFx_DOMContentLoaded;
             BrowserGeckoFx.DomClick += BrowserGeckoFx_DomClick;
             BrowserGeckoFx.DomContextMenu += BrowserGeckoFx_DomContextMenu;
+            BrowserGeckoFx.DomMouseDown += BrowserGeckoFx_DomMouseDown;
+            BrowserGeckoFx.DomMouseMove += BrowserGeckoFx_DomMouseMove;
+            BrowserGeckoFx.DomMouseUp += BrowserGeckoFx_DomMouseUp;
+
             if(Constants.WebNavigatorGeckoFxShowLog) {
                 BrowserGeckoFx.ConsoleMessage += BrowserGeckoFx_ConsoleMessage;
             }
@@ -1047,7 +1056,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     handled = true;
                     return true;
                 }
-            } else if(msg.Msg == WM_RBUTTONDOWN) {
+            }
+            /* 
+            else if(msg.Msg == WM_RBUTTONDOWN) {
                 //Debug.WriteLine("click!");
                 var devicePodPos = WindowsUtility.ConvertPOINTFromLParam(msg.LParam);
                 var devicePos = PodStructUtility.Convert(devicePodPos);
@@ -1073,6 +1084,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 }
                 return true;
             }
+            */
 
             return false;
         }
@@ -1144,6 +1156,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserDefault_Unloaded(object sender, RoutedEventArgs e)
         {
             PointingGesture.Changed -= PointingGesture_Changed;
+            SuppressionRestoreTimer.Tick -= SuppressionRestoreTimer_Tick;
 
             BrowserDefault.Unloaded -= BrowserDefault_Unloaded;
             BrowserDefault.Loaded -= BrowserDefault_Loaded;
@@ -1155,6 +1168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserGeckoFx_Disposed(object sender, EventArgs e)
         {
             PointingGesture.Changed -= PointingGesture_Changed;
+            SuppressionRestoreTimer.Tick -= SuppressionRestoreTimer_Tick;
 
             BrowserGeckoFx.Disposed -= BrowserGeckoFx_Disposed;
             BrowserGeckoFx.Navigating -= BrowserGeckoFx_Navigating;
@@ -1290,11 +1304,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 return;
             }
 
-            if(this.popupGesture.IsOpen) {
+            //if(this.popupGesture.IsOpen) {
+            //    return;
+            //}
+            if(PointingGesture.State != PointingGestureState.None || SuppressionContextMenu) {
+                if(e.Cancelable) {
+                    e.Handled = true;
+                }
+                PointingGesture.Cancel();
                 return;
             }
 
-            PointingGesture.Cancel();
 
             if(ContextMenu.ItemsSource == null) {
                 //var menuItems = CreateContextMenu();
@@ -1394,26 +1414,67 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             browser.Mediation.Logger.Trace(e.Message);
         }
 
+        private void BrowserGeckoFx_DomMouseDown(object sender, DomMouseEventArgs e)
+        {
+            if(e.Button == GeckoMouseButton.Right) {
+                SuppressionRestoreTimer.Stop();
+
+                var pos = new Point(e.ClientX, e.ClientY);
+
+                PointingGesture.StartPreparation(pos);
+            }
+        }
+
+        private void BrowserGeckoFx_DomMouseMove(object sender, DomMouseEventArgs e)
+        {
+            if(PointingGesture.State != PointingGestureState.None) {
+                var pos = new Point(e.ClientX, e.ClientY);
+
+                PointingGesture.Move(pos);
+            }else {
+                PointingGesture.Cancel();
+            }
+        }
+
+        private void BrowserGeckoFx_DomMouseUp(object sender, DomMouseEventArgs e)
+        {
+            if(PointingGesture.State == PointingGestureState.Action) {
+                PointingGesture.Finish();
+                e.Handled = true;
+            } else {
+                PointingGesture.Cancel();
+            }
+        }
+
 
         private void PointingGesture_Changed(object sender, Define.Event.PointingGestureChangedEventArgs e)
         {
             if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
                 this.popupGesture.IsOpen = true;
+                SuppressionContextMenu = true;
                 GestureItems.Add(e.Item);
                 var gestureCommand=GetGestureCommand(GestureItems);
-                textGesture.Text = (string)gestureCommand.Message;
+                textGesture.Text = gestureCommand.Message;
             } else {
                 if(e.ChangeKind == PointingGestureChangeKind.Finish) {
                     var gestureCommand = GetGestureCommand(GestureItems);
                     if(gestureCommand.IsSuccess) {
                         gestureCommand.Result.TryExecute(null);
                     }
+                    SuppressionRestoreTimer.Stop();
+                    SuppressionRestoreTimer.Start();
                 }
 
                 this.popupGesture.IsOpen = false;
                 GestureItems.Clear();
             }
+            ContextMenu.IsOpen = false;
         }
 
+        private void SuppressionRestoreTimer_Tick(object sender, EventArgs e)
+        {
+            SuppressionContextMenu = false;
+            SuppressionRestoreTimer.Stop();
+        }
     }
 }
