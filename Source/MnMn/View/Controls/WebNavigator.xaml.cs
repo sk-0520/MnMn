@@ -513,7 +513,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         PointingGesture PointingGesture { get; } = new PointingGesture();
         bool SuppressionContextMenu { get; set; }
-        DispatcherTimer SuppressionRestoreTimer { get; } 
+        DispatcherTimer SuppressionRestoreTimer { get; }
+        GeckoElement PointingGeckoFxElement { get; set; }
 
         /// <summary>
         /// サービス種別。
@@ -1422,6 +1423,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 var pos = new Point(e.ClientX, e.ClientY);
 
                 PointingGesture.StartPreparation(pos);
+                PointingGeckoFxElement = e.Target.CastToGeckoElement();
             }
         }
 
