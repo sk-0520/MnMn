@@ -94,7 +94,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '不安定極まりないマウスジェスチャ',
+						'comments': [
+							['ぐるんぐるん', '0.53.0/444.png']
+						]
 					},
 					{
 						'revision': '',
