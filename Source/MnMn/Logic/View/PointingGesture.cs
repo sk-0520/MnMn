@@ -94,19 +94,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
                     State = PointingGestureState.Action;
                     Items.Add(new PointingGestureItem(point, direction));
                     OnChanged(PointingGestureChangeKind.Start);
-                    Debug.WriteLine($"{string.Join(",", Items.Select(i => i.Direction))}");
                 }
             } else {
                 Debug.Assert(State == PointingGestureState.Action);
                 var prev = Items.Last();
                 var direction = GetDirection(prev.Point, point, ActionSize);
-                    Debug.WriteLine($"{prev.Point} x {point}");
                 if(direction != PointingGestureDirection.None) {
                     Items.Add(new PointingGestureItem(point, direction));
                     if(prev.Direction != direction) {
                         OnChanged(PointingGestureChangeKind.Add);
                     }
-                    Debug.WriteLine($"{string.Join(",", Items.Select(i => i.Direction))}");
                 }
             }
         }

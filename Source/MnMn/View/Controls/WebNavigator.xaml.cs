@@ -1061,10 +1061,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     PointingGesture.Move(logicalPos);
                 }
             } else if(msg.Msg == WM_RBUTTONUP) {
+                handled = PointingGesture.State == PointingGestureState.Action;
                 PointingGesture.Finish();
+                return true;
             }
 
             return false;
+        }
+
+        CheckResultModel<ICommand> GetGestureCommand(IEnumerable<PointingGestureItem> items)
+        {
+            //TODO: 今のところ固定だけど将来的に設定を提供するならここかな
+            var gestureItems = new[] {
+                new { Text = "back", Command = BackCommand, Directions = new [] { PointingGestureDirection.Left } },
+                new { Text = "funknown", Command = ForwardCommand, Directions = new [] { PointingGestureDirection.Right } },
+            };
+            var target = gestureItems.FirstOrDefault(gi => gi.Directions.SequenceEqual(items.Select(i => i.Direction)));
+
+            if(target != null) {
+                return new CheckResultModel<ICommand>(true, target.Command, null, target.Text);
+            } else {
+                return CheckResultModel.Failure<ICommand>("unknown");
+            }
         }
 
         #endregion
@@ -1365,10 +1383,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void PointingGesture_Changed(object sender, Define.Event.PointingGestureChangedEventArgs e)
         {
-            popupGesture.IsOpen = true;
             if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
+                this.popupGesture.IsOpen = true;
                 GestureItems.Add(e.Item);
+                var gestureCommand=GetGestureCommand(GestureItems);
+                textGesture.Text = (string)gestureCommand.Message;
             } else {
+                if(e.ChangeKind == PointingGestureChangeKind.Finish) {
+                    var gestureCommand = GetGestureCommand(GestureItems);
+                    if(gestureCommand.IsSuccess) {
+                        gestureCommand.Result.TryExecute(null);
+                    }
+                }
+
+                this.popupGesture.IsOpen = false;
                 GestureItems.Clear();
             }
         }
