@@ -305,7 +305,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     using(var zipStream = informationEntry.Open()) {
                         using(var streamWriter = new StreamWriter(zipStream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
                             var info = new AppInformationCollection();
-                            streamWriter.Write(info.ToString());
+                            info.WriteInformation(streamWriter);
+                            //streamWriter.Write(info.ToString());
                         }
                     }
 

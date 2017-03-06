@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -292,7 +293,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 logger.LoggerConfig.PutsStream = true;
             }
 
-            logger.Information(Constants.ApplicationName, new AppInformationCollection().ToString());
+            var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag();
+            using(var writer = new StreamWriter(stream)) {
+                var appInfo = new AppInformationCollection();
+                appInfo.WriteInformation(writer);
+                var s = Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
+                logger.Information(Constants.ApplicationName, s);
+            }
 
             if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
                 Shutdown();
