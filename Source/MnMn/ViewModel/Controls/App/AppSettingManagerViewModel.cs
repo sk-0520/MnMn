@@ -166,25 +166,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
-        public ICommand OpenCacheDirectoryCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        var dir = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
-                        if(dir.Exists) {
-                            try {
-                                Process.Start(dir.FullName);
-                            } catch(Exception ex) {
-                                Mediation.Logger.Error(ex);
-                            }
-                        }
-                    }
-                );
-            }
-        }
-
         public ICommand RebuildWebNavigatorGeckoFxPluginCommand
         {
             get
