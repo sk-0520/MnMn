@@ -58,11 +58,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         //const int WM_RBUTTONDOWN = 0x0204;
         //const int WM_NCRBUTTONDOWN = 0x00A4;
         //const int WM_RBUTTONUP = 0x0205;
-        const int WM_XBUTTONUP = 0x020C;
+        //const int WM_XBUTTONUP = 0x020C;
         //const int MK_RBUTTON = 0x0002;
         //const int WM_MOUSEMOVE = 0x0200;
-        const int XBUTTON1 = 0x10000;
-        const int XBUTTON2 = 0x20000;
+        //const int XBUTTON1 = 0x10000;
+        //const int XBUTTON2 = 0x20000;
 
         readonly string[] ignoreGeckoFxLogs = Constants.WebNavigatorGeckoFxIgnoreEngineLogs;
 
@@ -1039,14 +1039,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         internal bool PreProcessMessage(IWindowMessage windowMessage, ref System.Windows.Forms.Message msg, ref bool handled)
         {
-            if(msg.Msg == WM_XBUTTONUP) {
-                var wParam = msg.WParam.ToInt32();
-
-                if(wParam == XBUTTON1 && CanGoBack) {
+            if(msg.Msg == (int)WM.WM_XBUTTONUP) {
+                //var wParam = msg.WParam.ToInt32();
+                var hiWord = WindowsUtility.HIWORD(msg.WParam);
+                
+                if(hiWord == (int)XBUTTON.XBUTTON1 && CanGoBack) {
                     GoBack();
                     handled = true;
                     return true;
-                } else if(wParam == XBUTTON2 && CanGoForward) {
+                } else if(hiWord == (int)XBUTTON.XBUTTON2 && CanGoForward) {
                     GoForward();
                     handled = true;
                     return true;
