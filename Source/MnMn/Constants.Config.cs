@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         #region variable
 
-        static ConfigurationCaching appConfig = new ConfigurationCaching();
+        static ConfigurationCacher appConfig = new ConfigurationCacher();
 
         #endregion
 

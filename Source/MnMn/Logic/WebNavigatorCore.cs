@@ -348,7 +348,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     .Select(f => f.Name)
                     .ToList()
                 ;
-                downladFileName = TextUtility.ToUnique(downladFileName, files, (n, i) => {
+                //TODO: 大文字/小文字
+                downladFileName = TextUtility.ToUnique(downladFileName, files, StringComparison.Ordinal, (n, i) => {
                     var name = Path.GetFileNameWithoutExtension(n);
                     var ext = Path.GetExtension(n);
 

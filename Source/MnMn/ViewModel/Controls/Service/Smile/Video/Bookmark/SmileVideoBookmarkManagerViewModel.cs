@@ -311,7 +311,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         void AddNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)
         {
             var model = new SmileVideoBookmarkItemSettingModel() {
-                Name = TextUtility.ToUniqueDefault(global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_NewName, GetNodes(_ => true).Select(n => n.Name)),
+                Name = TextUtility.ToUniqueDefault(global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_NewName, GetNodes(_ => true).Select(n => n.Name), StringComparison.Ordinal),
             };
             var pair = parentNodeViewModel.NodeList.Add(model, null);
             pair.ViewModel.IsSelected = true;
@@ -334,7 +334,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         void InsertNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)
         {
             var model = new SmileVideoBookmarkItemSettingModel() {
-                Name = TextUtility.ToUniqueDefault(global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_NewName, GetNodes(_ => true).Select(n => n.Name)),
+                Name = TextUtility.ToUniqueDefault(global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_NewName, GetNodes(_ => true).Select(n => n.Name), StringComparison.Ordinal),
             };
             var pair = parentNodeViewModel.NodeList.Add(model, null);
             pair.ViewModel.IsSelected = true;

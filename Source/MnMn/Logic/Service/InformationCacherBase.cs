@@ -8,7 +8,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 {
-    public abstract class InformationCacherBase<TInformationViewModelBase>: Caching<string, TInformationViewModelBase>
+    public abstract class InformationCacherBase<TInformationViewModelBase>: Cacher<string, TInformationViewModelBase>
         where TInformationViewModelBase: InformationViewModelBase
     {
         #region variable
