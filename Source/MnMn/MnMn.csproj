@@ -479,6 +479,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Player\SmileLivePlayerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Market\SmileMarketVideoRelationItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />

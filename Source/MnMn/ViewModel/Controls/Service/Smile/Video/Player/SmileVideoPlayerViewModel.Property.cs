@@ -38,6 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using MahApps.Metro.Controls;
@@ -414,9 +415,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
         /// <summary>
         /// 市場。
-        /// <para>未実装</para>
         /// </summary>
-        public CollectionModel<object> MarketItems { get; } = new CollectionModel<object>();
+        public CollectionModel<SmileMarketVideoRelationItemViewModel> MarketItems { get; } = new CollectionModel<SmileMarketVideoRelationItemViewModel>();
 
         /// <summary>
         /// 動画に対するフィルタ設定。

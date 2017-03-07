@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //dmc();
             //src();
             //livestatus();
-            market();
+            //market();
         }
 
         async void login()
