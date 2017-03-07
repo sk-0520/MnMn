@@ -2072,7 +2072,13 @@
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
                   <StackPanel>
+                    <TextBlock Text="{Binding Id}" />
                     <TextBlock Text="{Binding Title}" />
+                    <TextBlock Text="{Binding MarketUri}" />
+                    <TextBlock Text="{Binding CashRegisterUri}" />
+                    <TextBlock Text="{Binding ThumbnailLoadState}" />
+                    <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
+                    <Image Source="{Binding ThumbnailImage}" />
                   </StackPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>

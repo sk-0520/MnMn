@@ -1077,7 +1077,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         Task LoadMarketItemsImageAsync()
         {
-            return Task.CompletedTask;
+            // 市場専用のマネージャ系がないのでここでいい感じに頑張る。
+            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMarketCacheDirectoryName);
+            var marketDir = Directory.CreateDirectory(cachedDirPath);
+
+            var userAgentHost = new HttpUserAgentHost();
+            var client = userAgentHost.CreateHttpUserAgent();
+            var tasks = MarketItems.Select(i => i.LoadThumbnaiImageAsync(Constants.ServiceSmileMarketImageCacheSpan, client));
+
+            return Task.WhenAll(tasks).ContinueWith(t => {
+                t.Dispose();
+                client.Dispose();
+                userAgentHost.Dispose();
+            });
+
         }
 
         protected virtual Task LoadMarketItemsAsync()

@@ -201,6 +201,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static CacheSpan ServiceSmileLiveImageCacheSpan => CacheSpan.InfinityCache;
         /// <summary>
+        /// ニコニコ市場: 動画サムネイルキャッシュ時間。
+        /// </summary>
+        public static CacheSpan ServiceSmileMarketImageCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(7));
+        /// <summary>
         /// sbin/
         /// </summary>
         public static string SbinDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "sbin"); } }
@@ -370,6 +374,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
+        public static string SmileMarketCacheDirectoryName { get; } = "market";
 
         public static char SmileMyListBookmarkTagTokenSplitter { get; } = ';';
 
