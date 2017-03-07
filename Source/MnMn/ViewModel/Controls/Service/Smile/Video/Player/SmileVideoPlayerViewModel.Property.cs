@@ -711,6 +711,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._isSelectedInformation; }
             set { SetVariableValue(ref this._isSelectedInformation, value); }
         }
+        public bool IsSelectedMarket
+        {
+            get { return this._isSelectedMarket; }
+            set { if(SetVariableValue(ref this._isSelectedMarket, value)) {
+                    if(IsSelectedMarket && MarketLoadState == LoadState.None) {
+                        LoadMarketItemsAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+        }
         /// <summary>
         /// メディア(動画ファイルとか)がプレイヤーに設定されているか。
         /// </summary>

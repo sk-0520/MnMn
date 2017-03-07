@@ -37,7 +37,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 item.Title = imageElement.GetAttributeValue("alt", imageElement.GetAttributeValue("title", string.Empty));
 
                 var makerElement = itemElement.SelectSingleNode(".//*[@class='maker']");
-                item.Maker = makerElement.InnerText;
+                if(makerElement != null) {
+                    item.Maker = makerElement.InnerText;
+                }
 
                 var actionElement = itemElement.SelectSingleNode(".//*[@class='action']");
                 var buyElement = actionElement.SelectSingleNode(".//*[@class='buy']");

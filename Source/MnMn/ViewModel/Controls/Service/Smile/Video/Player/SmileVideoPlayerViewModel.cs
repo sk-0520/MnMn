@@ -1075,7 +1075,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        Task LoadMarketImagesAsync()
+        Task LoadMarketItemsImageAsync()
         {
             return Task.CompletedTask;
         }
@@ -1089,7 +1089,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 var items = t.Result;
                 if(items.Any()) {
                     SetMarketItems(items);
-                    return LoadMarketImagesAsync().ContinueWith(_ => {
+                    return LoadMarketItemsImageAsync().ContinueWith(_ => {
                         MarketLoadState = LoadState.Loaded;
                     });
                 } else {

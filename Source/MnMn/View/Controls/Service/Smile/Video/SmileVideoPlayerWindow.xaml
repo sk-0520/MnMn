@@ -2061,7 +2061,7 @@
             </ItemsControl>
           </ScrollViewer>
         </TabItem>
-        <TabItem Header="market" IsEnabled="False">
+        <TabItem Header="market"  IsSelected="{Binding IsSelectedMarket}">
           <ScrollViewer>
             <ItemsControl ItemsSource="{Binding MarketItems}">
               <ItemsControl.ItemsPanel>
@@ -2072,7 +2072,7 @@
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
                   <StackPanel>
-                    <TextBlock>market item</TextBlock>
+                    <TextBlock Text="{Binding Title}" />
                   </StackPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
