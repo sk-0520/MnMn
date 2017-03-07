@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         SmileVideoCommentViewModel _selectedComment;
 
         LoadState _relationVideoLoadState;
+        LoadState _marketLoadState;
 
         double _realVideoWidth;
         double _realVideoHeight;

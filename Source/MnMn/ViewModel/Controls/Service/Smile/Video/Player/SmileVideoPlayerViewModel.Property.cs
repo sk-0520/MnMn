@@ -457,6 +457,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         /// <summary>
+        /// 市場画読込状態。
+        /// </summary>
+        public LoadState MarketLoadState
+        {
+            get { return this._marketLoadState; }
+            set { SetVariableValue(ref this._marketLoadState, value); }
+        }
+        /// <summary>
         /// 再生可能なサイズまでデータを読み込んだか。
         /// </summary>
         public bool CanVideoPlay

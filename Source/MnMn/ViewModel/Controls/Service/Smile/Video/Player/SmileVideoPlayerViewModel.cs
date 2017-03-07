@@ -94,6 +94,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -1073,6 +1074,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 });
             }
         }
+
+        Task LoadMarketImagesAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        protected virtual Task LoadMarketItemsAsync()
+        {
+            MarketLoadState = LoadState.Preparation;
+
+            MarketLoadState = LoadState.Loading;
+            return Information.LoadMarketItemsAsync().ContinueWith(t => {
+                var items = t.Result;
+                if(items.Any()) {
+                    SetMarketItems(items);
+                    return LoadMarketImagesAsync().ContinueWith(_ => {
+                        MarketLoadState = LoadState.Loaded;
+                    });
+                } else {
+                    MarketLoadState = LoadState.Failure;
+                    return Task.CompletedTask;
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void SetMarketItems(IEnumerable<SmileMarketVideoRelationItemViewModel> items)
+        {
+            if(!IsViewClosed) {
+                Application.Current.Dispatcher.Invoke(() => {
+                    MarketItems.InitializeRange(items);
+                });
+            }
+        }
+
 
         protected virtual void CheckTagPedia()
         {
