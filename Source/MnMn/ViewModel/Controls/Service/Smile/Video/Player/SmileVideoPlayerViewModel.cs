@@ -145,6 +145,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand OpenMarketCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var marketItem = (SmileMarketVideoRelationItemViewModel)o;
+                        throw new NotImplementedException();
+                    }
+                );
+            }
+        }
+
         public ICommand PlayCommand
         {
             get
