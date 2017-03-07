@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //dmc();
             //src();
             //livestatus();
+            market();
         }
 
         async void login()
@@ -184,6 +185,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //var getPlayerStatus = new GetPlayerStatus(mediation);
             await Task.Delay(0);
             var mmm = GetPlayerStatus.ConvertFromRawData(File.ReadAllText(@"x:\stat.xml"));
+        }
+
+        async void market()
+        {
+            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var market = new Market(mediation);
+            var model = await market.LoadVideoRelationAsync("sm9");
         }
 
     }
