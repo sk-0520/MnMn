@@ -17,7 +17,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
         /// <summary>
         /// 商品名。
         /// </summary>
-        public string Name { get; set; }
+        public string Title { get; set; }
+
+        /// <summary>
+        /// メーカー。
+        /// </summary>
+        public string Maker { get; set; }
 
         /// <summary>
         /// 購入者数。

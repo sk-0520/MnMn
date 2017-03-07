@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
@@ -191,7 +192,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
             var market = new Market(mediation);
-            var model = await market.LoadVideoRelationAsync("9");
+            var model = await market.LoadVideoRelationAsync("sm9");
+            var items = SmileMarketUtility.GetVideoRelationItems(model).ToList();
         }
 
     }
