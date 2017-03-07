@@ -2071,14 +2071,35 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
+                  <DataTemplate.Resources>
+                    <ControlTemplate x:Key="Standby">
+                      <TextBlock Text="{Binding Standby}" />
+                    </ControlTemplate>
+                    <ControlTemplate x:Key="Thumbnail">
+                      <Grid>
+                        <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
+                        <Image Source="{Binding ThumbnailImage}" />
+                      </Grid>
+                    </ControlTemplate>
+                  </DataTemplate.Resources>
                   <StackPanel>
                     <TextBlock Text="{Binding Id}" />
                     <TextBlock Text="{Binding Title}" />
                     <TextBlock Text="{Binding MarketUri}" />
                     <TextBlock Text="{Binding CashRegisterUri}" />
                     <TextBlock Text="{Binding ThumbnailLoadState}" />
-                    <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
-                    <Image Source="{Binding ThumbnailImage}" />
+                    <Control>
+                      <Control.Style>
+                        <Style TargetType="Control">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsStandby}" Value="True">
+                              <Setter Property="Template" Value="{StaticResource Standby}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Template" Value="{StaticResource Thumbnail}" />
+                        </Style>
+                      </Control.Style>
+                    </Control>
                   </StackPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>

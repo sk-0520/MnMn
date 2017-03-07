@@ -49,6 +49,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
         /// </summary>
         public string ThumbnailUrl { get; set; }
 
+        /// <summary>
+        /// デコメ
+        /// </summary>
+        public string Standby { get; set; }
+
         #endregion
     }
 }

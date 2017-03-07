@@ -192,7 +192,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
             var market = new Market(mediation);
-            var model = await market.LoadVideoRelationAsync("sm9");
+            //var model = await market.LoadVideoRelationAsync("sm9");
+            var model = await market.LoadVideoRelationAsync("sm14027065");
             var items = SmileMarketUtility.GetVideoRelationItems(model).ToList();
         }
 

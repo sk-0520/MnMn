@@ -47,12 +47,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market
         public Uri CashRegisterUri => MakeUri(Model.CashRegisterUrl);
         public Uri ThumbnailUri => MakeUri(Model.ThumbnailUrl);
 
+        public bool IsStandby => !string.IsNullOrEmpty(Model.Standby);
+
+        public string Standby => Model.Standby;
+
         public string Id => MarketUri?.Segments.Last();
 
         public LoadState ThumbnailLoadState
         {
             get { return this._thumbnailLoadState; }
-            set { SetVariableValue(ref this._thumbnailLoadState, value); }
+            set
+            {
+                if(SetVariableValue(ref this._thumbnailLoadState, value)) {
+                    CallOnPropertyChange(nameof(ThumbnailImage));
+                }
+            }
         }
 
         public ImageSource ThumbnailImage

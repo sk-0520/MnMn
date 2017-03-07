@@ -1084,7 +1084,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var userAgentHost = new HttpUserAgentHost();
             var client = userAgentHost.CreateHttpUserAgent();
-            var tasks = MarketItems.Select(i => i.LoadThumbnaiImageAsync(Constants.ServiceSmileMarketImageCacheSpan, client));
+            var tasks = MarketItems
+                .Where(i => !i.IsStandby)
+                .Select(i => i.LoadThumbnaiImageAsync(Constants.ServiceSmileMarketImageCacheSpan, client));
 
             return Task.WhenAll(tasks).ContinueWith(t => {
                 t.Dispose();
