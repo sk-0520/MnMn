@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
             var market = new Market(mediation);
-            var model = await market.LoadVideoRelationAsync("sm9");
+            var model = await market.LoadVideoRelationAsync("9");
         }
 
     }
