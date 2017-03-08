@@ -55,10 +55,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     {
         #region variable
 
-        bool _nowLoading;
+        //bool _nowLoading;
 
-        SmileVideoFinderItemViewModel _selectedFinderItem;
-        SourceLoadState _finderLoadState;
+        //SmileVideoFinderItemViewModel _selectedFinderItem;
+        //SourceLoadState _finderLoadState;
 
         SmileVideoSortType _selectedSortType;
         bool _showContinuousPlaybackMenu;
