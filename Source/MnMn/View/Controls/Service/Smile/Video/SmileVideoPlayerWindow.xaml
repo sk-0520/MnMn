@@ -2076,12 +2076,10 @@
                       <TextBlock FontSize="16" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Width="{StaticResource ImageWidth}" Text="{Binding Standby}" />
                     </ControlTemplate>
                     <ControlTemplate x:Key="Thumbnail">
-                      <Viewbox Stretch="UniformToFill"  StretchDirection="Both">
-                        <Grid>
-                          <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
-                          <Image Source="{Binding ThumbnailImage}" />
-                        </Grid>
-                      </Viewbox>
+                      <Grid>
+                        <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
+                        <Image Stretch="Uniform" Source="{Binding ThumbnailImage}" />
+                      </Grid>
                     </ControlTemplate>
                   </DataTemplate.Resources>
                   <Button HorizontalAlignment="Center" Style="{StaticResource Hyperlink}" Command="{Binding DataContext.OpenMarketCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Width="{StaticResource VideoInfoWidth}" ToolTip="{Binding Title, Mode=OneTime}">
