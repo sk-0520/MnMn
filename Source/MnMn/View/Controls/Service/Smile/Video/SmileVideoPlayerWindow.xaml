@@ -275,7 +275,7 @@
         <sys:Boolean>False</sys:Boolean>
       </KeyBinding.CommandParameter>
     </KeyBinding>
-    
+
     <KeyBinding Key="F7" Command="{Binding SwitchMuteCommand}" />
   </mamc:MetroWindow.InputBindings>
   <mamc:MetroWindow.Style>
@@ -1752,7 +1752,7 @@
                     <DataTemplate>
                       <StackPanel>
                         <Separator x:Name="separator" />
-                        
+
                         <Grid>
                           <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -2061,7 +2061,7 @@
             </ItemsControl>
           </ScrollViewer>
         </TabItem>
-        <TabItem Header="market" IsEnabled="False">
+        <TabItem Header="市場"  IsSelected="{Binding IsSelectedMarket}">
           <ScrollViewer>
             <ItemsControl ItemsSource="{Binding MarketItems}">
               <ItemsControl.ItemsPanel>
@@ -2071,9 +2071,44 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <StackPanel>
-                    <TextBlock>market item</TextBlock>
-                  </StackPanel>
+                  <DataTemplate.Resources>
+                    <ControlTemplate x:Key="Standby">
+                      <TextBlock FontSize="16" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Width="{StaticResource ImageWidth}" Text="{Binding Standby}" />
+                    </ControlTemplate>
+                    <ControlTemplate x:Key="Thumbnail">
+                      <Grid>
+                        <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
+                        <Image Stretch="Uniform" Source="{Binding ThumbnailImage}" />
+                      </Grid>
+                    </ControlTemplate>
+                  </DataTemplate.Resources>
+                  <Button HorizontalAlignment="Center" Style="{StaticResource Hyperlink}" Command="{Binding DataContext.OpenMarketCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Width="{StaticResource VideoInfoWidth}" ToolTip="{Binding Title, Mode=OneTime}">
+                    <StackPanel>
+                      <Control Width="{StaticResource ImageWidth}" Height="{StaticResource ImageHeight}">
+                        <Control.Style>
+                          <Style TargetType="Control">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding IsStandby}" Value="True">
+                                <Setter Property="Template" Value="{StaticResource Standby}" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                            <Setter Property="Template" Value="{StaticResource Thumbnail}" />
+                          </Style>
+                        </Control.Style>
+                      </Control>
+                      <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Title}">
+                        <TextBlock.Style>
+                          <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding IsStandby}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </TextBlock.Style>
+                      </TextBlock>
+                    </StackPanel>
+                  </Button>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>

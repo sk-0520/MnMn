@@ -94,6 +94,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -139,6 +140,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         if(SmileVideoInformationUtility.CheckCanPlay(videoInformation, Mediation.Logger)) {
                             LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
                         }
+                    }
+                );
+            }
+        }
+
+        public ICommand OpenMarketCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var marketItem = (SmileMarketVideoRelationItemViewModel)o;
+                        ShellUtility.OpenUriInSystemBrowser(marketItem.CashRegisterUri, Mediation);
                     }
                 );
             }
@@ -1073,6 +1087,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 });
             }
         }
+
+        Task LoadMarketItemsImageAsync()
+        {
+            // 市場専用のマネージャ系がないのでここでいい感じに頑張る。
+            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMarketCacheDirectoryName);
+            var marketDir = Directory.CreateDirectory(cachedDirPath);
+
+            var userAgentHost = new HttpUserAgentHost();
+            var client = userAgentHost.CreateHttpUserAgent();
+            var tasks = MarketItems
+                .Where(i => !i.IsStandby)
+                .Select(i => i.LoadThumbnaiImageAsync(Constants.ServiceSmileMarketImageCacheSpan, client));
+
+            return Task.WhenAll(tasks).ContinueWith(t => {
+                t.Dispose();
+                client.Dispose();
+                userAgentHost.Dispose();
+            });
+
+        }
+
+        protected virtual Task LoadMarketItemsAsync()
+        {
+            MarketLoadState = LoadState.Preparation;
+
+            MarketLoadState = LoadState.Loading;
+            return Information.LoadMarketItemsAsync().ContinueWith(t => {
+                var items = t.Result;
+                if(items.Any()) {
+                    SetMarketItems(items);
+                    return LoadMarketItemsImageAsync().ContinueWith(_ => {
+                        MarketLoadState = LoadState.Loaded;
+                    });
+                } else {
+                    MarketLoadState = LoadState.Loaded;
+                    return Task.CompletedTask;
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void SetMarketItems(IEnumerable<SmileMarketVideoRelationItemViewModel> items)
+        {
+            if(!IsViewClosed) {
+                Application.Current.Dispatcher.Invoke(() => {
+                    MarketItems.InitializeRange(items);
+                });
+            }
+        }
+
 
         protected virtual void CheckTagPedia()
         {
@@ -2121,6 +2185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SafeShowTime = TimeSpan.Zero;
             SafeDownloadedSize = 0;
             CommentScriptDefault = null;
+            MarketLoadState = LoadState.None;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
@@ -2137,6 +2202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 });
             }
             SetRelationVideoItems(Enumerable.Empty<SmileVideoInformationViewModel>());
+            SetMarketItems(Enumerable.Empty<SmileMarketVideoRelationItemViewModel>());
             //TagItems.Clear();
         }
 

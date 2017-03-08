@@ -38,6 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using MahApps.Metro.Controls;
@@ -414,9 +415,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
         /// <summary>
         /// 市場。
-        /// <para>未実装</para>
         /// </summary>
-        public CollectionModel<object> MarketItems { get; } = new CollectionModel<object>();
+        public CollectionModel<SmileMarketVideoRelationItemViewModel> MarketItems { get; } = new CollectionModel<SmileMarketVideoRelationItemViewModel>();
 
         /// <summary>
         /// 動画に対するフィルタ設定。
@@ -456,6 +456,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._relationVideoLoadState, value); }
         }
 
+        /// <summary>
+        /// 市場画読込状態。
+        /// </summary>
+        public LoadState MarketLoadState
+        {
+            get { return this._marketLoadState; }
+            set { SetVariableValue(ref this._marketLoadState, value); }
+        }
         /// <summary>
         /// 再生可能なサイズまでデータを読み込んだか。
         /// </summary>
@@ -702,6 +710,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._isSelectedInformation; }
             set { SetVariableValue(ref this._isSelectedInformation, value); }
+        }
+        public bool IsSelectedMarket
+        {
+            get { return this._isSelectedMarket; }
+            set { if(SetVariableValue(ref this._isSelectedMarket, value)) {
+                    if(IsSelectedMarket && MarketLoadState == LoadState.None) {
+                        LoadMarketItemsAsync().ConfigureAwait(false);
+                    }
+                }
+            }
         }
         /// <summary>
         /// メディア(動画ファイルとか)がプレイヤーに設定されているか。

@@ -6,6 +6,10 @@
 	<param key="smile-user-page">
 		<item key="user-id" value="${user-id}" />
 	</param>
+
+	<param key="smile-market-video-relation">
+		<item key="v" value="${video-id}" />
+	</param>
 	
 	<param key="smile-contents-search">
 		<item key="service" value="${service}" />

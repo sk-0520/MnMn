@@ -46,6 +46,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
@@ -58,6 +59,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -1077,6 +1079,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
 
                 return (IEnumerable<SmileVideoInformationViewModel>)result;
+            });
+        }
+
+        public Task<IEnumerable<SmileMarketVideoRelationItemViewModel>> LoadMarketItemsAsync()
+        {
+            var market = new Logic.Service.Smile.Api.V1.Market(Mediation);
+            return market.LoadVideoRelationAsync(VideoId).ContinueWith(t => {
+                var model = t.Result;
+                var items = SmileMarketUtility.GetVideoRelationItems(model);
+                if(items.Any()) {
+                    return items.Select(i => new SmileMarketVideoRelationItemViewModel(Mediation, i));
+                } else {
+                    return Enumerable.Empty<SmileMarketVideoRelationItemViewModel>();
+                }
             });
         }
 
