@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         long _workingSet;
         long _virtualMemorySize;
 
+        bool _isOpenDevelopmentMenu;
+
         #endregion
 
         public AppAboutManagerViewModel(Mediation mediation, AppLoggingManagerViewModel loggingManager)
@@ -100,6 +102,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return this._virtualMemorySize; }
             private set { SetVariableValue(ref this._virtualMemorySize, value); }
+        }
+
+        public bool IsOpenDevelopmentMenu
+        {
+            get { return this._isOpenDevelopmentMenu; }
+            set { SetVariableValue(ref this._isOpenDevelopmentMenu, value); }
         }
 
         #endregion
@@ -232,6 +240,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 );
             }
         }
+
+        public ICommand SettingSaveCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var isBackup = Convert.ToBoolean(o);
+                        Mediation.Order(new AppSaveOrderModel(isBackup));
+                        IsOpenDevelopmentMenu = false;
+                    }
+                );
+            }
+        }
+
+        public ICommand GoogbyeCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        IsOpenDevelopmentMenu = false;
+                        throw new Exception(nameof(GoogbyeCommand));
+                    }
+                );
+            }
+        }
+
 
         #endregion
 
