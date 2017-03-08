@@ -85,9 +85,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.52.1',
-		'isRc': true,
+		'date': '2017/03/08',
+		'version': '0.53.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -101,11 +101,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '開発環境を VS2017 にアップグレードしたのでノリでアップデート'
 					}
 				]
 			},
@@ -113,7 +109,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '4e0aec2bb5ff27473414fed463959dec5100205a',
 						'subject': '#444: 内臓ブラウザでマウスジェスチャーを構築する',
 						'comments': [
 							'マウス右ボタン押下でジェスチャー開始',
@@ -125,15 +121,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'edab9ae08057ffbc6a1408bb8d172aac67365544',
 						'subject': '#134: 動画に関連する市場情報の取得',
 						'comments': [
 							'とりあえず動画再生の邪魔にならないレベルで実装してみたからクリック程度の機能しかない'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -141,28 +133,24 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'e221893e60b39b9a94dd17dbddd8a8e8d49669fc',
 						'subject': '更新履歴 #438 の記載ミスを修正'
 					},
 					{
-						'revision': '',
+						'revision': '23e0493d19248588dfa5e0a051c7546e56aac324',
 						'subject': '内臓ブラウザからファイルダウンロード時に既存ファイル名との衝突判定に大文字小文字を区別しないようにした'
 					},
 					{
-						'revision': '',
+						'revision': 'a8e39ca1ee70d38aa9f377e5149f0cb46ca2de0c',
 						'subject': '#445: 情報タブから実行できるし重複除外のため本体設定からキャッシュディレクトリを開く機能の破棄'
 					},
 					{
-						'revision': '',
+						'revision': 'd176925ba115a13c7a97b8dc32bee492060db343',
 						'subject': '#446: クラッシュレポートの送信内容が大きいとクラッシュレポート自体が死んじゃうね',
 						'comments': [
 							'クラッシュレポートの飛んでこない平穏な日々の終わり',
 							'デバッグしやすくするために開発用の自爆処理を付けた'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -170,10 +158,10 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '3571e762ab576c584eb73b00eaf05e43648f9e39',
 						'subject': '#441: JavaScript エラーを MnMn 側でハンドリングする',
 						'comments': [
-							'デバッグ環境だからかもしれないけど標準出力に吐くとえっらい重いしなんか多いいから基本的にこの機能はOFF状態',
+							'デバッグ環境だからかもしれないけど標準出力に吐くとえっらい重いしなんか多いから基本的にこの機能はOFF状態',
 							'内部エラーの制御は App.config の以下キーで行う',
 							'`web_navigator-geckofx-show-log`: ログ表示そのものの実施',
 							'`web_navigator-geckofx-show-engine-log`: 内部制御表示有無',
@@ -181,7 +169,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'da7297daf1b88a51585d059da17d5b534ca35f7a',
 						'class': 'open',
 						'subject': '#440: せっかく WPF なんだからUIの拡縮してみたいよね',
 						'comments': [
@@ -190,16 +178,12 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '3c3d9a63a4d89188cd6c451661c50294588cdf98',
 						'subject': '#447: 開発環境を Visual Studio 2017 Community にアップグレード',
 						'comments': [
 							'2015 からのウィンドウ設定引継ぎが便利なんだぜ',
 							'.editorconfig どうやって効かすんだぜ'
 						]
-					},
-					{
-						'revision': '',
-						'subject': 'indent_style'
 					}
 				]
 			}
