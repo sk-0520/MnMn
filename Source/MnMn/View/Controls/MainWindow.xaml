@@ -87,13 +87,13 @@
 
       <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image Source="/Resources/Service/Smile/Service20442.png" Width="{StaticResource LargeIconWidth}" Height="{StaticResource LargeIconHeight}" />
+          <Image Source="/Resources/Service/Smile/Service-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
         </TabItem.Header>
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
       <TabItem DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image Source="/Resources/MnMn.png" Width="{StaticResource LargeIconWidth}" Height="{StaticResource LargeIconHeight}" />
+          <Image Source="/Resources/MnMn-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
         </TabItem.Header>
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
@@ -164,10 +164,24 @@
 
         </Grid>
       </TabItem>
-      <TabItem Header="ブラウザ" DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Viewbox Style="{StaticResource BigIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Browser}" Style="{StaticResource BigDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </TabItem.Header>
         <app_view_controls_app:AppGeneralBrowserManager x:Name="general" />
       </TabItem>
-      <TabItem Header="ダウンロード" DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Viewbox Style="{StaticResource BigIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </TabItem.Header>
         <app_view_controls_app:AppDownloadManager x:Name="download" />
       </TabItem>
 
