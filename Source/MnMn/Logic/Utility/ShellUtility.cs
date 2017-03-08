@@ -35,5 +35,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         {
             return ExecuteFileCore(file.FullName, null, logger);
         }
+
+        public static Process OpenUriInSystemBrowser(Uri uri, Mediation mediation)
+        {
+            try {
+                return Process.Start(uri.OriginalString);
+            } catch(Exception ex) {
+                mediation.Logger.Warning(ex);
+            }
+
+            return null;
+        }
     }
 }

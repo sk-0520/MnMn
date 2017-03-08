@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var marketItem = (SmileMarketVideoRelationItemViewModel)o;
-                        throw new NotImplementedException();
+                        ShellUtility.OpenUriInSystemBrowser(marketItem.CashRegisterUri, Mediation);
                     }
                 );
             }
