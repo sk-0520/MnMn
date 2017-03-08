@@ -71,10 +71,10 @@
         </StatusBarItem.Style>
         <ResizeGrip />
       </StatusBarItem>
-      
+
       <StatusBarItem DockPanel.Dock="Right" >
       </StatusBarItem>
-      
+
       <Image Source="/Resources/Service/Smile/Smile.png" Style="{StaticResource SmallItemImage}" />
       <TextBlock Text="{Binding SmileSession.LoginState, Converter={StaticResource EnumDisplayConverter}, Mode=OneWay}" />
       <TextBlock Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
@@ -84,18 +84,63 @@
       <TabControl.LayoutTransform>
         <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
       </TabControl.LayoutTransform>
-      
-      <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
+
+      <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Image ToolTip="ニコニコ" Source="/Resources/Service/Smile/Service-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+        </TabItem.Header>
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
-      <TabItem Header="{x:Static app:Constants.ApplicationName}" DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Image ToolTip="{x:Static app:Constants.ApplicationName}" Source="/Resources/MnMn-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+        </TabItem.Header>
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
-      <TabItem DataContext="{Binding AppUpdateManager}"  Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppUpdateManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <StackPanel>
-            <TextBlock Text="アップデート" Style="{StaticResource ParentItemLikeText}" />
-            <Border CornerRadius="4" BorderThickness="2" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <StackPanel ToolTip="アップデート">
+            <Viewbox Style="{StaticResource BigIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Update}">
+                  <Path.Style>
+                    <Style TargetType="Path" BasedOn="{StaticResource BigDefaultIconPath}">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasUpdate}" Value="True">
+                          <Setter Property="Opacity" Value="0.3" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Path.Style>
+                </Path>
+                <Path Data="{StaticResource Image_Update}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <Path.Style>
+                    <Style TargetType="Path" BasedOn="{StaticResource BigAccentIconPath}">
+                      <Style.Triggers>
+                        <Trigger Property="Visibility" Value="Visible">
+                          <Trigger.EnterActions>
+                            <BeginStoryboard>
+                              <Storyboard>
+                                <DoubleAnimation
+                                  AutoReverse="True"
+                                  RepeatBehavior="Forever"
+                                  Storyboard.TargetProperty="Opacity"
+                                  Duration="00:00:01.5"
+                                  From="0"
+                                  To="1"
+                                />
+                              </Storyboard>
+                            </BeginStoryboard>
+                          </Trigger.EnterActions>
+                        </Trigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Path.Style>
+                </Path>
+              </Canvas>
+            </Viewbox>
+
+            <Border CornerRadius="2" BorderThickness="1" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
               <Border.Style>
                 <Style TargetType="Border">
                   <Style.Triggers>
@@ -124,7 +169,7 @@
                   </Style.Triggers>
                 </Style>
               </Border.Style>
-              <TextBlock FontWeight="Bold" TextAlignment="Center" >あるよ！</TextBlock>
+              <TextBlock FontWeight="Bold" TextAlignment="Center" >UP!</TextBlock>
             </Border>
           </StackPanel>
         </TabItem.Header>
@@ -158,13 +203,27 @@
 
         </Grid>
       </TabItem>
-      <TabItem Header="ブラウザ" DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Viewbox ToolTip="ブラウザ" Style="{StaticResource BigIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Browser}" Style="{StaticResource BigDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </TabItem.Header>
         <app_view_controls_app:AppGeneralBrowserManager x:Name="general" />
       </TabItem>
-      <TabItem Header="ダウンロード" DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Viewbox ToolTip="ダウンロード" Style="{StaticResource BigIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </TabItem.Header>
         <app_view_controls_app:AppDownloadManager x:Name="download" />
       </TabItem>
-      
+
     </TabControl>
   </DockPanel>
 </mamc:MetroWindow>
