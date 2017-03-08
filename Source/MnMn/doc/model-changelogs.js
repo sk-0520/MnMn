@@ -183,11 +183,15 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#447: 開発環境を Visual Studio 2017 Community にアップグレード',
+						'comments': [
+							'2015 からのウィンドウ設定引継ぎが便利なんだぜ',
+							'.editorconfig どうやって効かすんだぜ'
+						]
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'indent_style'
 					}
 				]
 			}
