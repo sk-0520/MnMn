@@ -97,11 +97,50 @@
         </TabItem.Header>
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
-      <TabItem DataContext="{Binding AppUpdateManager}"  Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppUpdateManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
           <StackPanel>
-            <TextBlock Text="アップデート" Style="{StaticResource ParentItemLikeText}" />
-            <Border CornerRadius="4" BorderThickness="2" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Viewbox Style="{StaticResource BigIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Update}">
+                  <Path.Style>
+                    <Style TargetType="Path" BasedOn="{StaticResource BigDefaultIconPath}">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasUpdate}" Value="True">
+                          <Setter Property="Opacity" Value="0.3" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Path.Style>
+                </Path>
+                <Path Data="{StaticResource Image_Update}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <Path.Style>
+                    <Style TargetType="Path" BasedOn="{StaticResource BigAccentIconPath}">
+                      <Style.Triggers>
+                        <Trigger Property="Visibility" Value="Visible">
+                          <Trigger.EnterActions>
+                            <BeginStoryboard>
+                              <Storyboard>
+                                <DoubleAnimation
+                                  AutoReverse="True"
+                                  RepeatBehavior="Forever"
+                                  Storyboard.TargetProperty="Opacity"
+                                  Duration="00:00:01.5"
+                                  From="0"
+                                  To="1"
+                                />
+                              </Storyboard>
+                            </BeginStoryboard>
+                          </Trigger.EnterActions>
+                        </Trigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Path.Style>
+                </Path>
+              </Canvas>
+            </Viewbox>
+
+            <Border CornerRadius="2" BorderThickness="1" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
               <Border.Style>
                 <Style TargetType="Border">
                   <Style.Triggers>
@@ -130,7 +169,7 @@
                   </Style.Triggers>
                 </Style>
               </Border.Style>
-              <TextBlock FontWeight="Bold" TextAlignment="Center" >あるよ！</TextBlock>
+              <TextBlock FontWeight="Bold" TextAlignment="Center" >UP!</TextBlock>
             </Border>
           </StackPanel>
         </TabItem.Header>
