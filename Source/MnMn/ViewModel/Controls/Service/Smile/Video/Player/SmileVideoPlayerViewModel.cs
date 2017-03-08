@@ -1122,7 +1122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         MarketLoadState = LoadState.Loaded;
                     });
                 } else {
-                    MarketLoadState = LoadState.Failure;
+                    MarketLoadState = LoadState.Loaded;
                     return Task.CompletedTask;
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -2185,6 +2185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SafeShowTime = TimeSpan.Zero;
             SafeDownloadedSize = 0;
             CommentScriptDefault = null;
+            MarketLoadState = LoadState.None;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
@@ -2201,6 +2202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 });
             }
             SetRelationVideoItems(Enumerable.Empty<SmileVideoInformationViewModel>());
+            SetMarketItems(Enumerable.Empty<SmileMarketVideoRelationItemViewModel>());
             //TagItems.Clear();
         }
 
