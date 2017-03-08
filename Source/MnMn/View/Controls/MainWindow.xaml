@@ -87,13 +87,13 @@
 
       <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image Source="/Resources/Service/Smile/Service20442.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+          <Image Source="/Resources/Service/Smile/Service20442.png" Width="{StaticResource LargeIconWidth}" Height="{StaticResource LargeIconHeight}" />
         </TabItem.Header>
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
       <TabItem DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image Source="/Resources/MnMn.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+          <Image Source="/Resources/MnMn.png" Width="{StaticResource LargeIconWidth}" Height="{StaticResource LargeIconHeight}" />
         </TabItem.Header>
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
