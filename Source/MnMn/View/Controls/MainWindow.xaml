@@ -71,10 +71,10 @@
         </StatusBarItem.Style>
         <ResizeGrip />
       </StatusBarItem>
-      
+
       <StatusBarItem DockPanel.Dock="Right" >
       </StatusBarItem>
-      
+
       <Image Source="/Resources/Service/Smile/Smile.png" Style="{StaticResource SmallItemImage}" />
       <TextBlock Text="{Binding SmileSession.LoginState, Converter={StaticResource EnumDisplayConverter}, Mode=OneWay}" />
       <TextBlock Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
@@ -84,11 +84,17 @@
       <TabControl.LayoutTransform>
         <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
       </TabControl.LayoutTransform>
-      
-      <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
+
+      <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Image Source="/Resources/Service/Smile/Service20442.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+        </TabItem.Header>
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
-      <TabItem Header="{x:Static app:Constants.ApplicationName}" DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Image Source="/Resources/MnMn.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+        </TabItem.Header>
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
       <TabItem DataContext="{Binding AppUpdateManager}"  Style="{StaticResource SectionTabItem}">
@@ -164,7 +170,7 @@
       <TabItem Header="ダウンロード" DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_app:AppDownloadManager x:Name="download" />
       </TabItem>
-      
+
     </TabControl>
   </DockPanel>
 </mamc:MetroWindow>
