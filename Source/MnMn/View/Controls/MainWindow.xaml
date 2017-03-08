@@ -87,19 +87,19 @@
 
       <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image Source="/Resources/Service/Smile/Service-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+          <Image ToolTip="ニコニコ" Source="/Resources/Service/Smile/Service-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
         </TabItem.Header>
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
       <TabItem DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image Source="/Resources/MnMn-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+          <Image ToolTip="{x:Static app:Constants.ApplicationName}" Source="/Resources/MnMn-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
         </TabItem.Header>
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
       <TabItem DataContext="{Binding AppUpdateManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <StackPanel>
+          <StackPanel ToolTip="アップデート">
             <Viewbox Style="{StaticResource BigIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Update}">
@@ -205,7 +205,7 @@
       </TabItem>
       <TabItem DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Viewbox Style="{StaticResource BigIconBox}">
+          <Viewbox ToolTip="ブラウザ" Style="{StaticResource BigIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Browser}" Style="{StaticResource BigDefaultIconPath}" />
             </Canvas>
@@ -215,7 +215,7 @@
       </TabItem>
       <TabItem DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Viewbox Style="{StaticResource BigIconBox}">
+          <Viewbox ToolTip="ダウンロード" Style="{StaticResource BigIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
             </Canvas>
