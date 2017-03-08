@@ -21,6 +21,15 @@
   <!-- https://materialdesignicons.com/icon/arrow-down-drop-circle-outline -->
   <Geometry x:Key="Image_Item-Down">M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M7,10L12,15L17,10H7Z</Geometry>
 
+  <!-- https://materialdesignicons.com/icon/arrow-left-bold -->
+  <Geometry x:Key="Image_Arrow-Left">M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-right-bold -->
+  <Geometry x:Key="Image_Arrow-Right">M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-up-bold -->
+  <Geometry x:Key="Image_Arrow-Up">M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-down-bold -->
+  <Geometry x:Key="Image_Arrow-Down">M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z</Geometry>
+
   <!-- https://materialdesignicons.com/icon/chevron-left -->
   <Geometry x:Key="Image_Scroll-Left">M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z</Geometry>
   <!--  https://materialdesignicons.com/icon/chevron-right -->

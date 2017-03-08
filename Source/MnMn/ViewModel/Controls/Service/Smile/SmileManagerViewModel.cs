@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -117,6 +118,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             return true;
         }
 
+        private Task InitializeMarketAsync()
+        {
+            // 市場専用のマネージャ系がないのでここでキャッシュ破棄する。
+            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMarketCacheDirectoryName);
+            var marketDir = Directory.CreateDirectory(cachedDirPath);
+
+            return Task.Run(() => {
+                var cacheSpan = Constants.ServiceSmileMarketImageCacheSpan;
+                
+                var files = marketDir.EnumerateFiles()
+                    .Where(f => !cacheSpan.IsCacheTime(f.CreationTime))
+                    .ToList()
+                ;
+                foreach(var file in files) {
+                    try {
+                        file.Delete();
+                    } catch(Exception ex) {
+                        Mediation.Logger.Warning(ex);
+                    }
+                }
+            });
+        }
+
+
         #endregion
 
         #region ManagerViewModelBase
@@ -139,6 +165,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public async override Task InitializeAsync()
         {
+            await InitializeMarketAsync();
+
             if(Session.EnabledStartupAutoLogin) {
                 await Session.LoginAsync();
 

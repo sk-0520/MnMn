@@ -102,7 +102,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
+        ///   (function() {
+        ///	var link = document.getElementsByTagName(&apos;a&apos;);
+        ///
+        ///	for (var i = 0; i &lt; link.length; i++) {
+        ///		var a = link[i];
+        ///		a.setAttribute(&apos;target&apos;, &apos;_blank&apos;);
+        ///	}
+        ///})()
+        ///
+        /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string File_JavaScript_GeckoFx_AcceptLink {
             get {
@@ -995,6 +1004,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_Setting_PublicExportFileName {
             get {
                 return ResourceManager.GetString("String_App_Setting_PublicExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未定義ジェスチャ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Unknown_Gesture {
+            get {
+                return ResourceManager.GetString("String_App_Unknown_Gesture", resourceCulture);
             }
         }
         

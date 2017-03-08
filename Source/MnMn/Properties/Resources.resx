@@ -494,4 +494,7 @@
   <data name="File_JavaScript_GeckoFx_AcceptLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\javascript\geckofx\acceptlink.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="String_App_Unknown_Gesture" xml:space="preserve">
+    <value>未定義ジェスチャ</value>
+  </data>
 </root>

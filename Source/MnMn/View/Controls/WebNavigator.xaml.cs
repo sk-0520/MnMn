@@ -18,18 +18,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.View;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
@@ -39,6 +44,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 using Gecko;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
@@ -47,6 +53,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// </summary>
     public partial class WebNavigator: UserControl
     {
+        #region define
+
+        //const int WM_RBUTTONDOWN = 0x0204;
+        //const int WM_NCRBUTTONDOWN = 0x00A4;
+        //const int WM_RBUTTONUP = 0x0205;
+        //const int WM_XBUTTONUP = 0x020C;
+        //const int MK_RBUTTON = 0x0002;
+        //const int WM_MOUSEMOVE = 0x0200;
+        //const int XBUTTON1 = 0x10000;
+        //const int XBUTTON2 = 0x20000;
+
+        readonly string[] ignoreGeckoFxLogs = Constants.WebNavigatorGeckoFxIgnoreEngineLogs;
+
+        #endregion
+
         #region variable
 
         ICommand _copySelectionCommand;
@@ -60,6 +81,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public WebNavigator()
         {
             InitializeComponent();
+
+            PointingGesture.Changed += PointingGesture_Changed;
         }
 
         #region BridgeClickProperty
@@ -485,10 +508,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// </summary>
         ServiceGeckoWebBrowser BrowserGeckoFx { get; set; }
 
+        WebNavigatorPointingGesture PointingGesture { get; } = new WebNavigatorPointingGesture();
+
         /// <summary>
         /// サービス種別。
         /// </summary>
         public ServiceType ServiceType { get; set; }
+
+        public CollectionModel<PointingGestureItem> GestureItems { get; } = new CollectionModel<PointingGestureItem>();
 
         /// <summary>
         /// 現在ページ。
@@ -836,6 +863,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.FrameEventsPropagateToMainWindow = true;
             BrowserGeckoFx.CreateControl();
 
+            BrowserGeckoFx.SetNavigator(this);
+
             BrowserGeckoFx.NoDefaultContextMenu = true;
 
             BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;
@@ -846,6 +875,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.DOMContentLoaded += BrowserGeckoFx_DOMContentLoaded;
             BrowserGeckoFx.DomClick += BrowserGeckoFx_DomClick;
             BrowserGeckoFx.DomContextMenu += BrowserGeckoFx_DomContextMenu;
+            BrowserGeckoFx.DomMouseDown += BrowserGeckoFx_DomMouseDown;
+            BrowserGeckoFx.DomMouseMove += BrowserGeckoFx_DomMouseMove;
+            BrowserGeckoFx.DomMouseUp += BrowserGeckoFx_DomMouseUp;
+
+            if(Constants.WebNavigatorGeckoFxShowLog) {
+                BrowserGeckoFx.ConsoleMessage += BrowserGeckoFx_ConsoleMessage;
+            }
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
@@ -1001,6 +1037,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             return true;
         }
 
+        internal bool PreProcessMessage(IWindowMessage windowMessage, ref System.Windows.Forms.Message msg, ref bool handled)
+        {
+            if(msg.Msg == (int)WM.WM_XBUTTONUP) {
+                //var wParam = msg.WParam.ToInt32();
+                var hiWord = WindowsUtility.HIWORD(msg.WParam);
+                
+                if(hiWord == (int)XBUTTON.XBUTTON1 && CanGoBack) {
+                    GoBack();
+                    handled = true;
+                    return true;
+                } else if(hiWord == (int)XBUTTON.XBUTTON2 && CanGoForward) {
+                    GoForward();
+                    handled = true;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        CheckResultModel<ICommand> GetGestureCommand(IEnumerable<PointingGestureItem> items)
+        {
+            //TODO: 今のところ固定だけど将来的に設定を提供するならここかな
+            var gestureItems = new[] {
+                new { Text = Properties.Resources.String_App_Browser_Common_Back, Command = BackCommand, Directions = new [] { PointingGestureDirection.Left } },
+                new { Text = Properties.Resources.String_App_Browser_Common_Forward, Command = ForwardCommand, Directions = new [] { PointingGestureDirection.Right } },
+            };
+            var target = gestureItems.FirstOrDefault(gi => gi.Directions.SequenceEqual(items.Select(i => i.Direction)));
+
+            if(target != null) {
+                return new CheckResultModel<ICommand>(true, target.Command, null, target.Text);
+            } else {
+                return CheckResultModel.Failure<ICommand>(Properties.Resources.String_App_Unknown_Gesture);
+            }
+        }
+
         #endregion
 
         #region UserControl
@@ -1051,6 +1123,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserDefault_Unloaded(object sender, RoutedEventArgs e)
         {
+            PointingGesture.Changed -= PointingGesture_Changed;
+
             BrowserDefault.Unloaded -= BrowserDefault_Unloaded;
             BrowserDefault.Loaded -= BrowserDefault_Loaded;
             BrowserDefault.Navigating -= BrowserDefault_Navigating;
@@ -1060,6 +1134,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Disposed(object sender, EventArgs e)
         {
+            PointingGesture.Changed -= PointingGesture_Changed;
+
             BrowserGeckoFx.Disposed -= BrowserGeckoFx_Disposed;
             BrowserGeckoFx.Navigating -= BrowserGeckoFx_Navigating;
             BrowserGeckoFx.Navigated -= BrowserGeckoFx_Navigated;
@@ -1068,6 +1144,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.DOMContentLoaded -= BrowserGeckoFx_DOMContentLoaded;
             BrowserGeckoFx.DomClick -= BrowserGeckoFx_DomClick;
             BrowserGeckoFx.DomContextMenu -= BrowserGeckoFx_DomContextMenu;
+            BrowserGeckoFx.ConsoleMessage -= BrowserGeckoFx_ConsoleMessage;
         }
 
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -1193,13 +1270,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 return;
             }
 
+            //if(this.popupGesture.IsOpen) {
+            //    return;
+            //}
+            if(PointingGesture.State != PointingGestureState.None || PointingGesture.GeckoFxSuppressionContextMenu) {
+                if(e.Cancelable) {
+                    e.Handled = true;
+                }
+                PointingGesture.Cancel();
+                return;
+            }
+
+
             if(ContextMenu.ItemsSource == null) {
                 //var menuItems = CreateContextMenu();
                 var contextMenuDefineParameter = new WebNavigatorParameterModel(null, null, WebNavigatorEngine.GeckoFx, WebNavigatorParameterKind.ContextMenuDefine);
                 var contextMenuDefineResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuDefineResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuDefineParameter));
                 //ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
                 ContextMenu.ItemsSource = contextMenuDefineResult.Items.Select(MakeContextMenuItem).ToList();
-            } 
+            }
 
             var contextMenuParameter = new WebNavigatorContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(contextMenuParameter, e);
@@ -1278,6 +1367,71 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 ContextMenu.IsOpen = true;
             }
         }
-        
+
+        private void BrowserGeckoFx_ConsoleMessage(object sender, ConsoleMessageEventArgs e)
+        {
+            if(!Constants.WebNavigatorGeckoFxShowEngineLog) {
+                if(ignoreGeckoFxLogs.Any(s => e.Message.IndexOf(s) != -1)) {
+                    return;
+                }
+            }
+
+            var browser = (ServiceGeckoWebBrowser)sender;
+            browser.Mediation.Logger.Trace(e.Message);
+        }
+
+        private void BrowserGeckoFx_DomMouseDown(object sender, DomMouseEventArgs e)
+        {
+            if(e.Button == GeckoMouseButton.Right) {
+                var pos = new Point(e.ClientX, e.ClientY);
+                var element = e.Target.CastToGeckoElement();
+                PointingGesture.StartPreparation(pos, element);
+            }
+        }
+
+        private void BrowserGeckoFx_DomMouseMove(object sender, DomMouseEventArgs e)
+        {
+            if(PointingGesture.State != PointingGestureState.None) {
+                var pos = new Point(e.ClientX, e.ClientY);
+
+                PointingGesture.Move(pos);
+            } else {
+                PointingGesture.Cancel();
+            }
+        }
+
+        private void BrowserGeckoFx_DomMouseUp(object sender, DomMouseEventArgs e)
+        {
+            if(PointingGesture.State == PointingGestureState.Action) {
+                PointingGesture.Finish();
+                e.Handled = true;
+            } else {
+                PointingGesture.Cancel();
+            }
+        }
+
+
+        private void PointingGesture_Changed(object sender, Define.Event.PointingGestureChangedEventArgs e)
+        {
+            if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
+                this.popupGesture.IsOpen = true;
+                GestureItems.Add(e.Item);
+                var gestureCommand = GetGestureCommand(GestureItems);
+                textGesture.Text = gestureCommand.Message;
+            } else {
+                if(e.ChangeKind == PointingGestureChangeKind.Finish) {
+                    var gestureCommand = GetGestureCommand(GestureItems);
+                    if(gestureCommand.IsSuccess) {
+                        gestureCommand.Result.TryExecute(null);
+                    }
+                }
+
+                this.popupGesture.IsOpen = false;
+                GestureItems.Clear();
+            }
+            ContextMenu.IsOpen = false;
+        }
+
+
     }
 }

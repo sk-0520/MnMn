@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     {
         #region define
 
-        const int WM_SYSKEYDOWN = 0x0104;
+        //const int WM_SYSKEYDOWN = 0x0104;
         const int VK_F4 = 0x73;
 
         #endregion
@@ -37,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if((msg == WM_SYSKEYDOWN) && (wParam.ToInt32() == VK_F4)) {
+            if((msg == (int)WM.WM_SYSKEYDOWN) && (wParam.ToInt32() == (int)VK.VK_F4)) {
                 handled = true;
             }
 

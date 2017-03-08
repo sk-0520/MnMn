@@ -12,6 +12,8 @@
 
 	<item key="smile-contents-search" uri="http://api.search.nicovideo.jp/api/v2/${service}/contents/search" param="query" />
 
+	<item key="smile-market-video-relation" uri="http://ichiba.nicovideo.jp/embed/zero/show_ichiba" param="query" />
+
 	<item key="smile-video-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="none" />
 	<item key="smile-video-mylist-account-default-add" uri="http://www.nicovideo.jp/api/deflist/add" param="none" />
 	<item key="smile-video-mylist-account-default-delete" uri="http://www.nicovideo.jp/api/deflist/delete" param="none" />

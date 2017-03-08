@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
     {
         #region variable
 
-        Regex _tagNameRegex;
+        //Regex _tagNameRegex;
         Regex _valueRegex;
 
         #endregion

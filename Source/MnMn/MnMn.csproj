@@ -76,12 +76,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.23\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.24\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.104\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.105\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -225,6 +225,7 @@
     <Compile Include="Constants.Xaml.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\PointingGestureItem.cs" />
     <Compile Include="Data\WebNavigatorBridge\MatchSmileHtmlElement.cs" />
     <Compile Include="Data\WebNavigatorBridge\SimpleHtmlElement.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuItem.cs" />
@@ -232,6 +233,10 @@
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
+    <Compile Include="Define\Event\PointingGestureChangedEventArgs.cs" />
+    <Compile Include="Define\PointingGestureChangeKind.cs" />
+    <Compile Include="Define\PointingGestureDirection.cs" />
+    <Compile Include="Define\PointingGestureState.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
     <Compile Include="Define\WebNavigatorContextMenuKey.cs" />
@@ -293,6 +298,7 @@
     <Compile Include="IF\Control\IDropable.cs" />
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\ISelectable.cs" />
+    <Compile Include="IF\Control\IWindowMessage.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IDescription.cs" />
     <Compile Include="IF\IDownloadItem.cs" />
@@ -307,6 +313,7 @@
     <Compile Include="Logic\GlobalManager.cs" />
     <Compile Include="Logic\InformationLoader.cs" />
     <Compile Include="Logic\Service\InformationCacherBase.cs" />
+    <Compile Include="Logic\Service\Smile\Api\V1\Market.cs" />
     <Compile Include="Logic\Service\Smile\Live\Api\Category.cs" />
     <Compile Include="Logic\Service\Smile\Live\Api\Broadcast.cs" />
     <Compile Include="Logic\Service\Smile\Live\Api\GetPlayerStatus.cs" />
@@ -317,6 +324,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
     <Compile Include="Logic\SpaghettiScript.cs" />
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\SmileMarketUtility.cs" />
     <Compile Include="Logic\Utility\ShellUtility.cs" />
     <Compile Include="Logic\Utility\HtmlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveGetPlayerStatusUtility.cs" />
@@ -327,6 +335,8 @@
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
+    <Compile Include="Logic\View\PointingGesture.cs" />
+    <Compile Include="Logic\View\WebNavigatorPointingGesture.cs" />
     <Compile Include="Logic\WebNavigatorBridge\SimleHtmlElementList.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
@@ -375,6 +385,7 @@
     <Compile Include="Model\Response\WebNavigatorContextMenuDefineResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorNavigatingResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorResultModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileMarketItemModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveChannelModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveGuidModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveItemModel.cs" />
@@ -390,7 +401,10 @@
     <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusStreamTelopModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\RawSmileLiveGetPlayerStatusUserModel.cs" />
     <Compile Include="Model\Service\Smile\Live\SmileLiveCategoryModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileMarketVideoRelationModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileMarketVideoRelationPollingModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileTwitterInfoModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\SmileMarketVideoItemModel.cs" />
     <Compile Include="Model\Service\Smile\SmileUserDefinedModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcClientInformationModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthInfoModel.cs" />
@@ -465,6 +479,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Player\SmileLivePlayerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Market\SmileMarketVideoRelationItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />
@@ -529,6 +544,7 @@
     </Compile>
     <Compile Include="View\Controls\TokenizedTextBox.cs" />
     <Compile Include="View\Converter\Base64ImageSourceConverter.cs" />
+    <Compile Include="View\Converter\DoublePercentConverter.cs" />
     <Compile Include="View\Converter\EscapeAccessKeyConverter.cs" />
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
@@ -541,6 +557,9 @@
       <DependentUpon>TabDictionary.xaml</DependentUpon>
     </Compile>
     <Content Include="doc\help\html\general-app-setting.ja-jp.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="doc\help\html\general-browser.ja-jp.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\html\others-crash.ja-jp.html">
@@ -580,6 +599,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\image\changelog\0.50.0\crash-reporter.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="doc\help\image\changelog\0.53.0\444.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\web-navigator.tt">

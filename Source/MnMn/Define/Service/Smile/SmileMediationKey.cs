@@ -35,6 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string userPostVideo = "smile-user-post-video";
         public const string userFavoriteMyListPage = "smile-user-fav-mylist-page";
 
+        public const string marketVideoRelation = "smile-market-video-relation";
+
         public const string contentsSearch = "smile-contents-search";
 
         public const string mylistDefault = "smile-video-mylist-account-default";

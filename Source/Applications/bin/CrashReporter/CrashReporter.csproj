@@ -50,12 +50,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke">
-      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.23\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.24\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.104\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.105\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -76,6 +76,7 @@
     <Reference Include="System.Data">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\MahApps.Metro.1.4.3\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>

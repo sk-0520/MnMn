@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -172,7 +173,13 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
                 [ConfigurationManager.AppSettings.Get("send-param-debug")] = IsDebug.ToString().ToLower(),
             };
 
-            var content = new FormUrlEncodedContent(map);
+            var encoding = Encoding.GetEncoding(ConfigurationManager.AppSettings.Get("send-encoding"));
+            var items = map
+                .Select(p => new { Key = HttpUtility.UrlEncode(p.Key, encoding), Value = HttpUtility.UrlEncode(p.Value, encoding) })
+                .Select(i => $"{i.Key}={i.Value}");
+            ;
+            var param = string.Join("&", items);
+            var content = new StringContent(param, encoding, "application/x-www-form-urlencoded");
             var client = new HttpClient();
             return client.PostAsync(ConfigurationManager.AppSettings.Get("send-url"), content).ContinueWith(t => {
                 var response = t.Result;
