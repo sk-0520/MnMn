@@ -142,7 +142,13 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#451: 動画再生時に SmileVideoPlayerViewModel.SetMedia -> NullReferenceException で落ちる',
+						'comments': [
+							'クラッシュレポートでよく発生してそうなやつ',
+							'レポート読む感じ一部ユーザーはログイン失敗してる(?)感じがした',
+							'とりあえずの消極的な解決で再生対象ファイル(`PlayFile`)が無効ならファイルパス取得しないようにした',
+							'たぶん落ちないだけで何の解決にもなってない気がする'
+						]
 					},
 					{
 						'revision': '',
