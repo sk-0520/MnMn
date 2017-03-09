@@ -1,4 +1,6 @@
-﻿using ContentTypeTextNet.Library.SharedLibrary.Logic;
+﻿using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using System;
 using System.Collections;
@@ -211,6 +213,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region property
+        #endregion
+
         #region command
 
         public ICommand ScaleChangeCommand
@@ -223,6 +228,52 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     this.commandScale.IsChecked = false;
                 });
             }
+        }
+
+        public ICommand ScaleDownCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => Value = GetApproximateRange().Head,
+                    o => Minimum <= Value
+                );
+            }
+        }
+
+        public ICommand ScaleUpCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => Value = GetApproximateRange().Tail,
+                    o => Value < Maximum
+                );
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        IReadOnlyRange<double> GetApproximateRange()
+        {
+            var width = (int)(Maximum * 100) - (int)(Minimum * 100);
+            var nums = width / (int)(SmallChange * 100);
+            var blocks = Enumerable.Range(1, nums)
+                .Select(n => SmallChange + (n * SmallChange))
+                .ToList()
+            ;
+            var small = blocks.FindLast(n => n < Value);
+            if(small < Minimum) {
+                small = Minimum;
+            }
+            var big = blocks.Find(n => Value < n);
+            if (big < Minimum || Maximum < big) {
+                big = Maximum;
+            }
+
+            return RangeModel.Create(small, big);
         }
 
         #endregion

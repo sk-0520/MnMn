@@ -32,9 +32,9 @@
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Style="{StaticResource {x:Type Button}}">+</Button>
+            <Button Grid.Column="0" Style="{StaticResource {x:Type Button}}" Command="{Binding ScaleDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">-</Button>
             <Button Grid.Column="1" Style="{StaticResource {x:Type Button}}">reset</Button>
-            <Button Grid.Column="2" Style="{StaticResource {x:Type Button}}">-</Button>
+            <Button Grid.Column="2" Style="{StaticResource {x:Type Button}}" Command="{Binding ScaleUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">+</Button>
           </Grid>
 
           <ItemsControl ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
