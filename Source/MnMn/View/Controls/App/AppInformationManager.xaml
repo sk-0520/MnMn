@@ -29,6 +29,7 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
+      <app_view_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
@@ -376,7 +377,27 @@
     </TabItem>
 
     <TabItem Header="目安箱" DataContext="{Binding AppQuestionnaireManager}" Style="{StaticResource SectionTabItem}">
-      <app_view_controls:WebNavigator x:Name="questionnaireBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
+      <Grid x:Name="panelFAQ">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <app_view_controls:WebNavigator x:Name="questionnaireBrowser" Grid.Row="0" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
+        <Expander Grid.Row="1" IsExpanded="True" ExpandDirection="Up"  Header="投稿">
+          <Grid>
+            <StackPanel>
+              <TextBlock></TextBlock>
+              <TextBlock></TextBlock>
+              <TextBlock></TextBlock>
+              <TextBlock></TextBlock>
+              <TextBlock></TextBlock>
+              <TextBlock></TextBlock>
+              <TextBlock></TextBlock>
+              <TextBlock></TextBlock>
+            </StackPanel>
+          </Grid>
+        </Expander>
+      </Grid>
     </TabItem>
 
     <TabItem Header="Flash Player 確認" DataContext="{Binding AppFlashPlayerManager}" Style="{StaticResource SectionTabItem}">
