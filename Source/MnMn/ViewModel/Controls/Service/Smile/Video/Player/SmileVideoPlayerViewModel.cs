@@ -855,6 +855,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!IsSettedMedia && !IsViewClosed) {
                 Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
 
+                if(PlayFile == null) {
+                    Mediation.Logger.Warning($"{VideoId}: {nameof(PlayFile)} is null", Session.LoginState);
+                    return;
+                }
+
                 Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
                 Player.LoadMedia(PlayFile.FullName);
 
@@ -885,7 +890,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void PlayMovie()
         {
             ClearComment();
-            if(!IsViewClosed) {
+            if(!IsViewClosed && IsSettedMedia) {
                 var sw = new Stopwatch();
                 sw.Start();
                 Mediation.Logger.Debug($"{VideoId}: play invoke...");
@@ -911,12 +916,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void StopMovie(bool isStopComment)
         {
-            Mediation.Logger.Debug("stop");
+            Mediation.Logger.Debug($"{VideoId}: stop");
             if(IsSettedMedia && !IsViewClosed) {
                 Player.Stop();
             }
 
-            Mediation.Logger.Debug("stoped");
+            Mediation.Logger.Debug($"{VideoId}: stoped");
             PlayerState = PlayerState.Stop;
             VideoPosition = 0;
             if(isStopComment) {
@@ -2173,7 +2178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             WaitingFirstPlay.Value = true;
             VideoPosition = 0;
             PrevPlayedTime = TimeSpan.Zero;
-            _prevStateChangedPosition = initPrevStateChangedPosition;
+            this._prevStateChangedPosition = initPrevStateChangedPosition;
             UserOperationStop.Value = false;
             IsCheckedTagPedia = false;
             ChangingVideoPosition = false;
