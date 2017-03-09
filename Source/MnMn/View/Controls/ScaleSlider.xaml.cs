@@ -1,4 +1,5 @@
-﻿using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+﻿using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -134,6 +135,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region SmallChangeProperty
+
+        public static readonly DependencyProperty SmallChangeProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SmallChangeProperty)),
+            typeof(double),
+            typeof(ScaleSlider),
+            new FrameworkPropertyMetadata(Constants.ViewScaleChangeRange.Head, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSmallChangeChanged))
+        );
+
+        private static void OnSmallChangeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as ScaleSlider;
+            if (control != null) {
+                control.SmallChange = (double)e.NewValue;
+            }
+        }
+
+        public double SmallChange
+        {
+            get { return (double)GetValue(SmallChangeProperty); }
+            set { SetValue(SmallChangeProperty, value); }
+        }
+
+        #endregion
+
+        #region LargeChangeProperty
+
+        public static readonly DependencyProperty LargeChangeProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(LargeChangeProperty)),
+            typeof(double),
+            typeof(ScaleSlider),
+            new FrameworkPropertyMetadata(Constants.ViewScaleChangeRange.Tail, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnLargeChangeChanged))
+        );
+
+        private static void OnLargeChangeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as ScaleSlider;
+            if (control != null) {
+                control.LargeChange = (double)e.NewValue;
+            }
+        }
+
+        public double LargeChange
+        {
+            get { return (double)GetValue(LargeChangeProperty); }
+            set { SetValue(LargeChangeProperty, value); }
+        }
+
+        #endregion
+
         #region ItemsSourceProperty
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
@@ -159,5 +210,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         #endregion
 
         #endregion
+
+        #region command
+
+        public ICommand ScaleChangeCommand
+        {
+            get
+            {
+                return new DelegateCommand(o => {
+                    var scale = (double)o;
+                    Value = scale;
+                    this.commandScale.IsChecked = false;
+                });
+            }
+        }
+
+        #endregion
+
     }
 }

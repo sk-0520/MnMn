@@ -15,16 +15,35 @@
       Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType=UserControl}}"
       Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=UserControl}}"
       Value="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      SmallChange="{Binding SmallChange, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      LargeChange="{Binding LargeChange, RelativeSource={RelativeSource AncestorType=UserControl}}"
       Width="100"
     />
-    <ToggleButton x:Name="commnadScale">
+    <ToggleButton x:Name="commandScale">
       <TextBlock Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat=x0.00}" />
     </ToggleButton>
-    <Popup StaysOpen="False" AllowsTransparency="True"  PopupAnimation="Fade" IsOpen="{Binding IsChecked, ElementName=commnadScale, Mode=TwoWay}" PlacementTarget="{Binding ElementName=commnadScale}" Placement="Bottom" >
-      <Border BorderBrush="Red" BorderThickness="2" Background="Green">
+    <Popup StaysOpen="False" AllowsTransparency="True"  PopupAnimation="Fade" IsOpen="{Binding IsChecked, ElementName=commandScale, Mode=TwoWay}" PlacementTarget="{Binding ElementName=commandScale}" Placement="Bottom" >
+      <Border BorderBrush="{DynamicResource ContextMenuBorderBrush}" BorderThickness="1" Background="{DynamicResource ContextMenuBackgroundBrush}">
         <StackPanel>
-          <TextBlock Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat=x0.00}" />
-          <ItemsControl ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Style="{StaticResource {x:Type Button}}">+</Button>
+            <Button Grid.Column="1" Style="{StaticResource {x:Type Button}}">reset</Button>
+            <Button Grid.Column="2" Style="{StaticResource {x:Type Button}}">-</Button>
+          </Grid>
+
+          <ItemsControl ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <MenuItem Header="{Binding}" Command="{Binding ScaleChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
         </StackPanel>
       </Border>
     </Popup>
