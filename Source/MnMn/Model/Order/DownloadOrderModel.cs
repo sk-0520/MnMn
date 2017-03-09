@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
         /// <param name="canManagement">管理権限を譲渡するか。</param>
         /// <param name="serviceType"></param>
         public DownloadOrderModel(IDownloadItem downloadState, bool canManagement, ServiceType serviceType) 
-            : base(OrderKind.Donwload, serviceType)
+            : base(OrderKind.Download, serviceType)
         {
             DownloadState = downloadState;
             CanManagement = canManagement;

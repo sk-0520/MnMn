@@ -46,6 +46,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// ダウンロードマネージャに登録
         /// </summary>
-        Donwload,
+        Download,
     }
 }

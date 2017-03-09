@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region function
 
-        internal void AddDonwloadItem(AppDownloadItemViewModel downloadItem, bool startDownload)
+        internal void AddDownloadItem(AppDownloadItemViewModel downloadItem, bool startDownload)
         {
             DownloadStateItems.Insert(0, downloadItem);
 
