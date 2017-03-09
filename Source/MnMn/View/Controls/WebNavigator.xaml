@@ -4,7 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-  
+
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_logic="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Logic"
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
@@ -19,7 +19,7 @@
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-      <app_view_converter:DoublePercentConverter x:Key="DoublePercentConverter" />
+      <app_view_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <UserControl.ContextMenu>
@@ -131,11 +131,11 @@
 
     <ContentControl x:Name="container" Grid.Row="1" />
 
-    <Popup x:Name="popupGesture" IsHitTestVisible="False" Placement="Center" AllowsTransparency="True" PlacementTarget="{Binding ElementName=container}" MaxWidth="{Binding ActualWidth, ElementName=container, Converter={StaticResource DoublePercentConverter}, ConverterParameter=0.5}">
+    <Popup x:Name="popupGesture" IsHitTestVisible="False" Placement="Center" AllowsTransparency="True" PlacementTarget="{Binding ElementName=container}" MaxWidth="{Binding ActualWidth, ElementName=container, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=0.5}">
       <Border CornerRadius="5" Padding="{StaticResource BasePadding}" Background="{DynamicResource AccentColorBrush}" TextElement.Foreground="{DynamicResource TextBrush}">
         <StackPanel>
           <TextBlock x:Name="textGesture" FontSize="14" FontWeight="Bold" TextAlignment="Center" Padding="{StaticResource BasePadding}" Background="{DynamicResource AccentBaseColorBrush}" />
-          
+
           <ItemsControl Margin="{StaticResource AllMargin}" ItemsSource="{Binding GestureItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>

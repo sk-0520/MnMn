@@ -46,6 +46,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _height;
         bool _topmost;
 
+        double _viewScale;
+
         bool _playerShowDetailArea;
         bool _showNormalWindowCommentList;
         bool _showFullScreenCommentList;

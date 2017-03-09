@@ -182,10 +182,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool Topmost
         {
             get { return this._topmost; }
-            set { SetVariableValue(ref _topmost, value); }
+            set { SetVariableValue(ref this._topmost, value); }
         }
 
         #endregion
+
+        public double ViewScale
+        {
+            get { return this._viewScale; }
+            set { SetVariableValue(ref this._viewScale, value); }
+        }
 
         /// <summary>
         /// 詳細部分を表示状態。

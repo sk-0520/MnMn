@@ -668,6 +668,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Height = PlayerSetting.Window.Height;
             Topmost = PlayerSetting.Window.Topmost;
 
+            ViewScale = PlayerSetting.ViewScale;
+
             SetAreaLength(PlayerSetting.PlayerArea, PlayerSetting.CommentArea, PlayerSetting.InformationArea);
 
             PlayerShowDetailArea = PlayerSetting.ShowDetailArea;
@@ -694,6 +696,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PlayerSetting.Window.Width = Width;
             PlayerSetting.Window.Height = Height;
             PlayerSetting.Window.Topmost = Topmost;
+
+            PlayerSetting.ViewScale = ViewScale;
 
             PlayerSetting.PlayerArea = PlayerAreaLength.Value.Value;
             PlayerSetting.CommentArea = CommentAreaLength.Value.Value;

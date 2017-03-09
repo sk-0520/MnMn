@@ -256,7 +256,6 @@
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
         ScrollViewer.CanContentScroll="True"
-        ContextMenuOpening="PART_List_ContextMenuOpening"
       >
         <i:Interaction.Behaviors>
           <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />

@@ -64,6 +64,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         };
 
         [DataMember]
+        public double ViewScale { get; set; } = Constants.SettingApplicationViewScale;
+
+        [DataMember]
         public RunningInformationSettingModel RunningInformation { get; set; } = new RunningInformationSettingModel();
 
         [DataMember]
