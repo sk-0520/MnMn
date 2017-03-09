@@ -29,13 +29,25 @@
     </Button>
 
     <Slider
+      Width="100"
       Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType=UserControl}}"
       Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=UserControl}}"
       Value="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
       SmallChange="{Binding SmallChange, RelativeSource={RelativeSource AncestorType=UserControl}}"
       LargeChange="{Binding LargeChange, RelativeSource={RelativeSource AncestorType=UserControl}}"
-      Width="100"
-    />
+      IsMoveToPointEnabled="True"
+    >
+      <Slider.Style>
+        <Style TargetType="Slider" BasedOn="{StaticResource FlatSlider}">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+              <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Foreground" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
+        </Style>
+      </Slider.Style>
+    </Slider>
 
     <Button Command="{Binding ScaleUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <Viewbox Style="{StaticResource SmallIconBox}">

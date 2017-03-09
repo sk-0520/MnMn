@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             {
                 return new DelegateCommand(
                     o => Value = GetApproximateRange().Head,
-                    o => Minimum <= Value
+                    o => Minimum < Value
                 );
             }
         }
