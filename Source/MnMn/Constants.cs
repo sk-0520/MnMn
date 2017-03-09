@@ -60,6 +60,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// アプリケーション使用名。
         /// </summary>
         public static string ApplicationUsingName { get; } = ApplicationName + "-debug";
+#elif BETA
+        /// <summary>
+        /// アプリケーション使用名。
+        /// </summary>
+        public static string ApplicationUsingName { get; } = ApplicationName + "-beta";
 #else
         /// <summary>
         /// アプリケーション使用名。
@@ -132,7 +137,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 前回バージョンがこれ未満なら使用許諾を表示
         /// </summary>
         public static Version AcceptVersion { get; } = new Version(0, 49, 1, 0);
-        
+
         public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";
 
         #region tag

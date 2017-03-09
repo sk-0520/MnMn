@@ -138,7 +138,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#366: β版実行においてリリース版との Mutex 競合を回避する'
 					},
 					{
 						'revision': '',
