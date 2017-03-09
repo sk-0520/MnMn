@@ -1,6 +1,8 @@
 ﻿using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -128,6 +130,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get { return (double)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
+        }
+
+        #endregion
+
+        #region ItemsSourceProperty
+
+        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(ItemsSourceProperty)),
+            typeof(IEnumerable),
+            typeof(ScaleSlider),
+            new FrameworkPropertyMetadata(Constants.ViewScaleList, new PropertyChangedCallback(OnItemsSourceChanged))
+        );
+
+        private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CastUtility.AsAction<ScaleSlider>(d, control => {
+                control.ItemsSource = e.NewValue as IEnumerable<double>;
+            });
+        }
+
+        public IEnumerable<double> ItemsSource
+        {
+            get { return GetValue(ItemsSourceProperty) as ObservableCollection<double>; }
+            set { SetValue(ItemsSourceProperty, value); }
         }
 
         #endregion

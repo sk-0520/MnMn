@@ -76,6 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static double ViewScaleReset => appConfig.Get("view-scale-reset", double.Parse);
         public static IReadOnlyRange<double> ViewScaleRange => appConfig.Get("view-scale-range", RangeModel.Parse<double>);
+        public static double[] ViewScaleList => appConfig.Get("view-scale-list", s => s.Split(';').Select(i => double.Parse(i)).ToArray());
         public static double ViewScaleMinimum => ViewScaleRange.Head;
         public static double ViewScaleMaximum => ViewScaleRange.Tail;
 
