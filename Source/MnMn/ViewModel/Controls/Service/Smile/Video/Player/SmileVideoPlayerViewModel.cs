@@ -855,6 +855,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!IsSettedMedia && !IsViewClosed) {
                 Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
 
+                if(PlayFile == null) {
+                    Mediation.Logger.Warning($"{VideoId}: {nameof(PlayFile)} is null", Session.LoginState);
+                    return;
+                }
+
                 Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
                 Player.LoadMedia(PlayFile.FullName);
 
@@ -885,7 +890,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void PlayMovie()
         {
             ClearComment();
-            if(!IsViewClosed) {
+            if(!IsViewClosed && IsSettedMedia) {
                 var sw = new Stopwatch();
                 sw.Start();
                 Mediation.Logger.Debug($"{VideoId}: play invoke...");
