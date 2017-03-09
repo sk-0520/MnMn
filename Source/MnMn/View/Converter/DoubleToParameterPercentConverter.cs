@@ -9,7 +9,7 @@ using System.Windows.Data;
 namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 {
     [ValueConversion(typeof(double), typeof(double))]
-    public class DoublePercentConverter: IValueConverter
+    public class DoubleToParameterPercentConverter: IValueConverter
     {
         #region IValueConverter
 

@@ -547,7 +547,8 @@
     </Compile>
     <Compile Include="View\Controls\TokenizedTextBox.cs" />
     <Compile Include="View\Converter\Base64ImageSourceConverter.cs" />
-    <Compile Include="View\Converter\DoublePercentConverter.cs" />
+    <Compile Include="View\Converter\DoubleToParameterPercentConverter.cs" />
+    <Compile Include="View\Converter\DoubleToPercentConverter.cs" />
     <Compile Include="View\Converter\EscapeAccessKeyConverter.cs" />
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
