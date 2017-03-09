@@ -46,10 +46,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 
             base.OnClosed(e);
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            scale.Value = 1;
-        }
     }
 }

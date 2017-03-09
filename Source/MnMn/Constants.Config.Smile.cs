@@ -414,6 +414,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static BackgroundKind SettingServiceSmileVideoPlayerBackgroundKind => appConfig.Get("setting-service-smile-smilevideo-player-background-kind", s => EnumUtility.Parse<BackgroundKind>(s, false));
         public static Color SettingServiceSmileVideoPlayerBackgroundColor => appConfig.Get("setting-service-smile-smilevideo-player-background-color", s => (Color)ColorConverter.ConvertFromString(s));
 
+        public static double SettingServiceSmileVideoPlayerViewScale => appConfig.Get("setting-service-smile-smilevideo-player-vuew-scale", double.Parse);
+
         /// <summary>
         /// コメントを表示するか。
         /// </summary>

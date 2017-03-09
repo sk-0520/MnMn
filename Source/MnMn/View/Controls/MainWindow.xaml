@@ -47,12 +47,6 @@
   <mamc:MetroWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
-        <TextBlock Text="#440 試験運用中: " IsHitTestVisible="False" />
-        <TextBlock Text="{Binding Value, ElementName=scale, StringFormat=x0.00}" />
-        <Slider x:Name="scale" Style="{StaticResource ScaleSlider}" Value="{Binding ViewScale}" />
-        <CheckBox x:Name="selectScale">ファインダーメニューも適用</CheckBox>
-        <Button Click="Button_Click">リセット</Button>
-
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
       </StackPanel>
     </mamc:WindowCommands>
@@ -84,7 +78,7 @@
 
     <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
       <TabControl.LayoutTransform>
-        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
+        <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
       </TabControl.LayoutTransform>
 
       <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">

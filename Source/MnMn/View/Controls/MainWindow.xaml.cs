@@ -29,11 +29,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            scale.Value = 1;
-            selectScale.IsChecked = false;
-        }
     }
 }
