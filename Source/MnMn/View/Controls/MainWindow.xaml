@@ -49,7 +49,7 @@
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="#440 試験運用中: " IsHitTestVisible="False" />
         <TextBlock Text="{Binding Value, ElementName=scale, StringFormat=x0.00}" />
-        <Slider x:Name="scale" Style="{StaticResource ScaleSlider}" />
+        <Slider x:Name="scale" Style="{StaticResource ScaleSlider}" Value="{Binding ViewScale}" />
         <CheckBox x:Name="selectScale">ファインダーメニューも適用</CheckBox>
         <Button Click="Button_Click">リセット</Button>
       </StackPanel>

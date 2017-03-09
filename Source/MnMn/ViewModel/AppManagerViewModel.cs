@@ -147,6 +147,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         }
         #endregion
 
+        public double ViewScale
+        {
+            get { return Setting.ViewScale; }
+            set { SetPropertyValue(Setting, value); }
+        }
+
+
         #endregion
 
         #region command

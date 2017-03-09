@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static TimeSpan AppSplashCloseTime => appConfig.Get("app-splash-close-time", TimeSpan.Parse);
         public static bool AppSendCrashReport => appConfig.Get("app-send-crash-report", bool.Parse);
         public static bool AppCrashReportIsDebug => appConfig.Get("app-crash-report-is-debug", bool.Parse);
-        
+
         public static WebNavigatorEngine WebNavigatorEngine => appConfig.Get("web_navigator-engine", s => EnumUtility.Parse<WebNavigatorEngine>(s, false));
         public static string WebNavigatorGeckoFxLibraryDirectoryName => appConfig.Get("web_navigator-geckofx-lib-dir-name");
         public static string WebNavigatorGeckoFxProfileDirectoryName => appConfig.Get("web_navigator-geckofx-profile-dir-name");
@@ -69,9 +69,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool WebNavigatorGeckoFxShowEngineLog => appConfig.Get("web_navigator-geckofx-show-engine-log", bool.Parse);
         public static TimeSpan WebNavigatorGeckoFxGestureWaitTime  => appConfig.Get("web_navigator-geckofx-gesture-wait-time", TimeSpan.Parse);
         public static string[] WebNavigatorGeckoFxIgnoreEngineLogs => appConfig.Get("web_navigator-geckofx-ignore-engine-logs", s => s.Split('\t'));
-        
+
         public static bool WebNavigatorContextMenuShowHtmlSource => appConfig.Get("web_navigator-context_menu-show-html_source", bool.Parse);
-        
+
 
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 
@@ -137,6 +137,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ウィンドウ: 高さ
         /// </summary>
         public static int SettingApplicationWindowHeight => appConfig.Get("setting-application-window-height", int.Parse);
+
+        /// <summary>
+        /// ビューの拡大率。
+        /// </summary>
+        public static double SettingApplicationViewScale => appConfig.Get("setting-application-view-scale", double.Parse);
+
+        public static IReadOnlyRange<double> ViewScaleRange => appConfig.Get("view-scale-range", RangeModel.Parse<double>);
+        public static double ViewScaleMinimum => ViewScaleRange.Head;
+        public static double ViewScaleMaximum => ViewScaleRange.Tail;
 
         /// <summary>
         /// テーマ: ランダム。

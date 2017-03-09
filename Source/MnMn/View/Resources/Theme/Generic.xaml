@@ -263,9 +263,8 @@
   </Style>
 
   <Style x:Key="ScaleSlider" TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
-    <Setter Property="Minimum" Value="0.5" />
-    <Setter Property="Maximum" Value="2" />
-    <Setter Property="Value" Value="1" />
+    <Setter Property="Minimum" Value="{x:Static app:Constants.ViewScaleMinimum}" />
+    <Setter Property="Maximum" Value="{x:Static app:Constants.ViewScaleMaximum}" />
     <Setter Property="Width" Value="100" />
     <Setter Property="IsMoveToPointEnabled" Value="True" />
     <Setter Property="TickPlacement" Value="BottomRight" />
