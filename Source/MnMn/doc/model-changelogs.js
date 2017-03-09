@@ -119,7 +119,13 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#440: せっかく WPF なんだからUIの拡縮してみたいよね',
+						'comments': [
+							'0.5 - 2.0 の範囲で拡縮する(App.config: `view-scale-range`)',
+							'Toolbar(最上位), Statusbar, Popup, Browser 周りは一旦何もしない方向で対応、フィードバックあればがんばる',
+							'-> 4K 環境でどうなってんのか分からんしね',
+							'ニコ生プレイヤー？ ありましたね、そんなの'
+						]
 					},
 					{
 						'revision': '',
