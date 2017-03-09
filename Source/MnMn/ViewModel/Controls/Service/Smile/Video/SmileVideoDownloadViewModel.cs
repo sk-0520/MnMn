@@ -586,7 +586,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             long headPosition = 0;
-            FileInfo donwloadFile;
+            FileInfo downloadFile;
             // エコノミーキャッシュが存在しても非エコノミーでダウンロードできるなら新たにファイルを落とす。
             IsEconomyMode = Information.IsEconomyMode;
             if(IsEconomyMode) {
@@ -599,15 +599,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     return;
                 }
                 headPosition = economyHeadPosition;
-                donwloadFile = economyVideoFile;
+                downloadFile = economyVideoFile;
             } else {
                 headPosition = normalHeadPosition;
-                donwloadFile = normalVideoFile;
+                downloadFile = normalVideoFile;
             }
 
             VideoTotalSize = Information.VideoSize;
 
-            await LoadVideoAsync(Information.MovieServerUrl, donwloadFile, headPosition);
+            await LoadVideoAsync(Information.MovieServerUrl, downloadFile, headPosition);
         }
 
         protected virtual void OnLoadStart()
