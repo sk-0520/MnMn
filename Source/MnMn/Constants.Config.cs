@@ -78,8 +78,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static IReadOnlyRange<double> ViewScaleRange => appConfig.Get("view-scale-range", RangeModel.Parse<double>);
         public static IReadOnlyRange<double> ViewScaleChangeRange => appConfig.Get("view-scale-change-range", RangeModel.Parse<double>);
         public static double[] ViewScaleList => appConfig.Get("view-scale-list", s => s.Split(';').Select(i => double.Parse(i)).ToArray());
-        public static double ViewScaleMinimum => ViewScaleRange.Head;
-        public static double ViewScaleMaximum => ViewScaleRange.Tail;
 
         /// <summary>
         /// 設定ファイルの自動保存タイミング。

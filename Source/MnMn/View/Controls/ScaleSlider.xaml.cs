@@ -252,6 +252,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        public ICommand ScaleResetCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => {
+                        Value = ResetValue;
+                        this.commandScale.IsChecked = false;
+                    },
+                    o => Value != ResetValue
+                );
+            }
+        }
+
         #endregion
 
         #region function
