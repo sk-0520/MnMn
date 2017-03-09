@@ -72,8 +72,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static bool WebNavigatorContextMenuShowHtmlSource => appConfig.Get("web_navigator-context_menu-show-html_source", bool.Parse);
 
-
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
+
+        public static double ViewScaleReset => appConfig.Get("view-scale-reset", double.Parse);
+        public static IReadOnlyRange<double> ViewScaleRange => appConfig.Get("view-scale-range", RangeModel.Parse<double>);
+        public static double ViewScaleMinimum => ViewScaleRange.Head;
+        public static double ViewScaleMaximum => ViewScaleRange.Tail;
 
         /// <summary>
         /// 設定ファイルの自動保存タイミング。
@@ -142,10 +146,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ビューの拡大率。
         /// </summary>
         public static double SettingApplicationViewScale => appConfig.Get("setting-application-view-scale", double.Parse);
-
-        public static IReadOnlyRange<double> ViewScaleRange => appConfig.Get("view-scale-range", RangeModel.Parse<double>);
-        public static double ViewScaleMinimum => ViewScaleRange.Head;
-        public static double ViewScaleMaximum => ViewScaleRange.Tail;
 
         /// <summary>
         /// テーマ: ランダム。

@@ -52,6 +52,8 @@
         <Slider x:Name="scale" Style="{StaticResource ScaleSlider}" Value="{Binding ViewScale}" />
         <CheckBox x:Name="selectScale">ファインダーメニューも適用</CheckBox>
         <Button Click="Button_Click">リセット</Button>
+
+        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
       </StackPanel>
     </mamc:WindowCommands>
   </mamc:MetroWindow.RightWindowCommands>
