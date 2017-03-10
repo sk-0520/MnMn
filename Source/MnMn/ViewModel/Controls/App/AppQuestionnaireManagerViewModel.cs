@@ -26,6 +26,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         string _subject;
         string _message;
 
+        bool _canInput = true;
+        bool _openInput;
+
         #endregion
 
         public AppQuestionnaireManagerViewModel(Mediation mediation)
@@ -58,6 +61,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return this._message; }
             set { SetVariableValue(ref this._message, value); }
+        }
+
+        public bool CanInput
+        {
+            get { return this._canInput; }
+            set { SetVariableValue(ref this._canInput, value); }
+        }
+
+        public bool OpenInput
+        {
+            get { return this._openInput; }
+            set { SetVariableValue(ref this._openInput, value); }
         }
 
         #endregion
@@ -93,6 +108,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         Task SubmitCoreAsync()
         {
+            CanInput = false;
+
             var info = new AppInformationCollection();
             var cpu = info.GetCPU();
             var memory = info.GetMemory();
@@ -125,6 +142,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return client.PostAsync(Constants.AppUriQuestionnaire, content).ContinueWith(t => {
                 Mediation.Logger.Trace(t.Result.StatusCode.ToString(), t.Result.ToString());
                 QuestionnaireBrowser.HomeCommand.TryExecute(null);
+
+                QuestionnaireKind = default(QuestionnaireKind);
+                KindOther = Subject = Message = string.Empty;
+                CanInput = true;
+                OpenInput = false;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 

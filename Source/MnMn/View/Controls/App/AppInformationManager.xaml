@@ -385,7 +385,7 @@
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <app_view_controls:WebNavigator x:Name="questionnaireBrowser" Grid.Row="0" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
-        <Expander Grid.Row="1" IsExpanded="True" ExpandDirection="Up"  Header="投稿">
+        <Expander Grid.Row="1" IsEnabled="{Binding CanInput}" IsExpanded="{Binding OpenInput}" ExpandDirection="Up"  Header="投稿">
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition />
@@ -412,7 +412,7 @@
               <RadioButton Grid.Column="1" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Question}}" Style="{StaticResource HorizontalRadioButton}">質問</RadioButton>
               <RadioButton Grid.Column="2" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Bug}}" Style="{StaticResource HorizontalRadioButton}">不具合</RadioButton>
               <RadioButton Grid.Column="3" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Other}}" Style="{StaticResource HorizontalRadioButton}">その他</RadioButton>
-              <TextBox Grid.Column="4" mamc:TextBoxHelper.Watermark="その他の場合に入力してください" Text="{Binding KindOther}">
+              <TextBox Grid.Column="4" mamc:TextBoxHelper.Watermark="その他の場合に入力してください" MaxLength="20" Text="{Binding KindOther}">
                 <TextBox.Style>
                   <Style TargetType="TextBox" BasedOn="{StaticResource VerticalTextBox}">
                     <Style.Triggers>
@@ -427,13 +427,13 @@
             </Grid>
 
             <Label Grid.Row="1" Grid.Column="0">要約</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource VerticalTextBox}" Text="{Binding Subject}" />
+            <TextBox Grid.Row="1" Grid.Column="1" MaxLength="100" Style="{StaticResource VerticalTextBox}" Text="{Binding Subject}" />
 
             <Label Grid.Row="2" Grid.Column="0">内容</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" MinLines="3" MaxLines="3" Style="{StaticResource VerticalTextBox}" Text="{Binding Message}" />
+            <TextBox Grid.Row="2" Grid.Column="1" MaxLength="10000" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" TextWrapping="WrapWithOverflow" AcceptsReturn="True" MinLines="3" MaxLines="3" Style="{StaticResource VerticalTextBox}" Text="{Binding Message}" />
 
             <Label Grid.Row="3" Grid.Column="0">投稿</Label>
-            <Button Grid.Row="3" Grid.Column="1" Command="{Binding SubmitCommand}">入力内容を投稿する</Button>
+            <Button Grid.Row="3" Grid.Column="1" Command="{Binding SubmitCommand}" HorizontalAlignment="Left">入力内容を投稿する</Button>
 
           </Grid>
         </Expander>
