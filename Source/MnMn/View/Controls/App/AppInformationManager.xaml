@@ -245,7 +245,16 @@
           </Button>
 
           <xctk:DropDownButton IsOpen="{Binding IsOpenDevelopmentMenu, Mode=TwoWay}" Margin="{StaticResource LeftMargin}" Padding="{StaticResource BasePadding}">
-            <xctk:DropDownButton.Content>開発用</xctk:DropDownButton.Content>
+            <xctk:DropDownButton.Content>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource SmallItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Development}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>開発用</TextBlock>
+              </StackPanel>
+            </xctk:DropDownButton.Content>
             <xctk:DropDownButton.DropDownContent>
               <StackPanel>
                 <MenuItem Header="設定保存(そのまま)" Command="{Binding SettingSaveCommand}" CommandParameter="False" />
