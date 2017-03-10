@@ -214,6 +214,39 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
+  <Style x:Key="BigDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource LabelTextBrush}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
+  <Style x:Key="BigAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <Setter Property="Stroke" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="StrokeThickness" Value="1" />
+    <Setter Property="Clip" Value="{Binding Data, RelativeSource={RelativeSource Self}}" />
+  </Style>
+
+  <Style x:Key="BigLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
+  <Style x:Key="LargeDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource LabelTextBrush}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
+  <Style x:Key="LargeAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <Setter Property="Stroke" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="StrokeThickness" Value="1" />
+    <Setter Property="Clip" Value="{Binding Data, RelativeSource={RelativeSource Self}}" />
+  </Style>
+
+  <Style x:Key="LargeLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
 
   <!-- ============ 完結させられる図形 ============= -->
 
@@ -228,19 +261,6 @@
     <Setter Property="FontSize" Value="{StaticResource FontBaseSize}" />
     <Setter Property="TitleCharacterCasing" Value="Normal" />
   </Style>
-
-  <Style x:Key="ScaleSlider" TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
-    <Setter Property="Minimum" Value="0.5" />
-    <Setter Property="Maximum" Value="2" />
-    <Setter Property="Value" Value="1" />
-    <Setter Property="Width" Value="100" />
-    <Setter Property="IsMoveToPointEnabled" Value="True" />
-    <Setter Property="TickPlacement" Value="BottomRight" />
-    <Setter Property="TickFrequency" Value="0.5" />
-    <Setter Property="Ticks" Value="0.5" />
-    <Setter Property="Background" Value="{DynamicResource GrayBrush9}" />
-  </Style>
-
 
   <!--Button -->
   <Style x:Key="ReloadButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -738,16 +758,16 @@
       <Setter.Value>
         <ControlTemplate TargetType="Label">
           <Border
-            CornerRadius="4" 
-            BorderThickness="2,1" 
-            BorderBrush="{DynamicResource SemiTransparentWhiteBrush}" 
+            CornerRadius="4"
+            BorderThickness="2,1"
+            BorderBrush="{DynamicResource SemiTransparentWhiteBrush}"
             Padding="{StaticResource IndependentMargin}"
           >
             <Border.Background>
-              <RadialGradientBrush 
-                GradientOrigin="0.5,0.5" 
-                Center="0.5,0.5" 
-                RadiusX="0.5" 
+              <RadialGradientBrush
+                GradientOrigin="0.5,0.5"
+                Center="0.5,0.5"
+                RadiusX="0.5"
                 RadiusY="0.5"
                 Opacity="0.7"
               >
@@ -882,13 +902,13 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type xctk:SplitButton}">
           <Grid UseLayoutRounding="True">
-            <Border 
+            <Border
               x:Name="PART_Border"
               BorderBrush="{TemplateBinding BorderBrush}"
               BorderThickness="{TemplateBinding BorderThickness}"
               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
             >
-              <Grid 
+              <Grid
                 x:Name="PART_Container"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
@@ -897,7 +917,7 @@
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button 
+                <Button
                   x:Name="PART_Button"
                   Grid.Column="0"
                   HorizontalAlignment="Stretch"
@@ -914,12 +934,12 @@
                   FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                 >
-                  <StackPanel 
+                  <StackPanel
                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                     Orientation="Horizontal"
                   >
-                    <mamc:ContentControlEx 
+                    <mamc:ContentControlEx
                       x:Name="PART_ButtonContent"
                       Margin="2"
                       Padding="{TemplateBinding Padding}"
@@ -932,7 +952,7 @@
                       ContentTemplate="{TemplateBinding ContentTemplate}"
                       RecognizesAccessKey="True"
                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                      UseLayoutRounding="False" 
+                      UseLayoutRounding="False"
                     />
                   </StackPanel>
                 </Button>
@@ -968,12 +988,12 @@
                                 CornerRadius="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               >
-                              <ContentPresenter 
+                              <ContentPresenter
                                   x:Name="PART_ContentPresenter"
                                   Margin="{TemplateBinding Padding}"
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                  RecognizesAccessKey="True" 
+                                  RecognizesAccessKey="True"
                                 />
                             </Border>
                             <ControlTemplate.Triggers>
@@ -1000,7 +1020,7 @@
                 </ToggleButton>
               </Grid>
             </Border>
-            <Popup 
+            <Popup
               x:Name="PART_Popup"
               AllowsTransparency="True"
               Focusable="False"

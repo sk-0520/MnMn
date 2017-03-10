@@ -212,6 +212,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public Color BackgroundColor { get; set; } = Constants.SettingServiceSmileVideoPlayerBackgroundColor;
 
+        [DataMember]
+        public double ViewScale { get; set; } = Constants.SettingServiceSmileVideoPlayerViewScale;
+
         #endregion
     }
 }

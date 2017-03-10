@@ -85,6 +85,88 @@
 	},
 	*/
 	{
+		'date': '2017/03/11',
+		'version': '0.54.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': 'サービスにログインしてないそこのキミ',
+						'comments': [
+							'ログインしろ',
+							'クラッシュレポート見てたらログインせずに動画再生しようとしてる人がいる。なんなのよ',
+							'ログインしてるけど落ちる人は調査・実装・検証が追い付いてないからちょっと待ってね'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '目安箱を全部キレイに書き換えた',
+						'comments': [
+							'めんどくせーから全部公開。これがあるべき姿なんよ',
+							'たまに開発側から返信書くよ',
+							'きちんとした議論・検証はフォーラムや課題管理に投稿を。意見出し合った方が実装が早いよ'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '8970817f00edb7e0b794c754fccf44cc63c8a8cf',
+						'subject': '#448: サービスタブを縮めたい',
+						'comments': [
+							'ニコニコと MnMn がベクターじゃないのすっごい気になる',
+							'既存のラベルはツールチップに代替'
+						]
+					},
+					{
+						'revision': '38b544315841908e715df5fb5472e589bc9cb34c',
+						'subject': '#440: せっかく WPF なんだからUIの拡縮してみたいよね',
+						'comments': [
+							'0.5 - 2.0 の範囲で拡縮する(App.config: `view-scale-range`)',
+							'Toolbar(最上位), Statusbar, Popup, Browser 周りは一旦何もしない方向で対応、フィードバックあればがんばる',
+							'-> 4K 環境でどうなってんのか分からんしね',
+							'ニコ生プレイヤー？ ありましたね、そんなの'
+						]
+					},
+					{
+						'revision': 'bb7e6bdcb3967c3118a6971852d4a2c824de2530',
+						'subject': '#425: 目安箱を Google Form から GAS に移して各パラメータと集計を MnMn の制御下に置く',
+						'comments': [
+							'信じ難いだろうけど以前のフォーム形式って俯瞰で集計見れなくてすっごい疲れたの',
+							'受信側のソースは以下',
+							'https://drive.google.com/open?id=1w-Iqvwu1ROzUa9yQXyg2k-Yz9Wu0RSHgBFxSIwOhgdI877YXng-ttQRZ',
+							'下位互換のため「#452: 旧目安箱の破棄」で以前のフォームを破棄する'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': 'c70daffcc287197d81be2c1b238f4f753e731e18',
+						'subject': '#366: β版実行においてリリース版との Mutex 競合を回避する'
+					},
+					{
+						'revision': '50ba79e6540c9117bfd8668ee101b853610b23f1',
+						'subject': '#451: 動画再生時に SmileVideoPlayerViewModel.SetMedia -> NullReferenceException で落ちる',
+						'comments': [
+							'クラッシュレポートでよく発生してそうなやつ',
+							'レポート読む感じ一部ユーザーはログイン失敗してる(?)感じがした',
+							'とりあえずの消極的な解決で再生対象ファイル(`PlayFile`)が無効ならファイルパス取得しないようにした',
+							'たぶん落ちないだけで何の解決にもなってない気がする'
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/03/08',
 		'version': '0.53.0',
 		'isRc': false,

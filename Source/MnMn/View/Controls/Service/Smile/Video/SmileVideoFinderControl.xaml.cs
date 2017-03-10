@@ -133,15 +133,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
             OpenSubMenu(menuItem);
         }
 
-        private void PART_List_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            var mainWindow = (MainWindow)UIUtility.GetVisualClosest<MainWindow>(this);
-            var element = (FrameworkElement)sender;
-            if(mainWindow.selectScale.IsChecked.GetValueOrDefault()) {
-                element.ContextMenu.LayoutTransform = new ScaleTransform(mainWindow.scale.Value, mainWindow.scale.Value);
-            } else {
-                element.ContextMenu.LayoutTransform = new ScaleTransform(1, 1);
-            }
-        }
+        //ContextMenuOpening="PART_List_ContextMenuOpening"
+        //private void PART_List_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        //{
+        //    var mainWindow = (MainWindow)UIUtility.GetVisualClosest<MainWindow>(this);
+        //    var element = (FrameworkElement)sender;
+        //    if(mainWindow.selectScale.IsChecked.GetValueOrDefault()) {
+        //        element.ContextMenu.LayoutTransform = new ScaleTransform(mainWindow.scale.Value, mainWindow.scale.Value);
+        //    } else {
+        //        element.ContextMenu.LayoutTransform = new ScaleTransform(1, 1);
+        //    }
+        //}
     }
 }

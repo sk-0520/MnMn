@@ -429,14 +429,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
-        bool Order_Donwload(DownloadOrderModel order)
+        bool Order_Download(DownloadOrderModel order)
         {
             var downloadState = order.DownloadState;
             //DownloadStatus.Insert(0, downloadState);
 
             var downloadItem = new AppDownloadItemViewModel(order.ServiceType, order.DownloadState);
 
-            ManagerPack.AppManager.AppDownloadManager.AddDonwloadItem(downloadItem, order.CanManagement);
+            ManagerPack.AppManager.AppDownloadManager.AddDownloadItem(downloadItem, order.CanManagement);
 
             return true;
         }
@@ -543,8 +543,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             CheckUtility.DebugEnforceNotNull(order);
 
-            if(order.OrderKind == OrderKind.Donwload) {
-                return Order_Donwload((DownloadOrderModel)order);
+            if(order.OrderKind == OrderKind.Download) {
+                return Order_Download((DownloadOrderModel)order);
             }
 
             switch(order.ServiceType) {

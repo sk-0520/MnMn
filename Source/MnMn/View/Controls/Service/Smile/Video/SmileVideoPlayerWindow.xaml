@@ -299,10 +299,7 @@
   <mamc:MetroWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
-        <TextBlock Text="#440 試験運用中: " IsHitTestVisible="False" />
-        <TextBlock Text="{Binding Value, ElementName=scale, StringFormat=x0.00}" />
-        <Slider x:Name="scale" Style="{StaticResource ScaleSlider}" />
-        <Button Click="Button_Click">リセット</Button>
+        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
       </StackPanel>
     </mamc:WindowCommands>
   </mamc:MetroWindow.RightWindowCommands>
@@ -323,7 +320,7 @@
       </Button>
       <Menu>
         <Menu.Style>
-          <!-- 
+          <!--
           マイリストは「とりあえずマイリスト」があるから一つもないことはない予定だったが、
           ラボの任意再生構築により存在しない可能性がある。
           -->
@@ -729,7 +726,7 @@
 
     <Grid>
       <Grid.LayoutTransform>
-        <ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />
+        <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
       </Grid.LayoutTransform>
       <Grid.RowDefinitions>
         <RowDefinition Height="*"  />
@@ -1416,7 +1413,7 @@
                           Margin="15 0 0 0"
                           VerticalAlignment="Center"
                           Text="{Binding}"
-                          Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mamc:Flyout}}, Path=TitleVisibility}" 
+                          Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mamc:Flyout}}, Path=TitleVisibility}"
                         />
                       </DockPanel>
                     </ItemContainerTemplate>
@@ -1557,12 +1554,12 @@
                 <CheckBox Grid.Row="0" Grid.Column="0" Margin="{StaticResource VerticalContrlMargin}" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
                 <Grid Grid.Row="0" Grid.Column="1" Margin="{StaticResource VerticalContrlMargin}">
                   <Slider
-                    VerticalAlignment="Center" 
-                    Minimum="-3000" 
-                    Maximum="-1" 
-                    LargeChange="100" 
-                    IsEnabled="{Binding IsEnabledSharedNoGood}" 
-                    Value="{Binding SharedNoGoodScore}" 
+                    VerticalAlignment="Center"
+                    Minimum="-3000"
+                    Maximum="-1"
+                    LargeChange="100"
+                    IsEnabled="{Binding IsEnabledSharedNoGood}"
+                    Value="{Binding SharedNoGoodScore}"
                   />
                   <Border Visibility="{Binding IsEnabledSharedNoGood, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <ContentControl Style="{StaticResource Counter}">
@@ -1793,12 +1790,12 @@
 
                           </ContentControl>
 
-                          <Button 
+                          <Button
                             Focusable="False"
-                            Grid.Column="1" 
-                            Content="{Binding Title}" 
-                            Command="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                            CommandParameter="{Binding}"  
+                            Grid.Column="1"
+                            Content="{Binding Title}"
+                            Command="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{Binding}"
                             Style="{StaticResource Hyperlink}"
                             HorizontalAlignment="Stretch"
                           />
@@ -2027,8 +2024,8 @@
               <Grid Grid.Row="1">
                 <FlowDocumentScrollViewer Style="{StaticResource PlayerDescriptionDocument}">
                   <i:Interaction.Behaviors>
-                    <app_view_attachment:HtmlDescriptionBehavior 
-                      HtmlSource="{Binding Information.DescriptionHtmlSource}" 
+                    <app_view_attachment:HtmlDescriptionBehavior
+                      HtmlSource="{Binding Information.DescriptionHtmlSource}"
                       DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
                     />
                   </i:Interaction.Behaviors>

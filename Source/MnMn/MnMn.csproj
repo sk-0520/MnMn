@@ -237,6 +237,7 @@
     <Compile Include="Define\PointingGestureChangeKind.cs" />
     <Compile Include="Define\PointingGestureDirection.cs" />
     <Compile Include="Define\PointingGestureState.cs" />
+    <Compile Include="Define\Service\QuestionnaireKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
     <Compile Include="Define\WebNavigatorContextMenuKey.cs" />
@@ -515,6 +516,9 @@
       <DependentUpon>AppGeneralBrowserManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\FocusedTabControl.cs" />
+    <Compile Include="View\Controls\ScaleSlider.xaml.cs">
+      <DependentUpon>ScaleSlider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -544,7 +548,8 @@
     </Compile>
     <Compile Include="View\Controls\TokenizedTextBox.cs" />
     <Compile Include="View\Converter\Base64ImageSourceConverter.cs" />
-    <Compile Include="View\Converter\DoublePercentConverter.cs" />
+    <Compile Include="View\Converter\DoubleToParameterPercentConverter.cs" />
+    <Compile Include="View\Converter\DoubleToPercentConverter.cs" />
     <Compile Include="View\Converter\EscapeAccessKeyConverter.cs" />
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
@@ -982,6 +987,8 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Content Include="Resources\File\JavaScript\GeckoFx\AcceptLink.js" />
+    <Resource Include="Resources\MnMn-Header.png" />
+    <Resource Include="Resources\Service\Smile\Service-Header.png" />
     <Resource Include="Resources\MnMn.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <None Include="Properties\app.manifest" />
@@ -1002,6 +1009,10 @@
       <SubType>Designer</SubType>
     </None>
     <Page Include="View\Controls\App\AppDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\ScaleSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
