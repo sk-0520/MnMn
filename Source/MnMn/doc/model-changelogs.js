@@ -133,7 +133,8 @@
 						'comments': [
 							'信じ難いだろうけど以前のフォーム形式って俯瞰で集計見れなくてすっごい疲れたの',
 							'受信側のソースは以下',
-							'https://drive.google.com/open?id=1w-Iqvwu1ROzUa9yQXyg2k-Yz9Wu0RSHgBFxSIwOhgdI877YXng-ttQRZ'
+							'https://drive.google.com/open?id=1w-Iqvwu1ROzUa9yQXyg2k-Yz9Wu0RSHgBFxSIwOhgdI877YXng-ttQRZ',
+							'下位互換のため「#452: 旧目安箱の破棄」で以前のフォームを破棄する'
 						]
 					},
 					{
