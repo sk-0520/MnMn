@@ -129,6 +129,15 @@
 					},
 					{
 						'revision': '',
+						'subject': '#425: 目安箱を Google Form から GAS に移して各パラメータと集計を MnMn の制御下に置く',
+						'comments': [
+							'信じ難いだろうけど以前のフォーム形式って俯瞰で集計見れなくてすっごい疲れたの',
+							'受信側のソースは以下',
+							'https://drive.google.com/open?id=1w-Iqvwu1ROzUa9yQXyg2k-Yz9Wu0RSHgBFxSIwOhgdI877YXng-ttQRZ'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

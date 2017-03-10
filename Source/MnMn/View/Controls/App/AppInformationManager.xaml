@@ -379,7 +379,7 @@
     </TabItem>
 
     <TabItem Header="目安箱" DataContext="{Binding AppQuestionnaireManager}" Style="{StaticResource SectionTabItem}">
-      <Grid x:Name="panelFAQ">
+      <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
           <RowDefinition Height="Auto" />
