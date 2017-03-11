@@ -30,6 +30,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -150,7 +151,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public double ViewScale
         {
             get { return Setting.ViewScale; }
-            set { SetPropertyValue(Setting, value); }
+            set {
+                if(SetPropertyValue(Setting, value)) {
+                    ApplyWebNavigatorScale();
+                }
+            }
         }
 
 
@@ -178,6 +183,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         void OutputLogGarbageCollection(long gcSize)
         {
             Mediation.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)}", $"{gcSize:n0} byte");
+        }
+
+        void ApplyWebNavigatorScale()
+        {
+            if(View == null) {
+                return;
+            }
+            var webNavigatorItems = UIUtility.FindLogicalChildren<WebNavigator>(View);
+            //var scale = new Size(ViewScale, ViewScale);
+            foreach(var webNavigator in webNavigatorItems) {
+                webNavigator.SetScale(ViewScale);
+            }
         }
 
         #endregion
@@ -218,6 +235,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             foreach(var manager in ManagerChildren) {
                 manager.InitializeView(view);
             }
+
+            ApplyWebNavigatorScale();
 
             BackgroundAutoSaveTimer.Start();
 

@@ -1106,6 +1106,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        public void SetScale(double scale)
+        {
+            DoAction(
+                b => { /* not impl*/ },
+                b => {
+                    b.GetDocShellAttribute()
+                        .GetContentViewerAttribute()
+                        .SetFullZoomAttribute((float)scale);
+                    ;
+                }
+            );
+        }
+
         #endregion
 
         #region UserControl
