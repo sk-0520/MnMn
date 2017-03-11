@@ -32,6 +32,7 @@
       <Setter Property="BridgeContextMenu" Value="False" />
       <Setter Property="DomLoadedCommand" Value="{Binding DomLoadedCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
       <Setter Property="NewWindowCommand" Value="{Binding NewWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+      <Setter Property="IsEnabledGesture" Value="False" />
     </Style>
   </mamc:MetroWindow.Resources>
   <i:Interaction.Behaviors>
