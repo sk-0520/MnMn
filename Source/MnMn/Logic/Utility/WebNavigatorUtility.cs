@@ -21,11 +21,14 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
@@ -103,6 +106,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             var result = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture);
 
             return result;
+        }
+
+        public static void ApplyWebNavigatorScale(UIElement uiElement, double scale)
+        {
+            if(uiElement == null) {
+                return;
+            }
+            var webNavigatorItems = UIUtility.FindLogicalChildren<WebNavigator>(uiElement);
+            //var scale = new Size(ViewScale, ViewScale);
+            foreach(var webNavigator in webNavigatorItems) {
+                webNavigator.SetScale(scale);
+            }
         }
 
         #endregion

@@ -30,6 +30,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -150,7 +151,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public double ViewScale
         {
             get { return Setting.ViewScale; }
-            set { SetPropertyValue(Setting, value); }
+            set {
+                if(SetPropertyValue(Setting, value)) {
+                    WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
+                }
+            }
         }
 
 
@@ -218,6 +223,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             foreach(var manager in ManagerChildren) {
                 manager.InitializeView(view);
             }
+
+            WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
 
             BackgroundAutoSaveTimer.Start();
 

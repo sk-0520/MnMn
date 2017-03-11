@@ -316,7 +316,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns>.なし</returns>
