@@ -752,7 +752,7 @@
   <Style x:Key="HighlightLabel" TargetType="Label">
     <Setter Property="HorizontalAlignment" Value="Right" />
     <Setter Property="VerticalAlignment" Value="Bottom" />
-    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
     <Setter Property="FontWeight" Value="Bold" />
     <Setter Property="Template">
       <Setter.Value>
@@ -771,13 +771,13 @@
                 RadiusY="0.5"
                 Opacity="0.7"
               >
-                <GradientStop Color="{DynamicResource AccentColor}" Offset="0" />
-                <GradientStop Color="{DynamicResource AccentColor2}" Offset="0.75" />
-                <GradientStop Color="{DynamicResource AccentColor3}" Offset="1" />
+                <GradientStop Color="{DynamicResource HighlightColor}" Offset="0" />
+                <GradientStop Color="{DynamicResource AccentBaseColor}" Offset="0.9" />
+                <GradientStop Color="{DynamicResource AccentColor}" Offset="1" />
               </RadialGradientBrush>
             </Border.Background>
 
-            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ContentPresenter Margin="1,1" HorizontalAlignment="Center" VerticalAlignment="Center" />
           </Border>
         </ControlTemplate>
       </Setter.Value>
