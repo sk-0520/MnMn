@@ -636,11 +636,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 return new DelegateCommand(
                     o => {
                         Uri inputUri;
-                        if(Uri.TryCreate(location.Text, UriKind.Absolute, out inputUri)) {
+                        if(Uri.TryCreate(this.location.Text, UriKind.Absolute, out inputUri)) {
                             Navigate(inputUri);
                         }
                     },
-                    o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(location.Text)
+                    o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(this.location.Text)
                 );
             }
         }
@@ -799,7 +799,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             Navigate(uri);
             DoAction(
                 b => { },
-                b => Dispatcher.Invoke(() => { if(b.History.Count > 0) b.History.Clear(); })
+                b => Dispatcher.Invoke(() => {
+                    if (b.History.Count > 0) {
+                        b.History.Clear();
+                    }
+                })
             );
             IsEmptyContent = true;
         }
@@ -1042,7 +1046,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(msg.Msg == (int)WM.WM_XBUTTONUP) {
                 //var wParam = msg.WParam.ToInt32();
                 var hiWord = WindowsUtility.HIWORD(msg.WParam);
-                
+
                 if(hiWord == (int)XBUTTON.XBUTTON1 && CanGoBack) {
                     GoBack();
                     handled = true;
@@ -1371,7 +1375,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserGeckoFx_ConsoleMessage(object sender, ConsoleMessageEventArgs e)
         {
             if(!Constants.WebNavigatorGeckoFxShowEngineLog) {
-                if(ignoreGeckoFxLogs.Any(s => e.Message.IndexOf(s) != -1)) {
+                if(this.ignoreGeckoFxLogs.Any(s => e.Message.IndexOf(s) != -1)) {
                     return;
                 }
             }
@@ -1417,7 +1421,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 this.popupGesture.IsOpen = true;
                 GestureItems.Add(e.Item);
                 var gestureCommand = GetGestureCommand(GestureItems);
-                textGesture.Text = gestureCommand.Message;
+                this.textGesture.Text = gestureCommand.Message;
             } else {
                 if(e.ChangeKind == PointingGestureChangeKind.Finish) {
                     var gestureCommand = GetGestureCommand(GestureItems);
