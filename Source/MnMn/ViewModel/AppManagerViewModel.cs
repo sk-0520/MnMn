@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             get { return Setting.ViewScale; }
             set {
                 if(SetPropertyValue(Setting, value)) {
-                    ApplyWebNavigatorScale();
+                    WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
                 }
             }
         }
@@ -183,18 +183,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         void OutputLogGarbageCollection(long gcSize)
         {
             Mediation.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)}", $"{gcSize:n0} byte");
-        }
-
-        void ApplyWebNavigatorScale()
-        {
-            if(View == null) {
-                return;
-            }
-            var webNavigatorItems = UIUtility.FindLogicalChildren<WebNavigator>(View);
-            //var scale = new Size(ViewScale, ViewScale);
-            foreach(var webNavigator in webNavigatorItems) {
-                webNavigator.SetScale(ViewScale);
-            }
         }
 
         #endregion
@@ -236,7 +224,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 manager.InitializeView(view);
             }
 
-            ApplyWebNavigatorScale();
+            WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
 
             BackgroundAutoSaveTimer.Start();
 

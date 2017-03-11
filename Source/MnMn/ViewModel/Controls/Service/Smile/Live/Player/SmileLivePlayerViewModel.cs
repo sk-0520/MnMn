@@ -32,6 +32,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
@@ -193,7 +194,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public double ViewScale
         {
             get { return this._viewScale; }
-            set { SetVariableValue(ref this._viewScale, value); }
+            set
+            {
+                if(SetVariableValue(ref this._viewScale, value)) {
+                    WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
+                }
+            }
         }
 
         #endregion
@@ -490,6 +496,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             View = (SmileLivePlayerWindow)view;
             NavigatorPlayer = View.navigatorPlayer;
 
+            WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
             //DocumentDescription = View.documentDescription;
 
             //
