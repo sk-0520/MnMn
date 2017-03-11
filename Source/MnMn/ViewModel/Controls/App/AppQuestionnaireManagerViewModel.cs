@@ -108,8 +108,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         Task SubmitCoreAsync()
         {
-            CanInput = false;
-
             var info = new AppInformationCollection();
             var cpu = info.GetCPU();
             var memory = info.GetMemory();
@@ -141,13 +139,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             var client = host.CreateHttpUserAgent();
             return client.PostAsync(Constants.AppUriQuestionnaire, content).ContinueWith(t => {
                 Mediation.Logger.Trace(t.Result.StatusCode.ToString(), t.Result.ToString());
-                QuestionnaireBrowser.HomeCommand.TryExecute(null);
-
-                QuestionnaireKind = default(QuestionnaireKind);
-                KindOther = Subject = Message = string.Empty;
-                CanInput = true;
-                OpenInput = false;
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+                return t.Result.Content.ReadAsStringAsync().Result;
+            }).ContinueWith(t => {
+                Mediation.Logger.Trace(t.ToString(), t.Result);
+            });
         }
 
         Task SubmitAsync()
@@ -164,7 +159,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return Task.CompletedTask;
             }
 
-            return SubmitCoreAsync();
+            CanInput = false;
+
+            return SubmitCoreAsync().ContinueWith(_ => {
+                QuestionnaireBrowser.HomeCommand.TryExecute(null);
+
+                QuestionnaireKind = default(QuestionnaireKind);
+                KindOther = Subject = Message = string.Empty;
+                CanInput = true;
+                OpenInput = false;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion
