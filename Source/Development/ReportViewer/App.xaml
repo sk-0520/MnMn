@@ -1,7 +1,7 @@
-﻿<Application x:Class="Sketch.App"
+﻿<Application x:Class="ReportViewer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Sketch"
+             xmlns:local="clr-namespace:ReportViewer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
