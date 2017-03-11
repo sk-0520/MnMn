@@ -185,7 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public bool Topmost
         {
             get { return this._topmost; }
-            set { SetVariableValue(ref _topmost, value); }
+            set { SetVariableValue(ref this._topmost, value); }
         }
 
         #endregion
@@ -465,7 +465,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             get { return this._state; }
             set { SetVariableValue(ref this._state, value); }
         }
-        
+
         #endregion
 
         #region ISmileDescription
