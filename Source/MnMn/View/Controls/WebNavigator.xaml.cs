@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// <summary>
     /// WebNavigator.xaml の相互作用ロジック
     /// </summary>
-    public partial class WebNavigator: UserControl
+    public partial class WebNavigator : UserControl
     {
         #region define
 
@@ -84,6 +84,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
             PointingGesture.Changed += PointingGesture_Changed;
         }
+
+        #region DependencyProperty
 
         #region BridgeClickProperty
 
@@ -497,6 +499,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsEnabledGestureProperty
+
+        public static readonly DependencyProperty IsEnabledGestureProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsEnabledGestureProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledGestureChanged))
+        );
+
+        private static void OnIsEnabledGestureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.IsEnabledGesture = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsEnabledGesture
+        {
+            get { return (bool)GetValue(IsEnabledGestureProperty); }
+            set { SetValue(IsEnabledGestureProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
         #region property
 
         /// <summary>
@@ -636,11 +665,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 return new DelegateCommand(
                     o => {
                         Uri inputUri;
-                        if(Uri.TryCreate(location.Text, UriKind.Absolute, out inputUri)) {
+                        if(Uri.TryCreate(this.location.Text, UriKind.Absolute, out inputUri)) {
                             Navigate(inputUri);
                         }
                     },
-                    o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(location.Text)
+                    o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(this.location.Text)
                 );
             }
         }
@@ -799,7 +828,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             Navigate(uri);
             DoAction(
                 b => { },
-                b => Dispatcher.Invoke(() => { if(b.History.Count > 0) b.History.Clear(); })
+                b => Dispatcher.Invoke(() => {
+                    if(b.History.Count > 0) {
+                        b.History.Clear();
+                    }
+                })
             );
             IsEmptyContent = true;
         }
@@ -1042,7 +1075,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(msg.Msg == (int)WM.WM_XBUTTONUP) {
                 //var wParam = msg.WParam.ToInt32();
                 var hiWord = WindowsUtility.HIWORD(msg.WParam);
-                
+
                 if(hiWord == (int)XBUTTON.XBUTTON1 && CanGoBack) {
                     GoBack();
                     handled = true;
@@ -1371,7 +1404,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserGeckoFx_ConsoleMessage(object sender, ConsoleMessageEventArgs e)
         {
             if(!Constants.WebNavigatorGeckoFxShowEngineLog) {
-                if(ignoreGeckoFxLogs.Any(s => e.Message.IndexOf(s) != -1)) {
+                if(this.ignoreGeckoFxLogs.Any(s => e.Message.IndexOf(s) != -1)) {
                     return;
                 }
             }
@@ -1382,10 +1415,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_DomMouseDown(object sender, DomMouseEventArgs e)
         {
-            if(e.Button == GeckoMouseButton.Right) {
-                var pos = new Point(e.ClientX, e.ClientY);
-                var element = e.Target.CastToGeckoElement();
-                PointingGesture.StartPreparation(pos, element);
+            if(IsEnabledGesture) {
+                if(e.Button == GeckoMouseButton.Right) {
+                    var pos = new Point(e.ClientX, e.ClientY);
+                    var element = e.Target.CastToGeckoElement();
+                    PointingGesture.StartPreparation(pos, element);
+                }
             }
         }
 
@@ -1417,7 +1452,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 this.popupGesture.IsOpen = true;
                 GestureItems.Add(e.Item);
                 var gestureCommand = GetGestureCommand(GestureItems);
-                textGesture.Text = gestureCommand.Message;
+                this.textGesture.Text = gestureCommand.Message;
             } else {
                 if(e.ChangeKind == PointingGestureChangeKind.Finish) {
                     var gestureCommand = GetGestureCommand(GestureItems);
