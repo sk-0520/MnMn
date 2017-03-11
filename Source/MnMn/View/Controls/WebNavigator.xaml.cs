@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// <summary>
     /// WebNavigator.xaml の相互作用ロジック
     /// </summary>
-    public partial class WebNavigator: UserControl
+    public partial class WebNavigator : UserControl
     {
         #region define
 
@@ -84,6 +84,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
             PointingGesture.Changed += PointingGesture_Changed;
         }
+
+        #region DependencyProperty
 
         #region BridgeClickProperty
 
@@ -497,6 +499,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsEnabledGestureProperty
+
+        public static readonly DependencyProperty IsEnabledGestureProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsEnabledGestureProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledGestureChanged))
+        );
+
+        private static void OnIsEnabledGestureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.IsEnabledGesture = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsEnabledGesture
+        {
+            get { return (bool)GetValue(IsEnabledGestureProperty); }
+            set { SetValue(IsEnabledGestureProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
         #region property
 
         /// <summary>
@@ -800,7 +829,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             DoAction(
                 b => { },
                 b => Dispatcher.Invoke(() => {
-                    if (b.History.Count > 0) {
+                    if(b.History.Count > 0) {
                         b.History.Clear();
                     }
                 })
@@ -1386,10 +1415,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_DomMouseDown(object sender, DomMouseEventArgs e)
         {
-            if(e.Button == GeckoMouseButton.Right) {
-                var pos = new Point(e.ClientX, e.ClientY);
-                var element = e.Target.CastToGeckoElement();
-                PointingGesture.StartPreparation(pos, element);
+            if(IsEnabledGesture) {
+                if(e.Button == GeckoMouseButton.Right) {
+                    var pos = new Point(e.ClientX, e.ClientY);
+                    var element = e.Target.CastToGeckoElement();
+                    PointingGesture.StartPreparation(pos, element);
+                }
             }
         }
 
