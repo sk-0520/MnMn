@@ -73,6 +73,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         bool _topmost;
         bool _isNormalWindow = true;
 
+        double _viewScale;
+
         string _descriptionHtmlSource;
 
         #endregion
@@ -188,6 +190,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             set { SetVariableValue(ref this._topmost, value); }
         }
 
+        public double ViewScale
+        {
+            get { return this._viewScale; }
+            set { SetVariableValue(ref this._viewScale, value); }
+        }
+
         #endregion
 
         public DescriptionBase DescriptionProcessor => new SmileDescription(Mediation);
@@ -249,6 +257,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Height = Setting.Player.Window.Height;
             Topmost = Setting.Player.Window.Topmost;
 
+            ViewScale = Setting.Player.ViewScale;
+
             PlayerShowDetailArea.Value = Setting.Player.ShowDetailArea;
         }
 
@@ -259,6 +269,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Setting.Player.Window.Width = Width;
             Setting.Player.Window.Height = Height;
             Setting.Player.Window.Topmost = Topmost;
+
+            Setting.Player.ViewScale = ViewScale;
 
             Setting.Player.ShowDetailArea = PlayerShowDetailArea.Value;
         }
