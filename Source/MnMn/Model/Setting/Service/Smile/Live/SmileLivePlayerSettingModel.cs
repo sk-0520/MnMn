@@ -43,6 +43,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live
             Topmost = Constants.SettingServiceSmileLiveWindowTopmost,
         };
 
+        [DataMember]
+        public double ViewScale { get; set; } = Constants.SettingServiceSmileLivePlayerViewScale;
+
         #endregion
     }
 }

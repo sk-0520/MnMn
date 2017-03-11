@@ -42,3 +42,7 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
  * **current** [![Build status](https://ci.appveyor.com/api/projects/status/8uof5u0wtnenl1a8?svg=true)](https://ci.appveyor.com/project/sk_0520/mnmn)
  * **mater** [![Build status](https://ci.appveyor.com/api/projects/status/8uof5u0wtnenl1a8/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/mnmn/branch/master)
 
+### 垂れ流し
+
+ * [sk ☃#QQ](https://twitter.com/sk_cttn_QQ) @sk_cttn_QQ
+

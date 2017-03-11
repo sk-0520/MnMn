@@ -32,6 +32,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
@@ -72,6 +73,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         double _height;
         bool _topmost;
         bool _isNormalWindow = true;
+
+        double _viewScale;
 
         string _descriptionHtmlSource;
 
@@ -185,7 +188,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public bool Topmost
         {
             get { return this._topmost; }
-            set { SetVariableValue(ref _topmost, value); }
+            set { SetVariableValue(ref this._topmost, value); }
+        }
+
+        public double ViewScale
+        {
+            get { return this._viewScale; }
+            set
+            {
+                if(SetVariableValue(ref this._viewScale, value)) {
+                    WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
+                }
+            }
         }
 
         #endregion
@@ -249,6 +263,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Height = Setting.Player.Window.Height;
             Topmost = Setting.Player.Window.Topmost;
 
+            ViewScale = Setting.Player.ViewScale;
+
             PlayerShowDetailArea.Value = Setting.Player.ShowDetailArea;
         }
 
@@ -259,6 +275,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Setting.Player.Window.Width = Width;
             Setting.Player.Window.Height = Height;
             Setting.Player.Window.Topmost = Topmost;
+
+            Setting.Player.ViewScale = ViewScale;
 
             Setting.Player.ShowDetailArea = PlayerShowDetailArea.Value;
         }
@@ -301,30 +319,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             });
         }
 
-        void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
+        void TuneFlvplayer(GeckoWebBrowser browser, GeckoHtmlElement flvplayerElement)
         {
-            Mediation.Logger.Debug($"{Information.Id}: {nameof(NavigatorPlayer.IsEmptyContent)} = {NavigatorPlayer.IsEmptyContent}");
-
-            var browser = (GeckoWebBrowser)eventData.Sender;
-
-            if(NavigatorPlayer.IsEmptyContent) {
-                // TODO: 本来不要
-                PlayerLoadState.Value = LoadState.Loaded;
-
-                ShowWebPlayer.Value = true;
-                return;
-            }
-
-            var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
-            if(flvplayerElement == null) {
-                Mediation.Logger.Debug($"{Information.Id}: {nameof(flvplayerElement)} is null");
-                // TODO: 本来不要
-                PlayerLoadState.Value = LoadState.Loaded;
-
-                ShowWebPlayer.Value = true;
-                return;
-            }
-
             var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
             var bodyElement = browser.Document.Body;
             var firstElements = bodyElement.ChildNodes
@@ -355,7 +351,68 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             flvplayerElement.Style.SetPropertyValue("width", "100%");
             flvplayerElement.Style.SetPropertyValue("height", "100%");
             bodyElement.InsertBefore(flvplayerContainerElement, bodyElement.FirstChild);
+        }
 
+        private void TunePlayerContainer(GeckoWebBrowser browser, GeckoHtmlElement playerContainerElement)
+        {
+            var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
+            var bodyElement = browser.Document.Body;
+            var firstElements = bodyElement.ChildNodes
+                .OfType<GeckoHtmlElement>()
+                .ToArray()
+            ;
+
+            foreach(var element in firstElements) {
+                element.Style.SetPropertyValue("display", "none");
+            }
+            var rootElements = new[] {
+                htmlElement,
+                bodyElement,
+            };
+            foreach(var element in rootElements) {
+                //element.Style.SetPropertyValue("height", "100%");
+                element.Style.SetPropertyValue("margin", "0");
+                element.Style.SetPropertyValue("padding", "0");
+                //element.Style.SetPropertyValue("width", "100%");
+                //element.Style.SetPropertyValue("height", "100%");
+            }
+
+            bodyElement.InsertBefore(playerContainerElement, bodyElement.FirstChild);
+        }
+
+
+        void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
+        {
+            Mediation.Logger.Debug($"{Information.Id}: {nameof(NavigatorPlayer.IsEmptyContent)} = {NavigatorPlayer.IsEmptyContent}");
+
+            var browser = (GeckoWebBrowser)eventData.Sender;
+
+            if(NavigatorPlayer.IsEmptyContent) {
+                // TODO: 本来不要
+                PlayerLoadState.Value = LoadState.Loaded;
+
+                ShowWebPlayer.Value = true;
+                return;
+            }
+
+            // 旧来の
+            var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
+            // 新しいの
+            var playerContainerElement = browser.Document.GetElementById("player-container") as GeckoHtmlElement;
+
+            if(flvplayerElement == null && playerContainerElement == null) {
+                Mediation.Logger.Debug($"{Information.Id}: {nameof(flvplayerElement)} is null && {nameof(flvplayerElement)} is null");
+                // TODO: 本来不要
+                PlayerLoadState.Value = LoadState.Loaded;
+
+                ShowWebPlayer.Value = true;
+                return;
+            }
+            if(flvplayerElement != null) {
+                TuneFlvplayer(browser, flvplayerElement);
+            } else {
+                TunePlayerContainer(browser, playerContainerElement);
+            }
 
             PlayerLoadState.Value = LoadState.Loaded;
             ShowWebPlayer.Value = true;
@@ -376,18 +433,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             html.LoadHtml(htmlSource);
             var baseElement = html.GetElementbyId("jsFollowingAdMain");
             var removeTargets = new[] {
-                        baseElement.SelectSingleNode(".//*[@class='creator_btn_are']"),
-                        baseElement.SelectSingleNode(".//*[@id='livetags']"),
-                        baseElement.SelectSingleNode(".//*[@class='chan']"),
-                        baseElement.SelectSingleNode(".//*[@id='tooltip']"),
-                        baseElement.SelectSingleNode(".//*[@class='com']"),
-                        baseElement.SelectSingleNode(".//*[@class='community-info-score']"),
-                    };
+                baseElement?.SelectSingleNode(".//*[@class='creator_btn_are']"),
+                baseElement?.SelectSingleNode(".//*[@id='livetags']"),
+                baseElement?.SelectSingleNode(".//*[@class='chan']"),
+                baseElement?.SelectSingleNode(".//*[@id='tooltip']"),
+                baseElement?.SelectSingleNode(".//*[@class='com']"),
+                baseElement?.SelectSingleNode(".//*[@class='community-info-score']"),
+            };
             foreach(var target in removeTargets.Where(n => n != null)) {
                 target.Remove();
             }
 
-            return baseElement.InnerHtml;
+            return baseElement?.InnerHtml ?? string.Empty;
         }
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)
@@ -439,6 +496,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             View = (SmileLivePlayerWindow)view;
             NavigatorPlayer = View.navigatorPlayer;
 
+            WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
             //DocumentDescription = View.documentDescription;
 
             //
@@ -465,7 +523,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             get { return this._state; }
             set { SetVariableValue(ref this._state, value); }
         }
-        
+
         #endregion
 
         #region ISmileDescription

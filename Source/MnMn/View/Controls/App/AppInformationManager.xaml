@@ -393,7 +393,7 @@
           <RowDefinition Height="*" />
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <app_view_controls:WebNavigator x:Name="questionnaireBrowser" Grid.Row="0" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
+        <app_view_controls:WebNavigator x:Name="questionnaireBrowser" Grid.Row="0" IsEnabledGesture="False" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
         <Expander Grid.Row="1" IsEnabled="{Binding CanInput}" IsExpanded="{Binding OpenInput}" ExpandDirection="Up"  Header="投稿">
           <Grid>
             <Grid.RowDefinitions>

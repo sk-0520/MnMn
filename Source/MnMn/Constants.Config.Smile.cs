@@ -487,6 +487,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingServiceSmileLivePlayerShowDetailArea => appConfig.Get("setting-service-smile-smilelive-player-show-detail-area", bool.Parse);
 
+        public static double SettingServiceSmileLivePlayerViewScale => appConfig.Get("setting-service-smile-smilelive-player-vuew-scale", double.Parse);
+
         #endregion
 
         #endregion
