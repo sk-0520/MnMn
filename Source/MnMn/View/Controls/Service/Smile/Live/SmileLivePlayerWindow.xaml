@@ -50,24 +50,38 @@
       <Setter Property="Topmost" Value="{Binding Topmost}" />
     </Style>
   </Window.Style>
+  <mamc:MetroWindow.RightWindowCommands>
+    <mamc:WindowCommands>
+      <StackPanel Orientation="Horizontal">
+        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
+      </StackPanel>
+    </mamc:WindowCommands>
+  </mamc:MetroWindow.RightWindowCommands>
 
   <DockPanel>
-    <ToolBar DockPanel.Dock="Top">
-      <Button Command="{Binding ForceShowPlayerCommand}">メクラ板を外す</Button>
-    </ToolBar>
+    <!--<ToolBar DockPanel.Dock="Top" />-->
+
     <StatusBar DockPanel.Dock="Bottom">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
         <ResizeGrip />
       </StatusBarItem>
 
       <ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea.Value}">
-        info
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Information}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
       </ToggleButton>
 
+      <Button Command="{Binding ForceShowPlayerCommand}">メクラ板を外す</Button>
 
     </StatusBar>
 
     <Grid>
+      <Grid.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
+      </Grid.LayoutTransform>
       <Grid.RowDefinitions>
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
@@ -89,6 +103,9 @@
         <app_view_controls:WebNavigator
           x:Name="navigatorPlayer"
           ServiceType="SmileLive"
+          IsVisibleToolbar="False"
+          IsEnabledGesture="False"
+          IsEnabledUserChangeSource="False"
           Visibility="{Binding ShowWebPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
           NewWindowCommand="{Binding NewWindowCommand}"
           SourceLoadedCommand="{Binding SourceLoadedCommand}"
@@ -135,8 +152,8 @@
               <Grid Grid.Row="1">
                 <FlowDocumentScrollViewer Style="{StaticResource PlayerDescriptionDocument}">
                   <i:Interaction.Behaviors>
-                    <app_view_attachment:HtmlDescriptionBehavior 
-                      HtmlSource="{Binding DescriptionHtmlSource, Mode=OneWay}" 
+                    <app_view_attachment:HtmlDescriptionBehavior
+                      HtmlSource="{Binding DescriptionHtmlSource, Mode=OneWay}"
                       DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
                     />
                   </i:Interaction.Behaviors>

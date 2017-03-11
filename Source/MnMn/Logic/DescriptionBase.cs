@@ -173,11 +173,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return replacedSource;
         }
 
+        public static string ClearImage(string flowDocumentSource)
+        {
+            var regImage = new Regex(
+                @"
+                <Image\s*.*?/>
+                ",
+                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+            );
+            return regImage.Replace(flowDocumentSource, string.Empty);
+        }
 
         public string ConvertLinkFromPlainText(string flowDocumentSource, string commandName)
         {
             var regLink = new Regex(
                 @"
+                (?<!Source="")
                 (?<SCHEME>
                     h?
                     ttp

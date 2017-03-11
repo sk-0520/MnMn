@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="ConstantsTest.cs" />
     <Compile Include="Logic\PlayListManagerTest.cs" />
+    <Compile Include="Logic\DescriptionBaseTest.cs" />
     <Compile Include="Logic\Utility\RawValueUtilityTest.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDescriptionUtilityTest.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtilityTest.cs" />
@@ -82,6 +83,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Library\Bridging\Bridging.csproj">
+      <Project>{89a67e67-827b-44d6-a237-be50813883ac}</Project>
+      <Name>Bridging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Library\Package\Package.csproj">
       <Project>{922d77b4-f3b7-4685-b6dc-6ecb0f4bbe8f}</Project>
       <Name>Package</Name>
