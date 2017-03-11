@@ -312,27 +312,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        #region IsEnabledDefaultBrowserProperty
+        #region IsEnabledSystemBrowserProperty
 
-        public static readonly DependencyProperty IsEnabledDefaultBrowserProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(IsEnabledDefaultBrowserProperty)),
+        public static readonly DependencyProperty IsEnabledSystemBrowserProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsEnabledSystemBrowserProperty)),
             typeof(bool),
             typeof(WebNavigator),
-            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledDefaultBrowserChanged))
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledSystemBrowserChanged))
         );
 
-        private static void OnIsEnabledDefaultBrowserChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsEnabledSystemBrowserChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as WebNavigator;
             if(control != null) {
-                control.IsEnabledDefaultBrowser = (bool)e.NewValue;
+                control.IsEnabledSystemBrowser = (bool)e.NewValue;
             }
         }
 
-        public bool IsEnabledDefaultBrowser
+        public bool IsEnabledSystemBrowser
         {
-            get { return (bool)GetValue(IsEnabledDefaultBrowserProperty); }
-            set { SetValue(IsEnabledDefaultBrowserProperty, value); }
+            get { return (bool)GetValue(IsEnabledSystemBrowserProperty); }
+            set { SetValue(IsEnabledSystemBrowserProperty, value); }
         }
 
         #endregion

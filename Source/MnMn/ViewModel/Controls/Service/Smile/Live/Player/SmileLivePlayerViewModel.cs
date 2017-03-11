@@ -427,18 +427,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             html.LoadHtml(htmlSource);
             var baseElement = html.GetElementbyId("jsFollowingAdMain");
             var removeTargets = new[] {
-                baseElement.SelectSingleNode(".//*[@class='creator_btn_are']"),
-                baseElement.SelectSingleNode(".//*[@id='livetags']"),
-                baseElement.SelectSingleNode(".//*[@class='chan']"),
-                baseElement.SelectSingleNode(".//*[@id='tooltip']"),
-                baseElement.SelectSingleNode(".//*[@class='com']"),
-                baseElement.SelectSingleNode(".//*[@class='community-info-score']"),
+                baseElement?.SelectSingleNode(".//*[@class='creator_btn_are']"),
+                baseElement?.SelectSingleNode(".//*[@id='livetags']"),
+                baseElement?.SelectSingleNode(".//*[@class='chan']"),
+                baseElement?.SelectSingleNode(".//*[@id='tooltip']"),
+                baseElement?.SelectSingleNode(".//*[@class='com']"),
+                baseElement?.SelectSingleNode(".//*[@class='community-info-score']"),
             };
             foreach(var target in removeTargets.Where(n => n != null)) {
                 target.Remove();
             }
 
-            return baseElement.InnerHtml;
+            return baseElement?.InnerHtml ?? string.Empty;
         }
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)

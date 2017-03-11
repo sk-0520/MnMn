@@ -59,7 +59,7 @@
   </mamc:MetroWindow.RightWindowCommands>
 
   <DockPanel>
-    <ToolBar DockPanel.Dock="Top" />
+    <!--<ToolBar DockPanel.Dock="Top" />-->
 
     <StatusBar DockPanel.Dock="Bottom">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
@@ -103,6 +103,9 @@
         <app_view_controls:WebNavigator
           x:Name="navigatorPlayer"
           ServiceType="SmileLive"
+          IsVisibleToolbar="False"
+          IsEnabledGesture="False"
+          IsEnabledUserChangeSource="False"
           Visibility="{Binding ShowWebPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
           NewWindowCommand="{Binding NewWindowCommand}"
           SourceLoadedCommand="{Binding SourceLoadedCommand}"
