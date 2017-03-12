@@ -142,7 +142,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         void MakeUsingCategory()
         {
             // 初期化で読み込みが動いちゃう対応
-            var categoryItems = new List<SmileVideoRankingCategoryDefinedElementViewModel>(GetLinearRankingElementList(RankingModel.Items));
+            IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> items = GetLinearRankingElementList(RankingModel.Items).ToList();
+            var removeItems = items.Where(i => Setting.Ranking.IgnoreCategoryItems.Any(s => s == i.Key));
+            if(removeItems.Any()) {
+                var removedItems = items.Except(removeItems);
+                if(removedItems.Any()) {
+                    items = removedItems;
+                }
+            }
+
+            var categoryItems = new List<SmileVideoRankingCategoryDefinedElementViewModel>(items);
 
             if(!Session.IsLoggedIn || !Session.IsOver18) {
                 var expitems = categoryItems
@@ -224,7 +233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             if(CategoryItems == null) {
                 MakeUsingCategory();
             } else if(CurrentIgnoreCategoryItems != null) {
-                var hasDiff = Setting.Ranking.IgnoreCategoryItems
+                var hasDiff = !Setting.Ranking.IgnoreCategoryItems
                     .OrderBy(s => s)
                     .SequenceEqual(CurrentIgnoreCategoryItems.OrderBy(s => s))
                 ;
