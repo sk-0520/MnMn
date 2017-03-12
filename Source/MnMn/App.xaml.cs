@@ -228,6 +228,18 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //SmileSession
         }
 
+        void SetCrashReportInformation(CDataModel information, Exception ex)
+        {
+            // #465
+            if(ex is DllNotFoundException) {
+                var appDir = Constants.AssemblyRootDirectoryPath;
+                var files = Directory.GetFiles(appDir, "*", SearchOption.AllDirectories)
+                    .Select(f => f.Substring(appDir.Length))
+                ;
+                information.Text = string.Join(Environment.NewLine, files);
+            }
+        }
+
         string CreateCrashReport(Exception ex, bool callerUiThread)
         {
             var logParam = new AppLoggingParameterModel() {
@@ -240,6 +252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var crashReport = new CrashReportModel(ex, callerUiThread);
             crashReport.Logs.Text = string.Join(Environment.NewLine, logs);
+            SetCrashReportInformation(crashReport.Information, ex);
             SetCrashReportSetting(crashReport.Setting);
 
             var dir = VariableConstants.GetCrashReportDirectory();

@@ -62,6 +62,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         bool _isOpenDevelopmentMenu;
 
+        string _exceptionType = typeof(Exception).FullName;
+
         #endregion
 
         public AppAboutManagerViewModel(Mediation mediation, AppLoggingManagerViewModel loggingManager)
@@ -108,6 +110,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return this._isOpenDevelopmentMenu; }
             set { SetVariableValue(ref this._isOpenDevelopmentMenu, value); }
+        }
+
+        public string ExceptionType
+        {
+            get { return this._exceptionType; }
+            set { SetVariableValue(ref this._exceptionType, value); }
         }
 
         #endregion
@@ -262,6 +270,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         IsOpenDevelopmentMenu = false;
+
+                        if(!string.IsNullOrWhiteSpace(ExceptionType)) {
+                            var exceptionType = Type.GetType(ExceptionType, false);
+                            if(exceptionType != null) {
+                                var exception = Activator.CreateInstance(exceptionType, nameof(GoogbyeCommand)) as Exception;
+                                if(exception != null) {
+                                    throw exception;
+                                }
+                                throw new InvalidCastException($"{exceptionType}");
+                            }
+                            throw new InvalidCastException(ExceptionType);
+                        }
                         throw new Exception(nameof(GoogbyeCommand));
                     }
                 );
