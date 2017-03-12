@@ -57,6 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         SmileVideoRankingModel RankingModel { get; set; }
 
+        IReadOnlyList<string> CurrentIgnoreCategoryItems { get; set; }
+
         public IList<DefinedElementModel> PeriodItems { get { return RankingModel.Periods.Items; } }
         public IList<DefinedElementModel> TargetItems { get { return RankingModel.Targets.Items; } }
 
@@ -153,6 +155,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             SelectedCategory = categoryItems.FirstOrDefault(m => m.Model.Key == Setting.Ranking.DefaultCategoryKey) ?? categoryItems.First();
             CategoryItems = CollectionModel.Create(categoryItems);
             CallOnPropertyChange(nameof(CategoryItems));
+
+            CurrentIgnoreCategoryItems = Setting.Ranking.IgnoreCategoryItems.ToList();
         }
 
         IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)
@@ -219,6 +223,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         {
             if(CategoryItems == null) {
                 MakeUsingCategory();
+            } else if(CurrentIgnoreCategoryItems != null) {
+                var hasDiff = Setting.Ranking.IgnoreCategoryItems
+                    .OrderBy(s => s)
+                    .SequenceEqual(CurrentIgnoreCategoryItems.OrderBy(s => s))
+                ;
+                if(hasDiff) {
+                    MakeUsingCategory();
+                }
             }
 
             if(!RankingCategoryGroupItems.Any()) {
