@@ -46,4 +46,3 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
  * [sk ☃#QQ](https://twitter.com/sk_cttn_QQ) @sk_cttn_QQ
 
-
