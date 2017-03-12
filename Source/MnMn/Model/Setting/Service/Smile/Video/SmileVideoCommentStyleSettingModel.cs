@@ -80,12 +80,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember, IsDeepClone]
         public TextShowMode TextShowMode { get; set; } = Constants.SettingServiceSmileVideoCommentTextShowMode;
 
-        /// <summary>
-        /// 投稿者コメントの塗りつぶし。
-        /// </summary>
-        [DataMember, IsDeepClone]
-        public bool FillBackgroundOriginalPoster { get; set; } = Constants.SettingServiceSmileVideoCommentFillBackgroundOriginalPoster;
-
         #endregion
 
         #region IDeepClone

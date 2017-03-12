@@ -904,6 +904,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public bool FillBackgroundOriginalPoster
+        {
+            get { return this._fillBackgroundOriginalPoster; }
+            set { SetVariableValue(ref this._fillBackgroundOriginalPoster, value); }
+        }
+
         #region post
 
         /// <summary>
