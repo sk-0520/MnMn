@@ -904,12 +904,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public bool FillBackgroundOriginalPoster
-        {
-            get { return this._fillBackgroundOriginalPoster; }
-            set { SetVariableValue(ref this._fillBackgroundOriginalPoster, value); }
-        }
-
         #region post
 
         /// <summary>
@@ -1093,6 +1087,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 if(SetVariableValue(ref this._isEnabledOriginalPosterFilering, value)) {
                     ApprovalComment();
+                }
+            }
+        }
+
+        public bool FillBackgroundOriginalPoster
+        {
+            get { return this._fillBackgroundOriginalPoster; }
+            set
+            {
+                if(SetVariableValue(ref this._fillBackgroundOriginalPoster, value)) {
+                    ChangedCommentFillBackground();
                 }
             }
         }

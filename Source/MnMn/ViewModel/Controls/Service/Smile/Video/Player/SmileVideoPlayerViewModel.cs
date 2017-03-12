@@ -2139,6 +2139,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
             OriginalPosterCommentListCount = OriginalPosterCommentList.Count;
 
+            ChangedCommentFillBackground();
             ApprovalComment();
 
             if(FilteringCommentType != SmileVideoFilteringCommentType.All) {
