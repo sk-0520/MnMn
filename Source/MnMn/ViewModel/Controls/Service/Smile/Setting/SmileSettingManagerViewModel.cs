@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -32,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -53,12 +55,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         {
             Setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+
+            PropertyChangedListener = new PropertyChangedWeakEventListener(RankingSelectItem_PropertyChanged);
+
+            var rankingDefine = Mediation.GetResultFromRequest<SmileVideoRankingModel>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+            RankingCategoryItems = rankingDefine.Items.Select(i => new SmileVideoRankingGroupViewModel(i)).ToList();
+            foreach(var item in RankingCategoryItems.SelectMany(i => i.Items)) {
+                item.IsChecked = !Setting.Video.Ranking.IgnoreCategoryItems.Any(s => s == item.Key);
+                PropertyChangedListener.Add(item);
+            }
         }
 
         #region property
 
         SmileSettingModel Setting { get; }
         public SmileSessionViewModel Session { get; }
+
+        PropertyChangedWeakEventListener PropertyChangedListener { get; }
 
         /// <summary>
         /// 編集用アカウント名。
@@ -105,6 +118,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
                 return string.Join(", ", list.Select(s => "${" + s + "}"));
             }
         }
+
+        public IReadOnlyList<SmileVideoRankingGroupViewModel> RankingCategoryItems { get; }
+
 
         /// <summary>
         /// 動画再生方法。
@@ -402,5 +418,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         }
 
         #endregion
+
+        private void RankingSelectItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(SmileVideoRankingSelectItemViewModel.IsChecked)) {
+                var item = (SmileVideoRankingSelectItemViewModel)sender;
+                Setting.Video.Ranking.IgnoreCategoryItems.Remove(item.Key);
+                if(!item.IsChecked) {
+                    Setting.Video.Ranking.IgnoreCategoryItems.Add(item.Key);
+                }
+            }
+        }
+
     }
 }

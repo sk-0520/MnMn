@@ -81,9 +81,9 @@
               </Grid>
 
               <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource AllMargin}" />
-              
+
               <StackPanel Grid.Row="4" Grid.Column="1">
-                
+
                 <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding EnabledStartupAutoLogin}">起動時に自動ログインする</CheckBox>
               </StackPanel>
             </Grid>
@@ -108,6 +108,33 @@
               <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CommonCustomCopyList}" />
 
             </Grid>
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="ランキング">
+          <StackPanel>
+            <ItemsControl ItemsSource="{Binding RankingCategoryItems}">
+              <ItemsControl.ItemTemplate>
+                <!-- HierarchicalDataTemplate と迷ったけど2階層しかない仕様だからこれで落ち着いた -->
+                <DataTemplate>
+                  <StackPanel>
+                    <CheckBox IsChecked="{Binding RootItem.IsChecked}" Content="{Binding RootItem.DisplayText}" />
+                    <ItemsControl ItemsSource="{Binding Children}">
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" />
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
           </StackPanel>
         </GroupBox>
 
