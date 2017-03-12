@@ -688,6 +688,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentStyleSetting = (SmileVideoCommentStyleSettingModel)Setting.Comment.StyleSetting.DeepClone();
             IsEnabledOriginalPosterFilering = Setting.Comment.IsEnabledOriginalPosterFilering;
             FillBackgroundOriginalPoster = Setting.Comment.FillBackgroundOriginalPoster;
+
+            CanChangeCommentEnabledArea = Setting.Player.CanChangeCommentEnabledArea;
         }
 
         void ExportSetting()
@@ -2574,7 +2576,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void EnabledCommentControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowEnabledCommentPreviewArea = true;
+            if(CanChangeCommentEnabledArea) {
+                ShowEnabledCommentPreviewArea = true;
+            }
         }
 
         private void EnabledCommentControl_MouseLeave(object sender, MouseEventArgs e)

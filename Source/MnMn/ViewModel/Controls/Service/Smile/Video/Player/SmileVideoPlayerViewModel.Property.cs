@@ -1104,8 +1104,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public DescriptionBase DescriptionProcessor => new SmileDescription(Mediation);
 
-
         SmileVideoCommentViewModel CommentScriptDefault { get; set; }
+
+        public bool CanChangeCommentEnabledArea { get; private set; }
 
         #endregion
     }

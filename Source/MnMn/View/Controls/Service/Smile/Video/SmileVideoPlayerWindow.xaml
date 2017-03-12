@@ -132,7 +132,7 @@
               </Canvas>
             </Viewbox>
           </ToggleButton>
-          <Canvas Panel.ZIndex="100">
+          <Canvas Panel.ZIndex="100" Visibility="{Binding CanChangeCommentEnabledArea, Mode=OneTime, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Border
               x:Name="PART_CommentAreaSliderParent"
               Canvas.Left="0"
