@@ -26,6 +26,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         public SmileVideoRankingSelectItemViewModel RootItem { get; }
         public IReadOnlyList<SmileVideoRankingSelectItemViewModel> Children { get; }
 
+        public bool HasChildren => Children.Any();
+
         #endregion
     }
 }
