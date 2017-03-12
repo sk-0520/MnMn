@@ -259,7 +259,17 @@
               <StackPanel>
                 <MenuItem Header="設定保存(そのまま)" Command="{Binding SettingSaveCommand}" CommandParameter="False" />
                 <MenuItem Header="設定保存(アーカイブ)" Command="{Binding SettingSaveCommand}" CommandParameter="True" />
-                <MenuItem Header="自殺" Command="{Binding GoogbyeCommand}" />
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <Button Grid.Column="0" Content="自殺" Command="{Binding GoogbyeCommand}" />
+                  <ComboBox Grid.Column="1" IsEditable="True" Text="{Binding ExceptionType}">
+                    <ComboBoxItem>System.Exception</ComboBoxItem>
+                    <ComboBoxItem>System.DllNotFoundException</ComboBoxItem>
+                  </ComboBox>
+                </Grid>
               </StackPanel>
             </xctk:DropDownButton.DropDownContent>
           </xctk:DropDownButton>
