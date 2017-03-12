@@ -363,6 +363,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TextShowMode SettingServiceSmileVideoCommentTextShowMode => appConfig.Get("setting-service-smile-smilevideo-comment-text_show_mode", s => (TextShowMode)Enum.Parse(typeof(TextShowMode), s));
         /// <summary>
+        /// 投稿者のコメント背景色を塗りつぶすか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCommentFillBackgroundOriginalPoster  => appConfig.Get("setting-service-smile-smilevideo-comment-fill-background-op", bool.Parse);
+
+        /// <summary>
         /// コメントを自動スクロールするか。
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerAutoScrollCommentList => appConfig.Get("setting-service-smile-smilevideo-player-auto-scroll-comment-list", bool.Parse);

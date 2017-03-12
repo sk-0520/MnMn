@@ -29,7 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoCommentStyleSettingModel: SettingModelBase, IDeepClone
+    public class SmileVideoCommentStyleSettingModel : SettingModelBase, IDeepClone
     {
         #region property
 
@@ -79,7 +79,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember, IsDeepClone]
         public TextShowMode TextShowMode { get; set; } = Constants.SettingServiceSmileVideoCommentTextShowMode;
-
 
         #endregion
 

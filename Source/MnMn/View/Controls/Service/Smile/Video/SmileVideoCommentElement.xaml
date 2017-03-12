@@ -55,14 +55,23 @@
         <ContentControl.Style>
           <Style TargetType="ContentControl">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding TextShowMode}" Value="None">
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding TextShowMode}" Value="None" />
+                  <Condition Binding="{Binding FillBackground}" Value="False" />
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Content">
                   <Setter.Value>
                     <TextBlock Style="{StaticResource CommentText}" />
                   </Setter.Value>
                 </Setter>
-              </DataTrigger>
-              <DataTrigger Binding="{Binding TextShowMode}" Value="SimpleShadow">
+              </MultiDataTrigger>
+
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding TextShowMode}" Value="SimpleShadow" />
+                  <Condition Binding="{Binding FillBackground}" Value="False" />
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Content">
                   <Setter.Value>
                     <Grid>
@@ -71,8 +80,13 @@
                     </Grid>
                   </Setter.Value>
                 </Setter>
-              </DataTrigger>
-              <DataTrigger Binding="{Binding TextShowMode}" Value="BlurShadow">
+              </MultiDataTrigger>
+
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding TextShowMode}" Value="BlurShadow" />
+                  <Condition Binding="{Binding FillBackground}" Value="False" />
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Content">
                   <Setter.Value>
                     <Grid>
@@ -88,8 +102,13 @@
                     </Grid>
                   </Setter.Value>
                 </Setter>
-              </DataTrigger>
-              <DataTrigger Binding="{Binding TextShowMode}" Value="Outline">
+              </MultiDataTrigger>
+
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding TextShowMode}" Value="Outline" />
+                  <Condition Binding="{Binding FillBackground}" Value="False" />
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Content">
                   <Setter.Value>
                     <app_view_controls:OutlinedTextBlock
@@ -104,6 +123,14 @@
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Center"
                     />
+                  </Setter.Value>
+                </Setter>
+              </MultiDataTrigger>
+
+              <DataTrigger Binding="{Binding FillBackground}" Value="True" >
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <TextBlock Background="{Binding ActualShadow}" Style="{StaticResource CommentText}" />
                   </Setter.Value>
                 </Setter>
               </DataTrigger>

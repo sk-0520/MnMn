@@ -687,6 +687,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SharedNoGoodScore = Setting.Comment.SharedNoGoodScore;
             CommentStyleSetting = (SmileVideoCommentStyleSettingModel)Setting.Comment.StyleSetting.DeepClone();
             IsEnabledOriginalPosterFilering = Setting.Comment.IsEnabledOriginalPosterFilering;
+            FillBackgroundOriginalPoster = Setting.Comment.FillBackgroundOriginalPoster;
         }
 
         void ExportSetting()
@@ -718,6 +719,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Comment.SharedNoGoodScore = SharedNoGoodScore;
             Setting.Comment.StyleSetting = (SmileVideoCommentStyleSettingModel)CommentStyleSetting.DeepClone();
             Setting.Comment.IsEnabledOriginalPosterFilering = IsEnabledOriginalPosterFilering;
+            Setting.Comment.FillBackgroundOriginalPoster = FillBackgroundOriginalPoster;
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
@@ -1495,6 +1497,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void ChangedCommentFillBackground()
+        {
+            foreach(var comment in OriginalPosterCommentList) {
+                comment.FillBackground = FillBackgroundOriginalPoster;
+            }
+        }
+
         void ChangedCommentFps()
         {
             //NOTE: 実行中アニメーションは特に意味なさげ
@@ -1538,9 +1547,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentStyleSetting.ShowTime = Constants.SettingServiceSmileVideoCommentShowTime;
             CommentStyleSetting.ConvertPairYenSlash = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
             CommentStyleSetting.TextShowMode = Constants.SettingServiceSmileVideoCommentTextShowMode;
+            FillBackgroundOriginalPoster = Constants.SettingServiceSmileVideoCommentFillBackgroundOriginalPoster;
 
             ChangedCommentFont();
             ChangedCommentContent();
+            ChangedCommentFillBackground();
             ResetCommentInformation();
 
             var propertyNames = new[] {
@@ -2128,6 +2139,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
             OriginalPosterCommentListCount = OriginalPosterCommentList.Count;
 
+            ChangedCommentFillBackground();
             ApprovalComment();
 
             if(FilteringCommentType != SmileVideoFilteringCommentType.All) {

@@ -62,6 +62,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _approval;
 
+        bool _fillBackground;
+
         #endregion
 
         public SmileVideoCommentViewModel(RawSmileVideoMsgChatModel model, SmileVideoCommentStyleSettingModel setting)
@@ -284,6 +286,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public TextShowMode TextShowMode
         {
             get { return Setting.TextShowMode; }
+        }
+
+        public bool FillBackground
+        {
+            get { return this._fillBackground; }
+            set { SetVariableValue(ref this._fillBackground, value); }
         }
 
         /// <summary>

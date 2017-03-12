@@ -98,6 +98,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public bool IsEnabledOriginalPosterFilering { get; set; } = Constants.SettingServiceSmileVideoCommentIsEnabledOriginalPosterFilering;
 
+        /// <summary>
+        /// 投稿者コメントの塗りつぶし。
+        /// </summary>
+        [DataMember]
+        public bool FillBackgroundOriginalPoster { get; set; } = Constants.SettingServiceSmileVideoCommentFillBackgroundOriginalPoster;
+
         #endregion
     }
 }

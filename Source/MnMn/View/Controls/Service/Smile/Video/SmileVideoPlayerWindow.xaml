@@ -1842,6 +1842,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -1896,6 +1897,9 @@
                 <RadioButton VerticalAlignment="Center" Content="影(ぼかし)" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.BlurShadow}}" />
                 <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.Outline}}" />
               </WrapPanel>
+
+              <CheckBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding FillBackgroundOriginalPoster}">投稿者コメントの背景を塗りつぶす</CheckBox>
+
             </Grid>
           </TabItem>
         </TabControl>
