@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
@@ -34,6 +35,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public string DefaultTargetKey { get; set; }
         [DataMember]
         public string DefaultCategoryKey { get; set; }
+
+        /// <summary>
+        /// ランキングから除外する項目。
+        /// </summary>
+        [DataMember]
+        public CollectionModel<string> IgnoreCategoryItems { get; set; } = new CollectionModel<string>();
 
         #endregion
     }

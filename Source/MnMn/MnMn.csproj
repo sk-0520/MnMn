@@ -482,6 +482,8 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Player\SmileLivePlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Market\SmileMarketVideoRelationItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoRankingGroupViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoRankingSelectItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserVersionViewModel.cs" />
