@@ -426,6 +426,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
                 Setting.Video.Ranking.IgnoreCategoryItems.Remove(item.Key);
                 if(!item.IsChecked) {
                     Setting.Video.Ranking.IgnoreCategoryItems.Add(item.Key);
+
+                    // カテゴリのチェックが外されたなら下位は全部チェック外す(レイアウトの問題)
+                    var category = RankingCategoryItems.FirstOrDefault(i => i.RootItem == item);
+                    if(category != null) {
+                        foreach(var child in category.Children) {
+                            child.IsChecked = false;
+                        }
+                    }
                 }
             }
         }

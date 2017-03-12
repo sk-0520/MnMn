@@ -118,8 +118,11 @@
                 <!-- HierarchicalDataTemplate と迷ったけど2階層しかない仕様だからこれで落ち着いた -->
                 <DataTemplate>
                   <StackPanel>
-                    <CheckBox IsChecked="{Binding RootItem.IsChecked}" Content="{Binding RootItem.DisplayText}" />
-                    <ItemsControl ItemsSource="{Binding Children}">
+                    <CheckBox IsChecked="{Binding RootItem.IsChecked}" Content="{Binding RootItem.DisplayText}" Style="{StaticResource VerticalCheckBox}" />
+                    <ItemsControl ItemsSource="{Binding Children}" IsEnabled="{Binding RootItem.IsChecked}">
+                      <ItemsControl.Margin>
+                        <Thickness Left="{StaticResource NormalIndentWidth}" Bottom="{StaticResource HalfMarginWidth}" />
+                      </ItemsControl.Margin>
                       <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                           <WrapPanel Orientation="Horizontal" />
@@ -127,7 +130,7 @@
                       </ItemsControl.ItemsPanel>
                       <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                          <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" />
+                          <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" Style="{StaticResource HorizontalCheckBox}" />
                         </DataTemplate>
                       </ItemsControl.ItemTemplate>
                     </ItemsControl>
