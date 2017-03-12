@@ -150,7 +150,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'open',
+						'subject': "#465: System.DllNotFoundException: DLL 'mozglue' を読み込めません",
+						'comments': [
+							'そもそも DLL 見つかんないってのが分からないから DllNotFoundException で死んだらクラッシュレポートに MnMn のディレクトリから下位のファイル一覧を記載した'
+						]
 					},
 					{
 						'revision': '',
