@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
             var material = string.Join(string.Empty, materials);
 
-            using(var hashCreator = new SHA512CryptoServiceProvider())
+            using(var hashCreator = new SHA1CryptoServiceProvider())
             using(var stream = StreamUtility.ToUtf8Stream(material)) {
                 var hash = hashCreator.ComputeHash(stream);
                 var hashText = BitConverter.ToString(hash, 0);
