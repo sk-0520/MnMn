@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //src();
             //livestatus();
             //market();
-            user_id();
+            //user_id();
         }
 
         async void login()

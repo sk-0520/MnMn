@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
@@ -199,6 +200,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 var result = hashText.ToLower().Replace("-", string.Empty);
                 return result;
             }
+        }
+
+        /// <summary>
+        /// ユーザー識別子がドメイン上正しい書式化をチェック。
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static bool ValidateUserId(string userId)
+        {
+            if(string.IsNullOrWhiteSpace(userId)) {
+                return false;
+            }
+
+            const int userIdLength = 40;
+            if(userId.Length != userIdLength) {
+                return false;
+            }
+
+            return Regex.IsMatch(userId, $@"[0-9a-f]{{{userIdLength}}}", RegexOptions.IgnoreCase);
         }
 
         #endregion
