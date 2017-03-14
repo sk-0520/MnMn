@@ -72,6 +72,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public Version IgnoreUpdateVersion { get; set; }
 
+        /// <summary>
+        /// ユーザー識別子。
+        /// <para>#474: ユーザー環境に対する識別子の設定</para>
+        /// </summary>
+        [DataMember]
+        public string UserId { get; set; }
+
         #endregion
     }
 }
