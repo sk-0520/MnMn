@@ -116,6 +116,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
                     Players.Add(window);
                     return window;
                 }
+                var information = request.ViewModel as SmileLiveInformationViewModel;
+                if(information != null) {
+                    var plaingItem = Players
+                        .Select(w => new { View = w, ViewModel = w.DataContext as SmileLivePlayerViewModel })
+                        .Where(p => p.ViewModel != null)
+                        .FirstOrDefault(p => p.ViewModel.Id == information.Id)
+                    ;
+
+                    return plaingItem.View;
+                }
 
                 throw new NotImplementedException();
             } else {

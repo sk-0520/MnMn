@@ -100,6 +100,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public SmileSessionViewModel Session { get; }
         SmileLiveSettingModel Setting { get; }
 
+        public string Id => Information.Id;
+
         PropertyChangedWeakEventListener PropertyChangedListener { get; }
 
         public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
@@ -582,6 +584,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             NavigatorPlayer.NavigateEmpty();
 
             PropertyChangedListener.Remove(ShowWebPlayer);
+
+            Information.IsPlaying = false;
         }
 
         void ShowWebPlayer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
