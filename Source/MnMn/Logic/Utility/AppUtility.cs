@@ -16,9 +16,11 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -138,7 +140,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static XmlElement ExtractResourceXamlElement(string xamlSource, Action<XmlDocument, XmlElement> action)
         {
             using(var stream = new StringReader(xamlSource)) {
-                var xml= new XmlDocument();
+                var xml = new XmlDocument();
                 xml.Load(stream);
 
                 var element = xml.DocumentElement.ChildNodes
@@ -150,6 +152,52 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 }
 
                 return element;
+            }
+        }
+
+        /// <summary>
+        /// ユーザーIDの作成。
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateUserId(ILogger logger)
+        {
+            var materials = new List<string>();
+
+            // アカウント情報のユーザー名(取れなくてもいい)
+            try {
+                var userPrincipal = UserPrincipal.Current;
+                materials.Add(userPrincipal.DisplayName);
+            } catch(Exception ex) {
+                logger.Warning(ex);
+            }
+
+            // Windows ログオンユーザー名
+            materials.Add(Environment.UserName);
+
+            using(var appInfo = new AppInformationCollection()) {
+                // CPU の名称と説明
+                var cpuInfo = appInfo.GetCPU();
+                materials.Add((string)cpuInfo.Items["Name"]);
+                materials.Add((string)cpuInfo.Items["Description"]);
+
+                // メモリの合計サイズ(KB)
+                var memInfo = appInfo.GetMemory();
+                materials.Add(memInfo.Items["TotalVisibleMemorySize"].ToString());
+            }
+
+            // OS のメジャー・マイナーバージョン
+            var osVersion = Environment.OSVersion.Version;
+            materials.Add(osVersion.Major.ToString());
+            materials.Add(osVersion.Minor.ToString());
+
+            var material = string.Join(string.Empty, materials);
+
+            using(var hashCreator = new SHA512CryptoServiceProvider())
+            using(var stream = StreamUtility.ToUtf8Stream(material)) {
+                var hash = hashCreator.ComputeHash(stream);
+                var hashText = BitConverter.ToString(hash, 0);
+                var result = hashText.ToLower().Replace("-", string.Empty);
+                return result;
             }
         }
 
