@@ -1418,7 +1418,7 @@
                       </DockPanel>
                     </ItemContainerTemplate>
                   </mamc:Flyout.HeaderTemplate>
-                  <Grid>
+                  <Grid Margin="{StaticResource IndependentMargin}">
                     <ScrollViewer>
                       <Grid>
                         <Grid.Resources>
@@ -1883,12 +1883,8 @@
                 </Slider.ToolTip>
               </Slider>
 
-              <CheckBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding CommentConvertPairYenSlash}">
-                <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
-              </CheckBox>
-
-              <Label Grid.Row="7" Grid.Column="0" Content="テキスト描画" />
-              <WrapPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+              <Label Grid.Row="6" Grid.Column="0" Content="テキスト描画"  Margin="{StaticResource BottomMargin}" />
+              <WrapPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="{StaticResource BottomMargin}">
                 <WrapPanel.Resources>
                   <Style TargetType="RadioButton"  BasedOn="{StaticResource HorizontalRadioButton}" />
                 </WrapPanel.Resources>
@@ -1898,7 +1894,11 @@
                 <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.Outline}}" />
               </WrapPanel>
 
-              <CheckBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding FillBackgroundOriginalPoster}">投稿者コメントの背景を塗りつぶす</CheckBox>
+              <CheckBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding CommentConvertPairYenSlash}" Style="{StaticResource VerticalCheckBox}">
+                <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
+              </CheckBox>
+
+              <CheckBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding FillBackgroundOriginalPoster}" Style="{StaticResource VerticalCheckBox}">投稿者コメントの背景を塗りつぶす</CheckBox>
 
             </Grid>
           </TabItem>
