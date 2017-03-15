@@ -169,11 +169,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 var userPrincipal = UserPrincipal.Current;
                 materials.Add(userPrincipal.DisplayName);
             } catch(Exception ex) {
+                // Windows ログオンユーザー名
+                materials.Add(Environment.UserName);
                 logger.Warning(ex);
             }
-
-            // Windows ログオンユーザー名
-            materials.Add(Environment.UserName);
 
             using(var appInfo = new AppInformationCollection()) {
                 // CPU の名称と説明
