@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriUpdate => ReplaceAppConfig(appConfig.Get("app-uri-update"));
         public static string AppUriChangelogRelease => ReplaceAppConfig(appConfig.Get("app-uri-changelog-release"));
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));
+        public static Uri AppUriSituation => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-situation")));
         public static Uri AppUriIssueResolved => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved")));
         public static Uri AppUriQuestionnaire => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-questionnaire")));
         public static string AppUriWebNavigatorGeckoFxPlugins => ReplaceAppConfig(appConfig.Get("app-uri-web_navigator-plugins"));

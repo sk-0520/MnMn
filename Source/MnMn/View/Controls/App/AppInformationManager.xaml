@@ -389,6 +389,10 @@
       </DockPanel>
     </TabItem>
 
+    <TabItem Header="開発状況" DataContext="{Binding AppSituationManager}" Style="{StaticResource SectionTabItem}">
+      <app_view_controls:WebNavigator x:Name="situationBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
+    </TabItem>
+
     <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>

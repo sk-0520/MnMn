@@ -463,6 +463,7 @@
     <Compile Include="ViewModel\Controls\App\AppDownloadManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppSituationManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />

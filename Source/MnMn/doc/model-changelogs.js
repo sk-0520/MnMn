@@ -183,7 +183,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '垂れ流してる開発状況を表示する'
 					},
 					{
 						'revision': '',
