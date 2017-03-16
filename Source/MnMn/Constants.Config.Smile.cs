@@ -359,9 +359,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static double SettingServiceSmileVideoPlayerCommentEnableAreaPercent => appConfig.Get("setting-service-smile-smilevideo-player-comment-enable-area-percent", double.Parse);
         /// <summary>
+        /// コメント有効領域を設定可能にするか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCanChangeCommentEnabledArea => appConfig.Get("setting-service-smile-smilevideo-player-can-change-comment-enabled-area", bool.Parse);
+        /// <summary>
         /// コメントのテキスト描画方法。
         /// </summary>
         public static TextShowMode SettingServiceSmileVideoCommentTextShowMode => appConfig.Get("setting-service-smile-smilevideo-comment-text_show_mode", s => (TextShowMode)Enum.Parse(typeof(TextShowMode), s));
+        /// <summary>
+        /// 投稿者のコメント背景色を塗りつぶすか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCommentFillBackgroundOriginalPoster  => appConfig.Get("setting-service-smile-smilevideo-comment-fill-background-op", bool.Parse);
         /// <summary>
         /// コメントを自動スクロールするか。
         /// </summary>

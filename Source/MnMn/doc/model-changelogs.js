@@ -85,6 +85,102 @@
 	},
 	*/
 	{
+		'date': '2017/03/16',
+		'version': '0.56.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#474 対応により送信情報がユーザー環境に紐づきます',
+						'comments': [
+							'ユーザー名・CPU・メモリ・OS からユーザー識別子を作成します',
+							'ユーザー識別子をクラッシュレポートに紐づけて特定環境に起因しているのか多環境で発生しているのかを区別します',
+							'生成されたユーザー識別子からユーザーを特定することは来ません',
+							'実装に至った経緯は課題ページを参照してください',
+							'https://bitbucket.org/sk_0520/mnmn/issues/474',
+							'実装の安全性はソースを参照してください',
+							'https://bitbucket.org/sk_0520/mnmn/src/40201c4a4a90d08b9aaa470d0e9a11cb137a52a7/Source/MnMn/Logic/Utility/AppUtility.cs?fileviewer=file-view-default#AppUtility.cs-159'
+						]
+					},
+					{
+						'revision': '',
+						'subject': 'Twitter と GAS くっつけて遊んでたら MnMn の実装忘れてた！',
+						'comments': [
+							'意味はないけどリリース版更新の通知を自動投稿するスクリプトは次回リリースまでに書いときたいね',
+							'この辺のスクリプトは MnMn 関連システムだけど無くても MnMn 側は全く困らないからソースは初の非公開',
+							'適当に doPost で回してるから勝手に動かされても困るし'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': 'e0447d86d713509e81b0c8a92fb81fd9a86481f0',
+						'subject': '#369: ランキングの表示項目制限',
+						'comments': [
+							'ニコニコ -> 設定, 下の方',
+							'カテゴリを非チェックにすると下位のカテゴリも全部非チェックするイメージなので下位カテゴリのみを表示することはできない',
+							'内部的には下位カテゴリのみ表示は可能なんだけどランキングのプルダウンが気持ち悪いことになるから設定画面で制御',
+							'どうしてもやりたい人は自分で設定ファイル弄ってちょ'
+						]
+					},
+					{
+						'revision': '14a25d4e06fe0a09a8986bf20de591182d555274',
+						'subject': '#50: コメント背景色の表示を行う',
+						'comments': [
+							'投稿者コメントに背景色を付けて強調する機能',
+							'プレイヤー -> 設定タブ -> 投稿者コメントの背景を塗りつぶす',
+							'初期値: 偽'
+						]
+					},
+					{
+						'revision': '2c6a65a310fe5e924aba66ba26e94fc376e9b41c',
+						'subject': '#464: コメント有効領域の使用・不使用を設定する',
+						'comments': [
+							'ニコニコ -> 設定 -> コメント有効領域の設定を可能にする',
+							'初期値: 真'
+						]
+					},
+					{
+						'revision': 'f189367041206ab711b254dcc6942a91a2de2e57',
+						'subject': '#474: ユーザー環境に対する識別子の設定'
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': 'e63b9dba2d3082874eabbbd14d9507db4b2f6d49',
+						'subject': '#468: ニコ生の二重再生(ウィンドウ二つ開ける挙動)を抑制する'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '1d3a007b7888cb682140262ba2735726b78ecddf',
+						'class': 'open',
+						'subject': "#465: System.DllNotFoundException: DLL 'mozglue' を読み込めません",
+						'comments': [
+							'そもそも DLL 見つかんないってのが分からないから DllNotFoundException で死んだらクラッシュレポートに MnMn のディレクトリから下位のファイル一覧を記載した'
+						]
+					},
+					{
+						'revision': '3d6b51df20194cf0818a7a5d5005248a26e4fbb1',
+						'subject': '#477: 垂れ流してる開発状況を表示する'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/03/11',
 		'version': '0.55.0',
 		'isRc': false,

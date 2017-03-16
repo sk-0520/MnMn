@@ -259,7 +259,17 @@
               <StackPanel>
                 <MenuItem Header="設定保存(そのまま)" Command="{Binding SettingSaveCommand}" CommandParameter="False" />
                 <MenuItem Header="設定保存(アーカイブ)" Command="{Binding SettingSaveCommand}" CommandParameter="True" />
-                <MenuItem Header="自殺" Command="{Binding GoogbyeCommand}" />
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <Button Grid.Column="0" Content="自殺" Command="{Binding GoogbyeCommand}" />
+                  <ComboBox Grid.Column="1" IsEditable="True" Text="{Binding ExceptionType}">
+                    <ComboBoxItem>System.Exception</ComboBoxItem>
+                    <ComboBoxItem>System.DllNotFoundException</ComboBoxItem>
+                  </ComboBox>
+                </Grid>
               </StackPanel>
             </xctk:DropDownButton.DropDownContent>
           </xctk:DropDownButton>
@@ -377,6 +387,10 @@
           </ListView.View>
         </ListView>
       </DockPanel>
+    </TabItem>
+
+    <TabItem Header="開発状況" DataContext="{Binding AppSituationManager}" Style="{StaticResource SectionTabItem}">
+      <app_view_controls:WebNavigator x:Name="situationBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
     <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}" Style="{StaticResource SectionTabItem}">

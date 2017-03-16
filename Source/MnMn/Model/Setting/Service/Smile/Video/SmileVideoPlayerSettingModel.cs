@@ -124,6 +124,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public bool CommentEnabledAreaIsEnabled { get; set; } = Constants.SettingServiceSmileVideoPlayerCommentEnableAreaIsEnabled;
 
         /// <summary>
+        /// コメント有効領域を変更するか。
+        /// </summary>
+        [DataMember]
+        public bool CanChangeCommentEnabledArea { get; set; } = Constants.SettingServiceSmileVideoCanChangeCommentEnabledArea;
+
+        /// <summary>
         /// コメント有効表示領域の高さ。
         /// <para>全体領域の下辺を0として正の値分を非表示領域とする。</para>
         /// <para>予約: 今のところ設定に持たせない。</para>

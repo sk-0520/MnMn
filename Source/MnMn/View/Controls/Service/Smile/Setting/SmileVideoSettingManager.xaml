@@ -27,6 +27,7 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
@@ -81,9 +82,9 @@
               </Grid>
 
               <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource AllMargin}" />
-              
+
               <StackPanel Grid.Row="4" Grid.Column="1">
-                
+
                 <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding EnabledStartupAutoLogin}">起動時に自動ログインする</CheckBox>
               </StackPanel>
             </Grid>
@@ -206,6 +207,7 @@
           <StackPanel>
             <CheckBox IsChecked="{Binding OpenPlayerInNewWindow}" Style="{StaticResource VerticalCheckBox}">常に新規プレイヤーで動画再生を行う</CheckBox>
             <CheckBox IsChecked="{Binding IsAutoPlay}" Style="{StaticResource VerticalCheckBox}">動画を自動的に再生する</CheckBox>
+            <CheckBox IsChecked="{Binding CanChangeCommentEnabledArea}" Style="{StaticResource VerticalCheckBox}">コメント有効領域の設定を可能にする</CheckBox>
             <CheckBox IsChecked="{Binding InactiveIsFullScreenRestore}" Style="{StaticResource VerticalCheckBox}">フルスクリーン時に非アクティブで通常ウィンドウに戻す</CheckBox>
             <StackPanel Orientation="Horizontal" IsEnabled="{Binding InactiveIsFullScreenRestore, Mode=OneWay}">
               <Separator Style="{StaticResource NormalIndent}" />
@@ -333,6 +335,36 @@
                 <ComboBox ItemsSource="{Binding BackgroundColors}" SelectedItem="{Binding BackgroundColor}" />
               </WrapPanel>
             </Grid>
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="ランキング">
+          <StackPanel>
+            <ItemsControl ItemsSource="{Binding RankingCategoryItems}">
+              <ItemsControl.ItemTemplate>
+                <!-- HierarchicalDataTemplate と迷ったけど2階層しかない仕様だからこれで落ち着いた -->
+                <DataTemplate>
+                  <StackPanel>
+                    <CheckBox IsChecked="{Binding RootItem.IsChecked}" Content="{Binding RootItem.DisplayText}" Style="{StaticResource VerticalCheckBox}" />
+                    <ItemsControl ItemsSource="{Binding Children}" IsEnabled="{Binding RootItem.IsChecked}">
+                      <ItemsControl.Margin>
+                        <Thickness Left="{StaticResource NormalIndentWidth}" Bottom="{StaticResource HalfMarginWidth}" />
+                      </ItemsControl.Margin>
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" Style="{StaticResource HorizontalCheckBox}" />
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
           </StackPanel>
         </GroupBox>
 

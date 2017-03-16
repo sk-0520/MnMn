@@ -338,8 +338,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, this, ShowViewState.Foreground));
                 return Task.CompletedTask;
             } else {
-                var vm = new SmileLivePlayerViewModel(Mediation);
+                IsPlaying = true;
 
+                var vm = new SmileLivePlayerViewModel(Mediation);
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, vm, ShowViewState.Foreground));
 
                 var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);

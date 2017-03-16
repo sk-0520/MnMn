@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -60,6 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //src();
             //livestatus();
             //market();
+            //user_id();
         }
 
         async void login()
@@ -195,6 +197,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //var model = await market.LoadVideoRelationAsync("sm9");
             var model = await market.LoadVideoRelationAsync("sm14027065");
             var items = SmileMarketUtility.GetVideoRelationItems(model).ToList();
+        }
+
+        void user_id()
+        {
+            var logger = new Logger();
+            logger.LoggerConfig.PutsDebug = true;
+            var userid = AppUtility.CreateUserId(logger);
         }
 
     }

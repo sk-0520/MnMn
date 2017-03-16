@@ -149,6 +149,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -461,6 +463,7 @@
     <Compile Include="ViewModel\Controls\App\AppDownloadManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppSituationManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
@@ -482,6 +485,8 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Player\SmileLivePlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Market\SmileMarketVideoRelationItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoRankingGroupViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoRankingSelectItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserVersionViewModel.cs" />

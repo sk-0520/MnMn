@@ -68,30 +68,55 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region property
 
+        /// <summary>
+        /// 起動時間。
+        /// </summary>
         DateTime WakeUpTimestamp { get; } = DateTime.Now;
 
+        /// <summary>
+        /// 二重起動抑制 Mutex。
+        /// </summary>
         Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
 
+        /// <summary>
+        /// スプラッシュスクリーン。
+        /// </summary>
         SplashWindow SplashWindow { get; set; }
 
+        /// <summary>
+        /// 橋渡し。
+        /// </summary>
         Mediation Mediation { get; set; }
+
+        /// <summary>
+        /// メインウィンドウ。
+        /// </summary>
         MainWindow View { get; set; }
+
+        /// <summary>
+        /// マネージャ。
+        /// </summary>
         AppManagerViewModel AppManager { get; set; }
 
         #endregion
 
         #region function
 
-        void CatchUnhandleException(Exception ex, bool callerUiThread)
+        /// <summary>
+        /// 非ハンドリング例外の取得。
+        /// </summary>
+        /// <param name="exception">例外。</param>
+        /// <param name="callerUiThread">UI スレッドで発生したか。</param>
+        void CatchUnhandleException(Exception exception, bool callerUiThread)
         {
             Debug.WriteLine($"{nameof(callerUiThread)} = {callerUiThread}");
             if(Mediation != null && Mediation.Logger != null) {
-                Mediation.Logger.Fatal(ex);
+                Mediation.Logger.Fatal(exception);
             } else {
-                Debug.WriteLine(ex);
+                Debug.WriteLine(exception);
             }
 
-            var reportPath = CreateCrashReport(ex, callerUiThread);
+            var reportPath = CreateCrashReport(exception, callerUiThread);
             var sendCrash = Constants.AppSendCrashReport;
 #if KILL
             sendCrash = true;
@@ -107,6 +132,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
             Shutdown();
         }
 
+        /// <summary>
+        /// 設定ファイルの読み込み。
+        /// </summary>
+        /// <param name="logger">ロガー。</param>
+        /// <returns>真: 読み込めた, 偽: 読み込めなかった。</returns>
         CheckResultModel<AppSettingModel> LoadSetting(ILogger logger)
         {
             var dir = VariableConstants.GetSettingDirectory();
@@ -118,6 +148,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return new CheckResultModel<AppSettingModel>(existsFile, setting, null, null);
         }
 
+        /// <summary>
+        /// 使用許諾状況のチェック。
+        /// </summary>
+        /// <param name="model">実行情報データ。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns>許諾されている場合は真。偽の場合は非許諾状態か前回バージョン等々の都合で許諾されていない。</returns>
         public static bool CheckAccept(RunningInformationSettingModel model, ILogger logger)
         {
 #if FORCE_ACCEPT
@@ -144,6 +180,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return true;
         }
 
+        /// <summary>
+        /// 言語設定。
+        /// </summary>
+        /// <param name="cultureName">設定するカルチャ。</param>
         void SetLanguage(string cultureName)
         {
             CultureInfo usingCultureInfo = null;
@@ -170,20 +210,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
             );
         }
 
-        static DateTime? GetCrashReportFileTimestamp(FileInfo file)
-        {
-            DateTime dateTime;
-            if(DateTime.TryParseExact(Path.GetFileNameWithoutExtension(file.Name), Constants.FormatTimestampFileName, CultureInfo.InvariantCulture, DateTimeStyles.AllowLeadingWhite, out dateTime)) {
-                return dateTime;
-            }
-
-            if(file.Exists) {
-                return file.CreationTime;
-            }
-
-            return null;
-        }
-
         /// <summary>
         /// 古い異常終了時のデータを破棄。
         /// </summary>
@@ -202,6 +228,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             });
         }
 
+        /// <summary>
+        /// クラッシュレポートに設定データから抜粋情報を設定する。
+        /// </summary>
+        /// <param name="target"></param>
         void SetCrashReportSetting(CrashReportSettingModel target)
         {
             target.WakeUpTimestamp = WakeUpTimestamp;
@@ -209,6 +239,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
             //var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+            target.UserId = setting.RunningInformation.UserId;
 
             target.CacheDirectoryPath = setting.CacheDirectoryPath;
             //target.UsingCacheDirectoryPath = cacheDirectory.FullName;
@@ -228,7 +259,30 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //SmileSession
         }
 
-        string CreateCrashReport(Exception ex, bool callerUiThread)
+        /// <summary>
+        /// クラッシュレポートに例外から拡張情報を設定する。
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <param name="information"></param>
+        void SetCrashReportInformation(CDataModel information, Exception ex)
+        {
+            // #465
+            if(ex is DllNotFoundException) {
+                var appDir = Constants.AssemblyRootDirectoryPath;
+                var files = Directory.GetFiles(appDir, "*", SearchOption.AllDirectories)
+                    .Select(f => f.Substring(appDir.Length))
+                ;
+                information.Text = string.Join(Environment.NewLine, files);
+            }
+        }
+
+        /// <summary>
+        /// クラッシュレポート作成。
+        /// </summary>
+        /// <param name="exception">例外。</param>
+        /// <param name="callerUiThread">UI スレッドで発生したか。</param>
+        /// <returns>生成したクラッシュレポートファイルのパス。</returns>
+        string CreateCrashReport(Exception exception, bool callerUiThread)
         {
             var logParam = new AppLoggingParameterModel() {
                 GetClone = true,
@@ -238,8 +292,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 .Select(i => $"[{i.Timestamp:yyyy-MM-ddTHH:mm:ss.fff}] {i.Message}:  {i.CallerMember} ({i.CallerLine})" + (i.HasDetail ? (Environment.NewLine + i.DetailText): string.Empty) )
             ;
 
-            var crashReport = new CrashReportModel(ex, callerUiThread);
+            var crashReport = new CrashReportModel(exception, callerUiThread);
             crashReport.Logs.Text = string.Join(Environment.NewLine, logs);
+            SetCrashReportInformation(crashReport.Information, exception);
             SetCrashReportSetting(crashReport.Setting);
 
             var dir = VariableConstants.GetCrashReportDirectory();
@@ -249,6 +304,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return path;
         }
 
+        /// <summary>
+        /// 自身がβ版の際にβ版として明示的に実行されていない場合にユーザーから使用許可を取る。
+        /// </summary>
+        /// <returns>使用許可を得られたか。</returns>
         bool ShowBetaMessageIfNoBetaFlag()
         {
             if(VariableConstants.HasOptionExecuteBetaVersion) {
@@ -268,9 +327,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
-#endregion
+        async Task CheckAndRenewalUserIdAsync(AppSettingModel setting)
+        {
+            if(!AppUtility.ValidateUserId(setting.RunningInformation.UserId)) {
+                var userId = await Task.Run(() => {
+                    return AppUtility.CreateUserId(Mediation.Logger);
+                });
+                setting.RunningInformation.UserId = userId;
+            }
+        }
 
-#region Application
+
+        #endregion
+
+        #region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
@@ -352,6 +422,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             SplashWindow.Topmost = false;
             SplashWindow.ShowInTaskbar = true; // 非最前面化でどっかいっちゃう対策
 #endif
+            await CheckAndRenewalUserIdAsync(setting);
 
             var initializeTasks = new[] {
                 InitializeCrashReportAsync(),

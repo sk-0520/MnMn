@@ -1091,10 +1091,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public bool FillBackgroundOriginalPoster
+        {
+            get { return this._fillBackgroundOriginalPoster; }
+            set
+            {
+                if(SetVariableValue(ref this._fillBackgroundOriginalPoster, value)) {
+                    ChangedCommentFillBackground();
+                }
+            }
+        }
+
         public DescriptionBase DescriptionProcessor => new SmileDescription(Mediation);
 
-
         SmileVideoCommentViewModel CommentScriptDefault { get; set; }
+
+        public bool CanChangeCommentEnabledArea { get; private set; }
 
         #endregion
     }
