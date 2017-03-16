@@ -239,6 +239,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
             //var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+            target.UserId = setting.RunningInformation.UserId;
 
             target.CacheDirectoryPath = setting.CacheDirectoryPath;
             //target.UsingCacheDirectoryPath = cacheDirectory.FullName;

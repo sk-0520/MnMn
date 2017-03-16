@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
@@ -115,6 +119,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             var cpuName = $"{cpu.Items["Name"]}, {cpu.Items["Description"]}";
             var totalMemoryByte = (ulong)memory.Items["TotalVisibleMemorySize"] * 1024;
 
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+
             var map = new Dictionary<string, string>() {
                 ["version"] = Constants.ApplicationVersionNumberText,
                 ["revision"] = Constants.ApplicationVersionRevision,
@@ -123,6 +129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 ["memory"] = totalMemoryByte.ToString(),
                 ["os"] = Environment.OSVersion.ToString(),
                 ["clr"] = System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion(),
+                ["user_id"] = setting.RunningInformation.UserId,
                 ["subject"] = Subject,
                 ["kind"] = QuestionnaireKind.ToString().ToLower(),
                 ["kind_other"] = QuestionnaireKind == QuestionnaireKind.Other ? KindOther : string.Empty,
