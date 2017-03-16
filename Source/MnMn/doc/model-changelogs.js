@@ -94,7 +94,16 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#474 対応により送信情報がユーザー環境に紐づきます',
+						'comments': [
+							'ユーザー名・CPU・メモリ・OS からユーザー識別子を作成します',
+							'ユーザー識別子をクラッシュレポートに紐づけて特定環境に起因しているのか多環境で発生しているのかを区別します',
+							'生成されたユーザー識別子からユーザーを特定することは来ません',
+							'実装に至った経緯は課題ページを参照してください',
+							'https://bitbucket.org/sk_0520/mnmn/issues/474',
+							'実装の安全性はソースを参照してください',
+							'https://bitbucket.org/sk_0520/mnmn/src/40201c4a4a90d08b9aaa470d0e9a11cb137a52a7/Source/MnMn/Logic/Utility/AppUtility.cs?fileviewer=file-view-default#AppUtility.cs-159'
+						]
 					},
 					{
 						'revision': '',
@@ -133,6 +142,10 @@
 							'ニコニコの設定タブ -> コメント有効領域の設定を可能にする',
 							'初期値: 真'
 						]
+					},
+					{
+						'revision': '',
+						'subject': '#474: ユーザー環境に対する識別子の設定'
 					},
 					{
 						'revision': '',
