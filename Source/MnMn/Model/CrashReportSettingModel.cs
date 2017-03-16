@@ -8,9 +8,11 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     [Serializable]
-    public class CrashReportSettingModel: ModelBase
+    public class CrashReportSettingModel : ModelBase
     {
         #region property
+
+        public string UserId { get; set; }
 
         public DateTime WakeUpTimestamp { get; set; }
         public string RunningTime { get; set; }

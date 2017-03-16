@@ -50,6 +50,9 @@
       <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.105\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IO.RecyclableMemoryStream.1.2.1\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -80,6 +83,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDescriptionUtilityTest.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtilityTest.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtilityTest.cs" />
+    <Compile Include="Logic\Utility\AppUtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

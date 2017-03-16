@@ -239,6 +239,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
             //var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+            target.UserId = setting.RunningInformation.UserId;
 
             target.CacheDirectoryPath = setting.CacheDirectoryPath;
             //target.UsingCacheDirectoryPath = cacheDirectory.FullName;
@@ -326,9 +327,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
-#endregion
+        async Task CheckAndRenewalUserIdAsync(AppSettingModel setting)
+        {
+            if(!AppUtility.ValidateUserId(setting.RunningInformation.UserId)) {
+                var userId = await Task.Run(() => {
+                    return AppUtility.CreateUserId(Mediation.Logger);
+                });
+                setting.RunningInformation.UserId = userId;
+            }
+        }
 
-#region Application
+
+        #endregion
+
+        #region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
@@ -410,6 +422,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             SplashWindow.Topmost = false;
             SplashWindow.ShowInTaskbar = true; // 非最前面化でどっかいっちゃう対策
 #endif
+            await CheckAndRenewalUserIdAsync(setting);
 
             var initializeTasks = new[] {
                 InitializeCrashReportAsync(),
