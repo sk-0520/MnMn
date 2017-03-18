@@ -15,10 +15,10 @@
 >
   <Grid>
     <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
-      <TabItem Header="公式生放送" DataContext="{Binding OfficialBroadcastManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem Header="公式" DataContext="{Binding OfficialBroadcastManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_live:SmileLiveOfficialBroadcastManager />
       </TabItem>
-      <TabItem Header="カテゴリ生放送" DataContext="{Binding CategoryManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem Header="カテゴリ" DataContext="{Binding CategoryManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_live:SmileLiveCategoryManager />
       </TabItem>
     </TabControl>
