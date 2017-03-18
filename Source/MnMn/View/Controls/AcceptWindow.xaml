@@ -68,7 +68,13 @@
             <Paragraph>
               本ソフトウェア(以下 MnMn)は GPLv3 でライセンスされています。
               <LineBreak />
-              付属するサードパーティ製のソフトウェア等に関してはそれぞれの適用しているライセンスとなります。
+              付属するサードパーティ製のモジュールに関してはそれぞれの適用しているライセンスとなります。
+            </Paragraph>
+            <Paragraph>
+              MnMn のソースコードは以下のプロジェクトサイトを参照してください。
+              <LineBreak />
+              <Button Style="{StaticResource Hyperlink}" Content="{Binding DevelopmentUri, Mode=OneTime}" Command="{Binding OpenDevelopmentUriCommand}" />
+              <Button Style="{StaticResource Hyperlink}" Content="コピー" Command="{Binding CopyDevelopmentUriCommand}" />
             </Paragraph>
             <Paragraph>
               ライセンスは原文が正で日本語訳は理解を補佐するものです。
@@ -104,7 +110,9 @@
               </List>
             </Section>
             <Paragraph FontWeight="Bold">
-              ライセンスの定める範囲で好きにできますが、その責任は全てあなたが有します。
+              ライセンスの定める範囲で自由に使用できますが、その責任は全てあなたが有します。
+              <LineBreak />
+              本許諾はその旨を理解したうえで使用するかどうかの意思表明です。
             </Paragraph>
 
             <Paragraph FontSize="16" FontWeight="Bold">

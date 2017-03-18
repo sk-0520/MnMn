@@ -45,6 +45,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             set { SetPropertyValue(Setting, value); }
         }
 
+        public Uri DevelopmentUri => new Uri(Constants.AppUriDevelopment);
+
         #endregion
 
         #region command
@@ -88,7 +90,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public ICommand AcceptCommand
         {
-            get {
+            get
+            {
                 return CreateCommand(o => {
                     Setting.RunningInformation.Accept = true;
                     View.DialogResult = true;
@@ -103,6 +106,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 return CreateCommand(o => {
                     Setting.RunningInformation.Accept = false;
                     View.DialogResult = false;
+                });
+            }
+        }
+
+        public ICommand OpenDevelopmentUriCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    ShellUtility.OpenUriInSystemBrowser(DevelopmentUri, Mediation.Logger);
+                });
+            }
+        }
+
+        public ICommand CopyDevelopmentUriCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    ShellUtility.SetClipboard(DevelopmentUri.OriginalString, Mediation.Logger);
                 });
             }
         }
