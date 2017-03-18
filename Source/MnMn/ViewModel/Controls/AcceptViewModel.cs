@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using Gecko;
@@ -18,22 +22,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
     public class AcceptViewModel : ViewModelBase, ISetView
     {
-        public AcceptViewModel(Mediation mediation, RunningInformationSettingModel runningInformation)
+        public AcceptViewModel(Mediation mediation)
         {
             Mediation = mediation;
-            RunningInformation = runningInformation;
+
+            Setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
         }
 
         #region property
 
         Mediation Mediation { get; }
+        AppSettingModel Setting { get; }
 
         AcceptWindow View { get; set; }
 
         WebNavigator BrowserCultureLicense { get; set; }
         WebNavigator BrowserOriginalLicense { get; set; }
-
-        RunningInformationSettingModel RunningInformation { get; }
 
         #endregion
 
@@ -80,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get {
                 return CreateCommand(o => {
-                    RunningInformation.Accept = true;
+                    Setting.RunningInformation.Accept = true;
                     View.DialogResult = true;
                 });
             }
@@ -91,7 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get
             {
                 return CreateCommand(o => {
-                    RunningInformation.Accept = false;
+                    Setting.RunningInformation.Accept = false;
                     View.DialogResult = false;
                 });
             }
@@ -116,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             BrowserCultureLicense.Navigate(BrowserCultureLicense.HomeSource);
         }
 
-        void Initialize()
+        public void Initialize()
         {
             InitializedOriginLicense();
             InitializedCultureLicense();

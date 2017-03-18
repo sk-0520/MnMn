@@ -30,8 +30,8 @@
       <Setter Property="BridgeNavigating" Value="False" />
       <Setter Property="BridgeNewWindow" Value="False" />
       <Setter Property="BridgeContextMenu" Value="False" />
-      <Setter Property="DomLoadedCommand" Value="{Binding DomLoadedCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
-      <Setter Property="NewWindowCommand" Value="{Binding NewWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+      <Setter Property="DomLoadedCommand" Value="{Binding DomLoadedCommand}" />
+      <Setter Property="NewWindowCommand" Value="{Binding NewWindowCommand}" />
       <Setter Property="IsEnabledGesture" Value="False" />
     </Style>
   </mamc:MetroWindow.Resources>
@@ -120,7 +120,7 @@
         <ColumnDefinition />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Margin="3" IsDefault="True" Click="Button_Click" Style="{StaticResource AccentedSquareButtonStyle}">使用する</Button>
+      <Button Grid.Column="0" Margin="3" IsDefault="True" Style="{StaticResource AccentedSquareButtonStyle}">使用する</Button>
       <Button Grid.Column="1" Margin="3" IsCancel="True" Style="{DynamicResource SquareButtonStyle}">使用しない</Button>
     </Grid>
 

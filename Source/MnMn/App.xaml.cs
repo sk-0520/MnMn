@@ -396,11 +396,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppUtility.SetTheme(setting.Theme);
 
             if(!CheckAccept(setting.RunningInformation, logger)) {
-                var acceptViewModel = new AcceptViewModel(Mediation, setting.RunningInformation);
+                var acceptViewModel = new AcceptViewModel(Mediation);
                 var acceptWindow = new AcceptWindow() {
                     DataContext = acceptViewModel,
                 };
                 acceptViewModel.SetView(acceptWindow);
+                acceptViewModel.Initialize();
 
                 var acceptResult = acceptWindow.ShowDialog();
                 if(!acceptResult.GetValueOrDefault()) {
