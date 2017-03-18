@@ -10,6 +10,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using Gecko;
 
@@ -17,17 +18,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
     public class AcceptViewModel : ViewModelBase, ISetView
     {
-        public AcceptViewModel(Mediation mediation)
+        public AcceptViewModel(Mediation mediation, RunningInformationSettingModel runningInformation)
         {
             Mediation = mediation;
+            RunningInformation = runningInformation;
         }
 
         #region property
 
         Mediation Mediation { get; }
 
+        AcceptWindow View { get; set; }
+
         WebNavigator BrowserCultureLicense { get; set; }
         WebNavigator BrowserOriginalLicense { get; set; }
+
+        RunningInformationSettingModel RunningInformation { get; }
 
         #endregion
 
@@ -70,6 +76,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public ICommand AcceptCommand
+        {
+            get {
+                return CreateCommand(o => {
+
+                });
+            }
+        }
+
+        public ICommand CancelCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+
+                });
+            }
+        }
 
         #endregion
 
@@ -103,10 +127,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public void SetView(FrameworkElement view)
         {
-            var acceptView = (AcceptWindow)view;
+            View = (AcceptWindow)view;
 
-            BrowserCultureLicense = acceptView.docCultureLicense;
-            BrowserOriginalLicense = acceptView.docOriginalLicense;
+            BrowserCultureLicense = View.docCultureLicense;
+            BrowserOriginalLicense = View.docOriginalLicense;
         }
 
         #endregion

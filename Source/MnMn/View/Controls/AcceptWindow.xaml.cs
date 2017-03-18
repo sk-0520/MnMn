@@ -28,11 +28,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// </summary>
     public partial class AcceptWindow: MetroWindow
     {
-        public AcceptWindow(Mediation mediation)
+        public AcceptWindow()
         {
             InitializeComponent();
-            Mediation = mediation;
-            Initialize();
         }
 
         #region property
