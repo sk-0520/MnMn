@@ -536,6 +536,9 @@
     <Compile Include="View\Controls\Service\Smile\Live\SmileLiveFinderControl.xaml.cs">
       <DependentUpon>SmileLiveFinderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\Service\Smile\Live\SmileLiveManager.xaml.cs">
+      <DependentUpon>SmileLiveManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Service\Smile\Live\SmileLiveOfficialBroadcastManager.xaml.cs">
       <DependentUpon>SmileLiveOfficialBroadcastManager.xaml</DependentUpon>
     </Compile>
@@ -1018,6 +1021,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\ScaleSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\Live\SmileLiveManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
