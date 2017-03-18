@@ -120,8 +120,8 @@
         <ColumnDefinition />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Margin="3" IsDefault="True" Style="{StaticResource AccentedSquareButtonStyle}">使用する</Button>
-      <Button Grid.Column="1" Margin="3" IsCancel="True" Style="{DynamicResource SquareButtonStyle}">使用しない</Button>
+      <Button Grid.Column="0" Margin="3" Command="{Binding AcceptCommand}" Style="{StaticResource AccentedSquareButtonStyle}">使用する</Button>
+      <Button Grid.Column="1" Margin="3" IsCancel="True" Command="{Binding CancelCommand}" Style="{DynamicResource SquareButtonStyle}">使用しない</Button>
     </Grid>
 
     <StatusBar Grid.Row="2">
