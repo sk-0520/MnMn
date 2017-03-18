@@ -54,8 +54,8 @@
       <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoHistoryManager />
       </TabItem>
-      <TabItem Header="生放送" Style="{StaticResource SectionTabItem}">
-        <app_view_controls_service_smile_live:SmileLiveManager DataContext="{Binding LiveManager}" />
+      <TabItem Header="生放送" DataContext="{Binding LiveManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_service_smile_live:SmileLiveManager />
       </TabItem>
       <TabItem Header="ユーザー" DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileUsersManager />
