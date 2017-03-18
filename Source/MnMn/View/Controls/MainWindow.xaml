@@ -95,13 +95,24 @@
       </TabItem>
       <TabItem DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image ToolTip="{x:Static app:Constants.ApplicationName}" Source="/Resources/MnMn-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+          <Image Source="/Resources/MnMn-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}">
+            <Image.ToolTip>
+              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+                <TextBlock Text="{x:Static app:Constants.ApplicationName}" />
+              </ToolTip>
+            </Image.ToolTip>
+          </Image>
         </TabItem.Header>
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
       <TabItem DataContext="{Binding AppUpdateManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <StackPanel ToolTip="アップデート">
+          <StackPanel>
+            <StackPanel.ToolTip>
+              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+                <TextBlock Text="アップデート" />
+              </ToolTip>
+            </StackPanel.ToolTip>
             <Viewbox Style="{StaticResource BigIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Update}">
@@ -207,7 +218,12 @@
       </TabItem>
       <TabItem DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Viewbox ToolTip="ブラウザ" Style="{StaticResource BigIconBox}">
+          <Viewbox Style="{StaticResource BigIconBox}">
+            <Viewbox.ToolTip>
+              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+                <TextBlock Text="ブラウザ" />
+              </ToolTip>
+            </Viewbox.ToolTip>
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Browser}" Style="{StaticResource BigDefaultIconPath}" />
             </Canvas>
@@ -217,7 +233,12 @@
       </TabItem>
       <TabItem DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Viewbox ToolTip="ダウンロード" Style="{StaticResource BigIconBox}">
+          <Viewbox Style="{StaticResource BigIconBox}">
+            <Viewbox.ToolTip>
+              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+                <TextBlock Text="ダウンロード" />
+              </ToolTip>
+            </Viewbox.ToolTip>
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
             </Canvas>
