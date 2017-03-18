@@ -26,6 +26,7 @@
   <mamc:MetroWindow.Resources>
     <Style TargetType="app_view_controls:WebNavigator">
       <Setter Property="IsEnabledUserChangeSource" Value="False" />
+      <Setter Property="IsVisibleToolbar" Value="False" />
       <Setter Property="BridgeClick" Value="False" />
       <Setter Property="BridgeNavigating" Value="False" />
       <Setter Property="BridgeNewWindow" Value="False" />
