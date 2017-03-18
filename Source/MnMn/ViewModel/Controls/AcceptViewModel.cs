@@ -39,6 +39,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         WebNavigator BrowserCultureLicense { get; set; }
         WebNavigator BrowserOriginalLicense { get; set; }
 
+        public double ViewScale
+        {
+            get { return Setting.ViewScale; }
+            set { SetPropertyValue(Setting, value); }
+        }
+
         #endregion
 
         #region command

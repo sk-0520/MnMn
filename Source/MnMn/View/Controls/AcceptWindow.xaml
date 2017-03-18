@@ -36,6 +36,13 @@
       <Setter Property="IsEnabledGesture" Value="False" />
     </Style>
   </mamc:MetroWindow.Resources>
+  <mamc:MetroWindow.RightWindowCommands>
+    <mamc:WindowCommands>
+      <StackPanel Orientation="Horizontal">
+        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
+      </StackPanel>
+    </mamc:WindowCommands>
+  </mamc:MetroWindow.RightWindowCommands>
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="Application" Title="使用許諾" />
     <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
@@ -48,6 +55,9 @@
     </Grid.RowDefinitions>
 
     <TabControl Grid.Row="0">
+      <TabControl.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
+      </TabControl.LayoutTransform>
       <TabItem Header="使用許諾分" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
         <FlowDocumentScrollViewer>
           <FlowDocument FontSize="14">
@@ -116,6 +126,9 @@
     </TabControl>
 
     <Grid Grid.Row="1">
+      <Grid.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
+      </Grid.LayoutTransform>
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition />
