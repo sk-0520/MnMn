@@ -636,15 +636,29 @@
   </Style>
 
   <Style x:Key="SelectionTabToolTip" TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+    <Setter Property="ToolTipService.HorizontalOffset" Value="6" />
+    <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+    <Setter Property="ToolTipService.ShowDuration" Value="0" />
+    <Setter Property="ToolTipService.BetweenShowDelay" Value="0" />
+    <Setter Property="HasDropShadow" Value="True" />
     <Setter Property="FontSize" Value="14" />
     <Setter Property="MinHeight" Value="{StaticResource BigIconHeight}" />
-    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
+    <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+    <Setter Property="Background">
+      <Setter.Value>
+        <LinearGradientBrush EndPoint="1,0">
+          <GradientStop Offset="0" Color="{DynamicResource AccentBaseColor}" />
+          <GradientStop Offset="0.6" Color="{DynamicResource AccentBaseColor}"/>
+          <GradientStop Offset="0.95" Color="{DynamicResource AccentColor2}"/>
+          <GradientStop Offset="1" Color="{DynamicResource AccentColor3}"/>
+        </LinearGradientBrush>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Placement" Value="Right" />
     <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="Padding" Value="4" />
+    <Setter Property="Padding" Value="4,4,20,4" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="ToolTip">
@@ -655,9 +669,9 @@
             Background="{TemplateBinding Background}"
             BorderBrush="{TemplateBinding BorderBrush}"
             BorderThickness="{TemplateBinding BorderThickness}"
-            CornerRadius="5"
             Padding="{TemplateBinding Padding}"
           >
+            <Border.CornerRadius>0,5,5,0</Border.CornerRadius>
             <ContentPresenter VerticalAlignment="{TemplateBinding VerticalAlignment}" />
           </Border>
         </ControlTemplate>
