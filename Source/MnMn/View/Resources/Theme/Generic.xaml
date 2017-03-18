@@ -635,6 +635,10 @@
     <Setter Property="mamc:ControlsHelper.HeaderFontSize" Value="{StaticResource FontLargeSize}" />
   </Style>
 
+  <Style x:Key="SelectionTabToolTip" TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+
+  </Style>
+
   <Style x:Key="ParentItemLikeText" TargetType="TextBlock">
     <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.Foreground)}" />
     <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}" />

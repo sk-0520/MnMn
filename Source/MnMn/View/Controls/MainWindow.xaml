@@ -83,7 +83,13 @@
 
       <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image ToolTip="ニコニコ" Source="/Resources/Service/Smile/Service-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}" />
+          <Image Source="/Resources/Service/Smile/Service-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}">
+            <Image.ToolTip>
+              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+                <TextBlock>ニコニコ</TextBlock>
+              </ToolTip>
+            </Image.ToolTip>
+          </Image>
         </TabItem.Header>
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
