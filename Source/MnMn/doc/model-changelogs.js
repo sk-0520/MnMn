@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#479: ニコ生系のタブを一つ落とす'
 					},
 					{
 						'revision': '',
