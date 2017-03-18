@@ -111,7 +111,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#480: 使用許諾もスケール変更できるようにする'
 					},
 					{
 						'revision': '',
