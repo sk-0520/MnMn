@@ -637,9 +637,9 @@
 
   <Style x:Key="SelectionTabToolTip" TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
     <Setter Property="ToolTipService.HorizontalOffset" Value="6" />
-    <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
-    <Setter Property="ToolTipService.ShowDuration" Value="0" />
-    <Setter Property="ToolTipService.BetweenShowDelay" Value="0" />
+    <Setter Property="ToolTipService.InitialShowDelay" Value="10" />
+    <Setter Property="ToolTipService.ShowDuration" Value="10" />
+    <Setter Property="ToolTipService.BetweenShowDelay" Value="10" />
     <Setter Property="HasDropShadow" Value="True" />
     <Setter Property="FontSize" Value="14" />
     <Setter Property="MinHeight" Value="{StaticResource BigIconHeight}" />
