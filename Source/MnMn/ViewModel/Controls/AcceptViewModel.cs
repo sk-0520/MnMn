@@ -80,7 +80,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get {
                 return CreateCommand(o => {
-
+                    RunningInformation.Accept = true;
+                    View.DialogResult = true;
                 });
             }
         }
@@ -90,7 +91,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get
             {
                 return CreateCommand(o => {
-
+                    RunningInformation.Accept = false;
+                    View.DialogResult = false;
                 });
             }
         }

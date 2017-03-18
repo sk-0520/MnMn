@@ -402,13 +402,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 };
                 acceptViewModel.SetView(acceptWindow);
 
-                acceptWindow.ShowDialog();
-
-                if(!setting.RunningInformation.Accept) {
+                var acceptResult = acceptWindow.ShowDialog();
+                if(!acceptResult.GetValueOrDefault()) {
                     Shutdown();
                     return;
                 }
-                setting.RunningInformation.Accept = true;
 
                 var isFirst = !settingResult.IsSuccess;
                 if(isFirst) {
