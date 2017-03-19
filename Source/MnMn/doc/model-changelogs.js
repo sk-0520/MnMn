@@ -123,6 +123,17 @@
 					},
 					{
 						'revision': '',
+						'subject': '#282: プレイヤーのタグ表示部分にコンテキストメニューを追加する',
+						'comments': [
+							'コンテキストメニューの範囲は [タグ 📖] に適用',
+							'ついでに修正したんだけど大百科の URI も MnMn のインフラに適用させた',
+							"<MnMn>\\etc\\define\\service\\smile\\uri-list.xml: //item[@key='smile-pedia-word-article']",
+							'モノがモノだけに safety-* 系は未適用',
+							'これで URI 変わってもテキストエディタで定義変えるだけだ。やったね、これでまた保守性が増したよ！'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
