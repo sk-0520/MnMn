@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
     /// <summary>
     /// プレイヤー管理。
     /// </summary>
-    public partial class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileDescription, ICloseView
+    public partial class SmileVideoPlayerViewModel : SmileVideoDownloadViewModel, ISetView, ISmileDescription, ICloseView
     {
         #region define
 
@@ -249,6 +249,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     } catch(Exception ex) {
                         Mediation.Logger.Warning(ex);
                     }
+                });
+            }
+        }
+
+        public ICommand OpenPediaInAppBrowserCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var viewModel = (SmileVideoTagViewModel)o;
+                    // TODO: 百科事典までサポートすんの？ だりぃぞー
+                    //       今のところブラウザオープン(それも完全固定値)だけにする
+                    var baseUri = new Uri("http://dic.nicovideo.jp/a/");
+                    var uri = new Uri(baseUri, viewModel.TagName);
+                    DescriptionUtility.OpenUriInAppBrowser(uri, Mediation);
                 });
             }
         }
