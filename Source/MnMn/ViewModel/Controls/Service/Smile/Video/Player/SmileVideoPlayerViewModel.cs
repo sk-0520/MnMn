@@ -238,11 +238,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get
             {
-                return CreateCommand(o => {
-                    var tag = (SmileVideoTagViewModel)o;
-                    var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
-                    ShellUtility.OpenUriInSystemBrowser(pediaUri, Mediation.Logger);
-                });
+                return CreateCommand(
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+                        var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
+                        ShellUtility.OpenUriInSystemBrowser(pediaUri, Mediation.Logger);
+                    },
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+                        return tag?.ExistPedia ?? false;
+                    }
+                );
             }
         }
 
@@ -250,11 +256,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get
             {
-                return CreateCommand(o => {
-                    var tag = (SmileVideoTagViewModel)o;
-                    var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
-                    DescriptionUtility.OpenUriInAppBrowser(pediaUri, Mediation);
-                });
+                return CreateCommand(
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+                        var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
+                        DescriptionUtility.OpenUriInAppBrowser(pediaUri, Mediation);
+                    },
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+                        return tag?.ExistPedia ?? false;
+                    }
+                );
             }
         }
 

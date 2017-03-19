@@ -1997,8 +1997,8 @@
                           <ContextMenu>
                             <!-- NOTE: x:Reference 使わないと System.Windows.Data Error: 4 -->
                             <MenuItem Header="タグ検索" Command="{Binding DataContext.SearchTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
-                            <MenuItem Header="大百科を標準ブラウザで開く" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}" IsEnabled="{Binding ExistPedia}" />
-                            <MenuItem Header="大百科を内臓ブラウザで開く" Command="{Binding DataContext.OpenPediaInAppBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}" IsEnabled="{Binding ExistPedia}" />
+                            <MenuItem Header="大百科を標準ブラウザで開く" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}"  />
+                            <MenuItem Header="大百科を内臓ブラウザで開く" Command="{Binding DataContext.OpenPediaInAppBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
                             <Separator />
                             <MenuItem Header="タグをコピー">
                               <MenuItem.Icon>
