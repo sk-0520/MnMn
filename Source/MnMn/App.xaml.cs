@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
@@ -395,13 +396,18 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppUtility.SetTheme(setting.Theme);
 
             if(!CheckAccept(setting.RunningInformation, logger)) {
-                var accept = new AcceptWindow(Mediation);
-                var acceptResult = accept.ShowDialog();
+                var acceptViewModel = new AcceptViewModel(Mediation);
+                var acceptWindow = new AcceptWindow() {
+                    DataContext = acceptViewModel,
+                };
+                acceptViewModel.SetView(acceptWindow);
+                acceptViewModel.Initialize();
+
+                var acceptResult = acceptWindow.ShowDialog();
                 if(!acceptResult.GetValueOrDefault()) {
                     Shutdown();
                     return;
                 }
-                setting.RunningInformation.Accept = true;
 
                 var isFirst = !settingResult.IsSuccess;
                 if(isFirst) {

@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
                 var currentIndex = selectedIndex;
                 var nextIndex = GetNextIndex(tabItems, selectedIndex, 0 < e.Delta);
-                while(!tabItems[nextIndex].IsEnabled || tabItems[nextIndex].Visibility != Visibility.Visible) {
+                while((nextIndex != -1 && nextIndex < tabItems.Count) && (!tabItems[nextIndex].IsEnabled || tabItems[nextIndex].Visibility != Visibility.Visible)) {
                     nextIndex = GetNextIndex(tabItems, nextIndex, 0 < e.Delta);
                 }
 

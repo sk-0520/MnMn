@@ -35,7 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
-    public abstract class SmileLiveFinderViewModelBase: FinderViewModelBase<SmileLiveInformationViewModel, SmileLiveFinderItemViewModel>
+    public abstract class SmileLiveFinderViewModelBase: TFinderViewModelBase<SmileLiveInformationViewModel, SmileLiveFinderItemViewModel>
     {
         #region variable
 

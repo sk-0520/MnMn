@@ -10,10 +10,14 @@
 	<param key="smile-market-video-relation">
 		<item key="v" value="${video-id}" />
 	</param>
-	
+
+	<param key="smile-pedia-word-article">
+		<item key="@word" value="${word}" />
+	</param>
+
 	<param key="smile-contents-search">
 		<item key="service" value="${service}" />
-		
+
 		<item key="q" value="${query}" />
 		<item key="targets" value="${targets}" />
 		<item key="fields" value="${fields}" />
@@ -23,12 +27,12 @@
 		<item key="_limit" value="${limit}" />
 		<item key="_context" value="${context}" />
 	</param>
-	
+
 	<param key="smile-video-mylist-user">
 		<item prefix="/" key="" value="${mylist-id}" />
 		<item prefix="?" key="rss" bond="=" value="2.0" />
 	</param>
-	
+
 	<param key="smile-video-mylist-search">
 		<item key="" value="/" />
 		<item key="" value="${query}" encode="uri" />

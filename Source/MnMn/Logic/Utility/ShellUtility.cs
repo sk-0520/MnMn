@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
@@ -36,15 +37,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return ExecuteFileCore(file.FullName, null, logger);
         }
 
-        public static Process OpenUriInSystemBrowser(Uri uri, Mediation mediation)
+        public static Process OpenUriInSystemBrowser(Uri uri, ILogger logger)
         {
             try {
                 return Process.Start(uri.OriginalString);
             } catch(Exception ex) {
-                mediation.Logger.Warning(ex);
+                logger.Warning(ex);
             }
 
             return null;
+        }
+
+        public static bool SetClipboard(string text, ILogger logger)
+        {
+            try {
+                Clipboard.SetText(text);
+                return true;
+            } catch(Exception ex) {
+                logger.Warning(ex);
+            }
+
+            return false;
         }
     }
 }

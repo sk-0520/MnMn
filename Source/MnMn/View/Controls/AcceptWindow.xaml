@@ -26,15 +26,23 @@
   <mamc:MetroWindow.Resources>
     <Style TargetType="app_view_controls:WebNavigator">
       <Setter Property="IsEnabledUserChangeSource" Value="False" />
+      <Setter Property="IsVisibleToolbar" Value="False" />
       <Setter Property="BridgeClick" Value="False" />
       <Setter Property="BridgeNavigating" Value="False" />
       <Setter Property="BridgeNewWindow" Value="False" />
       <Setter Property="BridgeContextMenu" Value="False" />
-      <Setter Property="DomLoadedCommand" Value="{Binding DomLoadedCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
-      <Setter Property="NewWindowCommand" Value="{Binding NewWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+      <Setter Property="DomLoadedCommand" Value="{Binding DomLoadedCommand}" />
+      <Setter Property="NewWindowCommand" Value="{Binding NewWindowCommand}" />
       <Setter Property="IsEnabledGesture" Value="False" />
     </Style>
   </mamc:MetroWindow.Resources>
+  <mamc:MetroWindow.RightWindowCommands>
+    <mamc:WindowCommands>
+      <StackPanel Orientation="Horizontal">
+        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
+      </StackPanel>
+    </mamc:WindowCommands>
+  </mamc:MetroWindow.RightWindowCommands>
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="Application" Title="使用許諾" />
     <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
@@ -47,6 +55,9 @@
     </Grid.RowDefinitions>
 
     <TabControl Grid.Row="0">
+      <TabControl.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
+      </TabControl.LayoutTransform>
       <TabItem Header="使用許諾分" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
         <FlowDocumentScrollViewer>
           <FlowDocument FontSize="14">
@@ -57,7 +68,13 @@
             <Paragraph>
               本ソフトウェア(以下 MnMn)は GPLv3 でライセンスされています。
               <LineBreak />
-              付属するサードパーティ製のソフトウェア等に関してはそれぞれの適用しているライセンスとなります。
+              付属するサードパーティ製のモジュールに関してはそれぞれの適用しているライセンスとなります。
+            </Paragraph>
+            <Paragraph>
+              MnMn のソースコードは以下のプロジェクトサイトを参照してください。
+              <LineBreak />
+              <Button Style="{StaticResource Hyperlink}" Content="{Binding DevelopmentUri, Mode=OneTime}" Command="{Binding OpenDevelopmentUriCommand}" />
+              <Button Style="{StaticResource Hyperlink}" Content="コピー" Command="{Binding CopyDevelopmentUriCommand}" />
             </Paragraph>
             <Paragraph>
               ライセンスは原文が正で日本語訳は理解を補佐するものです。
@@ -93,7 +110,9 @@
               </List>
             </Section>
             <Paragraph FontWeight="Bold">
-              ライセンスの定める範囲で好きにできますが、その責任は全てあなたが有します。
+              ライセンスの定める範囲で自由に使用できますが、その責任は全てあなたが有します。
+              <LineBreak />
+              本許諾はその旨を理解したうえで使用するかどうかの意思表明です。
             </Paragraph>
 
             <Paragraph FontSize="16" FontWeight="Bold">
@@ -115,13 +134,16 @@
     </TabControl>
 
     <Grid Grid.Row="1">
+      <Grid.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
+      </Grid.LayoutTransform>
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Margin="3" IsDefault="True" Click="Button_Click" Style="{StaticResource AccentedSquareButtonStyle}">使用する</Button>
-      <Button Grid.Column="1" Margin="3" IsCancel="True" Style="{DynamicResource SquareButtonStyle}">使用しない</Button>
+      <Button Grid.Column="0" Margin="3" Command="{Binding AcceptCommand}" Style="{StaticResource AccentedSquareButtonStyle}">使用する</Button>
+      <Button Grid.Column="1" Margin="3" IsCancel="True" Command="{Binding CancelCommand}" Style="{DynamicResource SquareButtonStyle}">使用しない</Button>
     </Grid>
 
     <StatusBar Grid.Row="2">

@@ -85,6 +85,105 @@
 	},
 	*/
 	{
+		'date': '2017/03/19',
+		'version': '0.57.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '使用許諾のメッセージを追記修正したので今回バージョンも許諾強制表示です',
+						'comments': [
+							'前回バージョンも強制表示したから二回連続ってなんかやだね',
+							'根本的に変わってないけど文言整えたりしました',
+							'以下が抜粋',
+							'[変更] サードパーティ製の*ソフトウェア等*に -> サードパーティ製の*モジュール*に',
+							'[追加] MnMn のソースコードは以下のプロジェクトサイトを参照してください',
+							'[変更] ライセンスの定める範囲で*好きに*できますが -> ライセンスの定める範囲で*自由に使用*できますが',
+							'[追加] 本許諾はその旨を理解したうえで使用するかどうかの意思表明です',
+							'実際に変わった内容は以以下の差分を参照(一部ロジック修正も引っかかってるけどそこは無視で)',
+							'https://bitbucket.org/sk_0520/mnmn/diff/Source/MnMn/View/Controls/AcceptWindow.xaml?diff1=6813f91ecadc&diff2=8415d3c861f2461ebceb999ed45893c687617902&at=rc-0.57.0',
+							'あとついでに Enter キーでの「使用する」押下を廃止しました。誤操作による許諾ってイヤじゃね？ っていう気持ち'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': 'd79aa4522047b156db3826ddaafe181ad7085e6d',
+						'subject': '#480: 使用許諾もスケール変更できるようにする'
+					},
+					{
+						'revision': 'fa6b592a5f02fecde2a7f7e2f1d4b84fa5d3f945',
+						'subject': '#481: アイコンだけのタブヘッダのツールチップは可能な限り早く表示する',
+						'comments': [
+							'課題名と違う実装になった',
+							'ツールチップ表示を右側にシュッと表示するようにした'
+						]
+					},
+					{
+						'revision': '768d919faeb1f28f985c541836078e418748dbd6',
+						'subject': '#282: プレイヤーのタグ表示部分にコンテキストメニューを追加する',
+						'comments': [
+							'コンテキストメニューの範囲は [タグ 📖] に適用',
+							'ついでに修正したんだけど大百科の URI も MnMn のインフラに適用させた',
+							"<MnMn>\\etc\\define\\service\\smile\\uri-list.xml: //item[@key='smile-pedia-word-article']",
+							'モノがモノだけに safety-* 系は未適用',
+							'これで URI 変わってもテキストエディタで定義変えるだけだ。やったね、これでまた保守性が増したよ！'
+						]
+					},
+					{
+						'revision': '8415d3c861f2461ebceb999ed45893c687617902',
+						'subject': '#467: ふつーのブラウザみたいに<a>の遷移先をユーザー報告すべきじゃないかな',
+						'comments': [
+							'カーソルがポップアップとスクロールバーに出会っちゃうと始まる修羅場'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '56bd24aa47f998a447007f39df0d0f6e9bde34c6',
+						'subject': '#479: ニコ生系のタブを一つ落とす'
+					},
+					{
+						'revision': 'f0493b177181afdac2e42bbb0ace6c7e98defeee',
+						'subject': '#136: タブ内にあるファインダーのスクロールバー位置が共有されている',
+						'comments': [
+							'ViewModel にデータ持たせたと見せかけて View で処理して ViewModel の操作をする悲しみ'
+						]
+					},
+					{
+						'revision': '4b1a6fd918f4502b32d6d021a4fe3b6bcebc4bd1',
+						'subject': '#390: ContentTypeTextNet.MnMn.MnMn.View.Resources.TabDictionary.DockPanel_PreviewMouseWheel',
+						'comments': [
+							'件　名　が　長　い',
+							'デバッグ時に無茶したから発生したと思ってたけどクラッシュレポートに上がったので理屈上発生しないようにした'
+						]
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': 'b55f7ea3604d9aac2500fe1d0a86c0141492f15d',
+						'subject': '#482: 実行前のユーザー検証を可能にするため使用許諾からソースコードにアクセス可能にする',
+						'comments': [
+							'ついでに一部文言を修正した'
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/03/16',
 		'version': '0.56.0',
 		'isRc': false,

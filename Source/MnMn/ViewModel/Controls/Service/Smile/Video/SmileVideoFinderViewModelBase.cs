@@ -51,7 +51,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public abstract class SmileVideoFinderViewModelBase: FinderViewModelBase<SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
+    public abstract class SmileVideoFinderViewModelBase: TFinderViewModelBase<SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
     {
         #region variable
 
