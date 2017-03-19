@@ -151,6 +151,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
             }
         }
 
+        private void PART_List_Loaded(object sender, RoutedEventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            var scrollViewer = UIUtility.FindVisualChildren<ScrollViewer>(listBox).FirstOrDefault();
+            if(scrollViewer != null) {
+                var finder = (FinderViewModelBase)DataContext;
+                if(finder != null) {
+                    scrollViewer.ScrollToVerticalOffset(finder.ScrollPositionY);
+                }
+            }
+        }
+
         //ContextMenuOpening="PART_List_ContextMenuOpening"
         //private void PART_List_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         //{

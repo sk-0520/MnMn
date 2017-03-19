@@ -258,6 +258,7 @@
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
         ScrollViewer.CanContentScroll="True"
+        Loaded="PART_List_Loaded"
       >
         <i:Interaction.Behaviors>
           <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
