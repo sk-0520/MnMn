@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public string Title
         {
-            get { return $"[{VideoId}]: {Information.Title}"; }
+            get { return $"[{VideoId}] {Information.Title}"; }
             set { /*dmy*/ }
         }
 
