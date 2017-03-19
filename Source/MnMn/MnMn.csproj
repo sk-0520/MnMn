@@ -327,6 +327,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
     <Compile Include="Logic\SpaghettiScript.cs" />
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
+    <Compile Include="Logic\Utility\FinderUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMarketUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmilePediaUtility.cs" />
     <Compile Include="Logic\Utility\ShellUtility.cs" />
