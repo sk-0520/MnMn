@@ -1453,8 +1453,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(element != null) {
                 var elements = WebNavigatorCore.GetRootElementsGeckoFx(element).ToList();
                 elements.Add(element);
-                Debug.WriteLine(string.Join("/", elements.Select(elm => elm.TagName)));
+
+                var anchorElement = elements.LastOrDefault(elm => elm.TagName.ToUpper() == "A");
+                if(anchorElement != null) {
+                    var href = anchorElement.GetAttribute("href");
+                    if(!string.IsNullOrWhiteSpace(href)) {
+                        hrefValue = href;
+                    }
+                }
             }
+
+            Debug.WriteLine(hrefValue);
 
             if(string.IsNullOrWhiteSpace(hrefValue)) {
 
