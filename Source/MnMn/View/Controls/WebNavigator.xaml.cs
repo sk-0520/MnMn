@@ -1446,6 +1446,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             } else {
                 PointingGesture.Cancel();
             }
+
+            var browser = (GeckoWebBrowser)sender;
+            var element = browser.Document.ElementFromPoint(e.ClientX, e.ClientY);
+            string hrefValue = null;
+            if(element != null) {
+                var elements = WebNavigatorCore.GetRootElementsGeckoFx(element).ToList();
+                elements.Add(element);
+                Debug.WriteLine(string.Join("/", elements.Select(elm => elm.TagName)));
+            }
+
+            if(string.IsNullOrWhiteSpace(hrefValue)) {
+
+            } else {
+
+            }
         }
 
         private void BrowserGeckoFx_DomMouseUp(object sender, DomMouseEventArgs e)
