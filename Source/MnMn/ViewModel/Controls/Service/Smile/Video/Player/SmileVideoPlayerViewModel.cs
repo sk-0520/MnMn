@@ -239,16 +239,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(o => {
-                    var viewModel = (SmileVideoTagViewModel)o;
-                    // TODO: 百科事典までサポートすんの？ だりぃぞー
-                    //       今のところブラウザオープン(それも完全固定値)だけにする
-                    var baseUri = new Uri("http://dic.nicovideo.jp/a/");
-                    var uri = new Uri(baseUri, viewModel.TagName);
-                    try {
-                        Process.Start(uri.OriginalString);
-                    } catch(Exception ex) {
-                        Mediation.Logger.Warning(ex);
-                    }
+                    var tag = (SmileVideoTagViewModel)o;
+                    var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
+                    ShellUtility.OpenUriInSystemBrowser(pediaUri, Mediation.Logger);
                 });
             }
         }
@@ -258,12 +251,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(o => {
-                    var viewModel = (SmileVideoTagViewModel)o;
-                    // TODO: 百科事典までサポートすんの？ だりぃぞー
-                    //       今のところブラウザオープン(それも完全固定値)だけにする
-                    var baseUri = new Uri("http://dic.nicovideo.jp/a/");
-                    var uri = new Uri(baseUri, viewModel.TagName);
-                    DescriptionUtility.OpenUriInAppBrowser(uri, Mediation);
+                    var tag = (SmileVideoTagViewModel)o;
+                    var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
+                    DescriptionUtility.OpenUriInAppBrowser(pediaUri, Mediation);
                 });
             }
         }
