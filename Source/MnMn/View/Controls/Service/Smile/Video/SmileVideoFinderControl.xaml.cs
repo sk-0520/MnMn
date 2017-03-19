@@ -15,13 +15,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
     /// <summary>
     /// VideoList.xaml の相互作用ロジック
     /// </summary>
-    public partial class SmileVideoFinderControl: UserControl
+    public partial class SmileVideoFinderControl : UserControl
     {
         public SmileVideoFinderControl()
         {
@@ -131,6 +133,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         {
             var menuItem = (MenuItem)sender;
             OpenSubMenu(menuItem);
+        }
+
+        private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            FinderUtility.ScrollDataContextChanged(this.PART_List, e.OldValue, e.NewValue);
+        }
+
+        private void PART_List_Loaded(object sender, RoutedEventArgs e)
+        {
+            FinderUtility.ScrollItemsControlLoaded(this.PART_List, DataContext);
         }
 
         //ContextMenuOpening="PART_List_ContextMenuOpening"

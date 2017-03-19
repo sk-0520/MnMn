@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live
 {
@@ -76,5 +79,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live
 
         #endregion
 
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            FinderUtility.ScrollDataContextChanged(this.PART_List, e.OldValue, e.NewValue);
+        }
+
+        private void PART_List_Loaded(object sender, RoutedEventArgs e)
+        {
+            FinderUtility.ScrollItemsControlLoaded(this.PART_List, DataContext);
+        }
     }
 }
