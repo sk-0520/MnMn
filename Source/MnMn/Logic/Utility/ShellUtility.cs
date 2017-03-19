@@ -39,6 +39,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         }
 
         /// <summary>
+        /// ディレクトリを開く。
+        /// </summary>
+        /// <param name="file">対象ファイル。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
+        public static Process OpenDirectory(DirectoryInfo directory, ILogger logger)
+        {
+            return ExecuteFileCore(directory.FullName, null, logger);
+        }
+
+        /// <summary>
         /// ファイルを関連付けられたプログラムで起動。
         /// </summary>
         /// <param name="file">対象ファイル。</param>
