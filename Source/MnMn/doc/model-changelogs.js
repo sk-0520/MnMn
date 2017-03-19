@@ -154,6 +154,14 @@
 					},
 					{
 						'revision': '',
+						'subject': '#390: ContentTypeTextNet.MnMn.MnMn.View.Resources.TabDictionary.DockPanel_PreviewMouseWheel',
+						'comments': [
+							'件　名　が　長　い',
+							'デバッグ時に無茶したから発生したと思ってたけどクラッシュレポートに上がったので理屈上発生しないようにした'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
