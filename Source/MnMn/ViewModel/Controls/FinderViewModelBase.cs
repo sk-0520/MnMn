@@ -55,6 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         IDragAndDrop _dragAndDrop;
 
+        double _scrollPositionY;
+
         #endregion
 
         public FinderViewModelBase(Mediation mediation, int baseNumber)
@@ -63,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             BaseNumber = baseNumber;
 
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
-            
+
         }
 
         #region property
@@ -216,6 +218,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get { return this._selectedCheckedProcess; }
             set { SetVariableValue(ref this._selectedCheckedProcess, value); }
+        }
+
+        public virtual double ScrollPositionY
+        {
+            get { return this._scrollPositionY; }
+            set { SetVariableValue(ref this._scrollPositionY, value); }
         }
 
         #endregion
