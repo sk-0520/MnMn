@@ -41,11 +41,85 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
     {
         #region variable
 
+        bool _isAscending = true;
+        bool _nowLoading;
+        SourceLoadState _finderLoadState;
+
         double _scrollPositionY;
+
+        IDragAndDrop _dragAndDrop;
+
+        string _inputTitleFilter;
+        bool _isBlacklist;
 
         #endregion
 
+        public FinderViewModelBase(Mediation mediation, int baseNumber)
+        {
+            Mediation = mediation;
+            BaseNumber = baseNumber;
+        }
+
+
         #region property
+
+        protected int BaseNumber { get; }
+        protected Mediation Mediation { get; }
+
+        public virtual ICollectionView FinderItems { get; protected set; }
+
+        /// <summary>
+        /// 昇順か。
+        /// </summary>
+        public virtual bool IsAscending
+        {
+            get { return this._isAscending; }
+            set
+            {
+                if(SetVariableValue(ref this._isAscending, value)) {
+                    ChangeSortItems();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 現在読み込み中か。
+        /// </summary>
+        public virtual bool NowLoading
+        {
+            get { return this._nowLoading; }
+            set { SetVariableValue(ref this._nowLoading, value); }
+        }
+
+        /// <summary>
+        /// 読込状態。
+        /// </summary>
+        public virtual SourceLoadState FinderLoadState
+        {
+            get { return this._finderLoadState; }
+            set
+            {
+                if(SetVariableValue(ref this._finderLoadState, value)) {
+                    var propertyNames = new[] {
+                        nameof(CanLoad),
+                        nameof(NowLoading),
+                    };
+                    CallOnPropertyChange(propertyNames);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 読込可能か。
+        /// </summary>
+        public virtual bool CanLoad
+        {
+            get
+            {
+                var loadSkips = new[] { SourceLoadState.SourceLoading, SourceLoadState.SourceChecking };
+                return !loadSkips.Any(l => l == FinderLoadState);
+            }
+        }
 
         public virtual double ScrollPositionY
         {
@@ -53,6 +127,48 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             set { SetVariableValue(ref this._scrollPositionY, value); }
         }
 
+        public IDragAndDrop DragAndDrop
+        {
+            get { return this._dragAndDrop; }
+            set { SetVariableValue(ref this._dragAndDrop, value); }
+        }
+
+        /// <summary>
+        /// タイトルフィルター文字列。
+        /// </summary>
+        public virtual string InputTitleFilter
+        {
+            get { return this._inputTitleFilter; }
+            set
+            {
+                if(SetVariableValue(ref this._inputTitleFilter, value)) {
+                    FinderItems.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// タイトルフィルタを除外として扱うか。
+        /// </summary>
+        public virtual bool IsBlacklist
+        {
+            get { return this._isBlacklist; }
+            set
+            {
+                if(SetVariableValue(ref this._isBlacklist, value)) {
+                    FinderItems.Refresh();
+                }
+            }
+        }
+
+
         #endregion
+
+        #region function
+
+        internal abstract void ChangeSortItems();
+
+        #endregion
+
     }
 }

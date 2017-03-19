@@ -22,41 +22,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
     {
         #region variable
 
-        bool _isAscending = true;
-        bool _nowLoading;
-        SourceLoadState _finderLoadState;
-
         TFinderItemViewModel _selectedFinderItem;
-
-        string _inputTitleFilter;
-        bool _isBlacklist;
 
         bool _showFilterSetting;
         bool _isEnabledFinderFiltering = true;
         CheckedProcessType _selectedCheckedProcess;
 
-        IDragAndDrop _dragAndDrop;
-
         #endregion
 
         public TFinderViewModelBase(Mediation mediation, int baseNumber)
+            :base(mediation, baseNumber)
         {
-            Mediation = mediation;
-            BaseNumber = baseNumber;
-
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
-
         }
 
         #region property
 
-        protected int BaseNumber { get; }
-
         protected CollectionModel<TFinderItemViewModel> FinderItemList { get; } = new CollectionModel<TFinderItemViewModel>();
         public virtual IReadOnlyList<TFinderItemViewModel> FinderItemsViewer => FinderItemList;
-        public virtual ICollectionView FinderItems { get; }
 
-        protected Mediation Mediation { get; }
         protected CancellationTokenSource CancelLoading { get; set; }
 
         /// <summary>
@@ -74,64 +58,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public abstract CacheSpan DefaultImageCacheSpan { get; }
         public abstract object DefaultExtends { get; }
 
-        public IDragAndDrop DragAndDrop
-        {
-            get { return this._dragAndDrop; }
-            set { SetVariableValue(ref this._dragAndDrop, value); }
-        }
-
-        /// <summary>
-        /// 昇順か。
-        /// </summary>
-        public virtual bool IsAscending
-        {
-            get { return this._isAscending; }
-            set
-            {
-                if(SetVariableValue(ref this._isAscending, value)) {
-                    ChangeSortItems();
-                }
-            }
-        }
-
-        /// <summary>
-        /// 現在読み込み中か。
-        /// </summary>
-        public virtual bool NowLoading
-        {
-            get { return this._nowLoading; }
-            set { SetVariableValue(ref this._nowLoading, value); }
-        }
-
-        /// <summary>
-        /// 読込状態。
-        /// </summary>
-        public virtual SourceLoadState FinderLoadState
-        {
-            get { return this._finderLoadState; }
-            set
-            {
-                if(SetVariableValue(ref this._finderLoadState, value)) {
-                    var propertyNames = new[] {
-                        nameof(CanLoad),
-                        nameof(NowLoading),
-                    };
-                    CallOnPropertyChange(propertyNames);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 読込可能か。
-        /// </summary>
-        public virtual bool CanLoad
-        {
-            get
-            {
-                var loadSkips = new[] { SourceLoadState.SourceLoading, SourceLoadState.SourceChecking };
-                return !loadSkips.Any(l => l == FinderLoadState);
-            }
-        }
         /// <summary>
         /// 選択中アイテム。
         /// </summary>
@@ -139,34 +65,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get { return this._selectedFinderItem; }
             set { SetVariableValue(ref this._selectedFinderItem, value); }
-        }
-
-        /// <summary>
-        /// タイトルフィルター文字列。
-        /// </summary>
-        public virtual string InputTitleFilter
-        {
-            get { return this._inputTitleFilter; }
-            set
-            {
-                if(SetVariableValue(ref this._inputTitleFilter, value)) {
-                    FinderItems.Refresh();
-                }
-            }
-        }
-
-        /// <summary>
-        /// タイトルフィルタを除外として扱うか。
-        /// </summary>
-        public virtual bool IsBlacklist
-        {
-            get { return this._isBlacklist; }
-            set
-            {
-                if(SetVariableValue(ref this._isBlacklist, value)) {
-                    FinderItems.Refresh();
-                }
-            }
         }
 
         /// <summary>
@@ -234,8 +132,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #endregion
 
         #region function
-
-        internal abstract void ChangeSortItems();
 
         public Task LoadDefaultCacheAsync()
         {
