@@ -1119,6 +1119,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             );
         }
 
+        void SetLinkState(string showText)
+        {
+            if(this.showLinkState.Text != showText) {
+                this.showLinkState.Text = showText;
+            }
+
+            this.popupLinkState.IsOpen = !string.IsNullOrWhiteSpace(this.showLinkState.Text);
+        }
+
         #endregion
 
         #region UserControl
@@ -1195,12 +1204,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
         {
+            SetLinkState(null);
+
             this.location.Text = e.Uri?.ToString() ?? string.Empty;
             IsNavigating = true;
         }
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
+            SetLinkState(null);
+
             if(!BridgeNavigating) {
                 return;
             }
@@ -1463,13 +1476,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 }
             }
 
-            Debug.WriteLine(hrefValue);
-
-            if(string.IsNullOrWhiteSpace(hrefValue)) {
-
-            } else {
-
-            }
+            SetLinkState(hrefValue);
         }
 
         private void BrowserGeckoFx_DomMouseUp(object sender, DomMouseEventArgs e)

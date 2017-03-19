@@ -175,5 +175,8 @@
       </Border>
     </Popup>
 
+    <Popup x:Name="popupLinkState" Placement="Bottom" AllowsTransparency="True">
+      <TextBlock x:Name="showLinkState" />
+    </Popup>
   </Grid>
 </UserControl>
