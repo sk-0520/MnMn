@@ -169,6 +169,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool FinderTabTabHeaderUsingMouseWheel => appConfig.Get("finder_tab-tab_header-using-mouse-wheel", bool.Parse);
 
+        public static string HttpRequestResponseHeaderAccept => appConfig.Get("http-request_response-header-accept");
+        public static string HttpRequestResponseHeaderAcceptEncoding => appConfig.Get("http-request_response-header-accept-encoding");
 
         #endregion
     }

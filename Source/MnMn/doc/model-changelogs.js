@@ -128,7 +128,14 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#486: なんで共通処理する HttpClient 構築時に gzip コメントアウトしてんの？',
+						'comments': [
+							'とりあえず gzip を有効にした',
+							'何か変な動作したら App.config の変更を',
+							'-> `http-request_response-header-accept`: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+							'-> `http-request_response-header-accept-encoding`: gzip, deflate',
+							'以前(0.58.0 未満)は空白'
+						]
 					},
 					{
 						'revision': '',
