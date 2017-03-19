@@ -1993,6 +1993,14 @@
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
                       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel.ContextMenu>
+                          <ContextMenu>
+                            <MenuItem Header="タグ検索"  />
+                            <MenuItem Header="大百科を開く" IsEnabled="{Binding ExistPedia}" />
+                            <MenuItem Header="大百科を内臓ブラウザで開く" IsEnabled="{Binding ExistPedia}" />
+                            <MenuItem Header="タグをコピー" />
+                          </ContextMenu>
+                        </StackPanel.ContextMenu>
                         <Border x:Name="separator" Width="{StaticResource SeparatorWidth}" />
 
                         <Viewbox Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource {x:Type Viewbox}}">
