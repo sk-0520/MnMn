@@ -88,6 +88,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             communication.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Application, parameter, ShowViewState.Foreground));
         }
 
+        public static void OpenUriInAppBrowser(Uri uri, ICommunication communication)
+        {
+            OpenUriInAppBrowserCore(uri, communication);
+        }
+
         public static void OpenUriInAppBrowser(object parameter, ICommunication communication)
         {
             Uri uri;
