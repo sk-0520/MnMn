@@ -14,9 +14,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     {
         #region property
 
+        /// <summary>
+        /// ユーザーコードから設定する CData の中身。
+        /// </summary>
         [XmlIgnore]
         public string Text { get; set; }
 
+        /// <summary>
+        /// シリアライズ処理で使用する CData の中身。
+        /// <para>ユーザーコードで使用しないこと。</para>
+        /// </summary>
         [XmlText]
         public XmlNode[] CDataText
         {

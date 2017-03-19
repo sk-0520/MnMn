@@ -27,16 +27,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return null;
         }
 
+        /// <summary>
+        /// ファイルを選択した状態でエクスプローラを開く。
+        /// </summary>
+        /// <param name="file">対象ファイル。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
         public static Process OpenFileInDirectory(FileInfo file, ILogger logger)
         {
             return ExecuteFileCore("explorer.exe", $"/select,\"{file.FullName}\"", logger);
         }
 
+        /// <summary>
+        /// ファイルを関連付けられたプログラムで起動。
+        /// </summary>
+        /// <param name="file">対象ファイル。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
         public static Process ExecuteFile(FileInfo file, ILogger logger)
         {
             return ExecuteFileCore(file.FullName, null, logger);
         }
 
+        /// <summary>
+        /// URI をシステムブラウザで開く。
+        /// </summary>
+        /// <param name="uri">開くURI。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
         public static Process OpenUriInSystemBrowser(Uri uri, ILogger logger)
         {
             try {
@@ -48,6 +66,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return null;
         }
 
+        /// <summary>
+        /// クリップボードにコピーする。
+        /// </summary>
+        /// <param name="text">コピーする文字列。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns>成功・失敗。</returns>
         public static bool SetClipboard(string text, ILogger logger)
         {
             try {

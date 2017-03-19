@@ -8,6 +8,9 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
+    /// <summary>
+    ///<see cref="RecyclableMemoryStreamManager"/> でいい感じにストリームを作成する。
+    /// </summary>
     public static class StreamUtility
     {
         public static Stream ToStream(string text, Encoding encoding, int bufferSize)
