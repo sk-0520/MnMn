@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live
 {
@@ -76,5 +78,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live
 
         #endregion
 
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var finder = (SmileLiveFinderControl)sender;
+            var scrollViewer = UIUtility.FindVisualChildren<ScrollViewer>(finder.PART_List).FirstOrDefault();
+            if(scrollViewer != null) {
+                var oldFinder = (FinderViewModelBase)e.OldValue;
+                if(oldFinder != null) {
+                    oldFinder.ScrollPositionY = scrollViewer.VerticalOffset;
+                }
+
+                var newFinder = (FinderViewModelBase)e.NewValue;
+                if(newFinder != null) {
+                    scrollViewer.ScrollToVerticalOffset(newFinder.ScrollPositionY);
+                }
+            }
+        }
+
+        private void PART_List_Loaded(object sender, RoutedEventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            var scrollViewer = UIUtility.FindVisualChildren<ScrollViewer>(listBox).FirstOrDefault();
+            if(scrollViewer != null) {
+                var finder = (FinderViewModelBase)DataContext;
+                if(finder != null) {
+                    scrollViewer.ScrollToVerticalOffset(finder.ScrollPositionY);
+                }
+            }
+        }
     }
 }

@@ -17,6 +17,7 @@
   xmlns:app_view_converter_service_smile_live="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Live"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 
+  DataContextChanged="UserControl_DataContextChanged"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -118,6 +119,7 @@
         Grid.ColumnSpan="2"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
+        Loaded="PART_List_Loaded"
       >
         <ListBox.InputBindings>
           <KeyBinding Key="Return" Command="{Binding SelectedFinderItem.Information.OpenVideoDefaultCommand}" />
