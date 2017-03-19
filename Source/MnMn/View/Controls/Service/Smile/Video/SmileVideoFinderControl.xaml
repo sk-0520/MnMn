@@ -23,6 +23,8 @@
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   xmlns:app_view_controls_service_smile_video_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
+  
+  DataContextChanged="root_DataContextChanged"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"

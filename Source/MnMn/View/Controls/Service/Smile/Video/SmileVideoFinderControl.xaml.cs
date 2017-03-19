@@ -15,13 +15,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
     /// <summary>
     /// VideoList.xaml の相互作用ロジック
     /// </summary>
-    public partial class SmileVideoFinderControl: UserControl
+    public partial class SmileVideoFinderControl : UserControl
     {
         public SmileVideoFinderControl()
         {
@@ -131,6 +132,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         {
             var menuItem = (MenuItem)sender;
             OpenSubMenu(menuItem);
+        }
+
+        private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var finder = (SmileVideoFinderControl)sender;
+            var scrollViewer = UIUtility.FindVisualChildren<ScrollViewer>(finder.PART_List).FirstOrDefault();
+            if(scrollViewer != null) {
+                var oldFinder = (FinderViewModelBase)e.OldValue;
+                if(oldFinder != null) {
+                    oldFinder.ScrollPositionY = scrollViewer.VerticalOffset;
+                }
+
+                var newFinder = (FinderViewModelBase)e.NewValue;
+                if(newFinder != null) {
+                    scrollViewer.ScrollToVerticalOffset(newFinder.ScrollPositionY);
+                }
+            }
         }
 
         //ContextMenuOpening="PART_List_ContextMenuOpening"

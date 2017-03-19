@@ -34,7 +34,29 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
-    public abstract class FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>: ViewModelBase
+    /// <summary>
+    /// <para>独立できるやつは独立していこう。</para>
+    /// </summary>
+    public abstract class FinderViewModelBase : ViewModelBase
+    {
+        #region variable
+
+        double _scrollPositionY;
+
+        #endregion
+
+        #region property
+
+        public virtual double ScrollPositionY
+        {
+            get { return this._scrollPositionY; }
+            set { SetVariableValue(ref this._scrollPositionY, value); }
+        }
+
+        #endregion
+    }
+
+    public abstract class FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>: FinderViewModelBase
         where TInformationViewModel : InformationViewModelBase
         where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
     {
@@ -54,8 +76,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         CheckedProcessType _selectedCheckedProcess;
 
         IDragAndDrop _dragAndDrop;
-
-        double _scrollPositionY;
 
         #endregion
 
@@ -218,12 +238,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get { return this._selectedCheckedProcess; }
             set { SetVariableValue(ref this._selectedCheckedProcess, value); }
-        }
-
-        public virtual double ScrollPositionY
-        {
-            get { return this._scrollPositionY; }
-            set { SetVariableValue(ref this._scrollPositionY, value); }
         }
 
         #endregion
