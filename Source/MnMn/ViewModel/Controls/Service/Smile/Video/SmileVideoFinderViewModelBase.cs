@@ -37,6 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             FinderFilering = filteringResult.Filtering;
-            
+
             FinderItems.Filter = FilterItems;
 
             DragAndDrop = new DelegateDragAndDrop() {
@@ -454,11 +455,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void CopyInformationText(string text)
         {
-            try {
-                Clipboard.SetText(text);
-            } catch(Exception ex) {
-                Mediation.Logger.Warning(ex);
-            }
+            ShellUtility.SetClipboard(text, Mediation.Logger);
         }
 
         void SearchInformationText(string text)

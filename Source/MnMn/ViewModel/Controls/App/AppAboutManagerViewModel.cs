@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -155,7 +156,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     list.Add("OS: " + System.Environment.OSVersion);
                     list.Add("CLR: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
                     var text = Environment.NewLine + separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine;
-                    Clipboard.SetText(text);
+                    ShellUtility.SetClipboard(text, Mediation.Logger);
                 });
             }
         }
@@ -179,7 +180,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         + Environment.NewLine
                         + Environment.NewLine
                     ;
-                    Clipboard.SetText(text);
+                    ShellUtility.SetClipboard(text, Mediation.Logger);
                 });
             }
         }

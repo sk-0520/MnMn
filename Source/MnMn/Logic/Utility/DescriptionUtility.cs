@@ -54,11 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         internal static void CopyText(string text, ILogger logger)
         {
-            try {
-                Clipboard.SetText(text);
-            } catch(Exception ex) {
-                logger.Warning(ex);
-            }
+            ShellUtility.SetClipboard(text, logger);
         }
 
         /// <summary>
