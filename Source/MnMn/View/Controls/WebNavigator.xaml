@@ -19,6 +19,7 @@
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <cttn_sl_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
       <app_view_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
@@ -175,8 +176,10 @@
       </Border>
     </Popup>
 
-    <Popup x:Name="popupLinkState" Placement="Bottom" AllowsTransparency="True">
-      <TextBlock x:Name="showLinkState" />
+    <Popup x:Name="popupLinkState" IsHitTestVisible="False" AllowsTransparency="True" Placement="Bottom" VerticalOffset="{Binding ActualHeight, ElementName=contentLinkState, Converter={StaticResource NegativeDoubleConverter}}" >
+      <Border x:Name="contentLinkState" TextElement.Foreground="{DynamicResource LabelTextBrush}" CornerRadius="3" Padding="3" BorderThickness="1" BorderBrush="{DynamicResource SemiTransparentWhiteBrush}" Background="{DynamicResource ControlBackgroundBrush}" >
+        <TextBlock x:Name="showLinkState" />
+      </Border>
     </Popup>
   </Grid>
 </UserControl>
