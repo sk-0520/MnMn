@@ -505,6 +505,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Variable.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Controls\TFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorContextMenuItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorDefinedElementViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionItemViewModel.cs" />

@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
     /// ページャを保持するFinder。
     /// </summary>
     public interface IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>
-        where TFinderViewModel : FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
+        where TFinderViewModel : TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
         where TInformationViewModel : InformationViewModelBase
         where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
     {
@@ -47,11 +47,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
         PageViewModel<TFinderViewModel> SelectedPage { get; set; }
 
         /// <summary>
-        /// <see cref="FinderViewModelBase{TInformationViewModel, TFinderItemViewModel}.FinderItems"/>。
+        /// <see cref="TFinderViewModelBase{TInformationViewModel, TFinderItemViewModel}.FinderItems"/>。
         /// </summary>
         ICollectionView FinderItems { get; }
         /// <summary>
-        /// <see cref="FinderViewModelBase{TInformationViewModel, TFinderItemViewModel}.FinderLoadState"/>。
+        /// <see cref="TFinderViewModelBase{TInformationViewModel, TFinderItemViewModel}.FinderLoadState"/>。
         /// </summary>
         SourceLoadState FinderLoadState { get; set; }
 

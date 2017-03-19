@@ -24,7 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
 {
     public class ChangedSelectedPageEventArgs<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>: EventArgs
-        where TFinderViewModel : FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
+        where TFinderViewModel : TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
         where TInformationViewModel : InformationViewModelBase
         where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
     {

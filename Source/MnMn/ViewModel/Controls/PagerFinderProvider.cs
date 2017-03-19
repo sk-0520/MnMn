@@ -35,22 +35,22 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
     public class PagerFinderProvider<TBaseFinderVideModel, TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>: ViewModelBase, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>
-        where TBaseFinderVideModel : FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
-        where TChildFinderViewModel : FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
+        where TBaseFinderVideModel : TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
+        where TChildFinderViewModel : TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
         where TInformationViewModel : InformationViewModelBase
         where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
     {
         #region define
 
         static IEnumerable<string> DefaultChangePagePropertyNames => new[] {
-            nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderItemsViewer),
-            nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderItems),
-            nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderLoadState),
-            nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.CanLoad),
-            nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.NowLoading),
+            nameof(TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderItemsViewer),
+            nameof(TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderItems),
+            nameof(TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderLoadState),
+            nameof(TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.CanLoad),
+            nameof(TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.NowLoading),
             nameof(IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>.PageItems),
             nameof(IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>.PageChangeCommand),
-            nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.IsAscending),
+            nameof(TFinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.IsAscending),
         };
 
         #endregion
