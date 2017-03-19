@@ -1995,8 +1995,8 @@
                       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <StackPanel.ContextMenu>
                           <ContextMenu>
-                            <MenuItem Header="タグ検索"  />
-                            <MenuItem Header="大百科を開く" IsEnabled="{Binding ExistPedia}" />
+                            <MenuItem Header="タグ検索" Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                            <MenuItem Header="大百科を開く" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" IsEnabled="{Binding ExistPedia}" />
                             <MenuItem Header="大百科を内臓ブラウザで開く" IsEnabled="{Binding ExistPedia}" />
                             <MenuItem Header="タグをコピー" />
                           </ContextMenu>
@@ -2015,7 +2015,7 @@
                         >
                           <TextBlock Text="{Binding TagName, Mode=OneTime}" />
                         </Button>
-                        <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Viewbox Style="{StaticResource {x:Type Viewbox}}">
                             <Canvas Style="{StaticResource IconCanvas-24x24}" >
                               <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumLinkIconPath}" />

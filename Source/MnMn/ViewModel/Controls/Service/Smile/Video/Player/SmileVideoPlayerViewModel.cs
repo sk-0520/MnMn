@@ -234,7 +234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand OpenPediaCommand
+        public ICommand OpenPediaInSystemBrowserCommand
         {
             get
             {
