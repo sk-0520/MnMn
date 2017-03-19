@@ -147,7 +147,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#136: タブ内にあるファインダーのスクロールバー位置が共有されている',
+						'comments': [
+							'ViewModel にデータ持たせたと見せかけて View で処理して ViewModel の操作をする悲しみ'
+						]
 					},
 					{
 						'revision': '',
