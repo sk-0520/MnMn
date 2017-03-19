@@ -42,7 +42,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public double ViewScale
         {
             get { return Setting.ViewScale; }
-            set { SetPropertyValue(Setting, value); }
+            set
+            {
+                if(SetPropertyValue(Setting, value)) {
+                    WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
+                }
+            }
         }
 
         public Uri DevelopmentUri => new Uri(Constants.AppUriDevelopment);
@@ -166,6 +171,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
             BrowserCultureLicense = View.docCultureLicense;
             BrowserOriginalLicense = View.docOriginalLicense;
+
+            WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
         }
 
         #endregion
