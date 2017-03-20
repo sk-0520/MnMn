@@ -71,7 +71,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return ExecuteFileCore(command, null, logger);
         }
 
-
+        /// <summary>
+        /// コマンドを実行
+        /// </summary>
+        /// <param name="command">実行コマンド。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
+        public static Process ExecuteCommand(string command, string args, ILogger logger)
+        {
+            return ExecuteFileCore(command, args, logger);
+        }
         /// <summary>
         /// URI をシステムブラウザで開く。
         /// </summary>

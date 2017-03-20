@@ -358,11 +358,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public Task OpenVideoLauncherAsync(bool forceEconomy)
         {
             var args = SmileLiveInformationUtility.MakeLauncherParameter(this, Setting.Execute.LauncherParameter);
-            try {
-                Process.Start(Setting.Execute.LauncherPath, args);
-            } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
-            }
+            ShellUtility.ExecuteCommand(Setting.Execute.LauncherPath, args, Mediation.Logger);
 
             return Task.CompletedTask;
         }
