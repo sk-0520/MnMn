@@ -927,14 +927,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void OpenDefaultBrowser(Uri uri)
         {
-            //var defaultData = WebNavigatorCore.DefaultBrowserExecuteData;
-            try {
-                //var executeData = WebNavigatorCore.GetOpenUriExecuteData(defaultData.Value, Source);
-                //Process.Start(executeData.ApplicationPath, string.Join(" ", executeData.Arguments));
-                Process.Start(uri.OriginalString);
-            } catch(Exception ex) {
-                Debug.WriteLine(ex);
-            }
+            var logger = new Logger();
+            ShellUtility.OpenUriInSystemBrowser(uri, logger);
         }
 
         void SetClickParameterGeckoFx(WebNavigatorClickParameterModel model, DomMouseEventArgs e)

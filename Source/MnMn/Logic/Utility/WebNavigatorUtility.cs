@@ -88,11 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 case WebNavigatorEngine.GeckoFx: {
                         var exData = (WebNavigatorEventData<GeckoCreateWindowEventArgs>)data;
                         exData.EventArgs.Cancel = true;
-                        try {
-                            Process.Start(exData.EventArgs.Uri);
-                        } catch(Exception ex) {
-                            logger.Error(ex);
-                        }
+                        ShellUtility.OpenUriInSystemBrowser(exData.EventArgs.Uri, logger);
                     }
                     break;
 

@@ -61,6 +61,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         }
 
         /// <summary>
+        /// コマンドを実行
+        /// </summary>
+        /// <param name="command">実行コマンド。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
+        public static Process ExecuteCommand(string command, ILogger logger)
+        {
+            return ExecuteFileCore(command, null, logger);
+        }
+
+
+        /// <summary>
         /// URI をシステムブラウザで開く。
         /// </summary>
         /// <param name="uri">開くURI。</param>
@@ -77,6 +89,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return null;
         }
 
+        /// <summary>
+        /// URI をシステムブラウザで開く。
+        /// </summary>
+        /// <param name="uri">開くURI。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
+        public static Process OpenUriInSystemBrowser(string rawUri, ILogger logger)
+        {
+            try {
+                var uri = new Uri(rawUri);
+                return OpenUriInSystemBrowser(uri, logger);
+            } catch(Exception ex) {
+                logger.Warning(ex);
+            }
+
+            return null;
+        }
         /// <summary>
         /// クリップボードにコピーする。
         /// </summary>

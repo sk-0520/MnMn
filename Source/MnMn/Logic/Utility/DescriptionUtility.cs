@@ -64,11 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         /// <param name="logger"></param>
         static void OpenUriCore(string link, ILogger logger)
         {
-            try {
-                Process.Start(link);
-            } catch(Exception ex) {
-                logger.Warning(ex);
-            }
+            ShellUtility.OpenUriInSystemBrowser(link, logger);
         }
 
         public static void OpenUri(object parameter, ILogger logger)
