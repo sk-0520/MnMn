@@ -2024,7 +2024,7 @@
                               </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="タグをコピー">
+                            <MenuItem Header="タグをコピー" Command="{Binding DataContext.CopyTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
                                 <Viewbox Style="{StaticResource SmallIconBox}">
                                   <Canvas Style="{StaticResource IconCanvas-24x24}">
