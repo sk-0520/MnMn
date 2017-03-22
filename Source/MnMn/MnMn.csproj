@@ -360,6 +360,7 @@
     <Compile Include="Model\CrashReportSessionModel.cs" />
     <Compile Include="Model\CrashReportSettingModel.cs" />
     <Compile Include="Model\DragParameterModel.cs" />
+    <Compile Include="Model\EazyUpdateModel.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />

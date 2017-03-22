@@ -33,23 +33,29 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using Microsoft.Win32.SafeHandles;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
-    public sealed class AppUpdateManagerViewModel: ManagerViewModelBase
+    public sealed class AppUpdateManagerViewModel : ManagerViewModelBase
     {
         #region variable
 
         Uri _archiveUri;
         Version _archiveVersion;
         UpdateCheckState _updateCheckState;
+        UpdateCheckState _eazyUpdateCheckState;
 
         string _updateText;
         bool _hasUpdate;
+        bool _hasEasyUpdate;
 
         #endregion
 
@@ -87,9 +93,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 if(SetVariableValue(ref this._updateCheckState, value)) {
                     HasUpdate = UpdateCheckState == UpdateCheckState.CurrentIsOld;
-                    if(!HasUpdate) {
-                        SetUpdateStateViewAsync().ConfigureAwait(false);
-                    }
+                }
+            }
+        }
+
+        public UpdateCheckState EazyUpdateCheckState
+        {
+            get { return this._eazyUpdateCheckState; }
+            set
+            {
+                if(SetVariableValue(ref this._eazyUpdateCheckState, value)) {
+                    HasEasyUpdate = EazyUpdateCheckState == UpdateCheckState.CurrentIsOld;
                 }
             }
         }
@@ -100,11 +114,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._hasUpdate, value); }
         }
 
+        public bool HasEasyUpdate
+        {
+            get { return this._hasEasyUpdate; }
+            set { SetVariableValue(ref this._hasEasyUpdate, value); }
+        }
+
         public string UpdateText
         {
             get { return this._updateText; }
             set { SetVariableValue(ref this._updateText, value); }
         }
+
+        public EazyUpdateModel EazyUpdateModel { get; set; }
+
         #endregion
 
         #region command
@@ -149,12 +172,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region function
 
+        async Task CheckEazyUpdateAsync()
+        {
+            EazyUpdateCheckState = UpdateCheckState.UnChecked;
+            EazyUpdateModel = null;
+
+            using(var userAgentHost = new HttpUserAgentHost())
+            using(var userAgent = userAgentHost.CreateHttpUserAgent()) {
+                var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+
+                try {
+                    Mediation.Logger.Information($"eazy update check: {Constants.AppUriEazyUpdate}");
+
+                    var stream = await userAgent.GetStreamAsync(Constants.AppUriEazyUpdate);
+                    var model = SerializeUtility.LoadXmlSerializeFromStream<EazyUpdateModel>(stream);
+
+                    var isUpdateVersion = Constants.ApplicationVersionNumber <= new Version(model.Version);
+                    var isUpdateTimestamp = setting.RunningInformation.LastEazyUpdateTimestamp < model.Timestamp;
+
+                    if(isUpdateVersion && isUpdateTimestamp) {
+                        UpdateText = model.Version + " - " + model.Version;
+                        EazyUpdateModel = model;
+                        EazyUpdateCheckState = UpdateCheckState.CurrentIsOld;
+                    } else {
+                        EazyUpdateCheckState = UpdateCheckState.CurrentIsNew;
+                    }
+
+                } catch(Exception ex) {
+                    Mediation.Logger.Warning(ex);
+                    EazyUpdateCheckState = UpdateCheckState.Error;
+                }
+            }
+        }
+
         async Task CheckVersionAsync()
         {
             UpdateCheckState = UpdateCheckState.UnChecked;
+            EazyUpdateCheckState = UpdateCheckState.UnChecked;
+
             ArchiveVersion = null;
             ArchiveUri = null;
             UpdateText = string.Empty;
+
+            EazyUpdateModel = null;
 
             try {
                 var client = new HttpClient();
@@ -217,6 +277,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             } catch(Exception ex) {
                 Mediation.Logger.Warning(ex);
                 UpdateCheckState = UpdateCheckState.Error;
+            } finally {
+                // ぶっこんだなぁ
+                if(!HasUpdate) {
+                    await CheckEazyUpdateAsync();
+                }
             }
         }
 
@@ -230,6 +295,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         UpdateBrowser.LoadHtml(htmlSource);
                     }));
                 });
+            } else if(EazyUpdateCheckState == UpdateCheckState.CurrentIsOld) {
+
             }
 
             return Task.CompletedTask;
