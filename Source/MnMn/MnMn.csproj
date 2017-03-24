@@ -328,10 +328,10 @@
     <Compile Include="Logic\SpaghettiScript.cs" />
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
     <Compile Include="Logic\Utility\FinderUtility.cs" />
+    <Compile Include="Logic\Utility\HtmlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMarketUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmilePediaUtility.cs" />
     <Compile Include="Logic\Utility\ShellUtility.cs" />
-    <Compile Include="Logic\Utility\HtmlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveGetPlayerStatusUtility.cs" />
     <Compile Include="Logic\Utility\StreamUtility.cs" />
     <Compile Include="Logic\Utility\ItemsControlUtility.cs" />
@@ -710,6 +710,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\script\spaghetti\service\smile\video\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\template\eazy-update.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\File\Html\UpdateState.html" />

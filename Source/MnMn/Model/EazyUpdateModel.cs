@@ -26,6 +26,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlElement("version")]
         public string Version { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlElement("message")]
+        public string Message { get; set; }
+
         [XmlArray("targets"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> Targets { get; set; } = new CollectionModel<DefinedElementModel>();
 

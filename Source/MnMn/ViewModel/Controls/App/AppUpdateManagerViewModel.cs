@@ -28,6 +28,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
@@ -285,6 +286,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        static string GetEazyUpdateHtmlSource(EazyUpdateModel model)
+        {
+            var document = HtmlUtility.CreateHtmlDocument(File.ReadAllText(Constants.ApplicationEazyUpdateHtmlTemplatePath));
+
+            var timeElement = document.GetElementbyId("timestamp");
+            timeElement.SetAttributeValue("timeElement", model.Timestamp.ToString("u"));
+            HtmlUtility.CreateTextNode(document, timeElement, model.Timestamp.ToString("yyyy/MM/dd HH:mm"));
+
+            var messageElement = document.GetElementbyId("message");
+            var message = string.Join("<br />", model.Message.SplitLines());
+            HtmlUtility.CreateTextNode(document, messageElement, message);
+
+            var ulElement = document.GetElementbyId("targets");
+            foreach(var target in model.Targets) {
+                var liElement = HtmlUtility.CreateChildElement(document, ulElement, "li");
+                var aElement = HtmlUtility.CreateChildElement(document, liElement, "a");
+                HtmlUtility.CreateTextNode(document, aElement, target.Extends["expand"]);
+                aElement.SetAttributeValue("href", target.Key);
+            }
+
+            return document.DocumentNode.OuterHtml;
+        }
+
         Task LoadChangelogAsync()
         {
             if(UpdateCheckState == UpdateCheckState.CurrentIsOld) {
@@ -296,7 +320,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     }));
                 });
             } else if(EazyUpdateCheckState == UpdateCheckState.CurrentIsOld) {
-
+                var htmlSource = GetEazyUpdateHtmlSource(EazyUpdateModel);
+                UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
+                    UpdateBrowser.LoadHtml(htmlSource);
+                }));
             }
 
             return Task.CompletedTask;
@@ -426,7 +453,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             if(UpdateBrowser.IsEmptyContent) {
                 LoadChangelogAsync().ContinueWith(_ => {
-                    if(UpdateCheckState != UpdateCheckState.CurrentIsOld) {
+                    if(UpdateCheckState != UpdateCheckState.CurrentIsOld && EazyUpdateCheckState != UpdateCheckState.CurrentIsOld) {
                         SetUpdateStateViewAsync().ConfigureAwait(false);
                     }
                 }).ConfigureAwait(false);
