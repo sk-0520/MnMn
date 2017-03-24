@@ -9,6 +9,7 @@
   xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
 
   xmlns:cttn_sl_view_window="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Window;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
@@ -33,6 +34,7 @@
   <mamc:MetroWindow.Resources>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
@@ -192,7 +194,14 @@
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
 
-          <app_view_controls:WebNavigator x:Name="updateBrowser" Grid.Row="0" IsVisibleToolbar="False" IsEnabled="{Binding HasUpdate}" NewWindowCommand="{Binding NewWindowCommand}" />
+          <app_view_controls:WebNavigator x:Name="updateBrowser" Grid.Row="0" IsVisibleToolbar="False" NewWindowCommand="{Binding NewWindowCommand}">
+            <app_view_controls:WebNavigator.IsEnabled>
+              <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                <Binding Path="HasUpdate" />
+                <Binding Path="HasEazyUpdate" />
+              </MultiBinding>
+            </app_view_controls:WebNavigator.IsEnabled>
+          </app_view_controls:WebNavigator>
 
           <Grid Grid.Row="1">
             <Grid.RowDefinitions>

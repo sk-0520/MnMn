@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         string _updateText;
         bool _hasUpdate;
-        bool _hasEasyUpdate;
+        bool _hasEazyUpdate;
 
         #endregion
 
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set
             {
                 if(SetVariableValue(ref this._eazyUpdateCheckState, value)) {
-                    HasEasyUpdate = EazyUpdateCheckState == UpdateCheckState.CurrentIsOld;
+                    HasEazyUpdate = EazyUpdateCheckState == UpdateCheckState.CurrentIsOld;
                 }
             }
         }
@@ -115,10 +115,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._hasUpdate, value); }
         }
 
-        public bool HasEasyUpdate
+        public bool HasEazyUpdate
         {
-            get { return this._hasEasyUpdate; }
-            set { SetVariableValue(ref this._hasEasyUpdate, value); }
+            get { return this._hasEazyUpdate; }
+            set { SetVariableValue(ref this._hasEazyUpdate, value); }
         }
 
         public string UpdateText
@@ -303,7 +303,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 var liElement = HtmlUtility.CreateChildElement(document, ulElement, "li");
                 var aElement = HtmlUtility.CreateChildElement(document, liElement, "a");
                 HtmlUtility.CreateTextNode(document, aElement, target.Extends["expand"]);
-                aElement.SetAttributeValue("href", target.Key);
+                aElement.SetAttributeValue("href", target.Extends["view"]);
+                aElement.SetAttributeValue("target", "MNMN_SOURCE");
             }
 
             return document.DocumentNode.OuterHtml;
