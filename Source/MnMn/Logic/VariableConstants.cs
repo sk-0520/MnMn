@@ -70,6 +70,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return Directory.CreateDirectory(path);
         }
 
+        public static DirectoryInfo GetEazyUpdateDirectory()
+        {
+            var baseDir = GetSettingBaseDirectory();
+            var path = Path.Combine(baseDir, Constants.ArchiveEazyUpdateDirectoryName);
+
+            return Directory.CreateDirectory(path);
+        }
+
         public static DirectoryInfo GetWebNavigatorGeckFxPluginDirectory()
         {
             var baseDir = GetSettingBaseDirectory();

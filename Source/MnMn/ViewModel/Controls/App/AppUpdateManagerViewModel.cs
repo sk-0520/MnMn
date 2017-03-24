@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -145,13 +146,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         Mediation.Order(new AppSaveOrderModel(true));
-                        UpdateExecuteAsunc().ContinueWith(t => {
+                        UpdateExecuteAsync().ContinueWith(t => {
                             if(t.Result) {
                                 Mediation.Order(new Model.Request.OrderModel(OrderKind.Exit, ServiceType.Application));
                             }
                         });
                     },
-                    o => HasUpdate
+                    o => HasUpdate || HasEazyUpdate
                 );
             }
         }
@@ -381,63 +382,91 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return process;
         }
 
-        Task<bool> UpdateExecuteAsunc()
+        async Task<bool> EazyUpdateExecuteAsync()
         {
-            var eventName = "mnmn-event";
+            var eazyUpdateDir = VariableConstants.GetEazyUpdateDirectory();
+            var archivePath = Path.Combine(eazyUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(EazyUpdateModel.Timestamp), "zip"));
 
-            var archiveDir = VariableConstants.GetArchiveDirectory();
-
-            var lines = new List<string>();
-            var map = new Dictionary<string, string>() {
-                { "download",       archiveDir.FullName },
-                { "expand",         Constants.AssemblyRootDirectoryPath },
-                { "wait",           "true" },
-                { "no-wait-update", "true" },
-                { "event",           eventName },
-                { "script",          Path.Combine(Constants.ApplicationEtcDirectoryPath, Constants.ScriptDirectoryName, "Updater", "UpdaterScript.cs") },
-                { "uri",             ArchiveUri.OriginalString },
-            };
-
-            // #158
-            FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
-                Mediation.Logger.Warning(e);
-                return true;
-            });
-
-            var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
-            var process = CreateProcess(map);
-            Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
-
-            process.Start();
-            return Task.Run(() => {
-                var result = false;
-                var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
-                    SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
-                };
-                var handles = new[] { waitEvent, processEvent };
-                var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
-
-                Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
-                if(0 <= waitResult && waitResult < handles.Length) {
-                    if(handles[waitResult] == waitEvent) {
-                        // イベントが立てられたので終了
-                        Mediation.Logger.Information("exit", process.StartInfo.Arguments);
-                        result = true;
-                    } else if(handles[waitResult] == processEvent) {
-                        // Updaterがイベント立てる前に死んだ
-                        Mediation.Logger.Information("error-process", process.ExitCode);
+            using(var host = new HttpUserAgentHost())
+            using(var userAgent = host.CreateHttpUserAgent()) {
+                userAgent.Timeout = Constants.ArchiveEazyUpdateTimeout;
+                using(var archiveStream = new ZipArchive(new FileStream(archivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
+                    foreach(var tartget in EazyUpdateModel.Targets) {
+                        var entry = archiveStream.CreateEntry(tartget.Extends["expand"]);
+                        using(var entryStream = entry.Open()) {
+                            Mediation.Logger.Debug(tartget.Key);
+                            var stream = await userAgent.GetStreamAsync(tartget.Key);
+                            stream.CopyTo(entryStream);
+                        }
+                        await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
                     }
-                } else {
-                    // タイムアウト
-                    if(!process.HasExited) {
-                        // まだ生きてるなら強制的に殺す
-                        process.Kill();
-                    }
-                    Mediation.Logger.Information("error-timeout", process.ExitCode);
                 }
+            }
 
-                return result;
-            });
+            return true;
+        }
+
+        Task<bool> UpdateExecuteAsync()
+        {
+            if(HasUpdate) {
+                var eventName = "mnmn-event";
+
+                var archiveDir = VariableConstants.GetArchiveDirectory();
+
+                var lines = new List<string>();
+                var map = new Dictionary<string, string>() {
+                    { "download",       archiveDir.FullName },
+                    { "expand",         Constants.AssemblyRootDirectoryPath },
+                    { "wait",           "true" },
+                    { "no-wait-update", "true" },
+                    { "event",           eventName },
+                    { "script",          Path.Combine(Constants.ApplicationEtcDirectoryPath, Constants.ScriptDirectoryName, "Updater", "UpdaterScript.cs") },
+                    { "uri",             ArchiveUri.OriginalString },
+                };
+
+                // #158
+                FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
+                    Mediation.Logger.Warning(e);
+                    return true;
+                });
+
+                var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
+                var process = CreateProcess(map);
+                Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
+
+                process.Start();
+                return Task.Run(() => {
+                    var result = false;
+                    var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
+                        SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
+                    };
+                    var handles = new[] { waitEvent, processEvent };
+                    var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
+
+                    Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
+                    if(0 <= waitResult && waitResult < handles.Length) {
+                        if(handles[waitResult] == waitEvent) {
+                            // イベントが立てられたので終了
+                            Mediation.Logger.Information("exit", process.StartInfo.Arguments);
+                            result = true;
+                        } else if(handles[waitResult] == processEvent) {
+                            // Updaterがイベント立てる前に死んだ
+                            Mediation.Logger.Information("error-process", process.ExitCode);
+                        }
+                    } else {
+                        // タイムアウト
+                        if(!process.HasExited) {
+                            // まだ生きてるなら強制的に殺す
+                            process.Kill();
+                        }
+                        Mediation.Logger.Information("error-timeout", process.ExitCode);
+                    }
+
+                    return result;
+                });
+            } else {
+                return EazyUpdateExecuteAsync();
+            }
         }
 
 
