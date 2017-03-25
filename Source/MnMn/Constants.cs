@@ -289,7 +289,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ArchiveWebNavigatorGeckFxPluginDirectoryName { get; } = "archive-plugin";
         public static string ArchiveEazyUpdateDirectoryName { get; } = "archive-eazy_update";
         public static TimeSpan ArchiveEazyUpdateTimeout => TimeSpan.FromMinutes(10);
-        public static TimeSpan ArchiveEazyUpdateWaitTime => TimeSpan.FromSeconds(10);
+        public static TimeSpan ArchiveEazyUpdateWaitTime => TimeSpan.FromSeconds(1);
         /// <summary>
         /// バックアップディレクトリ名。
         /// </summary>

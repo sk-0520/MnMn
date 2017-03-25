@@ -395,8 +395,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         var entry = archiveStream.CreateEntry(tartget.Extends["expand"]);
                         using(var entryStream = entry.Open()) {
                             Mediation.Logger.Debug(tartget.Key);
-                            var stream = await userAgent.GetStreamAsync(tartget.Key);
-                            stream.CopyTo(entryStream);
+                            var response = await userAgent.GetAsync(tartget.Key);
+                            if(response.IsSuccessStatusCode) {
+                                var stream = await response.Content.ReadAsStreamAsync();
+                                await stream.CopyToAsync(entryStream);
+                            } else {
+                                Mediation.Logger.Error(response.ToString());
+                                return false;
+                            }
                         }
                         await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
                     }
