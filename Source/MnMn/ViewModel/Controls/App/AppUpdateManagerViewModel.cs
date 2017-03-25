@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         string _updateText;
         bool _hasUpdate;
         bool _hasEazyUpdate;
+        bool _ruuningUpdate;
 
         #endregion
 
@@ -130,6 +131,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public EazyUpdateModel EazyUpdateModel { get; set; }
 
+        public bool RuuningUpdate
+        {
+            get { return this._ruuningUpdate; }
+            set { SetVariableValue(ref this._ruuningUpdate, value); }
+        }
+
         #endregion
 
         #region command
@@ -146,13 +153,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         Mediation.Order(new AppSaveOrderModel(true));
-                        UpdateExecuteAsync().ContinueWith(t => {
-                            if(t.Result) {
-                                Mediation.Order(new Model.Request.OrderModel(OrderKind.Exit, ServiceType.Application));
-                            }
-                        });
+                        UpdateExecuteAsync().ConfigureAwait(false);
                     },
-                    o => HasUpdate || HasEazyUpdate
+                    o => !RuuningUpdate && (HasUpdate || HasEazyUpdate)
                 );
             }
         }
@@ -382,7 +385,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return process;
         }
 
-        async Task<bool> EazyUpdateExecuteAsync()
+        async Task<UpdatedResult> EazyUpdateExecuteAsync()
         {
             var eazyUpdateDir = VariableConstants.GetEazyUpdateDirectory();
             var archivePath = Path.Combine(eazyUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(EazyUpdateModel.Timestamp), "zip"));
@@ -401,26 +404,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                                 await stream.CopyToAsync(entryStream);
                             } else {
                                 Mediation.Logger.Error(response.ToString());
-                                return false;
+                                return UpdatedResult.None;
                             }
                         }
-                        await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
+                        //await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
                     }
                 }
             }
 
-            return true;
+            // アーカイブ展開
+            using(var archiveStream = new ZipArchive(new FileStream(archivePath, FileMode.Open, FileAccess.Read, FileShare.Read), ZipArchiveMode.Read)) {
+                foreach(var entry in archiveStream.Entries) {
+                    var path = Path.Combine(Constants.AssemblyRootDirectoryPath, entry.FullName);
+                    FileUtility.MakeFileParentDirectory(path);
+                    Mediation.Logger.Trace($"expand: {path}");
+                    using(var entryStream = entry.Open())
+                    using(var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
+                        entryStream.CopyTo(stream);
+                    }
+                }
+            }
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            setting.RunningInformation.LastEazyUpdateTimestamp = EazyUpdateModel.Timestamp;
+
+            return UpdatedResult.Reboot;
         }
 
-        Task<bool> UpdateExecuteAsync()
-        {
-            if(HasUpdate) {
-                var eventName = "mnmn-event";
+        Task<UpdatedResult>  AppUpdateExecuteAsync()
+            {
+            var eventName = "mnmn-event";
 
-                var archiveDir = VariableConstants.GetArchiveDirectory();
+            var archiveDir = VariableConstants.GetArchiveDirectory();
 
-                var lines = new List<string>();
-                var map = new Dictionary<string, string>() {
+            var lines = new List<string>();
+            var map = new Dictionary<string, string>() {
                     { "download",       archiveDir.FullName },
                     { "expand",         Constants.AssemblyRootDirectoryPath },
                     { "wait",           "true" },
@@ -430,48 +447,82 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     { "uri",             ArchiveUri.OriginalString },
                 };
 
-                // #158
-                FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
-                    Mediation.Logger.Warning(e);
-                    return true;
-                });
+            // #158
+            FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
+                Mediation.Logger.Warning(e);
+                return true;
+            });
 
-                var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
-                var process = CreateProcess(map);
-                Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
+            var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
+            var process = CreateProcess(map);
+            Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
 
-                process.Start();
-                return Task.Run(() => {
-                    var result = false;
-                    var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
-                        SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
-                    };
-                    var handles = new[] { waitEvent, processEvent };
-                    var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
+            process.Start();
+            return Task.Run(() => {
+                var result = UpdatedResult.None;
+                var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
+                    SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
+                };
+                var handles = new[] { waitEvent, processEvent };
+                var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
 
-                    Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
-                    if(0 <= waitResult && waitResult < handles.Length) {
-                        if(handles[waitResult] == waitEvent) {
-                            // イベントが立てられたので終了
-                            Mediation.Logger.Information("exit", process.StartInfo.Arguments);
-                            result = true;
-                        } else if(handles[waitResult] == processEvent) {
-                            // Updaterがイベント立てる前に死んだ
-                            Mediation.Logger.Information("error-process", process.ExitCode);
-                        }
-                    } else {
-                        // タイムアウト
-                        if(!process.HasExited) {
-                            // まだ生きてるなら強制的に殺す
-                            process.Kill();
-                        }
-                        Mediation.Logger.Information("error-timeout", process.ExitCode);
+                Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
+                if(0 <= waitResult && waitResult < handles.Length) {
+                    if(handles[waitResult] == waitEvent) {
+                        // イベントが立てられたので終了
+                        Mediation.Logger.Information("exit", process.StartInfo.Arguments);
+                        result = UpdatedResult.Exit;
+                    } else if(handles[waitResult] == processEvent) {
+                        // Updaterがイベント立てる前に死んだ
+                        Mediation.Logger.Information("error-process", process.ExitCode);
                     }
+                } else {
+                    // タイムアウト
+                    if(!process.HasExited) {
+                        // まだ生きてるなら強制的に殺す
+                        process.Kill();
+                    }
+                    Mediation.Logger.Information("error-timeout", process.ExitCode);
+                }
 
-                    return result;
-                });
+                return result;
+            });
+        }
+
+        async Task UpdateExecuteAsync()
+        {
+            RuuningUpdate = true;
+
+            Task<UpdatedResult> task;
+            if(HasUpdate) {
+                task = AppUpdateExecuteAsync();
+            } else if(HasEazyUpdate) {
+                task =  EazyUpdateExecuteAsync();
             } else {
-                return EazyUpdateExecuteAsync();
+                task = Task.FromResult(UpdatedResult.None);
+            }
+
+            try {
+                var result = await task;
+                switch(result) {
+                    case UpdatedResult.Exit:
+                        Mediation.Order(new OrderModel(OrderKind.Exit, ServiceType.Application));
+                        break;
+
+                    case UpdatedResult.Reboot:
+                        Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
+                        break;
+
+                    case UpdatedResult.None:
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+            } finally {
+                RuuningUpdate = false;
             }
         }
 

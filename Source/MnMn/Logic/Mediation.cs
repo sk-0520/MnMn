@@ -366,8 +366,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
-        private bool OrderCore_Rebbot(OrderModel order)
+        private bool OrderCore_Reboot(OrderModel order)
         {
+            WebNavigatorCore.Uninitialize();
+
             Process.Start(Constants.AssemblyPath, Environment.CommandLine);
             Application.Current.Shutdown();
             return true;
@@ -448,7 +450,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return OrderCore_Exit(order);
 
                 case OrderKind.Reboot:
-                    return OrderCore_Rebbot(order);
+                    return OrderCore_Reboot(order);
 
                 case OrderKind.Save:
                     return OrderCore_Save((AppSaveOrderModel)order);
