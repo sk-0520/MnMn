@@ -33,5 +33,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
             return htmlDocument;
         }
+
+        public static HtmlNode CreateChildElement(HtmlDocument document, HtmlNode parentNode, string tagName)
+        {
+            var element = document.CreateElement(tagName);
+            parentNode.AppendChild(element);
+
+            return element;
+        }
+
+        public static HtmlTextNode CreateTextNode(HtmlDocument document, HtmlNode parentNode, string plainText)
+        {
+            var textNode = document.CreateTextNode(plainText);
+            parentNode.AppendChild(textNode);
+
+            return textNode;
+        }
     }
 }

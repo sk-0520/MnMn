@@ -345,6 +345,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         protected async override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
 #if BETA
             if(!ShowBetaMessageIfNoBetaFlag()) {
                 Shutdown();
@@ -373,11 +374,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
+                logger.Warning($"{Constants.ApplicationUsingName} is opened"); ;
                 Shutdown();
                 return;
             }
-
-            base.OnStartup(e);
 
 #if DEBUG
             DoDebug();

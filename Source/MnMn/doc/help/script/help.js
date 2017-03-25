@@ -47,6 +47,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'general-update',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'アップデート'
+		}
+	},
+	{
 		name: 'general-uninstall',
 		localize: true,
 		level: 1,
@@ -180,14 +188,6 @@ var menuList = [
 		level: 1,
 		title: {
 			'ja-jp': 'Flash Player について'
-		}
-	},
-	{
-		name: 'others-older',
-		localize: true,
-		level: 1,
-		title: {
-			'ja-jp': '過去配布アーカイブ'
 		}
 	},
 	{

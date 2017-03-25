@@ -287,6 +287,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
         public static string ArchiveWebNavigatorGeckFxPluginDirectoryName { get; } = "archive-plugin";
+        public static string ArchiveEazyUpdateDirectoryName { get; } = "archive-eazy_update";
+        public static TimeSpan ArchiveEazyUpdateTimeout => TimeSpan.FromMinutes(10);
+        public static TimeSpan ArchiveEazyUpdateWaitTime => TimeSpan.FromSeconds(1);
         /// <summary>
         /// バックアップディレクトリ名。
         /// </summary>
@@ -329,6 +332,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string CrashReporterApplicationPath { get; } = Path.Combine(BinaryDirectoryPath, "CrashReporter", "CrashReporter.exe");
         public static string FfmpegApplicationPath { get; } = Path.Combine(BinaryDirectoryPath, "ffmpeg", "ffmpeg.exe");
+
+        public static string ApplicationTemplateDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, "template");
+        public static string ApplicationEazyUpdateHtmlTemplatePath { get; } = Path.Combine(ApplicationTemplateDirectoryPath, "eazy-update.html");
 
         public static string DefineName { get; } = "define";
 
