@@ -155,10 +155,21 @@
               </Canvas>
             </Viewbox>
 
-            <Border CornerRadius="2" BorderThickness="1" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Border CornerRadius="2" BorderThickness="1" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" >
               <Border.Style>
                 <Style TargetType="Border">
                   <Style.Triggers>
+                    <DataTrigger Value="True">
+                      <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                          <MultiBinding.Bindings>
+                            <Binding Path="HasUpdate" />
+                            <Binding Path="HasEazyUpdate" />
+                          </MultiBinding.Bindings>
+                        </MultiBinding>
+                      </DataTrigger.Binding>
+                      <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
                     <Trigger Property="Visibility" Value="Visible">
                       <Trigger.EnterActions>
                         <BeginStoryboard>
@@ -182,9 +193,21 @@
                       </Trigger.EnterActions>
                     </Trigger>
                   </Style.Triggers>
+                  <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
               </Border.Style>
-              <TextBlock FontWeight="Bold" TextAlignment="Center" >UP!</TextBlock>
+              <TextBlock FontWeight="Bold" TextAlignment="Center" >
+                <TextBlock.Style>
+                  <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding HasEazyUpdate}" Value="True">
+                        <Setter Property="Text" Value="EAZY" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="Text" Value="UP!" />
+                  </Style>
+                </TextBlock.Style>
+              </TextBlock>
             </Border>
           </StackPanel>
         </TabItem.Header>
