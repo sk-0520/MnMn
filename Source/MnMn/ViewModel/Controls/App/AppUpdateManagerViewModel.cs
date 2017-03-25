@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     var isUpdateTimestamp = setting.RunningInformation.LastEazyUpdateTimestamp < model.Timestamp;
 
                     if(isUpdateVersion && isUpdateTimestamp) {
-                        UpdateText = model.Version + " - " + model.Version;
+                        UpdateText = "TARGET VERSION: " + model.Version;
                         EazyUpdateModel = model;
                         EazyUpdateCheckState = UpdateCheckState.CurrentIsOld;
                     } else {
