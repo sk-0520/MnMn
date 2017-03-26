@@ -454,6 +454,7 @@
     <Compile Include="Model\SpaghettiSourceModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorBridgeModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorGestureElementModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorDefinedElementModelBase.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuItemModel.cs" />
@@ -627,12 +628,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>web-navigator.xml</LastGenOutput>
     </Content>
-    <Content Include="etc\define\web-navigator.xml">
+    <Resource Include="etc\define\web-navigator.xml">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>web-navigator.tt</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <Content Include="etc\image\common-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
