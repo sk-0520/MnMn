@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.MnMn.Common;
 
 namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 {
@@ -17,8 +18,14 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
     {
         public App()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            AssemblyResolveHelper = new AssemblyResolveHelper(Constants.LibraryDirectoryPath);
         }
+
+        #region property
+
+        AssemblyResolveHelper AssemblyResolveHelper { get; }
+
+        #endregion
 
         #region Application
 
@@ -45,26 +52,11 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 
         protected override void OnExit(ExitEventArgs e)
         {
-            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+            AssemblyResolveHelper.Dispose();
 
             base.OnExit(e);
         }
 
         #endregion
-
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            var name = new AssemblyName(args.Name).Name + ".dll";
-            var path = Path.Combine(Constants.LibraryDirectoryPath, name);
-            var absPath = Path.GetFullPath(path);
-            if(File.Exists(absPath)) {
-                var asm = Assembly.LoadFrom(absPath);
-                return asm;
-            }
-
-            // 見つかんないともう何もかもおかしい、と思ったけど resource.dll もこれで飛んでくんのかい
-            //throw new FileNotFoundException(absPath);
-            return null;
-        }
     }
 }
