@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                     return null;
                 }
 
-                //TODO: 実行形式かどうかまで判定してあげるべきなんかね, GetBinaryType 
+                //TODO: 実行形式かどうかまで判定してあげるべきなんかね, GetBinaryType
 
                 return expandedPath;
             }
@@ -94,19 +94,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                 Shutdown();
                 return;
             }
-            
-            // すでにインストールされていればそちらを実行
-            var installedPath = GetInstalledApplicationPath();
-            if(installedPath != null) {
-                try {
-                    Process.Start(installedPath);
-                    Shutdown();
-                } catch(Exception ex) {
-                    // 起動失敗ならインストール処理を継続
-                    Trace.WriteLine(ex);
-                }
-            }
-            
+
             base.OnStartup(e);
         }
 
