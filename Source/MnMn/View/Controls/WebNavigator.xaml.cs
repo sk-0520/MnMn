@@ -925,6 +925,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             this.container.Content = host;
         }
 
+
         void OpenDefaultBrowser(Uri uri)
         {
             var logger = new Logger();
@@ -1119,7 +1120,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 this.showLinkState.Text = showText;
             }
 
-            this.popupLinkState.IsOpen = !string.IsNullOrWhiteSpace(this.showLinkState.Text);
+            var openPopup = !string.IsNullOrWhiteSpace(this.showLinkState.Text);
+            this.popupLinkState.IsOpen = openPopup;
         }
 
         #endregion
@@ -1248,6 +1250,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
         {
+            this.popupLinkState.IsOpen = false;
+
             if(BridgeNewWindow) {
                 // 先に内部制御を試す
                 Uri nextUri;
@@ -1483,7 +1487,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
-
         private void PointingGesture_Changed(object sender, Define.Event.PointingGestureChangedEventArgs e)
         {
             if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
@@ -1505,6 +1508,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             ContextMenu.IsOpen = false;
         }
 
-
+        private void contentLinkState_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.popupLinkState.IsOpen = false;
+        }
     }
 }
