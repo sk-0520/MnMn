@@ -85,6 +85,87 @@
 	},
 	*/
 	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.58.1',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'class': 'warning',
+						'subject': '自動アップデートに失敗する場合',
+						'comments': [
+							'前バージョン 0.58.0 でアップデート処理に手を入れた(#491)のでもしダメだったら以下の URI から手動でダウンロード・展開を行ってください',
+							'https://bitbucket.org/sk_0520/mnmn/downloads/',
+							'いやまぁ大丈夫だと思うけど思うだけだから念のためにね'
+						]
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/03/26',
 		'version': '0.58.0',
 		'isRc': false,
