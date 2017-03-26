@@ -79,6 +79,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public string UserId { get; set; }
 
+        /// <summary>
+        /// 簡易アップデート実施日時。
+        /// </summary>
+        [DataMember]
+        public DateTime LastEazyUpdateTimestamp { get; set; } = DateTime.MinValue;
+
         #endregion
     }
 }

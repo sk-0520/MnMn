@@ -158,12 +158,12 @@ namespace ContentTypeTextNet.MnMn.Setup
             var response = await client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead);
             AddMessageLog(
                 string.Format(
-                    Properties.Resources.String_Http_Response_Header_Format, 
-                    response.IsSuccessStatusCode, 
+                    Properties.Resources.String_Http_Response_Header_Format,
+                    response.IsSuccessStatusCode,
                     response.StatusCode
                 )
             );
-            
+
 
             var downloadFileSize = response.Content.Headers.ContentLength;
             if(!downloadFileSize.HasValue) {
@@ -250,7 +250,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                         if(!Directory.Exists(dirPath)) {
                             Directory.CreateDirectory(dirPath);
                         }
-                        
+
                         AddMessageLog($"{entry.FullName}, {entry.Length} byte");
                         entry.ExtractToFile(expandPath, true);
                         SetProgressValue(this.progressExpand, ++fileCount);
@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                     archiveInfo.Item2
                 )
             );
-            
+
             // bitbucket を信じる！
             var downloadName = archiveInfo.Item1.Segments.Last();
             var downloadDirPath = Environment.ExpandEnvironmentVariables(Constants.ArchiveDirectoryPath);
@@ -291,20 +291,6 @@ namespace ContentTypeTextNet.MnMn.Setup
             // 各種登録処理開始
             var appPath = System.IO.Path.Combine(expandPath, Constants.ApplicationFileName);
             var uninstallBatchFilePath = System.IO.Path.Combine(expandPath, "bat", "uninstall.bat");
-
-            // レジストリ登録
-            using(var reg = Registry.CurrentUser.CreateSubKey(Constants.BaseRegistryPath, true)) {
-                reg.SetValue(Constants.ApplicationPathName, appPath);
-
-                // レジストリのサブキー以下を削除するアンインストール処理用バッチ作成
-                using(var stream = new StreamWriter(new FileStream(uninstallBatchFilePath, FileMode.Create, FileAccess.Write, FileShare.Read), Encoding.Default)) {
-                    stream.WriteLine($"echo off");
-                    stream.WriteLine($"echo レジストリデータ削除処理開始");
-                    stream.WriteLine($"reg delete {reg.Name} /f");
-                    stream.WriteLine($"echo レジストリデータ削除処理終了");
-                    stream.WriteLine($"pause");
-                }
-            }
 
             if(createShortcut) {
                 // 解放？ いらんいらん
@@ -330,9 +316,9 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         async Task InstallAsync()
         {
-            var installPath = inputInstallDirectoryPath.Text;
-            var createShortcut = selectCreateShortcut.IsChecked.GetValueOrDefault();
-            var installToExecute = selectInstallToExecute.IsChecked.GetValueOrDefault();
+            var installPath = this.inputInstallDirectoryPath.Text;
+            var createShortcut = this.selectCreateShortcut.IsChecked.GetValueOrDefault();
+            var installToExecute = this.selectInstallToExecute.IsChecked.GetValueOrDefault();
 
             this.progressInformation.Value = 0;
             this.progressDownload.Value = 0;

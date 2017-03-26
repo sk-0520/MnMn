@@ -33,6 +33,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
@@ -148,12 +149,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         void CopySingleLog(LogItemModel logItem)
         {
-            Clipboard.SetText(LogUtility.MakeLogDetailText(logItem));
+            ShellUtility.SetClipboard(LogUtility.MakeLogDetailText(logItem), Mediation.Logger);
         }
 
         void CopyAllLog()
         {
-            Clipboard.SetText(GetTextAllLog());
+            ShellUtility.SetClipboard(GetTextAllLog(), Mediation.Logger);
         }
 
         void SaveAllLogFromDialog()

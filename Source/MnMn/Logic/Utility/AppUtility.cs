@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         }
 
         /// <summary>
-        /// ユーザー識別子がドメイン上正しい書式化をチェック。
+        /// ユーザー識別子がドメイン上正しい書式かチェック。
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>

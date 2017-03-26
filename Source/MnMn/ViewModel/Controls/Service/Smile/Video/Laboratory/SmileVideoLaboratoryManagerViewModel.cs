@@ -181,11 +181,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                         ExportDummyFileAsync(outputDirectoryPath).ContinueWith((Task<bool> t) => {
                             this.NowOutput.Value = false;
                             if(!t.IsFaulted && t.Result && Directory.Exists(outputDirectoryPath)) {
-                                try {
-                                    Process.Start(outputDirectoryPath);
-                                } catch(Exception ex) {
-                                    Mediation.Logger.Error(ex);
-                                }
+                                var dir = new DirectoryInfo(outputDirectoryPath);
+                                ShellUtility.OpenDirectory(dir, Mediation.Logger);
                             }
                         });
                     },

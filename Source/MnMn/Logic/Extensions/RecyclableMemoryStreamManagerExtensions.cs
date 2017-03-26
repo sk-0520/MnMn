@@ -10,6 +10,7 @@ using Microsoft.IO;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
 {
+    [Obsolete(nameof(Utility.StreamUtility))]
     public static class RecyclableMemoryStreamManagerExtensions
     {
         static string MakeTag(string callerFilePath, int callerLineNumber, string callerMemberName)

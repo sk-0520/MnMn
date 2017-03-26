@@ -28,9 +28,9 @@
 				<word key="ja-jp" value="進む" />
 			</words>
 		</element>
-		
+
 		<element key="separator:move" separator="true" allow-service="*" send-service="common" />
-			
+
 		<element key="smile-video-open-player" separator="false" allow-service="*" send-service="smile-video">
 			<words>
 				<word key="ja-jp" value="プレイヤーで開く" />
@@ -54,7 +54,7 @@
 				</condition>
 			</conditions>
 		</element>
-		
+
 		<element key="smile-video-add-checkItlater" separator="false" allow-service="*" send-service="smile-video">
 			<words>
 				<word key="ja-jp" value="あとで見る" />
@@ -78,7 +78,7 @@
 				</condition>
 			</conditions>
 		</element>
-		
+
 		<element key="smile-video-add-unorganized-bookmark" separator="false" allow-service="*" send-service="smile-video">
 			<words>
 				<word key="ja-jp" value="未整理のブックマークに入れておく" />
@@ -110,4 +110,23 @@
 			</words>
 		</element>
 	</context-menu>
+
+	<gesture>
+		<element key="common-back" allow-service="*" send-service="common">
+			<words>
+				<word key="ja-jp" value="戻る" />
+			</words>
+			<directions>
+				<direction>left</direction>
+			</directions>
+		</element>
+		<element key="common-forward" allow-service="*" send-service="common">
+			<words>
+				<word key="ja-jp" value="進む" />
+			</words>
+			<directions>
+				<direction>right</direction>
+			</directions>
+		</element>
+	</gesture>
 </web-navigator>

@@ -270,6 +270,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand CopyTagCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+                        ShellUtility.SetClipboard(tag.TagName, Mediation.Logger);
+                    }
+                );
+            }
+        }
+
         public virtual ICommand OpenUserOrChannelIdCommand
         {
             get
@@ -293,7 +306,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         if(Information.CacheDirectory.Exists) {
-                            Process.Start(Information.CacheDirectory.FullName);
+                            ShellUtility.OpenDirectory(Information.CacheDirectory, Mediation.Logger);
                         }
                     }
                 );

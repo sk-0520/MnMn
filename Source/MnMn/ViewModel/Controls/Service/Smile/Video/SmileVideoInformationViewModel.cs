@@ -1193,12 +1193,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoBrowserAsync(bool forceEconomy)
         {
-            try {
-                Process.Start(WatchUrl.OriginalString);
-            } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
-            }
-
+            ShellUtility.OpenUriInSystemBrowser(WatchUrl, Mediation.Logger);
             return Task.CompletedTask;
         }
 

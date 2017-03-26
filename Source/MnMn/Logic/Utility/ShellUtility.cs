@@ -27,16 +27,66 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return null;
         }
 
+        /// <summary>
+        /// ファイルを選択した状態でエクスプローラを開く。
+        /// </summary>
+        /// <param name="file">対象ファイル。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
         public static Process OpenFileInDirectory(FileInfo file, ILogger logger)
         {
             return ExecuteFileCore("explorer.exe", $"/select,\"{file.FullName}\"", logger);
         }
 
+        /// <summary>
+        /// ディレクトリを開く。
+        /// </summary>
+        /// <param name="file">対象ファイル。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
+        public static Process OpenDirectory(DirectoryInfo directory, ILogger logger)
+        {
+            return ExecuteFileCore(directory.FullName, null, logger);
+        }
+
+        /// <summary>
+        /// ファイルを関連付けられたプログラムで起動。
+        /// </summary>
+        /// <param name="file">対象ファイル。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
         public static Process ExecuteFile(FileInfo file, ILogger logger)
         {
             return ExecuteFileCore(file.FullName, null, logger);
         }
 
+        /// <summary>
+        /// コマンドを実行
+        /// </summary>
+        /// <param name="command">実行コマンド。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
+        public static Process ExecuteCommand(string command, ILogger logger)
+        {
+            return ExecuteFileCore(command, null, logger);
+        }
+
+        /// <summary>
+        /// コマンドを実行
+        /// </summary>
+        /// <param name="command">実行コマンド。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
+        public static Process ExecuteCommand(string command, string args, ILogger logger)
+        {
+            return ExecuteFileCore(command, args, logger);
+        }
+        /// <summary>
+        /// URI をシステムブラウザで開く。
+        /// </summary>
+        /// <param name="uri">開くURI。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
         public static Process OpenUriInSystemBrowser(Uri uri, ILogger logger)
         {
             try {
@@ -48,6 +98,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return null;
         }
 
+        /// <summary>
+        /// URI をシステムブラウザで開く。
+        /// </summary>
+        /// <param name="uri">開くURI。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns></returns>
+        public static Process OpenUriInSystemBrowser(string rawUri, ILogger logger)
+        {
+            try {
+                var uri = new Uri(rawUri);
+                return OpenUriInSystemBrowser(uri, logger);
+            } catch(Exception ex) {
+                logger.Warning(ex);
+            }
+
+            return null;
+        }
+        /// <summary>
+        /// クリップボードにコピーする。
+        /// </summary>
+        /// <param name="text">コピーする文字列。</param>
+        /// <param name="logger">ロガー。</param>
+        /// <returns>成功・失敗。</returns>
         public static bool SetClipboard(string text, ILogger logger)
         {
             try {

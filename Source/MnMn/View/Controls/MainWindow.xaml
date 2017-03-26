@@ -9,6 +9,7 @@
   xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
 
   xmlns:cttn_sl_view_window="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Window;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
@@ -33,6 +34,7 @@
   <mamc:MetroWindow.Resources>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
@@ -153,10 +155,21 @@
               </Canvas>
             </Viewbox>
 
-            <Border CornerRadius="2" BorderThickness="1" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Border CornerRadius="2" BorderThickness="1" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" >
               <Border.Style>
                 <Style TargetType="Border">
                   <Style.Triggers>
+                    <DataTrigger Value="True">
+                      <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                          <MultiBinding.Bindings>
+                            <Binding Path="HasUpdate" />
+                            <Binding Path="HasEazyUpdate" />
+                          </MultiBinding.Bindings>
+                        </MultiBinding>
+                      </DataTrigger.Binding>
+                      <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
                     <Trigger Property="Visibility" Value="Visible">
                       <Trigger.EnterActions>
                         <BeginStoryboard>
@@ -180,9 +193,21 @@
                       </Trigger.EnterActions>
                     </Trigger>
                   </Style.Triggers>
+                  <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
               </Border.Style>
-              <TextBlock FontWeight="Bold" TextAlignment="Center" >UP!</TextBlock>
+              <TextBlock FontWeight="Bold" TextAlignment="Center" >
+                <TextBlock.Style>
+                  <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding HasEazyUpdate}" Value="True">
+                        <Setter Property="Text" Value="EAZY" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="Text" Value="UP!" />
+                  </Style>
+                </TextBlock.Style>
+              </TextBlock>
             </Border>
           </StackPanel>
         </TabItem.Header>
@@ -192,7 +217,14 @@
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
 
-          <app_view_controls:WebNavigator x:Name="updateBrowser" Grid.Row="0" IsVisibleToolbar="False" IsEnabled="{Binding HasUpdate}" NewWindowCommand="{Binding NewWindowCommand}" />
+          <app_view_controls:WebNavigator x:Name="updateBrowser" Grid.Row="0" IsVisibleToolbar="False" NewWindowCommand="{Binding NewWindowCommand}">
+            <app_view_controls:WebNavigator.IsEnabled>
+              <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                <Binding Path="HasUpdate" />
+                <Binding Path="HasEazyUpdate" />
+              </MultiBinding>
+            </app_view_controls:WebNavigator.IsEnabled>
+          </app_view_controls:WebNavigator>
 
           <Grid Grid.Row="1">
             <Grid.RowDefinitions>

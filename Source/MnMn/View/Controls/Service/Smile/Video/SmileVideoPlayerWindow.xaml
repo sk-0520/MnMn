@@ -808,7 +808,8 @@
                     <TextBlock.Effect>
                       <DropShadowEffect
                         BlurRadius="4"
-                        Color="SteelBlue"
+                        ShadowDepth="3"
+                        Color="{DynamicResource AccentColor}"
                         Direction="325"
                       />
                     </TextBlock.Effect>
@@ -1476,21 +1477,24 @@
                         <TextBlock Grid.Row="0" Grid.Column="0">表示時間</TextBlock>
                         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0">投稿時間</TextBlock>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0">コメント番号</TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Number, Mode=OneWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0">スコア</TextBlock>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedComment.Score, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0">投稿時間</TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}"/>
 
-                        <Grid Grid.Row="3" Grid.Column="0" Style="{StaticResource FilteringGrid}">
+                        <TextBlock Grid.Row="3" Grid.Column="0">スコア</TextBlock>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedComment.Score, Mode=OneWay}"/>
+
+                        <Grid Grid.Row="4" Grid.Column="0" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">ユーザーID</TextBlock>
                           <Button Grid.Column="1" Command="{Binding SetFilteringUserIdCommand}" Style="{StaticResource FilteringButton}" >
                             <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                           </Button>
                         </Grid>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedComment.UserId, Mode=OneWay}"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedComment.UserId, Mode=OneWay}"/>
 
-                        <Grid Grid.Row="4" Grid.Column="0" Style="{StaticResource FilteringGrid}">
+                        <Grid Grid.Row="5" Grid.Column="0" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">コマンド</TextBlock>
                           <mamc:DropDownButton Grid.Column="1" ArrowVisibility="Collapsed" Style="{StaticResource FilteringDropDownButton}" ItemsSource="{Binding SelectedComment.Commands}" >
                             <mamc:DropDownButton.Resources>
@@ -1505,18 +1509,18 @@
                             </mamc:DropDownButton.Content>
                           </mamc:DropDownButton>
                         </Grid>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}">表示不許可</TextBlock>
-                        <TextBox Grid.Row="5" Grid.Column="1"  Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
+                        <TextBlock Grid.Row="6" Grid.Column="0" Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}">表示不許可</TextBlock>
+                        <TextBox Grid.Row="6" Grid.Column="1"  Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
 
-                        <Grid Grid.Row="6" Grid.Column="0" Style="{StaticResource FilteringGrid}">
+                        <Grid Grid.Row="7" Grid.Column="0" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">コメント</TextBlock>
                           <Button Grid.Column="1" Command="{Binding SetFilteringCommentCommand}" Style="{StaticResource FilteringButton}" >
                             <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                           </Button>
                         </Grid>
-                        <TextBox Grid.Row="6" Grid.RowSpan="2" Grid.Column="1" Height="Auto" VerticalAlignment="Top" TextWrapping="Wrap" AcceptsReturn="False"  Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
+                        <TextBox Grid.Row="7" Grid.RowSpan="2" Grid.Column="1" Height="Auto" VerticalAlignment="Top" TextWrapping="Wrap" AcceptsReturn="False"  Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
 
                       </Grid>
                     </ScrollViewer>
@@ -2024,7 +2028,7 @@
                               </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="タグをコピー">
+                            <MenuItem Header="タグをコピー" Command="{Binding DataContext.CopyTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
                                 <Viewbox Style="{StaticResource SmallIconBox}">
                                   <Canvas Style="{StaticResource IconCanvas-24x24}">

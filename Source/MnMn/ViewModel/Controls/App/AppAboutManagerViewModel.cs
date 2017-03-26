@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -136,7 +137,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         var mail = "mailto:" + s;
                         s = mail;
                     }
-                    Execute(s);
+                    //Execute(s);
+                    ShellUtility.ExecuteCommand(s, Mediation.Logger);
                 });
             }
         }
@@ -155,7 +157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     list.Add("OS: " + System.Environment.OSVersion);
                     list.Add("CLR: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
                     var text = Environment.NewLine + separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine;
-                    Clipboard.SetText(text);
+                    ShellUtility.SetClipboard(text, Mediation.Logger);
                 });
             }
         }
@@ -179,7 +181,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         + Environment.NewLine
                         + Environment.NewLine
                     ;
-                    Clipboard.SetText(text);
+                    ShellUtility.SetClipboard(text, Mediation.Logger);
                 });
             }
         }
@@ -211,7 +213,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
-                    Execute(Constants.AssemblyRootDirectoryPath);
+                    var dir = new DirectoryInfo(Constants.AssemblyRootDirectoryPath);
+                    ShellUtility.OpenDirectory(dir, Mediation.Logger);
                 });
             }
         }
@@ -221,7 +224,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
-                    Execute(VariableConstants.GetSettingDirectory().FullName);
+                    ShellUtility.OpenDirectory(VariableConstants.GetSettingDirectory(), Mediation.Logger);
                 });
             }
         }
@@ -232,7 +235,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(o => {
                     var dir = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
-                    Execute(dir.FullName);
+                    ShellUtility.OpenDirectory(dir, Mediation.Logger);
                 });
             }
         }
@@ -293,14 +296,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region function
 
-        void Execute(string command)
-        {
-            try {
-                Process.Start(command);
-            } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
-            }
-        }
+        //void Execute(string command)
+        //{
+        //    try {
+        //        Process.Start(command);
+        //    } catch(Exception ex) {
+        //        Mediation.Logger.Error(ex);
+        //    }
+        //}
 
         void ReloadUsingMemory()
         {

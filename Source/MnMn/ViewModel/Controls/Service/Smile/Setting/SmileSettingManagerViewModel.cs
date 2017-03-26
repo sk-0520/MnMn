@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
@@ -320,12 +321,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get
             {
                 return CreateCommand(o => {
-                    var uri = (string)o;
-                    try {
-                        Process.Start(uri);
-                    } catch(Exception ex) {
-                        Mediation.Logger.Error(ex);
-                    }
+                    var rawUri = (string)o;
+                    var uri = new Uri(rawUri);
+                    ShellUtility.OpenUriInSystemBrowser(uri, Mediation.Logger);
                 });
             }
         }

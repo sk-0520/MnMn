@@ -55,8 +55,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriWebNavigatorGeckoFxPlugins => ReplaceAppConfig(appConfig.Get("app-uri-web_navigator-plugins"));
         public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
         public static Uri AppUriGeneralBrowserHome => new Uri(appConfig.Get("app-uri-general-browser"));
+        public static Uri AppUriEazyUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-eazy-update")));
 
         public static TimeSpan AppSplashCloseTime => appConfig.Get("app-splash-close-time", TimeSpan.Parse);
+        public static bool AppUnhandledExceptionHandled => appConfig.Get("app-un_handled-exception-handled", bool.Parse);
         public static bool AppSendCrashReport => appConfig.Get("app-send-crash-report", bool.Parse);
         public static bool AppCrashReportIsDebug => appConfig.Get("app-crash-report-is-debug", bool.Parse);
 
@@ -169,6 +171,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool FinderTabTabHeaderUsingMouseWheel => appConfig.Get("finder_tab-tab_header-using-mouse-wheel", bool.Parse);
 
+        public static string HttpRequestResponseHeaderAccept => appConfig.Get("http-request_response-header-accept");
+        public static string HttpRequestResponseHeaderAcceptEncoding => appConfig.Get("http-request_response-header-accept-encoding");
 
         #endregion
     }

@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 {
     public sealed class SmileVideoLaboratoryPlayerViewModel: SmileVideoPlayerViewModel
     {
-        public SmileVideoLaboratoryPlayerViewModel(Mediation mediation) 
+        public SmileVideoLaboratoryPlayerViewModel(Mediation mediation)
             : base(mediation)
         {
             Information = new SmileVideoLaboratoryInformationViewModel(Mediation);
@@ -162,12 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
                     o => {
                         VideoFile.Refresh();
                         if(VideoFile.Exists) {
-                            try {
-                                var dirPath = Path.GetDirectoryName(VideoFile.FullName);
-                                Process.Start(dirPath);
-                            } catch(Exception ex) {
-                                Mediation.Logger.Warning(ex);
-                            }
+                            ShellUtility.OpenDirectory(VideoFile.Directory, Mediation.Logger);
                         }
                     }
                 );

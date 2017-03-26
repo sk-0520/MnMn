@@ -127,6 +127,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 if(Constants.AppCrashReportIsDebug) {
                     args += " /debug";
                 }
+                args += $" /reboot=\"{Constants.AssemblyPath}\"";
+                if(VariableConstants.CommandLine.Length != 0) {
+                    var arg = Environment.CommandLine
+                        .Replace("\"" + Constants.AssemblyPath + "\"", string.Empty)
+                        .Replace(Constants.AssemblyPath, string.Empty)
+                        .Replace("\"", "\"\"")
+                        .Replace("\\", "\\\\")
+                    ;
+                    args += $" /reboot-arg=\"{arg}\"";
+                }
                 Process.Start(Constants.CrashReporterApplicationPath, args);
             }
 
@@ -345,6 +355,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         protected async override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
 #if BETA
             if(!ShowBetaMessageIfNoBetaFlag()) {
                 Shutdown();
@@ -373,11 +384,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
+                logger.Warning($"{Constants.ApplicationUsingName} is opened"); ;
                 Shutdown();
                 return;
             }
-
-            base.OnStartup(e);
 
 #if DEBUG
             DoDebug();
@@ -472,6 +482,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
             CatchUnhandleException(e.Exception, true);
+            if(Constants.AppSendCrashReport) {
+                e.Handled = Constants.AppUnhandledExceptionHandled;
+            }
         }
 
         /// <summary>

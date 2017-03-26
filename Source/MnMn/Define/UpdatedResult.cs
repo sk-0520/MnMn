@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public enum WebNavigatorParameterKind
+    public enum UpdatedResult
     {
-        ContextMenuDefine,
-        Navigating,
-        Click,
-        ContextMenu,
-        ContextMenuItem,
-        Gesture,
+        None,
+        Exit,
+        Reboot,
     }
 }

@@ -315,6 +315,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 //["Accept-Encoding"] = "gzip, deflate",
             };
 
+            if(!string.IsNullOrWhiteSpace(Constants.HttpRequestResponseHeaderAccept)) {
+                usingMap["Accept"] = Constants.HttpRequestResponseHeaderAccept;
+            }
+            if(!string.IsNullOrWhiteSpace(Constants.HttpRequestResponseHeaderAcceptEncoding)) {
+                usingMap["Accept-Encoding"] = Constants.HttpRequestResponseHeaderAcceptEncoding;
+            }
+
             var targetHeader = RequestHeaderList.Parameters
                 .FirstOrDefault(up => up.Key == key)
             ;
