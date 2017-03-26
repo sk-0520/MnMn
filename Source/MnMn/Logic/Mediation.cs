@@ -332,6 +332,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         return new ResponseModel(request, contextMenuItemResult);
                     }
 
+                case WebNavigatorParameterKind.Gesture: {
+                        var gestureResult = new WebNavigatorGestureResultModel(WebNavigatorBridge.Gesture.Items);
+                        return new ResponseModel(request, gestureResult);
+                    }
+
                 default:
                     throw new NotImplementedException();
             }

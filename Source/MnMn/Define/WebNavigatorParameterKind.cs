@@ -13,5 +13,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         Click,
         ContextMenu,
         ContextMenuItem,
+        Gesture,
     }
 }

@@ -388,6 +388,7 @@
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoProcessRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\WebNavigator\WebNavigatorParameterModel.cs" />
+    <Compile Include="Model\Response\WebNavigatorGestureResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorContextMenuItemResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorContextMenuDefineResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorNavigatingResultModel.cs" />
@@ -454,12 +455,14 @@
     <Compile Include="Model\SpaghettiSourceModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorBridgeModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorGestureElementModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorDefinedElementModelBase.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionParameterModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionTagModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorGestureModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorPageConditionModel.cs" />
