@@ -176,8 +176,11 @@
       </Border>
     </Popup>
 
-    <Popup x:Name="popupLinkState" IsHitTestVisible="False" AllowsTransparency="True" Placement="Bottom" VerticalOffset="{Binding ActualHeight, ElementName=contentLinkState, Converter={StaticResource NegativeDoubleConverter}}" >
-      <Border x:Name="contentLinkState" TextElement.Foreground="{DynamicResource LabelTextBrush}" CornerRadius="3" Padding="3" BorderThickness="1" BorderBrush="{DynamicResource SemiTransparentWhiteBrush}" Background="{DynamicResource ControlBackgroundBrush}" >
+    <Popup x:Name="popupLinkState" AllowsTransparency="True" Placement="Bottom"  >
+      <Border x:Name="contentLinkState" TextElement.Foreground="{DynamicResource LabelTextBrush}" CornerRadius="3" Padding="3" BorderThickness="1" Background="{DynamicResource ControlBackgroundBrush}">
+        <Border.BorderBrush>
+          <SolidColorBrush Color="{DynamicResource MenuShadowColor}" />
+        </Border.BorderBrush>
         <TextBlock x:Name="showLinkState" />
       </Border>
     </Popup>

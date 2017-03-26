@@ -1119,7 +1119,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 this.showLinkState.Text = showText;
             }
 
-            this.popupLinkState.IsOpen = !string.IsNullOrWhiteSpace(this.showLinkState.Text);
+            var openPopup = !string.IsNullOrWhiteSpace(this.showLinkState.Text);
+            this.popupLinkState.IsOpen = openPopup;
         }
 
         #endregion
@@ -1504,7 +1505,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
             ContextMenu.IsOpen = false;
         }
-
-
     }
 }
