@@ -175,7 +175,11 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#484: クラッシュレポート送信プログラムが立ち上がった際に「MnMn は動作を停止しました」ダイアログを表示しないようにする',
+						'comments': [
+							'クラッシュレポート送信後に再起動(#496)するためのインフラ',
+							'制御: App.config: `app-un_handled-exception-handled`'
+						]
 					}
 				]
 			},

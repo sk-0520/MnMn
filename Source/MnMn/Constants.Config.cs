@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static Uri AppUriEazyUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-eazy-update")));
 
         public static TimeSpan AppSplashCloseTime => appConfig.Get("app-splash-close-time", TimeSpan.Parse);
+        public static bool AppUnhandledExceptionHandled => appConfig.Get("app-un_handled-exception-handled", bool.Parse);
         public static bool AppSendCrashReport => appConfig.Get("app-send-crash-report", bool.Parse);
         public static bool AppCrashReportIsDebug => appConfig.Get("app-crash-report-is-debug", bool.Parse);
 

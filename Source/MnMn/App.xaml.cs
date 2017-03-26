@@ -472,6 +472,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
             CatchUnhandleException(e.Exception, true);
+            if(Constants.AppSendCrashReport) {
+                e.Handled = Constants.AppUnhandledExceptionHandled;
+            }
         }
 
         /// <summary>
