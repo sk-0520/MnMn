@@ -1249,6 +1249,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
         {
+            this.popupLinkState.IsOpen = false;
+
             if(BridgeNewWindow) {
                 // 先に内部制御を試す
                 Uri nextUri;
