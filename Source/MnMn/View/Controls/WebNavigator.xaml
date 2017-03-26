@@ -177,7 +177,7 @@
     </Popup>
 
     <Popup x:Name="popupLinkState" AllowsTransparency="True" Placement="Bottom"  >
-      <Border x:Name="contentLinkState" TextElement.Foreground="{DynamicResource LabelTextBrush}" CornerRadius="3" Padding="3" BorderThickness="1" Background="{DynamicResource ControlBackgroundBrush}">
+      <Border x:Name="contentLinkState" MouseEnter="contentLinkState_MouseEnter" TextElement.Foreground="{DynamicResource LabelTextBrush}" CornerRadius="3" Padding="3" BorderThickness="1" Background="{DynamicResource ControlBackgroundBrush}">
         <Border.BorderBrush>
           <SolidColorBrush Color="{DynamicResource MenuShadowColor}" />
         </Border.BorderBrush>

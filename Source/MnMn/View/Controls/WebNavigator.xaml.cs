@@ -925,6 +925,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             this.container.Content = host;
         }
 
+
         void OpenDefaultBrowser(Uri uri)
         {
             var logger = new Logger();
@@ -1486,7 +1487,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
-
         private void PointingGesture_Changed(object sender, Define.Event.PointingGestureChangedEventArgs e)
         {
             if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
@@ -1506,6 +1506,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 GestureItems.Clear();
             }
             ContextMenu.IsOpen = false;
+        }
+
+        private void contentLinkState_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.popupLinkState.IsOpen = false;
         }
     }
 }
