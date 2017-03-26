@@ -129,7 +129,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 }
                 args += $" /reboot=\"{Constants.AssemblyPath}\"";
                 if(VariableConstants.CommandLine.Length != 0) {
-                    var arg = Environment.CommandLine.Replace("\"", "\"\"").Replace("\\", "\\\\");
+                    var arg = Environment.CommandLine
+                        .Replace("\"" + Constants.AssemblyPath + "\"", string.Empty)
+                        .Replace(Constants.AssemblyPath, string.Empty)
+                        .Replace("\"", "\"\"")
+                        .Replace("\\", "\\\\")
+                    ;
                     args += $" /reboot-arg=\"{arg}\"";
                 }
                 Process.Start(Constants.CrashReporterApplicationPath, args);
