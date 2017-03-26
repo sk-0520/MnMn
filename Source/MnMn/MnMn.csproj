@@ -388,6 +388,7 @@
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoProcessRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\WebNavigator\WebNavigatorParameterModel.cs" />
+    <Compile Include="Model\Response\WebNavigatorGestureResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorContextMenuItemResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorContextMenuDefineResultModel.cs" />
     <Compile Include="Model\Response\WebNavigatorNavigatingResultModel.cs" />
@@ -461,6 +462,7 @@
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionParameterModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionTagModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorGestureModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorPageConditionModel.cs" />
@@ -628,11 +630,12 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>web-navigator.xml</LastGenOutput>
     </Content>
-    <Resource Include="etc\define\web-navigator.xml">
+    <Content Include="etc\define\web-navigator.xml">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>web-navigator.tt</DependentUpon>
-    </Resource>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\image\common-file.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

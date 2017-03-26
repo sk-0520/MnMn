@@ -545,6 +545,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public ServiceType ServiceType { get; set; }
 
         public CollectionModel<PointingGestureItem> GestureItems { get; } = new CollectionModel<PointingGestureItem>();
+        IReadOnlyList<WebNavigatorGestureElementModel> GestureDefineElements { get; set; }
+
+        Mediation Mediation
+        {
+            get
+            {
+                return DoFunction(
+                    b => (Mediation)b.Tag,
+                    b => b.Mediation
+                );
+            }
+        }
 
         /// <summary>
         /// 現在ページ。
@@ -1085,8 +1097,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             return false;
         }
 
-        CheckResultModel<ICommand> GetGestureCommand(IEnumerable<PointingGestureItem> items)
+        CheckResultModel<ICommand> GetGestureCommand(Mediation mediation, IEnumerable<PointingGestureItem> items)
         {
+            if(GestureDefineElements == null) {
+                var parameter = new WebNavigatorParameterModel(null, EventArgs.Empty, WebNavigatorCore.Engine, WebNavigatorParameterKind.Gesture);
+                var result = Mediation.GetResultFromRequest<WebNavigatorGestureResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+                GestureDefineElements = result.GestureItems;
+            }
+
             //TODO: 今のところ固定だけど将来的に設定を提供するならここかな
             var gestureItems = new[] {
                 new { Text = Properties.Resources.String_App_Browser_Common_Back, Command = BackCommand, Directions = new [] { PointingGestureDirection.Left } },
@@ -1492,11 +1510,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
                 this.popupGesture.IsOpen = true;
                 GestureItems.Add(e.Item);
-                var gestureCommand = GetGestureCommand(GestureItems);
+                var gestureCommand = GetGestureCommand(Mediation, GestureItems);
                 this.textGesture.Text = gestureCommand.Message;
             } else {
                 if(e.ChangeKind == PointingGestureChangeKind.Finish) {
-                    var gestureCommand = GetGestureCommand(GestureItems);
+                    var gestureCommand = GetGestureCommand(Mediation, GestureItems);
                     if(gestureCommand.IsSuccess) {
                         gestureCommand.Result.TryExecute(null);
                     }

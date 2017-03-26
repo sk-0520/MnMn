@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
         public WebNavigatorContextMenuModel ContextMenu { get; set; } = new WebNavigatorContextMenuModel();
 
         [XmlElement("gesture")]
-        public WebNavigatorGestureElementModel Gesture { get; set; } = new WebNavigatorGestureElementModel();
+        public WebNavigatorGestureModel Gesture { get; set; } = new WebNavigatorGestureModel();
         #endregion
     }
 }
