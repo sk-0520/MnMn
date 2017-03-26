@@ -151,7 +151,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#498: Newtonsoft.Json 9.0.1 -> 10.0.1'
 					},
 					{
 						'revision': '',
