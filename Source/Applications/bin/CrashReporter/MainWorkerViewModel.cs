@@ -31,6 +31,9 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
         bool _sending;
         bool _sendSuccess;
 
+        string _rebootApplicationPath;
+        string _rebootApplicationCommandLine;
+
         #endregion
 
         public MainWorkerViewModel()
@@ -96,6 +99,18 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 
         bool IsDebug { get; set; }
 
+        public string RebootApplicationPath
+        {
+            get { return this._rebootApplicationPath; }
+            set { SetVariableValue(ref this._rebootApplicationPath, value); }
+        }
+
+        public string RebootApplicationCommandLine
+        {
+            get { return this._rebootApplicationCommandLine; }
+            set { SetVariableValue(ref this._rebootApplicationCommandLine, value); }
+        }
+
         #endregion
 
         #region command
@@ -150,6 +165,20 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
             }
 
             IsDebug = commandLine.HasOption("debug");
+
+            var rebootOption = "reboot";
+            if(commandLine.HasValue(rebootOption)) {
+                var rebootAppPath = commandLine.GetValue(rebootOption);
+                RebootApplicationPath = rebootAppPath;
+            }
+
+            var rebootArgOption = "reboot-arg";
+            if(commandLine.HasValue(rebootArgOption)) {
+                var rebootAppArg = commandLine.GetValue(rebootArgOption);
+                RebootApplicationCommandLine = rebootAppArg;
+            }
+
+
         }
 
         public void Initialize()
