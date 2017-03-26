@@ -267,6 +267,7 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
         {
             var path = Environment.ExpandEnvironmentVariables(RebootApplicationPath);
             Process.Start(path, RebootApplicationCommandLine);
+            View.Close();
         }
 
         #endregion

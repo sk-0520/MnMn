@@ -113,7 +113,9 @@
             <Run>送信完了</Run>
             <LineBreak />
             <Hyperlink Click="Close_Click">終了</Hyperlink>
-            <Hyperlink Command="{Binding RebootApplicationCommand}">再起動</Hyperlink>
+            <LineBreak />
+            <LineBreak />
+            <Hyperlink FontWeight="Bold" Command="{Binding RebootApplicationCommand}">再起動</Hyperlink>
           </TextBlock>
           <TextBlock TextAlignment="Center" Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Hyperlink Command="{Binding ReInputCommand}">再入力</Hyperlink>
