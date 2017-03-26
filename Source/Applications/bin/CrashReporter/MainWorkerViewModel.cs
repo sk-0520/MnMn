@@ -140,6 +140,17 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
             get { return CreateCommand(o => IsBusy = false); }
         }
 
+        public ICommand RebootApplicationCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => RebootApplication(),
+                    o => !string.IsNullOrWhiteSpace(RebootApplicationPath) && File.Exists(Environment.ExpandEnvironmentVariables(RebootApplicationPath))
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -177,8 +188,6 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
                 var rebootAppArg = commandLine.GetValue(rebootArgOption);
                 RebootApplicationCommandLine = rebootAppArg;
             }
-
-
         }
 
         public void Initialize()
@@ -252,6 +261,12 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
                     }
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void RebootApplication()
+        {
+            var path = Environment.ExpandEnvironmentVariables(RebootApplicationPath);
+            Process.Start(path, RebootApplicationCommandLine);
         }
 
         #endregion
