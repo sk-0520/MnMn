@@ -113,6 +113,16 @@
 					},
 					{
 						'revision': '',
+						'subject': "#465: System.DllNotFoundException: DLL 'mozglue' を読み込めません",
+						'comments': [
+							'ほぼ偶然の産物で再現できたので問題に対して正しい解決方法かは分からないけどwikiの方に内容記載しておく',
+							'https://bitbucket.org/sk_0520/mnmn/wiki/%E8%B5%B7%E5%8B%95%E6%99%82%E3%81%AB%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%97%E3%81%A6%E8%B5%B7%E5%8B%95%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84',
+							'カッコつけて zip なんざ展開すんなって、扱えないんだから',
+							'ちがったらゴメンよ'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
