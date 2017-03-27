@@ -888,6 +888,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(!IsSettedMedia && !IsViewClosed) {
                 Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
+                Player.RebuildPlayer();
 
                 if(PlayFile == null) {
                     Mediation.Logger.Warning($"{VideoId}: {nameof(PlayFile)} is null", Session.LoginState);
@@ -933,6 +934,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     Player.Volume = Volume;
 
                     var prePlayTime = sw.Elapsed;
+                    StopMovie(false);
                     Player.Play();
 
                     if(TotalTime == TimeSpan.Zero) {
@@ -948,7 +950,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void StopMovie(bool isStopComment)
+        void StopMovie(bool isClearComment)
         {
             Mediation.Logger.Debug($"{VideoId}: stop");
             if(IsSettedMedia && !IsViewClosed) {
@@ -958,7 +960,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Mediation.Logger.Debug($"{VideoId}: stoped");
             PlayerState = PlayerState.Stop;
             VideoPosition = 0;
-            if(isStopComment) {
+            if(isClearComment) {
                 ClearComment();
             }
             PrevPlayedTime = TimeSpan.Zero;

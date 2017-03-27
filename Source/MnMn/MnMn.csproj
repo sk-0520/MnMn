@@ -104,14 +104,12 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Meta.Vlc">
-      <HintPath>..\packages\Meta.Vlc.16.05.01\lib\net45\x86\Meta.Vlc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Meta.Vlc, Version=16.5.1.0, Culture=neutral, PublicKeyToken=721a8c5379fa4056, processorArchitecture=x86">
+      <HintPath>..\packages\Meta.Vlc.16.11.19\lib\net45\x86\Meta.Vlc.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Meta.Vlc.Wpf">
-      <HintPath>..\packages\Meta.Vlc.Wpf.16.05.01.2\lib\net45\x86\Meta.Vlc.Wpf.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Meta.Vlc.Wpf, Version=16.5.1.0, Culture=neutral, PublicKeyToken=721a8c5379fa4056, processorArchitecture=x86">
+      <HintPath>..\packages\Meta.Vlc.Wpf.16.11.19\lib\net45\x86\Meta.Vlc.Wpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream">
