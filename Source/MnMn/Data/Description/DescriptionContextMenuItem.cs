@@ -44,6 +44,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Data.Description
 
         public string IconImage { get; }
 
+        public bool HasIcon => (IconKey != null && IconStyle != null) || IconImage != null;
+
         #endregion
     }
 }

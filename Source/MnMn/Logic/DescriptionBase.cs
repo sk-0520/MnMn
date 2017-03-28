@@ -113,11 +113,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             var xMenuItemNode = x.ImportNode(menuItemElement, true);
                             contextMenuElement.AppendChild(xMenuItemNode);
 
-                            if(menu.IconKey != null && menu.IconStyle != null) {
+                            if(menu.HasIcon) {
                                 var iconOuterElement = x.CreateElement($"{xMenuItemNode.Name}.{nameof(MenuItem.Icon)}");
                                 xMenuItemNode.AppendChild(iconOuterElement);
 
-                                if(true || menu.IconKey != null && menu.IconStyle != null) {
+                                if(menu.IconKey != null && menu.IconStyle != null) {
 
                                     var iconElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_SmallIcon, null);
                                     var iconMap = new StringsModel() {
@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 var linkUri = scheme + domainPath;
 
                 var menuItems = new DescriptionContextMenuBase[] {
-                    new DescriptionContextMenuItem(true, Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand), null),
+                    new DescriptionContextMenuItem(true, Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand), null, Constants.xamlIDescription_Image_DefaultBrowser),
                     new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand), null),
                     new DescriptionContextMenuSeparator(),
                     new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),

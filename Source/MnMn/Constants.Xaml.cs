@@ -28,5 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public const string xamlImage_Playlist_Add = "Image_Playlist-Add";
         public const string xamlImage_CheckItLater = "Image_CheckItLater";
+
+        public const string xamlIDescription_Image_DefaultBrowser = "DefaultBrowserIcon";
     }
 }

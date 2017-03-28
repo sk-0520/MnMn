@@ -2325,7 +2325,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #endregion
 
-        #region ISmileVideoDescription
+        #region ISmileDescription
+
+        public ImageSource DefaultBrowserIcon { get; } = WebNavigatorCore.DefaultBrowserIcon;
 
         public ICommand OpenUriCommand
         {
