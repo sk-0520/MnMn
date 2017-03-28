@@ -123,9 +123,10 @@
           </Viewbox>
         </Button>
         <Button Grid.Column="6" ToolTip="標準ブラウザで開く" Margin="{StaticResource LeftMargin}" Command="{Binding OpenDefaultBrowserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledSystemBrowser, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
-          <Viewbox Style="{StaticResource SmallIconBox}" SnapsToDevicePixels="True">
+          <Image Style="{StaticResource SmallIconImage}" Source="{Binding Source={x:Static app_logic:WebNavigatorCore.DefaultBrowserIcon}}" />
+          <!--<Viewbox Style="{StaticResource SmallIconBox}" SnapsToDevicePixels="True">
             <Image Source="{Binding DefaultBrowserIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-          </Viewbox>
+          </Viewbox>-->
         </Button>
       </Grid>
     </ToolBar>

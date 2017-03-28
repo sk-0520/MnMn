@@ -607,10 +607,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
-        public ImageSource DefaultBrowserIcon
-        {
-            get { return WebNavigatorCore.DefaultBrowserIcon; }
-        }
+        //public ImageSource DefaultBrowserIcon
+        //{
+        //    get { return WebNavigatorCore.DefaultBrowserIcon; }
+        //}
 
         #endregion
 
