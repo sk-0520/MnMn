@@ -23,7 +23,8 @@
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   xmlns:app_view_controls_service_smile_video_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
-  
+  xmlns:app_logic="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Logic"
+
   DataContextChanged="root_DataContextChanged"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -348,7 +349,7 @@
                 </MultiBinding>
               </MenuItem.CommandParameter>
             </MenuItem>
-            <MenuItem Header="ブラウザで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+            <MenuItem Header="標準ブラウザで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
               <MenuItem.Style>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Style.Triggers>
@@ -358,6 +359,9 @@
                   </Style.Triggers>
                 </Style>
               </MenuItem.Style>
+              <MenuItem.Icon>
+                <Image Style="{StaticResource SmallIconImage}" Source="{Binding Source={x:Static app_logic:WebNavigatorCore.DefaultBrowserIcon}}" />
+              </MenuItem.Icon>
               <MenuItem.CommandParameter>
                 <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
                   <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Browser}" />

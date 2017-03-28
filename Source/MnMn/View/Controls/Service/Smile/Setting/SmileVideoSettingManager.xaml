@@ -115,7 +115,7 @@
         <GroupBox Header="動画再生方法">
           <StackPanel>
             <RadioButton Content="プレイヤーで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
-            <RadioButton Content="ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
+            <RadioButton Content="標準ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
             <RadioButton Content="外部プログラムで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
 
             <GroupBox Header="外部プログラム設定">
