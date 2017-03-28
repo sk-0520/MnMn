@@ -1,0 +1,10 @@
+﻿<UserControl
+  x:Name="dummy"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <Image
+    Style="{StaticResource SmallIconImage}"
+    Source="{Binding ${image}}"
+  />
+</UserControl>

@@ -530,6 +530,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #region ISmileDescription
 
+        public ImageSource DefaultBrowserIcon { get; } = WebNavigatorCore.DefaultBrowserIcon;
+
         public ICommand OpenUriCommand
         {
             get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); }

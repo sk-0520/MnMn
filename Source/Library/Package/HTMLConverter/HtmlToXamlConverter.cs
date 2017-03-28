@@ -1,10 +1,10 @@
-//---------------------------------------------------------------------------
-// 
+﻿//---------------------------------------------------------------------------
+//
 // File: HtmlXamlConverter.cs
 //
 // Copyright (C) Microsoft Corporation.  All rights reserved.
 //
-// Description: Prototype for Html - Xaml conversion 
+// Description: Prototype for Html - Xaml conversion
 //
 //---------------------------------------------------------------------------
 
@@ -140,11 +140,11 @@ namespace HTMLConverter
         /// Analyzes the given htmlElement expecting it to be converted
         /// into some of xaml Block elements and adds the converted block
         /// to the children collection of xamlParentElement.
-        /// 
+        ///
         /// Analyzes the given XmlElement htmlElement, recognizes it as some HTML element
         /// and adds it as a child to a xamlParentElement.
         /// In some cases several following siblings of the given htmlElement
-        /// will be consumed too (e.g. LIs encountered without wrapping UL/OL, 
+        /// will be consumed too (e.g. LIs encountered without wrapping UL/OL,
         /// which must be collected together and wrapped into one implicit List element).
         /// </summary>
         /// <param name="xamlParentElement">
@@ -749,7 +749,7 @@ namespace HTMLConverter
         // .............................................................
 
         /// <summary>
-        /// Converts Html ul or ol element into Xaml list element. During conversion if the ul/ol element has any children 
+        /// Converts Html ul or ol element into Xaml list element. During conversion if the ul/ol element has any children
         /// that are not li elements, they are ignored and not added to the list element
         /// </summary>
         /// <param name="xamlParentElement">
@@ -860,7 +860,7 @@ namespace HTMLConverter
             //currentProperties = GetElementProperties(htmlLIElement, inheritedProperties, out localProperties, stylesheet);
 
             // Add li elements to the parent xamlListElement we created as long as they appear sequentially
-            // Use properties inherited from xamlParentElement for context 
+            // Use properties inherited from xamlParentElement for context
             while (htmlChildNode != null && htmlChildNodeName == "li")
             {
                 AddListItem(xamlListElement, (XmlElement)htmlChildNode, inheritedProperties, stylesheet, sourceContext);
@@ -927,7 +927,7 @@ namespace HTMLConverter
         /// XmlElement reprsenting the Html table element to be converted
         /// </param>
         /// <param name="inheritedProperties">
-        /// Hashtable representing properties inherited from parent context. 
+        /// Hashtable representing properties inherited from parent context.
         /// </param>
         private static void AddTable(XmlElement xamlParentElement, XmlElement htmlTableElement, Hashtable inheritedProperties, CssStylesheet stylesheet, List<XmlElement> sourceContext)
         {
@@ -1009,7 +1009,7 @@ namespace HTMLConverter
                         // Tbody is not present, but tr element is present. Tr is wrapped in tbody
                         XmlElement xamlTableBodyElement = xamlTableElement.OwnerDocument.CreateElement(null, Xaml_TableRowGroup, _xamlNamespace);
 
-                        // We use currentProperties of xamlTableElement when adding rows since the tbody element is artificially created and has 
+                        // We use currentProperties of xamlTableElement when adding rows since the tbody element is artificially created and has
                         // no properties of its own
 
                         htmlChildNode = AddTableRowsToTableBody(xamlTableBodyElement, htmlChildNode, currentProperties, columnStarts, stylesheet, sourceContext);
@@ -1130,7 +1130,7 @@ namespace HTMLConverter
             else
             {
                 // We do not have consistent information from table cells;
-                // Translate blindly colgroups from html.                
+                // Translate blindly colgroups from html.
                 for (XmlNode htmlChildNode = htmlTableElement.FirstChild; htmlChildNode != null; htmlChildNode = htmlChildNode.NextSibling)
                 {
                     if (htmlChildNode.LocalName.ToLower() == "colgroup")
@@ -1202,7 +1202,7 @@ namespace HTMLConverter
 
             // TODO: process local properties for TableColumn element
 
-            // Col is an empty element, with no subtree 
+            // Col is an empty element, with no subtree
             xamlTableElement.AppendChild(xamlTableColumnElement);
         }
 
@@ -1417,7 +1417,7 @@ namespace HTMLConverter
 
         /// <summary>
         /// Performs a parsing pass over a table to read information about column width and rowspan attributes. This information
-        /// is used to determine the starting point of each column. 
+        /// is used to determine the starting point of each column.
         /// </summary>
         /// <param name="htmlTableElement">
         /// XmlElement representing Html table whose structure is to be analyzed
@@ -1462,7 +1462,7 @@ namespace HTMLConverter
                         }
                         else if (tbodyWidth == 0)
                         {
-                            // Tbody analysis may return 0, probably due to unprocessable format. 
+                            // Tbody analysis may return 0, probably due to unprocessable format.
                             // We should also fail.
                             columnWidthsAvailable = false; // interrupt the analisys
                         }
@@ -1509,7 +1509,7 @@ namespace HTMLConverter
         /// <summary>
         /// Performs a parsing pass over a tbody to read information about column width and rowspan attributes. Information read about width
         /// attributes is stored in the reference ArrayList parameter columnStarts, which contains a list of all starting
-        /// positions of all columns in the table, ordered from left to right. Row spans are taken into consideration when 
+        /// positions of all columns in the table, ordered from left to right. Row spans are taken into consideration when
         /// computing column starts
         /// </summary>
         /// <param name="htmlTbodyElement">
@@ -1574,7 +1574,7 @@ namespace HTMLConverter
         }
 
         /// <summary>
-        /// Performs a parsing pass over a tr element to read information about column width and rowspan attributes.  
+        /// Performs a parsing pass over a tr element to read information about column width and rowspan attributes.
         /// </summary>
         /// <param name="htmlTRElement">
         /// XmlElement representing Html tr element whose structure is to be analyzed
@@ -1911,7 +1911,7 @@ namespace HTMLConverter
         }
 
         /// <summary>
-        /// Calculates column span based the column width and the widths of all other columns. Returns an integer representing 
+        /// Calculates column span based the column width and the widths of all other columns. Returns an integer representing
         /// the column span
         /// </summary>
         /// <param name="columnIndex">
@@ -2629,7 +2629,7 @@ namespace HTMLConverter
         /// XmlElement representing Xaml element for which properties are to be processed
         /// </param>
         /// <remarks>
-        /// TODO: Use the processed properties for htmlChildNode instead of using the node itself 
+        /// TODO: Use the processed properties for htmlChildNode instead of using the node itself
         /// </remarks>
         private static void ApplyPropertiesToTableCellElement(XmlElement htmlChildNode, XmlElement xamlTableCellElement)
         {
