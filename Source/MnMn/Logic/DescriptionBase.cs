@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 var menuItems = new DescriptionContextMenuBase[] {
                     new DescriptionContextMenuItem(true, Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand), null, Constants.xamlIDescription_Image_DefaultBrowser),
-                    new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand), null),
+                    new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand), null, Constants.xamlImage_Browser, Constants.xamlStyle_SmallDefaultIconPath),
                     new DescriptionContextMenuSeparator(),
                     new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                 };

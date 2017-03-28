@@ -29,6 +29,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public const string xamlImage_Playlist_Add = "Image_Playlist-Add";
         public const string xamlImage_CheckItLater = "Image_CheckItLater";
 
+        /// <summary>
+        /// 標準ブラウザアイコン。
+        /// </summary>
+        public const string xamlImage_Browser = "Image_Browser";
+
         public const string xamlIDescription_Image_DefaultBrowser = "DefaultBrowserIcon";
     }
 }
