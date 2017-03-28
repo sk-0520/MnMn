@@ -2001,7 +2001,7 @@
                         <StackPanel.ContextMenu>
                           <ContextMenu>
                             <!-- NOTE: x:Reference 使わないと System.Windows.Data Error: 4 -->
-                            <MenuItem Header="タグ検索" Command="{Binding DataContext.SearchTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+                            <MenuItem FontWeight="Bold" Header="タグ検索" Command="{Binding DataContext.SearchTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
                                 <Viewbox Style="{StaticResource SmallIconBox}">
                                   <Canvas Style="{StaticResource IconCanvas-24x24}">
