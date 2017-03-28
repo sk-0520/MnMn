@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         static bool IsUninitialized { get; set; } = false;
 
         /// <summary>
-        /// システムのデフォルトブラウザ。
+        /// システムの標準ブラウザ。
         /// <para>null の時は設定されてないか上手いこと取ってこれなかった。</para>
         /// </summary>
         public static ExecuteData? DefaultBrowserExecuteData { get; private set; }

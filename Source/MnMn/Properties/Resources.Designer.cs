@@ -954,7 +954,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   デフォルトブラウザで開く に類似しているローカライズされた文字列を検索します。
+        ///   標準ブラウザで開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_IDescription_MenuOpenUri {
             get {

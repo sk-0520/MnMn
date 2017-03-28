@@ -383,7 +383,7 @@
     <value>内蔵ブラウザで開く</value>
   </data>
   <data name="String_App_IDescription_MenuOpenUri" xml:space="preserve">
-    <value>デフォルトブラウザで開く</value>
+    <value>標準ブラウザで開く</value>
   </data>
   <data name="String_App_IDescription_MenuCopyUri" xml:space="preserve">
     <value>URIをコピー</value>
