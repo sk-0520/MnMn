@@ -130,6 +130,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                                     var xIconNode = x.ImportNode(iconElement, true);
                                     iconOuterElement.AppendChild(xIconNode);
+                                } else if(menu.IconImage != null) {
+                                    var imageElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_SmallImage, null);
+                                    var iconMap = new StringsModel() {
+                                        ["image"] = menu.IconImage,
+                                    };
+                                    foreach(var icon in GetAllElements(imageElement)) {
+                                        ReplaceAttibute(icon, iconMap);
+                                    }
+
+                                    var xIconNode = x.ImportNode(imageElement, true);
+                                    iconOuterElement.AppendChild(xIconNode);
                                 }
                             }
                         }

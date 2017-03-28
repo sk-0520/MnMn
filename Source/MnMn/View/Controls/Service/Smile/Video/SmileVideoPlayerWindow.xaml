@@ -27,6 +27,7 @@
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
+  xmlns:app_logic="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Logic"
 
 
   Icon="/Resources/Service/Smile/Service-Smile.ico"
@@ -2011,11 +2012,12 @@
                             </MenuItem>
                             <MenuItem Header="大百科を標準ブラウザで開く" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
-                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                <Image Style="{StaticResource SmallIconImage}" Source="{Binding Source={x:Static app_logic:WebNavigatorCore.DefaultBrowserIcon}}" />
+                                <!--<Viewbox Style="{StaticResource SmallIconBox}">
                                   <Canvas Style="{StaticResource IconCanvas-24x24}">
                                     <Path Data="{StaticResource Image_Book}" Style="{StaticResource SmallDefaultIconPath}" />
                                   </Canvas>
-                                </Viewbox>
+                                </Viewbox>-->
                               </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="大百科を内蔵ブラウザで開く" Command="{Binding DataContext.OpenPediaInAppBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
