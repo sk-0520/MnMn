@@ -963,7 +963,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   内臓ブラウザで開く に類似しているローカライズされた文字列を検索します。
+        ///   内蔵ブラウザで開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_IDescription_MenuOpenUriInAppBrowser {
             get {

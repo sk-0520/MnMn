@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         Process,
         /// <summary>
-        /// 内臓ブラウザ処理。
+        /// 内蔵ブラウザ処理。
         /// </summary>
         WebNavigator,
     }

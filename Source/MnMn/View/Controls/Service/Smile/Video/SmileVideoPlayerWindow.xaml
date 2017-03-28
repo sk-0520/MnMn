@@ -2018,7 +2018,7 @@
                                 </Viewbox>
                               </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="大百科を内臓ブラウザで開く" Command="{Binding DataContext.OpenPediaInAppBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+                            <MenuItem Header="大百科を内蔵ブラウザで開く" Command="{Binding DataContext.OpenPediaInAppBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
                                 <Viewbox Style="{StaticResource SmallIconBox}">
                                   <Canvas Style="{StaticResource IconCanvas-24x24}">

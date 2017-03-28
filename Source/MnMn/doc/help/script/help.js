@@ -67,7 +67,7 @@ var menuList = [
 		localize: true,
 		level: 1,
 		title: {
-			'ja-jp': '内臓ブラウザ'
+			'ja-jp': '内蔵ブラウザ'
 		}
 	},
 	{

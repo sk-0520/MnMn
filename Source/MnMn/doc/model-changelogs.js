@@ -149,7 +149,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#501: 内臓じゃなくて内蔵な',
+						'comments': [
+							'脳内 IME の保証期間切れてそう、全然気付かなかった'
+						]
 					},
 					{
 						'revision': '',
