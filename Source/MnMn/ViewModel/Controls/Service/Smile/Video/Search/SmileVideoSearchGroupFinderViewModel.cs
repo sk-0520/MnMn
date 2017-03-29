@@ -377,6 +377,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     RelationTagItems.InitializeRange(items);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
 
+                // #503, いつ復活するか分からんので一応残しておく
                 //var tag = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
                 //var tagTask = tag.LoadRelationTagListAsync(query).ContinueWith(task => {
                 //    var list = task.Result;
