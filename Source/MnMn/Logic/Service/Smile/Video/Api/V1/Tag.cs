@@ -40,6 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
+        //[Obsolete]
         RawSmileVideoTagListModel ConvertTagListFromRelation(string tagStrings)
         {
             var dataLine = tagStrings.SplitLines().First();
@@ -66,6 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         /// </summary>
         /// <param name="tagName"></param>
         /// <returns></returns>
+        //[Obsolete]
         public Task<RawSmileVideoTagListModel> LoadRelationTagListAsync(string tagName)
         {
             var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.tagRelation, ServiceType.SmileVideo);
@@ -101,7 +103,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
             return result;
         }
-
 
         /// <summary>
         /// トレンドタグを取得。

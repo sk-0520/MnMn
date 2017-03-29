@@ -108,7 +108,7 @@
 		</content>
 	</mapping>
 
-	<!-- 関連タグ -->
+	<!-- 関連タグ: #503 廃止 -->
 	<mapping key="video-tag-relation">
 		<item key="query" type="simple" value="${query}">
 			<bracket target="value" open="&quot;" close="&quot;" />
