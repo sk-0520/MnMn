@@ -313,6 +313,7 @@
     <Compile Include="Logic\InformationLoader.cs" />
     <Compile Include="Logic\Service\InformationCacherBase.cs" />
     <Compile Include="Logic\Service\Smile\Api\V1\Market.cs" />
+    <Compile Include="Logic\Service\Smile\Api\V1\Suggestion.cs" />
     <Compile Include="Logic\Service\Smile\Live\Api\Category.cs" />
     <Compile Include="Logic\Service\Smile\Live\Api\Broadcast.cs" />
     <Compile Include="Logic\Service\Smile\Live\Api\GetPlayerStatus.cs" />
@@ -408,6 +409,7 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileMarketVideoRelationPollingModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileTwitterInfoModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\SmileMarketVideoItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\SmileSuggestionCompleteCandidateModel.cs" />
     <Compile Include="Model\Service\Smile\SmileUserDefinedModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcClientInformationModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthInfoModel.cs" />

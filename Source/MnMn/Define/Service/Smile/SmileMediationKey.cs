@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 
         public const string pediaWordArticle = "smile-pedia-word-article";
 
+        public const string suggestionComplete = "smile-suggestion-complete";
+
         public const string contentsSearch = "smile-contents-search";
 
         public const string mylistDefault = "smile-video-mylist-account-default";

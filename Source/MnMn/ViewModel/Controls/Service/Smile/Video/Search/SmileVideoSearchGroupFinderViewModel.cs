@@ -33,9 +33,11 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
@@ -364,15 +366,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             if(isReload) {
                 SearchPropertyChangedListener.Add(SearchFinder);
 
-                var tag = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
-                var tagTask = tag.LoadRelationTagListAsync(query).ContinueWith(task => {
-                    var list = task.Result;
-                    var items = list.Tags
-                        .Where(t => t.Text != query)
-                        .Select(t => new SmileVideoTagViewModel(Mediation, t))
+                var suggestion = new Suggestion(Mediation);
+                suggestion.LoadCompleteAsync(query).ContinueWith(t => {
+                    var tags = t.Result;
+                    var items = tags.Items
+                        .Where(s => s != query)
+                        .Select(s => new RawSmileVideoTagItemModel() { Text = s, })
+                        .Select(tag => new SmileVideoTagViewModel(Mediation, tag))
                     ;
                     RelationTagItems.InitializeRange(items);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
+
+                //var tag = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
+                //var tagTask = tag.LoadRelationTagListAsync(query).ContinueWith(task => {
+                //    var list = task.Result;
+                //    var items = list.Tags
+                //        .Where(t => t.Text != query)
+                //        .Select(t => new SmileVideoTagViewModel(Mediation, t))
+                //    ;
+                //    RelationTagItems.InitializeRange(items);
+                //}, TaskScheduler.FromCurrentSynchronizationContext());
             }
 
             return SearchFinder.LoadAsync(thumbCacheSpan, imageCacheSpan);
