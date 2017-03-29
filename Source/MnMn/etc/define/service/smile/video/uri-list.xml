@@ -20,7 +20,7 @@
 
 	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="none" />
 
-	<item key="video-tag-relation" uri="http://api.search.nicovideo.jp/api/tag/" param="none" request-type="mapping" />
+	<item key="video-tag-relation" obsolete="true" uri="http://api.search.nicovideo.jp/api/tag/" param="none" request-type="mapping" />
 	<item key="video-tag-trend"  uri="http://www.nicovideo.jp/trendtag" param="none" />
 
 	<item key="video-history-page" uri="http://www.nicovideo.jp/my/history" />
