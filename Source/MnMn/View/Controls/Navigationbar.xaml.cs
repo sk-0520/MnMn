@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
@@ -22,12 +24,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// <summary>
     /// Navigationbar.xaml の相互作用ロジック
     /// </summary>
-    public partial class Navigationbar: UserControl
+    public partial class Navigationbar : UserControl
     {
         public Navigationbar()
         {
             InitializeComponent();
         }
+
+        #region DependencyProperty
 
         #region VideoPositionProperty
 
@@ -743,7 +747,195 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        #region function
+        #region StartSeekChangingCommand
+
+        #region StartSeekChangingCommandProperty
+
+        public static readonly DependencyProperty StartSeekChangingCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(StartSeekChangingCommandProperty)),
+            typeof(ICommand),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnStartSeekChangingCommandChanged))
+        );
+
+        private static void OnStartSeekChangingCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.StartSeekChangingCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand StartSeekChangingCommand
+        {
+            get { return GetValue(StartSeekChangingCommandProperty) as ICommand; }
+            set { SetValue(StartSeekChangingCommandProperty, value); }
+        }
+
         #endregion
+
+        #region StartSeekChangingCommandParameterProperty
+
+        public static readonly DependencyProperty StartSeekChangingCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(StartSeekChangingCommandParameterProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnStartSeekChangingCommandParameterChanged))
+        );
+
+        private static void OnStartSeekChangingCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.StartSeekChangingCommandParameter = e.NewValue;
+            }
+        }
+
+        public object StartSeekChangingCommandParameter
+        {
+            get { return GetValue(StartSeekChangingCommandParameterProperty); }
+            set { SetValue(StartSeekChangingCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region EndSeekChangeCommand
+
+        #region EndSeekChangeCommandProperty
+
+        public static readonly DependencyProperty EndSeekChangeCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(EndSeekChangeCommandProperty)),
+            typeof(ICommand),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnEndSeekChangeCommandChanged))
+        );
+
+        private static void OnEndSeekChangeCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.EndSeekChangeCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand EndSeekChangeCommand
+        {
+            get { return GetValue(EndSeekChangeCommandProperty) as ICommand; }
+            set { SetValue(EndSeekChangeCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region EndSeekChangeCommandParameterProperty
+
+        public static readonly DependencyProperty EndSeekChangeCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(EndSeekChangeCommandParameterProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnEndSeekChangeCommandParameterChanged))
+        );
+
+        private static void OnEndSeekChangeCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.EndSeekChangeCommandParameter = e.NewValue;
+            }
+        }
+
+        public object EndSeekChangeCommandParameter
+        {
+            get { return GetValue(EndSeekChangeCommandParameterProperty); }
+            set { SetValue(EndSeekChangeCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region property
+
+        /// <summary>
+        /// 動画再生位置を変更中か。
+        /// </summary>
+        public bool ChangingVideoPosition { get; private set; }
+        /// <summary>
+        /// シークバー押下時のカーソル位置。
+        /// </summary>
+        public Point SeekbarMouseDownPosition { get; private set; }
+        /// <summary>
+        /// シークバーの現在地が移動中か。
+        /// </summary>
+        public bool MovingSeekbarThumb { get; private set; }
+
+        #endregion
+
+        #region function
+
+        public void ResetStatus()
+        {
+            ChangingVideoPosition = false;
+            MovingSeekbarThumb = false;
+        }
+
+        #endregion
+
+        private void Seekbar_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton != MouseButtonState.Pressed) {
+                e.Handled = true;
+                return;
+            }
+
+            if(!StartSeekChangingCommand.TryExecute(null)) {
+                return;
+            }
+
+            var seekbar = (Slider)sender;
+            seekbar.CaptureMouse();
+
+            ChangingVideoPosition = true;
+            SeekbarMouseDownPosition = e.GetPosition(seekbar);
+            seekbar.PreviewMouseUp += Seekbar_PreviewMouseUp;
+            seekbar.MouseMove += Seekbar_MouseMove;
+
+            var tempPosition = SeekbarMouseDownPosition.X / seekbar.ActualWidth;
+            seekbar.Value = tempPosition;
+        }
+
+        private void Seekbar_MouseMove(object sender, MouseEventArgs e)
+        {
+            MovingSeekbarThumb = true;
+
+            Debug.Assert(ChangingVideoPosition);
+
+            var seekbar = (Slider)sender;
+            var movingPosition = e.GetPosition(seekbar);
+
+            var tempPosition = movingPosition.X / seekbar.ActualWidth;
+            seekbar.Value = tempPosition;
+        }
+
+        private void Seekbar_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var seekbar = (Slider)sender;
+
+            seekbar.PreviewMouseUp -= Seekbar_PreviewMouseUp;
+            seekbar.MouseMove -= Seekbar_MouseMove;
+
+            var pos = e.GetPosition(seekbar);
+            var nextPosition = (float)(pos.X / seekbar.ActualWidth);
+
+            EndSeekChangeCommand.TryExecute(nextPosition);
+
+            ChangingVideoPosition = false;
+            MovingSeekbarThumb = false;
+
+            seekbar.ReleaseMouseCapture();
+        }
     }
 }

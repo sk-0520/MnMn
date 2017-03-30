@@ -433,18 +433,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public SmileVideoFilteringViweModel GlobalCommentFilering { get; protected set; }
 
-        /// <summary>
-        /// 動画再生位置を変更中か。
-        /// </summary>
-        public bool ChangingVideoPosition { get; set; }
-        /// <summary>
-        /// シークバー押下時のカーソル位置。
-        /// </summary>
-        public Point SeekbarMouseDownPosition { get; set; }
-        /// <summary>
-        /// シークバーの現在地が移動中か。
-        /// </summary>
-        public bool MovingSeekbarThumb { get; set; }
+        ///// <summary>
+        ///// 動画再生位置を変更中か。
+        ///// </summary>
+        //public bool ChangingVideoPosition { get; set; }
+        ///// <summary>
+        ///// シークバー押下時のカーソル位置。
+        ///// </summary>
+        //public Point SeekbarMouseDownPosition { get; set; }
+        ///// <summary>
+        ///// シークバーの現在地が移動中か。
+        ///// </summary>
+        //public bool MovingSeekbarThumb { get; set; }
         /// <summary>
         /// ビューが閉じられたか。
         /// </summary>
