@@ -889,6 +889,8 @@
               WaitingFirstPlay="{Binding WaitingFirstPlay.Value}"
               IsAutoPlay="{Binding IsAutoPlay, Mode=OneWay}"
               IsUserOperationStop="{Binding UserOperationStop.Value}"
+              StartSeekChangingCommand="{Binding StartSeekChangingCommand}"
+              EndSeekChangeCommand="{Binding EndSeekChangeCommand}"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">

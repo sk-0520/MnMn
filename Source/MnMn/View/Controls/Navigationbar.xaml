@@ -99,6 +99,7 @@
       Focusable="False"
       KeyboardNavigation.DirectionalNavigation="None"
       Value="{Binding VideoPosition, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      PreviewMouseDown="Seekbar_PreviewMouseDown"
     >
       <Slider.Template>
         <ControlTemplate TargetType="Slider">

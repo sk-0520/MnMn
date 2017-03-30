@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
@@ -22,7 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// <summary>
     /// Navigationbar.xaml の相互作用ロジック
     /// </summary>
-    public partial class Navigationbar: UserControl
+    public partial class Navigationbar : UserControl
     {
         public Navigationbar()
         {
@@ -855,7 +857,85 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        #region function
+        #region property
+
+        /// <summary>
+        /// 動画再生位置を変更中か。
+        /// </summary>
+        public bool ChangingVideoPosition { get; private set; }
+        /// <summary>
+        /// シークバー押下時のカーソル位置。
+        /// </summary>
+        public Point SeekbarMouseDownPosition { get; private set; }
+        /// <summary>
+        /// シークバーの現在地が移動中か。
+        /// </summary>
+        public bool MovingSeekbarThumb { get; private set; }
+
         #endregion
+
+        #region function
+
+        public void ResetStatus()
+        {
+            ChangingVideoPosition = false;
+            MovingSeekbarThumb = false;
+        }
+
+        #endregion
+
+        private void Seekbar_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton != MouseButtonState.Pressed) {
+                e.Handled = true;
+                return;
+            }
+
+            if(!StartSeekChangingCommand.TryExecute(null)) {
+                return;
+            }
+
+            var seekbar = (Slider)sender;
+            seekbar.CaptureMouse();
+
+            ChangingVideoPosition = true;
+            SeekbarMouseDownPosition = e.GetPosition(seekbar);
+            seekbar.PreviewMouseUp += Seekbar_PreviewMouseUp;
+            seekbar.MouseMove += Seekbar_MouseMove;
+
+            var tempPosition = SeekbarMouseDownPosition.X / seekbar.ActualWidth;
+            seekbar.Value = tempPosition;
+        }
+
+        private void Seekbar_MouseMove(object sender, MouseEventArgs e)
+        {
+            MovingSeekbarThumb = true;
+
+            Debug.Assert(ChangingVideoPosition);
+
+            var seekbar = (Slider)sender;
+            var movingPosition = e.GetPosition(seekbar);
+
+            var tempPosition = movingPosition.X / seekbar.ActualWidth;
+            seekbar.Value = tempPosition;
+        }
+
+        private void Seekbar_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var seekbar = (Slider)sender;
+
+            seekbar.PreviewMouseUp -= Seekbar_PreviewMouseUp;
+            seekbar.MouseMove -= Seekbar_MouseMove;
+
+            var pos = e.GetPosition(seekbar);
+            var nextPosition = (float)(pos.X / seekbar.ActualWidth);
+
+            EndSeekChangeCommand.TryExecute(nextPosition);
+
+            ChangingVideoPosition = false;
+            MovingSeekbarThumb = false;
+
+            seekbar.ReleaseMouseCapture();
+        }
     }
 }
