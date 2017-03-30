@@ -139,7 +139,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#507: 互換用コードの読み込みアセンブリにJson.NETだったりHtmlAgilityPackだったりを追加しておく'
 					},
 					{
 						'revision': '',
