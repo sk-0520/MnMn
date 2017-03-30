@@ -501,6 +501,9 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Laboratory\SmileVideoLaboratoryPlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoBookmarkMyListFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoMyListBookmarkFilterViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Command.cs">
+      <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
