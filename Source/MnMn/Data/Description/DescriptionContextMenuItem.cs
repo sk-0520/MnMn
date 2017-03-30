@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Data.Description
 {
-    public class DescriptionContextMenuItem: DescriptionContextMenuBase
+    public class DescriptionContextMenuItem : DescriptionContextMenuBase
     {
         public DescriptionContextMenuItem(bool isDefault, string headerText, string command, string commandParameter)
         {
@@ -24,6 +24,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Data.Description
             IconStyle = iconStyle;
         }
 
+        public DescriptionContextMenuItem(bool isDefault, string headerText, string command, string commandParameter, string iconImage)
+            : this(isDefault, headerText, command, commandParameter)
+        {
+            IconImage = iconImage;
+        }
+
         #region proeprty
 
         public bool IsDefault { get; }
@@ -35,6 +41,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Data.Description
 
         public string IconKey { get; }
         public string IconStyle { get; }
+
+        public string IconImage { get; }
+
+        public bool HasIcon => (IconKey != null && IconStyle != null) || IconImage != null;
 
         #endregion
     }

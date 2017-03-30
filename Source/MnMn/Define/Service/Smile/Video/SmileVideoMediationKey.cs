@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string msgPost = "video-msg-post";
         public const string msgPostKey = "video-msg-post-key";
 
+        [Obsolete]
         public const string tagRelation = "video-tag-relation";
 
         public const string tagTrend = "video-tag-trend";

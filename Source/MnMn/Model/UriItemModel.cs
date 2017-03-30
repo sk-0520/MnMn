@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// URI定義。
     /// </summary>
     [Serializable]
-    public class UriItemModel: ModelBase
+    public class UriItemModel : ModelBase
     {
         #region property
         /// <summary>
@@ -43,6 +43,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// </summary>
         [XmlAttribute("uri")]
         public string Uri { get; set; }
+
+        /// <summary>
+        /// 廃止されているか。
+        /// </summary>
+        [XmlAttribute("obsolete")]
+        public bool IsObsolete { get; set; }
+
         /// <summary>
         /// URI加工タイプ。
         /// </summary>

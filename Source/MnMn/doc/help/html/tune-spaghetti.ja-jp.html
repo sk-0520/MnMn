@@ -113,6 +113,22 @@
 			</tbody>
 		</table>
 
+		<h3>ファイル名運用規則</h3>
+		<p>
+			<span class="page">tune-defined</span>のキーがファイル名になっていれば問題ないんですが以下の規則で何とか頑張りたいと思う所存。
+		</p>
+		<ul>
+			<li>キー名</li>
+			<li>@</li>
+			<li><strong>0埋め4桁連番, 100の倍数を基本にする</strong></li>
+			<li>.</li>
+			<li><code>M</code>(開発側提供処理)/<code>U</code>(ユーザー定義処理)</li>
+			<li>.xml</li>
+		</ul>
+		<p>
+			要はいい感じの優先度と開発側提供処理は *.M.xml で破棄できるようにしておきたいのです。
+		</p>
+
 		<h2>コード作成規約</h2>
 		<p>
 			若干 通常のコードの書き方と異なるため注意が必要です。
@@ -134,6 +150,8 @@
 			<li>System.Core.dll</li>
 			<li>System.Data.dll</li>
 			<li>System.Net.Http.dll</li>
+			<li>HtmlAgilityPack.dll</li>
+			<li>Newtonsoft.Json.dll</li>
 			<li>ContentTypeTextNet.SharedLibrary.dll</li>
 			<li>Bridging.dll</li>
 			<li>MnMn.exe</li>
@@ -157,6 +175,9 @@
 			<li>System.Net.Http.Headers</li>
 			<li>System.Text</li>
 			<li>System.Text.RegularExpressions</li>
+			<li>HtmlAgilityPack</li>
+			<li>Newtonsoft.Json</li>
+			<li>Newtonsoft.Json.Linq</li>
 			<li>ContentTypeTextNet.MnMn.Library.Bridging.Define</li>
 			<li>ContentTypeTextNet.MnMn.Library.Bridging.Model</li>
 			<li>ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility</li>

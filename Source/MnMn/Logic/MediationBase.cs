@@ -301,6 +301,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             var uriItem = GetUriItem(key);
             if(uriItem != null) {
+                if(uriItem.IsObsolete) {
+                    Logger.Warning($"warning: key({key}) is obsolete");
+                }
                 return GetFormatedUri(uriItem, replaceMap);
             } else {
                 return null;

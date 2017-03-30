@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
         void MakeDescription()
         {
             var flowDocumentSource = DescriptionProcessor.ConvertFlowDocumentFromHtml(HtmlSource);
-            
+
             DescriptionUtility.SetDescriptionDocument(this.AssociatedObject, flowDocumentSource, new Logger());
         }
 

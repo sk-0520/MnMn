@@ -403,7 +403,7 @@
                   <ItemsControl ItemsSource="{Binding RelationTagItems}">
                     <ItemsControl.ItemsPanel>
                       <ItemsPanelTemplate>
-                        <WrapPanel VerticalAlignment="Top" Orientation="Horizontal" />
+                        <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" />
                       </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>

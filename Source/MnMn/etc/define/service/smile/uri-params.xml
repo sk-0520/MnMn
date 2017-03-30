@@ -15,6 +15,10 @@
 		<item key="@word" value="${word}" />
 	</param>
 
+	<param key="smile-suggestion-complete">
+		<item key="@word" value="${word}" />
+	</param>
+
 	<param key="smile-contents-search">
 		<item key="service" value="${service}" />
 

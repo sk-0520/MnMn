@@ -269,7 +269,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag()) {
                 using(var responseStream = await response.Content.ReadAsStreamAsync()) {
-                    responseStream.CopyTo(stream);
+                    await responseStream.CopyToAsync(stream);
                     stream.Position = 0;
                 }
 

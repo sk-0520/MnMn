@@ -23,8 +23,8 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class SpaghettiScript: 
-        DisposeFinalizeBase, 
+    public class SpaghettiScript:
+        DisposeFinalizeBase,
         IUriCompatibility,
         IRequestCompatibility,
         IResponseCompatibility
@@ -32,6 +32,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region define
 
         static readonly string[] appReferenceAssemblies = new[] {
+            Path.Combine(Constants.LibraryDirectoryPath, "HtmlAgilityPack.dll"),
+            Path.Combine(Constants.LibraryDirectoryPath, "Newtonsoft.Json.dll"),
             Path.Combine(Constants.LibraryDirectoryPath, "ContentTypeTextNet.SharedLibrary.dll"),
             Path.Combine(Constants.LibraryDirectoryPath, "Bridging.dll"),
             Path.Combine(Constants.AssemblyPath),
@@ -46,7 +48,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             "System.Text",
             "System.Text.RegularExpressions",
             "System.Net.Http.Headers",
-            "System.Diagnostics"
+            "System.Diagnostics",
+            "HtmlAgilityPack",
+            "Newtonsoft.Json",
+            "Newtonsoft.Json.Linq",
         };
 
         static readonly string[] defaultAppNameSpace = new[] {
