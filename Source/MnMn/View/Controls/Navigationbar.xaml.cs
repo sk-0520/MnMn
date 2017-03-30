@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             InitializeComponent();
         }
 
+        #region DependencyProperty
+
         #region VideoPositionProperty
 
         public static readonly DependencyProperty VideoPositionProperty = DependencyProperty.Register(
@@ -740,6 +742,116 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get { return (PlacementMode)GetValue(SeekbarPopupPlacementProperty); }
             set { SetValue(SeekbarPopupPlacementProperty, value); }
         }
+
+        #endregion
+
+        #region StartSeekChangingCommand
+
+        #region StartSeekChangingCommandProperty
+
+        public static readonly DependencyProperty StartSeekChangingCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(StartSeekChangingCommandProperty)),
+            typeof(ICommand),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnStartSeekChangingCommandChanged))
+        );
+
+        private static void OnStartSeekChangingCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.StartSeekChangingCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand StartSeekChangingCommand
+        {
+            get { return GetValue(StartSeekChangingCommandProperty) as ICommand; }
+            set { SetValue(StartSeekChangingCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region StartSeekChangingCommandParameterProperty
+
+        public static readonly DependencyProperty StartSeekChangingCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(StartSeekChangingCommandParameterProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnStartSeekChangingCommandParameterChanged))
+        );
+
+        private static void OnStartSeekChangingCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.StartSeekChangingCommandParameter = e.NewValue;
+            }
+        }
+
+        public object StartSeekChangingCommandParameter
+        {
+            get { return GetValue(StartSeekChangingCommandParameterProperty); }
+            set { SetValue(StartSeekChangingCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region EndSeekChangeCommand
+
+        #region EndSeekChangeCommandProperty
+
+        public static readonly DependencyProperty EndSeekChangeCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(EndSeekChangeCommandProperty)),
+            typeof(ICommand),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnEndSeekChangeCommandChanged))
+        );
+
+        private static void OnEndSeekChangeCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.EndSeekChangeCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand EndSeekChangeCommand
+        {
+            get { return GetValue(EndSeekChangeCommandProperty) as ICommand; }
+            set { SetValue(EndSeekChangeCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region EndSeekChangeCommandParameterProperty
+
+        public static readonly DependencyProperty EndSeekChangeCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(EndSeekChangeCommandParameterProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnEndSeekChangeCommandParameterChanged))
+        );
+
+        private static void OnEndSeekChangeCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.EndSeekChangeCommandParameter = e.NewValue;
+            }
+        }
+
+        public object EndSeekChangeCommandParameter
+        {
+            get { return GetValue(EndSeekChangeCommandParameterProperty); }
+            set { SetValue(EndSeekChangeCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
 
         #endregion
 
