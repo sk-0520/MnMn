@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         void RefreshDownloadingCount()
         {
-            DownloadingCount = DownloadStateItems.Count(i => i.Item.DownLoadState == LoadState.Loading);
+            DownloadingCount = DownloadStateItems.Count(i => i.Item.DownloadState == LoadState.Loading);
         }
 
         #endregion
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             foreach(var download in DownloadStateItems) {
                 // 列挙中に終わるかもしんないから逐次実行。
-                if(download.Item.DownLoadState == LoadState.Loading || download.Item.DownLoadState == LoadState.Preparation) {
+                if(download.Item.DownloadState == LoadState.Loading || download.Item.DownloadState == LoadState.Preparation) {
                     download.CancelDownload();
                 }
             }
@@ -107,11 +107,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         private void DownloadItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(IDownloadItem.DownLoadState)) {
+            if(e.PropertyName == nameof(IDownloadItem.DownloadState)) {
                 RefreshDownloadingCount();
 
                 var downloadItem = (IDownloadItem)sender;
-                if(downloadItem.DownLoadState == LoadState.Loaded) {
+                if(downloadItem.DownloadState == LoadState.Loaded) {
                     downloadItem.AutoExecuteTargetCommand.TryExecute(null);
                 }
             }

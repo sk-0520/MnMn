@@ -14,21 +14,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
     public class DownloadOrderModel: OrderModel
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <param name="downloadState"></param>
+        /// <param name="downloadItem"></param>
         /// <param name="canManagement">管理権限を譲渡するか。</param>
         /// <param name="serviceType"></param>
-        public DownloadOrderModel(IDownloadItem downloadState, bool canManagement, ServiceType serviceType) 
+        public DownloadOrderModel(IDownloadItem downloadItem, bool canManagement, ServiceType serviceType)
             : base(OrderKind.Download, serviceType)
         {
-            DownloadState = downloadState;
+            DownloadItem = downloadItem;
             CanManagement = canManagement;
         }
 
         #region property
 
-        public IDownloadItem DownloadState { get; }
+        public IDownloadItem DownloadItem { get; }
 
         public bool CanManagement { get; }
 

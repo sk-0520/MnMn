@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// <summary>
         /// ダウンロード状態。
         /// </summary>
-        LoadState DownLoadState { get; }
+        LoadState DownloadState { get; }
 
         /// <summary>
         /// ダウンロード単位。

@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         long _downloadTotalSize;
         long _downloadedSize;
 
-        LoadState _downLoadState;
+        LoadState _downloadState;
         ImageSource _image;
 
         #endregion
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             Downloader.Downloaded += Downloader_Downloaded;
             Downloader.DownloadingError += Downloader_DownloadingError;
 
-            DownLoadState = LoadState.None;
+            DownloadState = LoadState.None;
         }
 
         #region property
@@ -110,10 +110,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public IProgress<double> DownloadingProgress { get; set; }
 
-        public LoadState DownLoadState
+        public LoadState DownloadState
         {
-            get { return this._downLoadState; }
-            private set { SetVariableValue(ref this._downLoadState, value); }
+            get { return this._downloadState; }
+            private set { SetVariableValue(ref this._downloadState, value); }
         }
 
         public ImageSource Image
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             private set { SetVariableValue(ref this._image, value); }
         }
 
-        public bool CanRestart => false;
+        public bool CanRestart => true;
 
         public ICommand OpenDirectoryCommand
         {
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             Cancellation = new CancellationTokenSource();
 
-            DownLoadState = LoadState.Preparation;
+            DownloadState = LoadState.Preparation;
 
             EnabledTotalSize = false;
             DownloadedSize = DownloadTotalSize = 0;
@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         private void Downloader_DownloadStart(object sender, Define.Event.DownloadStartEventArgs e)
         {
-            DownLoadState = LoadState.Loading;
+            DownloadState = LoadState.Loading;
 
             DownloadingProgress?.Report(0);
 
@@ -211,14 +211,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             var downloader = (Downloader)sender;
             if(e.Cancel) {
                 if(!downloader.Completed) {
-                    DownLoadState = LoadState.Failure;
+                    DownloadState = LoadState.Failure;
                     WriteStream?.Dispose();
                     WriteStream = null;
                     return;
                 }
             }
 
-            DownLoadState = LoadState.Loading;
+            DownloadState = LoadState.Loading;
 
             WriteStream.Write(e.Data.Array, 0, e.Data.Count);
             DownloadedSize = Downloader.DownloadedSize;
@@ -233,10 +233,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             var downloader = (Downloader)sender;
             if(downloader.Completed) {
-                DownLoadState = LoadState.Loaded;
+                DownloadState = LoadState.Loaded;
                 DownloadingProgress?.Report(1);
             } else {
-                DownLoadState = LoadState.Failure;
+                DownloadState = LoadState.Failure;
             }
 
             DownloadedSize = Downloader.DownloadedSize;
@@ -247,7 +247,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         private void Downloader_DownloadingError(object sender, Define.Event.DownloadingErrorEventArgs e)
         {
-            DownLoadState = LoadState.Failure;
+            DownloadState = LoadState.Failure;
 
             WriteStream?.Dispose();
             WriteStream = null;

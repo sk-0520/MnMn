@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             private set { SetVariableValue(ref this._downloadUri, value); }
         }
 
-        public LoadState DownLoadState
+        public LoadState DownloadState
         {
             get { return this._downLoadState; }
             private set { SetVariableValue(ref this._downLoadState, value); }
@@ -112,11 +112,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         public ICommand ExecuteTargetCommand => CreateCommand(o => { }, o => false);
 
-        public ICommand AutoExecuteTargetCommand => CreateCommand(o => ExpandArchive(), o => DownLoadState == LoadState.Loaded);
+        public ICommand AutoExecuteTargetCommand => CreateCommand(o => ExpandArchive(), o => DownloadState == LoadState.Loaded);
 
         public async Task StartAsync()
         {
-            DownLoadState = LoadState.Preparation;
+            DownloadState = LoadState.Preparation;
 
             Cancellation = new CancellationTokenSource();
             DownloadedSize = 0;
@@ -126,11 +126,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             using(var userAgent = host.CreateHttpUserAgent()) {
                 userAgent.Timeout = Constants.ArchiveEazyUpdateTimeout;
                 using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
-                    DownLoadState = LoadState.Loading;
+                    DownloadState = LoadState.Loading;
 
                     foreach(var tartget in Model.Targets) {
                         if(Cancellation.IsCancellationRequested) {
-                            DownLoadState = LoadState.Failure;
+                            DownloadState = LoadState.Failure;
                             return;
                         }
 
@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                                 DownloadingProgress?.Report(DownloadedSize / (double)DownloadTotalSize);
                             } else {
                                 Mediation.Logger.Error(response.ToString());
-                                DownLoadState = LoadState.Failure;
+                                DownloadState = LoadState.Failure;
                                 return;
                             }
                         }
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             }
 
             DownloadingProgress?.Report(1);
-            DownLoadState = LoadState.Loaded;
+            DownloadState = LoadState.Loaded;
         }
 
         public void Cancel()
