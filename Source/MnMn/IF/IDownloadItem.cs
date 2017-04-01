@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         LoadState DownLoadState { get; }
 
         /// <summary>
+        /// ダウンロード単位。
+        /// <para>基本的に <see cref="DownloadUnit.Size"/> でいい。</para>
+        /// </summary>
+        DownloadUnit DownloadUnit { get; }
+
+        /// <summary>
         /// ダウンロードするサイズは判明しているか。
         /// </summary>
         bool EnabledTotalSize { get; }

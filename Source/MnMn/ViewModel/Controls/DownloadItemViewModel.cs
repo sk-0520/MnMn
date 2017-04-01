@@ -25,6 +25,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #region variable
 
         bool _enabledCompleteSize;
+        DownloadUnit _downloadUnit;
+
         long _downloadTotalSize;
         long _downloadedSize;
 
@@ -86,6 +88,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get { return this._enabledCompleteSize; }
             private set { SetVariableValue(ref this._enabledCompleteSize, value); }
         }
+
+        public DownloadUnit DownloadUnit
+        {
+            get { return this._downloadUnit; }
+            private set { SetVariableValue(ref this._downloadUnit, value); }
+        }
+
 
         public long DownloadTotalSize
         {
