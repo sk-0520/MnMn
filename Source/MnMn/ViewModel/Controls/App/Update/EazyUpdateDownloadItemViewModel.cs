@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 {
@@ -30,6 +36,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         {
             Mediation = mediation;
             Model = model;
+
+            var eazyUpdateDir = VariableConstants.GetEazyUpdateDirectory();
+            ArchivePath = Path.Combine(eazyUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(Model.Timestamp), "zip"));
         }
 
         #region property
@@ -39,13 +48,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         CancellationTokenSource Cancellation { get; set; }
 
+        string ArchivePath { get; }
+
         #endregion
 
         #region function
 
-        Task UpdateAsync()
+        void ExpandArchive()
         {
-            return Task.CompletedTask;
+            // アーカイブ展開
+            using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Open, FileAccess.Read, FileShare.Read), ZipArchiveMode.Read)) {
+                foreach(var entry in archiveStream.Entries) {
+                    var path = Path.Combine(Constants.AssemblyRootDirectoryPath, entry.FullName);
+                    FileUtility.MakeFileParentDirectory(path);
+                    Mediation.Logger.Trace($"expand: {path}");
+                    using(var entryStream = entry.Open())
+                    using(var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
+                        entryStream.CopyTo(stream);
+                    }
+                }
+            }
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            setting.RunningInformation.LastEazyUpdateTimestamp = Model.Timestamp;
         }
 
         #endregion
@@ -84,12 +108,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         public ICommand ExecuteTargetCommand => CreateCommand(o => { }, o => false);
 
-        public ICommand AutoExecuteTargetCommand => CreateCommand(o => UpdateAsync(), o => DownLoadState == LoadState.Loaded);
+        public ICommand AutoExecuteTargetCommand => CreateCommand(o => ExpandArchive(), o => DownLoadState == LoadState.Loaded);
 
-        public Task StartAsync()
+        public async Task StartAsync()
         {
+            DownLoadState = LoadState.Preparation;
+
             Cancellation = new CancellationTokenSource();
-            return Task.CompletedTask;
+            DownloadedSize = 0;
+            DownloadingProgress?.Report(0);
+
+            using(var host = new HttpUserAgentHost())
+            using(var userAgent = host.CreateHttpUserAgent()) {
+                userAgent.Timeout = Constants.ArchiveEazyUpdateTimeout;
+                using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
+                    DownLoadState = LoadState.Loading;
+
+                    foreach(var tartget in Model.Targets) {
+                        if(Cancellation.IsCancellationRequested) {
+                            DownLoadState = LoadState.Failure;
+                            return;
+                        }
+
+                        var entry = archiveStream.CreateEntry(tartget.Extends["expand"]);
+                        using(var entryStream = entry.Open()) {
+                            Mediation.Logger.Debug(tartget.Key);
+                            var response = await userAgent.GetAsync(tartget.Key);
+                            if(response.IsSuccessStatusCode) {
+                                var stream = await response.Content.ReadAsStreamAsync();
+                                await stream.CopyToAsync(entryStream);
+                                DownloadedSize += 1;
+                                DownloadingProgress?.Report(DownloadedSize / DownloadTotalSize);
+                            } else {
+                                Mediation.Logger.Error(response.ToString());
+                                DownLoadState = LoadState.Failure;
+                                return;
+                            }
+                        }
+                        //await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
+                    }
+                }
+            }
+
+            DownloadingProgress?.Report(1);
+            DownLoadState = LoadState.Loaded;
         }
 
         public void Cancel()
