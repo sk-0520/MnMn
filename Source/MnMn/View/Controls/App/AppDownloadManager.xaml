@@ -67,6 +67,13 @@
                             <Setter Property="Visibility" Value="Collapsed" />
                             <Setter Property="Value" Value="1" />
                           </DataTrigger>
+                          <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                              <Condition Binding="{Binding Item.EnabledTotalSize}" Value="False" />
+                              <Condition Binding="{Binding Item.DownloadState}" Value="Failure" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsIndeterminate" Value="False" />
+                          </MultiDataTrigger>
                         </Style.Triggers>
 
                         <Setter Property="Value" Value="{Binding DownloadingProgress, Mode=OneWay}" />
