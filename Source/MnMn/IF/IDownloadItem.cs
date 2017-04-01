@@ -55,8 +55,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 
         #region command
 
-        ICommand OpenDirectoryCommand { get; } 
+        ICommand OpenDirectoryCommand { get; }
         ICommand ExecuteTargetCommand { get; }
+        ICommand AutoExecuteTargetCommand { get; }
 
         #endregion
 

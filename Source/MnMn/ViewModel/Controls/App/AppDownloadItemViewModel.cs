@@ -48,8 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(
-                    o => Item.ExecuteTargetCommand.TryExecute(o),
-                    o => Item.DownLoadState == Define.LoadState.Loaded
+                    o => Item.ExecuteTargetCommand.Execute(o),
+                    o => Item.DownLoadState == Define.LoadState.Loaded && Item.ExecuteTargetCommand.CanExecute(o)
                 );
             }
         }
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(
                     o => StartAsync(),
-                    o => Item.DownLoadState == Define.LoadState.Failure
+                    o => Item.DownLoadState == Define.LoadState.Failure || Item.DownLoadState == Define.LoadState.None
                 );
             }
         }

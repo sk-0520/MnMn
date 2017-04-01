@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -108,6 +109,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             if(e.PropertyName == nameof(IDownloadItem.DownLoadState)) {
                 RefreshDownloadingCount();
+
+                var downloadItem = (IDownloadItem)sender;
+                if(downloadItem.DownLoadState == LoadState.Loaded) {
+                    downloadItem.AutoExecuteTargetCommand.TryExecute(null);
+                }
             }
         }
     }

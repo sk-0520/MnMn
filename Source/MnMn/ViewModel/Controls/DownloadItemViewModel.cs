@@ -133,6 +133,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public ICommand AutoExecuteTargetCommand
+        {
+            get
+            {
+                return CreateCommand(o => { }, o => false);
+            }
+        }
 
         public Task StartAsync()
         {
