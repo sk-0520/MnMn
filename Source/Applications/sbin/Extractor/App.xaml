@@ -4,7 +4,15 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   StartupUri="MainWindow.xaml"
 >
-    <Application.Resources>
-         
-    </Application.Resources>
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <!-- http://www.infragistics.com/community/blogs/blagunas/archive/2013/05/25/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls.aspx -->
+        <ResourceDictionary Source="/Resources/Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
+        <ResourceDictionary Source="/Resources/Themes/Metro/Styles.Shared.xaml" />
+        <ResourceDictionary Source="/Resources/Themes/Metro/Styles.WPF.xaml" />
+        <ResourceDictionary Source="/Resources/Themes/Metro/Theme.Colors.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>
