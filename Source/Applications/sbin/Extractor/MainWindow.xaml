@@ -11,8 +11,30 @@
   Title="MainWindow"
   Width="525"
   Height="350"
+  WindowStyle="None"
+  ResizeMode="NoResize"
+  WindowStartupLocation="CenterScreen"
 >
+  <Window.Resources>
+    <Thickness x:Key="DefaultMargin">8</Thickness>
+  </Window.Resources>
+  <Window.BorderBrush>
+    <SolidColorBrush Color="{StaticResource Color_026}" />
+  </Window.BorderBrush>
   <Grid>
-
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    
+    <StackPanel>
+      <StackPanel.Background>
+        <SolidColorBrush Color="{StaticResource Color_025}" />
+      </StackPanel.Background>
+      <Grid PreviewMouseDown="Grid_PreviewMouseDown" Cursor="SizeAll">
+        <TextBlock>Extractor</TextBlock>
+      </Grid>
+    </StackPanel>
+    
   </Grid>
 </Window>

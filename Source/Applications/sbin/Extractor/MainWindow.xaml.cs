@@ -24,5 +24,14 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         {
             InitializeComponent();
         }
+
+        private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            if(e.LeftButton == MouseButtonState.Pressed) {
+                DragMove();
+            }
+        }
     }
 }
