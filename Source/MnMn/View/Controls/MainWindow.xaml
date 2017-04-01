@@ -265,16 +265,29 @@
       </TabItem>
       <TabItem DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Viewbox Style="{StaticResource BigIconBox}">
-            <Viewbox.ToolTip>
+          <Grid>
+            <Grid.ToolTip>
               <ToolTip Style="{StaticResource SelectionTabToolTip}">
                 <TextBlock Text="ダウンロード" />
               </ToolTip>
-            </Viewbox.ToolTip>
-            <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
-            </Canvas>
-          </Viewbox>
+            </Grid.ToolTip>
+            <Viewbox Style="{StaticResource BigIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="{Binding DownloadingCount}">
+              <Label.Style>
+                <Style TargetType="Label" BasedOn="{StaticResource HighlightLabel}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding DownloadingCount}" Value="0">
+                      <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Label.Style>
+            </Label>
+          </Grid>
         </TabItem.Header>
         <app_view_controls_app:AppDownloadManager x:Name="download" />
       </TabItem>
