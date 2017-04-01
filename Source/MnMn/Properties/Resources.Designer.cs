@@ -202,12 +202,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         ///  x:Name=&quot;dummy&quot;
         ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
-        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
-        ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
         ///&gt;
         ///  &lt;Image
         ///    Style=&quot;{StaticResource SmallIconImage}&quot;
-        ///    Source=&quot;{Binding ${image}}}&quot;
+        ///    Source=&quot;{Binding ${image}}&quot;
         ///  /&gt;
         ///&lt;/UserControl&gt;
         /// に類似しているローカライズされた文字列を検索します。
@@ -949,6 +947,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_Define_UpdateCheckState_UnChecked {
             get {
                 return ResourceManager.GetString("String_App_Define_UpdateCheckState_UnChecked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   簡易アップデート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_EazyUpdate {
+            get {
+                return ResourceManager.GetString("String_App_EazyUpdate", resourceCulture);
             }
         }
         

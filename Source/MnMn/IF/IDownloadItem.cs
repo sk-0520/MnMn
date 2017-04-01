@@ -25,7 +25,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// <summary>
         /// ダウンロード状態。
         /// </summary>
-        LoadState DownLoadState { get; }
+        LoadState DownloadState { get; }
+
+        /// <summary>
+        /// ダウンロード単位。
+        /// <para>基本的に <see cref="DownloadUnit.Size"/> でいい。</para>
+        /// </summary>
+        DownloadUnit DownloadUnit { get; }
 
         /// <summary>
         /// ダウンロードするサイズは判明しているか。
@@ -49,14 +55,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// </summary>
         IProgress<double> DownloadingProgress { get; set; }
 
+        /// <summary>
+        /// 表示する画像。
+        /// <para>48pxくらいかなぁ。</para>
+        /// </summary>
         ImageSource Image { get; }
+
+        /// <summary>
+        /// キャンセル後に再実行可能か。
+        /// <para>内部制御がややこしい場合にfalseを設定するイメージ。</para>
+        /// <para>基本的にはアップデート処理以外は可能だと思いたい。</para>
+        /// </summary>
+        bool CanRestart { get; }
 
         #endregion
 
         #region command
 
-        ICommand OpenDirectoryCommand { get; } 
+        ICommand OpenDirectoryCommand { get; }
         ICommand ExecuteTargetCommand { get; }
+        ICommand AutoExecuteTargetCommand { get; }
 
         #endregion
 

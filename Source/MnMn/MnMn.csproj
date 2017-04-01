@@ -230,6 +230,7 @@
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
+    <Compile Include="Define\DownloadUnit.cs" />
     <Compile Include="Define\Event\PointingGestureChangedEventArgs.cs" />
     <Compile Include="Define\PointingGestureChangeKind.cs" />
     <Compile Include="Define\PointingGestureDirection.cs" />
@@ -473,6 +474,8 @@
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="Logic\DragAndDropBase.cs" />
+    <Compile Include="ViewModel\Controls\App\Update\EazyUpdateDownloadItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\DownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\FinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\InformationViewModelBase.cs" />
@@ -1007,6 +1010,8 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Content Include="Resources\File\JavaScript\GeckoFx\AcceptLink.js" />
+    <Resource Include="Resources\MnMn-Update_App.png" />
+    <Resource Include="Resources\MnMn-Update_Eazy.png" />
     <Resource Include="Resources\MnMn-Header.png" />
     <Resource Include="Resources\Service\Smile\Service-Header.png" />
     <Resource Include="Resources\MnMn.png" />

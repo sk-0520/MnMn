@@ -438,10 +438,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         bool Order_Download(DownloadOrderModel order)
         {
-            var downloadState = order.DownloadState;
+            var downloadState = order.DownloadItem;
             //DownloadStatus.Insert(0, downloadState);
 
-            var downloadItem = new AppDownloadItemViewModel(order.ServiceType, order.DownloadState);
+            var downloadItem = new AppDownloadItemViewModel(order.ServiceType, order.DownloadItem);
 
             ManagerPack.AppManager.AppDownloadManager.AddDownloadItem(downloadItem, order.CanManagement);
 

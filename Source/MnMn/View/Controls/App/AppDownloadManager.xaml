@@ -1,13 +1,13 @@
-﻿<UserControl 
+﻿<UserControl
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.App.AppDownloadManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-  
+
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
 
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
@@ -63,10 +63,17 @@
                           <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="False">
                             <Setter Property="IsIndeterminate" Value="True" />
                           </DataTrigger>
-                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
                             <Setter Property="Visibility" Value="Collapsed" />
                             <Setter Property="Value" Value="1" />
                           </DataTrigger>
+                          <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                              <Condition Binding="{Binding Item.EnabledTotalSize}" Value="False" />
+                              <Condition Binding="{Binding Item.DownloadState}" Value="Failure" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsIndeterminate" Value="False" />
+                          </MultiDataTrigger>
                         </Style.Triggers>
 
                         <Setter Property="Value" Value="{Binding DownloadingProgress, Mode=OneWay}" />
@@ -80,7 +87,7 @@
 
                       <Style x:Key="ShowDownloadingTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Style.Triggers>
-                          <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
                             <Setter Property="Visibility" Value="Collapsed" />
                           </DataTrigger>
                         </Style.Triggers>
@@ -95,8 +102,21 @@
                       <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="{Binding Item.DownLoadState, Converter={StaticResource EnumDisplayConverter}}" />
-                    <TextBlock Grid.Column="1" TextAlignment="Right" Text="{Binding Item.DownloadedSize, Converter={StaticResource HumanLikeByteConverter}}" Style="{StaticResource ShowDownloadingTextStyle}" />
+                    <TextBlock Grid.Column="0" Text="{Binding Item.DownloadState, Converter={StaticResource EnumDisplayConverter}}" />
+                    <TextBlock x:Name="current" Grid.Column="1" TextAlignment="Right">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource ShowDownloadingTextStyle}">
+                          <Style.Triggers>
+                            <DataTrigger  Binding="{Binding Item.DownloadUnit}" Value="Size">
+                              <Setter Property="Text" Value="{Binding Item.DownloadedSize, Converter={StaticResource HumanLikeByteConverter}}" />
+                            </DataTrigger>
+                            <DataTrigger  Binding="{Binding Item.DownloadUnit}" Value="Count">
+                              <Setter Property="Text" Value="{Binding Item.DownloadedSize}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
                     <TextBlock Grid.Column="2" Text=" / " Style="{StaticResource ShowDownloadingTextStyle}" />
                     <TextBlock Grid.Column="3" TextAlignment="Left">
                       <TextBlock.Style>
@@ -104,6 +124,24 @@
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="True">
                               <Setter Property="Text" Value="{Binding Item.DownloadTotalSize, Converter={StaticResource HumanLikeByteConverter}}" />
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Item.EnabledTotalSize}" Value="True" />
+                                <Condition Binding="{Binding Item.DownloadUnit}" Value="Size" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Item.DownloadTotalSize, Converter={StaticResource HumanLikeByteConverter}}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Item.EnabledTotalSize}" Value="True" />
+                                <Condition Binding="{Binding Item.DownloadUnit}" Value="Count" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Item.DownloadTotalSize}" />
+                            </MultiDataTrigger>
+
+                            <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
+                              <Setter Property="Text" Value="{Binding Text, ElementName=current}" />
                             </DataTrigger>
                           </Style.Triggers>
 
@@ -126,7 +164,7 @@
                         <Button.Style>
                           <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
-                              <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Failure">
+                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Failure">
                                 <Setter Property="Command" Value="{Binding StartDownloadCommand}" />
                                 <Setter Property="Content">
                                   <Setter.Value>
@@ -139,7 +177,7 @@
                                 </Setter>
                                 <Setter Property="Visibility" Value="Visible" />
                               </DataTrigger>
-                              <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loading">
+                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loading">
                                 <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
                                 <Setter Property="Content">
                                   <Setter.Value>
@@ -162,7 +200,7 @@
                         <Button.Style>
                           <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
-                              <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
                                 <Setter Property="Visibility" Value="Visible" />
                               </DataTrigger>
                             </Style.Triggers>
@@ -182,7 +220,7 @@
                         <Button.Style>
                           <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
-                              <DataTrigger Binding="{Binding Item.DownLoadState}" Value="Loaded">
+                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
                                 <Setter Property="Visibility" Value="Visible" />
                               </DataTrigger>
                             </Style.Triggers>
