@@ -102,6 +102,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             private set { SetVariableValue(ref this._downloadedSize, value); }
         }
 
+        public bool CanRestart => false;
+
         public IProgress<double> DownloadingProgress { get; set; }
 
         public ImageSource Image => throw new NotImplementedException();

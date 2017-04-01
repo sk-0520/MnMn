@@ -122,6 +122,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             private set { SetVariableValue(ref this._image, value); }
         }
 
+        public bool CanRestart => false;
+
         public ICommand OpenDirectoryCommand
         {
             get

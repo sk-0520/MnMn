@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(
                     o => StartAsync(),
-                    o => Item.DownLoadState == Define.LoadState.Failure || Item.DownLoadState == Define.LoadState.None
+                    o => Item.CanRestart && Item.DownLoadState == Define.LoadState.Failure || Item.DownLoadState == Define.LoadState.None
                 );
             }
         }

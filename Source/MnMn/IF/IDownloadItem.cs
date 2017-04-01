@@ -55,7 +55,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// </summary>
         IProgress<double> DownloadingProgress { get; set; }
 
+        /// <summary>
+        /// 表示する画像。
+        /// <para>48pxくらいかなぁ。</para>
+        /// </summary>
         ImageSource Image { get; }
+
+        /// <summary>
+        /// キャンセル後に再実行可能か。
+        /// <para>内部制御がややこしい場合にfalseを設定するイメージ。</para>
+        /// <para>基本的にはアップデート処理以外は可能だと思いたい。</para>
+        /// </summary>
+        bool CanRestart { get; }
 
         #endregion
 
