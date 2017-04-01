@@ -1010,6 +1010,8 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Content Include="Resources\File\JavaScript\GeckoFx\AcceptLink.js" />
+    <Resource Include="Resources\MnMn-Update_App.png" />
+    <Resource Include="Resources\MnMn-Update_Eazy.png" />
     <Resource Include="Resources\MnMn-Header.png" />
     <Resource Include="Resources\Service\Smile\Service-Header.png" />
     <Resource Include="Resources\MnMn.png" />

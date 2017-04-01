@@ -8,6 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
@@ -29,6 +32,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         LoadState _downLoadState;
 
         long _downloadedSize;
+
+        string _displayText;
 
         #endregion
 
@@ -74,6 +79,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
 
+        void SetDisplayText(string expandPath)
+        {
+            if(string.IsNullOrEmpty(expandPath)) {
+                this._displayText = Properties.Resources.String_App_EazyUpdate;
+            } else {
+                this._displayText = $"{Properties.Resources.String_App_EazyUpdate}: {expandPath}";
+            }
+            CallOnPropertyChange(nameof(DisplayText));
+        }
+
+
         #endregion
 
         #region IDownloadItem
@@ -106,7 +122,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         public IProgress<double> DownloadingProgress { get; set; }
 
-        public ImageSource Image => throw new NotImplementedException();
+        public ImageSource Image
+        {
+            get
+            {
+                var image= new BitmapImage();
+                using(Initializer.BeginInitialize(image)) {
+                    image.UriSource = SharedConstants.GetEntryUri("Resources/MnMn-Update_Eazy.png");
+                }
+
+                return image;
+            }
+        }
 
         public ICommand OpenDirectoryCommand => CreateCommand(o => { }, o => false);
 
@@ -121,6 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             Cancellation = new CancellationTokenSource();
             DownloadedSize = 0;
             DownloadingProgress?.Report(0);
+            SetDisplayText(null);
 
             using(var host = new HttpUserAgentHost())
             using(var userAgent = host.CreateHttpUserAgent()) {
@@ -133,11 +161,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                             DownloadState = LoadState.Failure;
                             return;
                         }
-
-                        var entry = archiveStream.CreateEntry(tartget.Extends["expand"]);
+                        DownloadUri = new Uri(tartget.Key);
+                        var expand = tartget.Extends["expand"];
+                        SetDisplayText(expand);
+                        var entry = archiveStream.CreateEntry(expand);
                         using(var entryStream = entry.Open()) {
-                            Mediation.Logger.Debug(tartget.Key);
-                            var response = await userAgent.GetAsync(tartget.Key);
+                            Mediation.Logger.Debug(DownloadUri.ToString());
+                            var response = await userAgent.GetAsync(DownloadUri);
                             if(response.IsSuccessStatusCode) {
                                 var stream = await response.Content.ReadAsStreamAsync();
                                 await stream.CopyToAsync(entryStream);
@@ -156,12 +186,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
             DownloadingProgress?.Report(1);
             DownloadState = LoadState.Loaded;
+            SetDisplayText(null);
         }
 
         public void Cancel()
         {
             Cancellation.Cancel();
         }
+
+        #endregion
+
+        #region ViewModelBase
+
+        public override string DisplayText => this._displayText;
 
         #endregion
     }
