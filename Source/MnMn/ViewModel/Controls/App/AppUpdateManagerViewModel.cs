@@ -42,6 +42,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update;
 using Microsoft.Win32.SafeHandles;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
@@ -385,50 +386,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return process;
         }
 
-        async Task<UpdatedResult> EazyUpdateExecuteAsync()
-        {
-            var eazyUpdateDir = VariableConstants.GetEazyUpdateDirectory();
-            var archivePath = Path.Combine(eazyUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(EazyUpdateModel.Timestamp), "zip"));
+        //async Task<UpdatedResult> EazyUpdateExecuteAsync()
+        //{
+        //    var eazyUpdateDir = VariableConstants.GetEazyUpdateDirectory();
+        //    var archivePath = Path.Combine(eazyUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(EazyUpdateModel.Timestamp), "zip"));
 
-            using(var host = new HttpUserAgentHost())
-            using(var userAgent = host.CreateHttpUserAgent()) {
-                userAgent.Timeout = Constants.ArchiveEazyUpdateTimeout;
-                using(var archiveStream = new ZipArchive(new FileStream(archivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
-                    foreach(var tartget in EazyUpdateModel.Targets) {
-                        var entry = archiveStream.CreateEntry(tartget.Extends["expand"]);
-                        using(var entryStream = entry.Open()) {
-                            Mediation.Logger.Debug(tartget.Key);
-                            var response = await userAgent.GetAsync(tartget.Key);
-                            if(response.IsSuccessStatusCode) {
-                                var stream = await response.Content.ReadAsStreamAsync();
-                                await stream.CopyToAsync(entryStream);
-                            } else {
-                                Mediation.Logger.Error(response.ToString());
-                                return UpdatedResult.None;
-                            }
-                        }
-                        //await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
-                    }
-                }
-            }
+        //    using(var host = new HttpUserAgentHost())
+        //    using(var userAgent = host.CreateHttpUserAgent()) {
+        //        userAgent.Timeout = Constants.ArchiveEazyUpdateTimeout;
+        //        using(var archiveStream = new ZipArchive(new FileStream(archivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
+        //            foreach(var tartget in EazyUpdateModel.Targets) {
+        //                var entry = archiveStream.CreateEntry(tartget.Extends["expand"]);
+        //                using(var entryStream = entry.Open()) {
+        //                    Mediation.Logger.Debug(tartget.Key);
+        //                    var response = await userAgent.GetAsync(tartget.Key);
+        //                    if(response.IsSuccessStatusCode) {
+        //                        var stream = await response.Content.ReadAsStreamAsync();
+        //                        await stream.CopyToAsync(entryStream);
+        //                    } else {
+        //                        Mediation.Logger.Error(response.ToString());
+        //                        return UpdatedResult.None;
+        //                    }
+        //                }
+        //                //await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
+        //            }
+        //        }
+        //    }
 
-            // アーカイブ展開
-            using(var archiveStream = new ZipArchive(new FileStream(archivePath, FileMode.Open, FileAccess.Read, FileShare.Read), ZipArchiveMode.Read)) {
-                foreach(var entry in archiveStream.Entries) {
-                    var path = Path.Combine(Constants.AssemblyRootDirectoryPath, entry.FullName);
-                    FileUtility.MakeFileParentDirectory(path);
-                    Mediation.Logger.Trace($"expand: {path}");
-                    using(var entryStream = entry.Open())
-                    using(var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
-                        entryStream.CopyTo(stream);
-                    }
-                }
-            }
-            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
-            setting.RunningInformation.LastEazyUpdateTimestamp = EazyUpdateModel.Timestamp;
+        //    // アーカイブ展開
+        //    using(var archiveStream = new ZipArchive(new FileStream(archivePath, FileMode.Open, FileAccess.Read, FileShare.Read), ZipArchiveMode.Read)) {
+        //        foreach(var entry in archiveStream.Entries) {
+        //            var path = Path.Combine(Constants.AssemblyRootDirectoryPath, entry.FullName);
+        //            FileUtility.MakeFileParentDirectory(path);
+        //            Mediation.Logger.Trace($"expand: {path}");
+        //            using(var entryStream = entry.Open())
+        //            using(var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
+        //                entryStream.CopyTo(stream);
+        //            }
+        //        }
+        //    }
+        //    var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+        //    setting.RunningInformation.LastEazyUpdateTimestamp = EazyUpdateModel.Timestamp;
 
-            return UpdatedResult.Reboot;
-        }
+        //    return UpdatedResult.Reboot;
+        //}
 
         Task<UpdatedResult>  AppUpdateExecuteAsync()
             {
@@ -497,7 +498,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             if(HasUpdate) {
                 task = AppUpdateExecuteAsync();
             } else if(HasEazyUpdate) {
-                task =  EazyUpdateExecuteAsync();
+                //task =  EazyUpdateExecuteAsync();
+
+                var download = new EazyUpdateDownloadItemViewModel(Mediation, EazyUpdateModel);
+                Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
+
+                task = download.StartAsync().ContinueWith(t => {
+                    return UpdatedResult.None;
+                });
             } else {
                 task = Task.FromResult(UpdatedResult.None);
             }

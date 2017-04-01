@@ -70,6 +70,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             }
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
             setting.RunningInformation.LastEazyUpdateTimestamp = Model.Timestamp;
+
+            Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
 
         #endregion
@@ -138,7 +140,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                                 var stream = await response.Content.ReadAsStreamAsync();
                                 await stream.CopyToAsync(entryStream);
                                 DownloadedSize += 1;
-                                DownloadingProgress?.Report(DownloadedSize / DownloadTotalSize);
+                                DownloadingProgress?.Report(DownloadedSize / (double)DownloadTotalSize);
                             } else {
                                 Mediation.Logger.Error(response.ToString());
                                 DownLoadState = LoadState.Failure;
