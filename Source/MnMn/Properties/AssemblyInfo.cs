@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using Meta.Vlc;
 
-[assembly: AssemblyVersion("0.59.3.*")]
+[assembly: AssemblyVersion("0.59.4.*")]
 
 #region あまり変わらない部分
 
