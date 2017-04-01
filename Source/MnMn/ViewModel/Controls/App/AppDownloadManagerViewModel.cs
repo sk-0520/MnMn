@@ -15,6 +15,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppDownloadManagerViewModel: ManagerViewModelBase
     {
+        #region variable
+
+        int _downloadingCount;
+
+        #endregion
+
         public AppDownloadManagerViewModel(Mediation mediation)
             : base(mediation)
         {
@@ -26,6 +32,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         PropertyChangedWeakEventListener DownloadItemPropertyChangedListener { get; }
 
         public CollectionModel<AppDownloadItemViewModel> DownloadStateItems { get; } = new CollectionModel<AppDownloadItemViewModel>();
+
+        public int DownloadingCount
+        {
+            get { return this._downloadingCount; }
+            private set { SetVariableValue(ref this._downloadingCount, value); }
+        }
 
         #endregion
 
@@ -42,6 +54,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        void RefreshDownloadingCount()
+        {
+            DownloadingCount = DownloadStateItems.Count(i => i.Item.DownLoadState == LoadState.Loading);
+        }
 
         #endregion
 
@@ -90,7 +106,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         private void DownloadItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
+            if(e.PropertyName == nameof(IDownloadItem.DownLoadState)) {
+                RefreshDownloadingCount();
+            }
         }
     }
 }
