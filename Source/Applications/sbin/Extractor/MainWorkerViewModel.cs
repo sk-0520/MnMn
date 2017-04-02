@@ -233,6 +233,13 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     entry.ExtractToFile(expandPath, true);
                 }
             }
+
+            // Updater使用バージョンの場合は展開プログラムがないので下位互換として現在処理中展開プログラムを実行可能な状態にしておく
+            if(!File.Exists(myPath)) {
+                AddInformationLog($"Restore -> {renamePath} => {myPath}");
+                File.Copy(renamePath, myPath, true);
+            }
+
         }
 
         void AppendAssembly(CompilerParameters parameters, string dllName)
@@ -344,12 +351,14 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 }
             }).ContinueWith(t => {
                 if(!t.IsFaulted) {
-                    Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
+                    //Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
 
-                    if(AutoExecute) {
-                        Thread.Sleep(TimeSpan.FromSeconds(5));
-                        Application.Current.Shutdown();
-                    }
+                    //if(AutoExecute) {
+                    //    Thread.Sleep(TimeSpan.FromSeconds(5));
+                    //    Application.Current.Shutdown();
+                    //}
+                } else {
+                    AddErrorLog(t.Exception.ToString());
                 }
                 CanInput = true;
             }, TaskScheduler.FromCurrentSynchronizationContext());
