@@ -13,5 +13,22 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
     /// </summary>
     public partial class App : Application
     {
+        #region Application
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var viewModel = new MainWorkerViewModel();
+            var view = new MainWindow() {
+                DataContext = viewModel,
+            };
+            viewModel.SetView(view);
+            viewModel.Initialize();
+
+            view.Show();
+        }
+
+        #endregion
     }
 }

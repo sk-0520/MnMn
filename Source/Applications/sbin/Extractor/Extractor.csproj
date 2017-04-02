@@ -40,6 +40,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,12 +72,14 @@
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Define\PropertyCheck.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.IF\IDisplayText.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.IF\IIsDisposed.cs" />
+    <Compile Include="ContentTypeTextNet.Library.SharedLibrary.IF\IModel.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Logic.Utility\CheckUtility.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Logic\Cacher.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Logic\CommandLine.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Logic\DelegateCommand.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Logic\DisposeFinalizeBase.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Logic\NotifyPropertyChangedObject.cs" />
+    <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Model\CollectionModel.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.ViewModel\ViewModelBase.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -99,6 +103,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWorkerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

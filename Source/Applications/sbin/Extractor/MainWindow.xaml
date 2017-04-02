@@ -25,9 +25,10 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    
-    <StackPanel>
+
+    <StackPanel Grid.Row="0">
       <StackPanel.Background>
         <SolidColorBrush Color="{StaticResource Color_025}" />
       </StackPanel.Background>
@@ -35,6 +36,55 @@
         <TextBlock>Extractor</TextBlock>
       </Grid>
     </StackPanel>
-    
+
+    <Grid Grid.Row="1" Margin="4">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Label Grid.Row="0" Grid.Column="0">archive</Label>
+      <Grid Grid.Row="0" Grid.Column="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Column="0" Text="{Binding ArchiveFilePath}" />
+      </Grid>
+
+      <Label Grid.Row="1" Grid.Column="0">expand</Label>
+      <Grid Grid.Row="1" Grid.Column="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Column="0" Text="{Binding ExpandDirectoryPath}" />
+      </Grid>
+
+      <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+        <GroupBox Header="実行ログ">
+
+        </GroupBox>
+      </Grid>
+
+    </Grid>
+
+    <Grid  Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" Content="実行" Command="{Binding ExecuteCommand}" />
+      <Button Grid.Column="1" Content="終了" Command="{Binding CloseCommand}" />
+    </Grid>
+
   </Grid>
 </Window>
