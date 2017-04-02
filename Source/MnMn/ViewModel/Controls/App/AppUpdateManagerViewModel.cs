@@ -368,7 +368,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             var process = new Process();
             var startInfo = process.StartInfo;
-            startInfo.FileName = Constants.ExtractorExecuteFilePath;
+            startInfo.FileName = Constants.UpdaterExecuteFilePath;
 
             var defaultMap = new Dictionary<string, string>() {
                 { "pid",      string.Format("{0}", Process.GetCurrentProcess().Id) },
@@ -494,23 +494,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             Task<UpdatedResult> task;
             if(HasUpdate) {
-                //task = AppUpdateExecuteAsync();
-                var archiveDir = VariableConstants.GetArchiveDirectory();
-                var archivePath = Path.Combine(archiveDir.FullName, ArchiveUri.Segments.Last());
-                var archiveFile = new FileInfo(archivePath);
+                if(Constants.AppUpdateIsExtractor) {
+                    var archiveDir = VariableConstants.GetArchiveDirectory();
+                    var archivePath = Path.Combine(archiveDir.FullName, ArchiveUri.Segments.Last());
+                    var archiveFile = new FileInfo(archivePath);
 
-                // #158
-                FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
-                    Mediation.Logger.Warning(e);
-                    return true;
-                });
+                    // #158
+                    FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
+                        Mediation.Logger.Warning(e);
+                        return true;
+                    });
 
-                var download = new AppUpdateDownloadItemViewModel(Mediation, ArchiveUri, archiveFile, new HttpUserAgentHost());
-                Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
+                    var download = new AppUpdateDownloadItemViewModel(Mediation, ArchiveUri, archiveFile, new HttpUserAgentHost());
+                    Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
 
-                task = download.StartAsync().ContinueWith(t => {
-                    return UpdatedResult.None;
-                });
+                    task = download.StartAsync().ContinueWith(t => {
+                        return UpdatedResult.None;
+                    });
+                } else {
+                    task = AppUpdateExecuteAsync();
+                }
 
             } else if(HasEazyUpdate) {
                 //task =  EazyUpdateExecuteAsync();

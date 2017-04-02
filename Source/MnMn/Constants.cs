@@ -217,7 +217,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 更新プログラムファイルパス。
         /// </summary>
-        [Obsolete]
         public static string UpdaterExecuteFilePath { get { return Path.Combine(SbinDirectoryPath, "Updater", "Updater.exe"); } }
         /// <summary>
         /// 更新アーカイブ展開プログラムファイルパス。
