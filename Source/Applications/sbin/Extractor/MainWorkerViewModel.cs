@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             {
                 return CreateCommand(
                     o => ExecuteAsync(),
-                    o => CanInput
+                    o => CanInput && !string.IsNullOrWhiteSpace(ArchiveFilePath) && !string.IsNullOrWhiteSpace(ExpandDirectoryPath)
                 );
             }
         }
@@ -348,6 +348,19 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         {
             CanInput = false;
 
+            try {
+                if(!File.Exists(ArchiveFilePath)) {
+                    throw new Exception($"not found {ArchiveFilePath}");
+                }
+                if(!Directory.Exists(ExpandDirectoryPath)) {
+                    throw new Exception($"not found {ExpandDirectoryPath}");
+                }
+            } catch(Exception ex) {
+                AddErrorLog(ex.ToString());
+                CanInput = true;
+                return Task.CompletedTask;
+            }
+
             return Task.Run(() => {
                 CloseProcess();
             }).ContinueWith(t => {
@@ -363,16 +376,13 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 } else {
                     throw t.Exception;
                 }
-            }).ContinueWith(t => {
+            }).ContinueWith(async t => {
                 if(!t.IsFaulted) {
-#if false
                     Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
 
-                    if(AutoExecute) {
-                        Thread.Sleep(TimeSpan.FromSeconds(5));
-                        Application.Current.Shutdown();
-                    }
-#endif
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+
+                    Application.Current.Shutdown();
                 } else {
                     AddErrorLog(t.Exception.ToString());
                 }
