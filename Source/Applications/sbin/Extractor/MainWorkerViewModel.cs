@@ -338,6 +338,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }).ContinueWith(t => {
                 if(!t.IsFaulted) {
                     RunScript();
+                    AddInformationLog(";-)");
                 } else {
                     throw t.Exception;
                 }
@@ -346,7 +347,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
 
                     if(AutoExecute) {
-                        //Application.Current.Shutdown();
+                        Thread.Sleep(TimeSpan.FromSeconds(5));
+                        Application.Current.Shutdown();
                     }
                 }
                 CanInput = true;
