@@ -220,6 +220,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return Regex.IsMatch(userId, $@"[0-9a-f]{{{userIdLength}}}", RegexOptions.IgnoreCase);
         }
 
+        public static string GetRawCommandLine()
+        {
+            if(VariableConstants.CommandLine.Length != 0) {
+                var arg = Environment.CommandLine
+                    .Replace("\"" + Constants.AssemblyPath + "\"", string.Empty)
+                    .Replace(Constants.AssemblyPath, string.Empty)
+                    .Replace("\"", "\"\"")
+                    .Replace("\\", "\\\\")
+                ;
+                return arg;
+            }
+
+            return string.Empty;
+        }
+
         #endregion
     }
 }

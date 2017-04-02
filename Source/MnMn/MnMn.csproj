@@ -474,6 +474,7 @@
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="Logic\DragAndDropBase.cs" />
+    <Compile Include="ViewModel\Controls\App\Update\AppUpdateDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\Update\EazyUpdateDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\DownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />

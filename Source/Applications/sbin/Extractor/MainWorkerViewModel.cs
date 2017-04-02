@@ -134,6 +134,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             ExpandDirectoryPath = GetCommandValue(commandLine, "expand");
 
             AutoExecute = GetCommandValue(commandLine, "auto", bool.TryParse, false);
+
             EventName = GetCommandValue(commandLine, "event");
             ProcessId = GetCommandValue(commandLine, "pid", int.TryParse, 0);
 
