@@ -8,6 +8,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -85,6 +89,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         #endregion
 
         #region DownloadItemViewModel
+
+        public override ImageSource Image
+        {
+            get
+            {
+                var image = new BitmapImage();
+                using(Initializer.BeginInitialize(image)) {
+                    image.UriSource = SharedConstants.GetEntryUri("Resources/MnMn-Update_App.png");
+                }
+
+                return image;
+            }
+        }
 
         public override ICommand OpenDirectoryCommand => CreateCommand(o => { }, o => false);
 
