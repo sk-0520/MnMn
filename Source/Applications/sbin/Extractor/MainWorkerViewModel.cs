@@ -141,6 +141,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             RebootApplicationCommandLine = GetCommandValue(commandLine, "reboot-arg");
 
             ScriptFilePath = GetCommandValue(commandLine, "script");
+            Platform = GetCommandValue(commandLine, "platform");
         }
 
         void InitializeCore()
@@ -249,7 +250,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 parameters.IncludeDebugInformation = true;
                 parameters.TreatWarningsAsErrors = true;
                 parameters.WarningLevel = 4;
-                //parameters.CompilerOptions = string.Format("/platform:{0}", Platform);
+                parameters.CompilerOptions = string.Format("/platform:{0}", Platform);
 
                 // 最低限のアセンブリは読み込ませる
                 var asmList = new[] {
@@ -303,9 +304,10 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 var assembly = cr.CompiledAssembly;
 
                 var us = assembly.CreateInstance("UpdaterScript");
-                us.GetType().GetMethod("ExpandMain").Invoke(us, new object[] { new [] {
+                us.GetType().GetMethod("Main").Invoke(us, new object[] { new [] {
                     ScriptFilePath,
-                    ExpandDirectoryPath
+                    ExpandDirectoryPath,
+                    Platform
                 }});
             }
         }
