@@ -8,12 +8,14 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 
-  Title="MainWindow"
+  Title="MnMn アーカイブ展開"
   Width="700"
   Height="500"
   WindowStyle="None"
   ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
+  BorderThickness="3"
+  Icon="/Resources/Icon/MnMn-Update_App.ico"
 >
   <Window.Resources>
     <Thickness x:Key="DefaultMargin">8</Thickness>
@@ -34,7 +36,12 @@
         <SolidColorBrush Color="{StaticResource Color_025}" />
       </StackPanel.Background>
       <Grid PreviewMouseDown="Grid_PreviewMouseDown" Cursor="SizeAll">
-        <TextBlock>Extractor</TextBlock>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="0" Source="/Resources/Icon/MnMn-Update_App.ico" Width="48" Height="48" />
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
       </Grid>
     </StackPanel>
 
@@ -130,7 +137,7 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Content="実行" Command="{Binding ExecuteCommand}" />
+      <Button Grid.Column="0" FontWeight="Bold" Content="実行" Command="{Binding ExecuteCommand}" />
       <Button Grid.Column="1" Content="終了" Command="{Binding CloseCommand}" />
     </Grid>
 
