@@ -16,6 +16,7 @@
   WindowStartupLocation="CenterScreen"
   BorderThickness="3"
   Icon="/Resources/Icon/MnMn-Update_App.ico"
+  Topmost="{Binding AutoExecute}"
 >
   <Window.Resources>
     <Thickness x:Key="DefaultMargin">8</Thickness>

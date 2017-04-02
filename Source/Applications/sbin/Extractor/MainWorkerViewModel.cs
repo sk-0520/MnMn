@@ -34,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         bool _canInput = true;
 
+        bool _autoExecute;
+
         string _archiveFilePath;
         string _expandDirectoryPath;
 
@@ -69,7 +71,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             set { SetVariableValue(ref this._expandDirectoryPath, value); }
         }
 
-        bool AutoExecute { get; set; }
+        public bool AutoExecute
+        {
+            get { return this._autoExecute; }
+            set { SetVariableValue(ref this._autoExecute, value); }
+        }
+
         string EventName { get; set; }
         int ProcessId { get; set; }
 
@@ -378,6 +385,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 }
             }).ContinueWith(async t => {
                 if(!t.IsFaulted) {
+                    AutoExecute = false;
                     Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
 
                     await Task.Delay(TimeSpan.FromSeconds(5));
