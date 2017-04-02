@@ -11,8 +11,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using Microsoft.CSharp;
 
@@ -36,9 +39,15 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         #endregion
 
+        public MainWorkerViewModel()
+        { }
+
         #region property
 
         MainWindow View { get; set; }
+        ListBox ListLog { get; set; }
+
+        public CollectionModel<LogItemViewModel> LogItems { get; } = new CollectionModel<LogItemViewModel>();
 
         public bool CanInput
         {
@@ -101,6 +110,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         public void SetView(MainWindow view)
         {
             View = view;
+            ListLog = View.listLog;
 
             View.ContentRendered += View_ContentRendered;
         }
@@ -126,7 +136,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             return defaultResult;
         }
 
-        void InitializeFromCommandLIne()
+        void InitializeFromCommandLine()
         {
             var commandLine = new CommandLine();
 
@@ -147,7 +157,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         void InitializeCore()
         {
-            InitializeFromCommandLIne();
+            InitializeFromCommandLine();
         }
 
         public void Initialize()
@@ -166,10 +176,10 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 eventHandle = EventWaitHandle.OpenExisting(EventName);
             }
             if(eventHandle != null && closeEventName) {
-                Debug.WriteLine("event set");
+                AddInformationLog("event set");
                 eventHandle.Set();
             } else {
-                Debug.WriteLine("process kill");
+                AddInformationLog("process kill");
                 process.Kill();
             }
         }
@@ -194,7 +204,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 if(isRestart && !process.HasExited) {
                     KillProcess(process, false);
                 }
-                Debug.WriteLine("Kill -> {0}, Time = {1}", isRestart, killStopwatch.Elapsed);
+                AddInformationLog($"Kill -> {isRestart}, Time = {killStopwatch.Elapsed}");
             }
         }
 
@@ -208,18 +218,18 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             if(File.Exists(renamePath)) {
                 File.Delete(renamePath);
             }
-            Debug.WriteLine("Rename -> {0} => {1}", myPath, renamePath);
+            AddInformationLog($"Rename -> {myPath} => {renamePath}");
             File.Move(myPath, renamePath);
 
             // 置き換え開始
-            using(var archive = ZipFile.OpenRead(ArchiveFilePath)) {
+            using(var archive = new ZipArchive(new FileStream(ArchiveFilePath, FileMode.Open, FileAccess.Read, FileShare.None), ZipArchiveMode.Read)) {
                 foreach(var entry in archive.Entries.Where(e => e.Name.Length > 0)) {
                     var expandPath = Path.Combine(ExpandDirectoryPath, entry.FullName);
                     var dirPath = Path.GetDirectoryName(expandPath);
                     if(!Directory.Exists(dirPath)) {
                         Directory.CreateDirectory(dirPath);
                     }
-                    Debug.WriteLine($"Expand -> {expandPath}");
+                    AddInformationLog($"Expand -> {expandPath}");
                     entry.ExtractToFile(expandPath, true);
                 }
             }
@@ -230,7 +240,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             if(!parameters.ReferencedAssemblies.Contains(dllName)) {
                 parameters.ReferencedAssemblies.Add(dllName);
             } else {
-                Console.WriteLine("Overlap: {0}", dllName);
+                AddInformationLog($"Overlap: {dllName}");
             }
         }
 
@@ -282,7 +292,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     AppendAssembly(parameters, dllName);
                 }
                 foreach(var asm in parameters.ReferencedAssemblies) {
-                    Console.WriteLine("Assembly = {0}", asm);
+                    AddInformationLog($"Assembly = {asm}");
                 }
 
                 var cr = compiler.CompileAssemblyFromSource(parameters, scriptText);
@@ -290,14 +300,14 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 #if DEBUG
                 if(cr.Output.Count > 0) {
                     foreach(var output in cr.Output) {
-                        Debug.Write(output);
+                        AddInformationLog(output.ToString());
                     }
                 }
 #endif
                 if(cr.Errors.Count > 0) {
-                    Debug.Write("error:");
+                    AddErrorLog("error:");
                     foreach(var error in cr.Errors) {
-                        Debug.Write(error);
+                        AddErrorLog(error.ToString());
                     }
                     throw new Exception("compile");
                 }
@@ -342,6 +352,42 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 CanInput = true;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+
+        #region function
+
+        void AddInformationLog(string message)
+        {
+            var log = new LogItemViewModel(LogKind.Information, message, null);
+            AddLog(log);
+        }
+
+        void AddWarningLog(string message, string detail = null)
+        {
+            var log = new LogItemViewModel(LogKind.Warning, message, detail);
+            AddLog(log);
+        }
+
+        void AddErrorLog(string message, string detail = null)
+        {
+            var log = new LogItemViewModel(LogKind.Error, message, detail);
+            AddLog(log);
+        }
+
+        void AddScriptLog(string message)
+        {
+            var log = new LogItemViewModel(LogKind.Script, message, null);
+            AddLog(log);
+        }
+
+        void AddLog(LogItemViewModel log)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                LogItems.Add(log);
+                ListLog.ScrollIntoView(log);
+            }));
+        }
+
+        #endregion
 
         #endregion
 

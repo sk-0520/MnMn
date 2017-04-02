@@ -81,6 +81,8 @@
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Logic\NotifyPropertyChangedObject.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Model\CollectionModel.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.ViewModel\ViewModelBase.cs" />
+    <Compile Include="LogItemViewModel.cs" />
+    <Compile Include="LogKind.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

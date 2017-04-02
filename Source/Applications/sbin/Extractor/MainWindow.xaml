@@ -9,14 +9,15 @@
   mc:Ignorable="d"
 
   Title="MainWindow"
-  Width="525"
-  Height="350"
+  Width="700"
+  Height="500"
   WindowStyle="None"
   ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
 >
   <Window.Resources>
     <Thickness x:Key="DefaultMargin">8</Thickness>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
   </Window.Resources>
   <Window.BorderBrush>
     <SolidColorBrush Color="{StaticResource Color_026}" />
@@ -37,7 +38,7 @@
       </Grid>
     </StackPanel>
 
-    <Grid Grid.Row="1" Margin="4">
+    <Grid Grid.Row="1" Margin="{StaticResource DefaultMargin}">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
@@ -70,7 +71,31 @@
 
       <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
         <GroupBox Header="実行ログ">
+          <ListBox x:Name="listLog"  ItemsSource="{Binding LogItems}">
+            <ListBox.ItemContainerStyle>
+              <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+              </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
 
+                  <TextBlock Grid.Column="0" Text="{Binding Timestamp}" />
+                  <TextBlock Grid.Column="1" Text="{Binding Kind}" />
+                  <StackPanel Grid.Column="2">
+                    <TextBlock Text="{Binding Message}" />
+                    <TextBlock Text="{Binding Detail}" Visibility="{Binding HasDetail, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                  </StackPanel>
+                </Grid>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
         </GroupBox>
       </Grid>
 
