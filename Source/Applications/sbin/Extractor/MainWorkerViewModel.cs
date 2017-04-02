@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         #region variable
 
+        bool _canInput=true;
+
         string _archiveFilePath;
         string _expandDirectoryPath;
 
@@ -37,6 +39,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         #region property
 
         MainWindow View { get; set; }
+
+        public bool CanInput
+        {
+            get { return this._canInput; }
+            set { SetVariableValue(ref this._canInput, value); }
+        }
 
         public string ArchiveFilePath
         {
@@ -69,7 +77,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             get
             {
                 return CreateCommand(
-                    o => View.Close()
+                    o => View.Close(),
+                    o => CanInput
                 );
             }
         }
@@ -79,7 +88,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             get
             {
                 return CreateCommand(
-                    o => ExecuteAsync()
+                    o => ExecuteAsync(),
+                    o => CanInput
                 );
             }
         }
@@ -302,18 +312,31 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         Task ExecuteAsync()
         {
+            CanInput = false;
+
             return Task.Run(() => {
                 CloseProcess();
             }).ContinueWith(t => {
-                ExpandArchive();
-            }).ContinueWith(t => {
-                RunScript();
-            }).ContinueWith(t => {
-                Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
-
-                if(AutoExecute) {
-                    //Application.Current.Shutdown();
+                if(!t.IsFaulted) {
+                    ExpandArchive();
+                } else {
+                    throw t.Exception;
                 }
+            }).ContinueWith(t => {
+                if(!t.IsFaulted) {
+                    RunScript();
+                } else {
+                    throw t.Exception;
+                }
+            }).ContinueWith(t => {
+                if(!t.IsFaulted) {
+                    Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
+
+                    if(AutoExecute) {
+                        //Application.Current.Shutdown();
+                    }
+                }
+                CanInput = true;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
