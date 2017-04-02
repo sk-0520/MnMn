@@ -37,6 +37,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         string _archiveFilePath;
         string _expandDirectoryPath;
 
+        string _platform;
+
         #endregion
 
         public MainWorkerViewModel()
@@ -75,7 +77,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         string RebootApplicationCommandLine { get; set; }
 
         string ScriptFilePath { get; set; }
-        string Platform { get; set; }
+
+        public string Platform
+        {
+            get { return this._platform; }
+            set { SetVariableValue(ref this._platform, value); }
+        }
 
         #endregion
 
@@ -268,7 +275,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 parameters.IncludeDebugInformation = true;
                 parameters.TreatWarningsAsErrors = true;
                 parameters.WarningLevel = 4;
-                parameters.CompilerOptions = string.Format("/platform:{0}", Platform);
+                //parameters.CompilerOptions = string.Format("/platform:{0}", Platform);
 
                 // 最低限のアセンブリは読み込ませる
                 var asmList = new[] {
@@ -321,12 +328,18 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
                 var assembly = cr.CompiledAssembly;
 
+                var writer = new StringWriter();
+                Console.SetOut(writer);
+
                 var us = assembly.CreateInstance("UpdaterScript");
                 us.GetType().GetMethod("Main").Invoke(us, new object[] { new [] {
                     ScriptFilePath,
                     ExpandDirectoryPath,
                     Platform
                 }});
+
+                writer.Flush();
+                var sss = writer.GetStringBuilder().ToString();
             }
         }
 
@@ -351,16 +364,21 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 }
             }).ContinueWith(t => {
                 if(!t.IsFaulted) {
-                    //Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
+#if false
+                    Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
 
-                    //if(AutoExecute) {
-                    //    Thread.Sleep(TimeSpan.FromSeconds(5));
-                    //    Application.Current.Shutdown();
-                    //}
+                    if(AutoExecute) {
+                        Thread.Sleep(TimeSpan.FromSeconds(5));
+                        Application.Current.Shutdown();
+                    }
+#endif
                 } else {
                     AddErrorLog(t.Exception.ToString());
                 }
+
                 CanInput = true;
+                CommandManager.InvalidateRequerySuggested();
+
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 

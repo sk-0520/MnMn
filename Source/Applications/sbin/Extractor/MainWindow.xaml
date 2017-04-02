@@ -50,17 +50,21 @@
       </Grid.ColumnDefinitions>
 
       <Label Grid.Row="0" Grid.Column="0">archive</Label>
-      <Grid Grid.Row="0" Grid.Column="1">
+      <Grid Grid.Row="0" Grid.Column="1" IsEnabled="{Binding CanInput}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <TextBox Grid.Column="0" Text="{Binding ArchiveFilePath}" />
+        <ComboBox Grid.Column="1" Text="{Binding Platform}">
+          <ComboBoxItem>x86</ComboBoxItem>
+          <ComboBoxItem>x64</ComboBoxItem>
+        </ComboBox>
       </Grid>
 
       <Label Grid.Row="1" Grid.Column="0">expand</Label>
-      <Grid Grid.Row="1" Grid.Column="1">
+      <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanInput}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
