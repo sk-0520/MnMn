@@ -21,7 +21,7 @@ using Microsoft.CSharp;
 
 namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 {
-    public class MainWorkerViewModel:ViewModelBase
+    public class MainWorkerViewModel : ViewModelBase
     {
         #region define
 
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         #region variable
 
-        bool _canInput=true;
+        bool _canInput = true;
 
         string _archiveFilePath;
         string _expandDirectoryPath;
@@ -205,7 +205,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 process.Exited += (object sender, EventArgs e) => {
                     killStopwatch.Stop();
                 };
-                KillProcess(process ,true);
+                KillProcess(process, true);
 
                 var isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(1).TotalMilliseconds));
                 if(isRestart && !process.HasExited) {
@@ -328,18 +328,19 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
                 var assembly = cr.CompiledAssembly;
 
-                var writer = new StringWriter();
-                Console.SetOut(writer);
+                using(var writer = new ConsoleWriter()) {
+                    writer.WriteLineAction = s => {
+                        AddScriptLog(s);
+                    };
+                    Console.SetOut(writer);
 
-                var us = assembly.CreateInstance("UpdaterScript");
-                us.GetType().GetMethod("Main").Invoke(us, new object[] { new [] {
-                    ScriptFilePath,
-                    ExpandDirectoryPath,
-                    Platform
-                }});
-
-                writer.Flush();
-                var sss = writer.GetStringBuilder().ToString();
+                    var us = assembly.CreateInstance("UpdaterScript");
+                        us.GetType().GetMethod("Main").Invoke(us, new object[] { new [] {
+                        ScriptFilePath,
+                        ExpandDirectoryPath,
+                        Platform
+                    }});
+                }
             }
         }
 

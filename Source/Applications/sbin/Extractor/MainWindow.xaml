@@ -85,13 +85,32 @@
               <DataTemplate>
                 <Grid>
                   <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" Text="{Binding Timestamp}" />
-                  <TextBlock Grid.Column="1" Text="{Binding Kind}" />
+                  <TextBlock Grid.Column="0" Text="{Binding Timestamp, StringFormat=yyyy/MM/dd hh:mm:ss}" />
+                  <TextBlock Grid.Column="1" TextAlignment="Center">
+                    <TextBlock.Style>
+                      <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding Kind}" Value="Information">
+                            <Setter Property="Text" Value="情報" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Kind}" Value="Warning">
+                            <Setter Property="Text" Value="警告" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Kind}" Value="Error">
+                            <Setter Property="Text" Value="異常" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Kind}" Value="Script">
+                            <Setter Property="Text" Value="コード" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBlock.Style>
+                  </TextBlock>
                   <StackPanel Grid.Column="2">
                     <TextBlock Text="{Binding Message}" />
                     <TextBlock Text="{Binding Detail}" Visibility="{Binding HasDetail, Converter={StaticResource BooleanToVisibilityConverter}}" />

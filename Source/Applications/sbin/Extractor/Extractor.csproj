@@ -69,6 +69,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ConsoleWriter.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.Define\PropertyCheck.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.IF\IDisplayText.cs" />
     <Compile Include="ContentTypeTextNet.Library.SharedLibrary.IF\IIsDisposed.cs" />
