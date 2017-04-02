@@ -53,14 +53,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region property
 
-        Mediation Mediation { get; }
+        protected Mediation Mediation { get; }
 
         Downloader Downloader { get; }
         Stream WriteStream { get; set; }
 
-        FileInfo DownloadFile { get; }
+        protected FileInfo DownloadFile { get; }
 
-        CancellationTokenSource Cancellation { get; set; }
+        protected CancellationTokenSource Cancellation { get; set; }
 
         #endregion
 
@@ -116,15 +116,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             private set { SetVariableValue(ref this._downloadState, value); }
         }
 
-        public ImageSource Image
+        public virtual ImageSource Image
         {
             get { return this._image; }
             private set { SetVariableValue(ref this._image, value); }
         }
 
-        public bool CanRestart => true;
+        public virtual bool CanRestart => true;
 
-        public ICommand OpenDirectoryCommand
+        public virtual ICommand OpenDirectoryCommand
         {
             get
             {
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
-        public ICommand ExecuteTargetCommand
+        public virtual ICommand ExecuteTargetCommand
         {
             get
             {
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
-        public ICommand AutoExecuteTargetCommand
+        public virtual ICommand AutoExecuteTargetCommand
         {
             get
             {

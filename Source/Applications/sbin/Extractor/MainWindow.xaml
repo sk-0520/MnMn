@@ -1,0 +1,146 @@
+﻿<Window
+  x:Class="ContentTypeTextNet.MnMn.SystemApplications.Extractor.MainWindow"
+
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+
+  Title="MnMn アーカイブ展開"
+  Width="700"
+  Height="500"
+  WindowStyle="None"
+  ResizeMode="NoResize"
+  WindowStartupLocation="CenterScreen"
+  BorderThickness="3"
+  Icon="/Resources/Icon/MnMn-Update_App.ico"
+  Topmost="{Binding AutoExecute}"
+>
+  <Window.Resources>
+    <Thickness x:Key="DefaultMargin">8</Thickness>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+  </Window.Resources>
+  <Window.BorderBrush>
+    <SolidColorBrush Color="{StaticResource Color_026}" />
+  </Window.BorderBrush>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0">
+      <StackPanel.Background>
+        <SolidColorBrush Color="{StaticResource Color_025}" />
+      </StackPanel.Background>
+      <Grid PreviewMouseDown="Grid_PreviewMouseDown" Cursor="SizeAll">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="0" Source="/Resources/Icon/MnMn-Update_App.ico" Width="48" Height="48" />
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
+      </Grid>
+    </StackPanel>
+
+    <Grid Grid.Row="1" Margin="{StaticResource DefaultMargin}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Label Grid.Row="0" Grid.Column="0">archive</Label>
+      <Grid Grid.Row="0" Grid.Column="1" IsEnabled="{Binding CanInput}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Column="0" Text="{Binding ArchiveFilePath}" />
+        <ComboBox Grid.Column="1" Text="{Binding Platform}">
+          <ComboBoxItem>x86</ComboBoxItem>
+          <ComboBoxItem>x64</ComboBoxItem>
+        </ComboBox>
+      </Grid>
+
+      <Label Grid.Row="1" Grid.Column="0">expand</Label>
+      <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanInput}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Column="0" Text="{Binding ExpandDirectoryPath}" />
+      </Grid>
+
+      <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+        <GroupBox Header="実行ログ">
+          <ListBox x:Name="listLog"  ItemsSource="{Binding LogItems}">
+            <ListBox.ItemContainerStyle>
+              <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+              </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <TextBlock Grid.Column="0" Text="{Binding Timestamp, StringFormat=yyyy/MM/dd hh:mm:ss}" />
+                  <TextBlock Grid.Column="1" TextAlignment="Center">
+                    <TextBlock.Style>
+                      <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding Kind}" Value="Information">
+                            <Setter Property="Text" Value="情報" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Kind}" Value="Warning">
+                            <Setter Property="Text" Value="警告" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Kind}" Value="Error">
+                            <Setter Property="Text" Value="異常" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Kind}" Value="Script">
+                            <Setter Property="Text" Value="コード" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBlock.Style>
+                  </TextBlock>
+                  <StackPanel Grid.Column="2">
+                    <TextBlock Text="{Binding Message}" />
+                    <TextBlock Text="{Binding Detail}" Visibility="{Binding HasDetail, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                  </StackPanel>
+                </Grid>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </GroupBox>
+      </Grid>
+
+    </Grid>
+
+    <Grid  Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Column="0" FontWeight="Bold" Content="実行" Command="{Binding ExecuteCommand}" />
+      <Button Grid.Column="1" Content="終了" Command="{Binding CloseCommand}" />
+    </Grid>
+
+  </Grid>
+</Window>
