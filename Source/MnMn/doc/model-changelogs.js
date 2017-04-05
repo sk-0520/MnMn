@@ -86,7 +86,7 @@
 	*/
 	{
 		'date': 'YYYY/MM/DD',
-		'version': '0.59.1',
+		'version': '0.59.2',
 		'isRc': true,
 		'contents': [
 			{
@@ -178,6 +178,27 @@
 					{
 						'revision': '',
 						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
+		'date': '2017/04/05',
+		'version': '0.59.1',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '8e24e72a57a068c44a500280579c0f9d75acc5ba',
+						'subject': '#514: ニコニコのユーザー関係の処理が死んでる',
+						'comments': [
+							'HTML の中身変わってるっぽいので緊急リリース',
+							'正規表現の * を + に変えるだけのやるせない思い',
+							'コード側の処理なんで簡易アップデートできない悲しみ'
+						]
 					}
 				]
 			}
