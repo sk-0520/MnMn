@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
                 \s*
                 \{
                     (?<VALUE>
-                        .*
+                        .+
                     )
                 \}
                 \s*
