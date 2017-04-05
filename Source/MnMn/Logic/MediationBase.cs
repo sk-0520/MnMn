@@ -51,40 +51,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IConvertCompatibility
     {
         public MediationBase()
-            : this(null, null, null, null, null)
+            : this(null, null, null, null, null, null)
         { }
 
-        protected MediationBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath)
+        protected MediationBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
         {
-            if(uriListPath != null) {
-                UriList = SerializeUtility.LoadXmlSerializeFromFile<UrisModel>(uriListPath);
-            } else {
-                UriList = new UrisModel();
-            }
-
-            if(uriParametersPath != null) {
-                UriParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(uriParametersPath);
-            } else {
-                UriParameterList = new ParametersModel();
-            }
-
-            if(requestHeaderPath != null) {
-                RequestHeaderList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(requestHeaderPath);
-            } else {
-                RequestHeaderList = new ParametersModel();
-            }
-
-            if(requestParametersPath != null) {
-                RequestParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(requestParametersPath);
-            } else {
-                RequestParameterList = new ParametersModel();
-            }
-
-            if(requestMappingsPath != null) {
-                RequestMappingList = SerializeUtility.LoadXmlSerializeFromFile<MappingsModel>(requestMappingsPath);
-            } else {
-                RequestMappingList = new MappingsModel();
-            }
+            UriList = LoadDefineModel<UrisModel>(uriListPath);
+            UriParameterList = LoadDefineModel<ParametersModel>(uriParametersPath);
+            RequestHeaderList = LoadDefineModel<ParametersModel>(requestHeaderPath);
+            RequestParameterList = LoadDefineModel<ParametersModel>(requestParametersPath);
+            RequestMappingList = LoadDefineModel<MappingsModel>(requestMappingsPath);
         }
 
         #region property
@@ -108,6 +84,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region function
+
+        static TModel LoadDefineModel<TModel>(string path)
+            where TModel: IModel, new()
+        {
+            if(path != null) {
+                return SerializeUtility.LoadXmlSerializeFromFile<TModel>(path);
+            }
+
+            return new TModel();
+        }
 
         protected static TModel LoadModelFromFile<TModel>(string path)
             where TModel : IModel, new()
