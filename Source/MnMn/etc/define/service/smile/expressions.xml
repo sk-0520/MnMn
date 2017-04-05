@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <expressions>
 	<element key="">
-		<item id="" kind="" regex-flags="">
+		<item id="" kind="" regex-options="">
 			<data>
 				<![CDATA[
 				]]>

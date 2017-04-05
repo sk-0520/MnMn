@@ -232,6 +232,7 @@
     <Compile Include="Data\WebNavigatorEventData.cs" />
     <Compile Include="Define\DownloadUnit.cs" />
     <Compile Include="Define\Event\PointingGestureChangedEventArgs.cs" />
+    <Compile Include="Define\ExpressionItemKind.cs" />
     <Compile Include="Define\PointingGestureChangeKind.cs" />
     <Compile Include="Define\PointingGestureDirection.cs" />
     <Compile Include="Define\PointingGestureState.cs" />
@@ -359,6 +360,9 @@
     <Compile Include="Model\CrashReportSettingModel.cs" />
     <Compile Include="Model\DragParameterModel.cs" />
     <Compile Include="Model\EazyUpdateModel.cs" />
+    <Compile Include="Model\ExpressionElementModel.cs" />
+    <Compile Include="Model\ExpressionItemModel.cs" />
+    <Compile Include="Model\ExpressionsModel.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />

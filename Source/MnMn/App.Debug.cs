@@ -62,6 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //livestatus();
             //market();
             //user_id();
+            //exp();
         }
 
         async void login()
@@ -206,6 +207,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var userid = AppUtility.CreateUserId(logger);
         }
 
+        void exp()
+        {
+            var i = new ExpressionItemModel();
+            i.Data.Text = "zxc";
+            i.Kind = Define.ExpressionItemKind.Regex;
+
+            var e = new ExpressionElementModel();
+            e.Key = "asd";
+            e.Items.Add(i);
+            var es = new ExpressionsModel();
+            es.Elements.Add(e);
+
+            SerializeUtility.SaveXmlSerializeToFile(@"X:\exps.xml", es);
+        }
     }
 #endif
 }
