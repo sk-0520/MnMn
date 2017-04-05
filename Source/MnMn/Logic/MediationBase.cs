@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IGetUri,
         IGetRequestHeader,
         IGetRequestParameter,
+        IGetExpression,
         ICommunication,
         IUriCompatibility,
         IRequestCompatibility,
@@ -61,6 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             RequestHeaderList = LoadDefineModel<ParametersModel>(requestHeaderPath);
             RequestParameterList = LoadDefineModel<ParametersModel>(requestParametersPath);
             RequestMappingList = LoadDefineModel<MappingsModel>(requestMappingsPath);
+            Expressions = LoadDefineModel<ExpressionsModel>(expressionsPath);
         }
 
         #region property
@@ -78,6 +80,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected ParametersModel RequestParameterList { get; private set; }
 
         protected MappingsModel RequestMappingList { get; }
+
+        protected ExpressionsModel Expressions { get; }
 
         protected SpaghettiScript Script { get; set; }
 
@@ -140,6 +144,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ThrowNotSupportGetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportGetExpressionItem(string key, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportGetExpressionItem(string key, string id, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(id)}: {id}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportConvertUri(string key, string uri, ServiceType serviceType)
@@ -598,6 +612,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         }
 
         public virtual MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IGetExpression
+
+        public virtual ExpressionItemModel GetExpressionItem(string key, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual ExpressionItemModel GetExpressionItem(string key, string id, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
