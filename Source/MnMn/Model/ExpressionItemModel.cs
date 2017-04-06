@@ -15,6 +15,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     {
         #region property
 
+        [XmlAttribute("id")]
+        public string Id { get; set; }
+
         [XmlAttribute("kind")]
         public ExpressionItemKind Kind { get; set; }
 

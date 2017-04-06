@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
     public interface IGetExpression
     {
-        ExpressionItemModel GetExpressionItem(string key, ServiceType serviceType);
-        ExpressionItemModel GetExpressionItem(string key, string id, ServiceType serviceType);
+        IExpression GetExpression(string key, ServiceType serviceType);
+        IExpression GetExpression(string key, string id, ServiceType serviceType);
     }
 }

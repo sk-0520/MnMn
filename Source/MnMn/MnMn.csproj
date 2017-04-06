@@ -304,6 +304,7 @@
     <Compile Include="IF\IDescription.cs" />
     <Compile Include="IF\IDownloadItem.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
+    <Compile Include="IF\IExpression.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetExpression.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
@@ -311,6 +312,8 @@
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\DelegateDragAndDrop.cs" />
     <Compile Include="Logic\DescriptionBase.cs" />
+    <Compile Include="Logic\Expression.cs" />
+    <Compile Include="Logic\ExpressionLoader.cs" />
     <Compile Include="Logic\Extensions\RecyclableMemoryStreamManagerExtensions.cs" />
     <Compile Include="Logic\GlobalManager.cs" />
     <Compile Include="Logic\InformationLoader.cs" />
@@ -637,6 +640,7 @@
     </Content>
     <Content Include="etc\define\service\smile\expressions.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="etc\define\service\smile\video\expressions.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

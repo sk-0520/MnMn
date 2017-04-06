@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             RequestHeaderList = LoadDefineModel<ParametersModel>(requestHeaderPath);
             RequestParameterList = LoadDefineModel<ParametersModel>(requestParametersPath);
             RequestMappingList = LoadDefineModel<MappingsModel>(requestMappingsPath);
-            Expressions = LoadDefineModel<ExpressionsModel>(expressionsPath);
+            Expression = new ExpressionLoader(LoadDefineModel<ExpressionsModel>(expressionsPath));
         }
 
         #region property
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected MappingsModel RequestMappingList { get; }
 
-        protected ExpressionsModel Expressions { get; }
+        protected ExpressionLoader Expression { get; }
 
         protected SpaghettiScript Script { get; set; }
 
@@ -146,12 +146,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetExpressionItem(string key, ServiceType serviceType)
+        protected void ThrowNotSupportGetExpression(string key, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetExpressionItem(string key, string id, ServiceType serviceType)
+        protected void ThrowNotSupportGetExpression(string key, string id, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(id)}: {id}, {nameof(serviceType)}: {serviceType}");
         }
@@ -620,12 +620,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetExpression
 
-        public virtual ExpressionItemModel GetExpressionItem(string key, ServiceType serviceType)
+        public virtual IExpression GetExpression(string key, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual ExpressionItemModel GetExpressionItem(string key, string id, ServiceType serviceType)
+        public virtual IExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
