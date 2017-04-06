@@ -47,4 +47,25 @@
 			</data>
 		</item>
 	</element>
+	<element key="smile-video-mylist-account-group-token">
+		<item kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					NicoAPI
+					\s*
+					\.
+					\s*
+					token
+					\s*
+					=
+					\s*
+					("|')
+					(?<TOKEN>
+						(.+)
+					)
+					("|')
+				]]>
+			</data>
+		</item>
+	</element>
 </expressions>
