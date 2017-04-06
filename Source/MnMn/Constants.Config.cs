@@ -62,8 +62,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool AppSendCrashReport => appConfig.Get("app-send-crash-report", bool.Parse);
         public static bool AppCrashReportIsDebug => appConfig.Get("app-crash-report-is-debug", bool.Parse);
 
-        public static bool AppUpdateIsExtractor => appConfig.Get("app-update-is-extractor", bool.Parse);
-
         public static WebNavigatorEngine WebNavigatorEngine => appConfig.Get("web_navigator-engine", s => EnumUtility.Parse<WebNavigatorEngine>(s, false));
         public static string WebNavigatorGeckoFxLibraryDirectoryName => appConfig.Get("web_navigator-geckofx-lib-dir-name");
         public static string WebNavigatorGeckoFxProfileDirectoryName => appConfig.Get("web_navigator-geckofx-profile-dir-name");

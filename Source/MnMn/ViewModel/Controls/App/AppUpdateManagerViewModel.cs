@@ -61,6 +61,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         bool _hasEazyUpdate;
         bool _ruuningUpdate;
 
+        bool _useOldUpdateIssue518;
+
         #endregion
 
         public AppUpdateManagerViewModel(Mediation mediation)
@@ -136,6 +138,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return this._ruuningUpdate; }
             set { SetVariableValue(ref this._ruuningUpdate, value); }
+        }
+
+        public bool UseOldUpdateIssue518
+        {
+            get { return this._useOldUpdateIssue518; }
+            set { SetVariableValue(ref this._useOldUpdateIssue518, value); }
         }
 
         #endregion
@@ -429,8 +437,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         //    return UpdatedResult.Reboot;
         //}
 
-        Task<UpdatedResult>  AppUpdateExecuteAsync()
-            {
+        Task<UpdatedResult> AppUpdateExecuteAsync()
+        {
             var eventName = "mnmn-event";
 
             var archiveDir = VariableConstants.GetArchiveDirectory();
@@ -494,7 +502,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             Task<UpdatedResult> task;
             if(HasUpdate) {
-                if(Constants.AppUpdateIsExtractor) {
+                if(!UseOldUpdateIssue518) {
                     var archiveDir = VariableConstants.GetArchiveDirectory();
                     var archivePath = Path.Combine(archiveDir.FullName, ArchiveUri.Segments.Last());
                     var archiveFile = new FileInfo(archivePath);
@@ -514,7 +522,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 } else {
                     task = AppUpdateExecuteAsync();
                 }
-
             } else if(HasEazyUpdate) {
                 //task =  EazyUpdateExecuteAsync();
 
@@ -545,7 +552,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     default:
                         throw new NotImplementedException();
                 }
-            }catch(Exception ex) {
+            } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
             } finally {
                 RuuningUpdate = false;
