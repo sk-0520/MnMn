@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expressions>
+	<element key="video-session-login">
+		<item id="user-value" kind="regex" regex-options="ExplicitCapture  Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					var
+					\s+
+					User
+					\s*
+					=
+					\s*
+					\{
+					(?<VALUE>
+						.+
+					)
+					\}
+					\s*
+					;?
+				]]>
+			</data>
+		</item>
+		<item id="user-r18" kind="regex" regex-options="IgnorePatternWhitespace IgnoreCase">
+			<data>
+				<![CDATA[
+					isOver18
+					\s*
+					:
+					\s*
+					!
+					\s*
+					!
+					\s*
+					document
+					\s*
+					\.
+					\s*
+					cookie
+					\s*
+					\.
+					match
+					\s*
+					\(
+						.+
+					\)
+				]]>
+			</data>
+		</item>
+	</element>
+	<element key="smile-video-mylist-account-group-token">
+		<item kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					NicoAPI
+					\s*
+					\.
+					\s*
+					token
+					\s*
+					=
+					\s*
+					("|')
+					(?<TOKEN>
+						(.+)
+					)
+					("|')
+				]]>
+			</data>
+		</item>
+	</element>
+</expressions>

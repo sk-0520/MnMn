@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
@@ -39,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
     public class SmileLiveMediation: MediationCustomBase
     {
         public SmileLiveMediation(Mediation mediation, SmileLiveSettingModel setting)
-            : base(mediation, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileLiveRequestHeadersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
+            : base(mediation, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileLiveRequestHeadersListPath, Constants.SmileLiveRequestParametersListPath, Constants.SmileLiveRequestMappingsListPath, Constants.SmileLiveExpressionsPath)
         {
             Setting = setting;
             Category = SerializeUtility.LoadXmlSerializeFromFile<SmileLiveCategoryModel>(Constants.SmileLiveCategoryPath);
@@ -200,6 +201,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
             return GetRequestMappingCore(key, replaceMap, serviceType);
         }
+
+        public override IExpression GetExpression(string key, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileLive) {
+                ThrowNotSupportGetExpression(key, serviceType);
+            }
+
+            return GetExpressionCore(key, serviceType);
+        }
+
+        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileLive) {
+                ThrowNotSupportGetExpression(key, id, serviceType);
+            }
+
+            return GetExpressionCore(key, id, serviceType);
+        }
+
 
         public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {

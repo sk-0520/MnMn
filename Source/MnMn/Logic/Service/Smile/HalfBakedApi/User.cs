@@ -31,66 +31,70 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
         RawSmileUserAccountSimpleModel GetSimpleUserAccountModelFromHtmlDocument(HtmlDocument htmlDocument)
         {
-            var regUser = new Regex(
-                @"
-                var
-                \s+
-                User
-                \s*
-                =
-                \s*
-                \{
-                    (?<VALUE>
-                        .+
-                    )
-                \}
-                \s*
-                ;?
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            );
+            //var regUser = new Regex(
+            //    @"
+            //    var
+            //    \s+
+            //    User
+            //    \s*
+            //    =
+            //    \s*
+            //    \{
+            //        (?<VALUE>
+            //            .+
+            //        )
+            //    \}
+            //    \s*
+            //    ;?
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+            //);
+            var videoLoginUserValue = Mediation.GetExpression(SmileMediationKey.videoLogin, SmileMediationKey.Id.videoLogin_userValue, ServiceType.Smile);
 
             var userElement = htmlDocument.DocumentNode.Descendants()
                 .Where(n => n.Name == "script")
                 .Select(e => e.InnerText)
                 .Where(s => !string.IsNullOrWhiteSpace(s))
-                .FirstOrDefault(s => regUser.IsMatch(s))
+                .FirstOrDefault(s => videoLoginUserValue.Regex.IsMatch(s))
             ;
 
             if(userElement == null) {
                 return null;
             }
 
-            var match = regUser.Match(userElement);
+            var match = videoLoginUserValue.Regex.Match(userElement);
 
             // #34
-            var rawUser = Regex.Replace(
-                match.Groups["VALUE"].Value,
-                @"
-                isOver18
-                \s*
-                :
-                \s*
-                !
-                \s*
-                !
-                \s*
-                document
-                \s*
-                \.
-                \s*
-                cookie
-                \s*
-                \.
-                match
-                \s*
-                \(
-                    .+
-                \)
-                ",
-                "isOver18: false",
-                RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase
-            );
+            //var rawUser = Regex.Replace(
+            //    match.Groups["VALUE"].Value,
+            //    @"
+            //    isOver18
+            //    \s*
+            //    :
+            //    \s*
+            //    !
+            //    \s*
+            //    !
+            //    \s*
+            //    document
+            //    \s*
+            //    \.
+            //    \s*
+            //    cookie
+            //    \s*
+            //    \.
+            //    match
+            //    \s*
+            //    \(
+            //        .+
+            //    \)
+            //    ",
+            //    "isOver18: false",
+            //    RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase
+            //);
+
+            var videoLoginUserR18 = Mediation.GetExpression(SmileMediationKey.videoLogin, SmileMediationKey.Id.videoLogin_userR18, ServiceType.Smile);
+            var rawUser = videoLoginUserR18.Regex.Replace(match.Groups["VALUE"].Value, "isOver18: false");
 
             var jsonUser = "{" + rawUser + "}";
 

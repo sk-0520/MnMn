@@ -369,6 +369,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileRequestHeadersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-headers.xml");
         public static string SmileRequestParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-params.xml");
         public static string SmileRequestMappingsListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
+        public static string SmileExpressionsPath { get; } = Path.Combine(DefineSmileDirectoryPath, "expressions.xml");
         public static string SmileUserInformationPath { get; } = Path.Combine(DefineSmileDirectoryPath, "user.xml");
 
         public static string DefineSmileVideoDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
@@ -379,6 +380,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoRequestHeadersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-headers.xml");
         public static string SmileVideoRequestParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
         public static string SmileVideoRequestMappingsListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
+        public static string SmileVideoExpressionsPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "expressions.xml");
 
         public static string SmileVideoFinderItemName { get; } = "abc";
 
@@ -398,6 +400,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileLiveRequestHeadersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-headers.xml");
         public static string SmileLiveRequestParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-params.xml");
         public static string SmileLiveRequestMappingsListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-mappings.xml");
+        public static string SmileLiveExpressionsPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "expressions.xml");
 
         public static string SmileLiveCategoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "category.xml");
         //public static string SmileLivePlayerDirectoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "player");

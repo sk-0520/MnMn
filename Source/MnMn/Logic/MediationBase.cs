@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IGetUri,
         IGetRequestHeader,
         IGetRequestParameter,
+        IGetExpression,
         ICommunication,
         IUriCompatibility,
         IRequestCompatibility,
@@ -51,40 +52,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IConvertCompatibility
     {
         public MediationBase()
-            : this(null, null, null, null, null)
+            : this(null, null, null, null, null, null)
         { }
 
-        protected MediationBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath)
+        protected MediationBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
         {
-            if(uriListPath != null) {
-                UriList = SerializeUtility.LoadXmlSerializeFromFile<UrisModel>(uriListPath);
-            } else {
-                UriList = new UrisModel();
-            }
-
-            if(uriParametersPath != null) {
-                UriParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(uriParametersPath);
-            } else {
-                UriParameterList = new ParametersModel();
-            }
-
-            if(requestHeaderPath != null) {
-                RequestHeaderList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(requestHeaderPath);
-            } else {
-                RequestHeaderList = new ParametersModel();
-            }
-
-            if(requestParametersPath != null) {
-                RequestParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(requestParametersPath);
-            } else {
-                RequestParameterList = new ParametersModel();
-            }
-
-            if(requestMappingsPath != null) {
-                RequestMappingList = SerializeUtility.LoadXmlSerializeFromFile<MappingsModel>(requestMappingsPath);
-            } else {
-                RequestMappingList = new MappingsModel();
-            }
+            UriList = LoadDefineModel<UrisModel>(uriListPath);
+            UriParameterList = LoadDefineModel<ParametersModel>(uriParametersPath);
+            RequestHeaderList = LoadDefineModel<ParametersModel>(requestHeaderPath);
+            RequestParameterList = LoadDefineModel<ParametersModel>(requestParametersPath);
+            RequestMappingList = LoadDefineModel<MappingsModel>(requestMappingsPath);
+            Expression = new ExpressionLoader(LoadDefineModel<ExpressionsModel>(expressionsPath));
         }
 
         #region property
@@ -103,11 +81,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected MappingsModel RequestMappingList { get; }
 
+        protected ExpressionLoader Expression { get; }
+
         protected SpaghettiScript Script { get; set; }
 
         #endregion
 
         #region function
+
+        static TModel LoadDefineModel<TModel>(string path)
+            where TModel: IModel, new()
+        {
+            if(path != null) {
+                return SerializeUtility.LoadXmlSerializeFromFile<TModel>(path);
+            }
+
+            return new TModel();
+        }
 
         protected static TModel LoadModelFromFile<TModel>(string path)
             where TModel : IModel, new()
@@ -154,6 +144,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ThrowNotSupportGetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportGetExpression(string key, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportGetExpression(string key, string id, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(id)}: {id}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportConvertUri(string key, string uri, ServiceType serviceType)
@@ -442,6 +442,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
+        protected IExpression GetExpressionCore(string key, ServiceType serviceType)
+        {
+            return Expression.GetExpression(key);
+        }
+
+        protected IExpression GetExpressionCore(string key, string id, ServiceType serviceType)
+        {
+            return Expression.GetExpression(key, id);
+        }
+
         protected abstract SpaghettiScript CreateScript();
 
         protected virtual IEnumerable<string> GetKeys()
@@ -612,6 +622,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         }
 
         public virtual MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IGetExpression
+
+        public virtual IExpression GetExpression(string key, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

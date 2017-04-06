@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// <summary>
     /// データ連携等々の橋渡し。
     /// </summary>
-    public class Mediation: MediationBase
+    public class Mediation : MediationBase
     {
         #region variable
 
@@ -647,6 +647,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 default:
                     ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override IExpression GetExpression(string key, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
+                    return Smile.GetExpression(key, serviceType);
+
+                default:
+                    ThrowNotSupportGetExpression(key, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
+                    return Smile.GetExpression(key, id, serviceType);
+
+                default:
+                    ThrowNotSupportGetExpression(key, id, serviceType);
                     throw new NotImplementedException();
             }
         }
