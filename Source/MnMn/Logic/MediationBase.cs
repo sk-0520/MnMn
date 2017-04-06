@@ -442,6 +442,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
+        protected IExpression GetExpressionCore(string key, ServiceType serviceType)
+        {
+            return Expression.GetExpression(key);
+        }
+
+        protected IExpression GetExpressionCore(string key, string id, ServiceType serviceType)
+        {
+            return Expression.GetExpression(key, id);
+        }
+
         protected abstract SpaghettiScript CreateScript();
 
         protected virtual IEnumerable<string> GetKeys()

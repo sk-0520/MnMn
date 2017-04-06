@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 throw new ArgumentException(nameof(id));
             }
 
-            return GetExpressionCore(key, null);
+            return GetExpressionCore(key, id);
         }
 
         #endregion

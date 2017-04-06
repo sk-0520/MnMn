@@ -301,6 +301,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
+        public override IExpression GetExpression(string key, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                    return GetExpressionCore(key, serviceType);
+
+                case ServiceType.SmileVideo:
+                    return VideoMediation.GetExpression(key, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.GetExpression(key, serviceType);
+
+                default:
+                    ThrowNotSupportGetExpression(key, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                    return GetExpressionCore(key, id, serviceType);
+
+                case ServiceType.SmileVideo:
+                    return VideoMediation.GetExpression(key, id, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.GetExpression(key, id, serviceType);
+
+                default:
+                    ThrowNotSupportGetExpression(key, id, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
         public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             switch(serviceType) {
