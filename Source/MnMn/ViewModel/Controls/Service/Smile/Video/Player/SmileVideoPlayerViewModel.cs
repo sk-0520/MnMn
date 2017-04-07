@@ -1226,7 +1226,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.IgnoreTaskbarOnMaximize = false;
 
                 ResetFocus();
+
+                if(PrevFullScreenState == WindowState.Maximized) {
+                    View.Dispatcher.Invoke(() => {
+                        State = PrevFullScreenState;
+                    }, DispatcherPriority.SystemIdle);
+                }
+
             } else {
+                PrevFullScreenState = State;
+
                 View.IgnoreTaskbarOnMaximize = true;
                 State = WindowState.Maximized;
                 View.UseNoneWindowStyle = true;
@@ -1764,16 +1773,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!IsViewClosed) {
                 View.Close();
             }
-        }
-
-        #endregion
-
-        #region ICaptionCommand
-
-        public WindowState State
-        {
-            get { return this._state; }
-            set { SetVariableValue(ref this._state, value); }
         }
 
         #endregion
