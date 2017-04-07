@@ -138,6 +138,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static Version AcceptVersion { get; } = new Version(0, 56, 1, 0);
 
+        public static DateTime LightweightUpdateNone { get; } = DateTime.MinValue;
+
         public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";
 
         #region tag

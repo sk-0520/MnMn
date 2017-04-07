@@ -348,6 +348,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
         }
 
+        /// <summary>
+        /// 現在バージョンが前回バージョンより大きい場合通常アップデートが行われたと判断して簡易アップデート日時をリセットする。
+        /// </summary>
+        /// <param name="runningInformation"></param>
+        void CheckAndResetLightweightUpdateVersion(RunningInformationSettingModel runningInformation)
+        {
+            var lastVersion = new Version(runningInformation.LastExecuteVersion.Major, runningInformation.LastExecuteVersion.Minor, runningInformation.LastExecuteVersion.Build);
+            var nowVersion = new Version(Constants.ApplicationVersionNumber.Major, Constants.ApplicationVersionNumber.Minor, Constants.ApplicationVersionNumber.Build);
+            if(lastVersion < nowVersion) {
+                runningInformation.LastLightweightUpdateTimestamp = Constants.LightweightUpdateNone;
+            }
+        }
+
 
         #endregion
 
@@ -429,6 +442,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
                 setting.RunningInformation.FirstTimestamp = DateTime.Now;
             }
+
+            CheckAndResetLightweightUpdateVersion(setting.RunningInformation);
 
             setting.RunningInformation.LastExecuteVersion = Constants.ApplicationVersionNumber;
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
