@@ -130,6 +130,21 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
             }
         }
 
+        public ICommand OpenHelpCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    try {
+                        var receiveProgramUrl = ConfigurationManager.AppSettings.Get("help-url");
+                        Process.Start(receiveProgramUrl);
+                    } catch(Exception ex) {
+                        MessageBox.Show(ex.Message);
+                    }
+                });
+            }
+        }
+
         public ICommand SendCommand
         {
             get { return CreateCommand(o => SendAsync()); }

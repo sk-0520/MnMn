@@ -21,8 +21,8 @@
   FontFamily="Meiryo UI"
 
   Title="MnMn: クラッシュレポート配達屋さん"
-  Width="480"
-  Height="550"
+  Width="500"
+  Height="600"
   Topmost="True"
 >
   <mamc:MetroWindow.Resources>
@@ -52,19 +52,21 @@
   <Grid Margin="8">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
-      <RowDefinition />
+      <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0" Margin="8" IsEnabled="{Binding IsBusy, Converter={StaticResource LogicalNotConverter}}">
       <TextBlock FontSize="14" TextWrapping="Wrap">
-        <Run FontWeight="Bold">MnMn は死にました。</Run>
+        <Run FontSize="16" FontWeight="Bold">MnMn は死にました。</Run>
         <LineBreak />
         このレポートを送信することで今後の改善につながるかもです。
         <LineBreak />
         送信されたレポートは Google Drive に格納され、開発側でのみ共有されます。
         <LineBreak />
-        <TextBlock FontSize="11">※受信側プログラムは開発リポジトリに格納していないため<Hyperlink Command="{Binding OpenReceiveProgramCommand}">こちら</Hyperlink>を確認してください。</TextBlock>
+        もしかしたら<Hyperlink Command="{Binding OpenHelpCommand}">Wikiに解決方法</Hyperlink>が書いてあるかもです。
+        <LineBreak />
+        <TextBlock Margin="0,10,0,0" FontSize="11">※受信側プログラムは開発リポジトリに格納していないため<Hyperlink Command="{Binding OpenReceiveProgramCommand}">こちら</Hyperlink>を確認してください。</TextBlock>
       </TextBlock>
     </Grid>
 

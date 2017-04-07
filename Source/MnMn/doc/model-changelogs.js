@@ -206,6 +206,10 @@
 					},
 					{
 						'revision': '',
+						'subject': "#524: クラッシュレポートに Wiki へのリンクでも表示して System.DllNotFoundException: DLL 'mozglue' は忘却の彼方へ追いやりたい"
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
