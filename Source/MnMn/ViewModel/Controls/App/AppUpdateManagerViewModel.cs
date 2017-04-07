@@ -54,11 +54,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         Uri _archiveUri;
         Version _archiveVersion;
         UpdateCheckState _updateCheckState;
-        UpdateCheckState _eazyUpdateCheckState;
+        UpdateCheckState _lightweightUpdateCheckState;
 
         string _updateText;
         bool _hasUpdate;
-        bool _hasEazyUpdate;
+        bool _hasLightweightUpdate;
         bool _ruuningUpdate;
 
         bool _useOldUpdateIssue518;
@@ -103,13 +103,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
-        public UpdateCheckState EazyUpdateCheckState
+        public UpdateCheckState LightweightUpdateCheckState
         {
-            get { return this._eazyUpdateCheckState; }
+            get { return this._lightweightUpdateCheckState; }
             set
             {
-                if(SetVariableValue(ref this._eazyUpdateCheckState, value)) {
-                    HasEazyUpdate = EazyUpdateCheckState == UpdateCheckState.CurrentIsOld;
+                if(SetVariableValue(ref this._lightweightUpdateCheckState, value)) {
+                    HasLightweightUpdate = LightweightUpdateCheckState == UpdateCheckState.CurrentIsOld;
                 }
             }
         }
@@ -120,10 +120,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._hasUpdate, value); }
         }
 
-        public bool HasEazyUpdate
+        public bool HasLightweightUpdate
         {
-            get { return this._hasEazyUpdate; }
-            set { SetVariableValue(ref this._hasEazyUpdate, value); }
+            get { return this._hasLightweightUpdate; }
+            set { SetVariableValue(ref this._hasLightweightUpdate, value); }
         }
 
         public string UpdateText
@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._updateText, value); }
         }
 
-        public EazyUpdateModel EazyUpdateModel { get; set; }
+        public LightweightUpdateModel LightweightUpdateModel { get; set; }
 
         public bool RuuningUpdate
         {
@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         Mediation.Order(new AppSaveOrderModel(true));
                         UpdateExecuteAsync().ConfigureAwait(false);
                     },
-                    o => !RuuningUpdate && (HasUpdate || HasEazyUpdate)
+                    o => !RuuningUpdate && (HasUpdate || HasLightweightUpdate)
                 );
             }
         }
@@ -186,35 +186,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region function
 
-        async Task CheckEazyUpdateAsync()
+        async Task CheckLightweightUpdateAsync()
         {
-            EazyUpdateCheckState = UpdateCheckState.UnChecked;
-            EazyUpdateModel = null;
+            LightweightUpdateCheckState = UpdateCheckState.UnChecked;
+            LightweightUpdateModel = null;
 
             using(var userAgentHost = new HttpUserAgentHost())
             using(var userAgent = userAgentHost.CreateHttpUserAgent()) {
                 var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
 
                 try {
-                    Mediation.Logger.Information($"eazy update check: {Constants.AppUriEazyUpdate}");
+                    Mediation.Logger.Information($"lightweight update check: {Constants.AppUriLightweightUpdate}");
 
-                    var stream = await userAgent.GetStreamAsync(Constants.AppUriEazyUpdate);
-                    var model = SerializeUtility.LoadXmlSerializeFromStream<EazyUpdateModel>(stream);
+                    var stream = await userAgent.GetStreamAsync(Constants.AppUriLightweightUpdate);
+                    var model = SerializeUtility.LoadXmlSerializeFromStream<LightweightUpdateModel>(stream);
 
                     var isUpdateVersion = Constants.ApplicationVersionNumber <= new Version(model.Version);
-                    var isUpdateTimestamp = setting.RunningInformation.LastEazyUpdateTimestamp < model.Timestamp;
+                    var isUpdateTimestamp = setting.RunningInformation.LastLightweightUpdateTimestamp < model.Timestamp;
 
                     if(isUpdateVersion && isUpdateTimestamp) {
                         UpdateText = "TARGET VERSION: " + model.Version;
-                        EazyUpdateModel = model;
-                        EazyUpdateCheckState = UpdateCheckState.CurrentIsOld;
+                        LightweightUpdateModel = model;
+                        LightweightUpdateCheckState = UpdateCheckState.CurrentIsOld;
                     } else {
-                        EazyUpdateCheckState = UpdateCheckState.CurrentIsNew;
+                        LightweightUpdateCheckState = UpdateCheckState.CurrentIsNew;
                     }
 
                 } catch(Exception ex) {
                     Mediation.Logger.Warning(ex);
-                    EazyUpdateCheckState = UpdateCheckState.Error;
+                    LightweightUpdateCheckState = UpdateCheckState.Error;
                 }
             }
         }
@@ -222,13 +222,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         async Task CheckVersionAsync()
         {
             UpdateCheckState = UpdateCheckState.UnChecked;
-            EazyUpdateCheckState = UpdateCheckState.UnChecked;
+            LightweightUpdateCheckState = UpdateCheckState.UnChecked;
 
             ArchiveVersion = null;
             ArchiveUri = null;
             UpdateText = string.Empty;
 
-            EazyUpdateModel = null;
+            LightweightUpdateModel = null;
 
             try {
                 var client = new HttpClient();
@@ -294,14 +294,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             } finally {
                 // ぶっこんだなぁ
                 if(!HasUpdate) {
-                    await CheckEazyUpdateAsync();
+                    await CheckLightweightUpdateAsync();
                 }
             }
         }
 
-        static string GetEazyUpdateHtmlSource(EazyUpdateModel model)
+        static string GetLightweightUpdateHtmlSource(LightweightUpdateModel model)
         {
-            var document = HtmlUtility.CreateHtmlDocument(File.ReadAllText(Constants.ApplicationEazyUpdateHtmlTemplatePath));
+            var document = HtmlUtility.CreateHtmlDocument(File.ReadAllText(Constants.ApplicationLightweightUpdateHtmlTemplatePath));
 
             var timeElement = document.GetElementbyId("timestamp");
             timeElement.SetAttributeValue("timeElement", model.Timestamp.ToString("u"));
@@ -333,8 +333,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         UpdateBrowser.LoadHtml(htmlSource);
                     }));
                 });
-            } else if(EazyUpdateCheckState == UpdateCheckState.CurrentIsOld) {
-                var htmlSource = GetEazyUpdateHtmlSource(EazyUpdateModel);
+            } else if(LightweightUpdateCheckState == UpdateCheckState.CurrentIsOld) {
+                var htmlSource = GetLightweightUpdateHtmlSource(LightweightUpdateModel);
                 UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
                     UpdateBrowser.LoadHtml(htmlSource);
                 }));
@@ -391,51 +391,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             return process;
         }
-
-        //async Task<UpdatedResult> EazyUpdateExecuteAsync()
-        //{
-        //    var eazyUpdateDir = VariableConstants.GetEazyUpdateDirectory();
-        //    var archivePath = Path.Combine(eazyUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(EazyUpdateModel.Timestamp), "zip"));
-
-        //    using(var host = new HttpUserAgentHost())
-        //    using(var userAgent = host.CreateHttpUserAgent()) {
-        //        userAgent.Timeout = Constants.ArchiveEazyUpdateTimeout;
-        //        using(var archiveStream = new ZipArchive(new FileStream(archivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
-        //            foreach(var tartget in EazyUpdateModel.Targets) {
-        //                var entry = archiveStream.CreateEntry(tartget.Extends["expand"]);
-        //                using(var entryStream = entry.Open()) {
-        //                    Mediation.Logger.Debug(tartget.Key);
-        //                    var response = await userAgent.GetAsync(tartget.Key);
-        //                    if(response.IsSuccessStatusCode) {
-        //                        var stream = await response.Content.ReadAsStreamAsync();
-        //                        await stream.CopyToAsync(entryStream);
-        //                    } else {
-        //                        Mediation.Logger.Error(response.ToString());
-        //                        return UpdatedResult.None;
-        //                    }
-        //                }
-        //                //await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
-        //            }
-        //        }
-        //    }
-
-        //    // アーカイブ展開
-        //    using(var archiveStream = new ZipArchive(new FileStream(archivePath, FileMode.Open, FileAccess.Read, FileShare.Read), ZipArchiveMode.Read)) {
-        //        foreach(var entry in archiveStream.Entries) {
-        //            var path = Path.Combine(Constants.AssemblyRootDirectoryPath, entry.FullName);
-        //            FileUtility.MakeFileParentDirectory(path);
-        //            Mediation.Logger.Trace($"expand: {path}");
-        //            using(var entryStream = entry.Open())
-        //            using(var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
-        //                entryStream.CopyTo(stream);
-        //            }
-        //        }
-        //    }
-        //    var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
-        //    setting.RunningInformation.LastEazyUpdateTimestamp = EazyUpdateModel.Timestamp;
-
-        //    return UpdatedResult.Reboot;
-        //}
 
         Task<UpdatedResult> AppUpdateExecuteAsync()
         {
@@ -522,10 +477,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 } else {
                     task = AppUpdateExecuteAsync();
                 }
-            } else if(HasEazyUpdate) {
+            } else if(HasLightweightUpdate) {
                 //task =  EazyUpdateExecuteAsync();
 
-                var download = new EazyUpdateDownloadItemViewModel(Mediation, EazyUpdateModel);
+                var download = new LightweightUpdateDownloadItemViewModel(Mediation, LightweightUpdateModel);
                 Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
 
                 task = download.StartAsync().ContinueWith(t => {
@@ -573,7 +528,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             if(UpdateBrowser.IsEmptyContent) {
                 LoadChangelogAsync().ContinueWith(_ => {
-                    if(UpdateCheckState != UpdateCheckState.CurrentIsOld && EazyUpdateCheckState != UpdateCheckState.CurrentIsOld) {
+                    if(UpdateCheckState != UpdateCheckState.CurrentIsOld && LightweightUpdateCheckState != UpdateCheckState.CurrentIsOld) {
                         SetUpdateStateViewAsync().ConfigureAwait(false);
                     }
                 }).ConfigureAwait(false);
