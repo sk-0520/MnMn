@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     var model = SerializeUtility.LoadXmlSerializeFromStream<LightweightUpdateModel>(stream);
 
                     var isUpdateVersion = Constants.ApplicationVersionNumber <= new Version(model.Version);
-                    var isUpdateTimestamp = setting.RunningInformation.LastLightweightUpdateTimestamp < model.Timestamp;
+                    var isUpdateTimestamp = setting.RunningInformation.LightweightUpdateTimestamp < model.Timestamp;
 
                     if(isUpdateVersion && isUpdateTimestamp) {
                         UpdateText = "TARGET VERSION: " + model.Version;

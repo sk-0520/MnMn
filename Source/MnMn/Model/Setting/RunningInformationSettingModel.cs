@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// 簡易アップデート実施日時。
         /// </summary>
         [DataMember]
-        public DateTime LastLightweightUpdateTimestamp { get; set; } = Constants.LightweightUpdateNone;
+        public DateTime LightweightUpdateTimestamp { get; set; } = Constants.LightweightUpdateNone;
 
         #endregion
     }

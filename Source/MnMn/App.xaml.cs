@@ -258,6 +258,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             target.FirstVersion = setting.RunningInformation.FirstVersion?.ToString();
             target.FirstTimestamp = setting.RunningInformation.FirstTimestamp;
+            target.LightweightUpdateTimestamp = setting.RunningInformation.LightweightUpdateTimestamp;
 
             target.GeckoFxScanPlugin = setting.WebNavigator.GeckoFxScanPlugin;
 
@@ -361,7 +362,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var lastVersion = new Version(runningInformation.LastExecuteVersion.Major, runningInformation.LastExecuteVersion.Minor, runningInformation.LastExecuteVersion.Build);
             var nowVersion = new Version(Constants.ApplicationVersionNumber.Major, Constants.ApplicationVersionNumber.Minor, Constants.ApplicationVersionNumber.Build);
             if(lastVersion < nowVersion) {
-                runningInformation.LastLightweightUpdateTimestamp = Constants.LightweightUpdateNone;
+                runningInformation.LightweightUpdateTimestamp = Constants.LightweightUpdateNone;
             }
         }
 

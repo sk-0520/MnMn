@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                 }
             }
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
-            setting.RunningInformation.LastLightweightUpdateTimestamp = Model.Timestamp;
+            setting.RunningInformation.LightweightUpdateTimestamp = Model.Timestamp;
 
             Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
