@@ -354,6 +354,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <param name="runningInformation"></param>
         void CheckAndResetLightweightUpdateVersion(RunningInformationSettingModel runningInformation)
         {
+            if(runningInformation.LastExecuteVersion == null) {
+                return;
+            }
+
             var lastVersion = new Version(runningInformation.LastExecuteVersion.Major, runningInformation.LastExecuteVersion.Minor, runningInformation.LastExecuteVersion.Build);
             var nowVersion = new Version(Constants.ApplicationVersionNumber.Major, Constants.ApplicationVersionNumber.Minor, Constants.ApplicationVersionNumber.Build);
             if(lastVersion < nowVersion) {
