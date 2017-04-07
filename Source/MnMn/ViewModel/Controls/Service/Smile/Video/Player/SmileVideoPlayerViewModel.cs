@@ -1225,13 +1225,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.ShowTitleBar = true; // <-- this must be set to true
                 View.IgnoreTaskbarOnMaximize = false;
 
-                ResetFocus();
-
                 if(PrevFullScreenState == WindowState.Maximized) {
                     View.Dispatcher.Invoke(() => {
                         State = PrevFullScreenState;
                     }, DispatcherPriority.SystemIdle);
                 }
+
+                ResetFocus();
 
             } else {
                 PrevFullScreenState = State;
