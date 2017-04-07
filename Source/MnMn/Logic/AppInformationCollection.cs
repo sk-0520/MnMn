@@ -22,11 +22,27 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class AppInformationCollection: InformationCollection
     {
+        public AppInformationCollection(ICommunication communication)
+        {
+            Communication = communication;
+        }
+
+        #region property
+
+        ICommunication Communication { get; }
+
+        #endregion
+
         #region InformationCollection
 
         public override FileVersionInfo GetVersionInfo
@@ -39,6 +55,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var result = base.GetApplication();
 
             result.Items.Add("BuildType", Constants.BuildType);
+
+            if(Communication != null) {
+                var setting = Communication.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+                result.Items.Add("LightweightUpdate", setting.RunningInformation.LightweightUpdateTimestamp.ToString("u"));
+            }
 
             return result;
         }

@@ -395,7 +395,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag();
             using(var writer = new StreamWriter(stream)) {
-                var appInfo = new AppInformationCollection();
+                var appInfo = new AppInformationCollection(null);
                 appInfo.WriteInformation(writer);
                 var s = Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
                 logger.Information(Constants.ApplicationName, s);

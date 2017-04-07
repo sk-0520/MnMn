@@ -156,6 +156,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64" : "32"));
                     list.Add("OS: " + System.Environment.OSVersion);
                     list.Add("CLR: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
+                    var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+                    list.Add("Lightweight: " + setting.RunningInformation.LightweightUpdateTimestamp.ToString("u"));
                     var text = Environment.NewLine + separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine;
                     ShellUtility.SetClipboard(text, Mediation.Logger);
                 });
@@ -167,7 +169,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
-                    var appInfo = new AppInformationCollection();
+                    var appInfo = new AppInformationCollection(Mediation);
                     var text
                         = Environment.NewLine
                         + separator
@@ -363,7 +365,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     var informationEntry = exportStream.CreateEntry(Constants.InformationFileName);
                     using(var zipStream = informationEntry.Open()) {
                         using(var streamWriter = new StreamWriter(zipStream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
-                            var info = new AppInformationCollection();
+                            var info = new AppInformationCollection(Mediation);
                             info.WriteInformation(streamWriter);
                             //streamWriter.Write(info.ToString());
                         }
