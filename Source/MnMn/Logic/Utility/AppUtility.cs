@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 logger.Warning(ex);
             }
 
-            using(var appInfo = new AppInformationCollection()) {
+            using(var appInfo = new AppInformationCollection(null)) {
                 // CPU の名称と説明
                 var cpuInfo = appInfo.GetCPU();
                 materials.Add((string)cpuInfo.Items["Name"]);

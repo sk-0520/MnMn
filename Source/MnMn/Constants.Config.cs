@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriWebNavigatorGeckoFxPlugins => ReplaceAppConfig(appConfig.Get("app-uri-web_navigator-plugins"));
         public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
         public static Uri AppUriGeneralBrowserHome => new Uri(appConfig.Get("app-uri-general-browser"));
-        public static Uri AppUriEazyUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-eazy-update")));
+        public static Uri AppUriLightweightUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-lightweight-update")));
 
         public static TimeSpan AppSplashCloseTime => appConfig.Get("app-splash-close-time", TimeSpan.Parse);
         public static bool AppUnhandledExceptionHandled => appConfig.Get("app-un_handled-exception-handled", bool.Parse);

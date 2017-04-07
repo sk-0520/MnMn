@@ -258,6 +258,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             target.FirstVersion = setting.RunningInformation.FirstVersion?.ToString();
             target.FirstTimestamp = setting.RunningInformation.FirstTimestamp;
+            target.LightweightUpdateTimestamp = setting.RunningInformation.LightweightUpdateTimestamp;
 
             target.GeckoFxScanPlugin = setting.WebNavigator.GeckoFxScanPlugin;
 
@@ -348,6 +349,23 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
         }
 
+        /// <summary>
+        /// 現在バージョンが前回バージョンより大きい場合通常アップデートが行われたと判断して簡易アップデート日時をリセットする。
+        /// </summary>
+        /// <param name="runningInformation"></param>
+        void CheckAndResetLightweightUpdateVersion(RunningInformationSettingModel runningInformation)
+        {
+            if(runningInformation.LastExecuteVersion == null) {
+                return;
+            }
+
+            var lastVersion = new Version(runningInformation.LastExecuteVersion.Major, runningInformation.LastExecuteVersion.Minor, runningInformation.LastExecuteVersion.Build);
+            var nowVersion = new Version(Constants.ApplicationVersionNumber.Major, Constants.ApplicationVersionNumber.Minor, Constants.ApplicationVersionNumber.Build);
+            if(lastVersion < nowVersion) {
+                runningInformation.LightweightUpdateTimestamp = Constants.LightweightUpdateNone;
+            }
+        }
+
 
         #endregion
 
@@ -377,7 +395,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag();
             using(var writer = new StreamWriter(stream)) {
-                var appInfo = new AppInformationCollection();
+                var appInfo = new AppInformationCollection(null);
                 appInfo.WriteInformation(writer);
                 var s = Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
                 logger.Information(Constants.ApplicationName, s);
@@ -429,6 +447,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
                 setting.RunningInformation.FirstTimestamp = DateTime.Now;
             }
+
+            CheckAndResetLightweightUpdateVersion(setting.RunningInformation);
 
             setting.RunningInformation.LastExecuteVersion = Constants.ApplicationVersionNumber;
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);

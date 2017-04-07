@@ -138,6 +138,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static Version AcceptVersion { get; } = new Version(0, 56, 1, 0);
 
+        public static DateTime LightweightUpdateNone { get; } = DateTime.MinValue;
+
         public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";
 
         #region tag
@@ -291,9 +293,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
         public static string ArchiveWebNavigatorGeckFxPluginDirectoryName { get; } = "archive-plugin";
-        public static string ArchiveEazyUpdateDirectoryName { get; } = "archive-eazy_update";
-        public static TimeSpan ArchiveEazyUpdateTimeout => TimeSpan.FromMinutes(10);
-        public static TimeSpan ArchiveEazyUpdateWaitTime => TimeSpan.FromSeconds(1);
+        public static string ArchiveLightweightUpdateDirectoryName { get; } = "archive-lightweight_update";
+        public static TimeSpan ArchiveLightweightUpdateTimeout => TimeSpan.FromMinutes(10);
+        public static TimeSpan ArchiveLightweightUpdateWaitTime => TimeSpan.FromSeconds(1);
         /// <summary>
         /// バックアップディレクトリ名。
         /// </summary>
@@ -338,7 +340,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string FfmpegApplicationPath { get; } = Path.Combine(BinaryDirectoryPath, "ffmpeg", "ffmpeg.exe");
 
         public static string ApplicationTemplateDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, "template");
-        public static string ApplicationEazyUpdateHtmlTemplatePath { get; } = Path.Combine(ApplicationTemplateDirectoryPath, "eazy-update.html");
+        public static string ApplicationLightweightUpdateHtmlTemplatePath { get; } = Path.Combine(ApplicationTemplateDirectoryPath, "lightweight-update.html");
 
         public static string DefineName { get; } = "define";
 

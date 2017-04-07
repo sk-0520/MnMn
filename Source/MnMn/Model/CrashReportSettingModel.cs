@@ -28,6 +28,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         public string FirstVersion { get; set; }
         public DateTime FirstTimestamp { get; set; }
 
+        public DateTime LightweightUpdateTimestamp { get; set; }
+
         #endregion
 
         #region WebNavigator

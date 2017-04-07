@@ -8,8 +8,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    [Serializable, XmlRoot("eazy-update")]
-    public class EazyUpdateModel:ModelBase
+    [Serializable, XmlRoot("lightweight-update")]
+    public class LightweightUpdateModel:ModelBase
     {
         #region property
 

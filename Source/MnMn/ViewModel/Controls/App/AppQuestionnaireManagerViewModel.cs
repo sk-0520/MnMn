@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         Task SubmitCoreAsync()
         {
-            var info = new AppInformationCollection();
+            var info = new AppInformationCollection(Mediation);
             var cpu = info.GetCPU();
             var memory = info.GetMemory();
 

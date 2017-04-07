@@ -164,7 +164,7 @@
                         <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
                           <MultiBinding.Bindings>
                             <Binding Path="HasUpdate" />
-                            <Binding Path="HasEazyUpdate" />
+                            <Binding Path="HasLightweightUpdate" />
                           </MultiBinding.Bindings>
                         </MultiBinding>
                       </DataTrigger.Binding>
@@ -200,8 +200,8 @@
                 <TextBlock.Style>
                   <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                     <Style.Triggers>
-                      <DataTrigger Binding="{Binding HasEazyUpdate}" Value="True">
-                        <Setter Property="Text" Value="EAZY" />
+                      <DataTrigger Binding="{Binding HasLightweightUpdate}" Value="True">
+                        <Setter Property="Text" Value="簡易" />
                       </DataTrigger>
                     </Style.Triggers>
                     <Setter Property="Text" Value="UP!" />
@@ -221,7 +221,7 @@
             <app_view_controls:WebNavigator.IsEnabled>
               <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
                 <Binding Path="HasUpdate" />
-                <Binding Path="HasEazyUpdate" />
+                <Binding Path="HasLightweightUpdate" />
               </MultiBinding>
             </app_view_controls:WebNavigator.IsEnabled>
           </app_view_controls:WebNavigator>

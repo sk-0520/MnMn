@@ -24,7 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 {
-    public class EazyUpdateDownloadItemViewModel : ViewModelBase, IDownloadItem
+    public class LightweightUpdateDownloadItemViewModel : ViewModelBase, IDownloadItem
     {
         #region variable
 
@@ -37,19 +37,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         #endregion
 
-        public EazyUpdateDownloadItemViewModel(Mediation mediation, EazyUpdateModel model)
+        public LightweightUpdateDownloadItemViewModel(Mediation mediation, LightweightUpdateModel model)
         {
             Mediation = mediation;
             Model = model;
 
-            var eazyUpdateDir = VariableConstants.GetEazyUpdateDirectory();
-            ArchivePath = Path.Combine(eazyUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(Model.Timestamp), "zip"));
+            var lightweightUpdateDir = VariableConstants.GetLightweightUpdateDirectory();
+            ArchivePath = Path.Combine(lightweightUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(Model.Timestamp), "zip"));
         }
 
         #region property
 
         Mediation Mediation { get; }
-        EazyUpdateModel Model { get; }
+        LightweightUpdateModel Model { get; }
 
         CancellationTokenSource Cancellation { get; set; }
 
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                 }
             }
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
-            setting.RunningInformation.LastEazyUpdateTimestamp = Model.Timestamp;
+            setting.RunningInformation.LightweightUpdateTimestamp = Model.Timestamp;
 
             Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
@@ -82,9 +82,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         void SetDisplayText(string expandPath)
         {
             if(string.IsNullOrEmpty(expandPath)) {
-                this._displayText = Properties.Resources.String_App_EazyUpdate;
+                this._displayText = Properties.Resources.String_App_LightweightUpdate;
             } else {
-                this._displayText = $"{Properties.Resources.String_App_EazyUpdate}: {expandPath}";
+                this._displayText = $"{Properties.Resources.String_App_LightweightUpdate}: {expandPath}";
             }
             CallOnPropertyChange(nameof(DisplayText));
         }
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             {
                 var image= new BitmapImage();
                 using(Initializer.BeginInitialize(image)) {
-                    image.UriSource = SharedConstants.GetEntryUri("Resources/MnMn-Update_Eazy.png");
+                    image.UriSource = SharedConstants.GetEntryUri("Resources/MnMn-Update_Lightweight.png");
                 }
 
                 return image;
@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
             using(var host = new HttpUserAgentHost())
             using(var userAgent = host.CreateHttpUserAgent()) {
-                userAgent.Timeout = Constants.ArchiveEazyUpdateTimeout;
+                userAgent.Timeout = Constants.ArchiveLightweightUpdateTimeout;
                 using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
                     DownloadState = LoadState.Loading;
 
@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                                 return;
                             }
                         }
-                        //await Task.Delay(Constants.ArchiveEazyUpdateWaitTime);
+                        //await Task.Delay(Constants.ArchiveLightweightUpdateWaitTime);
                     }
                 }
             }

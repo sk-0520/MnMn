@@ -951,15 +951,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   簡易アップデート に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string String_App_EazyUpdate {
-            get {
-                return ResourceManager.GetString("String_App_EazyUpdate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   この MnMn はβ版ですが、β版として起動されていません。
         ///明示的な起動(/execute-beta)が行われておらず、設定データ・キャッシュがリリース版と混在する可能性があるためこのまま続行することはお勧めしません。
         ///β版をリリース版と混合せず使用するには &quot;&lt;MnMn&gt;\bat\beta.bat&quot; を実行してください。
@@ -996,6 +987,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_IDescription_MenuOpenUriInAppBrowser {
             get {
                 return ResourceManager.GetString("String_App_IDescription_MenuOpenUriInAppBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   簡易アップデート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_LightweightUpdate {
+            get {
+                return ResourceManager.GetString("String_App_LightweightUpdate", resourceCulture);
             }
         }
         
