@@ -61,8 +61,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 downloadItem.StartAsync();
             } else if(downloadItem.Item.DownloadState == DownloadState.Waiting) {
                 StartWaitingItem();
-                RefreshDownloadingCount();
             }
+
+            RefreshDownloadingCount();
         }
 
         void StartWaitingItem()

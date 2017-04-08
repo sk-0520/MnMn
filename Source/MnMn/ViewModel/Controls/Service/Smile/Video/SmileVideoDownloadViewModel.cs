@@ -872,6 +872,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public void Cancel()
         {
+            StopPrevProcessAsync();
+            InitializeStatus();
         }
 
         #endregion

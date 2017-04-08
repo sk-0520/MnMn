@@ -1895,16 +1895,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             IsViewClosed = true;
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
-                if(UsingDmc.Value) {
-                    if(DownloadCancel != null) {
-                        Mediation.Logger.Trace($"{VideoId}: download cancel! from dmc");
-                        DownloadCancel.Cancel();
-                        DownloadCancel.Dispose();
-                        DownloadCancel = null;
-                    }
+                if(DownloadCancel != null) {
+                    Mediation.Logger.Trace($"{VideoId}: download cancel! from dmc");
+                    DownloadCancel.Cancel();
+                    DownloadCancel.Dispose();
+                    DownloadCancel = null;
+                }
 
+                if(UsingDmc.Value) {
                     StopDmcDownloadAsync();
                 }
+
                 StopMovie(true);
             }
 
