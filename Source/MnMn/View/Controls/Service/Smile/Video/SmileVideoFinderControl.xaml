@@ -413,6 +413,9 @@
                 </Viewbox>
               </MenuItem.Icon>
             </MenuItem>
+
+            <MenuItem Header="#362" Command="{Binding AddDownloadManagerCommand}" />
+
             <Separator />
             <MenuItem Header="クリップボードにコピー">
               <MenuItem.Icon>

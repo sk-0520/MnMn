@@ -41,6 +41,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
@@ -224,6 +225,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => AddUnorganizedBookmark(SelectedFinderItem),
+                    o => IsEnabledUnorganizedBookmarkMenu && SelectedFinderItem != null
+                );
+            }
+        }
+
+        public ICommand AddDownloadManagerCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddDownloadManager(SelectedFinderItem),
                     o => IsEnabledUnorganizedBookmarkMenu && SelectedFinderItem != null
                 );
             }
@@ -423,6 +435,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var item = information.ToVideoItemModel();
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(item)));
         }
+
+        void AddDownloadManager(SmileVideoFinderItemViewModel finderItem)
+        {
+            var information = finderItem.Information;
+            if(!SmileVideoInformationUtility.CheckCanPlay(information, Mediation.Logger)) {
+                return;
+            }
+
+            var download = new SmileVideoDownloadViewModel(Mediation);
+            download.Information = information;
+            Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
+        }
+
 
         protected virtual bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
         {
