@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         /// <param name="logger"></param>
         static void OpenUriCore(string link, ILogger logger)
         {
-            ShellUtility.OpenUriInSystemBrowser(link, logger);
+            ShellUtility.OpenUriInDefaultBrowser(link, logger);
         }
 
         public static void OpenUri(object parameter, ILogger logger)

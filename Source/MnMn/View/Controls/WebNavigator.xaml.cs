@@ -942,7 +942,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         void OpenDefaultBrowser(Uri uri)
         {
             var logger = new Logger();
-            ShellUtility.OpenUriInSystemBrowser(uri, logger);
+            ShellUtility.OpenUriInDefaultBrowser(uri, logger);
         }
 
         void SetClickParameterGeckoFx(WebNavigatorClickParameterModel model, DomMouseEventArgs e)

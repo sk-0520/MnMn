@@ -300,6 +300,7 @@
   <mamc:MetroWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
+        <Button Cursor="Hand" Margin="{StaticResource RightMargin}" Command="{Binding OpenDefaultBrowserCommand}">視聴ページ</Button>
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
       </StackPanel>
     </mamc:WindowCommands>

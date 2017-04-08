@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         /// <param name="uri">開くURI。</param>
         /// <param name="logger">ロガー。</param>
         /// <returns></returns>
-        public static Process OpenUriInSystemBrowser(Uri uri, ILogger logger)
+        public static Process OpenUriInDefaultBrowser(Uri uri, ILogger logger)
         {
             try {
                 return Process.Start(uri.OriginalString);
@@ -104,11 +104,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         /// <param name="uri">開くURI。</param>
         /// <param name="logger">ロガー。</param>
         /// <returns></returns>
-        public static Process OpenUriInSystemBrowser(string rawUri, ILogger logger)
+        public static Process OpenUriInDefaultBrowser(string rawUri, ILogger logger)
         {
             try {
                 var uri = new Uri(rawUri);
-                return OpenUriInSystemBrowser(uri, logger);
+                return OpenUriInDefaultBrowser(uri, logger);
             } catch(Exception ex) {
                 logger.Warning(ex);
             }
