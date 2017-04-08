@@ -69,7 +69,7 @@
             <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="{x:Static app:Constants.BuildType}" />
           </Grid>
 
-          <TextBox IsReadOnly="True" Text="{x:Static app:Constants.ApplicationVersion}" />
+          <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" IsTabStop="False" IsReadOnly="True" Text="{x:Static app:Constants.ApplicationVersion}" />
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource ContentMargin}">

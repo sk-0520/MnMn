@@ -164,7 +164,7 @@
                         <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
                           <MultiBinding.Bindings>
                             <Binding Path="HasUpdate" />
-                            <Binding Path="HasEazyUpdate" />
+                            <Binding Path="HasLightweightUpdate" />
                           </MultiBinding.Bindings>
                         </MultiBinding>
                       </DataTrigger.Binding>
@@ -200,8 +200,8 @@
                 <TextBlock.Style>
                   <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                     <Style.Triggers>
-                      <DataTrigger Binding="{Binding HasEazyUpdate}" Value="True">
-                        <Setter Property="Text" Value="EAZY" />
+                      <DataTrigger Binding="{Binding HasLightweightUpdate}" Value="True">
+                        <Setter Property="Text" Value="簡易" />
                       </DataTrigger>
                     </Style.Triggers>
                     <Setter Property="Text" Value="UP!" />
@@ -221,7 +221,7 @@
             <app_view_controls:WebNavigator.IsEnabled>
               <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
                 <Binding Path="HasUpdate" />
-                <Binding Path="HasEazyUpdate" />
+                <Binding Path="HasLightweightUpdate" />
               </MultiBinding>
             </app_view_controls:WebNavigator.IsEnabled>
           </app_view_controls:WebNavigator>
@@ -243,7 +243,25 @@
             </TextBlock>
 
             <Button Grid.Row="1" Grid.Column="0" Command="{Binding UpdateCheckCommand}">アップデートチェック</Button>
-            <Button Grid.Row="1" Grid.Column="1" Margin="{StaticResource LeftMargin}" Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding UpdateExecuteCommand}">アップデートを行う</Button>
+
+            <Grid  Grid.Row="1" Grid.Column="1" >
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <Button Grid.Column="0" Margin="{StaticResource LeftMargin}" Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding UpdateExecuteCommand}">アップデートを行う</Button>
+              <CheckBox Grid.Column="1" IsEnabled="{Binding HasUpdate}" IsChecked="{Binding UseOldUpdateIssue518}" Margin="{StaticResource LeftMargin}" >
+                <CheckBox.ToolTip>
+                  <TextBlock>
+                    アップデートがうまくいかない場合にチェックしてください。
+                    <LineBreak />
+                    本処理は #518 で保守され、安定稼働すれば廃止されます。
+                  </TextBlock>
+                </CheckBox.ToolTip>
+                旧アップデート処理を使用
+              </CheckBox>
+            </Grid>
           </Grid>
 
         </Grid>
@@ -265,16 +283,49 @@
       </TabItem>
       <TabItem DataContext="{Binding AppDownloadManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Viewbox Style="{StaticResource BigIconBox}">
-            <Viewbox.ToolTip>
+          <Grid>
+            <Grid.ToolTip>
               <ToolTip Style="{StaticResource SelectionTabToolTip}">
                 <TextBlock Text="ダウンロード" />
               </ToolTip>
-            </Viewbox.ToolTip>
-            <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
-            </Canvas>
-          </Viewbox>
+            </Grid.ToolTip>
+            <Viewbox Style="{StaticResource BigIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label>
+              <Label.Style>
+                <Style TargetType="Label" BasedOn="{StaticResource HighlightLabel}">
+                  <Style.Triggers>
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding DownloadingCount}" Value="0" />
+                        <Condition Binding="{Binding WaitingCount}" Value="0" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Visibility" Value="Collapsed" />
+                    </MultiDataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Label.Style>
+              <Label.Content>
+                <TextBlock>
+                  <TextBlock Text="{Binding DownloadingCount}" />
+                  <TextBlock FontSize="10" FontWeight="Normal" Text="{Binding WaitingCount, StringFormat=/{0}}">
+                    <TextBlock.Style>
+                      <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding WaitingCount}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBlock.Style>
+                  </TextBlock>
+                </TextBlock>
+              </Label.Content>
+            </Label>
+          </Grid>
         </TabItem.Header>
         <app_view_controls_app:AppDownloadManager x:Name="download" />
       </TabItem>

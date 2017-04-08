@@ -70,10 +70,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return Directory.CreateDirectory(path);
         }
 
-        public static DirectoryInfo GetEazyUpdateDirectory()
+        public static DirectoryInfo GetLightweightUpdateDirectory()
         {
             var baseDir = GetSettingBaseDirectory();
-            var path = Path.Combine(baseDir, Constants.ArchiveEazyUpdateDirectoryName);
+            var path = Path.Combine(baseDir, Constants.ArchiveLightweightUpdateDirectoryName);
 
             return Directory.CreateDirectory(path);
         }

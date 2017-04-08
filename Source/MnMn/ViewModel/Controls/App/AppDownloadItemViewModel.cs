@@ -48,8 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(
-                    o => Item.ExecuteTargetCommand.TryExecute(o),
-                    o => Item.DownLoadState == Define.LoadState.Loaded
+                    o => Item.ExecuteTargetCommand.Execute(o),
+                    o => Item.DownloadState == Define.DownloadState.Completed && Item.ExecuteTargetCommand.CanExecute(o)
                 );
             }
         }
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(
                     o => StartAsync(),
-                    o => Item.DownLoadState == Define.LoadState.Failure
+                    o => Item.CanRestart && Item.DownloadState == Define.DownloadState.Failure || Item.DownloadState == Define.DownloadState.None
                 );
             }
         }
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(
                     o => CancelDownload(),
-                    o => Item.DownLoadState == Define.LoadState.Loading
+                    o => Item.DownloadState == Define.DownloadState.Downloading
                 );
             }
         }

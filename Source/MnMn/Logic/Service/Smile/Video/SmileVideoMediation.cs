@@ -29,6 +29,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     public class SmileVideoMediation: MediationCustomBase
     {
         public SmileVideoMediation(Mediation mediation, SmileVideoSettingModel setting)
-            : base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestHeadersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
+            : base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestHeadersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath, Constants.SmileVideoExpressionsPath)
         {
             Setting = setting;
 
@@ -333,6 +334,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
 
             return GetRequestMappingCore(key, replaceMap, serviceType);
+        }
+
+        public override IExpression GetExpression(string key, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileVideo) {
+                ThrowNotSupportGetExpression(key, serviceType);
+            }
+
+            return GetExpressionCore(key, serviceType);
+        }
+
+        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileVideo) {
+                ThrowNotSupportGetExpression(key, id, serviceType);
+            }
+
+            return GetExpressionCore(key, id, serviceType);
         }
 
         public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)

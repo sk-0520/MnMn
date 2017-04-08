@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var marketItem = (SmileMarketVideoRelationItemViewModel)o;
-                        ShellUtility.OpenUriInSystemBrowser(marketItem.CashRegisterUri, Mediation.Logger);
+                        ShellUtility.OpenUriInDefaultBrowser(marketItem.CashRegisterUri, Mediation.Logger);
                     }
                 );
             }
@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
                         var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
-                        ShellUtility.OpenUriInSystemBrowser(pediaUri, Mediation.Logger);
+                        ShellUtility.OpenUriInDefaultBrowser(pediaUri, Mediation.Logger);
                     },
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
@@ -588,6 +588,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 );
             }
         }
+
+        public ICommand OpenDefaultBrowserCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        ShellUtility.OpenUriInDefaultBrowser(Information.WatchUrl, Mediation.Logger);
+                    }
+                );
+            }
+        }
+
 
         #endregion
     }

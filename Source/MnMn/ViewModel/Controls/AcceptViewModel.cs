@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get
             {
                 return CreateCommand(o => {
-                    ShellUtility.OpenUriInSystemBrowser(DevelopmentUri, Mediation.Logger);
+                    ShellUtility.OpenUriInDefaultBrowser(DevelopmentUri, Mediation.Logger);
                 });
             }
         }

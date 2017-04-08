@@ -350,7 +350,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         public Task OpenVideoBrowserAsync(bool forceEconomy)
         {
-            ShellUtility.OpenUriInSystemBrowser(WatchUrl, Mediation.Logger);
+            ShellUtility.OpenUriInDefaultBrowser(WatchUrl, Mediation.Logger);
 
             return Task.CompletedTask;
         }

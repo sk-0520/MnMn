@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public abstract class MediationCustomBase: MediationBase
     {
-        protected MediationCustomBase(Mediation mediation, string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath)
-            : base(uriListPath, uriParametersPath, requestHeaderPath, requestParametersPath, requestMappingsPath)
+        protected MediationCustomBase(Mediation mediation, string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
+            : base(uriListPath, uriParametersPath, requestHeaderPath, requestParametersPath, requestMappingsPath, expressionsPath)
         {
             Mediation = mediation;
 

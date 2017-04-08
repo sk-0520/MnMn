@@ -61,5 +61,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string inputGetVideoId = "convert-get-video-id";
         public const string inputGetMyListId = "convert-get-mylist-id";
         public const string inputGetUserId = "convert-get-user-id";
+
+        public static class Id
+        {
+            public const string videoLogin_userValue = "user-value";
+            public const string videoLogin_userR18 = "user-r18";
+        }
+
     }
 }

@@ -323,7 +323,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
                 return CreateCommand(o => {
                     var rawUri = (string)o;
                     var uri = new Uri(rawUri);
-                    ShellUtility.OpenUriInSystemBrowser(uri, Mediation.Logger);
+                    ShellUtility.OpenUriInDefaultBrowser(uri, Mediation.Logger);
                 });
             }
         }

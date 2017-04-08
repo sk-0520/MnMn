@@ -80,8 +80,8 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6294.14352, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.106\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6305.25849, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.107\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Geckofx-Core">
@@ -118,7 +118,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="OxyPlot">
@@ -230,7 +230,10 @@
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
+    <Compile Include="Define\DownloadState.cs" />
+    <Compile Include="Define\DownloadUnit.cs" />
     <Compile Include="Define\Event\PointingGestureChangedEventArgs.cs" />
+    <Compile Include="Define\ExpressionItemKind.cs" />
     <Compile Include="Define\PointingGestureChangeKind.cs" />
     <Compile Include="Define\PointingGestureDirection.cs" />
     <Compile Include="Define\PointingGestureState.cs" />
@@ -302,12 +305,16 @@
     <Compile Include="IF\IDescription.cs" />
     <Compile Include="IF\IDownloadItem.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
+    <Compile Include="IF\IExpression.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
+    <Compile Include="IF\IGetExpression.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\DelegateDragAndDrop.cs" />
     <Compile Include="Logic\DescriptionBase.cs" />
+    <Compile Include="Logic\Expression.cs" />
+    <Compile Include="Logic\ExpressionLoader.cs" />
     <Compile Include="Logic\Extensions\RecyclableMemoryStreamManagerExtensions.cs" />
     <Compile Include="Logic\GlobalManager.cs" />
     <Compile Include="Logic\InformationLoader.cs" />
@@ -357,7 +364,10 @@
     <Compile Include="Model\CrashReportSessionModel.cs" />
     <Compile Include="Model\CrashReportSettingModel.cs" />
     <Compile Include="Model\DragParameterModel.cs" />
-    <Compile Include="Model\EazyUpdateModel.cs" />
+    <Compile Include="Model\LightweightUpdateModel.cs" />
+    <Compile Include="Model\ExpressionElementModel.cs" />
+    <Compile Include="Model\ExpressionItemModel.cs" />
+    <Compile Include="Model\ExpressionsModel.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />
@@ -473,6 +483,9 @@
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="Logic\DragAndDropBase.cs" />
+    <Compile Include="ViewModel\Controls\App\Update\AppUpdateDownloadItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\Update\LightweightUpdateDownloadItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\DownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\FinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\InformationViewModelBase.cs" />
@@ -626,6 +639,16 @@
     <Content Include="doc\help\image\changelog\0.53.0\444.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\define\service\smile\expressions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="etc\define\service\smile\video\expressions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\live\expressions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\define\web-navigator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>web-navigator.xml</LastGenOutput>
@@ -716,7 +739,7 @@
     <Content Include="etc\script\spaghetti\service\smile\video\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\template\eazy-update.html">
+    <Content Include="etc\template\lightweight-update.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\File\Html\UpdateState.html" />
@@ -1007,6 +1030,8 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Content Include="Resources\File\JavaScript\GeckoFx\AcceptLink.js" />
+    <Resource Include="Resources\MnMn-Update_App.png" />
+    <Resource Include="Resources\MnMn-Update_Lightweight.png" />
     <Resource Include="Resources\MnMn-Header.png" />
     <Resource Include="Resources\Service\Smile\Service-Header.png" />
     <Resource Include="Resources\MnMn.png" />
@@ -1028,10 +1053,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </None>
-    <Page Include="Resources\File\Xaml\SmallImage.xaml">
+    <None Include="Resources\File\Xaml\SmallImage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </None>
     <Page Include="View\Controls\App\AppDownloadManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

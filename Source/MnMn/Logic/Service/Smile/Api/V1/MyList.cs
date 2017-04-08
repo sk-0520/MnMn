@@ -260,24 +260,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 };
                 htmlDocument.LoadHtml(htmlSource);
 
-                var regToken = new Regex(
-                    @"
-                    NicoAPI
-                    \s*
-                    \.
-                    \s*
-                    token
-                    \s*
-                    =
-                    \s*
-                    (\""|')
-                    (?<TOKEN>
-                        (.+)
-                    )
-                    (\""|')
-                    ",
-                    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-                );
+                //var regToken = new Regex(
+                //    @"
+                //    NicoAPI
+                //    \s*
+                //    \.
+                //    \s*
+                //    token
+                //    \s*
+                //    =
+                //    \s*
+                //    (\""|')
+                //    (?<TOKEN>
+                //        (.+)
+                //    )
+                //    (\""|')
+                //    ",
+                //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+                //);
+
+                var mylistGroupToken = Mediation.GetExpression(SmileMediationKey.mylistGroupToken, ServiceType.Smile);
+                var regToken = mylistGroupToken.Regex;
+
+                var tokenElement2 = htmlDocument.DocumentNode.Descendants()
+                    .Where(n => n.Name == "script")
+                    .Select(e => e.InnerText)
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .ToArray()
+                    //.FirstOrDefault(s => regToken.IsMatch(s))
+                ;
 
                 var tokenElement = htmlDocument.DocumentNode.Descendants()
                     .Where(n => n.Name == "script")

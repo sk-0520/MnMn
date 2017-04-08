@@ -46,7 +46,6 @@
 				</condition>
 				<condition visible="false">
 					<base />
-					<base>//www\.nicovideo\.jp</base>
 					<targets>
 						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;VIDEO_ID&gt;(sm|nm|so)?\d+)" />
 					</targets>

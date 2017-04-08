@@ -68,8 +68,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static async Task<BitmapSource> LoadBitmapBinaryAsync(HttpClient client, Uri loadUri, int maxCount, TimeSpan waitTime, ILogger logger)
         {
             var count = 0;
-            
-            logger.Trace($"{nameof(loadUri)}({loadUri}), start");
+
+            //logger.Trace($"{nameof(loadUri)}({loadUri}), start");
             do {
                 try {
                     Stream stream = null;
@@ -82,13 +82,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                         }
 
                         stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag();
-                        responseStream.CopyTo(stream);
+                        await responseStream.CopyToAsync(stream);
                     }
 
                     if(stream != null) {
                         using(stream) {
                             stream.Position = 0;
-                            logger.Trace($"{nameof(loadUri)}({loadUri}), length: {stream.Length}");
+                            //logger.Trace($"{nameof(loadUri)}({loadUri}), length: {stream.Length}");
                             return GetBitmapSource(stream);
                         }
                     }

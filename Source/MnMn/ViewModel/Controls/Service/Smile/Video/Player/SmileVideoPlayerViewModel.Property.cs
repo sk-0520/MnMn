@@ -185,6 +185,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._topmost, value); }
         }
 
+        public WindowState State
+        {
+            get { return this._state; }
+            set { SetVariableValue(ref this._state, value); }
+        }
+
+        /// <summary>
+        /// フルスクリーン実施前のウィンドウ状態。
+        /// </summary>
+        public WindowState PrevFullScreenState { get; set; }
+
         #endregion
 
         public double ViewScale

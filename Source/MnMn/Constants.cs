@@ -138,6 +138,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static Version AcceptVersion { get; } = new Version(0, 56, 1, 0);
 
+        public static DateTime LightweightUpdateNone { get; } = DateTime.MinValue;
+
         public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";
 
         #region tag
@@ -218,6 +220,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 更新プログラムファイルパス。
         /// </summary>
         public static string UpdaterExecuteFilePath { get { return Path.Combine(SbinDirectoryPath, "Updater", "Updater.exe"); } }
+        /// <summary>
+        /// 更新アーカイブ展開プログラムファイルパス。
+        /// </summary>
+        public static string ExtractorExecuteFilePath { get { return Path.Combine(SbinDirectoryPath, "Extractor", "Extractor.exe"); } }
 
         /// <summary>
         /// etc/
@@ -287,9 +293,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
         public static string ArchiveWebNavigatorGeckFxPluginDirectoryName { get; } = "archive-plugin";
-        public static string ArchiveEazyUpdateDirectoryName { get; } = "archive-eazy_update";
-        public static TimeSpan ArchiveEazyUpdateTimeout => TimeSpan.FromMinutes(10);
-        public static TimeSpan ArchiveEazyUpdateWaitTime => TimeSpan.FromSeconds(1);
+        public static string ArchiveLightweightUpdateDirectoryName { get; } = "archive-lightweight_update";
+        public static TimeSpan ArchiveLightweightUpdateTimeout => TimeSpan.FromMinutes(10);
+        public static TimeSpan ArchiveLightweightUpdateWaitTime => TimeSpan.FromSeconds(1);
         /// <summary>
         /// バックアップディレクトリ名。
         /// </summary>
@@ -334,7 +340,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string FfmpegApplicationPath { get; } = Path.Combine(BinaryDirectoryPath, "ffmpeg", "ffmpeg.exe");
 
         public static string ApplicationTemplateDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, "template");
-        public static string ApplicationEazyUpdateHtmlTemplatePath { get; } = Path.Combine(ApplicationTemplateDirectoryPath, "eazy-update.html");
+        public static string ApplicationLightweightUpdateHtmlTemplatePath { get; } = Path.Combine(ApplicationTemplateDirectoryPath, "lightweight-update.html");
 
         public static string DefineName { get; } = "define";
 
@@ -365,6 +371,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileRequestHeadersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-headers.xml");
         public static string SmileRequestParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-params.xml");
         public static string SmileRequestMappingsListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
+        public static string SmileExpressionsPath { get; } = Path.Combine(DefineSmileDirectoryPath, "expressions.xml");
         public static string SmileUserInformationPath { get; } = Path.Combine(DefineSmileDirectoryPath, "user.xml");
 
         public static string DefineSmileVideoDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
@@ -375,6 +382,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoRequestHeadersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-headers.xml");
         public static string SmileVideoRequestParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
         public static string SmileVideoRequestMappingsListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
+        public static string SmileVideoExpressionsPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "expressions.xml");
 
         public static string SmileVideoFinderItemName { get; } = "abc";
 
@@ -394,6 +402,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileLiveRequestHeadersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-headers.xml");
         public static string SmileLiveRequestParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-params.xml");
         public static string SmileLiveRequestMappingsListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-mappings.xml");
+        public static string SmileLiveExpressionsPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "expressions.xml");
 
         public static string SmileLiveCategoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "category.xml");
         //public static string SmileLivePlayerDirectoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "player");

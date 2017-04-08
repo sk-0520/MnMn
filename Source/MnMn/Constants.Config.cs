@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriWebNavigatorGeckoFxPlugins => ReplaceAppConfig(appConfig.Get("app-uri-web_navigator-plugins"));
         public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
         public static Uri AppUriGeneralBrowserHome => new Uri(appConfig.Get("app-uri-general-browser"));
-        public static Uri AppUriEazyUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-eazy-update")));
+        public static Uri AppUriLightweightUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-lightweight-update")));
 
         public static TimeSpan AppSplashCloseTime => appConfig.Get("app-splash-close-time", TimeSpan.Parse);
         public static bool AppUnhandledExceptionHandled => appConfig.Get("app-un_handled-exception-handled", bool.Parse);
@@ -81,6 +81,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static IReadOnlyRange<double> ViewScaleRange => appConfig.Get("view-scale-range", RangeModel.Parse<double>);
         public static IReadOnlyRange<double> ViewScaleChangeRange => appConfig.Get("view-scale-change-range", RangeModel.Parse<double>);
         public static double[] ViewScaleList => appConfig.Get("view-scale-list", s => s.Split(';').Select(i => double.Parse(i)).ToArray());
+
+        public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
         /// <summary>
         /// 設定ファイルの自動保存タイミング。

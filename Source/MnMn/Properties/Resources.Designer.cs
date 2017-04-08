@@ -202,12 +202,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         ///  x:Name=&quot;dummy&quot;
         ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
-        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
-        ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
         ///&gt;
         ///  &lt;Image
         ///    Style=&quot;{StaticResource SmallIconImage}&quot;
-        ///    Source=&quot;{Binding ${image}}}&quot;
+        ///    Source=&quot;{Binding ${image}}&quot;
         ///  /&gt;
         ///&lt;/UserControl&gt;
         /// に類似しているローカライズされた文字列を検索します。
@@ -314,6 +312,60 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_Define_CheckedProcessType_SequencePlay {
             get {
                 return ResourceManager.GetString("String_App_Define_CheckedProcessType_SequencePlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Completed {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ダウンロード中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Downloading {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Downloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Failure {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未処理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_None {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   準備中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Preparation {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Preparation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   待機中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Waiting {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Waiting", resourceCulture);
             }
         }
         
@@ -989,6 +1041,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_IDescription_MenuOpenUriInAppBrowser {
             get {
                 return ResourceManager.GetString("String_App_IDescription_MenuOpenUriInAppBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   簡易アップデート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_LightweightUpdate {
+            get {
+                return ResourceManager.GetString("String_App_LightweightUpdate", resourceCulture);
             }
         }
         

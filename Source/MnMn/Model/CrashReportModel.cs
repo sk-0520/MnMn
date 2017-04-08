@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     {
         CrashReportModel()
         {
-            Environments.Text = new AppInformationCollection().ToString();
+            Environments.Text = new AppInformationCollection(null).ToString();
         }
 
         public CrashReportModel(Exception ex, bool callerUiThread)

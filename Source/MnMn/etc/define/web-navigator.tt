@@ -59,7 +59,6 @@
 				</condition>
 				<condition visible="false">
 					<base />
-					<base><#= smileVideoIdOfficialBaseUrlPattern #></base>
 					<targets>
 						<target attribute="href" value="<#= smileVideoIdInPublicPattern #>" />
 					</targets>

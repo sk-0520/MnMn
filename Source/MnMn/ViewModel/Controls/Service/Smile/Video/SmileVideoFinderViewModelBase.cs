@@ -41,6 +41,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
@@ -52,7 +53,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public abstract class SmileVideoFinderViewModelBase: TFinderViewModelBase<SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
+    public abstract class SmileVideoFinderViewModelBase : TFinderViewModelBase<SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
     {
         #region variable
 
@@ -63,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         SmileVideoSortType _selectedSortType;
         bool _showContinuousPlaybackMenu;
+
+        bool _showDownloadMenu;
 
         #endregion
 
@@ -135,6 +138,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public virtual bool IsEnabledCheckItLaterMenu { get; } = true;
         /// <summary>
+        /// ダウンローダーへ設定可能か
+        /// </summary>
+        public virtual bool IsEnabledDownloadMenu => IsEnabledCheckItLaterMenu;
+        /// <summary>
         /// 「未整理のブックマーク」メニューを有効にするか。
         /// </summary>
         public virtual bool IsEnabledUnorganizedBookmarkMenu { get; } = true;
@@ -170,6 +177,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(result.UserNodes);
                 return bookmarkItems;
             }
+        }
+
+        public bool ShowDownloadMenu
+        {
+            get { return this._showDownloadMenu; }
+            set { SetVariableValue(ref this._showDownloadMenu, value); }
         }
 
         #endregion
@@ -229,9 +242,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand AddDownloadManagerCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddDownloadManager(SelectedFinderItem),
+                    o => IsEnabledDownloadMenu && SelectedFinderItem != null && SmileVideoInformationUtility.CheckCanPlay(SelectedFinderItem.Information, Mediation.Logger)
+                );
+            }
+        }
+
         public ICommand CopyCustomInformationCommand
         {
-            get {
+            get
+            {
                 return CreateCommand(
                     o => CopyCustomInformation(SelectedFinderItem.Information),
                     o => SelectedFinderItem != null && !string.IsNullOrWhiteSpace(Setting.Common.CustomCopyFormat)
@@ -263,7 +288,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public ICommand AddBookmarkCheckedItemCommand
         {
-            get {
+            get
+            {
                 return CreateCommand(
                     o => AddBookmarkCheckedItem((SmileVideoBookmarkNodeViewModel)o)
                 );
@@ -424,6 +450,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(item)));
         }
 
+        void AddDownloadManager(SmileVideoFinderItemViewModel finderItem)
+        {
+            var information = finderItem.Information;
+            if(!SmileVideoInformationUtility.CheckCanPlay(information, Mediation.Logger)) {
+                return;
+            }
+            // あとで見る用キャッシュなのであとで見るに追加するが、「追加可能であれば」という条件付き
+            if(IsEnabledCheckItLaterMenu) {
+                AddCheckItLater(finderItem);
+            }
+            var download = new SmileVideoDownloadViewModel(Mediation) {
+                Information = information,
+                DownloadState = DownloadState.Waiting,
+            };
+            Mediation.Order(new DownloadOrderModel(download, false, ServiceType.SmileVideo));
+        }
+
+
         protected virtual bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
         {
             return false;
@@ -470,7 +514,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        #region ViewModelBase
+        #region TFinderViewModelBase
+
+        public override bool IsOpenContextMenu
+        {
+            get { return base.IsOpenContextMenu; }
+            set {
+                if(value) {
+                    ShowDownloadMenu = AppUtility.MoreOptionsShowable;
+                }
+
+                base.IsOpenContextMenu = value;
+            }
+        }
 
         public override CacheSpan DefaultInformationCacheSpan => Constants.ServiceSmileVideoThumbCacheSpan;
         public override CacheSpan DefaultImageCacheSpan => Constants.ServiceSmileVideoImageCacheSpan;
