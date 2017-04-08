@@ -136,6 +136,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public virtual bool IsEnabledCheckItLaterMenu { get; } = true;
         /// <summary>
+        /// ダウンローダーへ設定可能か
+        /// </summary>
+        public virtual bool IsEnabledDownloadMenu => IsEnabledCheckItLaterMenu;
+        /// <summary>
         /// 「未整理のブックマーク」メニューを有効にするか。
         /// </summary>
         public virtual bool IsEnabledUnorganizedBookmarkMenu { get; } = true;
@@ -236,7 +240,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => AddDownloadManager(SelectedFinderItem),
-                    o => SelectedFinderItem != null && SmileVideoInformationUtility.CheckCanPlay(SelectedFinderItem.Information, Mediation.Logger)
+                    o => IsEnabledDownloadMenu && SelectedFinderItem != null && SmileVideoInformationUtility.CheckCanPlay(SelectedFinderItem.Information, Mediation.Logger)
                 );
             }
         }

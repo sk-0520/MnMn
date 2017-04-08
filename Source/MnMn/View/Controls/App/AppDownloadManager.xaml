@@ -129,7 +129,7 @@
                             <Setter Property="Text" Value="---" />
                           </DataTrigger>
                           <DataTrigger Binding="{Binding Item.DownloadState}" Value="Waiting">
-                            <Setter Property="Text" Value="---" />
+                            <Setter Property="Text" Value="***" />
                           </DataTrigger>
                         </Style.Triggers>
 
@@ -170,7 +170,7 @@
                             <Setter Property="Text" Value="---" />
                           </DataTrigger>
                           <DataTrigger Binding="{Binding Item.DownloadState}" Value="Waiting">
-                            <Setter Property="Text" Value="---" />
+                            <Setter Property="Text" Value="***" />
                           </DataTrigger>
 
                         </Style.Triggers>
