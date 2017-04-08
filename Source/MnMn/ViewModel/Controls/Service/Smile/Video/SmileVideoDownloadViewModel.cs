@@ -168,7 +168,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._videoLoadState, value); }
         }
 
-
         public CacheState CacheState
         {
             get { return this._cacheState; }
@@ -829,7 +828,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public DownloadState DownloadState
         {
             get { return this._downloadState; }
-            private set { SetVariableValue(ref this._downloadState, value); }
+            internal set { SetVariableValue(ref this._downloadState, value); }
         }
 
 

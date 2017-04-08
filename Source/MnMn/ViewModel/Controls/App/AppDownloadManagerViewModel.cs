@@ -14,11 +14,12 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
-    public class AppDownloadManagerViewModel: ManagerViewModelBase
+    public class AppDownloadManagerViewModel : ManagerViewModelBase
     {
         #region variable
 
         int _downloadingCount;
+        int _waitingCount;
 
         #endregion
 
@@ -40,6 +41,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             private set { SetVariableValue(ref this._downloadingCount, value); }
         }
 
+        public int WaitingCount
+        {
+            get { return this._waitingCount; }
+            private set { SetVariableValue(ref this._waitingCount, value); }
+        }
+
         #endregion
 
         #region function
@@ -52,14 +59,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             if(startDownload) {
                 downloadItem.StartAsync();
+            } else if(downloadItem.Item.DownloadState == DownloadState.Waiting) {
+                StartWaitingItem();
+                RefreshDownloadingCount();
+            }
+        }
+
+        void StartWaitingItem()
+        {
+            var serviceGroups = DownloadStateItems
+                .GroupBy(i => i.ServiceType)
+            ;
+
+            foreach(var serviceGroup in serviceGroups) {
+                // 同一サービスでダウンロード中のものがあったら無視
+                if(serviceGroup.Any(i => i.Item.DownloadState == DownloadState.Downloading)) {
+                    continue;
+                }
+                // 待機中アイテムのダウンロード開始(ダウンローダーに積まれた順序)
+                var waitItem = serviceGroup.LastOrDefault(i => i.Item.DownloadState == DownloadState.Waiting);
+                if(waitItem != null) {
+                    waitItem.StartAsync();
+                }
             }
         }
 
         void RefreshDownloadingCount()
         {
             DownloadingCount = DownloadStateItems.Count(i => i.Item.DownloadState == DownloadState.Downloading);
+            WaitingCount = DownloadStateItems.Count(i => i.Item.DownloadState == DownloadState.Waiting);
         }
-
         #endregion
 
         #region ManagerViewModelBase
@@ -108,7 +137,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         private void DownloadItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(IDownloadItem.DownloadState)) {
+                var prevCount = DownloadingCount;
                 RefreshDownloadingCount();
+
+                if(prevCount != DownloadingCount) {
+                    StartWaitingItem();
+                }
 
                 var downloadItem = (IDownloadItem)sender;
                 if(downloadItem.DownloadState == DownloadState.Completed) {

@@ -294,16 +294,26 @@
                 <Path Data="{StaticResource Image_Download}" Style="{StaticResource BigDefaultIconPath}" />
               </Canvas>
             </Viewbox>
-            <Label Content="{Binding DownloadingCount}">
+            <Label>
               <Label.Style>
                 <Style TargetType="Label" BasedOn="{StaticResource HighlightLabel}">
                   <Style.Triggers>
-                    <DataTrigger Binding="{Binding DownloadingCount}" Value="0">
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding DownloadingCount}" Value="0" />
+                        <Condition Binding="{Binding WaitingCount}" Value="0" />
+                      </MultiDataTrigger.Conditions>
                       <Setter Property="Visibility" Value="Collapsed" />
-                    </DataTrigger>
+                    </MultiDataTrigger>
                   </Style.Triggers>
                 </Style>
               </Label.Style>
+              <Label.Content>
+                <StackPanel>
+                  <TextBlock Text="{Binding DownloadingCount}" />
+                  <TextBlock Text="{Binding WaitingCount}" />
+                </StackPanel>
+              </Label.Content>
             </Label>
           </Grid>
         </TabItem.Header>

@@ -53,7 +53,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public abstract class SmileVideoFinderViewModelBase: TFinderViewModelBase<SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
+    public abstract class SmileVideoFinderViewModelBase : TFinderViewModelBase<SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
     {
         #region variable
 
@@ -236,14 +236,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => AddDownloadManager(SelectedFinderItem),
-                    o => IsEnabledUnorganizedBookmarkMenu && SelectedFinderItem != null
+                    o => SelectedFinderItem != null && SmileVideoInformationUtility.CheckCanPlay(SelectedFinderItem.Information, Mediation.Logger)
                 );
             }
         }
 
         public ICommand CopyCustomInformationCommand
         {
-            get {
+            get
+            {
                 return CreateCommand(
                     o => CopyCustomInformation(SelectedFinderItem.Information),
                     o => SelectedFinderItem != null && !string.IsNullOrWhiteSpace(Setting.Common.CustomCopyFormat)
@@ -275,7 +276,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public ICommand AddBookmarkCheckedItemCommand
         {
-            get {
+            get
+            {
                 return CreateCommand(
                     o => AddBookmarkCheckedItem((SmileVideoBookmarkNodeViewModel)o)
                 );
@@ -443,10 +445,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return;
             }
 
-            var download = new SmileVideoDownloadViewModel(Mediation);
-            download.Information = information;
-            Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
-            download.StartAsync();
+            var download = new SmileVideoDownloadViewModel(Mediation) {
+                Information = information,
+                DownloadState = DownloadState.Waiting,
+            };
+            Mediation.Order(new DownloadOrderModel(download, false, ServiceType.SmileVideo));
         }
 
 
