@@ -65,6 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoSortType _selectedSortType;
         bool _showContinuousPlaybackMenu;
 
+        bool _showDownloadMenu;
+
         #endregion
 
         public SmileVideoFinderViewModelBase(Mediation mediation, int baseNumber)
@@ -175,6 +177,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(result.UserNodes);
                 return bookmarkItems;
             }
+        }
+
+        public bool ShowDownloadMenu
+        {
+            get { return this._showDownloadMenu; }
+            set { SetVariableValue(ref this._showDownloadMenu, value); }
         }
 
         #endregion
@@ -506,7 +514,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        #region ViewModelBase
+        #region TFinderViewModelBase
+
+        public override bool IsOpenContextMenu
+        {
+            get { return base.IsOpenContextMenu; }
+            set {
+                if(value) {
+                    ShowDownloadMenu = AppUtility.MoreOptionsShowable;
+                }
+
+                base.IsOpenContextMenu = value;
+            }
+        }
 
         public override CacheSpan DefaultInformationCacheSpan => Constants.ServiceSmileVideoThumbCacheSpan;
         public override CacheSpan DefaultImageCacheSpan => Constants.ServiceSmileVideoImageCacheSpan;

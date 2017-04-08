@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         string _inputTitleFilter;
         bool _isBlacklist;
 
+        bool _isOpenContextMenu;
+
         #endregion
 
         public FinderViewModelBase(Mediation mediation, int baseNumber)
@@ -161,6 +163,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public virtual bool IsOpenContextMenu
+        {
+            get { return this._isOpenContextMenu; }
+            set { SetVariableValue(ref this._isOpenContextMenu, value); }
+        }
 
         #endregion
 
