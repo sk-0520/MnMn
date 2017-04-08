@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -32,6 +33,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
@@ -54,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     /// <summary>
     /// 指定動画ダウンロード。
     /// </summary>
-    public class SmileVideoDownloadViewModel: ViewModelBase
+    public class SmileVideoDownloadViewModel : ViewModelBase, IDownloadItem
     {
         #region define
 
@@ -788,6 +790,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region IDownloadItem
+
+        Uri IDownloadItem.DownloadUri => DownloadUri;
+
+        public DownloadState DownloadState => throw new NotImplementedException();
+
+        public DownloadUnit DownloadUnit { get; } = DownloadUnit.Size;
+
+        public bool EnabledTotalSize => true;
+
+        public long DownloadTotalSize => VideoTotalSize;
+
+        public long DownloadedSize => VideoLoadedSize;
+
+        public IProgress<double> DownloadingProgress { get; set; }
+
+        public ImageSource Image => Information.ThumbnailImage;
+
+        public bool CanRestart => true;
+
+        public ICommand OpenDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(Information.CacheDirectory.Exists) {
+                        ShellUtility.OpenDirectory(Information.CacheDirectory, Mediation.Logger);
+                    }
+                });
+            }
+        }
+
+        public ICommand ExecuteTargetCommand => CreateCommand(o => { /* 暫定 */ }, o => true);
+
+        public ICommand AutoExecuteTargetCommand => CreateCommand(o => { }, o => false);
+
+        public Task StartAsync()
+        {
+            var forceEconomy = false;
+
+            return LoadAsync(Information, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
+
+
+        public void Cancel()
+        {
         }
 
         #endregion
