@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         #region variable
 
         Uri _downloadUri;
-        LoadState _downLoadState;
+        DownloadState _downLoadState;
 
         long _downloadedSize;
 
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             private set { SetVariableValue(ref this._downloadUri, value); }
         }
 
-        public LoadState DownloadState
+        public DownloadState DownloadState
         {
             get { return this._downLoadState; }
             private set { SetVariableValue(ref this._downLoadState, value); }
@@ -139,11 +139,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         public ICommand ExecuteTargetCommand => CreateCommand(o => { }, o => false);
 
-        public ICommand AutoExecuteTargetCommand => CreateCommand(o => ExpandArchive(), o => DownloadState == LoadState.Loaded);
+        public ICommand AutoExecuteTargetCommand => CreateCommand(o => ExpandArchive(), o => DownloadState == DownloadState.Completed);
 
         public async Task StartAsync()
         {
-            DownloadState = LoadState.Preparation;
+            DownloadState = DownloadState.Preparation;
 
             Cancellation = new CancellationTokenSource();
             DownloadedSize = 0;
@@ -154,11 +154,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             using(var userAgent = host.CreateHttpUserAgent()) {
                 userAgent.Timeout = Constants.ArchiveLightweightUpdateTimeout;
                 using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
-                    DownloadState = LoadState.Loading;
+                    DownloadState = DownloadState.Downloading;
 
                     foreach(var tartget in Model.Targets) {
                         if(Cancellation.IsCancellationRequested) {
-                            DownloadState = LoadState.Failure;
+                            DownloadState = DownloadState.Failure;
                             return;
                         }
                         DownloadUri = new Uri(tartget.Key);
@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                                 DownloadingProgress?.Report(DownloadedSize / (double)DownloadTotalSize);
                             } else {
                                 Mediation.Logger.Error(response.ToString());
-                                DownloadState = LoadState.Failure;
+                                DownloadState = DownloadState.Failure;
                                 return;
                             }
                         }
@@ -185,7 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             }
 
             DownloadingProgress?.Report(1);
-            DownloadState = LoadState.Loaded;
+            DownloadState = DownloadState.Completed;
             SetDisplayText(null);
         }
 
