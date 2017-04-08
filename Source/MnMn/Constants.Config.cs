@@ -82,6 +82,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static IReadOnlyRange<double> ViewScaleChangeRange => appConfig.Get("view-scale-change-range", RangeModel.Parse<double>);
         public static double[] ViewScaleList => appConfig.Get("view-scale-list", s => s.Split(';').Select(i => double.Parse(i)).ToArray());
 
+        public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
+
         /// <summary>
         /// 設定ファイルの自動保存タイミング。
         /// </summary>

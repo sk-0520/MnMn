@@ -26,14 +26,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 {
     public class LightweightUpdateDownloadItemViewModel : ViewModelBase, IDownloadItem
     {
+        #region define
+
+        static object uniqueItemObject = new object();
+
+        #endregion
+
         #region variable
 
         Uri _downloadUri;
-        LoadState _downLoadState;
+        DownloadState _downLoadState;
 
         long _downloadedSize;
 
-        string _displayText;
+        string _downloadTitle;
 
         #endregion
 
@@ -79,14 +85,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
 
-        void SetDisplayText(string expandPath)
+        void SetDownloadTitle(string expandPath)
         {
             if(string.IsNullOrEmpty(expandPath)) {
-                this._displayText = Properties.Resources.String_App_LightweightUpdate;
+                DownloadTitle = Properties.Resources.String_App_LightweightUpdate;
             } else {
-                this._displayText = $"{Properties.Resources.String_App_LightweightUpdate}: {expandPath}";
+                DownloadTitle = $"{Properties.Resources.String_App_LightweightUpdate}: {expandPath}";
             }
-            CallOnPropertyChange(nameof(DisplayText));
         }
 
 
@@ -100,7 +105,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             private set { SetVariableValue(ref this._downloadUri, value); }
         }
 
-        public LoadState DownloadState
+        public string DownloadTitle
+        {
+            get { return this._downloadTitle; }
+            set { SetVariableValue(ref this._downloadTitle, value); }
+        }
+
+        public DownloadState DownloadState
         {
             get { return this._downLoadState; }
             private set { SetVariableValue(ref this._downLoadState, value); }
@@ -119,6 +130,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         }
 
         public bool CanRestart => false;
+
+        public object DownloadUniqueItem { get; } = uniqueItemObject;
 
         public IProgress<double> DownloadingProgress { get; set; }
 
@@ -139,31 +152,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         public ICommand ExecuteTargetCommand => CreateCommand(o => { }, o => false);
 
-        public ICommand AutoExecuteTargetCommand => CreateCommand(o => ExpandArchive(), o => DownloadState == LoadState.Loaded);
+        public ICommand AutoExecuteTargetCommand => CreateCommand(o => ExpandArchive(), o => DownloadState == DownloadState.Completed);
 
         public async Task StartAsync()
         {
-            DownloadState = LoadState.Preparation;
+            DownloadState = DownloadState.Preparation;
 
             Cancellation = new CancellationTokenSource();
             DownloadedSize = 0;
             DownloadingProgress?.Report(0);
-            SetDisplayText(null);
+            SetDownloadTitle(null);
 
             using(var host = new HttpUserAgentHost())
             using(var userAgent = host.CreateHttpUserAgent()) {
                 userAgent.Timeout = Constants.ArchiveLightweightUpdateTimeout;
                 using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
-                    DownloadState = LoadState.Loading;
+                    DownloadState = DownloadState.Downloading;
 
                     foreach(var tartget in Model.Targets) {
                         if(Cancellation.IsCancellationRequested) {
-                            DownloadState = LoadState.Failure;
+                            DownloadState = DownloadState.Failure;
                             return;
                         }
                         DownloadUri = new Uri(tartget.Key);
                         var expand = tartget.Extends["expand"];
-                        SetDisplayText(expand);
+                        SetDownloadTitle(expand);
                         var entry = archiveStream.CreateEntry(expand);
                         using(var entryStream = entry.Open()) {
                             Mediation.Logger.Debug(DownloadUri.ToString());
@@ -175,7 +188,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                                 DownloadingProgress?.Report(DownloadedSize / (double)DownloadTotalSize);
                             } else {
                                 Mediation.Logger.Error(response.ToString());
-                                DownloadState = LoadState.Failure;
+                                DownloadState = DownloadState.Failure;
                                 return;
                             }
                         }
@@ -185,20 +198,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             }
 
             DownloadingProgress?.Report(1);
-            DownloadState = LoadState.Loaded;
-            SetDisplayText(null);
+            DownloadState = DownloadState.Completed;
+            SetDownloadTitle(null);
         }
 
         public void Cancel()
         {
             Cancellation.Cancel();
         }
-
-        #endregion
-
-        #region ViewModelBase
-
-        public override string DisplayText => this._displayText;
 
         #endregion
     }

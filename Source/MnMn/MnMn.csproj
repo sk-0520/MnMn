@@ -230,6 +230,7 @@
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
+    <Compile Include="Define\DownloadState.cs" />
     <Compile Include="Define\DownloadUnit.cs" />
     <Compile Include="Define\Event\PointingGestureChangedEventArgs.cs" />
     <Compile Include="Define\ExpressionItemKind.cs" />

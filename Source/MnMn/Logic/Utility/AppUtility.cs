@@ -25,6 +25,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -39,6 +40,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
     public static class AppUtility
     {
+        #region property
+
+        /// <summary>
+        /// 代替コマンドを含むメニュー表示可能か。
+        /// <para>shift押されてる場合に拡張メニュー表示するときに使用する。</para>
+        /// </summary>
+        public static bool MoreOptionsShowable
+        {
+            get
+            {
+                // 他のキーが押されてても Shift が押されてたら拡張OKとする
+                return Constants.ForceMoreOptionsShow || Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+            }
+        }
+
+        #endregion
+
         #region function
 
         public static string ReplaceString(string s, IDictionary<string, string> map)

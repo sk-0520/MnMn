@@ -16,16 +16,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
     /// <summary>
     /// ダウンロード情報表示データ。
     /// </summary>
-    public interface IDownloadItem: INotifyPropertyChanged, IDisplayText
+    public interface IDownloadItem: INotifyPropertyChanged
     {
         #region property
+
+        string DownloadTitle { get; }
 
         Uri DownloadUri { get; }
 
         /// <summary>
         /// ダウンロード状態。
         /// </summary>
-        LoadState DownloadState { get; }
+        DownloadState DownloadState { get; }
 
         /// <summary>
         /// ダウンロード単位。
@@ -67,6 +69,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// <para>基本的にはアップデート処理以外は可能だと思いたい。</para>
         /// </summary>
         bool CanRestart { get; }
+
+        /// <summary>
+        /// 同一アイテム判定用オブジェクト。
+        /// </summary>
+        object DownloadUniqueItem { get; }
 
         #endregion
 

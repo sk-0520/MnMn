@@ -14,11 +14,12 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
-    public class AppDownloadManagerViewModel: ManagerViewModelBase
+    public class AppDownloadManagerViewModel : ManagerViewModelBase
     {
         #region variable
 
         int _downloadingCount;
+        int _waitingCount;
 
         #endregion
 
@@ -40,26 +41,77 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             private set { SetVariableValue(ref this._downloadingCount, value); }
         }
 
+        public int WaitingCount
+        {
+            get { return this._waitingCount; }
+            private set { SetVariableValue(ref this._waitingCount, value); }
+        }
+
         #endregion
 
         #region function
 
         internal void AddDownloadItem(AppDownloadItemViewModel downloadItem, bool startDownload)
         {
+            var stockedItem = DownloadStateItems.FirstOrDefault(i => i.Item.DownloadUniqueItem == downloadItem.Item.DownloadUniqueItem);
+            if(stockedItem != null) {
+                Mediation.Logger.Warning($"stocked: {downloadItem.Item.DownloadUniqueItem}");
+                switch(stockedItem.Item.DownloadState) {
+                    case DownloadState.None:
+                    case DownloadState.Completed:
+                    case DownloadState.Failure:
+                        DownloadStateItems.Remove(stockedItem);
+                        Mediation.Logger.Information($"reset download item");
+                        break;
+
+                    case DownloadState.Waiting:
+                    case DownloadState.Preparation:
+                    case DownloadState.Downloading:
+                        Mediation.Logger.Trace($"ignore download item");
+                        return;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
             DownloadStateItems.Insert(0, downloadItem);
 
             DownloadItemPropertyChangedListener.Add(downloadItem.Item);
 
             if(startDownload) {
                 downloadItem.StartAsync();
+            } else if(downloadItem.Item.DownloadState == DownloadState.Waiting) {
+                StartIfDownloadableWaitingItem();
+            }
+
+            RefreshDownloadingCount();
+        }
+
+        void StartIfDownloadableWaitingItem()
+        {
+            var serviceGroups = DownloadStateItems
+                .GroupBy(i => i.ServiceType)
+            ;
+
+            foreach(var serviceGroup in serviceGroups) {
+                // 同一サービスでダウンロード中のものがあったら無視
+                if(serviceGroup.Any(i => i.Item.DownloadState == DownloadState.Downloading)) {
+                    continue;
+                }
+                // 待機中アイテムのダウンロード開始(ダウンローダーに積まれた順序)
+                var waitItem = serviceGroup.LastOrDefault(i => i.Item.DownloadState == DownloadState.Waiting);
+                if(waitItem != null) {
+                    waitItem.StartAsync();
+                }
             }
         }
 
         void RefreshDownloadingCount()
         {
-            DownloadingCount = DownloadStateItems.Count(i => i.Item.DownloadState == LoadState.Loading);
+            DownloadingCount = DownloadStateItems.Count(i => i.Item.DownloadState == DownloadState.Downloading);
+            WaitingCount = DownloadStateItems.Count(i => i.Item.DownloadState == DownloadState.Waiting);
         }
-
         #endregion
 
         #region ManagerViewModelBase
@@ -78,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             foreach(var download in DownloadStateItems) {
                 // 列挙中に終わるかもしんないから逐次実行。
-                if(download.Item.DownloadState == LoadState.Loading || download.Item.DownloadState == LoadState.Preparation) {
+                if(download.Item.DownloadState == DownloadState.Downloading || download.Item.DownloadState == DownloadState.Preparation) {
                     download.CancelDownload();
                 }
             }
@@ -108,10 +160,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         private void DownloadItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(IDownloadItem.DownloadState)) {
+                //var prevCount = DownloadingCount;
                 RefreshDownloadingCount();
+                StartIfDownloadableWaitingItem();
 
                 var downloadItem = (IDownloadItem)sender;
-                if(downloadItem.DownloadState == LoadState.Loaded) {
+                if(downloadItem.DownloadState == DownloadState.Completed) {
                     downloadItem.AutoExecuteTargetCommand.TryExecute(null);
                 }
             }

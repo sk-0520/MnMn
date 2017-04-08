@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -32,6 +33,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
@@ -54,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     /// <summary>
     /// 指定動画ダウンロード。
     /// </summary>
-    public class SmileVideoDownloadViewModel: ViewModelBase
+    public class SmileVideoDownloadViewModel : ViewModelBase, IDownloadItem
     {
         #region define
 
@@ -79,6 +81,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isEconomyMode;
 
         //bool _isProcessCancel;
+        Uri _downloadUri;
+        DownloadState _downloadState;
 
         #endregion
 
@@ -112,7 +116,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         AutoResetEvent DmcPollingWait { get; set; }
         CancellationTokenSource DmcPollingCancel { get; set; }
 
-        protected Uri DownloadUri { get; private set; }
+        public Uri DownloadUri
+        {
+            get { return this._downloadUri; }
+            private set { SetVariableValue(ref this._downloadUri, value); }
+        }
 
         protected FileInfo VideoFile { get; set; }
 
@@ -139,7 +147,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(SetVariableValue(ref this._thumbnailLoadState, value)) {
-                    CallOnPropertyChange(nameof(ThumbnailImage));
+                    var propertyNames = new[] {
+                        nameof(ThumbnailImage),
+                        nameof(Image),
+                    };
+                    CallOnPropertyChange(propertyNames);
                 }
             }
         }
@@ -156,7 +168,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._videoLoadState, value); }
         }
 
-
         public CacheState CacheState
         {
             get { return this._cacheState; }
@@ -167,14 +178,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._videoLoadedSize; }
             // TowWay用
-            set { SetVariableValue(ref this._videoLoadedSize, value); }
+            set
+            {
+                if(SetVariableValue(ref this._videoLoadedSize, value)) {
+                    CallOnPropertyChange(nameof(DownloadedSize));
+                }
+            }
         }
 
         public long VideoTotalSize
         {
             get { return this._videoTotalSize; }
             // TowWay用
-            set { SetVariableValue(ref this._videoTotalSize, value); }
+            set
+            {
+                if(SetVariableValue(ref this._videoTotalSize, value)) {
+                    CallOnPropertyChange(nameof(DownloadTotalSize));
+                }
+            }
         }
 
         public ImageSource ThumbnailImage
@@ -300,12 +321,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 Information.SetDmcLoaded(mux.VideoSrcIds.First(), mux.AudioSrcIds.First(), VideoFile.Length == Information.DmcItems[role].Length);
                                 if(Information.DmcItems[role].IsLoaded) {
                                     VideoLoadState = LoadState.Loaded;
+                                    DownloadState = DownloadState.Completed;
                                 } else {
                                     Mediation.Logger.Debug($"{VideoId}: LoadState.Failure, {mux.VideoSrcIds.First()}, {mux.AudioSrcIds.First()}, {VideoFile.Length == Information.DmcItems[role].Length}, {role}");
                                     VideoLoadState = LoadState.Failure;
+                                    DownloadState = DownloadState.Failure;
                                 }
                             } else {
                                 VideoLoadState = LoadState.Loaded;
+                                DownloadState = DownloadState.Completed;
                                 if(Information.IsEconomyMode) {
                                     Information.LoadedEconomyVideo = true;
                                 } else {
@@ -314,6 +338,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             }
                             Information.SaveSetting(false);
                         } else {
+                            DownloadState = DownloadState.Failure;
                             VideoLoadState = LoadState.Failure;
                             Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
                         }
@@ -322,6 +347,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         }
                     } catch(Exception ex) {
                         Mediation.Logger.Error(ex);
+                        DownloadState = DownloadState.Failure;
                         VideoLoadState = LoadState.Failure;
                         Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
                     } finally {
@@ -538,6 +564,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             VideoFile = videoFile;
             VideoLoadedSize = VideoTotalSize = VideoFile.Length;
+            DownloadState = DownloadState.Completed;
             VideoLoadState = LoadState.Loaded;
 
             // TODO: HTMLがあること前提
@@ -643,6 +670,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             VideoLoadedSize = initVideoLoadSize;
             VideoTotalSize = initVideoTotalSize;
+            DownloadState = DownloadState.None;
             VideoLoadState = LoadState.None;
             InformationLoadState = LoadState.None;
             ThumbnailLoadState = LoadState.None;
@@ -684,6 +712,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             OnLoadStart();
 
+            DownloadState = DownloadState.Preparation;
             InformationLoadState = LoadState.Loading;
 
             OnLoadGetthumbinfoStart();
@@ -792,8 +821,94 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
+        #region IDownloadItem
+
+        Uri IDownloadItem.DownloadUri => DownloadUri;
+
+        public string DownloadTitle => $"[{Information.VideoId}] {Information.Title}";
+
+        public DownloadState DownloadState
+        {
+            get { return this._downloadState; }
+            internal set { SetVariableValue(ref this._downloadState, value); }
+        }
+
+        public DownloadUnit DownloadUnit { get; } = DownloadUnit.Size;
+
+        public bool EnabledTotalSize => true;
+
+        public long DownloadTotalSize => VideoTotalSize;
+
+        public long DownloadedSize => VideoLoadedSize;
+
+        public IProgress<double> DownloadingProgress { get; set; }
+
+        public ImageSource Image => Information.ThumbnailImage;
+
+        public bool CanRestart => true;
+
+        public virtual object DownloadUniqueItem => Information;
+
+        public ICommand OpenDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(Information.CacheDirectory.Exists) {
+                            ShellUtility.OpenDirectory(Information.CacheDirectory, Mediation.Logger);
+                        }
+                    },
+                    o => Information?.CacheDirectory.Exists ?? false
+                );
+            }
+        }
+
+        public ICommand ExecuteTargetCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var forceEconomy = false;
+                        Information.OpenVideoDefaultAsync(forceEconomy);
+                    },
+                    o => Information != null && SmileVideoInformationUtility.CheckCanPlay(Information, Mediation.Logger) && DownloadState != DownloadState.Preparation
+                );
+            }
+        }
+
+        public ICommand AutoExecuteTargetCommand => CreateCommand(o => { }, o => false);
+
+        public Task StartAsync()
+        {
+            if(Information == null) {
+                throw new InvalidOperationException($"{nameof(Information)} is null");
+            }
+            if(!SmileVideoInformationUtility.CheckCanPlay(Information, Mediation.Logger)) {
+                // 別んとこで使われてる
+                Mediation.Logger.Warning($"{nameof(Information)} can not download");
+                DownloadState = DownloadState.Failure;
+                return Task.CompletedTask;
+            }
+
+            var forceEconomy = false;
+            return LoadAsync(Information, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
+
+
+        public void Cancel()
+        {
+            StopPrevProcessAsync().ContinueWith(_ => {
+                DownloadState = DownloadState.Failure;
+            });
+        }
+
+        #endregion
+
         private void Downloader_DownloadStart(object sender, DownloadStartEventArgs e)
         {
+            DownloadState = DownloadState.Downloading;
             VideoLoadState = LoadState.Loading;
 
             if(e.DownloadStartType == DownloadStartType.Range) {
@@ -856,6 +971,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return;
             }
 
+            DownloadingProgress?.Report(VideoLoadedSize / (double)VideoTotalSize);
+
             Information.IsDownloading = true;
 
             OnDownloading(sender, e);
@@ -884,6 +1001,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(e.Cancel) {
                 if(VideoLoadState != LoadState.Loaded) {
                     // スレッド間のあれな動作であれになる抑制
+                    DownloadState = DownloadState.Failure;
                     VideoLoadState = LoadState.Failure;
                     Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
                 }

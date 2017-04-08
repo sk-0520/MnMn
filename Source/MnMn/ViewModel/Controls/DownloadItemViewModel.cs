@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         long _downloadTotalSize;
         long _downloadedSize;
 
-        LoadState _downloadState;
+        DownloadState _downloadState;
         ImageSource _image;
 
         #endregion
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             Downloader.Downloaded += Downloader_Downloaded;
             Downloader.DownloadingError += Downloader_DownloadingError;
 
-            DownloadState = LoadState.None;
+            DownloadState = DownloadState.None;
         }
 
         #region property
@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public Uri DownloadUri { get; }
 
+        public string DownloadTitle => DownloadFile.Name;
+
         public bool EnabledTotalSize
         {
             get { return this._enabledCompleteSize; }
@@ -110,7 +112,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public IProgress<double> DownloadingProgress { get; set; }
 
-        public LoadState DownloadState
+        public DownloadState DownloadState
         {
             get { return this._downloadState; }
             private set { SetVariableValue(ref this._downloadState, value); }
@@ -123,6 +125,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         }
 
         public virtual bool CanRestart => true;
+
+        public virtual object DownloadUniqueItem => this;
 
         public virtual ICommand OpenDirectoryCommand
         {
@@ -156,7 +160,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             Cancellation = new CancellationTokenSource();
 
-            DownloadState = LoadState.Preparation;
+            DownloadState = DownloadState.Preparation;
 
             EnabledTotalSize = false;
             DownloadedSize = DownloadTotalSize = 0;
@@ -174,8 +178,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #endregion
 
         #region ViewModelBase
-
-        public override string DisplayText => DownloadFile.Name;
 
         protected override void Dispose(bool disposing)
         {
@@ -196,7 +198,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         private void Downloader_DownloadStart(object sender, Define.Event.DownloadStartEventArgs e)
         {
-            DownloadState = LoadState.Loading;
+            DownloadState = DownloadState.Downloading;
 
             DownloadingProgress?.Report(0);
 
@@ -211,14 +213,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             var downloader = (Downloader)sender;
             if(e.Cancel) {
                 if(!downloader.Completed) {
-                    DownloadState = LoadState.Failure;
+                    DownloadState = DownloadState.Failure;
                     WriteStream?.Dispose();
                     WriteStream = null;
                     return;
                 }
             }
 
-            DownloadState = LoadState.Loading;
+            DownloadState = DownloadState.Downloading;
 
             WriteStream.Write(e.Data.Array, 0, e.Data.Count);
             DownloadedSize = Downloader.DownloadedSize;
@@ -233,10 +235,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             var downloader = (Downloader)sender;
             if(downloader.Completed) {
-                DownloadState = LoadState.Loaded;
+                DownloadState = DownloadState.Completed;
                 DownloadingProgress?.Report(1);
             } else {
-                DownloadState = LoadState.Failure;
+                DownloadState = DownloadState.Failure;
             }
 
             DownloadedSize = Downloader.DownloadedSize;
@@ -247,7 +249,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         private void Downloader_DownloadingError(object sender, Define.Event.DownloadingErrorEventArgs e)
         {
-            DownloadState = LoadState.Failure;
+            DownloadState = DownloadState.Failure;
 
             WriteStream?.Dispose();
             WriteStream = null;
