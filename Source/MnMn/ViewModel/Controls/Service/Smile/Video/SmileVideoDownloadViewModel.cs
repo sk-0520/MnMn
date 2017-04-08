@@ -147,7 +147,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(SetVariableValue(ref this._thumbnailLoadState, value)) {
-                    CallOnPropertyChange(nameof(ThumbnailImage));
+                    var propertyNames = new[] {
+                        nameof(ThumbnailImage),
+                        nameof(Image),
+                    };
+                    CallOnPropertyChange(propertyNames);
                 }
             }
         }
@@ -161,7 +165,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public LoadState VideoLoadState
         {
             get { return this._videoLoadState; }
-            private set { SetVariableValue(ref this._videoLoadState, value); }
+            set { SetVariableValue(ref this._videoLoadState, value); }
         }
 
 
@@ -175,14 +179,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._videoLoadedSize; }
             // TowWay用
-            set { SetVariableValue(ref this._videoLoadedSize, value); }
+            set
+            {
+                if(SetVariableValue(ref this._videoLoadedSize, value)) {
+                    CallOnPropertyChange(nameof(DownloadedSize));
+                }
+            }
         }
 
         public long VideoTotalSize
         {
             get { return this._videoTotalSize; }
             // TowWay用
-            set { SetVariableValue(ref this._videoTotalSize, value); }
+            set
+            {
+                if(SetVariableValue(ref this._videoTotalSize, value)) {
+                    CallOnPropertyChange(nameof(DownloadTotalSize));
+                }
+            }
         }
 
         public ImageSource ThumbnailImage
@@ -927,6 +941,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(e.Cancel || downloader.Canceled) {
                 return;
             }
+
+            DownloadingProgress?.Report(VideoLoadedSize / (double)VideoTotalSize);
 
             Information.IsDownloading = true;
 

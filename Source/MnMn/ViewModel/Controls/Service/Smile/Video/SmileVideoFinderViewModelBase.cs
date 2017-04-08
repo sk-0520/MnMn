@@ -446,6 +446,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var download = new SmileVideoDownloadViewModel(Mediation);
             download.Information = information;
             Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
+            download.StartAsync();
         }
 
 
