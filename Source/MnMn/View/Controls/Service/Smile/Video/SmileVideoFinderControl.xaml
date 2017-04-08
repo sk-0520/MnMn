@@ -410,17 +410,8 @@
                 </Viewbox>
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}">
-              <MenuItem.Icon>
-                <Viewbox Style="{StaticResource SmallIconBox}">
-                  <Canvas Style="{StaticResource IconCanvas-24x24}">
-                    <Path Data="{StaticResource Image_Bookmark-Unorganized}" Style="{StaticResource SmallDefaultIconPath}" />
-                  </Canvas>
-                </Viewbox>
-              </MenuItem.Icon>
-            </MenuItem>
 
-            <MenuItem Header="#362" Visibility="{Binding ShowDownloadMenu, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding AddDownloadManagerCommand}">
+            <MenuItem Header="ご飯食べたらすぐ見る" Visibility="{Binding ShowDownloadMenu, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding AddDownloadManagerCommand}">
               <MenuItem.Icon>
                 <Canvas Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}">
                   <Viewbox Canvas.Left="0" Canvas.Top="0" Style="{StaticResource MinimumIconBox}">
@@ -434,6 +425,16 @@
                     </Canvas>
                   </Viewbox>
                 </Canvas>
+              </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Bookmark-Unorganized}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
               </MenuItem.Icon>
             </MenuItem>
 
