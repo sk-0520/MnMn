@@ -60,13 +60,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             if(startDownload) {
                 downloadItem.StartAsync();
             } else if(downloadItem.Item.DownloadState == DownloadState.Waiting) {
-                StartWaitingItem();
+                StartIfDownloadableWaitingItem();
             }
 
             RefreshDownloadingCount();
         }
 
-        void StartWaitingItem()
+        void StartIfDownloadableWaitingItem()
         {
             var serviceGroups = DownloadStateItems
                 .GroupBy(i => i.ServiceType)
@@ -138,12 +138,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         private void DownloadItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(IDownloadItem.DownloadState)) {
-                var prevCount = DownloadingCount;
+                //var prevCount = DownloadingCount;
                 RefreshDownloadingCount();
-
-                if(prevCount != DownloadingCount) {
-                    StartWaitingItem();
-                }
+                StartIfDownloadableWaitingItem();
 
                 var downloadItem = (IDownloadItem)sender;
                 if(downloadItem.DownloadState == DownloadState.Completed) {

@@ -309,10 +309,20 @@
                 </Style>
               </Label.Style>
               <Label.Content>
-                <StackPanel>
+                <TextBlock>
                   <TextBlock Text="{Binding DownloadingCount}" />
-                  <TextBlock Text="{Binding WaitingCount}" />
-                </StackPanel>
+                  <TextBlock FontSize="10" FontWeight="Normal" Text="{Binding WaitingCount, StringFormat=/{0}}">
+                    <TextBlock.Style>
+                      <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding WaitingCount}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBlock.Style>
+                  </TextBlock>
+                </TextBlock>
               </Label.Content>
             </Label>
           </Grid>
