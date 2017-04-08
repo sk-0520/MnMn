@@ -62,7 +62,7 @@
                   </Viewbox>
                 </Grid>
 
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Item.DisplayText}" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Item.DownloadTitle}" />
 
                 <ProgressBar Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="1">
                   <ProgressBar.Style>
@@ -115,13 +115,24 @@
                     <TextBlock.Style>
                       <Style TargetType="TextBlock" BasedOn="{StaticResource ShowDownloadingTextStyle}">
                         <Style.Triggers>
-                          <DataTrigger  Binding="{Binding Item.DownloadUnit}" Value="Size">
+                          <DataTrigger Binding="{Binding Item.DownloadUnit}" Value="Size">
                             <Setter Property="Text" Value="{Binding Item.DownloadedSize, Converter={StaticResource HumanLikeByteConverter}}" />
                           </DataTrigger>
-                          <DataTrigger  Binding="{Binding Item.DownloadUnit}" Value="Count">
+                          <DataTrigger Binding="{Binding Item.DownloadUnit}" Value="Count">
                             <Setter Property="Text" Value="{Binding Item.DownloadedSize}" />
                           </DataTrigger>
+
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Failure">
+                            <Setter Property="Text" Value="+_+" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Preparation">
+                            <Setter Property="Text" Value="---" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Waiting">
+                            <Setter Property="Text" Value="---" />
+                          </DataTrigger>
                         </Style.Triggers>
+
                       </Style>
                     </TextBlock.Style>
                   </TextBlock>
@@ -151,6 +162,17 @@
                           <DataTrigger Binding="{Binding Item.DownloadState}" Value="Completed">
                             <Setter Property="Text" Value="{Binding Text, ElementName=current}" />
                           </DataTrigger>
+
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Failure">
+                            <Setter Property="Text" Value="^o^&#x29F5;" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Preparation">
+                            <Setter Property="Text" Value="---" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Waiting">
+                            <Setter Property="Text" Value="---" />
+                          </DataTrigger>
+
                         </Style.Triggers>
 
                         <Setter Property="Text" Value="サイズ不明" />

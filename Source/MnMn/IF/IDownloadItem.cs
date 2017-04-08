@@ -16,9 +16,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
     /// <summary>
     /// ダウンロード情報表示データ。
     /// </summary>
-    public interface IDownloadItem: INotifyPropertyChanged, IDisplayText
+    public interface IDownloadItem: INotifyPropertyChanged
     {
         #region property
+
+        string DownloadTitle { get; }
 
         Uri DownloadUri { get; }
 

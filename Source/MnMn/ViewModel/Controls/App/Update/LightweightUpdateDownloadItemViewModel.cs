@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         long _downloadedSize;
 
-        string _displayText;
+        string _downloadTitle;
 
         #endregion
 
@@ -85,14 +85,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
 
-        void SetDisplayText(string expandPath)
+        void SetDownloadTitle(string expandPath)
         {
             if(string.IsNullOrEmpty(expandPath)) {
-                this._displayText = Properties.Resources.String_App_LightweightUpdate;
+                DownloadTitle = Properties.Resources.String_App_LightweightUpdate;
             } else {
-                this._displayText = $"{Properties.Resources.String_App_LightweightUpdate}: {expandPath}";
+                DownloadTitle = $"{Properties.Resources.String_App_LightweightUpdate}: {expandPath}";
             }
-            CallOnPropertyChange(nameof(DisplayText));
         }
 
 
@@ -104,6 +103,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         {
             get { return this._downloadUri; }
             private set { SetVariableValue(ref this._downloadUri, value); }
+        }
+
+        public string DownloadTitle
+        {
+            get { return this._downloadTitle; }
+            set { SetVariableValue(ref this._downloadTitle, value); }
         }
 
         public DownloadState DownloadState
@@ -156,7 +161,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             Cancellation = new CancellationTokenSource();
             DownloadedSize = 0;
             DownloadingProgress?.Report(0);
-            SetDisplayText(null);
+            SetDownloadTitle(null);
 
             using(var host = new HttpUserAgentHost())
             using(var userAgent = host.CreateHttpUserAgent()) {
@@ -171,7 +176,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                         }
                         DownloadUri = new Uri(tartget.Key);
                         var expand = tartget.Extends["expand"];
-                        SetDisplayText(expand);
+                        SetDownloadTitle(expand);
                         var entry = archiveStream.CreateEntry(expand);
                         using(var entryStream = entry.Open()) {
                             Mediation.Logger.Debug(DownloadUri.ToString());
@@ -194,19 +199,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
             DownloadingProgress?.Report(1);
             DownloadState = DownloadState.Completed;
-            SetDisplayText(null);
+            SetDownloadTitle(null);
         }
 
         public void Cancel()
         {
             Cancellation.Cancel();
         }
-
-        #endregion
-
-        #region ViewModelBase
-
-        public override string DisplayText => this._displayText;
 
         #endregion
     }

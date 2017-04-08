@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public Uri DownloadUri { get; }
 
+        public string DownloadTitle => DownloadFile.Name;
+
         public bool EnabledTotalSize
         {
             get { return this._enabledCompleteSize; }
@@ -176,8 +178,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #endregion
 
         #region ViewModelBase
-
-        public override string DisplayText => DownloadFile.Name;
 
         protected override void Dispose(bool disposing)
         {

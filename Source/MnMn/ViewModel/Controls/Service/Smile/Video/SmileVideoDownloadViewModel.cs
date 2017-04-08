@@ -825,6 +825,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         Uri IDownloadItem.DownloadUri => DownloadUri;
 
+        public string DownloadTitle => $"[{Information.VideoId}] {Information.Title}";
+
         public DownloadState DownloadState
         {
             get { return this._downloadState; }
