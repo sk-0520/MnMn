@@ -36,6 +36,15 @@
                 </i:EventTrigger>
               </i:Interaction.Triggers>
               <Grid Background="Transparent">
+                <Grid.Style>
+                  <Style TargetType="Grid">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding Item.DownloadState}" Value="Completed">
+                        <Setter Property="ToolTip" Value="ダブルクリックで実行" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </Grid.Style>
                 <Grid.RowDefinitions>
                   <RowDefinition Height="28" />
                   <RowDefinition Height="Auto" />
@@ -151,7 +160,7 @@
                   <TextBlock Grid.Column="4" TextTrimming="CharacterEllipsis" Text="{Binding Item.DownloadUri.Host}" />
                 </Grid>
 
-                <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Center">
+                <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Center">
                   <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <StackPanel.Resources>
                       <Style TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">

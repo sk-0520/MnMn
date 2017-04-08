@@ -831,7 +831,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             internal set { SetVariableValue(ref this._downloadState, value); }
         }
 
-
         public DownloadUnit DownloadUnit { get; } = DownloadUnit.Size;
 
         public bool EnabledTotalSize => true;
@@ -852,31 +851,46 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                return CreateCommand(o => {
-                    if(Information.CacheDirectory.Exists) {
-                        ShellUtility.OpenDirectory(Information.CacheDirectory, Mediation.Logger);
-                    }
-                });
+                return CreateCommand(
+                    o => {
+                        if(Information.CacheDirectory.Exists) {
+                            ShellUtility.OpenDirectory(Information.CacheDirectory, Mediation.Logger);
+                        }
+                    },
+                    o => Information?.CacheDirectory.Exists ?? false
+                );
             }
         }
 
-        public ICommand ExecuteTargetCommand => CreateCommand(o => { /* 暫定 */ }, o => true);
+        public ICommand ExecuteTargetCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var forceEconomy = false;
+                        Information.OpenVideoDefaultAsync(forceEconomy);
+                    },
+                    o => Information != null && SmileVideoInformationUtility.CheckCanPlay(Information, Mediation.Logger) && DownloadState != DownloadState.Preparation
+                );
+            }
+        }
 
         public ICommand AutoExecuteTargetCommand => CreateCommand(o => { }, o => false);
 
         public Task StartAsync()
         {
             if(Information == null) {
-                throw new InvalidOperationException($"nameof(Information) is null");
+                throw new InvalidOperationException($"{nameof(Information)} is null");
             }
             if(!SmileVideoInformationUtility.CheckCanPlay(Information, Mediation.Logger)) {
                 // 別んとこで使われてる
+                Mediation.Logger.Warning($"{nameof(Information)} can not download");
                 DownloadState = DownloadState.Failure;
                 return Task.CompletedTask;
             }
 
             var forceEconomy = false;
-
             return LoadAsync(Information, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
