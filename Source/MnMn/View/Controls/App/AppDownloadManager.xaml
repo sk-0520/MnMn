@@ -63,7 +63,7 @@
                           <DataTrigger Binding="{Binding Item.EnabledTotalSize}" Value="False">
                             <Setter Property="IsIndeterminate" Value="True" />
                           </DataTrigger>
-                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Completed">
                             <Setter Property="Visibility" Value="Collapsed" />
                             <Setter Property="Value" Value="1" />
                           </DataTrigger>
@@ -87,7 +87,7 @@
 
                       <Style x:Key="ShowDownloadingTextStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Style.Triggers>
-                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
+                          <DataTrigger Binding="{Binding Item.DownloadState}" Value="Completed">
                             <Setter Property="Visibility" Value="Collapsed" />
                           </DataTrigger>
                         </Style.Triggers>
@@ -140,7 +140,7 @@
                               <Setter Property="Text" Value="{Binding Item.DownloadTotalSize}" />
                             </MultiDataTrigger>
 
-                            <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
+                            <DataTrigger Binding="{Binding Item.DownloadState}" Value="Completed">
                               <Setter Property="Text" Value="{Binding Text, ElementName=current}" />
                             </DataTrigger>
                           </Style.Triggers>
@@ -177,7 +177,7 @@
                                 </Setter>
                                 <Setter Property="Visibility" Value="Visible" />
                               </DataTrigger>
-                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loading">
+                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Downloading">
                                 <Setter Property="Command" Value="{Binding CancelDownloadCommand}" />
                                 <Setter Property="Content">
                                   <Setter.Value>
@@ -200,7 +200,7 @@
                         <Button.Style>
                           <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
-                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
+                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Completed">
                                 <Setter Property="Visibility" Value="Visible" />
                               </DataTrigger>
                             </Style.Triggers>
@@ -220,7 +220,7 @@
                         <Button.Style>
                           <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
-                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Loaded">
+                              <DataTrigger Binding="{Binding Item.DownloadState}" Value="Completed">
                                 <Setter Property="Visibility" Value="Visible" />
                               </DataTrigger>
                             </Style.Triggers>
