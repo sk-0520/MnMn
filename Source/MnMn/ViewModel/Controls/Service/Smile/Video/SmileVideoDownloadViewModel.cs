@@ -864,6 +864,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task StartAsync()
         {
+            if(Information == null) {
+                throw new InvalidOperationException($"nameof(Information) is null");
+            }
+            if(!SmileVideoInformationUtility.CheckCanPlay(Information, Mediation.Logger)) {
+                // 別んとこで使われてる
+                DownloadState = DownloadState.Failure;
+                return Task.CompletedTask;
+            }
+
             var forceEconomy = false;
 
             return LoadAsync(Information, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
@@ -872,8 +881,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public void Cancel()
         {
-            StopPrevProcessAsync();
-            InitializeStatus();
+            StopPrevProcessAsync().ContinueWith(_ => {
+                DownloadState = DownloadState.Failure;
+            });
         }
 
         #endregion
