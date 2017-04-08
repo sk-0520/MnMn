@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             get
             {
                 // 他のキーが押されてても Shift が押されてたら拡張OKとする
-                return Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+                return Constants.ForceMoreOptionsShow || Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             }
         }
 
