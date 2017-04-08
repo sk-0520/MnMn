@@ -316,6 +316,60 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Completed {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ダウンロード中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Downloading {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Downloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Failure {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未処理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_None {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   準備中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Preparation {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Preparation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   待機中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_DownloadState_Waiting {
+            get {
+                return ResourceManager.GetString("String_App_Define_DownloadState_Waiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   前方一致 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_FilteringType_ForwardMatch {

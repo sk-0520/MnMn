@@ -503,4 +503,22 @@
   <data name="String_App_LightweightUpdate" xml:space="preserve">
     <value>簡易アップデート</value>
   </data>
+  <data name="String_App_Define_DownloadState_Completed" xml:space="preserve">
+    <value>完了</value>
+  </data>
+  <data name="String_App_Define_DownloadState_Downloading" xml:space="preserve">
+    <value>ダウンロード中</value>
+  </data>
+  <data name="String_App_Define_DownloadState_Failure" xml:space="preserve">
+    <value>失敗</value>
+  </data>
+  <data name="String_App_Define_DownloadState_None" xml:space="preserve">
+    <value>未処理</value>
+  </data>
+  <data name="String_App_Define_DownloadState_Preparation" xml:space="preserve">
+    <value>準備中</value>
+  </data>
+  <data name="String_App_Define_DownloadState_Waiting" xml:space="preserve">
+    <value>待機中</value>
+  </data>
 </root>
