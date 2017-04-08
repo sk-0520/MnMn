@@ -68,6 +68,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// </summary>
         bool CanRestart { get; }
 
+        /// <summary>
+        /// 同一アイテム判定用オブジェクト。
+        /// </summary>
+        object DownloadUniqueItem { get; }
+
         #endregion
 
         #region command

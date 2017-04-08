@@ -26,6 +26,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 {
     public class LightweightUpdateDownloadItemViewModel : ViewModelBase, IDownloadItem
     {
+        #region define
+
+        static object uniqueItemObject = new object();
+
+        #endregion
+
         #region variable
 
         Uri _downloadUri;
@@ -119,6 +125,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         }
 
         public bool CanRestart => false;
+
+        public object DownloadUniqueItem { get; } = uniqueItemObject;
 
         public IProgress<double> DownloadingProgress { get; set; }
 

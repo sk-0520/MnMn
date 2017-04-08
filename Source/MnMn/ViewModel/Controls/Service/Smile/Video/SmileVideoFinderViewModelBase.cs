@@ -444,7 +444,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(!SmileVideoInformationUtility.CheckCanPlay(information, Mediation.Logger)) {
                 return;
             }
-
+            // あとで見る用キャッシュなのであとで見るに追加するが、「追加可能であれば」という条件付き
+            if(IsEnabledCheckItLaterMenu) {
+                AddCheckItLater(finderItem);
+            }
             var download = new SmileVideoDownloadViewModel(Mediation) {
                 Information = information,
                 DownloadState = DownloadState.Waiting,

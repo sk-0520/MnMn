@@ -846,6 +846,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public bool CanRestart => true;
 
+        public virtual object DownloadUniqueItem => Information;
+
         public ICommand OpenDirectoryCommand
         {
             get

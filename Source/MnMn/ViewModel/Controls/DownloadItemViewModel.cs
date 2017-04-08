@@ -124,6 +124,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public virtual bool CanRestart => true;
 
+        public virtual object DownloadUniqueItem => this;
+
         public virtual ICommand OpenDirectoryCommand
         {
             get

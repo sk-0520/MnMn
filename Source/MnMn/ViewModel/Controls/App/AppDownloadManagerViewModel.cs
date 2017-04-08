@@ -53,6 +53,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         internal void AddDownloadItem(AppDownloadItemViewModel downloadItem, bool startDownload)
         {
+            var stockedItem = DownloadStateItems.FirstOrDefault(i => i.Item.DownloadUniqueItem == downloadItem.Item.DownloadUniqueItem);
+            if(stockedItem != null) {
+                Mediation.Logger.Warning($"stocked: {downloadItem.Item.DownloadUniqueItem}");
+                switch(stockedItem.Item.DownloadState) {
+                    case DownloadState.None:
+                    case DownloadState.Completed:
+                    case DownloadState.Failure:
+                        DownloadStateItems.Remove(stockedItem);
+                        Mediation.Logger.Information($"reset download item");
+                        break;
+
+                    case DownloadState.Waiting:
+                    case DownloadState.Preparation:
+                    case DownloadState.Downloading:
+                        Mediation.Logger.Trace($"ignore download item");
+                        return;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
             DownloadStateItems.Insert(0, downloadItem);
 
             DownloadItemPropertyChangedListener.Add(downloadItem.Item);
