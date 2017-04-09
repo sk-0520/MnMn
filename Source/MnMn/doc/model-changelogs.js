@@ -116,7 +116,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#528: あとで見るからもダウンロードできるようにする'
 					},
 					{
 						'revision': '',
