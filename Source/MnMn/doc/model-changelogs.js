@@ -85,9 +85,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
+		'date': '2017/04/09',
 		'version': '0.60.1',
-		'isRc': true,
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -103,11 +103,11 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '0.60.0 の #362 の出来があんまりよくないので緊急リリース',
+						'comments': [
+							'多分直ったはず',
+							'ついでにアップデート処理も試してみたいしね'
+						]
 					}
 				]
 			},
@@ -115,16 +115,8 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'd7a058912e75a2fe06a82a486cfdedeeb528ca69',
 						'subject': '#528: あとで見るからもダウンロードできるようにする'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -132,36 +124,11 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '817ad2b20e38fdf26d3a370f01e1aa1abbf171c1',
 						'subject': '#527: ダウンロード準備中が複数あってなんかもう色々ダメになる',
 						'comments': [
 							'待機中が 2 件以上あるとすっごい勢いで連鎖的に死んで壊滅してた'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
