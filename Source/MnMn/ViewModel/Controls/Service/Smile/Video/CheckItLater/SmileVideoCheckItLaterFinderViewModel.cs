@@ -67,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         public override bool IsEnabledCheckItLaterMenu { get; } = false;
 
+        public override bool IsEnabledDownloadMenu => true;
+
         protected override bool FilterItems(object obj)
         {
             var baseResult = base.FilterItems(obj);

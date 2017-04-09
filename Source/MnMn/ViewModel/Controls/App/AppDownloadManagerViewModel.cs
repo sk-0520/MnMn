@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -32,6 +33,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region property
 
         PropertyChangedWeakEventListener DownloadItemPropertyChangedListener { get; }
+
+         object WaitingItemLock { get; } = new object();
 
         public CollectionModel<AppDownloadItemViewModel> DownloadStateItems { get; } = new CollectionModel<AppDownloadItemViewModel>();
 
@@ -94,16 +97,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 .GroupBy(i => i.ServiceType)
             ;
 
+            var nextDownloadItems = new List<AppDownloadItemViewModel>();
+
             foreach(var serviceGroup in serviceGroups) {
-                // 同一サービスでダウンロード中のものがあったら無視
-                if(serviceGroup.Any(i => i.Item.DownloadState == DownloadState.Downloading)) {
+                // 同一サービスでダウンロード中(と準備中)のものがあったら無視
+                if(serviceGroup.Any(i => i.Item.DownloadState == DownloadState.Downloading || i.Item.DownloadState == DownloadState.Preparation)) {
+                    Mediation.Logger.Trace($"downloading: {serviceGroup.Key}");
                     continue;
                 }
+
                 // 待機中アイテムのダウンロード開始(ダウンローダーに積まれた順序)
                 var waitItem = serviceGroup.LastOrDefault(i => i.Item.DownloadState == DownloadState.Waiting);
                 if(waitItem != null) {
-                    waitItem.StartAsync();
+                    Mediation.Logger.Trace($"download target: {serviceGroup.Key}, {waitItem.Item.DownloadTitle}");
+                    nextDownloadItems.Add(waitItem);
+                    DownloadItemPropertyChangedListener.Remove(waitItem.Item);
                 }
+            }
+
+            foreach(var nextDownloadItem in nextDownloadItems) {
+                Mediation.Logger.Trace($"download start: {nextDownloadItem.Item.DownloadTitle}");
+                nextDownloadItem.StartAsync();
+            }
+            foreach(var nextDownloadItem in nextDownloadItems) {
+                DownloadItemPropertyChangedListener.Add(nextDownloadItem.Item);
             }
         }
 
@@ -162,11 +179,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             if(e.PropertyName == nameof(IDownloadItem.DownloadState)) {
                 //var prevCount = DownloadingCount;
                 RefreshDownloadingCount();
-                StartIfDownloadableWaitingItem();
+
+                Application.Current.Dispatcher.Invoke(() => {
+                    lock(WaitingItemLock) {
+                        StartIfDownloadableWaitingItem();
+                    }
+                });
 
                 var downloadItem = (IDownloadItem)sender;
                 if(downloadItem.DownloadState == DownloadState.Completed) {
                     downloadItem.AutoExecuteTargetCommand.TryExecute(null);
+                    DownloadItemPropertyChangedListener.Remove(downloadItem);
                 }
             }
         }
