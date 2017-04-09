@@ -882,18 +882,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task StartAsync()
         {
+            DownloadState = DownloadState.Preparation;
+
             if(Information == null) {
+                DownloadState = DownloadState.Failure;
                 throw new InvalidOperationException($"{nameof(Information)} is null");
             }
             if(!SmileVideoInformationUtility.CheckCanPlay(Information, Mediation.Logger)) {
                 // 別んとこで使われてる
-                Mediation.Logger.Warning($"{nameof(Information)} can not download");
                 DownloadState = DownloadState.Failure;
+                Mediation.Logger.Warning($"{Information.VideoId}: can not download");
                 return Task.CompletedTask;
             }
 
             var forceEconomy = false;
-            return LoadAsync(Information, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+            return LoadAsync(Information, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(t => {
+                if(t.IsFaulted) {
+                    Mediation.Logger.Warning($"{Information.VideoId}: {t.Exception.Message}", t.Exception);
+                    DownloadState = DownloadState.Failure;
+                }
+            });
         }
 
 
