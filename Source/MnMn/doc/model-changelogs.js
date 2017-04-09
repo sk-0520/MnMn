@@ -85,6 +85,86 @@
 	},
 	*/
 	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.61.2',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'class': 'warning',
+						'subject': 'アップデート(の内部)処理が 0.60.0 から変わってます',
+						'comments': [
+							'動くはずなんだけど動かない場合はアップデート前に「」にチェックしてください(#518)',
+							'本互換処理は #513 で保守され、不具合報告がなければ将来的に破棄されます'
+						]
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/04/09',
 		'version': '0.60.1',
 		'isRc': false,
