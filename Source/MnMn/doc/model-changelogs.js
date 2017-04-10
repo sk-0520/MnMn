@@ -150,7 +150,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'App.configをちょろちょろーっと修正'
 					},
 					{
 						'revision': '',

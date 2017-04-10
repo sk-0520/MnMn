@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// タブヘッダ部をマウスホイールでスクロールするか。
         /// <para>暫定対応: https://groups.google.com/d/topic/mnmn-forum/jm663Y8Wnn4/discussion </para>
         /// </summary>
-        public static bool FinderTabTabHeaderUsingMouseWheel => appConfig.Get("finder_tab-tab_header-using-mouse-wheel", bool.Parse);
+        public static bool FinderTabTabHeaderEnabledMouseWheel => appConfig.Get("finder_tab-tab_header-enabled-mouse-wheel", bool.Parse);
 
         public static string HttpRequestResponseHeaderAccept => appConfig.Get("http-request_response-header-accept");
         public static string HttpRequestResponseHeaderAcceptEncoding => appConfig.Get("http-request_response-header-accept-encoding");
