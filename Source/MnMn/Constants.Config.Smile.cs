@@ -241,6 +241,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static double SettingServiceSmileMyListItemsAreaStar => appConfig.Get("setting-service-smile-mylist-items-area-star", double.Parse);
         public static bool SettingServiceSmileMyListUsingBookmarkTagFilter => appConfig.Get("setting-service-smile-mylist-using-bookmark-tag-filter", bool.Parse);
 
+        public static double SettingServiceSmileChannelGroupAreaStar => appConfig.Get("setting-service-smile-channel-group-area-star", double.Parse);
+        public static double SettingServiceSmileChannelItemsAreaStar => appConfig.Get("setting-service-smile-channel-items-area-star", double.Parse);
 
         #region video
 

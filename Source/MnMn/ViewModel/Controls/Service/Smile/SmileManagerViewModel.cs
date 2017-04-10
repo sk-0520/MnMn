@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
@@ -60,6 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             VideoManager = new SmileVideoManagerViewModel(Mediation);
             LiveManager = new SmileLiveManagerViewModel(Mediation);
             UsersManager = new SmileUsersManagerViewModel(Mediation);
+            ChannelManager = new SmileChannelManagerViewModel(Mediation);
             SettingManager = new SmileSettingManagerViewModel(Mediation);
 
             WebSiteManager = new SmileWebSiteManagerViewModel(Mediation);
@@ -74,6 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SmileVideoManagerViewModel VideoManager { get; set; }
         public SmileLiveManagerViewModel LiveManager { get; }
         public SmileUsersManagerViewModel UsersManager { get; }
+        public SmileChannelManagerViewModel ChannelManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; set; }
 
         public SmileWebSiteManagerViewModel WebSiteManager { get; }
@@ -127,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
             return Task.Run(() => {
                 var cacheSpan = Constants.ServiceSmileMarketImageCacheSpan;
-                
+
                 var files = marketDir.EnumerateFiles()
                     .Where(f => !cacheSpan.IsCacheTime(f.CreationTime))
                     .ToList()
@@ -151,6 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         {
             return new ManagerViewModelBase[] {
                 UsersManager,
+                ChannelManager,
                 VideoManager,
                 WebSiteManager,
                 SettingManager,

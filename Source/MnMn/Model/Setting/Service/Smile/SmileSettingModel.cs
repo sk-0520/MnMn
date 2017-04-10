@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Channel;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -46,6 +47,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 
         [DataMember]
         public SmileUserSettingModel User { get; set; } = new SmileUserSettingModel();
+
+        [DataMember]
+        public SmileChannelSettingModel Channel { get; set; } = new SmileChannelSettingModel();
 
         #endregion
     }
