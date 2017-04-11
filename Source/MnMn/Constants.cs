@@ -394,6 +394,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
         public static string SmileMarketCacheDirectoryName { get; } = "market";
+        public static string SmileChannelCacheDirectoryName { get; } = "channel";
 
         public static char SmileMyListBookmarkTagTokenSplitter { get; } = ';';
 

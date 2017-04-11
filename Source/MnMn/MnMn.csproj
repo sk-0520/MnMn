@@ -343,6 +343,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveInformationUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
+    <Compile Include="Logic\Utility\UriUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\View\PointingGesture.cs" />
     <Compile Include="Logic\View\WebNavigatorPointingGesture.cs" />
