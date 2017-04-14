@@ -49,6 +49,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         #endregion
 
+        #region function
+
+        public Task LoadAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task LoadDefaultAsync()
+        {
+            return LoadAsync();
+        }
+
+        #endregion
+
         #region InformationViewModelBase
 
         public override string Title => throw new NotImplementedException();

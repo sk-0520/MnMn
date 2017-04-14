@@ -26,8 +26,29 @@
 
     <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 
-    <TabControl Grid.Column="2">
+    <TabControl Grid.Column="2" ItemsSource="{Binding ChannelItems}">
+      <TabControl.ItemTemplate>
+        <DataTemplate>
+          <TabControl>
+            <TabItem Header="channel">
+              <Grid>
+                <StackPanel>
 
+                </StackPanel>
+              </Grid>
+            </TabItem>
+            <TabItem Header="video">
+
+            </TabItem>
+            <TabItem Header="live">
+
+            </TabItem>
+            <TabItem Header="blog">
+
+            </TabItem>
+          </TabControl>
+        </DataTemplate>
+      </TabControl.ItemTemplate>
     </TabControl>
 
   </Grid>
