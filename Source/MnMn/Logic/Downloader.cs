@@ -231,16 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     var bytePerSecond = new OctetPerTime(TimeSpan.FromSeconds(1));
                     bytePerSecond.Start();
 
-                    //var secondsStopWatch = new Stopwatch();
-                    //var secondsBaseTime = TimeSpan.FromSeconds(1);
-                    //long secondsReadSize = 0;
-                    //long prevSecondsDownloadingSize = 0;
-
                     while(true) {
-                        //if(secondsReadSize == 0) {
-                        //    secondsStopWatch.Restart();
-                        //}
-
                         int currentReadSize = 0;
 
                         int errorCounter = 1;
@@ -251,7 +242,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                     return;
                                 }
                                 currentReadSize = reader.Read(buffer, 0, buffer.Length);
-                                //secondsReadSize += currentReadSize;
                                 bytePerSecond.Add(currentReadSize);
 
                                 break;
@@ -267,19 +257,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             // TODO: 最後かどうかわからんけどとりあえず今のところは最後認識。イベントでも作るべし
                             break;
                         }
-
-                        //var elapsedTime = secondsStopWatch.Elapsed;
-                        //long secondsDownlodingSize = prevSecondsDownloadingSize;
-
-                        //if(secondsBaseTime <= elapsedTime) {
-                        //    //DODO: 超過分をきちんと割合比較
-                        //    secondsDownlodingSize = secondsReadSize;
-                        //    prevSecondsDownloadingSize = secondsDownlodingSize;
-                        //    secondsReadSize = 0;
-                        //}
-
-                        //Debug.WriteLine($"OLD: {secondsDownlodingSize}");
-                        //Debug.WriteLine($"NEW: {bytePerSecond.Size}");
 
                         DownloadedSize += currentReadSize;
                         var slice = new ArraySegment<byte>(buffer, 0, currentReadSize);
