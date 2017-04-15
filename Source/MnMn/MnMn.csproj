@@ -311,6 +311,7 @@
     <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
+    <Compile Include="Logic\OctetPerTime.cs" />
     <Compile Include="Logic\DelegateDragAndDrop.cs" />
     <Compile Include="Logic\DescriptionBase.cs" />
     <Compile Include="Logic\Expression.cs" />
