@@ -228,6 +228,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     byte[] buffer = new byte[ReceiveBufferSize];
                     int counter = 1;
 
+                    var bytePerSecond = new OctetPerTime(TimeSpan.FromSeconds(1));
+                    bytePerSecond.Start();
+
                     var secondsStopWatch = new Stopwatch();
                     var secondsBaseTime = TimeSpan.FromSeconds(1);
                     long secondsReadSize = 0;
@@ -249,6 +252,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 }
                                 currentReadSize = reader.Read(buffer, 0, buffer.Length);
                                 secondsReadSize += currentReadSize;
+
+                                bytePerSecond.Add(currentReadSize);
                                 break;
                             } catch(IOException ex) {
                                 var cancel = OnDownloadingError(errorCounter++, ex);
@@ -272,6 +277,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             prevSecondsDownloadingSize = secondsDownlodingSize;
                             secondsReadSize = 0;
                         }
+
+                        Debug.WriteLine($"OLD: {secondsDownlodingSize}");
+                        Debug.WriteLine($"NEW: {bytePerSecond.Size}");
 
                         DownloadedSize += currentReadSize;
                         var slice = new ArraySegment<byte>(buffer, 0, currentReadSize);

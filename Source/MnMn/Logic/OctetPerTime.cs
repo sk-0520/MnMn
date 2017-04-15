@@ -36,6 +36,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public void Add(long addSize)
         {
+            Debug.Assert(TimeStopWatch.IsRunning);
+
             var elapsedTime = TimeStopWatch.Elapsed;
 
             if(BaseTime <= elapsedTime) {
