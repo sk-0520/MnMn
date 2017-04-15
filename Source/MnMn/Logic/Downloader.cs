@@ -231,15 +231,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     var bytePerSecond = new OctetPerTime(TimeSpan.FromSeconds(1));
                     bytePerSecond.Start();
 
-                    var secondsStopWatch = new Stopwatch();
-                    var secondsBaseTime = TimeSpan.FromSeconds(1);
-                    long secondsReadSize = 0;
-                    long prevSecondsDownloadingSize = 0;
+                    //var secondsStopWatch = new Stopwatch();
+                    //var secondsBaseTime = TimeSpan.FromSeconds(1);
+                    //long secondsReadSize = 0;
+                    //long prevSecondsDownloadingSize = 0;
 
                     while(true) {
-                        if(secondsReadSize == 0) {
-                            secondsStopWatch.Restart();
-                        }
+                        //if(secondsReadSize == 0) {
+                        //    secondsStopWatch.Restart();
+                        //}
 
                         int currentReadSize = 0;
 
@@ -251,9 +251,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                     return;
                                 }
                                 currentReadSize = reader.Read(buffer, 0, buffer.Length);
-                                secondsReadSize += currentReadSize;
-
+                                //secondsReadSize += currentReadSize;
                                 bytePerSecond.Add(currentReadSize);
+
                                 break;
                             } catch(IOException ex) {
                                 var cancel = OnDownloadingError(errorCounter++, ex);
@@ -268,22 +268,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             break;
                         }
 
-                        var elapsedTime = secondsStopWatch.Elapsed;
-                        long secondsDownlodingSize = prevSecondsDownloadingSize;
+                        //var elapsedTime = secondsStopWatch.Elapsed;
+                        //long secondsDownlodingSize = prevSecondsDownloadingSize;
 
-                        if(secondsBaseTime <= elapsedTime) {
-                            //DODO: 超過分をきちんと割合比較
-                            secondsDownlodingSize = secondsReadSize;
-                            prevSecondsDownloadingSize = secondsDownlodingSize;
-                            secondsReadSize = 0;
-                        }
+                        //if(secondsBaseTime <= elapsedTime) {
+                        //    //DODO: 超過分をきちんと割合比較
+                        //    secondsDownlodingSize = secondsReadSize;
+                        //    prevSecondsDownloadingSize = secondsDownlodingSize;
+                        //    secondsReadSize = 0;
+                        //}
 
-                        Debug.WriteLine($"OLD: {secondsDownlodingSize}");
-                        Debug.WriteLine($"NEW: {bytePerSecond.Size}");
+                        //Debug.WriteLine($"OLD: {secondsDownlodingSize}");
+                        //Debug.WriteLine($"NEW: {bytePerSecond.Size}");
 
                         DownloadedSize += currentReadSize;
                         var slice = new ArraySegment<byte>(buffer, 0, currentReadSize);
-                        if(OnDownloading(slice, counter++, secondsDownlodingSize)) {
+                        if(OnDownloading(slice, counter++, bytePerSecond.Size)) {
                             Canceled = true;
                             return;
                         }
