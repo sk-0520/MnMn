@@ -21,6 +21,7 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
     {
         #region variable
 
+        string _reportMessage;
         string _reportFilePath;
         string _reportFileData;
         string _reportInformation;
@@ -42,6 +43,12 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
         #region property
 
         MainWindow View { get; set; }
+
+        public string ReportMessage
+        {
+            get { return this._reportMessage; }
+            set { SetVariableValue(ref this._reportMessage, value); }
+        }
 
         public string ReportFilePath
         {
@@ -177,6 +184,12 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 
         void InitializeCrash(CommandLine commandLine)
         {
+            var messageOption = "message";
+            if(commandLine.HasValue(messageOption)) {
+                var reportPath = commandLine.GetValue(messageOption);
+                ReportMessage = reportPath;
+            }
+
             var reportOption = "report";
             if(commandLine.HasValue(reportOption)) {
                 var reportPath = commandLine.GetValue(reportOption);

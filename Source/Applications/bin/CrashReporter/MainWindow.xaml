@@ -73,6 +73,7 @@
     <Grid Grid.Row="1" IsEnabled="{Binding IsBusy, Converter={StaticResource LogicalNotConverter}}">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
         <RowDefinition />
         <RowDefinition />
         <RowDefinition Height="Auto" />
@@ -82,17 +83,31 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Label Grid.Row="0" Grid.Column="0" Content="クラッシュレポート" />
-      <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.SelectAllOnFocus="True"  IsReadOnly="True" Text="{Binding ReportFilePath}" />
+      <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="クラッシュ内容" />
+      <TextBox 
+        Grid.Row="0" 
+        Grid.Column="1" 
+        mamc:TextBoxHelper.SelectAllOnFocus="True"  
+        IsReadOnly="True" 
+        BorderThickness="0"
+        Background="Transparent"
+        FontSize="14"
+        FontWeight="Bold"
+        Text="{Binding ReportMessage}" 
+        Foreground="{DynamicResource TextBrush}"
+      />
 
-      <Label Grid.Row="1" Grid.Column="0" Content="レポート内容" />
-      <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" AcceptsReturn="True" Text="{Binding ReportFileData}" />
+      <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="クラッシュレポート" />
+      <TextBox Grid.Row="1" Grid.Column="1" mamc:TextBoxHelper.SelectAllOnFocus="True"  IsReadOnly="True" Text="{Binding ReportFilePath}" />
 
-      <Label Grid.Row="2" Grid.Column="0" Content="追加情報" />
-      <TextBox Grid.Row="2" Grid.Column="1" mamc:TextBoxHelper.Watermark="追加情報があれば入力してください" AcceptsReturn="True" Text="{Binding ReportInformation}" />
+      <Label Grid.Row="2" Grid.Column="0" Content="レポート詳細" />
+      <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" AcceptsReturn="True" Text="{Binding ReportFileData}" />
 
-      <Label Grid.Row="3" Grid.Column="0" Content="連絡先" />
-      <TextBox Grid.Row="3" Grid.Column="1" mamc:TextBoxHelper.Watermark="開発側から連絡をしてもよい場合に入力してください" Text="{Binding ContactAddress}" />
+      <Label Grid.Row="3" Grid.Column="0" Content="追加情報" />
+      <TextBox Grid.Row="3" Grid.Column="1" mamc:TextBoxHelper.Watermark="追加情報があれば入力してください" AcceptsReturn="True" Text="{Binding ReportInformation}" />
+
+      <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Content="連絡先" />
+      <TextBox Grid.Row="4" Grid.Column="1" mamc:TextBoxHelper.Watermark="開発側から連絡をしてもよい場合に入力してください" Text="{Binding ContactAddress}" />
     </Grid>
 
     <Grid Grid.Row="2" TextElement.FontSize="24" Margin="0,20,0,0" IsEnabled="{Binding IsBusy, Converter={StaticResource LogicalNotConverter}}">
