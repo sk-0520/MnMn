@@ -589,6 +589,16 @@
         <TextBlock>]</TextBlock>
       </TextBlock>
       <Viewbox ToolTip="酷使するプレイヤーウィンドウ！" Style="{StaticResource SmallIconBox}" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Viewbox.ContextMenu>
+          <ContextMenu IsOpen="{Binding IsOpenWorkingPlayer}" ItemsSource="{Binding WorkingPlayerItems}">
+            <ContextMenu.ItemContainerStyle>
+              <Style TargetType="MenuItem">
+                <Setter Property="Header" Value="{Binding Title}"/>
+                <Setter Property="Command" Value="{Binding SwitchWorkingPlayerCommand}"/>
+              </Style>
+            </ContextMenu.ItemContainerStyle>
+          </ContextMenu>
+        </Viewbox.ContextMenu>
         <Viewbox.Effect>
           <DropShadowEffect Color="{DynamicResource WindowColor}" ShadowDepth="0" BlurRadius="2" />
         </Viewbox.Effect>

@@ -26,6 +26,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
@@ -33,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -40,6 +42,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using MahApps.Metro.Controls;
 using Meta.Vlc.Wpf;
@@ -53,6 +56,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #region property
 
         protected virtual SmileVideoPlayerSettingModel PlayerSetting { get { return Setting.Player; } }
+
+        public DateTime CreatedTimestamp { get; } = DateTime.Now;
 
         /// <summary>
         /// ウィンドウ要素。
@@ -121,6 +126,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public FewViewModel<bool> CanPlayNextVieo { get; } = new FewViewModel<bool>(false);
 
         public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
+
+        public bool IsOpenWorkingPlayer
+        {
+            get { return this._isOpenWorkingPlayer; }
+            set
+            {
+                if(SetVariableValue(ref this._isOpenWorkingPlayer, value)) {
+                    if(IsOpenWorkingPlayer) {
+                        var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
+                            .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
+                        ;
+                        WorkingPlayerItems.InitializeRange(players.OrderBy(p => p.CreatedTimestamp));
+                    }
+                }
+            }
+        }
+
+        public CollectionModel<SmileVideoPlayerViewModel> WorkingPlayerItems { get; } = new CollectionModel<SmileVideoPlayerViewModel>();
 
         #region window
 
