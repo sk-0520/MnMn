@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// ウィンドウ要素。
         /// </summary>
-        SmileVideoPlayerWindow View { get; set; }
+        public SmileVideoPlayerWindow View { get; private set; }
         /// <summary>
         /// プレイヤー要素。
         /// </summary>
@@ -132,14 +132,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._isOpenWorkingPlayer; }
             set
             {
-                if(SetVariableValue(ref this._isOpenWorkingPlayer, value)) {
-                    if(IsOpenWorkingPlayer) {
-                        var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
-                            .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
-                        ;
-                        WorkingPlayerItems.InitializeRange(players.OrderBy(p => p.CreatedTimestamp));
-                    }
+                if(!IsOpenWorkingPlayer && value) {
+                    var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
+                        .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
+                    ;
+                    WorkingPlayerItems.InitializeRange(players.OrderBy(p => p.CreatedTimestamp));
                 }
+                SetVariableValue(ref this._isOpenWorkingPlayer, value);
             }
         }
 

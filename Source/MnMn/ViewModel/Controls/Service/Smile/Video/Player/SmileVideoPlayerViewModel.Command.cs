@@ -620,6 +620,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                     p.IsWorkingPlayer.Value = false;
                                 }
                                 IsWorkingPlayer.Value = true;
+
+                                CommandManager.InvalidateRequerySuggested();
                             }
                         }
                     }
