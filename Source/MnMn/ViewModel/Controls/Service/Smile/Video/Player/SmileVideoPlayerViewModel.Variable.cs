@@ -117,6 +117,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _fillBackgroundOriginalPoster;
 
+        bool _isOpenWorkingPlayer;
+
         #endregion
     }
 }

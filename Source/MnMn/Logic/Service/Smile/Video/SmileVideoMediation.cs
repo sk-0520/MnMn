@@ -471,11 +471,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             window.DataContext = null;
 
             // 判断基準なし
-            var nextPlayer = Players
+            var players = Players
                 .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
                 .Where(vm => !(vm is SmileVideoLaboratoryPlayerViewModel)) // 任意再生は除外
-                .FirstOrDefault()
             ;
+            var nextPlayer =
+                players.FirstOrDefault(p => p.IsWorkingPlayer.Value)
+                ??
+                players.FirstOrDefault()
+            ;
+
             if(nextPlayer != null) {
                 nextPlayer.IsWorkingPlayer.Value = true;
             }
