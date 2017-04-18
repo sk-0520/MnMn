@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ChangePlayerSizeFromPercent(int percent)
         {
-            if(VisualVideoSize.IsEmpty) {
+            if(VisualVideoSize.Width <= 0 && VisualVideoSize.Height <= 0) {
                 return;
             }
             Debug.Assert(!WaitingFirstPlay.Value, "到達不可のはず");
