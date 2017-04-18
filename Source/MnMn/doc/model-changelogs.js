@@ -176,6 +176,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#541: MahApps.Metro 1.4.3 -> 1.5.0'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
