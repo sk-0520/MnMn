@@ -101,6 +101,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             var commentAreaHeight = (int)commentArea.Height;
             var myHeight = (int)element.ActualHeight;
+            // #534 調査中にあったなんだかわからん不具合対応
+            if(0 >= myHeight) {
+                myHeight = commentAreaHeight;
+            }
             var start = isAsc ? 0 : commentAreaHeight - myHeight;
             var last = isAsc ? commentAreaHeight - myHeight : 0;
 

@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         var percent = int.Parse((string)o);
                         ChangePlayerSizeFromPercent(percent);
                     },
-                    o => !WaitingFirstPlay.Value
+                    o => !WaitingFirstPlay.Value && IsSettedMedia && 0 < RealVideoWidth && 0 < RealVideoHeight
                 );
             }
         }
