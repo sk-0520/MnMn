@@ -153,6 +153,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static double SettingApplicationViewScale => appConfig.Get("setting-application-view-scale", double.Parse);
 
         /// <summary>
+        /// システム未操作が一定時間続いた場合に再起動するか。
+        /// </summary>
+        public static bool SettingApplicationAutoReboot => appConfig.Get("setting-application-auto-reboot", bool.Parse);
+        /// <summary>
+        /// システム未操作が一定時間続いた場合に再起動する判定時間。
+        /// </summary>
+        public static TimeSpan SettingApplicationAutoRebootTime => appConfig.Get("setting-application-auto-reboot-time", TimeSpan.Parse);
+
+        /// <summary>
         /// テーマ: ランダム。
         /// </summary>
         public static bool SettingApplicationThemeIsRandom => appConfig.Get("setting-application-theme-is-random", bool.Parse);

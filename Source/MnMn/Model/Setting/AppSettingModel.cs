@@ -67,6 +67,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         public double ViewScale { get; set; } = Constants.SettingApplicationViewScale;
 
         [DataMember]
+        public bool AutoReboot { get; set; } = Constants.SettingApplicationAutoReboot;
+        [DataMember]
+        public TimeSpan AutoRebootTime { get; set; } = Constants.SettingApplicationAutoRebootTime;
+
+        [DataMember]
         public RunningInformationSettingModel RunningInformation { get; set; } = new RunningInformationSettingModel();
 
         [DataMember]
