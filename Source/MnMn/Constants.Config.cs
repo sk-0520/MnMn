@@ -86,6 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// システム未操作の監視間隔。
         /// </summary>
         public static TimeSpan AutoRebootWatchTime => appConfig.Get("auto-reboot-watch-time", TimeSpan.Parse);
+        public static TimeSpan AutoRebootWaitTime => appConfig.Get("auto-reboot-wait-time", TimeSpan.Parse);
 
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 

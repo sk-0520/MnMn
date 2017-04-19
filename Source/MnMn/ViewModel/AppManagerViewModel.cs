@@ -325,6 +325,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         private void AutoRebootWatchTimer_Tick(object sender, EventArgs e)
         {
             AutoRebootWatchTimer.Stop();
+
+            var reboot = false;
+
             try {
                 if(!Setting.AutoReboot) {
                     return;
@@ -336,19 +339,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 if(!NativeMethods.GetLastInputInfo(ref lastInputInfo)) {
                     return;
                 }
+
                 var lastInputTime = lastInputInfo.dwTime;
                 var nowTime = NativeMethods.GetTickCount();
                 if(lastInputTime < nowTime) {
                     var elapsedTime = TimeSpan.FromMilliseconds(nowTime - lastInputTime);
                     if(Setting.AutoRebootTime < elapsedTime) {
-                        AutoRebootWatchTimer.Tick -= AutoRebootWatchTimer_Tick;
-                        Mediation.Logger.Information("reboot!");
-                        //WebNavigatorCore.Uninitialize();
-                        Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
+                        reboot = true;
                     }
                 }
             } finally {
-                AutoRebootWatchTimer.Start();
+                if(!reboot) {
+                    AutoRebootWatchTimer.Start();
+                }
+            }
+
+            if(reboot) {
+                Mediation.Logger.Information("reboot!");
+                Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
             }
         }
 
