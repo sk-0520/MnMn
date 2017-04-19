@@ -96,6 +96,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Interval = Constants.AutoRebootWatchTime,
         };
 
+        /// <summary>
+        /// 本体が起動した時点の Windows 稼働時間。
+        /// <para>BUGS: オーバーフロー。</para>
+        /// </summary>
+        TimeSpan StartupTime { get; } = TimeSpan.FromMilliseconds(NativeMethods.GetTickCount());
+
         public AppUpdateManagerViewModel AppUpdateManager { get; }
         public AppInformationManagerViewModel AppInformationManager { get; }
         public AppBrowserManagerViewModel AppBrowserManager { get; }
@@ -342,10 +348,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                     return;
                 }
 
-                var lastInputTime = lastInputInfo.dwTime;
-                var nowTime = NativeMethods.GetTickCount();
-                if(lastInputTime < nowTime) {
-                    var elapsedTime = TimeSpan.FromMilliseconds(nowTime - lastInputTime);
+                var lastInputTime = TimeSpan.FromMilliseconds(lastInputInfo.dwTime);
+                var nowRunningTime = TimeSpan.FromMilliseconds(NativeMethods.GetTickCount());
+
+                if(lastInputTime < nowRunningTime) {
+                    // 再起動後に最終入力時間見ると連続で再起動するからプログラム起動時間に補正してあげる
+                    var useLastInputTime = StartupTime < lastInputTime ? lastInputTime : StartupTime;
+                    var elapsedTime = nowRunningTime - useLastInputTime;
                     if(Constants.AutoRebootJudgeTime < elapsedTime) {
                         reboot = true;
                     }
