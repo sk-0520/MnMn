@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 二重起動抑制 Mutex。
         /// </summary>
-        Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
+        Mutex Mutex { get; set; } = new Mutex(false, Constants.ApplicationUsingName);
 
         /// <summary>
         /// スプラッシュスクリーン。
@@ -402,11 +402,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 logger.Information(Constants.ApplicationName, s);
             }
 
+            logger.Information($"mutex check: {Constants.ApplicationUsingName}");
             if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
                 logger.Warning($"{Constants.ApplicationUsingName} is opened"); ;
+                Mutex = null;
                 Shutdown();
                 return;
             }
+            logger.Information("mutex ok");
 
 #if DEBUG
             DoDebug();
@@ -487,7 +490,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Mutex.Dispose();
+            if(Mutex != null) {
+                Mutex.ReleaseMutex();
+                Mutex.Dispose();
+                Mutex = null;
+            }
 
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
 
