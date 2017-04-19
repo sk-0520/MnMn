@@ -82,6 +82,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static IReadOnlyRange<double> ViewScaleChangeRange => appConfig.Get("view-scale-change-range", RangeModel.Parse<double>);
         public static double[] ViewScaleList => appConfig.Get("view-scale-list", s => s.Split(';').Select(i => double.Parse(i)).ToArray());
 
+        /// <summary>
+        /// システム未操作の監視間隔。
+        /// </summary>
+        public static TimeSpan AutoRebootWatchTime => appConfig.Get("auto-reboot-watch-time", TimeSpan.Parse);
+
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
         /// <summary>
@@ -158,6 +163,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SettingApplicationAutoReboot => appConfig.Get("setting-application-auto-reboot", bool.Parse);
         /// <summary>
         /// システム未操作が一定時間続いた場合に再起動する判定時間。
+        /// <para><see cref="AutoRebootWatchTime"/>以上の値じゃないとダメぷー。</para>
         /// </summary>
         public static TimeSpan SettingApplicationAutoRebootTime => appConfig.Get("setting-application-auto-reboot-time", TimeSpan.Parse);
 

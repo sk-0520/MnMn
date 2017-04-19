@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -52,7 +53,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
-    public class AppManagerViewModel: ManagerViewModelBase
+    public class AppManagerViewModel : ManagerViewModelBase
     {
         #region variable
 
@@ -77,6 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
             BackgroundAutoSaveTimer.Tick += AutoSaveTimer_Tick;
             BackgroundGarbageCollectionTimer.Tick += BackgroundGarbageCollectionTimer_Tick;
+            AutoRebootWatchTimer.Tick += AutoRebootWatchTimer_Tick;
         }
 
         #region property
@@ -89,6 +91,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         };
         DispatcherTimer BackgroundGarbageCollectionTimer { get; } = new DispatcherTimer() {
             Interval = Constants.BackgroundGarbageCollectionTime,
+        };
+        DispatcherTimer AutoRebootWatchTimer { get; } = new DispatcherTimer() {
+            Interval = Constants.AutoRebootWatchTime,
         };
 
         public AppUpdateManagerViewModel AppUpdateManager { get; }
@@ -151,7 +156,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public double ViewScale
         {
             get { return Setting.ViewScale; }
-            set {
+            set
+            {
                 if(SetPropertyValue(Setting, value)) {
                     WebNavigatorUtility.ApplyWebNavigatorScale(View, ViewScale);
                 }
@@ -208,7 +214,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync()));
+            return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync())).ContinueWith(_ => {
+                AutoRebootWatchTimer.Start();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public override Task UninitializeAsync()
@@ -281,6 +289,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             BackgroundGarbageCollectionTimer.Stop();
             BackgroundGarbageCollectionTimer.Tick -= BackgroundGarbageCollectionTimer_Tick;
 
+            AutoRebootWatchTimer.Stop();
+            AutoRebootWatchTimer.Tick -= AutoRebootWatchTimer_Tick;
+
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
         }
@@ -311,6 +322,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
+        private void AutoRebootWatchTimer_Tick(object sender, EventArgs e)
+        {
+            AutoRebootWatchTimer.Stop();
+            try {
+                if(!Setting.AutoReboot) {
+                    return;
+                }
+
+                var lastInputInfo = new LASTINPUTINFO() {
+                    cbSize = (uint)LASTINPUTINFO.SizeOf,
+                };
+                if(!NativeMethods.GetLastInputInfo(ref lastInputInfo)) {
+                    return;
+                }
+                var lastInputTime = lastInputInfo.dwTime;
+                var nowTime = NativeMethods.GetTickCount();
+                if(lastInputTime < nowTime) {
+                    var elapsedTime = TimeSpan.FromMilliseconds(nowTime - lastInputTime);
+                    if(Setting.AutoRebootTime < elapsedTime) {
+                        AutoRebootWatchTimer.Tick -= AutoRebootWatchTimer_Tick;
+                        Mediation.Logger.Information("reboot!");
+                        //WebNavigatorCore.Uninitialize();
+                        Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
+                    }
+                }
+            } finally {
+                AutoRebootWatchTimer.Start();
+            }
+        }
 
     }
 }
