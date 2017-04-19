@@ -215,8 +215,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public override Task InitializeAsync()
         {
             return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync())).ContinueWith(_ => {
-                AutoRebootWatchTimer.Start();
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+                if(Constants.AutoRebootIsEnabled) {
+                    AutoRebootWatchTimer.Start();
+                }
+            });
         }
 
         public override Task UninitializeAsync()
@@ -329,9 +331,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             var reboot = false;
 
             try {
-                if(!Setting.AutoReboot) {
-                    return;
-                }
+                //if(!Constants.AutoRebootIsEnabled) {
+                //    return;
+                //}
 
                 var lastInputInfo = new LASTINPUTINFO() {
                     cbSize = (uint)LASTINPUTINFO.SizeOf,
@@ -344,7 +346,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 var nowTime = NativeMethods.GetTickCount();
                 if(lastInputTime < nowTime) {
                     var elapsedTime = TimeSpan.FromMilliseconds(nowTime - lastInputTime);
-                    if(Setting.AutoRebootTime < elapsedTime) {
+                    if(Constants.AutoRebootJudgeTime < elapsedTime) {
                         reboot = true;
                     }
                 }

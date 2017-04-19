@@ -86,7 +86,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// システム未操作の監視間隔。
         /// </summary>
         public static TimeSpan AutoRebootWatchTime => appConfig.Get("auto-reboot-watch-time", TimeSpan.Parse);
-        public static TimeSpan AutoRebootWaitTime => appConfig.Get("auto-reboot-wait-time", TimeSpan.Parse);
+        /// <summary>
+        /// システム未操作が一定時間続いた場合に再起動するか。
+        /// </summary>
+        public static bool AutoRebootIsEnabled => appConfig.Get("auto-reboot-is-enabled", bool.Parse);
+        /// <summary>
+        /// システム未操作が一定時間続いた場合に再起動する判定時間。
+        /// <para><see cref="AutoRebootWatchTime"/>以上の値じゃないとダメぷー。</para>
+        /// </summary>
+        public static TimeSpan AutoRebootJudgeTime => appConfig.Get("auto-reboot-judge-time", TimeSpan.Parse);
 
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
@@ -157,16 +165,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ビューの拡大率。
         /// </summary>
         public static double SettingApplicationViewScale => appConfig.Get("setting-application-view-scale", double.Parse);
-
-        /// <summary>
-        /// システム未操作が一定時間続いた場合に再起動するか。
-        /// </summary>
-        public static bool SettingApplicationAutoReboot => appConfig.Get("setting-application-auto-reboot", bool.Parse);
-        /// <summary>
-        /// システム未操作が一定時間続いた場合に再起動する判定時間。
-        /// <para><see cref="AutoRebootWatchTime"/>以上の値じゃないとダメぷー。</para>
-        /// </summary>
-        public static TimeSpan SettingApplicationAutoRebootTime => appConfig.Get("setting-application-auto-reboot-time", TimeSpan.Parse);
 
         /// <summary>
         /// テーマ: ランダム。
