@@ -82,6 +82,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static IReadOnlyRange<double> ViewScaleChangeRange => appConfig.Get("view-scale-change-range", RangeModel.Parse<double>);
         public static double[] ViewScaleList => appConfig.Get("view-scale-list", s => s.Split(';').Select(i => double.Parse(i)).ToArray());
 
+        /// <summary>
+        /// システム未操作の監視間隔。
+        /// </summary>
+        public static TimeSpan AutoRebootWatchTime => appConfig.Get("auto-reboot-watch-time", TimeSpan.Parse);
+        /// <summary>
+        /// システム未操作が一定時間続いた場合に再起動するか。
+        /// </summary>
+        public static bool AutoRebootIsEnabled => appConfig.Get("auto-reboot-is-enabled", bool.Parse);
+        /// <summary>
+        /// システム未操作が一定時間続いた場合に再起動する判定時間。
+        /// <para><see cref="AutoRebootWatchTime"/>以上の値じゃないとダメぷー。</para>
+        /// </summary>
+        public static TimeSpan AutoRebootJudgeTime => appConfig.Get("auto-reboot-judge-time", TimeSpan.Parse);
+
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
         /// <summary>
@@ -171,7 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// タブヘッダ部をマウスホイールでスクロールするか。
         /// <para>暫定対応: https://groups.google.com/d/topic/mnmn-forum/jm663Y8Wnn4/discussion </para>
         /// </summary>
-        public static bool FinderTabTabHeaderUsingMouseWheel => appConfig.Get("finder_tab-tab_header-using-mouse-wheel", bool.Parse);
+        public static bool FinderTabTabHeaderEnabledMouseWheel => appConfig.Get("finder_tab-tab_header-enabled-mouse-wheel", bool.Parse);
 
         public static string HttpRequestResponseHeaderAccept => appConfig.Get("http-request_response-header-accept");
         public static string HttpRequestResponseHeaderAcceptEncoding => appConfig.Get("http-request_response-header-accept-encoding");

@@ -228,16 +228,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     byte[] buffer = new byte[ReceiveBufferSize];
                     int counter = 1;
 
-                    var secondsStopWatch = new Stopwatch();
-                    var secondsBaseTime = TimeSpan.FromSeconds(1);
-                    long secondsReadSize = 0;
-                    long prevSecondsDownloadingSize = 0;
+                    var bytePerSecond = new OctetPerTime(TimeSpan.FromSeconds(1));
+                    bytePerSecond.Start();
 
                     while(true) {
-                        if(secondsReadSize == 0) {
-                            secondsStopWatch.Restart();
-                        }
-
                         int currentReadSize = 0;
 
                         int errorCounter = 1;
@@ -248,7 +242,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                     return;
                                 }
                                 currentReadSize = reader.Read(buffer, 0, buffer.Length);
-                                secondsReadSize += currentReadSize;
+                                bytePerSecond.Add(currentReadSize);
+
                                 break;
                             } catch(IOException ex) {
                                 var cancel = OnDownloadingError(errorCounter++, ex);
@@ -263,19 +258,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             break;
                         }
 
-                        var elapsedTime = secondsStopWatch.Elapsed;
-                        long secondsDownlodingSize = prevSecondsDownloadingSize;
-
-                        if(secondsBaseTime <= elapsedTime) {
-                            //DODO: 超過分をきちんと割合比較
-                            secondsDownlodingSize = secondsReadSize;
-                            prevSecondsDownloadingSize = secondsDownlodingSize;
-                            secondsReadSize = 0;
-                        }
-
                         DownloadedSize += currentReadSize;
                         var slice = new ArraySegment<byte>(buffer, 0, currentReadSize);
-                        if(OnDownloading(slice, counter++, secondsDownlodingSize)) {
+                        if(OnDownloading(slice, counter++, bytePerSecond.Size)) {
                             Canceled = true;
                             return;
                         }

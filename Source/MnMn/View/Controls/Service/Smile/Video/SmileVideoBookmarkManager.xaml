@@ -84,12 +84,17 @@
           </Viewbox>
         </Button>
         <Button Command="{Binding UpParentNodeCommand}" ToolTip="親ノードへ移動">
-          <Viewbox Style="{StaticResource SmallIconBox}">
-            <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_Item-Left}" Style="{StaticResource SmallDefaultIconPath}" />
-            </Canvas>
-          </Viewbox>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource SmallItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Item-Left}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <TextBlock>下げる</TextBlock>
+          </StackPanel>
         </Button>
+        <Separator />
+        <Button Command="{Binding ExpandAllNodeCommand}" Content="展開" ToolTip="全てのノートを展開" />
       </ToolBar>
       <TreeView Grid.Row="1" x:Name="treeNodes" AllowDrop="True">
         <TreeView.Resources>
@@ -124,7 +129,7 @@
                 </Button>
               </StackPanel>
             </Grid>
-            
+
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="commandsPlay" Property="Visibility" Value="Visible" />
@@ -134,7 +139,7 @@
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
-          
+
           <DataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkSystemNodeViewModel}">
             <Control Template="{StaticResource Node}" />
           </DataTemplate>

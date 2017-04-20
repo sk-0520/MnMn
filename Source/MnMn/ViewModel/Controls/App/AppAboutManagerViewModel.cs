@@ -341,6 +341,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             var stripSetting = SerializeUtility.LoadSetting<AppSettingModel>(settingStream, SerializeFileType.Json, Mediation.Logger);
 
             stripSetting.ServiceSmileSetting.Account = new Model.Setting.Service.Smile.SmileUserAccountModel();
+            stripSetting.RunningInformation.UserId = null;
 
             return stripSetting;
         }

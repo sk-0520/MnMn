@@ -37,6 +37,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public CollectionModel<SmileVideoVideoItemModel> Items { get; } = new CollectionModel<SmileVideoVideoItemModel>();
 
+        [DataMember]
+        public bool IsExpanded { get; set; } = true;
+
         #endregion
     }
 }
