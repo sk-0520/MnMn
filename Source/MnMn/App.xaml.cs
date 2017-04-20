@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #endif
             if(sendCrash) {
                 var args = $"/crash /report=\"{reportPath}\"";
-                args += $" /message=\"{exception.Message}({exception.GetType().FullName})\"";
+                args += $" /message=\"{exception.GetType().FullName}: {exception.Message}\"";
                 if(Constants.AppCrashReportIsDebug) {
                     args += " /debug";
                 }
