@@ -588,11 +588,27 @@
         <TextBlock Text="{Binding PlayerState, Mode=OneWay}"/>
         <TextBlock>]</TextBlock>
       </TextBlock>
-      <Viewbox ToolTip="酷使するプレイヤーウィンドウ！" Style="{StaticResource SmallIconBox}" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <Viewbox ToolTip="酷使するプレイヤーウィンドウ！" Style="{StaticResource SmallIconBox}" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}" >
+        <Viewbox.ContextMenu>
+          <ContextMenu IsOpen="{Binding IsOpenWorkingPlayer}" ItemsSource="{Binding WorkingPlayerItems}">
+            <ContextMenu.ItemContainerStyle>
+              <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsWorkingPlayer.Value}" Value="True">
+                    <Setter Property="FontWeight" Value="Bold" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Header" Value="{Binding Title}"/>
+                <Setter Property="Command" Value="{Binding SwitchWorkingPlayerCommand}"/>
+                <Setter Property="IsChecked" Value="{Binding IsWorkingPlayer.Value}" />
+              </Style>
+            </ContextMenu.ItemContainerStyle>
+          </ContextMenu>
+        </Viewbox.ContextMenu>
         <Viewbox.Effect>
           <DropShadowEffect Color="{DynamicResource WindowColor}" ShadowDepth="0" BlurRadius="2" />
         </Viewbox.Effect>
-        <Canvas Style="{StaticResource IconCanvas-24x24}">
+        <Canvas Style="{StaticResource IconCanvas-24x24}" Background="Transparent">
           <Path Data="{StaticResource Image_Worker}" Style="{StaticResource SmallAccentIconPath}" />
         </Canvas>
       </Viewbox>
@@ -1518,7 +1534,7 @@
                         <TextBlock Grid.Row="6" Grid.Column="0" Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}">表示不許可</TextBlock>
                         <TextBox Grid.Row="6" Grid.Column="1"  Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
 
-                        <Grid Grid.Row="7" Grid.Column="0" Style="{StaticResource FilteringGrid}">
+                        <Grid Grid.Row="7" Grid.Column="0" VerticalAlignment="Top" Margin="0,2" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">コメント</TextBlock>
                           <Button Grid.Column="1" Command="{Binding SetFilteringCommentCommand}" Style="{StaticResource FilteringButton}" >
                             <ContentControl ContentTemplate="{StaticResource FilterIcon}" />

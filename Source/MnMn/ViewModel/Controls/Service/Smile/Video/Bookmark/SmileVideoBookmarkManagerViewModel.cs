@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         }
                         AddNode(node);
                     },
-                    o => SelectedBookmarkNode != null
+                    o => SelectedBookmarkNode != null || !UserNodes.Any()
                 );
             }
         }
@@ -242,6 +242,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 );
             }
         }
+
+        public ICommand ExpandAllNodeCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var nodes = GetNodes(n => true);
+                        foreach(var node in nodes) {
+                            node.IsExpanded = true;
+                        }
+                    },
+                    o => UserNodes.Any()
+                );
+            }
+        }
+
 
         public ICommand SequentialPlayCommand
         {

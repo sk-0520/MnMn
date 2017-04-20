@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -519,7 +520,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public override bool IsOpenContextMenu
         {
             get { return base.IsOpenContextMenu; }
-            set {
+            set
+            {
                 if(value) {
                     ShowDownloadMenu = AppUtility.MoreOptionsShowable;
                 }

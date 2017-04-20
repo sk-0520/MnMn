@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
         private void DockPanel_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if(!Constants.FinderTabTabHeaderUsingMouseWheel) {
+            if(!Constants.FinderTabTabHeaderEnabledMouseWheel) {
                 return;
             }
 

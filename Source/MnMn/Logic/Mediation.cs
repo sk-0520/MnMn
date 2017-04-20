@@ -376,6 +376,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             WebNavigatorCore.Uninitialize();
 
             Process.Start(Constants.AssemblyPath, Environment.CommandLine);
+            //var processStartInfo = new ProcessStartInfo() {
+            //    FileName = Constants.AssemblyPath,
+            //    Arguments = Environment.CommandLine,
+            //    UseShellExecute = false,
+            //};
+            //Process.Start(processStartInfo);
             Application.Current.Shutdown();
             return true;
         }
