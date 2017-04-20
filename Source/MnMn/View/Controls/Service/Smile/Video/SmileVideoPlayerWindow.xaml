@@ -1534,7 +1534,7 @@
                         <TextBlock Grid.Row="6" Grid.Column="0" Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}">表示不許可</TextBlock>
                         <TextBox Grid.Row="6" Grid.Column="1"  Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
 
-                        <Grid Grid.Row="7" Grid.Column="0" Style="{StaticResource FilteringGrid}">
+                        <Grid Grid.Row="7" Grid.Column="0" VerticalAlignment="Top" Margin="0,2" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">コメント</TextBlock>
                           <Button Grid.Column="1" Command="{Binding SetFilteringCommentCommand}" Style="{StaticResource FilteringButton}" >
                             <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
