@@ -145,6 +145,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
             FinderUtility.ScrollItemsControlLoaded(this.PART_List, DataContext);
         }
 
+        private void MenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            foreach(var item in menuItem.Items.OfType<MenuItem>().Where(m => m != null)) {
+                var bind = BindingOperations.GetBinding(item, MenuItem.CommandProperty);
+                if(bind != null) {
+                    BindingOperations.ClearBinding(item, MenuItem.CommandProperty);
+                    BindingOperations.SetBinding(item, MenuItem.CommandProperty, bind);
+                }
+            }
+        }
+
         //ContextMenuOpening="PART_List_ContextMenuOpening"
         //private void PART_List_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         //{

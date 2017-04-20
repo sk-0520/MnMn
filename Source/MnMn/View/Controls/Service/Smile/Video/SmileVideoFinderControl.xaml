@@ -439,7 +439,7 @@
             </MenuItem>
 
             <Separator />
-            <MenuItem Header="クリップボードにコピー">
+            <MenuItem Header="クリップボードにコピー" IsSubmenuOpen="{Binding IsSubmenuOpenClipboard}" SubmenuOpened="MenuItem_SubmenuOpened">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -462,10 +462,10 @@
                   <MenuItem Header="カスタム" Command="{Binding CopyCustomInformationCommand}" Style="{StaticResource {x:Type MenuItem}}" />
                   <MenuItem Header="動画ID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.VideoId}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="タイトル" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.Title}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="ユーザーID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserId}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="ユーザー名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="チャンネルID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="チャンネル名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="ユーザーID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserId}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="ユーザー名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="チャンネルID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="チャンネル名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}"  Style="{StaticResource {x:Type MenuItem}}"/>
 
                   <Separator Style="{StaticResource TagSeparator}" />
                   <CollectionContainer Collection="{Binding Source={StaticResource TagList}}" />

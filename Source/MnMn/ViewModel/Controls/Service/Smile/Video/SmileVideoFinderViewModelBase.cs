@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -66,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _showContinuousPlaybackMenu;
 
         bool _showDownloadMenu;
+
+        bool _isSubmenuOpenClipboard;
 
         #endregion
 
@@ -183,6 +186,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._showDownloadMenu; }
             set { SetVariableValue(ref this._showDownloadMenu, value); }
+        }
+
+        public bool IsSubmenuOpenClipboard
+        {
+            get { return this._isSubmenuOpenClipboard; }
+            set
+            {
+                if(SetVariableValue(ref this._isSubmenuOpenClipboard, value)) {
+                    if(IsSubmenuOpenClipboard) {
+                        Application.Current.Dispatcher.BeginInvoke(new Action(async () => {
+                            System.Media.SystemSounds.Beep.Play();
+                            await Task.Delay(TimeSpan.FromSeconds(2));
+                            System.Media.SystemSounds.Beep.Play();
+                            CommandManager.InvalidateRequerySuggested();
+                        }), DispatcherPriority.ApplicationIdle);
+                    }
+                }
+            }
         }
 
         #endregion
@@ -519,7 +540,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public override bool IsOpenContextMenu
         {
             get { return base.IsOpenContextMenu; }
-            set {
+            set
+            {
                 if(value) {
                     ShowDownloadMenu = AppUtility.MoreOptionsShowable;
                 }
