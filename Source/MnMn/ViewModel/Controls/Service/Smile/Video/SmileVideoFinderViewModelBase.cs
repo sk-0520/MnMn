@@ -68,8 +68,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _showDownloadMenu;
 
-        bool _isSubmenuOpenClipboard;
-
         #endregion
 
         public SmileVideoFinderViewModelBase(Mediation mediation, int baseNumber)
@@ -186,24 +184,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._showDownloadMenu; }
             set { SetVariableValue(ref this._showDownloadMenu, value); }
-        }
-
-        public bool IsSubmenuOpenClipboard
-        {
-            get { return this._isSubmenuOpenClipboard; }
-            set
-            {
-                if(SetVariableValue(ref this._isSubmenuOpenClipboard, value)) {
-                    if(IsSubmenuOpenClipboard) {
-                        Application.Current.Dispatcher.BeginInvoke(new Action(async () => {
-                            System.Media.SystemSounds.Beep.Play();
-                            await Task.Delay(TimeSpan.FromSeconds(2));
-                            System.Media.SystemSounds.Beep.Play();
-                            CommandManager.InvalidateRequerySuggested();
-                        }), DispatcherPriority.ApplicationIdle);
-                    }
-                }
-            }
         }
 
         #endregion

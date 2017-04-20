@@ -439,7 +439,7 @@
             </MenuItem>
 
             <Separator />
-            <MenuItem Header="クリップボードにコピー" IsSubmenuOpen="{Binding IsSubmenuOpenClipboard}" SubmenuOpened="MenuItem_SubmenuOpened">
+            <MenuItem Header="クリップボードにコピー" SubmenuOpened="MenuItem_SubmenuOpened">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">

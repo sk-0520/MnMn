@@ -148,6 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         private void MenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
         {
             var menuItem = (MenuItem)sender;
+            menuItem.SubmenuOpened -= MenuItem_SubmenuOpened;
             foreach(var item in menuItem.Items.OfType<MenuItem>().Where(m => m != null)) {
                 var bind = BindingOperations.GetBinding(item, MenuItem.CommandProperty);
                 if(bind != null) {
