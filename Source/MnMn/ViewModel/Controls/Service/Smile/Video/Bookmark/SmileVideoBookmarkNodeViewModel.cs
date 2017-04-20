@@ -35,7 +35,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         #region variable
 
         bool _isSelected = false;
-        bool _isExpanded = true;
         int _level;
 
         //string _editingName;
@@ -62,8 +61,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
         public bool IsExpanded
         {
-            get { return this._isExpanded; }
-            set { SetVariableValue(ref this._isExpanded, value); }
+            get { return Model.IsExpanded; }
+            set { SetModelValue(value); }
         }
 
         public int Level
