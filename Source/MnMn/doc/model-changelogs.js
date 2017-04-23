@@ -132,7 +132,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#546: 灰色テーマの線が死んでる',
+						'comments': [
+							'0.61.0 の #541 で色定義変わってたっぽい'
+						]
 					},
 					{
 						'revision': '',
@@ -145,9 +148,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '#546: 灰色テーマの線が死んでる',
+						'subject': '#543: DllNotFoundException のクラッシュレポートに代替データストリームも表示させる',
 						'comments': [
-							'0.61.0 の #541 で色定義変わってたっぽい'
+							'Trinet.Core.IO.Ntfs を使用',
+							'非 NTFS 環境未考慮'
 						]
 					},
 					{
