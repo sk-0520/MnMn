@@ -272,6 +272,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //SmileSession
         }
 
+        IEnumerable<string> GetFilePathAndAds(string filePath)
+        {
+            yield return filePath;
+        }
+
         /// <summary>
         /// クラッシュレポートに例外から拡張情報を設定する。
         /// </summary>
@@ -283,6 +288,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             if(ex is DllNotFoundException) {
                 var appDir = Constants.AssemblyRootDirectoryPath;
                 var files = Directory.GetFiles(appDir, "*", SearchOption.AllDirectories)
+                    .Select(f => GetFilePathAndAds(f))
+                    .SelectMany(fs => fs)
                     .Select(f => f.Substring(appDir.Length))
                 ;
                 information.Text = string.Join(Environment.NewLine, files);
