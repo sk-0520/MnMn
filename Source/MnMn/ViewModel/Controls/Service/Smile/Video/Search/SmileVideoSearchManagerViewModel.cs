@@ -20,6 +20,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -199,6 +201,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public CollectionModel<SmileVideoTagViewModel> RecommendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
         public CollectionModel<SmileVideoTagViewModel> TrendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
+
+        bool UsingIme { get; set; }
 
         #endregion
 
@@ -510,6 +514,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+
+        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            UsingIme = InputMethod.Current.ImeState == InputMethodState.On;
+        }
+
+        private void OnPreviewTextInputStart(object sender, TextCompositionEventArgs e)
+        {
+            UsingIme = InputMethod.Current.ImeState == InputMethodState.On;
+        }
+
+        private void OnPreviewTextInputUpdate(object sender, TextCompositionEventArgs e)
+        {
+            if(e.TextComposition.CompositionText.Length == 0) {
+                UsingIme = false;
+            }
+        }
+
         #endregion
 
         #region ManagerViewModelBase
@@ -546,7 +568,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         }
 
         public override void InitializeView(MainWindow view)
-        { }
+        {
+            view.smile.search.listSearch.AddHandler(
+                TextBoxBase.TextChangedEvent,
+                new TextChangedEventHandler(listSearch_TextChanged)
+            );
+
+            TextCompositionManager.AddPreviewTextInputHandler(view.smile.search.listSearch, OnPreviewTextInput);
+            TextCompositionManager.AddPreviewTextInputStartHandler(view.smile.search.listSearch, OnPreviewTextInputStart);
+            TextCompositionManager.AddPreviewTextInputUpdateHandler(view.smile.search.listSearch, OnPreviewTextInputUpdate);
+        }
 
         public override void UninitializeView(MainWindow view)
         { }
@@ -557,5 +588,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         }
 
         #endregion
+
+        private void listSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(UsingIme) {
+                return;
+            }
+        }
+
     }
 }
