@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<div class="warning">
+			<p>
+				セーフモードは常用使用を想定していません。
+			</p>
+		</div>
+
+		<h2>セーフモード</h2>
+		<p>
+			セーフモードで起動すると既存の設定ファイルを使用せずセーフモード用の設定ファイルを<strong>常に新規作成</strong>して使用します。
+		</p>
+		<p>
+			初期設定状態で特定機能だけ設定変更して動作を確認するのが想定している使用方法です。
+		</p>
+
+		<h3>使用方法</h3>
+		<p>
+			<em class="file">&lt;MnMn&gt;\bat\safe-mode.bat</em> を実行することでセーフモードで <span class="word">app</span> を起動します。
+		</p>
+
+		<h3>終了時</h3>
+		<p>
+			<span class="word">app</span> を終了すると作成されたセーフモード用設定ファイルが開かれます。<br />
+			基本的には既存設定ファイルと同じディレクトリに <span class="file">safe-mode_setting.json</span> が保存されます。
+		</p>
+		<div class="warning">
+			<p>
+				セーフモード用設定ファイルは常に新規作成されます。
+			</p>
+		</div>
+
+		<h3>運用制限</h3>
+		<p>
+			セーフモードで実行している間はいくつかの運用注意・機能制限が掛かります。
+		</p>
+		<ul>
+			<li><strong>使用許諾は表示されませんが許諾されたものとします。</strong></li>
+			<li>アップデート処理は実施できません。</li>
+			<li>(セーフモード用の)設定ファイルは自動バックアップ対象外です。</li>
+			<li>キャッシュデータ・キャッシュの個別設定については通常起動時の設定を用いるため注意してください。</li>
+		</ul>
+
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>
