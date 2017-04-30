@@ -1177,6 +1177,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetCommentInformation(string text)
         {
             CommentInformation = text;
+            Mediation.Logger.Trace(text);
         }
 
         protected void ResetCommentInformation()
