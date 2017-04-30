@@ -419,6 +419,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 Shutdown();
             }
 #endif
+            ShowSafeModeFlag();
+
             var logger = new Pe.PeMain.Logic.AppLogger();
             logger.IsStock = true;
 
@@ -529,10 +531,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Loaded += MainWindow_Loaded;
             SplashWindow.commandClose.Visibility = Visibility.Collapsed;
             MainWindow.Show();
-
-#if !DEBUG
-            ShowSafeModeFlag();
-#endif
         }
 
         protected override void OnExit(ExitEventArgs e)
