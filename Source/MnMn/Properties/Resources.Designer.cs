@@ -1018,6 +1018,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   セーフモードとして起動されました。
+        ///セーフモード起動はセーフモード用の本体設定ファイルを新規作成・上書きします。
+        ///影響範囲は本体設定のみになるためキャッシュ・キャッシュ個別の設定ファイルに実行が影響します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_ExecuteSafeMode_Information {
+            get {
+                return ResourceManager.GetString("String_App_ExecuteSafeMode_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   URIをコピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_IDescription_MenuCopyUri {

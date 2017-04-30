@@ -524,4 +524,9 @@
   <data name="String_App_Splash_Execute_SafeMode" xml:space="preserve">
     <value>セーフモード</value>
   </data>
+  <data name="String_App_ExecuteSafeMode_Information" xml:space="preserve">
+    <value>セーフモードとして起動されました。
+セーフモード起動はセーフモード用の本体設定ファイルを新規作成・上書きします。
+影響範囲は本体設定のみになるためキャッシュ・キャッシュ個別の設定ファイルに実行が影響します。</value>
+  </data>
 </root>

@@ -153,8 +153,21 @@ namespace ContentTypeTextNet.MnMn.MnMn
         CheckResultModel<AppSettingModel> LoadSetting(ILogger logger)
         {
             var dir = VariableConstants.GetSettingDirectory();
-            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+            var fileName = Constants.SettingFileName;
+
+            if(VariableConstants.IsSafeModeExecute) {
+                // セーフモードの場合は影響しないファイル名に変更する
+                fileName = Constants.SafeModeSettingFileName;
+            }
+
+            var filePath = Path.Combine(dir.FullName, fileName);
             var existsFile = File.Exists(filePath);
+
+            if(VariableConstants.IsSafeModeExecute && existsFile) {
+                // セーフモードはファイル初期化状態で起動させる
+                File.Delete(filePath);
+                existsFile = false;
+            }
 
             var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
 
@@ -172,6 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #if FORCE_ACCEPT
             var a = true; if(a) return false;
 #endif
+
             if(!model.Accept) {
                 // 完全に初回
                 logger.Debug("first");
@@ -356,6 +370,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
+        void ShowSafeModeFlag()
+        {
+            if(VariableConstants.IsSafeModeExecute) {
+                var dialogResult = MessageBox.Show(
+                    MnMn.Properties.Resources.String_App_ExecuteSafeMode_Information,
+                    $"{Constants.ApplicationName}:{Constants.ApplicationVersion}",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.DefaultDesktopOnly
+                );
+            }
+        }
+
         async Task CheckAndRenewalUserIdAsync(AppSettingModel setting)
         {
             if(!AppUtility.ValidateUserId(setting.RunningInformation.UserId)) {
@@ -443,26 +471,30 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppUtility.InitializeTheme(Mediation.Logger);
             AppUtility.SetTheme(setting.Theme);
 
-            if(!CheckAccept(setting.RunningInformation, logger)) {
-                var acceptViewModel = new AcceptViewModel(Mediation);
-                var acceptWindow = new AcceptWindow() {
-                    DataContext = acceptViewModel,
-                };
-                acceptViewModel.SetView(acceptWindow);
-                acceptViewModel.Initialize();
+            // セーフモードの場合許諾ウィンドウは表示しない
+            if(!VariableConstants.IsSafeModeExecute) {
+                if(!CheckAccept(setting.RunningInformation, logger)) {
+                    var acceptViewModel = new AcceptViewModel(Mediation);
+                    var acceptWindow = new AcceptWindow() {
+                        DataContext = acceptViewModel,
+                    };
+                    acceptViewModel.SetView(acceptWindow);
+                    acceptViewModel.Initialize();
 
-                var acceptResult = acceptWindow.ShowDialog();
-                if(!acceptResult.GetValueOrDefault()) {
-                    Shutdown();
-                    return;
-                }
+                    var acceptResult = acceptWindow.ShowDialog();
+                    if(!acceptResult.GetValueOrDefault()) {
+                        Shutdown();
+                        return;
+                    }
 
-                var isFirst = !settingResult.IsSuccess;
-                if(isFirst) {
-                    setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
-                    setting.RunningInformation.FirstTimestamp = DateTime.Now;
+                    var isFirst = !settingResult.IsSuccess;
+                    if(isFirst) {
+                        setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
+                        setting.RunningInformation.FirstTimestamp = DateTime.Now;
+                    }
                 }
             }
+
             if(setting.RunningInformation.FirstVersion == null) {
                 setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
                 setting.RunningInformation.FirstTimestamp = DateTime.Now;
@@ -502,6 +534,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Loaded += MainWindow_Loaded;
             SplashWindow.commandClose.Visibility = Visibility.Collapsed;
             MainWindow.Show();
+
+#if !DEBUG
+            ShowSafeModeFlag();
+#endif
         }
 
         protected override void OnExit(ExitEventArgs e)
