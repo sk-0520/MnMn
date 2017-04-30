@@ -190,6 +190,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string HttpRequestResponseHeaderAccept => appConfig.Get("http-request_response-header-accept");
         public static string HttpRequestResponseHeaderAcceptEncoding => appConfig.Get("http-request_response-header-accept-encoding");
 
+        public static bool ComboBoxInputIme549Enabled => appConfig.Get("combobox-input-ime-549-enabled", bool.Parse);
+
         #endregion
     }
 }

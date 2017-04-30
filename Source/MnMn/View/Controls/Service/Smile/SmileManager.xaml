@@ -40,7 +40,7 @@
     </ToolBar>
     <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
       <TabItem Header="検索" DataContext="{Binding VideoManager.SearchManager}" Style="{StaticResource SectionTabItem}">
-        <app_view_controls_service_smile_video:SmileVideoSearchManager />
+        <app_view_controls_service_smile_video:SmileVideoSearchManager x:Name="search" />
       </TabItem>
       <TabItem Header="ランキング" DataContext="{Binding VideoManager.RankingManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoRankingManager />
