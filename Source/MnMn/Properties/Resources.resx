@@ -521,4 +521,7 @@
   <data name="String_App_Define_DownloadState_Waiting" xml:space="preserve">
     <value>待機中</value>
   </data>
+  <data name="String_App_Splash_Execute_SafeMode" xml:space="preserve">
+    <value>セーフモード</value>
+  </data>
 </root>

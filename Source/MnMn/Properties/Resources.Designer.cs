@@ -1090,6 +1090,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   セーフモード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Splash_Execute_SafeMode {
+            get {
+                return ResourceManager.GetString("String_App_Splash_Execute_SafeMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   未定義ジェスチャ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Unknown_Gesture {

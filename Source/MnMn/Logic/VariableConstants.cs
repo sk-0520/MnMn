@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public static bool HasOptionExecuteBetaVersion => CommandLine.HasOption(optionExecuteBetaVersion);
 
         const string optionExecuteMode = "execute";
-        public static bool HasOptionExecuteMode => CommandLine.HasOption(optionExecuteMode);
+        public static bool HasOptionExecuteMode => CommandLine.HasValue(optionExecuteMode);
         public static bool IsSafeModeExecute => HasOptionExecuteMode && CommandLine.GetValue(optionExecuteMode) == "safe-mode";
 
         #endregion
