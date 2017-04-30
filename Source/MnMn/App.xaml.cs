@@ -153,12 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         CheckResultModel<AppSettingModel> LoadSetting(ILogger logger)
         {
             var dir = VariableConstants.GetSettingDirectory();
-            var fileName = Constants.SettingFileName;
-
-            if(VariableConstants.IsSafeModeExecute) {
-                // セーフモードの場合は影響しないファイル名に変更する
-                fileName = Constants.SafeModeSettingFileName;
-            }
+            var fileName = VariableConstants.SettingFileName;
 
             var filePath = Path.Combine(dir.FullName, fileName);
             var existsFile = File.Exists(filePath);

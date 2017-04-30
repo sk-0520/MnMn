@@ -390,7 +390,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         bool OrderCore_Save(AppSaveOrderModel order)
         {
             var settingDirectory = VariableConstants.GetSettingDirectory();
-            var settingFilePath = Path.Combine(settingDirectory.FullName, Constants.SettingFileName);
+            var settingFilePath = Path.Combine(settingDirectory.FullName, VariableConstants.SettingFileName);
             SerializeUtility.SaveSetting(settingFilePath, Setting, SerializeFileType.Json, true, Logger);
 
             if(order.IsBackup) {
