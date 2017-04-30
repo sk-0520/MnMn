@@ -146,6 +146,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._useOldUpdateIssue518, value); }
         }
 
+        public bool IsEnabledUpdate
+        {
+            get
+            {
+                return !VariableConstants.IsSafeModeExecute;
+            }
+        }
+
         #endregion
 
         #region command
@@ -545,6 +553,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override Task InitializeAsync()
         {
+            if(VariableConstants.IsSafeModeExecute) {
+                return Task.CompletedTask;
+            }
+
             return CheckVersionAsync().ContinueWith(t => {
                 BackgroundUpdateCheckTimer.Start();
             });

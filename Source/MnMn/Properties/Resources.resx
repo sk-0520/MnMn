@@ -393,6 +393,7 @@
   </data>
   <data name="String_App_ExecuteBetaVersion_Warning" xml:space="preserve">
     <value>この MnMn はβ版ですが、β版として起動されていません。
+
 明示的な起動(/execute-beta)が行われておらず、設定データ・キャッシュがリリース版と混在する可能性があるためこのまま続行することはお勧めしません。
 β版をリリース版と混合せず使用するには "&lt;MnMn&gt;\bat\beta.bat" を実行してください。
 
@@ -520,5 +521,19 @@
   </data>
   <data name="String_App_Define_DownloadState_Waiting" xml:space="preserve">
     <value>待機中</value>
+  </data>
+  <data name="String_App_Splash_Execute_SafeMode" xml:space="preserve">
+    <value>セーフモード</value>
+  </data>
+  <data name="String_App_ExecuteSafeMode_Information" xml:space="preserve">
+    <value>セーフモードとして起動されました。
+
+!!注意!!
+セーフモードでは使用許諾が表示されませんが許諾されたものとします。
+
+セーフモードは専用の本体設定ファイルを常に新規作成するため既存の設定ファイルに影響を与えず問題の特定を行えます。
+ただしキャッシュ・キャッシュ個別の設定ファイルは実行内容が反映されます。
+
+MnMn 終了時に専用設定ファイルが開かれます。</value>
   </data>
 </root>

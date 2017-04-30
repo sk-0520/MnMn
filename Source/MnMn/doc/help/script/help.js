@@ -167,6 +167,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'others-safe_mode',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'セーフモード'
+		}
+	},
+	{
 		name: 'others-beta',
 		localize: true,
 		level: 1,

@@ -281,6 +281,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string SettingFileName { get; } = "setting.json";
         /// <summary>
+        /// セーフモードで使用する設定ファイル名。
+        /// </summary>
+        public static string SafeModeSettingFileName { get; }= "safe-mode_setting.json";
+        /// <summary>
         /// 情報ファイル名。
         /// </summary>
         public static string InformationFileName { get; } = "information.txt";

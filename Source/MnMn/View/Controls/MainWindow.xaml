@@ -107,7 +107,7 @@
         </TabItem.Header>
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
-      <TabItem DataContext="{Binding AppUpdateManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding AppUpdateManager}" IsEnabled="{Binding IsEnabledUpdate, Mode=OneTime}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
           <StackPanel>
             <StackPanel.ToolTip>

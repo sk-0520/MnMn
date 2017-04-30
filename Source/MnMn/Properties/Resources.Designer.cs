@@ -1006,6 +1006,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         
         /// <summary>
         ///   この MnMn はβ版ですが、β版として起動されていません。
+        ///
         ///明示的な起動(/execute-beta)が行われておらず、設定データ・キャッシュがリリース版と混在する可能性があるためこのまま続行することはお勧めしません。
         ///β版をリリース版と混合せず使用するには &quot;&lt;MnMn&gt;\bat\beta.bat&quot; を実行してください。
         ///
@@ -1014,6 +1015,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_ExecuteBetaVersion_Warning {
             get {
                 return ResourceManager.GetString("String_App_ExecuteBetaVersion_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   セーフモードとして起動されました。
+        ///
+        ///!!注意!!
+        ///セーフモードでは使用許諾が表示されませんが許諾されたものとします。
+        ///
+        ///セーフモードは専用の本体設定ファイルを常に新規作成するため既存の設定ファイルに影響を与えず問題の特定を行えます。
+        ///ただしキャッシュ・キャッシュ個別の設定ファイルは実行内容が反映されます。
+        ///
+        ///MnMn 終了時に専用設定ファイルが開かれます。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_ExecuteSafeMode_Information {
+            get {
+                return ResourceManager.GetString("String_App_ExecuteSafeMode_Information", resourceCulture);
             }
         }
         
@@ -1086,6 +1104,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_Setting_PublicExportFileName {
             get {
                 return ResourceManager.GetString("String_App_Setting_PublicExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   セーフモード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Splash_Execute_SafeMode {
+            get {
+                return ResourceManager.GetString("String_App_Splash_Execute_SafeMode", resourceCulture);
             }
         }
         
