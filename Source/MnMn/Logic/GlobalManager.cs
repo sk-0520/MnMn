@@ -16,6 +16,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static RecyclableMemoryStreamManager MemoryStream { get; } = new RecyclableMemoryStreamManager();
 
+        public static bool? IsEnabledScreenSaver { get; set; }
+
         #endregion
     }
 }

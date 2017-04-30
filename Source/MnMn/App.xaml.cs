@@ -411,6 +411,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var screenSaverFlag = 0;
             NativeMethods.SystemParametersInfo(SPI.SPI_GETSCREENSAVEACTIVE, 0, ref screenSaverFlag, SPIF.None);
             var isEnabledScreenSaver = screenSaverFlag != 0 ? true : false;
+
+            Mediation.Logger.Information($"SPI_GETSCREENSAVEACTIVE: {isEnabledScreenSaver}");
+            GlobalManager.IsEnabledScreenSaver = isEnabledScreenSaver;
         }
 
         #endregion
