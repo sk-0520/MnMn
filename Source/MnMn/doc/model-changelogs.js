@@ -147,6 +147,14 @@
 					},
 					{
 						'revision': '',
+						'subject': '#549: 動画検索における検索タグ・ワード入力 UI で IME 未確定文字が補完される',
+						'comments': [
+							'旧処理ロジックに戻す場合は App.config を修正すること',
+							'`combobox-input-ime-549-enabled`: Boolean, #549対応を使用するか'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
