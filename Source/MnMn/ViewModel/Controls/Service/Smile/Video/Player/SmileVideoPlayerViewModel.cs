@@ -1122,10 +1122,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
         {
-            if(CommentThread == null) {
-                var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
-                ImportCommentThread(rawMessagePacket);
-            }
+            // #548
+            //if(CommentThread == null) {
+            //    var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
+            //    ImportCommentThread(rawMessagePacket);
+            //}
+            var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
+            ImportCommentThread(rawMessagePacket);
 
             var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
             Debug.Assert(CommentThread.Thread == Information.ThreadId);
