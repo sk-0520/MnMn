@@ -569,14 +569,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override void InitializeView(MainWindow view)
         {
-            view.smile.search.listSearch.AddHandler(
-                TextBoxBase.TextChangedEvent,
-                new TextChangedEventHandler(listSearch_TextChanged)
-            );
+            if(Constants.ComboBoxInputIme549Enabled) {
+                view.smile.search.listSearch.AddHandler(
+                    TextBoxBase.TextChangedEvent,
+                    new TextChangedEventHandler(listSearch_TextChanged)
+                );
 
-            TextCompositionManager.AddPreviewTextInputHandler(view.smile.search.listSearch, OnPreviewTextInput);
-            TextCompositionManager.AddPreviewTextInputStartHandler(view.smile.search.listSearch, OnPreviewTextInputStart);
-            TextCompositionManager.AddPreviewTextInputUpdateHandler(view.smile.search.listSearch, OnPreviewTextInputUpdate);
+                TextCompositionManager.AddPreviewTextInputHandler(view.smile.search.listSearch, OnPreviewTextInput);
+                TextCompositionManager.AddPreviewTextInputStartHandler(view.smile.search.listSearch, OnPreviewTextInputStart);
+                TextCompositionManager.AddPreviewTextInputUpdateHandler(view.smile.search.listSearch, OnPreviewTextInputUpdate);
+            }
         }
 
         public override void UninitializeView(MainWindow view)
