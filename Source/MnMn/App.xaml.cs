@@ -38,6 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
+using Trinet.Core.IO.Ntfs;
 
 #if !DEBUG && !BETA
 #if FORCE_ACCEPT
@@ -272,6 +273,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //SmileSession
         }
 
+        IEnumerable<string> GetFilePathAndAds(string filePath)
+        {
+            yield return filePath;
+
+            var streams = FileSystem.ListAlternateDataStreams(filePath);
+            foreach(var stream in streams) {
+                yield return stream.FullPath;
+                yield return $"\t{nameof(stream.Size)}: {stream.Size}";
+                yield return $"\t{nameof(stream.StreamType)}: {stream.StreamType}";
+                yield return $"\t{nameof(stream.Attributes)}: {stream.Attributes}";
+            }
+        }
+
         /// <summary>
         /// クラッシュレポートに例外から拡張情報を設定する。
         /// </summary>
@@ -283,7 +297,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             if(ex is DllNotFoundException) {
                 var appDir = Constants.AssemblyRootDirectoryPath;
                 var files = Directory.GetFiles(appDir, "*", SearchOption.AllDirectories)
-                    .Select(f => f.Substring(appDir.Length))
+                    .Select(f => GetFilePathAndAds(f))
+                    .SelectMany(fs => fs)
+                    .Select(f => appDir.Length <= f.Length ? f.Substring(appDir.Length): f)
                 ;
                 information.Text = string.Join(Environment.NewLine, files);
             }
