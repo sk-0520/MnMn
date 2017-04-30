@@ -146,6 +146,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._useOldUpdateIssue518, value); }
         }
 
+        public bool IsEnabledUpdate
+        {
+            get
+            {
+                return !VariableConstants.IsSafeModeExecute;
+            }
+        }
+
         #endregion
 
         #region command

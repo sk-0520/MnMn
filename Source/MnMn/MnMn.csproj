@@ -1040,6 +1040,9 @@
     <Resource Include="Resources\Service\Smile\Service-Header.png" />
     <Resource Include="Resources\MnMn.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
+    <Content Include="bat\safe-mode.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\app.manifest" />
     <None Include="Resources\File\Xaml\DescriptionLink.xaml">
       <SubType>Designer</SubType>
@@ -1365,9 +1368,9 @@
     <None Include="%40MnMn.exe.user.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="bat\beta.bat">
+    <Content Include="bat\beta.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="MnMn.exe.user.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
