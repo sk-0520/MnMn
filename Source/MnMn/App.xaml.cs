@@ -575,6 +575,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
             WebNavigatorCore.Uninitialize();
 
             AppManager.UninitializeView(View);
+
+            if(VariableConstants.IsSafeModeExecute) {
+                var dir = VariableConstants.GetSettingDirectory();
+                var fileName = VariableConstants.SettingFileName;
+
+                var filePath = Path.Combine(dir.FullName, fileName);
+                if(File.Exists(filePath)) {
+                    ShellUtility.OpenFileInDirectory(new FileInfo(filePath), Mediation.Logger);
+                }
+            }
         }
 
         private async void App_Exit(object sender, ExitEventArgs e)
