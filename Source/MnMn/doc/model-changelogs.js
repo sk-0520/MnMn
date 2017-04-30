@@ -85,24 +85,20 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.61.1',
-		'isRc': true,
+		'date': '2017/04/30',
+		'version': '0.62.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': "#551: めっちゃ根が深い疑惑の「DLL 'mozglue' を読み込めません:指定されたモジュールが見つかりません」",
+						'comments': [
+							'これ、思ってた問題と異なってる気がしてならないから今回アップデートは #551 調査用の仕組みを #543 で組み込んで一旦リリース',
+							'ちょい様子見かなぁ'
+						]
 					}
 				]
 			},
@@ -110,7 +106,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '5d4bdb489733a756eb17ad54c5eeb3023d63e3bb',
 						'subject': '#550: 設定ファイルを初期化した状態で起動できるようにする',
 						'comments': [
 							'セーフモードという形で実装',
@@ -119,14 +115,6 @@
 							"使用するには <MnMn>\\bat\\safe-mode.bat を実行",
 							'クラッシュレポートで設定ミスってる人がいたからその簡易救済用(簡単に設定ミスできるような UI が悪いんだけどね！)'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -134,18 +122,18 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '637f11ce037869bfacfd4ea057fd4daccfca9791',
 						'subject': '#547: ファインダーのフィルタコンテキストメニューも非活性表示がなんか遅い'
 					},
 					{
-						'revision': '',
+						'revision': 'd2b136ac6b2e7ed2910666b7836f11633148b87e',
 						'subject': '#546: 灰色テーマの線が死んでる',
 						'comments': [
 							'0.61.0 の #541 で色定義変わってたっぽい'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '2820efa5e0c2bb50a9f3190e6c61d1bf330190a6',
 						'subject': '#548: コメントデータ取得後に一定時間経過した後コメント入力するとサービス側がコメントを受け付けない',
 						'comments': [
 							'本件としてはフォーラム・課題の対応内容で様子見',
@@ -153,16 +141,12 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '0cc238ac775ce5646237b71e7d19a2c5a10fdecf',
 						'subject': '#549: 動画検索における検索タグ・ワード入力 UI で IME 未確定文字が補完される',
 						'comments': [
 							'旧処理ロジックに戻す場合は App.config を修正すること',
 							'`combobox-input-ime-549-enabled`: Boolean, #549対応を使用するか'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -170,20 +154,12 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '5f9b448b43a4de06614f7dc6b90e8923abae1b93',
 						'subject': '#543: DllNotFoundException のクラッシュレポートに代替データストリームも表示させる',
 						'comments': [
 							'Trinet.Core.IO.Ntfs を使用',
 							'非 NTFS 環境未考慮'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
