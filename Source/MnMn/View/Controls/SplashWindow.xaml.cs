@@ -14,6 +14,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
@@ -32,6 +33,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public SplashWindow()
         {
             InitializeComponent();
+
+            if(VariableConstants.HasOptionExecuteMode) {
+                if(VariableConstants.IsSafeModeExecute) {
+                    this.textExecuteMode.Text = Properties.Resources.String_App_Splash_Execute_SafeMode;
+                }
+            } else {
+                this.textExecuteMode.Visibility = Visibility.Collapsed;
+            }
         }
 
         #region function

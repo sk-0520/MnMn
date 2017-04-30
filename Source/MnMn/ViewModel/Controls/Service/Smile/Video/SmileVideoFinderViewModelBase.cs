@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         var commandParameter = (SmileVideoFinderFilterCommandParameterModel)o;
                         AddFinderFiltering(commandParameter.FilteringTarget, commandParameter.Source);
                     },
-                    o => SelectedFinderItem != null
+                    o => SelectedFinderItem != null && !string.IsNullOrEmpty((o as SmileVideoFinderFilterCommandParameterModel)?.Source)
                 );
             }
         }

@@ -390,26 +390,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         bool OrderCore_Save(AppSaveOrderModel order)
         {
             var settingDirectory = VariableConstants.GetSettingDirectory();
-            var settingFilePath = Path.Combine(settingDirectory.FullName, Constants.SettingFileName);
+            var settingFilePath = Path.Combine(settingDirectory.FullName, VariableConstants.SettingFileName);
             SerializeUtility.SaveSetting(settingFilePath, Setting, SerializeFileType.Json, true, Logger);
 
-            if(order.IsBackup) {
-                var baseName = $"{Constants.GetNowTimestampFileName()}_ver.{Constants.ApplicationVersionNumber.ToString()}";
-                var fileName = PathUtility.AppendExtension(baseName, "json.gz");
-                var backupDirectory = VariableConstants.GetBackupDirectory();
-                FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern, OrderBy.Descending, Constants.BackupSettingCount, e => {
-                    Logger.Warning(e);
-                    return true;
-                });
-                var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
-                FileUtility.MakeFileParentDirectory(backupFilePath);
+            // セーフモード時にバックアップは行わない
+            if(!VariableConstants.IsSafeModeExecute) {
+                if(order.IsBackup) {
+                    var baseName = $"{Constants.GetNowTimestampFileName()}_ver.{Constants.ApplicationVersionNumber.ToString()}";
+                    var fileName = PathUtility.AppendExtension(baseName, "json.gz");
+                    var backupDirectory = VariableConstants.GetBackupDirectory();
+                    FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern, OrderBy.Descending, Constants.BackupSettingCount, e => {
+                        Logger.Warning(e);
+                        return true;
+                    });
+                    var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
+                    FileUtility.MakeFileParentDirectory(backupFilePath);
 
-                // 1ファイル集約の元 gzip でポン!
-                using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
-                    using(var input = File.OpenRead(settingFilePath)) {
-                        input.CopyTo(output);
+                    // 1ファイル集約の元 gzip でポン!
+                    using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
+                        using(var input = File.OpenRead(settingFilePath)) {
+                            input.CopyTo(output);
+                        }
                     }
                 }
+            } else {
+                Logger.Information("skip backup: safe mode");
             }
 
             return true;

@@ -5,15 +5,15 @@
 
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-  
+
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
-  Title="SplashScreen" 
+  Title="SplashScreen"
   Width="600"
-  Height="280" 
-  
+  Height="280"
+
   AllowsTransparency="True"
   WindowStyle="None"
   ResizeMode="NoResize"
@@ -52,9 +52,12 @@
         <TextBlock FontSize="40" FontWeight="Bold" Text="{x:Static app:Constants.ApplicationName}"/>
         <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.BuildType}" />
         <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.ApplicationVersionNumberText}" />
-        <TextBlock Margin="16,1,0,0"  Text="{x:Static app:Constants.ApplicationVersionRevision}" />
+        <TextBlock Margin="16,1,0,0" Text="{x:Static app:Constants.ApplicationVersionRevision}" />
       </StackPanel>
+
       <mamc:ProgressRing Grid.Row="1" Grid.Column="0" Width="80" Height="80"></mamc:ProgressRing>
+
+      <TextBlock x:Name="textExecuteMode" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="!!MODE:UNKNOWN!!" Foreground="{DynamicResource HighlightBrush}" Background="{DynamicResource BlackColorBrush}" />
     </Grid>
 
     <Button x:Name="commandClose" VerticalAlignment="Top" Width="40" Height="40" HorizontalAlignment="Right" Style="{DynamicResource MetroCircleButtonStyle}" Click="Button_Click">

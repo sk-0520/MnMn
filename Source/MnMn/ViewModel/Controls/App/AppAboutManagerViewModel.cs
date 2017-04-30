@@ -358,7 +358,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 FileUtility.MakeFileParentDirectory(filePath);
                 using(var exportStream = new ZipArchive(new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
 
-                    var settingEntry = exportStream.CreateEntry(Constants.SettingFileName);
+                    var settingEntry = exportStream.CreateEntry(VariableConstants.SettingFileName);
                     using(var zipStream = settingEntry.Open()) {
                         SerializeUtility.SaveSetting(zipStream, stripSetting, SerializeFileType.Json, Mediation.Logger);
                     }

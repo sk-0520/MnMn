@@ -116,6 +116,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
             }
         }
 
+        void ResetCommandProperty(MenuItem parentMenuItem)
+        {
+            var subMenuItems = parentMenuItem.Items
+                .OfType<MenuItem>()
+                .Where(m => m != null)
+            ;
+
+            foreach(var subMenuItem in subMenuItems) {
+                var bind = BindingOperations.GetBinding(subMenuItem, MenuItem.CommandProperty);
+                if(bind != null) {
+                    BindingOperations.ClearBinding(subMenuItem, MenuItem.CommandProperty);
+                    BindingOperations.SetBinding(subMenuItem, MenuItem.CommandProperty, bind);
+                }
+            }
+
+        }
+
         #endregion
 
         private void UIElement_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -145,17 +162,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
             FinderUtility.ScrollItemsControlLoaded(this.PART_List, DataContext);
         }
 
-        private void MenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
+        private void CopyMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
         {
             var menuItem = (MenuItem)sender;
-            menuItem.SubmenuOpened -= MenuItem_SubmenuOpened;
-            foreach(var item in menuItem.Items.OfType<MenuItem>().Where(m => m != null)) {
-                var bind = BindingOperations.GetBinding(item, MenuItem.CommandProperty);
-                if(bind != null) {
-                    BindingOperations.ClearBinding(item, MenuItem.CommandProperty);
-                    BindingOperations.SetBinding(item, MenuItem.CommandProperty, bind);
-                }
-            }
+            menuItem.SubmenuOpened -= CopyMenuItem_SubmenuOpened;
+
+            ResetCommandProperty(menuItem);
+        }
+
+        private void FilterMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            menuItem.SubmenuOpened -= FilterMenuItem_SubmenuOpened;
+
+            ResetCommandProperty(menuItem);
         }
 
         //ContextMenuOpening="PART_List_ContextMenuOpening"

@@ -37,6 +37,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         const string optionExecuteBetaVersion = "execute-beta";
         public static bool HasOptionExecuteBetaVersion => CommandLine.HasOption(optionExecuteBetaVersion);
 
+        const string optionExecuteMode = "execute";
+        public static bool HasOptionExecuteMode => CommandLine.HasValue(optionExecuteMode);
+        public static bool IsSafeModeExecute => HasOptionExecuteMode && CommandLine.GetValue(optionExecuteMode) == "safe-mode";
+
+        /// <summary>
+        /// 本体設定ファイル名。
+        /// <para>通常起動とセーフモード起動でファイル名を切り替える。</para>
+        /// </summary>
+        public static string SettingFileName
+        {
+            get
+            {
+                if(IsSafeModeExecute) {
+                    return Constants.SafeModeSettingFileName;
+                }
+
+                return Constants.SettingFileName;
+            }
+        }
+
         #endregion
 
         #region function

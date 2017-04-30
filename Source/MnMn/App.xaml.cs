@@ -38,6 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
+using Trinet.Core.IO.Ntfs;
 
 #if !DEBUG && !BETA
 #if FORCE_ACCEPT
@@ -152,8 +153,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         CheckResultModel<AppSettingModel> LoadSetting(ILogger logger)
         {
             var dir = VariableConstants.GetSettingDirectory();
-            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+            var fileName = VariableConstants.SettingFileName;
+
+            var filePath = Path.Combine(dir.FullName, fileName);
             var existsFile = File.Exists(filePath);
+
+            if(VariableConstants.IsSafeModeExecute && existsFile) {
+                // セーフモードはファイル初期化状態で起動させる
+                File.Delete(filePath);
+                existsFile = false;
+            }
 
             var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
 
@@ -171,6 +180,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #if FORCE_ACCEPT
             var a = true; if(a) return false;
 #endif
+
             if(!model.Accept) {
                 // 完全に初回
                 logger.Debug("first");
@@ -272,6 +282,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //SmileSession
         }
 
+        IEnumerable<string> GetFilePathAndAds(string filePath)
+        {
+            yield return filePath;
+
+            var streams = FileSystem.ListAlternateDataStreams(filePath);
+            foreach(var stream in streams) {
+                yield return stream.FullPath;
+                yield return $"\t{nameof(stream.Size)}: {stream.Size}";
+                yield return $"\t{nameof(stream.StreamType)}: {stream.StreamType}";
+                yield return $"\t{nameof(stream.Attributes)}: {stream.Attributes}";
+            }
+        }
+
         /// <summary>
         /// クラッシュレポートに例外から拡張情報を設定する。
         /// </summary>
@@ -283,7 +306,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             if(ex is DllNotFoundException) {
                 var appDir = Constants.AssemblyRootDirectoryPath;
                 var files = Directory.GetFiles(appDir, "*", SearchOption.AllDirectories)
-                    .Select(f => f.Substring(appDir.Length))
+                    .Select(f => GetFilePathAndAds(f))
+                    .SelectMany(fs => fs)
+                    .Select(f => appDir.Length <= f.Length ? f.Substring(appDir.Length): f)
                 ;
                 information.Text = string.Join(Environment.NewLine, files);
             }
@@ -340,6 +365,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return dialogResult == MessageBoxResult.OK;
         }
 
+        void ShowSafeModeFlag()
+        {
+            if(VariableConstants.IsSafeModeExecute) {
+                var dialogResult = MessageBox.Show(
+                    MnMn.Properties.Resources.String_App_ExecuteSafeMode_Information,
+                    $"{Constants.ApplicationName}:{Constants.ApplicationVersion}",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.DefaultDesktopOnly
+                );
+            }
+        }
+
         async Task CheckAndRenewalUserIdAsync(AppSettingModel setting)
         {
             if(!AppUtility.ValidateUserId(setting.RunningInformation.UserId)) {
@@ -380,6 +419,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 Shutdown();
             }
 #endif
+            ShowSafeModeFlag();
+
             var logger = new Pe.PeMain.Logic.AppLogger();
             logger.IsStock = true;
 
@@ -427,26 +468,30 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppUtility.InitializeTheme(Mediation.Logger);
             AppUtility.SetTheme(setting.Theme);
 
-            if(!CheckAccept(setting.RunningInformation, logger)) {
-                var acceptViewModel = new AcceptViewModel(Mediation);
-                var acceptWindow = new AcceptWindow() {
-                    DataContext = acceptViewModel,
-                };
-                acceptViewModel.SetView(acceptWindow);
-                acceptViewModel.Initialize();
+            // セーフモードの場合許諾ウィンドウは表示しない
+            if(!VariableConstants.IsSafeModeExecute) {
+                if(!CheckAccept(setting.RunningInformation, logger)) {
+                    var acceptViewModel = new AcceptViewModel(Mediation);
+                    var acceptWindow = new AcceptWindow() {
+                        DataContext = acceptViewModel,
+                    };
+                    acceptViewModel.SetView(acceptWindow);
+                    acceptViewModel.Initialize();
 
-                var acceptResult = acceptWindow.ShowDialog();
-                if(!acceptResult.GetValueOrDefault()) {
-                    Shutdown();
-                    return;
-                }
+                    var acceptResult = acceptWindow.ShowDialog();
+                    if(!acceptResult.GetValueOrDefault()) {
+                        Shutdown();
+                        return;
+                    }
 
-                var isFirst = !settingResult.IsSuccess;
-                if(isFirst) {
-                    setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
-                    setting.RunningInformation.FirstTimestamp = DateTime.Now;
+                    var isFirst = !settingResult.IsSuccess;
+                    if(isFirst) {
+                        setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
+                        setting.RunningInformation.FirstTimestamp = DateTime.Now;
+                    }
                 }
             }
+
             if(setting.RunningInformation.FirstVersion == null) {
                 setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
                 setting.RunningInformation.FirstTimestamp = DateTime.Now;
@@ -528,6 +573,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
             WebNavigatorCore.Uninitialize();
 
             AppManager.UninitializeView(View);
+
+            if(VariableConstants.IsSafeModeExecute) {
+                var dir = VariableConstants.GetSettingDirectory();
+                var fileName = VariableConstants.SettingFileName;
+
+                var filePath = Path.Combine(dir.FullName, fileName);
+                if(File.Exists(filePath)) {
+                    ShellUtility.OpenFileInDirectory(new FileInfo(filePath), Mediation.Logger);
+                }
+            }
         }
 
         private async void App_Exit(object sender, ExitEventArgs e)
