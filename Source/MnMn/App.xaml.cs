@@ -406,6 +406,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
         }
 
+        void SetSystemParameter()
+        {
+            var screenSaverFlag = 0;
+            NativeMethods.SystemParametersInfo(SPI.SPI_GETSCREENSAVEACTIVE, 0, ref screenSaverFlag, SPIF.None);
+            var isEnabledScreenSaver = screenSaverFlag != 0 ? true : false;
+        }
 
         #endregion
 
@@ -531,6 +537,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Loaded += MainWindow_Loaded;
             SplashWindow.commandClose.Visibility = Visibility.Collapsed;
             MainWindow.Show();
+
+            // ここで現在情報取得！
+            SetSystemParameter();
         }
 
         protected override void OnExit(ExitEventArgs e)
