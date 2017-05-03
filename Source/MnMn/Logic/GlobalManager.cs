@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using Microsoft.IO;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static RecyclableMemoryStreamManager MemoryStream { get; } = new RecyclableMemoryStreamManager();
 
-        public static bool? IsEnabledScreenSaver { get; set; }
+        public static SystemParameterModel SystemParameter { get; set; }
 
         #endregion
     }

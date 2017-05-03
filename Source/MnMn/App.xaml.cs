@@ -406,22 +406,26 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
         }
 
-        void GetSystemParameter()
+        static SystemParameterModel GetSystemParameter(ILogger logger)
         {
+            var systemParameter = new SystemParameterModel();
+
             var screenSaverFlag = 0;
             NativeMethods.SystemParametersInfo(SPI.SPI_GETSCREENSAVEACTIVE, 0, ref screenSaverFlag, SPIF.None);
             var isEnabledScreenSaver = screenSaverFlag != 0 ? true : false;
 
-            Mediation.Logger.Information($"SPI_GETSCREENSAVEACTIVE: {isEnabledScreenSaver}");
-            GlobalManager.IsEnabledScreenSaver = isEnabledScreenSaver;
+            logger.Information($"SPI_GETSCREENSAVEACTIVE: {isEnabledScreenSaver}");
+            systemParameter.IsEnabledScreenSaver = isEnabledScreenSaver;
+
+            return systemParameter;
         }
 
-        void RestoreSystemParameter()
+        static void RestoreSystemParameter(SystemParameterModel systemParameter, ILogger logger)
         {
-            if(GlobalManager.IsEnabledScreenSaver.HasValue) {
+            if(systemParameter.IsEnabledScreenSaver.HasValue) {
                 int tempIsEnabledScreenSaver = 0;
-                Mediation.Logger.Information($"SPI_SETSCREENSAVEACTIVE: {GlobalManager.IsEnabledScreenSaver}");
-                NativeMethods.SystemParametersInfo(SPI.SPI_SETSCREENSAVEACTIVE, GlobalManager.IsEnabledScreenSaver.Value ? 1u: 0u, ref tempIsEnabledScreenSaver, SPIF.SPIF_SENDCHANGE);
+                logger.Information($"SPI_SETSCREENSAVEACTIVE: {systemParameter.IsEnabledScreenSaver}");
+                NativeMethods.SystemParametersInfo(SPI.SPI_SETSCREENSAVEACTIVE, systemParameter.IsEnabledScreenSaver.Value ? 1u: 0u, ref tempIsEnabledScreenSaver, SPIF.SPIF_SENDCHANGE);
             }
         }
 
@@ -551,7 +555,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Show();
 
             // ここで現在情報取得！
-            GetSystemParameter();
+            GlobalManager.SystemParameter = GetSystemParameter(Mediation.Logger);
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -605,7 +609,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 }
             }
 
-            RestoreSystemParameter();
+            RestoreSystemParameter(GlobalManager.SystemParameter, Mediation.Logger);
         }
 
         private async void App_Exit(object sender, ExitEventArgs e)

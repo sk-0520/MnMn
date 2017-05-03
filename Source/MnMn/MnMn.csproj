@@ -464,6 +464,7 @@
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
     <Compile Include="Data\SpaghettiPreparationData.cs" />
     <Compile Include="Model\SpaghettiSourceModel.cs" />
+    <Compile Include="Model\SystemParameterModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorBridgeModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorGestureElementModel.cs" />
