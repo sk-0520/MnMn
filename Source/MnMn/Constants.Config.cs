@@ -168,6 +168,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static double SettingApplicationViewScale => appConfig.Get("setting-application-view-scale", double.Parse);
 
+        /// <summary>
+        /// スクリーンセーバー・ロックの抑制。
+        /// </summary>
         public static bool SettingApplicationSystemBreakSuppression => appConfig.Get("setting-application-system-break-suppression", bool.Parse);
 
         /// <summary>

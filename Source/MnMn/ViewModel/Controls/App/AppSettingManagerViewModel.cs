@@ -132,6 +132,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetPropertyValue(AppSetting, value); }
         }
 
+        public bool SystemBreakSuppression
+        {
+            get { return AppSetting.SystemBreakSuppression; }
+            set { SetPropertyValue(AppSetting, value); }
+        }
+
         public bool WebNavigatorGeckoFxScanPlugin
         {
             get { return AppSetting.WebNavigator.GeckoFxScanPlugin; }
