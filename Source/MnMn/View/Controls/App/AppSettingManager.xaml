@@ -84,6 +84,12 @@
           </Grid>
         </GroupBox>
 
+        <GroupBox Header="システム制御">
+          <StackPanel>
+            <CheckBox IsChecked="{Binding SystemBreakSuppression}">非操作稼働中にスクリーンセーバー・ロックを抑制する</CheckBox>
+          </StackPanel>
+        </GroupBox>
+
         <GroupBox Header="テーマ">
           <StackPanel>
             <CheckBox Grid.Column="0" IsChecked="{Binding IsRandomTheme}" Style="{StaticResource VerticalCheckBox}">ランダム</CheckBox>

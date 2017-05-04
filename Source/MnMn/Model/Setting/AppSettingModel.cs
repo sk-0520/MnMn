@@ -75,6 +75,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public ThemeSettingModel Theme { get; set; } = new ThemeSettingModel();
 
+        [DataMember]
+        public bool SystemBreakSuppression { get; set; }= Constants.SettingApplicationSystemBreakSuppression;
+
         #region service
 
         [DataMember]
