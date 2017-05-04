@@ -410,23 +410,23 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var systemParameter = new SystemParameterModel();
 
-            var screenSaverFlag = 0;
-            NativeMethods.SystemParametersInfo(SPI.SPI_GETSCREENSAVEACTIVE, 0, ref screenSaverFlag, SPIF.None);
-            var isEnabledScreenSaver = screenSaverFlag != 0 ? true : false;
+            //var screenSaverFlag = 0;
+            //NativeMethods.SystemParametersInfo(SPI.SPI_GETSCREENSAVEACTIVE, 0, ref screenSaverFlag, SPIF.None);
+            //var isEnabledScreenSaver = screenSaverFlag != 0 ? true : false;
 
-            logger.Information($"SPI_GETSCREENSAVEACTIVE: {isEnabledScreenSaver}");
-            systemParameter.IsEnabledScreenSaver = isEnabledScreenSaver;
+            //logger.Information($"SPI_GETSCREENSAVEACTIVE: {isEnabledScreenSaver}");
+            //systemParameter.IsEnabledScreenSaver = isEnabledScreenSaver;
 
             return systemParameter;
         }
 
         static void RestoreSystemParameter(SystemParameterModel systemParameter, ILogger logger)
         {
-            if(systemParameter.IsEnabledScreenSaver.HasValue) {
-                int tempIsEnabledScreenSaver = 0;
-                logger.Information($"SPI_SETSCREENSAVEACTIVE: {systemParameter.IsEnabledScreenSaver}");
-                NativeMethods.SystemParametersInfo(SPI.SPI_SETSCREENSAVEACTIVE, systemParameter.IsEnabledScreenSaver.Value ? 1u: 0u, ref tempIsEnabledScreenSaver, SPIF.SPIF_SENDCHANGE);
-            }
+            //if(systemParameter.IsEnabledScreenSaver.HasValue) {
+            //    int tempIsEnabledScreenSaver = 0;
+            //    logger.Information($"SPI_SETSCREENSAVEACTIVE: {systemParameter.IsEnabledScreenSaver}");
+            //    NativeMethods.SystemParametersInfo(SPI.SPI_SETSCREENSAVEACTIVE, systemParameter.IsEnabledScreenSaver.Value ? 1u: 0u, ref tempIsEnabledScreenSaver, SPIF.SPIF_SENDCHANGE);
+            //}
         }
 
         #endregion

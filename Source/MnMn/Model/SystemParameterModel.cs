@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     {
         #region property
 
-        public bool? IsEnabledScreenSaver { get; set; }
+        //public bool? IsEnabledScreenSaver { get; set; }
 
         #endregion
     }
