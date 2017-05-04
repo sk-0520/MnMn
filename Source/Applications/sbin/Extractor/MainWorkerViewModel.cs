@@ -118,12 +118,23 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
-        public ICommand OutputLogCommand
+        public ICommand OutputLogsCommand
         {
             get
             {
                 return CreateCommand(
-                    o => OutputLogFromDialog(),
+                    o => OutputLogsFromDialog(),
+                    o => LogItems.Any()
+                );
+            }
+        }
+
+        public ICommand CopyLogsCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => CopyLogs(),
                     o => LogItems.Any()
                 );
             }
@@ -434,7 +445,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
-        void OutputLogFromDialog()
+        void OutputLogsFromDialog()
         {
             var dialog = new SaveFileDialog() {
                 Filter = "log|*.log",
@@ -444,6 +455,19 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             };
             if(dialog.ShowDialog().GetValueOrDefault()) {
                 OutputLog(dialog.FileName);
+            }
+        }
+
+        void CopyLogs()
+        {
+            using(var stream = new MemoryStream()) {
+                WriteStream(stream);
+                try {
+                    var text = Encoding.UTF8.GetString(stream.ToArray());
+                    Clipboard.SetText(text);
+                }catch(Exception ex) {
+                    AddErrorLog(ex.Message, ex.ToString());
+                }
             }
         }
 
