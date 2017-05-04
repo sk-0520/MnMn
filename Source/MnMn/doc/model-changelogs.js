@@ -152,7 +152,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': '#553: Microsoft.IO.RecyclableMemoryStream 1.21 -> 1.22',
+						'comments': [
+							'大型連休に浮かれて未調査・未検証だけどいけるいける。天下の MS 様を信じろ'
+						]
 					},
 					{
 						'revision': '',
