@@ -133,6 +133,11 @@
               </ListBox.ItemTemplate>
             </ListBox>
             <WrapPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+              <WrapPanel.Resources>
+                <Style TargetType="TextBlock">
+                  <Setter Property="Margin" Value="4" />
+                </Style>
+              </WrapPanel.Resources>
               <TextBlock>
                 <Hyperlink Command="{Binding OutputLogCommand}">ログをファイル出力</Hyperlink>
               </TextBlock>
