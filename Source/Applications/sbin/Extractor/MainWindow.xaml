@@ -134,7 +134,7 @@
             </ListBox>
             <WrapPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
               <TextBlock>
-                <Hyperlink>ログをファイル出力</Hyperlink>
+                <Hyperlink Command="{Binding OutputLogCommand}">ログをファイル出力</Hyperlink>
               </TextBlock>
             </WrapPanel>
           </Grid>
