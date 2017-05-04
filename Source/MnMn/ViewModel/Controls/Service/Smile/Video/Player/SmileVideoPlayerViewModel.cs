@@ -1942,18 +1942,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 PrevPlayedTime = PlayTime;
 
-                var vistaFlag
-                    = ES.ES_DISPLAY_REQUIRED
-                    | ES.ES_SYSTEM_REQUIRED
-                    | ES.ES_AWAYMODE_REQUIRED
-                ;
-                if((int)NativeMethods.SetThreadExecutionState(vistaFlag) == 0) {
-                    var toutastu_shinai
-                        = ES.ES_DISPLAY_REQUIRED
-                        | ES.ES_SYSTEM_REQUIRED
-                    ;
-                    NativeMethods.SetThreadExecutionState(toutastu_shinai);
-                }
+                Mediation.Order(new AppSystemBreakOrderModel(true));
 
                 ClearResidualComments();
             }

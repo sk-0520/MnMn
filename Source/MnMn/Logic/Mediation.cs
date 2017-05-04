@@ -27,6 +27,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -111,6 +112,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         internal SmileMediation Smile { get; private set; }
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
+
+        /// <summary>
+        /// スリープ・ロック抑制を最後に実施した時間。
+        /// </summary>
+        DateTime LastSystemBreakSuppressionTime { get; set; } = DateTime.MinValue;
 
         #endregion
 
@@ -459,6 +465,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
+        bool OrderCore_SystemBreak(AppSystemBreakOrderModel order)
+        {
+            Debug.Assert(order.Suppression);
+
+            var elapsed = DateTime.Now - LastSystemBreakSuppressionTime;
+            if(elapsed <= Constants.AppSystemBreakTime) {
+                // 前回抑制時間から閾値の時間に至ってない場合は抑制しない
+                return false;
+            }
+
+            var vistaFlag
+                = ES.ES_DISPLAY_REQUIRED
+                | ES.ES_SYSTEM_REQUIRED
+                | ES.ES_AWAYMODE_REQUIRED
+            ;
+            if((int)NativeMethods.SetThreadExecutionState(vistaFlag) == 0) {
+                // OS バージョン的には到達しない。でも失敗の場合は到達する
+                var toutastu_shinai
+                    = ES.ES_DISPLAY_REQUIRED
+                    | ES.ES_SYSTEM_REQUIRED
+                ;
+                NativeMethods.SetThreadExecutionState(toutastu_shinai);
+            }
+
+            LastSystemBreakSuppressionTime = DateTime.Now;
+
+            Logger.Debug("suppression: screen savrer/lock");
+
+            return true;
+        }
+
         bool OrderCore(OrderModel order)
         {
             switch(order.OrderKind) {
@@ -473,6 +510,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case OrderKind.CleanMemory:
                     return OrderCore_CleanMemory((AppCleanMemoryOrderModel)order);
+
+                case OrderKind.SystemBreak:
+                    return OrderCore_SystemBreak((AppSystemBreakOrderModel)order);
 
                 default:
                     throw new NotImplementedException();
