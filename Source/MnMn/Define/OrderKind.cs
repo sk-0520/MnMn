@@ -47,5 +47,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// ダウンロードマネージャに登録
         /// </summary>
         Download,
+        /// <summary>
+        /// スリープとかロック回り。
+        /// </summary>
+        SystemBreak,
     }
 }
