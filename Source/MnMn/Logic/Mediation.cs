@@ -469,6 +469,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             Debug.Assert(order.Suppression);
 
+            if(!Setting.SystemBreakSuppression) {
+                return false;
+            }
+
             var elapsed = DateTime.Now - LastSystemBreakSuppressionTime;
             if(elapsed <= Constants.AppSystemBreakTime) {
                 // 前回抑制時間から閾値の時間に至ってない場合は抑制しない

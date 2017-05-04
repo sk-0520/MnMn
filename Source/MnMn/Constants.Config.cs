@@ -168,6 +168,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static double SettingApplicationViewScale => appConfig.Get("setting-application-view-scale", double.Parse);
 
+        public static bool SettingApplicationSystemBreakSuppression => appConfig.Get("setting-application-system-break-suppression", bool.Parse);
+
         /// <summary>
         /// テーマ: ランダム。
         /// </summary>
