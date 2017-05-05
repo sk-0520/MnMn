@@ -90,14 +90,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var search = new ContentsSearch(Mediation);
 
-            var typeElement = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.Type, Type);
+            var typeElement = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.Contents.Type, Type);
 
             return search.SearchAsync(
                 SearchModel.Service,
                 Query,
                 typeElement.Key,
                 Method.Key,
-                SearchModel.Results,
+                SearchModel.Contents.Results,
                 Sort.Key,
                 Index,
                 Count

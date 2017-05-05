@@ -92,9 +92,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
-        public IList<DefinedElementModel> SortItems => SearchModel.Sort;
-        public IList<DefinedElementModel> TypeItems => SearchModel.Type;
+        public IList<DefinedElementModel> MethodItems => SearchModel.Contents.Methods;
+        public IList<DefinedElementModel> SortItems => SearchModel.Contents.Sort;
+        public IList<DefinedElementModel> TypeItems => SearchModel.Contents.Type;
 
         public CollectionModel<SmileVideoSearchGroupFinderViewModel> SearchGroups { get; } = new CollectionModel<SmileVideoSearchGroupFinderViewModel>();
 
