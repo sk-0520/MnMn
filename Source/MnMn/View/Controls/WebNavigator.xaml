@@ -29,6 +29,7 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
 
@@ -131,7 +132,23 @@
       </Grid>
     </ToolBar>
 
-    <ContentControl x:Name="container" Grid.Row="1" />
+    <Grid Grid.Row="0" Visibility="{Binding IsMinimumRunning, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <Border Margin="4" Padding="4" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush3}">
+        <StackPanel>
+          <TextBlock>
+            ややこい問題により内蔵ブラウザに IE コンポーネントを強制使用しています
+          </TextBlock>
+          <TextBlock>
+            この問題は自体は<Button Style="{StaticResource Hyperlink}" Command="{Binding OpenIssue551Command, RelativeSource={RelativeSource AncestorType=UserControl}}">#551</Button>で認知してますが難しくて泣きました。
+          </TextBlock>
+          <TextBlock>
+            二重保守のしんどさから IE コンポーネント強制使用時は各種 MnMn の機能を使用できません。
+          </TextBlock>
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <ContentControl x:Name="container" Grid.Row="2" />
 
     <Popup x:Name="popupGesture" IsHitTestVisible="False" Placement="Center" AllowsTransparency="True" PlacementTarget="{Binding ElementName=container}" MaxWidth="{Binding ActualWidth, ElementName=container, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=0.5}">
       <Border CornerRadius="5" Padding="{StaticResource BasePadding}" Background="{DynamicResource AccentColorBrush}" TextElement.Foreground="{DynamicResource TextBrush}">

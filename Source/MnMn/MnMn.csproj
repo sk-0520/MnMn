@@ -486,6 +486,7 @@
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorPageConditionModel.cs" />
+    <Compile Include="Model\WebNavigatorTagModel.cs" />
     <Compile Include="ViewModel\Controls\AcceptViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppDownloadManagerViewModel.cs" />

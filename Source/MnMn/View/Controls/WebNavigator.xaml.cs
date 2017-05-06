@@ -524,6 +524,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        public bool IsMinimumRunning
+        {
+            get
+            {
+                return WebNavigatorCore.ForceDefaultEngine;
+            }
+        }
+
         #endregion
 
         #region property
@@ -553,7 +561,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return DoFunction(
-                    b => (Mediation)b.Tag,
+                    b => ((WebNavigatorTagModel)b.Tag).Mediation,
                     b => b.Mediation
                 );
             }
@@ -759,6 +767,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 }
 
                 return this._showPropertyCommand;
+            }
+        }
+
+        public ICommand OpenIssue551Command
+        {
+            get
+            {
+                return new DelegateCommand(o => {
+                    ShellUtility.OpenUriInDefaultBrowser("https://bitbucket.org/sk_0520/mnmn/issues/551", Mediation.Logger);
+                });
             }
         }
 
@@ -1056,7 +1074,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                 var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
                 DoAction(
-                    b => { ((Mediation)b.Tag).Request(processRequest); },
+                    b => { ((WebNavigatorTagModel)b.Tag).Mediation.Request(processRequest); },
                     b => { (b.Mediation).Request(processRequest); }
                 );
             }
@@ -1175,7 +1193,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             var element = (FrameworkElement)sender;
             element.Loaded -= Browser_Loaded;
             DoAction(
-                b => b.Tag = ServiceType, // IEもうどうでもいいわ
+                b => ((WebNavigatorTagModel)b.Tag).ServiceType = ServiceType, // IEもうどうでもいいわ
                 b => {
                     var type = b.GetType();
                     var property = type.GetProperty(nameof(ServiceGeckoWebBrowser.ServiceType));
