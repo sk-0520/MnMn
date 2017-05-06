@@ -486,6 +486,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             AppManager = new AppManagerViewModel(Mediation, logger);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             WebNavigatorCore.Initialize(Mediation);
             AppUtility.InitializeTheme(Mediation.Logger);
             AppUtility.SetTheme(setting.Theme);
@@ -567,6 +568,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
 
             base.OnExit(e);
         }
@@ -591,6 +593,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             CatchUnhandleException((Exception)e.ExceptionObject, false);
+        }
+
+        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            Mediation.Logger.Warning(args.Name, args.RequestingAssembly);
+
+            return null;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
