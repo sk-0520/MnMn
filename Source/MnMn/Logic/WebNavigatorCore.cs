@@ -116,6 +116,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         InitializeGecko();
 #if ISSUE_551
                         throw new Exception("#551");
+#if !DEBUG
+#error NOT DEBUG!
+#endif
 #endif
                     } catch(Exception ex) {
                         Mediation.Logger.Error(ex);
