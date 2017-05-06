@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //market();
             //user_id();
             //exp();
+            //search();
         }
 
         async void login()
@@ -220,6 +221,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
             es.Elements.Add(e);
 
             SerializeUtility.SaveXmlSerializeToFile(@"X:\exps.xml", es);
+        }
+
+        void search()
+        {
+            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var map = new StringsModel() {
+                ["type"] = "TYPE",
+                ["query"] = "クエリ",
+                ["page"] = "PAGE",
+                ["sort"] = "SORT",
+                ["order"] = "ORDER",
+            };
+            var uri = mediation.GetUri("video-search", map, Library.Bridging.Define.ServiceType.SmileVideo);
+            Debug.WriteLine(uri);
         }
     }
 #endif

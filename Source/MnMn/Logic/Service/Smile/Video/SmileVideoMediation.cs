@@ -121,8 +121,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 case SmileVideoInformationSource.Getthumbinfo:
                     return new ResponseModel(request, InformationCaching.Get(request.Thumb));
 
-                case SmileVideoInformationSource.Search:
+                case SmileVideoInformationSource.ContentsSearch:
                     return new ResponseModel(request, InformationCaching.Get(request.ContentsSearch));
+
+                case SmileVideoInformationSource.OfficialSearch:
+                    return new ResponseModel(request, InformationCaching.Get(request.OfficialSearch));
 
                 case SmileVideoInformationSource.Feed:
                     return new ResponseModel(request, InformationCaching.Get(request.Feed, request.InformationFlags));
