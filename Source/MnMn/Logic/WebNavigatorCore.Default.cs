@@ -29,6 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -49,7 +50,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             WebBrowser browser = null;
             Application.Current.Dispatcher.Invoke(() => {
                 browser = new WebBrowser() {
-                    Tag = Mediation,
+                    Tag = new WebNavigatorTagModel() {
+                        Mediation = Mediation,
+                    },
                 };
             });
 
