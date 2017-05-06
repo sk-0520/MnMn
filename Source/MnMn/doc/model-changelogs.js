@@ -211,7 +211,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#559: AppUtilityTest.CreateUserIdTest が落ちるのやめましょう'
 					},
 					{
 						'revision': '',
