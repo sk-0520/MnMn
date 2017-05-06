@@ -213,6 +213,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileVideoRelationVideoOrderDescending => appConfig.Get("service-smile-relation-video-order-descending");
 
+        /// <summary>
+        /// 動画検索方法。
+        /// </summary>
+        public static SmileVideoSearchType SearchType => appConfig.Get("service-smile-smilevideo-search-type", s => EnumUtility.Parse< SmileVideoSearchType>(s));
+
+
         #region live
 
         /// <summary>
