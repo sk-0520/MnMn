@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Search = search;
 
-            InformationSource = SmileVideoInformationSource.Search;
+            InformationSource = SmileVideoInformationSource.ContentsSearch;
             Initialize();
         }
 
@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return FeedDetail.VideoId;
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                         return Search.ContentId;
 
                     default:
@@ -326,7 +326,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return FeedDetail.Title ?? Feed.Title;
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                         return Search.Title;
 
                     default:
@@ -346,7 +346,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return FeedDetail.Description ?? Feed.Description;
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                         return Search.Description;
 
                     default:
@@ -366,7 +366,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertUri(FeedDetail.ThumbnailUrl);
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                         return RawValueUtility.ConvertUri(Search.ThumbnailUrl);
 
                     default:
@@ -386,7 +386,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertDateTime(FeedDetail.FirstRetrieve);
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                         return RawValueUtility.ConvertDateTime(Search.StartTime);
 
                     default:
@@ -406,7 +406,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(FeedDetail.Length);
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                     default:
                         throw new NotImplementedException();
                 }
@@ -427,7 +427,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertInteger(FeedDetail.ViewCounter);
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                         return RawValueUtility.ConvertInteger(Search.ViewCounter);
 
                     default:
@@ -446,7 +446,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertInteger(FeedDetail.CommentNum);
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                         return RawValueUtility.ConvertInteger(Search.CommentCounter);
 
                     default:
@@ -466,7 +466,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertInteger(FeedDetail.MylistCounter);
 
-                    case SmileVideoInformationSource.Search:
+                    case SmileVideoInformationSource.ContentsSearch:
                         return RawValueUtility.ConvertInteger(Search.MylistCounter);
 
                     default:

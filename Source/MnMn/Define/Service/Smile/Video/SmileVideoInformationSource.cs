@@ -41,8 +41,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// </summary>
         Feed,
         /// <summary>
-        /// 検索から取得。
+        /// 公式検索から取得。
         /// </summary>
-        Search,
+        OfficialSearch,
+        /// <summary>
+        /// コンテンツサーチから取得。
+        /// </summary>
+        ContentsSearch,
     }
 }

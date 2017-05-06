@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
 
         public SmileVideoInformationCacheParameterModel(RawSmileContentsSearchItemModel contentsSearch)
         {
-            InformationSource = SmileVideoInformationSource.Search;
+            InformationSource = SmileVideoInformationSource.ContentsSearch;
 
             ContentsSearch = contentsSearch;
         }
