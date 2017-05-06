@@ -28,12 +28,12 @@
 		<sort>
 			<element key="-">
 				<words>
-					<word key="ja-jp" value="昇順" />
+					<word key="ja-jp" value="降順" />
 				</words>
 			</element>
 			<element key="+">
 				<words>
-					<word key="ja-jp" value="降順" />
+					<word key="ja-jp" value="昇順" />
 				</words>
 			</element>
 		</sort>
