@@ -1,4 +1,6 @@
-﻿/*
+﻿#define ISSUE_551
+
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -59,7 +61,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         static Mediation Mediation { get; set; }
 
         //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
-        public static WebNavigatorEngine Engine { get; } = Constants.WebNavigatorEngine;
+        public static WebNavigatorEngine Engine {
+            get {
+                if(ForceDefaultEngine) {
+                    return WebNavigatorEngine.Default;
+                }
+
+                return Constants.WebNavigatorEngine;
+            }
+        }
+
+        public static bool ForceDefaultEngine { get; set; } = false;
 
         static bool IsInitialized { get; set; } = false;
         static bool IsUninitialized { get; set; } = false;
@@ -95,12 +107,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             switch(Engine) {
                 case WebNavigatorEngine.Default:
+                WebNavigatorEngine_Default:
                     InitializeDefault();
                     break;
 
                 case WebNavigatorEngine.GeckoFx:
-                    InitializeGecko();
+                    try {
+                        InitializeGecko();
+#if ISSUE_551
+                        throw new Exception("#551");
+#endif
+                    } catch(Exception ex) {
+                        Mediation.Logger.Error(ex);
+                        ForceDefaultEngine = true;
+                        goto WebNavigatorEngine_Default;
+                    }
+#if !ISSUE_551
                     break;
+#endif
+
 
                 default:
                     break;
@@ -365,6 +390,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return dialog;
         }
 
-        #endregion
+#endregion
     }
 }
