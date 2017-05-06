@@ -69,7 +69,72 @@
 			<field>thumbnailUrl</field>
 		</result>
 	</contents>
-	<official>
 
+	<official max-index="50" max-count="32">
+		<!-- 検索 -->
+		<method>
+			<element key="n">
+				<words>
+					<word key="ja-jp" value="最新のコメント" />
+				</words>
+			</element>
+			<element key="v">
+				<words>
+					<word key="ja-jp" value="再生数" />
+				</words>
+			</element>
+			<element key="m">
+				<words>
+					<word key="ja-jp" value="マイリスト" />
+				</words>
+			</element>
+			<element key="r">
+				<words>
+					<word key="ja-jp" value="コメント数" />
+				</words>
+			</element>
+			<element key="f">
+				<words>
+					<word key="ja-jp" value="投稿日時" />
+				</words>
+			</element>
+			<element key="l">
+				<words>
+					<word key="ja-jp" value="再生時間" />
+				</words>
+			</element>
+		</method>
+		<!-- ソート(単語の意味と役割違うけどしゃあない) -->
+		<sort>
+			<element key="a">
+				<words>
+					<word key="ja-jp" value="昇順" />
+				</words>
+			</element>
+			<element key="d">
+				<words>
+					<word key="ja-jp" value="降順" />
+				</words>
+			</element>
+		</sort>
+		<!-- タグ・キーワード -->
+		<type>
+			<element key="tag">
+				<words>
+					<word key="ja-jp" value="タグ" />
+				</words>
+				<extends>
+					<extend key="type" value="tag" />
+				</extends>
+			</element>
+			<element key="search">
+				<words>
+					<word key="ja-jp" value="キーワード" />
+				</words>
+				<extends>
+					<extend key="type" value="keyword" />
+				</extends>
+			</element>
+		</type>
 	</official>
 </search>
