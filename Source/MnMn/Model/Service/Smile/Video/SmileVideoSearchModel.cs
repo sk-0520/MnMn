@@ -30,9 +30,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     {
         #region property
 
-        [XmlAttribute("service")]
-        public string Service { get; set; }
-
         [XmlElement("contents")]
         public SmileVideoContentsSearchModel Contents { get; set; } = new SmileVideoContentsSearchModel();
 

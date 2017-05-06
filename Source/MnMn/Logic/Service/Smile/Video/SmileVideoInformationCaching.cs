@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
@@ -103,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 }
 
                 var createdInformation = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
-                lock(checker) {
+                lock(this.checker) {
                     if(TryGetValue(usingVideoId, out result)) {
                         result.IncrementReference();
                         return result;
@@ -129,6 +130,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public SmileVideoInformationViewModel Get(RawSmileContentsSearchItemModel search)
         {
             var usingVideoId = GetSafeVideoId(search.ContentId);
+
+            var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
+
+            result.IncrementReference();
+
+            return result;
+        }
+
+        public SmileVideoInformationViewModel Get(RawSmileVideoSearchItemModel search)
+        {
+            var usingVideoId = GetSafeVideoId(search.Id);
 
             var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
 

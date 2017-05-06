@@ -36,6 +36,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
             ContentsSearch = contentsSearch;
         }
 
+        public SmileVideoInformationCacheParameterModel(RawSmileVideoSearchItemModel officialSearch)
+        {
+            InformationSource = SmileVideoInformationSource.OfficialSearch;
+
+            OfficialSearch = officialSearch;
+        }
+
         public SmileVideoInformationCacheParameterModel(FeedSmileVideoItemModel feed, SmileVideoInformationFlags informationFlags)
         {
             InformationSource = SmileVideoInformationSource.Feed;
@@ -54,6 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
         public RawSmileVideoThumbModel Thumb { get; set; }
 
         public RawSmileContentsSearchItemModel ContentsSearch { get; set; }
+        public RawSmileVideoSearchItemModel OfficialSearch { get; set; }
 
         public FeedSmileVideoItemModel Feed { get; set; }
         public SmileVideoInformationFlags InformationFlags { get; set; }

@@ -117,9 +117,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoInformationViewModel(Mediation mediation, RawSmileContentsSearchItemModel search, int number)
             : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
         {
-            Search = search;
+            ContentsSearch = search;
 
             InformationSource = SmileVideoInformationSource.ContentsSearch;
+            Initialize();
+        }
+
+        public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoSearchItemModel search, int number)
+            : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
+        {
+            OfficialSearch = search;
+
+            InformationSource = SmileVideoInformationSource.OfficialSearch;
             Initialize();
         }
 
@@ -163,7 +172,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         RawSmileVideoThumbModel Thumb { get; set; }
         FeedSmileVideoItemModel Feed { get; set; }
-        RawSmileContentsSearchItemModel Search { get; }
+        RawSmileContentsSearchItemModel ContentsSearch { get; }
+        RawSmileVideoSearchItemModel OfficialSearch { get; }
         /// <summary>
         /// フィードデータの詳細部。
         /// </summary>
@@ -307,7 +317,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return FeedDetail.VideoId;
 
                     case SmileVideoInformationSource.ContentsSearch:
-                        return Search.ContentId;
+                        return ContentsSearch.ContentId;
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return OfficialSearch.Id;
 
                     default:
                         throw new NotImplementedException();
@@ -327,7 +340,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return FeedDetail.Title ?? Feed.Title;
 
                     case SmileVideoInformationSource.ContentsSearch:
-                        return Search.Title;
+                        return ContentsSearch.Title;
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return OfficialSearch.Title;
 
                     default:
                         throw new NotImplementedException();
@@ -347,7 +363,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return FeedDetail.Description ?? Feed.Description;
 
                     case SmileVideoInformationSource.ContentsSearch:
-                        return Search.Description;
+                        return ContentsSearch.Description;
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return OfficialSearch.DescriptionShort;
 
                     default:
                         throw new NotImplementedException();
@@ -367,7 +386,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertUri(FeedDetail.ThumbnailUrl);
 
                     case SmileVideoInformationSource.ContentsSearch:
-                        return RawValueUtility.ConvertUri(Search.ThumbnailUrl);
+                        return RawValueUtility.ConvertUri(ContentsSearch.ThumbnailUrl);
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return RawValueUtility.ConvertUri(OfficialSearch.ThumbnailUrl);
 
                     default:
                         throw new NotImplementedException();
@@ -387,7 +409,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertDateTime(FeedDetail.FirstRetrieve);
 
                     case SmileVideoInformationSource.ContentsSearch:
-                        return RawValueUtility.ConvertDateTime(Search.StartTime);
+                        return RawValueUtility.ConvertDateTime(ContentsSearch.StartTime);
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return RawValueUtility.ConvertDateTime(OfficialSearch.FirstRetrieve);
 
                     default:
                         throw new NotImplementedException();
@@ -405,6 +430,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                     case SmileVideoInformationSource.Feed:
                         return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(FeedDetail.Length);
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(OfficialSearch.Length);
 
                     case SmileVideoInformationSource.ContentsSearch:
                     default:
@@ -428,7 +456,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(FeedDetail.ViewCounter);
 
                     case SmileVideoInformationSource.ContentsSearch:
-                        return RawValueUtility.ConvertInteger(Search.ViewCounter);
+                        return RawValueUtility.ConvertInteger(ContentsSearch.ViewCounter);
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return RawValueUtility.ConvertInteger(OfficialSearch.ViewCounter);
 
                     default:
                         throw new NotImplementedException();
@@ -447,7 +478,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(FeedDetail.CommentNum);
 
                     case SmileVideoInformationSource.ContentsSearch:
-                        return RawValueUtility.ConvertInteger(Search.CommentCounter);
+                        return RawValueUtility.ConvertInteger(ContentsSearch.CommentCounter);
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return RawValueUtility.ConvertInteger(OfficialSearch.NumRes);
 
                     default:
                         throw new NotImplementedException();
@@ -467,7 +501,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(FeedDetail.MylistCounter);
 
                     case SmileVideoInformationSource.ContentsSearch:
-                        return RawValueUtility.ConvertInteger(Search.MylistCounter);
+                        return RawValueUtility.ConvertInteger(ContentsSearch.MylistCounter);
+
+                    case SmileVideoInformationSource.OfficialSearch:
+                        return RawValueUtility.ConvertInteger(OfficialSearch.MylistCounter);
 
                     default:
                         throw new NotImplementedException();

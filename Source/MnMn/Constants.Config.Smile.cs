@@ -299,6 +299,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 検索で一度に取得する数。
         /// </summary>
+        [Obsolete]
         public static int SettingServiceSmileVideoSearchCount => appConfig.Get("setting-service-smile-smilevideo-search-count", int.Parse);
         /// <summary>
         /// 動画情報を取得するか。

@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public CollectionModel<RawSmileVideoSearchItemModel> List { get; set; }
 
         [DataMember(Name = "count")]
-        public string TotalCount { get; set; }
+        public string Count { get; set; }
 
         [DataMember(Name = "has_ng_video_for_adsense_on_listing")]
         public string HasNgVideoForAdsenseOnListing { get; set; }

@@ -66,6 +66,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
             get { return CacheParameter.ContentsSearch; }
         }
 
+        public RawSmileVideoSearchItemModel OfficialSearch
+        {
+            get { return CacheParameter.OfficialSearch; }
+        }
+
         public FeedSmileVideoItemModel Feed
         {
             get { return CacheParameter.Feed; }

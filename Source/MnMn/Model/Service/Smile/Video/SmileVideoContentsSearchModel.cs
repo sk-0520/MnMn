@@ -14,6 +14,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     {
         #region property
 
+        [XmlAttribute("service")]
+        public string Service { get; set; }
+
         [XmlArray("result"), XmlArrayItem("field")]
         public CollectionModel<string> Results { get; set; } = new CollectionModel<string>();
 

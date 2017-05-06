@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public string NumRes { get; set; }
 
         [DataMember(Name = "last_res_body")]
-        public string last_res_body { get; set; }
+        public string LastResBody { get; set; }
 
         [DataMember(Name = "length")]
         public string Length { get; set; }
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public string DescriptionShort { get; set; }
 
         [DataMember(Name = "thumbnail_style")]
-        public string ThumbnailStyle { get; set; }
+        public RawSmileVideoSearchThumbnailStyleModel ThumbnailStyle { get; set; }
 
         [DataMember(Name = "is_middle_thumbnail")]
         public string IsMiddleThumbnail { get; set; }

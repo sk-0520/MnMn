@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<search service="video">
-	<contents  max-index="1600" max-count="100">
+<search>
+	<contents service="video" max-index="1600" max-count="100">
 		<!-- 検索 -->
 		<method>
 			<element key="viewCounter">
@@ -70,7 +70,7 @@
 		</result>
 	</contents>
 
-	<official max-index="50" max-count="32">
+	<official max-index="1600" max-count="32">
 		<!-- 検索 -->
 		<method>
 			<element key="n">

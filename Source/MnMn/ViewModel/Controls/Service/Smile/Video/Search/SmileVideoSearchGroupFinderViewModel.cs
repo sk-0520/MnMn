@@ -357,7 +357,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 nowSort = LoadingSort;
             }
 
-            SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.Search.Count);
+            SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, SearchModel.GetDefaultSearchTypeDefine().MaximumCount);
             //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
             //PropertyChangedEventManager.AddListener(SearchFinder, PagerPropertyChangedListener, string.Empty);
             PagerPropertyChangedListener.Add(SearchFinder);
@@ -575,13 +575,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
                     var usingList = Enumerable.Empty<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
 
-                    if(TotalCount > Setting.Search.Count) {
-                        var define = SearchModel.GetDefaultSearchTypeDefine();
+                    var define = SearchModel.GetDefaultSearchTypeDefine();
 
-                        var pageCount = Math.Min(TotalCount / Setting.Search.Count, (define.MaximumIndex + define.MaximumCount) / Setting.Search.Count);
+                    if(TotalCount > define.MaximumCount) {
+
+                        var pageCount = Math.Min(TotalCount / define.MaximumCount, (define.MaximumIndex + define.MaximumCount) / define.MaximumCount);
                         var correctionPage = TotalCount > (define.MaximumIndex + define.MaximumCount) ? 1 : 0;
                         var preList = Enumerable.Range(1, pageCount - correctionPage)
-                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, searchFinder.Method, searchFinder.Sort, Type, searchFinder.Query, (i + 1) * Setting.Search.Count, Setting.Search.Count))
+                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, searchFinder.Method, searchFinder.Sort, Type, searchFinder.Query, (i + 1) * define.MaximumCount, define.MaximumCount))
                             .Select((v, i) => new PageViewModel<SmileVideoSearchItemFinderViewModel>(v, i + 2))
                             .ToList()
                         ;

@@ -334,6 +334,7 @@
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Service\Smile\SmileDescription.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Search.cs" />
     <Compile Include="Logic\SpaghettiScript.cs" />
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
     <Compile Include="Logic\Utility\FinderUtility.cs" />
@@ -444,6 +445,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthBySignatureModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSrcIdToMultiplexerModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchThumbnailStyleModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoContentsSearchModel.cs" />
@@ -1577,6 +1579,7 @@
     </Content>
     <Content Include="etc\define\service\smile\video\search.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="etc\define\service\smile\video\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

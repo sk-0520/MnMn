@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
@@ -39,7 +40,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 {
-    public class SmileVideoSearchItemFinderViewModel: SmileVideoFinderViewModelBase
+    public class SmileVideoSearchItemFinderViewModel : SmileVideoFinderViewModelBase
     {
         #region variable
 
@@ -87,10 +88,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var search = new ContentsSearch(Mediation);
 
-            var typeElement = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.Contents.Type, Type);
+            var typeElement = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.GetDefaultSearchTypeDefine().Type, Type);
 
             return search.SearchAsync(
-                SearchModel.Service,
+                SearchModel.Contents.Service,
                 Query,
                 typeElement.Key,
                 Method.Key,
@@ -116,9 +117,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         Task LoadOfficialSearchAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            return Task.CompletedTask;
-        }
+            var search = new Logic.Service.Smile.Video.Api.V1.Search(Mediation);
 
+            var typeElement = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.GetDefaultSearchTypeDefine().Type, Type);
+
+            return search.SearchAsync(
+                Query,
+                typeElement.Key,
+                Method.Key,
+                Sort.Key,
+                (Index / SearchModel.GetDefaultSearchTypeDefine().MaximumCount) + 1,
+                Count
+            ).ContinueWith(t => {
+                FinderLoadState = SourceLoadState.SourceChecking;
+                var result = t.Result;
+                TotalCount = RawValueUtility.ConvertInteger(result.Count);
+
+                var list = result.List.Select(item => {
+                    var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item));
+                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                });
+                return list;
+            }).ContinueWith(task => {
+                var list = task.Result;
+                return SetItemsAsync(list, thumbCacheSpan);
+            });
+        }
         #endregion
 
         #region SmileVideoFinderViewModelBase

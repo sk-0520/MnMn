@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// 動画検索で一度に取得する数。
         /// </summary>
-        [DataMember]
+        [Obsolete]
         public int Count { get; set; } = Constants.SettingServiceSmileVideoSearchCount;
         /// <summary>
         /// 一覧データから動画情報を取得するか。
