@@ -56,5 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 
         public const string dmc = "video-dmc";
         public const string dmcReload = "video-dmc-reload";
+
+        public const string search = "video-search";
     }
 }

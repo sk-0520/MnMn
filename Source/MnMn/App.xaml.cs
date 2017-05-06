@@ -406,6 +406,28 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
         }
 
+        static SystemParameterModel GetSystemParameter(ILogger logger)
+        {
+            var systemParameter = new SystemParameterModel();
+
+            //var screenSaverFlag = 0;
+            //NativeMethods.SystemParametersInfo(SPI.SPI_GETSCREENSAVEACTIVE, 0, ref screenSaverFlag, SPIF.None);
+            //var isEnabledScreenSaver = screenSaverFlag != 0 ? true : false;
+
+            //logger.Information($"SPI_GETSCREENSAVEACTIVE: {isEnabledScreenSaver}");
+            //systemParameter.IsEnabledScreenSaver = isEnabledScreenSaver;
+
+            return systemParameter;
+        }
+
+        static void RestoreSystemParameter(SystemParameterModel systemParameter, ILogger logger)
+        {
+            //if(systemParameter.IsEnabledScreenSaver.HasValue) {
+            //    int tempIsEnabledScreenSaver = 0;
+            //    logger.Information($"SPI_SETSCREENSAVEACTIVE: {systemParameter.IsEnabledScreenSaver}");
+            //    NativeMethods.SystemParametersInfo(SPI.SPI_SETSCREENSAVEACTIVE, systemParameter.IsEnabledScreenSaver.Value ? 1u: 0u, ref tempIsEnabledScreenSaver, SPIF.SPIF_SENDCHANGE);
+            //}
+        }
 
         #endregion
 
@@ -531,6 +553,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Loaded += MainWindow_Loaded;
             SplashWindow.commandClose.Visibility = Visibility.Collapsed;
             MainWindow.Show();
+
+            // ここで現在情報取得！
+            GlobalManager.SystemParameter = GetSystemParameter(Mediation.Logger);
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -583,6 +608,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
                     ShellUtility.OpenFileInDirectory(new FileInfo(filePath), Mediation.Logger);
                 }
             }
+
+            RestoreSystemParameter(GlobalManager.SystemParameter, Mediation.Logger);
         }
 
         private async void App_Exit(object sender, ExitEventArgs e)

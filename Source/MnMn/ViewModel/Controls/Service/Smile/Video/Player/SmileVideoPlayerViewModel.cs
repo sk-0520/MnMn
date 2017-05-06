@@ -1942,6 +1942,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 PrevPlayedTime = PlayTime;
 
+                Mediation.Order(new AppSystemBreakOrderModel(true));
+
                 ClearResidualComments();
             }
         }

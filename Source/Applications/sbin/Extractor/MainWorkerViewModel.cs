@@ -18,6 +18,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using Microsoft.CSharp;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 {
@@ -113,6 +114,28 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 return CreateCommand(
                     o => ExecuteAsync(),
                     o => CanInput && !string.IsNullOrWhiteSpace(ArchiveFilePath) && !string.IsNullOrWhiteSpace(ExpandDirectoryPath)
+                );
+            }
+        }
+
+        public ICommand OutputLogsCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => OutputLogsFromDialog(),
+                    o => LogItems.Any()
+                );
+            }
+        }
+
+        public ICommand CopyLogsCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => CopyLogs(),
+                    o => LogItems.Any()
                 );
             }
         }
@@ -214,7 +237,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 };
                 KillProcess(process, true);
 
-                var isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(1).TotalMilliseconds));
+                var isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(3).TotalMilliseconds));
                 if(isRestart && !process.HasExited) {
                     KillProcess(process, false);
                 }
@@ -399,6 +422,53 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 CommandManager.InvalidateRequerySuggested();
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void WriteStream(Stream stream)
+        {
+            using(var writer = new StreamWriter(stream, Encoding.UTF8, 4096, true)) {
+                foreach(var item in LogItems) {
+                    writer.WriteLine($"[{item.Timestamp:yyyy-MM-ddThh:mm:ss}] {item.Kind}: {item.Message}");
+                    if(item.HasDetail) {
+                        writer.WriteLine(item.Detail);
+                    }
+                }
+            }
+        }
+
+        void OutputLog(string outputFilePath)
+        {
+            var dirPath = Path.GetDirectoryName(outputFilePath);
+            Directory.CreateDirectory(dirPath);
+            using(var stream = new FileStream(outputFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                WriteStream(stream);
+            }
+        }
+
+        void OutputLogsFromDialog()
+        {
+            var dialog = new SaveFileDialog() {
+                Filter = "log|*.log",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                FileName = $"{DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss")}_expand.log",
+                CheckPathExists = true,
+            };
+            if(dialog.ShowDialog().GetValueOrDefault()) {
+                OutputLog(dialog.FileName);
+            }
+        }
+
+        void CopyLogs()
+        {
+            using(var stream = new MemoryStream()) {
+                WriteStream(stream);
+                try {
+                    var text = Encoding.UTF8.GetString(stream.ToArray());
+                    Clipboard.SetText(text);
+                }catch(Exception ex) {
+                    AddErrorLog(ex.Message, ex.ToString());
+                }
+            }
         }
 
         #region function

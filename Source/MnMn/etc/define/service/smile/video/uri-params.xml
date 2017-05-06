@@ -65,4 +65,11 @@
 		<item key="suppress_response_codes" value="true" />
 	</param>
 
+	<param key="video-search">
+		<item key="mode" value="watch" />
+		<item key="page" value="${page}" />
+		<item key="sort" value="${sort}" />
+		<item key="order" value="${order}" />
+	</param>
+
 </parameters>

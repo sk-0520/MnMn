@@ -75,13 +75,12 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContentTypeTextNet.PInvoke">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.24\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6332.25171, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.25\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6305.25849, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.107\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6332.25650, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.108\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Geckofx-Core">
@@ -111,9 +110,8 @@
       <HintPath>..\packages\Meta.Vlc.Wpf.16.11.19\lib\net45\x86\Meta.Vlc.Wpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.IO.RecyclableMemoryStream">
-      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.2.1\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.2.2\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -243,6 +241,7 @@
     <Compile Include="Define\Service\QuestionnaireKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoSearchType.cs" />
     <Compile Include="Define\UpdatedResult.cs" />
     <Compile Include="Define\WebNavigatorContextMenuKey.cs" />
     <Compile Include="Define\CacheState.cs" />
@@ -313,7 +312,9 @@
     <Compile Include="IF\IGetExpression.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
+    <Compile Include="IF\Service\Smile\Video\ISmileVideoSearchDefine.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
+    <Compile Include="Logic\Extensions\Service\Smile\Video\SmileVideoSearchModelExtensions.cs" />
     <Compile Include="Logic\OctetPerTime.cs" />
     <Compile Include="Logic\DelegateDragAndDrop.cs" />
     <Compile Include="Logic\DescriptionBase.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Service\Smile\SmileDescription.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Search.cs" />
     <Compile Include="Logic\SpaghettiScript.cs" />
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
     <Compile Include="Logic\Utility\FinderUtility.cs" />
@@ -377,6 +379,7 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
+    <Compile Include="Model\Order\AppSystemBreakOrderModel.cs" />
     <Compile Include="Model\Order\DownloadOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
     <Compile Include="Model\Request\AppLogingProcessRequestModel.cs" />
@@ -442,6 +445,11 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthBySignatureModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSrcIdToMultiplexerModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchThumbnailStyleModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoContentsSearchModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoOfficialSearchModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDmcItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
@@ -464,6 +472,7 @@
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
     <Compile Include="Data\SpaghettiPreparationData.cs" />
     <Compile Include="Model\SpaghettiSourceModel.cs" />
+    <Compile Include="Model\SystemParameterModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorBridgeModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorGestureElementModel.cs" />
@@ -477,6 +486,7 @@
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorPageConditionModel.cs" />
+    <Compile Include="Model\WebNavigatorTagModel.cs" />
     <Compile Include="ViewModel\Controls\AcceptViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppDownloadManagerViewModel.cs" />
@@ -1570,6 +1580,7 @@
     </Content>
     <Content Include="etc\define\service\smile\video\search.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="etc\define\service\smile\video\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

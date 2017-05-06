@@ -83,50 +83,69 @@
 
       <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
         <GroupBox Header="実行ログ">
-          <ListBox x:Name="listLog"  ItemsSource="{Binding LogItems}">
-            <ListBox.ItemContainerStyle>
-              <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-              </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-              <DataTemplate>
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="130" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="*" />
-                  </Grid.ColumnDefinitions>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListBox x:Name="listLog" Grid.Row="0" ItemsSource="{Binding LogItems}">
+              <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                  <Setter Property="HorizontalAlignment" Value="Stretch" />
+                </Style>
+              </ListBox.ItemContainerStyle>
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="130" />
+                      <ColumnDefinition Width="50" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" Text="{Binding Timestamp, StringFormat=yyyy/MM/dd hh:mm:ss}" />
-                  <TextBlock Grid.Column="1" TextAlignment="Center">
-                    <TextBlock.Style>
-                      <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding Kind}" Value="Information">
-                            <Setter Property="Text" Value="情報" />
-                          </DataTrigger>
-                          <DataTrigger Binding="{Binding Kind}" Value="Warning">
-                            <Setter Property="Text" Value="警告" />
-                          </DataTrigger>
-                          <DataTrigger Binding="{Binding Kind}" Value="Error">
-                            <Setter Property="Text" Value="異常" />
-                          </DataTrigger>
-                          <DataTrigger Binding="{Binding Kind}" Value="Script">
-                            <Setter Property="Text" Value="コード" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Style>
-                  </TextBlock>
-                  <StackPanel Grid.Column="2">
-                    <TextBlock Text="{Binding Message}" />
-                    <TextBlock Text="{Binding Detail}" Visibility="{Binding HasDetail, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                  </StackPanel>
-                </Grid>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
+                    <TextBlock Grid.Column="0" Text="{Binding Timestamp, StringFormat=yyyy/MM/dd hh:mm:ss}" />
+                    <TextBlock Grid.Column="1" TextAlignment="Center">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Kind}" Value="Information">
+                              <Setter Property="Text" Value="情報" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Warning">
+                              <Setter Property="Text" Value="警告" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Error">
+                              <Setter Property="Text" Value="異常" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Script">
+                              <Setter Property="Text" Value="コード" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+                    <StackPanel Grid.Column="2">
+                      <TextBlock Text="{Binding Message}" />
+                      <TextBlock Text="{Binding Detail}" Visibility="{Binding HasDetail, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                  </Grid>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+            <WrapPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+              <WrapPanel.Resources>
+                <Style TargetType="TextBlock">
+                  <Setter Property="Margin" Value="4" />
+                </Style>
+              </WrapPanel.Resources>
+              <TextBlock>
+                <Hyperlink Command="{Binding OutputLogsCommand}">ログをファイル出力</Hyperlink>
+              </TextBlock>
+              <TextBlock>
+                <Hyperlink Command="{Binding CopyLogsCommand}">全ログをコピー</Hyperlink>
+              </TextBlock>
+            </WrapPanel>
+          </Grid>
         </GroupBox>
       </Grid>
 

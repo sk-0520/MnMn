@@ -33,5 +33,7 @@
 	<item key="video-dmc" uri="${api-uri}" param="query" request-type="mapping" />
 	<item key="video-dmc-reload" uri="${api-uri}" param="query" request-type="mapping" />
 
+	<item key="video-search" uri="http://ext.nicovideo.jp/api/search/${type}/${query}" param="query" />
+
 </uri>
 

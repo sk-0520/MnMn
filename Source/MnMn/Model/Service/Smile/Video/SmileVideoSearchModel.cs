@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
@@ -29,22 +30,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     {
         #region property
 
-        [XmlAttribute("service")]
-        public string Service { get; set; }
+        [XmlElement("contents")]
+        public SmileVideoContentsSearchModel Contents { get; set; } = new SmileVideoContentsSearchModel();
 
-        [XmlArray("method"), XmlArrayItem("element")]
-        public CollectionModel<DefinedElementModel> Methods { get; set; } = new CollectionModel<DefinedElementModel>();
-        [XmlArray("sort"), XmlArrayItem("element")]
-        public CollectionModel<DefinedElementModel> Sort { get; set; } = new CollectionModel<DefinedElementModel>();
-        [XmlArray("type"), XmlArrayItem("element")]
-        public CollectionModel<DefinedElementModel> Type { get; set; } = new CollectionModel<DefinedElementModel>();
-        [XmlArray("result"), XmlArrayItem("field")]
-        public CollectionModel<string> Results { get; set; } = new CollectionModel<string>();
-
-        [XmlAttribute("max-index")]
-        public int MaximumIndex { get; set; }
-        [XmlAttribute("max-count")]
-        public int MaximumCount { get; set; }
+        [XmlElement("official")]
+        public SmileVideoOfficialSearchModel Official { get; set; } = new SmileVideoOfficialSearchModel();
 
         #endregion
     }
