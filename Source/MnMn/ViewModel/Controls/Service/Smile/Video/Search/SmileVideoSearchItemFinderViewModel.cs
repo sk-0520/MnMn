@@ -82,11 +82,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #endregion
 
         #region function
-        #endregion
 
-        #region SmileVideoFinderViewModelBase
-
-        protected override Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        Task LoadContentsSearchAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             var search = new ContentsSearch(Mediation);
 
@@ -115,6 +112,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 var list = task.Result;
                 return SetItemsAsync(list, thumbCacheSpan);
             }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+        }
+
+        Task LoadOfficialSearchAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+            return Task.CompletedTask;
+        }
+
+        #endregion
+
+        #region SmileVideoFinderViewModelBase
+
+        protected override Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+            switch(Constants.ServiceSmileVideoSearchType) {
+                case SmileVideoSearchType.Contents:
+                    return LoadContentsSearchAsync(thumbCacheSpan, imageCacheSpan, extends);
+
+                case SmileVideoSearchType.Official:
+                    return LoadOfficialSearchAsync(thumbCacheSpan, imageCacheSpan, extends);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion

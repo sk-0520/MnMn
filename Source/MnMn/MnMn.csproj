@@ -312,7 +312,9 @@
     <Compile Include="IF\IGetExpression.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
+    <Compile Include="IF\Service\Smile\Video\ISmileVideoSearchDefine.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
+    <Compile Include="Logic\Extensions\Service\Smile\Video\SmileVideoSearchModelExtensions.cs" />
     <Compile Include="Logic\OctetPerTime.cs" />
     <Compile Include="Logic\DelegateDragAndDrop.cs" />
     <Compile Include="Logic\DescriptionBase.cs" />

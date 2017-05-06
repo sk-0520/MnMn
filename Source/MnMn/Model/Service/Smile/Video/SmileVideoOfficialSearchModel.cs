@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     [Serializable]
-    public class SmileVideoOfficialSearchModel: ModelBase
+    public class SmileVideoOfficialSearchModel: ModelBase, ISmileVideoSearchDefine
     {
-        #region property
+        #region ISmileVideoSearchDefine
 
         [XmlAttribute("max-index")]
         public int MaximumIndex { get; set; }

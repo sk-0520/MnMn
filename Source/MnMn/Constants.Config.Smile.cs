@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 動画検索方法。
         /// </summary>
-        public static SmileVideoSearchType SearchType => appConfig.Get("service-smile-smilevideo-search-type", s => EnumUtility.Parse< SmileVideoSearchType>(s));
+        public static SmileVideoSearchType ServiceSmileVideoSearchType => appConfig.Get("service-smile-smilevideo-search-type", s => EnumUtility.Parse< SmileVideoSearchType>(s));
 
 
         #region live
