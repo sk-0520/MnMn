@@ -371,6 +371,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         bool OrderCore_Exit(OrderModel order)
         {
+            WebNavigatorCore.Uninitialize();
+
             Application.Current.Dispatcher.Invoke(() => {
                 Application.Current.Shutdown();
             });
