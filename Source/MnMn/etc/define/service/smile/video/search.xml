@@ -73,14 +73,14 @@
 	<official max-index="1600" max-count="32">
 		<!-- 検索 -->
 		<method>
-			<element key="n">
-				<words>
-					<word key="ja-jp" value="最新のコメント" />
-				</words>
-			</element>
 			<element key="v">
 				<words>
 					<word key="ja-jp" value="再生数" />
+				</words>
+			</element>
+			<element key="n">
+				<words>
+					<word key="ja-jp" value="最新のコメント" />
 				</words>
 			</element>
 			<element key="m">
@@ -106,14 +106,14 @@
 		</method>
 		<!-- ソート(単語の意味と役割違うけどしゃあない) -->
 		<sort>
-			<element key="a">
-				<words>
-					<word key="ja-jp" value="昇順" />
-				</words>
-			</element>
 			<element key="d">
 				<words>
 					<word key="ja-jp" value="降順" />
+				</words>
+			</element>
+			<element key="a">
+				<words>
+					<word key="ja-jp" value="昇順" />
 				</words>
 			</element>
 		</sort>
