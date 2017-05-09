@@ -120,7 +120,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#561: 内蔵ブラウザの警告表示が見切れてる'
 					},
 					{
 						'revision': '',
