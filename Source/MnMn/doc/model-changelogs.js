@@ -111,6 +111,23 @@
 				'logs': [
 					{
 						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
 						'subject': '#563: クラッシュレポートが複数立ち上がっている？',
 						'comments': [
 							'クラッシュレポートが複数立ち上がらないようにしたのね',
@@ -124,24 +141,11 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '',
 						'subject': '#562: クラッシュレポートより: System.NullReferenceException 連続で起きて連続でクラッシュレポート立ち上がってる？',
 						'comments': [
 							'複数立ち上がるのは #563 で対応',
 							'NullReferenceException は終了時の非同期処理がまずかったんだと思いたい'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					},
 					{
 						'revision': '',
