@@ -171,7 +171,8 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': '#566: GeckoFx 45.0.30 -> 45.0.31'
 					},
 					{
 						'revision': '',
