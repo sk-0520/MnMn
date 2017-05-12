@@ -854,7 +854,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             DoAction(
                 b => b.Navigate(uri),
-                b => b.Navigate(uri.OriginalString)
+                b => {
+                    if(!b.IsDisposed) {
+                        b.Navigate(uri.OriginalString);
+                    }
+                }
             );
             IsEmptyContent = false;
 

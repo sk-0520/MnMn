@@ -149,6 +149,14 @@
 					},
 					{
 						'revision': '',
+						'subject': '#565: クラッシュレポートより: System.ObjectDisposedException: 破棄されたオブジェクトにアクセスできません。'
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
