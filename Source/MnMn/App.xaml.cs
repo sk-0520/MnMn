@@ -599,7 +599,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             Mediation.Logger.Trace("start closing!");
 
             var uninitTask = AppManager.UninitializeAsync();
-            if(!uninitTask.Wait(TimeSpan.FromSeconds(20))) {
+            if(!uninitTask.Wait(Constants.UninitializeAsyncWaitTime)) {
                 Mediation.Logger.Fatal($"time out: {nameof(ManagerViewModelBase.UninitializeAsync)}");
             }
 

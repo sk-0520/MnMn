@@ -98,6 +98,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan AutoRebootJudgeTime => appConfig.Get("auto-reboot-judge-time", TimeSpan.Parse);
 
+        public static TimeSpan UninitializeAsyncWaitTime => appConfig.Get("uninitialize_async-wait-time", TimeSpan.Parse);
+
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
         /// <summary>
