@@ -117,6 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// スリープ・ロック抑制を最後に実施した時間。
         /// </summary>
         DateTime LastSystemBreakSuppressionTime { get; set; } = DateTime.MinValue;
+        int CalledEmptyWorkingSetCount { get; set; }
 
         #endregion
 
@@ -433,11 +434,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var prevTime = DateTime.Now;
             var prevUsingMemory = GC.GetTotalMemory(false);
 
+            var callEmptyWorkingSet = false;
+            if(order.IsTargetLargeObjectHeap) {
+                if(order.CallEmptyWorkingSet) {
+                    if(3 < CalledEmptyWorkingSetCount++) {
+                        callEmptyWorkingSet = true;
+                        CalledEmptyWorkingSetCount = 0;
+                    }
+                }
+            }
+
             if(order.IsTargetLargeObjectHeap) {
                 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
             }
+            if(callEmptyWorkingSet) {
+                NativeMethods.EmptyWorkingSet(Process.GetCurrentProcess().Handle);
+            }
             GC.Collect();
             GC.WaitForPendingFinalizers();
+            if(callEmptyWorkingSet) {
+                NativeMethods.EmptyWorkingSet(Process.GetCurrentProcess().Handle);
+            }
             GC.Collect();
 
             var gcUsingMemory = GC.GetTotalMemory(true);
