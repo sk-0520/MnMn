@@ -1520,7 +1520,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Information.IsPlaying = false;
                 Information.SaveSetting(false);
                 // LOHも含めてGC
-                Mediation.Order(new AppCleanMemoryOrderModel(true));
+                Mediation.Order(new AppCleanMemoryOrderModel(true, false));
             }
 
             AddHistory(videoInformation);
@@ -1925,7 +1925,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
             }
-            Mediation.Order(new AppCleanMemoryOrderModel(true));
+            Mediation.Order(new AppCleanMemoryOrderModel(true, true));
         }
 
         private void Player_PositionChanged(object sender, EventArgs e)
