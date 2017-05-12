@@ -435,12 +435,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var prevUsingMemory = GC.GetTotalMemory(false);
 
             var callEmptyWorkingSet = false;
-            if(order.IsTargetLargeObjectHeap) {
-                if(order.CallEmptyWorkingSet) {
-                    if(3 < CalledEmptyWorkingSetCount++) {
-                        callEmptyWorkingSet = true;
-                        CalledEmptyWorkingSetCount = 0;
-                    }
+            if(order.IsTargetLargeObjectHeap && order.CallEmptyWorkingSet) {
+                CalledEmptyWorkingSetCount += 1;
+                if(Constants.GarbageCollectionCallEmptyworkingsetCount < CalledEmptyWorkingSetCount) {
+                    callEmptyWorkingSet = true;
+                    CalledEmptyWorkingSetCount = 0;
                 }
             }
 
