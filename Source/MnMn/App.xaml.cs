@@ -612,11 +612,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             RestoreSystemParameter(GlobalManager.SystemParameter, Mediation.Logger);
         }
 
-        private async void App_Exit(object sender, ExitEventArgs e)
+        private void App_Exit(object sender, ExitEventArgs e)
         {
             Exit -= App_Exit;
-
-            await AppManager.UninitializeAsync();
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
