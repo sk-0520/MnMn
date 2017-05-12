@@ -133,7 +133,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#562: クラッシュレポートより: System.NullReferenceException 連続で起きて連続でクラッシュレポート立ち上がってる？',
+						'comments': [
+							'複数立ち上がるのは #563 で対応',
+							'NullReferenceException は終了時の非同期処理がまずかったんだと思いたい'
+						]
 					},
 					{
 						'revision': '',
