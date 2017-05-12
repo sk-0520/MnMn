@@ -35,9 +35,8 @@
     <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6332.25171, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.25\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6341.29050, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6332.25650, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.108\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
@@ -197,6 +196,7 @@
     <Compile Include="stackoverflow.com\ScrollIntoViewForListBox.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Firefox\omni.ja" />
     <None Include="LibVlc\plugins\plugins.dat" />
     <None Include="packages.config" />

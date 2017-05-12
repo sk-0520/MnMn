@@ -153,7 +153,12 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'open',
+						'subject': '#342: メモリ断片化: System.Runtime.InteropServices.COMException (0x80070008)',
+						'comments': [
+							'意味あるかは知らないけど EmptyWorkingSet を定期的に呼び出すようにした',
+							'手っ取り早く 64bit 化しちゃえばいいんだけど周辺ライブラリが足引っ張る悲しみ'
+						]
 					},
 					{
 						'revision': '',

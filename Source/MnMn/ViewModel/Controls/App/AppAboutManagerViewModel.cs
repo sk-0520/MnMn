@@ -202,7 +202,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(
                     o => {
-                        Mediation.Order(new AppCleanMemoryOrderModel(true));
+#if DEBUG
+                        Mediation.Order(new AppCleanMemoryOrderModel(true, true));
+#else
+                        Mediation.Order(new AppCleanMemoryOrderModel(true, false));
+#endif
                         ReloadUsingMemoryCommand.TryExecute(null);
                     }
                 );

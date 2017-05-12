@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 // GCは裏で走らせておく
                 GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime), false).ContinueWith(t => {
                     OutputLogGarbageCollection(t.Result);
-                    Mediation.Order(new AppCleanMemoryOrderModel(true));
+                    Mediation.Order(new AppCleanMemoryOrderModel(true, true));
                     BackgroundGarbageCollectionTimer.Start();
                 });
             } else {
@@ -258,7 +258,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             View.Closing += View_Closing;
             View.Closed += View_Closed;
 
-            Mediation.Order(new AppCleanMemoryOrderModel(false));
+            Mediation.Order(new AppCleanMemoryOrderModel(false, false));
         }
 
         public override void UninitializeView(MainWindow view)
@@ -324,7 +324,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 var cacheSpan = new CacheSpan(DateTime.Now, Setting.CacheLifeTime);
                 var gcSize = await GarbageCollectionAsync(Constants.BackgroundGarbageCollectionLevel, cacheSpan, false);
                 OutputLogGarbageCollection(gcSize);
-                Mediation.Order(new AppCleanMemoryOrderModel(true));
+                Mediation.Order(new AppCleanMemoryOrderModel(true, true));
             } finally {
                 BackgroundGarbageCollectionTimer.Start();
             }
