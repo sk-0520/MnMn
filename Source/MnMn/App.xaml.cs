@@ -547,6 +547,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 DataContext = AppManager,
             };
             MainWindow = View;
+            MainWindow.Closing += MainWindow_Closing;
             MainWindow.Closed += MainWindow_Closed;
             AppManager.InitializeView(View);
             Exit += App_Exit;
@@ -591,6 +592,18 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             CatchUnhandleException((Exception)e.ExceptionObject, false);
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Mediation.Logger.Trace("start closing!");
+
+            var uninitTask = AppManager.UninitializeAsync();
+            if(!uninitTask.Wait(TimeSpan.FromSeconds(20))) {
+                Mediation.Logger.Fatal($"time out: {nameof(ManagerViewModelBase.UninitializeAsync)}");
+            }
+
+            Mediation.Logger.Trace("end closing -> start close!");
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
