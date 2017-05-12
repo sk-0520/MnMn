@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public async override Task UninitializeAsync()
         {
             foreach(var manager in ManagerChildren) {
-                await manager.UninitializeAsync();
+                await manager.UninitializeAsync().ConfigureAwait(false);
             }
         }
 
