@@ -1293,8 +1293,12 @@
                     <ListBox.ItemContainerStyle>
                       <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                         <Style.Triggers>
-                          <DataTrigger Binding="{Binding NowShowing}" Value="True">
-                            <DataTrigger.EnterActions>
+                          <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                              <Condition Binding="{Binding NowShowing}" Value="True" />
+                              <Condition Binding="{Binding DataContext.CommentEffect, ElementName=root}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
                               <BeginStoryboard>
                                 <Storyboard>
                                   <!-- テーマの随時適用はすぐには無理っすね -->
@@ -1308,8 +1312,8 @@
                                   />
                                 </Storyboard>
                               </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
                               <BeginStoryboard>
                                 <Storyboard>
                                   <ColorAnimation
@@ -1320,8 +1324,8 @@
                                   />
                                 </Storyboard>
                               </BeginStoryboard>
-                            </DataTrigger.ExitActions>
-                          </DataTrigger>
+                            </MultiDataTrigger.ExitActions>
+                          </MultiDataTrigger>
                           <DataTrigger Binding="{Binding Approval}" Value="False">
                             <Setter Property="Background" Value="{DynamicResource SemiTransparentGreyBrush}" />
                             <Setter Property="Foreground" Value="{DynamicResource SemiTransparentWhiteBrush}" />

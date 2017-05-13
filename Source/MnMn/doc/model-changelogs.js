@@ -180,7 +180,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'レンチあんじゃん！ (関連: #347)'
 					},
 					{
 						'revision': '',

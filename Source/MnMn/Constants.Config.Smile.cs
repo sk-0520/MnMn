@@ -200,6 +200,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int ServiceSmileVideoPlayerStepSeekRangeAbsoluteMinimum => ServiceSmileVideoPlayerStepSeekRangeAbsolute.Head;
         public static int ServiceSmileVideoPlayerStepSeekRangeAbsoluteMaximum => ServiceSmileVideoPlayerStepSeekRangeAbsolute.Tail;
 
+        public static bool ServiceSmileVideoPlayerCommentEffect => appConfig.Get("service-smile-smilevideo-player-comment-effect", bool.Parse);
+
         /// <summary>
         /// 関連動画のソート。
         /// </summary>

@@ -58,6 +58,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected virtual SmileVideoPlayerSettingModel PlayerSetting { get { return Setting.Player; } }
 
+        public bool CommentEffect { get; } = Constants.ServiceSmileVideoPlayerCommentEffect;
+
         public DateTime CreatedTimestamp { get; } = DateTime.Now;
 
         /// <summary>
