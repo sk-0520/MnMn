@@ -2102,12 +2102,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     SetWindowMode(true);
                 }
             }
+
+            if(!IsViewClosed) {
+                PlayerCursorHider.StartHide();
+            }
         }
 
         void View_Activated(object sender, EventArgs e)
         {
             if(!IsViewClosed) {
                 ResetFocus();
+                PlayerCursorHider.StartHide();
             }
         }
 
@@ -2115,6 +2120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(PlayerState == PlayerState.Playing) {
                 ResetFocus();
+                PlayerCursorHider.StartHide();
             }
         }
 
