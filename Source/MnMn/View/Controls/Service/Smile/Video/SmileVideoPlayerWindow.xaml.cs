@@ -28,24 +28,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
     /// </summary>
     public partial class SmileVideoPlayerWindow: MetroWindow
     {
-        #region property
-
-        CursorHider PlayerCursorHider { get; }
-
-        #endregion
-
         public SmileVideoPlayerWindow()
         {
             InitializeComponent();
-
-            PlayerCursorHider = new CursorHider(this.player);
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            PlayerCursorHider.Dispose();
-
-            base.OnClosed(e);
         }
     }
 }

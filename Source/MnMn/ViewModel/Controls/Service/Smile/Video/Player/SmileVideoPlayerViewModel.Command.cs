@@ -439,6 +439,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         // フルスクリーン時は元に戻してあげる
                         SetWindowMode(true);
                     }
+
+                    if(!IsViewClosed) {
+                        PlayerCursorHider.StartHide();
+                    }
                 });
             }
         }
