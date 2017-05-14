@@ -162,28 +162,31 @@
                       <TextBlock>
                         <Button Style="{StaticResource Hyperlink}" Command="{Binding DataContext.AppAboutManager.OpenLinkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Uri}">
                           <StackPanel Style="{StaticResource ItemPanel}">
-                          <TextBlock>
-                              <TextBlock.Style>
-                                <Style TargetType="TextBlock" >
-                                  <!-- 今持ってるフォントで表示できたやつを渋々使用 -->
+                            <Viewbox Style="{StaticResource SmallItemBox}">
+                              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                <Path>
+                                  <Path.Style>
+                                    <Style TargetType="Path" BasedOn="{StaticResource SmallLinkIconPath}">
                                   <Style.Triggers>
                                     <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Library}">
-                                      <Setter Property="Text" Value="⚙" />
+                                      <Setter Property="Data" Value="{StaticResource Image_Library}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Image}">
-                                      <Setter Property="Text" Value="✍" />
+                                      <Setter Property="Data" Value="{StaticResource Image_Image}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Source}">
-                                      <Setter Property="Text" Value="📖" />
+                                      <Setter Property="Data" Value="{StaticResource Image_Book}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.WebPage}">
-                                      <Setter Property="Text" Value="🏠" />
+                                      <Setter Property="Data" Value="{StaticResource Image_Browser}" />
                                     </DataTrigger>
                                   </Style.Triggers>
-                                </Style>
-                              </TextBlock.Style>
-                          </TextBlock>
-                          <TextBlock Text="{Binding Name}" />
+                                    </Style>
+                                  </Path.Style>
+                                </Path>
+                              </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="{Binding Name}" />
                           </StackPanel>
                         </Button>
                       </TextBlock>

@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.MnMn.Common;
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
     /// <summary>
     /// App.xaml の相互作用ロジック
     /// </summary>
-    public partial class App: Application
+    public partial class App : Application
     {
         public App()
         {
@@ -24,6 +25,7 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
         #region property
 
         AssemblyResolveHelper AssemblyResolveHelper { get; }
+        Mutex Mutex { get; set; } = new Mutex(false, ConfigurationManager.AppSettings.Get("mutex-name"));
 
         #endregion
 
@@ -32,6 +34,11 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            if(!Mutex.WaitOne(TimeSpan.Parse(ConfigurationManager.AppSettings.Get("mutex-wait-time")), false)) {
+                Mutex = null;
+                return;
+            }
 
             var viewModel = new MainWorkerViewModel();
             try {
@@ -53,6 +60,11 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
         protected override void OnExit(ExitEventArgs e)
         {
             AssemblyResolveHelper.Dispose();
+
+            if(Mutex != null) {
+                Mutex.ReleaseMutex();
+                Mutex.Dispose();
+            }
 
             base.OnExit(e);
         }

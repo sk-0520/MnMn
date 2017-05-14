@@ -108,26 +108,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
             Element.Unloaded -= Element_Unloaded;
         }
 
-        void StartHide()
+        void SwitchHide()
         {
             LastCursorMoveTime = DateTime.Now;
 
             if(IsHidden) {
                 ShowCursor();
             } else {
-                HideWaitTimer.Stop();
-                HideWaitTimer.Interval = HideTime;
-                HideWaitTimer.Start();
+                StartHide();
             }
         }
 
-        void HideCursor()
+        bool JudgeHideTime()
         {
-            if(HideTime <= DateTime.Now - LastCursorMoveTime) {
-                Element.Cursor = HiddenCursor;
-                IsHidden = true;
-                HideWaitTimer.Stop();
-            }
+            return HideTime <= DateTime.Now - LastCursorMoveTime;
+        }
+
+        public void HideCursor()
+        {
+            Element.Cursor = HiddenCursor;
+            IsHidden = true;
+            HideWaitTimer.Stop();
+        }
+
+        public void StartHide()
+        {
+            HideWaitTimer.Stop();
+            HideWaitTimer.Interval = HideTime;
+            HideWaitTimer.Start();
         }
 
         #endregion
@@ -151,17 +159,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 
         private void Element_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            StartHide();
+            SwitchHide();
         }
 
         private void Element_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            StartHide();
+            SwitchHide();
         }
 
         private void HideWaitTimer_Tick(object sender, EventArgs e)
         {
-            HideCursor();
+            if(JudgeHideTime()) {
+                HideCursor();
+            }
         }
 
         private void Element_Unloaded(object sender, RoutedEventArgs e)

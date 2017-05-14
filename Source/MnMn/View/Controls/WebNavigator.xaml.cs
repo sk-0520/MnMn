@@ -780,6 +780,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        public ICommand OpenIssue560Command
+        {
+            get
+            {
+                return new DelegateCommand(o => {
+                    ShellUtility.OpenUriInDefaultBrowser("https://bitbucket.org/sk_0520/mnmn/issues/560", Mediation.Logger);
+                });
+            }
+        }
+
         #endregion
 
         #region function
@@ -844,7 +854,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             DoAction(
                 b => b.Navigate(uri),
-                b => b.Navigate(uri.OriginalString)
+                b => {
+                    if(!b.IsDisposed) {
+                        b.Navigate(uri.OriginalString);
+                    }
+                }
             );
             IsEmptyContent = false;
 

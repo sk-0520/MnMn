@@ -1520,7 +1520,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Information.IsPlaying = false;
                 Information.SaveSetting(false);
                 // LOHも含めてGC
-                Mediation.Order(new AppCleanMemoryOrderModel(true));
+                Mediation.Order(new AppCleanMemoryOrderModel(true, false));
             }
 
             AddHistory(videoInformation);
@@ -1754,6 +1754,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Navigationbar = View.seekbar;
             CommentView = View.commentView;
             DetailComment = View.detailComment;
+            PlayerCursorHider = new Logic.View.CursorHider(Player);
 
             // 初期設定
             Player.Volume = Volume;
@@ -1863,6 +1864,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!IsDisposed) {
                 DetachmentEvent();
 
+                if(PlayerCursorHider != null) {
+                    PlayerCursorHider.Dispose();
+                    PlayerCursorHider = null;
+                }
+
                 View = null;
                 Player = null;
                 Navigationbar = null;
@@ -1925,7 +1931,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
             }
-            Mediation.Order(new AppCleanMemoryOrderModel(true));
+            Mediation.Order(new AppCleanMemoryOrderModel(true, true));
         }
 
         private void Player_PositionChanged(object sender, EventArgs e)
@@ -2096,12 +2102,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     SetWindowMode(true);
                 }
             }
+
+            if(!IsViewClosed) {
+                PlayerCursorHider.StartHide();
+            }
         }
 
         void View_Activated(object sender, EventArgs e)
         {
             if(!IsViewClosed) {
                 ResetFocus();
+                PlayerCursorHider.StartHide();
             }
         }
 
@@ -2109,6 +2120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(PlayerState == PlayerState.Playing) {
                 ResetFocus();
+                PlayerCursorHider.StartHide();
             }
         }
 

@@ -132,20 +132,22 @@
       </Grid>
     </ToolBar>
 
-    <Grid Grid.Row="0" Visibility="{Binding IsMinimumRunning, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime, RelativeSource={RelativeSource AncestorType=UserControl}}">
-      <Border Margin="4" Padding="4" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush3}">
+    <Grid Grid.Row="1" Visibility="{Binding IsMinimumRunning, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <Expander Padding="4" Background="{DynamicResource AccentColorBrush3}">
+        <Expander.Header>
+          ややこい問題により内蔵ブラウザに IE コンポーネントを強制使用しています
+        </Expander.Header>
         <StackPanel>
-          <TextBlock>
-            ややこい問題により内蔵ブラウザに IE コンポーネントを強制使用しています
-          </TextBlock>
           <TextBlock>
             この問題は自体は<Button Style="{StaticResource Hyperlink}" Command="{Binding OpenIssue551Command, RelativeSource={RelativeSource AncestorType=UserControl}}">#551</Button>で認知してますが難しくて泣きました。
           </TextBlock>
           <TextBlock>
             二重保守のしんどさから IE コンポーネント強制使用時は各種 MnMn の機能を使用できません。
+            <LineBreak />
+            根本的な解決は<Button Style="{StaticResource Hyperlink}" Command="{Binding OpenIssue560Command, RelativeSource={RelativeSource AncestorType=UserControl}}">#560</Button>で模索中です。
           </TextBlock>
         </StackPanel>
-      </Border>
+      </Expander>
     </Grid>
 
     <ContentControl x:Name="container" Grid.Row="2" />

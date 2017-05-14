@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
             return Task.Run(() => {
                 var cacheSpan = Constants.ServiceSmileMarketImageCacheSpan;
-                
+
                 var files = marketDir.EnumerateFiles()
                     .Where(f => !cacheSpan.IsCacheTime(f.CreationTime))
                     .ToList()
@@ -184,11 +184,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public async override Task UninitializeAsync()
         {
             foreach(var manager in ManagerChildren) {
-                await manager.UninitializeAsync();
+                await manager.UninitializeAsync().ConfigureAwait(false);
             }
 
             if(Session.IsLoggedIn) {
-                await Session.LogoutAsync();
+                await Session.LogoutAsync().ConfigureAwait(false);
             }
         }
 

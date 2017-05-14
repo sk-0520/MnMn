@@ -300,7 +300,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 var executor = GetExecutor(httpMethod);
 
-                using(var response = await executor()) {
+                using(var response = await executor().ConfigureAwait(false)) {
                     Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {response.StatusCode}", response.ToString());
                     if(!response.IsSuccessStatusCode) {
                         if(JudgeFailureStatusCode != null) {

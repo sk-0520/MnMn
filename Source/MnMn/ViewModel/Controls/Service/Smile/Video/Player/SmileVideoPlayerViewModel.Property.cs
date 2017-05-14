@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.View;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
@@ -56,6 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #region property
 
         protected virtual SmileVideoPlayerSettingModel PlayerSetting { get { return Setting.Player; } }
+
+        public bool CommentEffect { get; } = Constants.ServiceSmileVideoPlayerCommentEffect;
 
         public DateTime CreatedTimestamp { get; } = DateTime.Now;
 
@@ -96,6 +99,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// コメント有効位置抑制スライダー要素。
         /// </summary>
         Control EnabledCommentControl { get; set; }
+
+        CursorHider PlayerCursorHider { get; set; }
 
         public int VolumeMinimum { get { return Constants.NavigatorVolumeRange.Head; } }
         public int VolumeMaximum { get { return Constants.NavigatorVolumeRange.Tail; } }

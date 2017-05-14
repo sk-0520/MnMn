@@ -173,7 +173,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
                 };
-                await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
+                var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get).ConfigureAwait(false);
+                Mediation.Logger.Debug(response.DisplayText);
             }
         }
 

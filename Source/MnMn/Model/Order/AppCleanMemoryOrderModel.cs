@@ -33,10 +33,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
         ///
         /// </summary>
         /// <param name="isTargetLargeObjectHeap">LOHを含めるか</param>
-        public AppCleanMemoryOrderModel(bool isTargetLargeObjectHeap)
+        /// <param name="callEmptyWorkingSet">(可能であれば)<see cref="ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.EmptyWorkingSet(IntPtr)"/>を呼び出すか。<see cref="isTargetLargeObjectHeap"/>が真の場合に使用される。</param>
+        public AppCleanMemoryOrderModel(bool isTargetLargeObjectHeap, bool callEmptyWorkingSet)
             : base(OrderKind.CleanMemory, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Application)
         {
             IsTargetLargeObjectHeap = isTargetLargeObjectHeap;
+            CallEmptyWorkingSet = callEmptyWorkingSet;
         }
 
         #region property
@@ -45,6 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
         /// LOHを含めるか。
         /// </summary>
         public bool IsTargetLargeObjectHeap { get; }
+        public bool CallEmptyWorkingSet { get; }
 
         #endregion
     }

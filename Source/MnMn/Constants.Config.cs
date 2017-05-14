@@ -98,6 +98,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan AutoRebootJudgeTime => appConfig.Get("auto-reboot-judge-time", TimeSpan.Parse);
 
+        public static TimeSpan UninitializeAsyncWaitTime => appConfig.Get("uninitialize_async-wait-time", TimeSpan.Parse);
+
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
         /// <summary>
@@ -121,6 +123,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ゴミ処理規模。
         /// </summary>
         public static GarbageCollectionLevel BackgroundGarbageCollectionLevel => appConfig.Get("background-garbage-collection-level", s => (GarbageCollectionLevel)Enum.Parse(typeof(GarbageCollectionLevel), s));
+
+        public static int GarbageCollectionCallEmptyworkingsetCount => appConfig.Get("garbage-collection-call-emptyworkingset-count", int.Parse);
 
         public static TimeSpan MutexWaitTime => appConfig.Get("mutex-wait-time", TimeSpan.Parse);
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);

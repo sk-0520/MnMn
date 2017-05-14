@@ -547,6 +547,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 DataContext = AppManager,
             };
             MainWindow = View;
+            MainWindow.Closing += MainWindow_Closing;
             MainWindow.Closed += MainWindow_Closed;
             AppManager.InitializeView(View);
             Exit += App_Exit;
@@ -593,6 +594,18 @@ namespace ContentTypeTextNet.MnMn.MnMn
             CatchUnhandleException((Exception)e.ExceptionObject, false);
         }
 
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Mediation.Logger.Trace("start closing!");
+
+            var uninitTask = AppManager.UninitializeAsync();
+            if(!uninitTask.Wait(Constants.UninitializeAsyncWaitTime)) {
+                Mediation.Logger.Fatal($"time out: {nameof(ManagerViewModelBase.UninitializeAsync)}");
+            }
+
+            Mediation.Logger.Trace("end closing -> start close!");
+        }
+
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             WebNavigatorCore.Uninitialize();
@@ -612,11 +625,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             RestoreSystemParameter(GlobalManager.SystemParameter, Mediation.Logger);
         }
 
-        private async void App_Exit(object sender, ExitEventArgs e)
+        private void App_Exit(object sender, ExitEventArgs e)
         {
             Exit -= App_Exit;
-
-            await AppManager.UninitializeAsync();
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
