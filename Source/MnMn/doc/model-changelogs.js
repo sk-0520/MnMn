@@ -85,49 +85,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.63.1',
-		'isRc': true,
+		'date': '2017/05/14',
+		'version': '0.64.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'ecee95de57903d00ea77c3235e1f6c964de94c89',
 						'subject': '#563: クラッシュレポートが複数立ち上がっている？',
 						'comments': [
 							'クラッシュレポートが複数立ち上がらないようにしたのね',
@@ -136,11 +102,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'd0b70d43af3b739c4bd51bcc91324c1d57c1d16f',
 						'subject': '#561: 内蔵ブラウザの警告表示が見切れてる'
 					},
 					{
-						'revision': '',
+						'revision': '033a15a9f4a55b9b3bb1226dcb40f8a5744371bb',
 						'subject': '#562: クラッシュレポートより: System.NullReferenceException 連続で起きて連続でクラッシュレポート立ち上がってる？',
 						'comments': [
 							'複数立ち上がるのは #563 で対応',
@@ -148,11 +114,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'bde35a79f458f20a639b40dc0f04b8eb7c7a07d3',
 						'subject': '#565: クラッシュレポートより: System.ObjectDisposedException: 破棄されたオブジェクトにアクセスできません。'
 					},
 					{
-						'revision': '',
+						'revision': '2f3da2ad05505d08cd92eda7df7ce35ecb2a9997',
 						'class': 'open',
 						'subject': '#342: メモリ断片化: System.Runtime.InteropServices.COMException (0x80070008)',
 						'comments': [
@@ -161,16 +127,12 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '2bc1e802a445c7a460d2f130494b5a464e89a54b',
 						'subject': '#564: マウスカーソルが隠れないときある '
 					},
 					{
-						'revision': '',
+						'revision': 'aaaaaa480992d41d6adc81712834b60392a230a0',
 						'subject': 'スクリーンセーバー・ロック抑制の監視時間を 30 秒から 55 秒に変更'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -178,17 +140,13 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'b24907656d550f36385177483e104de801816251',
 						'class': 'nuget',
 						'subject': '#566: GeckoFx 45.0.30 -> 45.0.31'
 					},
 					{
-						'revision': '',
+						'revision': '7213de47dd1b507db361a3b0c405005033c32aa0',
 						'subject': 'レンチあんじゃん！ (関連: #347)'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
