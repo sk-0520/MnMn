@@ -338,7 +338,7 @@
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
     <Compile Include="Logic\Utility\FinderUtility.cs" />
     <Compile Include="Logic\Utility\HtmlUtility.cs" />
-    <Compile Include="Logic\Utility\NetoworkUtility.cs" />
+    <Compile Include="Logic\Utility\NetworkUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMarketUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmilePediaUtility.cs" />
     <Compile Include="Logic\Utility\ShellUtility.cs" />

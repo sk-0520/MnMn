@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -66,7 +67,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public HttpClient CreateHttpUserAgent()
         {
-            return new HttpClient(ClientHandler, false);
+            var httpUserAgent = new HttpClient(ClientHandler, false);
+
+            var userAgentText = NetworkUtility.GetLogicUserAgentText(NetworkSetting);
+            if(!string.IsNullOrWhiteSpace(userAgentText)) {
+                httpUserAgent.DefaultRequestHeaders.Add("User-Agent", userAgentText);
+            }
+
+            return httpUserAgent;
         }
 
         #endregion

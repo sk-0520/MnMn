@@ -24,7 +24,10 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
@@ -52,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public SessionViewModelBase(Mediation mediation)
         {
             Mediation = mediation;
+            NetworkSetting = Mediation.GetNetworkSetting();
         }
 
         #region property
@@ -59,7 +63,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// 内部連携。
         /// </summary>
-        public Mediation Mediation { get; private set; }
+        protected Mediation Mediation { get; private set; }
+        protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>
         /// HttpClient用ハンドラ。
@@ -156,7 +161,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public HttpClient CreateHttpUserAgent()
         {
-            return new HttpClient(ClientHandler, false);
+            var httpUserAgent = new HttpClient(ClientHandler, false);
+
+            var userAgentText = NetworkUtility.GetLogicUserAgentText(NetworkSetting);
+            if(!string.IsNullOrWhiteSpace(userAgentText)) {
+                httpUserAgent.DefaultRequestHeaders.Add("User-Agent", userAgentText);
+            }
+
+            return httpUserAgent;
         }
 
         #endregion

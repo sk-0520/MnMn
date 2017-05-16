@@ -273,6 +273,15 @@
                     <ComboBoxItem>System.DllNotFoundException</ComboBoxItem>
                   </ComboBox>
                 </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <Button Grid.Column="0" Content="HTTP" Command="{Binding ConnectHttpCommand}" />
+                  <TextBox Grid.Column="1" mamc:TextBoxHelper.SelectAllOnFocus="True" Text="{Binding HttpUri}">
+                  </TextBox>
+                </Grid>
               </StackPanel>
             </xctk:DropDownButton.DropDownContent>
           </xctk:DropDownButton>
