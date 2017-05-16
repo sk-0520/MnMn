@@ -23,15 +23,20 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class HttpUserAgentHost: DisposeFinalizeBase, ICreateHttpUserAgent
     {
-        public HttpUserAgentHost()
-        { }
+        public HttpUserAgentHost(IReadOnlyNetworkSetting networkSetting)
+        {
+            NetworkSetting = networkSetting;
+        }
 
         #region property
+
+        protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>
         /// HttpClient用ハンドラ。

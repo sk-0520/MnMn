@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         async Task<FeedSmileVideoModel> LoadFeedAsync(string key)
         {
-            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(), key, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting), key, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["lang"] = AppUtility.GetCultureName();
                 var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!feedResult.IsSuccess) {

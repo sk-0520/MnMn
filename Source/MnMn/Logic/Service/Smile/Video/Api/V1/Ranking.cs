@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<FeedSmileVideoModel> LoadAsync(string target, string period, string category)
         {
-            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(), SmileVideoMediationKey.ranking, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting), SmileVideoMediationKey.ranking, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["target"] = target;
                 page.ReplaceUriParameters["period"] = period;
                 page.ReplaceUriParameters["category"] = category;

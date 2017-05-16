@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         async Task<FileInfo> DownloadWebNavigatorGeckoFxPluginAsync()
         {
-            var host = new HttpUserAgentHost();
+            var host = new HttpUserAgentHost(NetworkSetting);
             var client = host.CreateHttpUserAgent();
 
             var archiveDir = VariableConstants.GetWebNavigatorGeckFxPluginDirectory();

@@ -39,6 +39,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -46,6 +47,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live;
@@ -87,6 +89,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
+            NetworkSetting = Mediation.GetNetworkSetting();
+
             PropertyChangedListener = new PropertyChangedWeakEventListener(ShowWebPlayer_PropertyChanged);
             PropertyChangedListener.Add(ShowWebPlayer);
 
@@ -96,6 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         #region proeprty
 
         Mediation Mediation { get; }
+        IReadOnlyNetworkSetting NetworkSetting { get; }
 
         public SmileSessionViewModel Session { get; }
         SmileLiveSettingModel Setting { get; }
@@ -304,7 +309,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Information = information;
             CallOnPropertyChange(nameof(Information));
 
-            var page = new PageLoader(Mediation, new HttpUserAgentHost(), SmileLiveMediationKey.watchPage, ServiceType.SmileLive);
+            var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting), SmileLiveMediationKey.watchPage, ServiceType.SmileLive);
             page.ForceUri = Information.WatchUrl;
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
                 var response = t.Result;

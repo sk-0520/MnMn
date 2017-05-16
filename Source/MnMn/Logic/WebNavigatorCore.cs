@@ -32,6 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -59,6 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region property
 
         static Mediation Mediation { get; set; }
+        static IReadOnlyNetworkSetting NetworkSetting { get; set; }
 
         //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
         public static WebNavigatorEngine Engine {
@@ -104,6 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             Mediation = mediation;
+            NetworkSetting = Mediation.GetNetworkSetting();
 
             switch(Engine) {
                 case WebNavigatorEngine.Default:

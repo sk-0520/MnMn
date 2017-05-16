@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player;
 
@@ -54,6 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             Mediation = mediation;
 
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
+
+            NetworkSetting = Mediation.GetNetworkSetting();
         }
 
         public SmileLiveInformationViewModel(Mediation mediation, FeedSmileLiveItemModel feed)
