@@ -239,7 +239,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             LightweightUpdateModel = null;
 
             try {
-                var client = new HttpClient();
+                var userAgentHost = new HttpUserAgentHost();
+                var client = userAgentHost.CreateHttpUserAgent();
                 Mediation.Logger.Trace("update check: " + Constants.AppUriUpdate);
                 var response = await client.GetAsync(Constants.AppUriUpdate);
 
@@ -334,7 +335,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         Task LoadChangelogAsync()
         {
             if(UpdateCheckState == UpdateCheckState.CurrentIsOld) {
-                var client = new HttpClient();
+                var userAgentHost = new HttpUserAgentHost();
+                var client = userAgentHost.CreateHttpUserAgent();
                 return client.GetStringAsync(Constants.AppUriChangelogRelease).ContinueWith(t => {
                     var htmlSource = t.Result;
                     UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {

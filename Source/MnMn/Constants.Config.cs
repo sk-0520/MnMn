@@ -150,6 +150,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingApplicationWebNavigatorGeckoFxScanPlugin => appConfig.Get("setting-application-web_navigator-geckofx-scan-plugin", bool.Parse);
 
+        public static bool SettingApplicationNetworkUsingCustomUserAgent => appConfig.Get("setting-application-network-using-custom-ua", bool.Parse);
+        public static string SettingApplicationNetworkCustomUserAgentFormat => appConfig.Get("setting-application-network-custom-ua-format");
+
         /// <summary>
         /// ウィンドウ: 左
         /// </summary>
