@@ -100,6 +100,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static TimeSpan UninitializeAsyncWaitTime => appConfig.Get("uninitialize_async-wait-time", TimeSpan.Parse);
 
+        public static string ApplicationLogicUserAgentFormat => appConfig.Get("application-logic-ua-format");
+
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
         /// <summary>
@@ -150,8 +152,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingApplicationWebNavigatorGeckoFxScanPlugin => appConfig.Get("setting-application-web_navigator-geckofx-scan-plugin", bool.Parse);
 
-        public static bool SettingApplicationNetworkUsingCustomUserAgent => appConfig.Get("setting-application-network-using-custom-ua", bool.Parse);
-        public static string SettingApplicationNetworkCustomUserAgentFormat => appConfig.Get("setting-application-network-custom-ua-format");
+        public static bool SettingApplicationNetworkLogicUsingCustomUserAgent => appConfig.Get("setting-application-network-logic-using-custom-ua", bool.Parse);
+        public static string SettingApplicationNetworkLogicCustomUserAgentFormat => appConfig.Get("setting-application-network-logic-custom-ua-format");
+        public static bool SettingApplicationNetworkUsingBrowserCustomUserAgent => appConfig.Get("setting-application-network-browser-using-custom-ua", bool.Parse);
+        public static string SettingApplicationNetworkBrowserCustomDefaultUserAgentFormat => appConfig.Get("setting-application-network-browser-custom-default-ua-format");
+        public static string SettingApplicationNetworkBrowserCustomGeckofxUserAgentFormat => appConfig.Get("setting-application-network-browser-custom-geckofx-ua-format");
+
 
         /// <summary>
         /// ウィンドウ: 左

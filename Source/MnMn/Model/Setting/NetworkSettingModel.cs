@@ -14,10 +14,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         #region IReadOnlyNetworkSetting
 
         [DataMember]
-        public bool UsingCustomUserAgent { get; set; } = Constants.SettingApplicationNetworkUsingCustomUserAgent;
+        public bool UsingCustomUserAgent { get; set; } = Constants.SettingApplicationNetworkLogicUsingCustomUserAgent;
 
         [DataMember]
-        public string UserAgentFormat { get; set; } = Constants.SettingApplicationNetworkCustomUserAgentFormat;
+        public string UserAgentFormat { get; set; } = Constants.SettingApplicationNetworkLogicCustomUserAgentFormat;
 
         #endregion
     }
