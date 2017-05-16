@@ -162,11 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public HttpClient CreateHttpUserAgent()
         {
             var httpUserAgent = new HttpClient(ClientHandler, false);
-
-            var userAgentText = NetworkUtility.GetLogicUserAgentText(NetworkSetting);
-            if(!string.IsNullOrWhiteSpace(userAgentText)) {
-                httpUserAgent.DefaultRequestHeaders.Add("User-Agent", userAgentText);
-            }
+            httpUserAgent.SetLogicUserAgentText(NetworkSetting);
 
             return httpUserAgent;
         }
