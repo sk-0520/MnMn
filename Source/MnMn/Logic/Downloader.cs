@@ -64,12 +64,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        public Downloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator)
+        public Downloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator)
         {
             DownloadUri = downloadUri;
             UserAgentCreator = userAgentCreator;
         }
-        public Downloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator, CancellationToken cancelToken)
+        public Downloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, CancellationToken cancelToken)
             : this(downloadUri, userAgentCreator)
         {
             CancelToken = cancelToken;
@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public CancellationToken? CancelToken { get; private set; }
 
         public Uri DownloadUri { get; protected set; }
-        protected ICreateHttpUserAgent UserAgentCreator { get; set; }
+        protected IHttpUserAgentCreator UserAgentCreator { get; set; }
         protected HttpClient UserAgent { get; set; }
 
         public long RangeHeadPotision { get; set; }

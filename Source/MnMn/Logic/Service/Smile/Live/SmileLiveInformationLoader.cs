@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
     public class SmileLiveInformationLoader: InformationLoader<SmileLiveInformationViewModel>
     {
-        public SmileLiveInformationLoader(IEnumerable<SmileLiveInformationViewModel> informations, ICreateHttpUserAgent createHttpUserAgent)
+        public SmileLiveInformationLoader(IEnumerable<SmileLiveInformationViewModel> informations, IHttpUserAgentCreator createHttpUserAgent)
             : base(informations, createHttpUserAgent)
         { }
     }

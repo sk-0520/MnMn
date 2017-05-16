@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     public class InformationLoader<TInformationViewModel>
         where TInformationViewModel : InformationViewModelBase
     {
-        public InformationLoader(IEnumerable<TInformationViewModel> informations, ICreateHttpUserAgent createHttpUserAgent)
+        public InformationLoader(IEnumerable<TInformationViewModel> informations, IHttpUserAgentCreator createHttpUserAgent)
         {
             InformationItems = new List<TInformationViewModel>(informations);
             CreateHttpUserAgent = createHttpUserAgent;
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region property
 
         protected IReadOnlyList<TInformationViewModel> InformationItems { get; }
-        protected ICreateHttpUserAgent CreateHttpUserAgent { get; }
+        protected IHttpUserAgentCreator CreateHttpUserAgent { get; }
 
         #endregion
 

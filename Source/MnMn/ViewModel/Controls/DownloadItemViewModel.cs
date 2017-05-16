@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public DownloadItemViewModel(Mediation mediation, Uri uri, FileInfo downloadFile, ICreateHttpUserAgent userAgentCreator)
+        public DownloadItemViewModel(Mediation mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
         {
             Mediation = mediation;
 

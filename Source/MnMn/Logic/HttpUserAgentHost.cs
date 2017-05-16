@@ -27,7 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class HttpUserAgentHost: DisposeFinalizeBase, ICreateHttpUserAgent
+    public class HttpUserAgentHost: DisposeFinalizeBase, IHttpUserAgentCreator
     {
         public HttpUserAgentHost(IReadOnlyNetworkSetting networkSetting)
         {

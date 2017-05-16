@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
     /// セッションを管理する。
     /// <para>基本的なログイン・ログアウトをサポート。</para>
     /// </summary>
-    public abstract class SessionViewModelBase: ViewModelBase, ICreateHttpUserAgent
+    public abstract class SessionViewModelBase: ViewModelBase, IHttpUserAgentCreator
     {
         #region define
 
