@@ -64,6 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         bool _isOpenDevelopmentMenu;
 
         string _exceptionType = typeof(Exception).FullName;
+        string _httpUri = "http://127.0.0.1";
 
         #endregion
 
@@ -117,6 +118,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return this._exceptionType; }
             set { SetVariableValue(ref this._exceptionType, value); }
+        }
+
+        public string HttpUri
+        {
+            get { return this._httpUri; }
+            set { SetVariableValue(ref this._httpUri, value); }
         }
 
         #endregion
@@ -297,6 +304,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        public ICommand ConnectHttpCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        IsOpenDevelopmentMenu = false;
+
+                        var userAgentHost = new HttpUserAgentHost(NetworkSetting);
+                        var host = userAgentHost.CreateHttpUserAgent();
+                        host.GetStringAsync(HttpUri).ContinueWith(t => {
+                            if(t.IsFaulted) {
+                                Mediation.Logger.Error(t.Exception);
+                            } else {
+                                Mediation.Logger.Debug(HttpUri, t.Result);
+                            }
+                        });
+                    }
+                );
+            }
+        }
 
         #endregion
 

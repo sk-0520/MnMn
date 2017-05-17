@@ -16,6 +16,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -50,12 +51,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
             var lightweightUpdateDir = VariableConstants.GetLightweightUpdateDirectory();
             ArchivePath = Path.Combine(lightweightUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(Model.Timestamp), "zip"));
+
+            NetworkSetting = Mediation.GetNetworkSetting();
         }
 
         #region property
 
         Mediation Mediation { get; }
         LightweightUpdateModel Model { get; }
+        IReadOnlyNetworkSetting NetworkSetting { get; }
 
         CancellationTokenSource Cancellation { get; set; }
 
@@ -163,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             DownloadingProgress?.Report(0);
             SetDownloadTitle(null);
 
-            using(var host = new HttpUserAgentHost())
+            using(var host = new HttpUserAgentHost(NetworkSetting))
             using(var userAgent = host.CreateHttpUserAgent()) {
                 userAgent.Timeout = Constants.ArchiveLightweightUpdateTimeout;
                 using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {

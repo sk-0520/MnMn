@@ -28,9 +28,14 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
@@ -60,6 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             Mediation = mediation;
             BaseNumber = baseNumber;
+
+            NetworkSetting = Mediation.GetNetworkSetting();
         }
 
 
@@ -67,6 +74,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         protected int BaseNumber { get; }
         protected Mediation Mediation { get; }
+
+        protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         public virtual ICollectionView FinderItems { get; protected set; }
 

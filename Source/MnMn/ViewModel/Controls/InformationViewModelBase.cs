@@ -26,6 +26,7 @@ using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
@@ -44,6 +45,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #endregion
 
         #region property
+
+        protected IReadOnlyNetworkSetting NetworkSetting { get; set; }
 
         /// <summary>
         /// キャッシュ上の参照カウンタ。
@@ -166,7 +169,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public Task LoadInformationDefaultAsync(CacheSpan cacheSpan)
         {
-            var host = new HttpUserAgentHost();
+            var host = new HttpUserAgentHost(NetworkSetting);
             var userAgent = host.CreateHttpUserAgent();
             return LoadInformationAsync(cacheSpan, userAgent).ContinueWith(_ => {
                 userAgent.Dispose();
@@ -204,7 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public Task LoadThumbnaiImageDefaultAsync(CacheSpan cacheSpan)
         {
-            var host = new HttpUserAgentHost();
+            var host = new HttpUserAgentHost(NetworkSetting);
             var userAgent = host.CreateHttpUserAgent();
             return LoadThumbnaiImageAsync(cacheSpan, userAgent).ContinueWith(_ => {
                 userAgent.Dispose();

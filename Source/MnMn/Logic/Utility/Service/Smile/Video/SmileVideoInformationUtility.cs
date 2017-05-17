@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             });
         }
 
-        public static Task<string> LoadWatchPageHtmlSource(ICreateHttpUserAgent userAgentCreator, Uri watchPageUri)
+        public static Task<string> LoadWatchPageHtmlSource(IHttpUserAgentCreator userAgentCreator, Uri watchPageUri)
         {
             var userAgent = userAgentCreator.CreateHttpUserAgent();
             return LoadWatchPageHtmlSource(userAgent, watchPageUri);

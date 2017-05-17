@@ -309,9 +309,11 @@
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetExpression.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoSearchDefine.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
+    <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Logic\Extensions\Service\Smile\Video\SmileVideoSearchModelExtensions.cs" />
     <Compile Include="Logic\OctetPerTime.cs" />
     <Compile Include="Logic\DelegateDragAndDrop.cs" />
@@ -337,6 +339,7 @@
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
     <Compile Include="Logic\Utility\FinderUtility.cs" />
     <Compile Include="Logic\Utility\HtmlUtility.cs" />
+    <Compile Include="Logic\Utility\NetworkUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMarketUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmilePediaUtility.cs" />
     <Compile Include="Logic\Utility\ShellUtility.cs" />
@@ -448,6 +451,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoContentsSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoOfficialSearchModel.cs" />
+    <Compile Include="Model\Setting\NetworkSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDmcItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
@@ -1241,7 +1245,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoInformationSource.cs" />
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\UriParameterType.cs" />
-    <Compile Include="IF\ICreateHttpUserAgent.cs" />
+    <Compile Include="IF\IHttpUserAgentCreator.cs" />
     <Compile Include="IF\IGetRequestParameter.cs" />
     <Compile Include="IF\IGetUri.cs" />
     <Compile Include="IF\Control\ITreeNodeItem.cs" />

@@ -78,6 +78,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             GeckoPreferences.User["browser.cache.disk.enable"] = false;
             GeckoPreferences.User["browser.cache.disk.capacity"] = 0;
 
+            if(NetworkSetting.BrowserUsingCustomUserAgent) {
+                var userAgentText = NetworkUtility.GetUserAgentText(NetworkSetting.BrowserCustomUserAgentFormat);
+                if(!string.IsNullOrEmpty(userAgentText)) {
+                    GeckoPreferences.User["general.useragent.override"] = userAgentText;
+                }
+            }
+
             var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.WebNavigatorGeckoFxPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {
                 //GeckoPreferences.Load(preferencesFilePath);
@@ -219,7 +226,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var downloadFilePath = dialog.FileName;
             var downloadFile = new FileInfo(downloadFilePath);
 
-            var download = new WebNavigatorFileDownloadItemViewModel(Mediation, downloadUri, downloadFile, new HttpUserAgentHost());
+            var download = new WebNavigatorFileDownloadItemViewModel(Mediation, downloadUri, downloadFile, new HttpUserAgentHost(NetworkSetting));
             download.LoadImageAsync();
 
             Mediation.Order(new DownloadOrderModel(download, true, ServiceType.Application));

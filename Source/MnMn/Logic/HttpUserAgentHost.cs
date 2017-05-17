@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -23,15 +24,24 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class HttpUserAgentHost: DisposeFinalizeBase, ICreateHttpUserAgent
+    public class HttpUserAgentHost: DisposeFinalizeBase, IHttpUserAgentCreator
     {
-        public HttpUserAgentHost()
-        { }
+        public HttpUserAgentHost(IReadOnlyNetworkSetting networkSetting)
+        {
+            Debug.Assert(networkSetting != null);
+
+            NetworkSetting = networkSetting;
+        }
 
         #region property
+
+        protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>
         /// HttpClient用ハンドラ。
@@ -61,7 +71,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public HttpClient CreateHttpUserAgent()
         {
-            return new HttpClient(ClientHandler, false);
+            var httpUserAgent = new HttpClient(ClientHandler, false);
+            httpUserAgent.SetLogicUserAgentText(NetworkSetting);
+
+            return httpUserAgent;
         }
 
         #endregion

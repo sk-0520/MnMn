@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// </summary>
     public class PageLoader: DisposeFinalizeBase
     {
-        public PageLoader(Mediation mediation, ICreateHttpUserAgent userAgentCreator, string key, ServiceType serviceType)
+        public PageLoader(Mediation mediation, IHttpUserAgentCreator userAgentCreator, string key, ServiceType serviceType)
         {
             Mediation = mediation;
             HttpUserAgent = userAgentCreator.CreateHttpUserAgent();

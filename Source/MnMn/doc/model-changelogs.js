@@ -111,7 +111,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#492: User-Agent きちんとする',
+						'comments': [
+							'きちんとするのもしんどいし設定項目にしてユーザーに任せた'
+						]
 					},
 					{
 						'revision': '',

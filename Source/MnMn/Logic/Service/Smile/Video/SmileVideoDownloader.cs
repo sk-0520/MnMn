@@ -32,12 +32,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoDownloader: Downloader
     {
-        public SmileVideoDownloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator, Uri referrerUri)
+        public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri)
             : base(downloadUri, userAgentCreator)
         {
             ReferrerUri = referrerUri;
         }
-        public SmileVideoDownloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator, Uri referrerUri, CancellationToken cancelToken)
+        public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, CancellationToken cancelToken)
             : base(downloadUri, userAgentCreator, cancelToken)
         {
             ReferrerUri = referrerUri;

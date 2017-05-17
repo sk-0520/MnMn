@@ -100,6 +100,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static TimeSpan UninitializeAsyncWaitTime => appConfig.Get("uninitialize_async-wait-time", TimeSpan.Parse);
 
+        public static string ApplicationLogicUserAgentFormat => appConfig.Get("application-logic-ua-format");
+
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
         /// <summary>
@@ -149,6 +151,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         ///<para>plugin.scan.plid.all</para>
         /// </summary>
         public static bool SettingApplicationWebNavigatorGeckoFxScanPlugin => appConfig.Get("setting-application-web_navigator-geckofx-scan-plugin", bool.Parse);
+
+        public static bool SettingApplicationNetworkLogicUsingCustomUserAgent => appConfig.Get("setting-application-network-logic-using-custom-ua", bool.Parse);
+        public static string SettingApplicationNetworkLogicCustomUserAgentFormat => appConfig.Get("setting-application-network-logic-custom-ua-format");
+        public static bool SettingApplicationNetworkBrowserUsingCustomUserAgent => appConfig.Get("setting-application-network-browser-using-custom-ua", bool.Parse);
+        public static string SettingApplicationNetworkBrowserCustomUserAgentFormat => appConfig.Get("setting-application-network-browser-custom-ua-format");
+
 
         /// <summary>
         /// ウィンドウ: 左

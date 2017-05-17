@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
-    public interface ICreateHttpUserAgent
+    public interface IHttpUserAgentCreator
     {
         HttpClient CreateHttpUserAgent();
     }

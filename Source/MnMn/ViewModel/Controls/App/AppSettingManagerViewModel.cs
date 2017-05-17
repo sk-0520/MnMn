@@ -138,6 +138,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetPropertyValue(AppSetting, value); }
         }
 
+        public bool LogicUsingCustomUserAgent
+        {
+            get { return AppSetting.Network.LogicUsingCustomUserAgent; }
+            set { SetPropertyValue(AppSetting.Network, value); }
+        }
+
+        public string LogicUserAgentFormat
+        {
+            get { return AppSetting.Network.LogicUserAgentFormat; }
+            set { SetPropertyValue(AppSetting.Network, value); }
+        }
+
+        public bool BrowserUsingCustomUserAgent
+        {
+            get { return AppSetting.Network.BrowserUsingCustomUserAgent; }
+            set { SetPropertyValue(AppSetting.Network, value); }
+        }
+
+        public string BrowserCustomUserAgentFormat
+        {
+            get { return AppSetting.Network.BrowserCustomUserAgentFormat; }
+            set { SetPropertyValue(AppSetting.Network, value); }
+        }
+
         public bool WebNavigatorGeckoFxScanPlugin
         {
             get { return AppSetting.WebNavigator.GeckoFxScanPlugin; }
@@ -201,7 +225,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         async Task<FileInfo> DownloadWebNavigatorGeckoFxPluginAsync()
         {
-            var host = new HttpUserAgentHost();
+            var host = new HttpUserAgentHost(NetworkSetting);
             var client = host.CreateHttpUserAgent();
 
             var archiveDir = VariableConstants.GetWebNavigatorGeckFxPluginDirectory();

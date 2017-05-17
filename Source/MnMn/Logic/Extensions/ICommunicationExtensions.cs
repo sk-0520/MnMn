@@ -19,8 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
 {
@@ -39,6 +43,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
             var result = (TResult)responce.Result;
 
             return result;
+        }
+
+        public static IReadOnlyNetworkSetting GetNetworkSetting(this ICommunication communication)
+        {
+            var appSetting = communication.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+
+            return appSetting.Network;
         }
     }
 }
