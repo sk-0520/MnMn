@@ -122,10 +122,11 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
-              <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}">logic ua</CheckBox>
-              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LogicUserAgentFormat}" />
+              <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}">通信UA変更</CheckBox>
+              <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="通信処理のユーザーエージェントを変更する場合に入力してください" Text="{Binding LogicUserAgentFormat}" />
             </Grid>
-            <GroupBox Header="ブラウザ">
+
+            <GroupBox Header="ブラウザ" Margin="{StaticResource TopMargin}">
               <StackPanel>
                 <Grid>
                   <Grid.RowDefinitions>
@@ -136,11 +137,11 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}">browser ua(要再起動)</CheckBox>
-                  <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding BrowserCustomUserAgentFormat}" />
+                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}">内蔵ブラウザUA変更 (要再起動)</CheckBox>
+                  <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="内蔵ブラウザのユーザーエージェントを変更する場合に入力してください" Text="{Binding BrowserCustomUserAgentFormat}" />
                 </Grid>
 
-                <Expander Header="GeckoFx *通常使用でさわんなくていいです*" mamc:ControlsHelper.ContentCharacterCasing="Normal">
+                <Expander Header="GeckoFx *通常使用でさわんなくていいです*" mamc:ControlsHelper.ContentCharacterCasing="Normal" Margin="{StaticResource TopMargin}">
                   <StackPanel>
                     <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
 
