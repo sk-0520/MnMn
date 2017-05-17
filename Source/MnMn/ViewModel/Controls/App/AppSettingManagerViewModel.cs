@@ -150,6 +150,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetPropertyValue(AppSetting.Network, value); }
         }
 
+        public bool BrowserUsingCustomUserAgent
+        {
+            get { return AppSetting.Network.BrowserUsingCustomUserAgent; }
+            set { SetPropertyValue(AppSetting.Network, value); }
+        }
+
+        public string BrowserCustomUserAgentFormat
+        {
+            get { return AppSetting.Network.BrowserCustomUserAgentFormat; }
+            set { SetPropertyValue(AppSetting.Network, value); }
+        }
+
         public bool WebNavigatorGeckoFxScanPlugin
         {
             get { return AppSetting.WebNavigator.GeckoFxScanPlugin; }

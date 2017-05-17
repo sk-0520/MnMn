@@ -127,6 +127,19 @@
             </Grid>
             <GroupBox Header="ブラウザ">
               <StackPanel>
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}">browser ua(要再起動)</CheckBox>
+                  <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding BrowserCustomUserAgentFormat}" />
+                </Grid>
+
                 <Expander Header="GeckoFx *通常使用でさわんなくていいです*" mamc:ControlsHelper.ContentCharacterCasing="Normal">
                   <StackPanel>
                     <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
