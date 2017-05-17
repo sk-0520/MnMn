@@ -22,11 +22,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         IReadOnlyUserAgent IReadOnlyNetworkSetting.LogicUserAgent => LogicUserAgent;
 
         [DataMember]
+        public NetworkProxySettingModel LogicProxy { get; set; } = new NetworkProxySettingModel();
+        IReadOnlyNetworkProxy IReadOnlyNetworkSetting.LogicProxy => LogicProxy;
+
+
+        [DataMember]
         public NetworkUserAgentSettingModel BrowserUserAgent { get; set; } = new NetworkUserAgentSettingModel() {
             UsingCustomUserAgent = Constants.SettingApplicationNetworkBrowserUsingCustomUserAgent,
             CustomUserAgentFormat = Constants.SettingApplicationNetworkBrowserCustomUserAgentFormat,
         };
         IReadOnlyUserAgent IReadOnlyNetworkSetting.BrowserUserAgent => BrowserUserAgent;
+
+        [DataMember]
+        public NetworkProxySettingModel BrowserProxy { get; set; } = new NetworkProxySettingModel();
+        IReadOnlyNetworkProxy IReadOnlyNetworkSetting.BrowserProxy => BrowserProxy;
 
         #endregion
     }

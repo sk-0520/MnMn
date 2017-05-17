@@ -11,7 +11,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
         #region property
 
         IReadOnlyUserAgent LogicUserAgent { get; }
+        IReadOnlyNetworkProxy LogicProxy { get; }
+
         IReadOnlyUserAgent BrowserUserAgent { get; }
+        IReadOnlyNetworkProxy BrowserProxy { get; }
 
         #endregion
     }

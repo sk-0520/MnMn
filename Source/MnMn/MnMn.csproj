@@ -311,6 +311,7 @@
     <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkProxy.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyPassword.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUserAgent.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyDefinedElement.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoSearchDefine.cs" />

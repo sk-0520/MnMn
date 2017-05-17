@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    public interface IReadOnlyNetworkProxy
+    public interface IReadOnlyNetworkProxy: IReadOnlyPassword
     {
+        bool UsingCustomProxy { get; }
+        string ServerAddress { get; }
+
+        bool UsingAuth { get; }
+        string UserName { get; }
     }
 }
