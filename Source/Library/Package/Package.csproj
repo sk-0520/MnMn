@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6341.29050, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6332.25650, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.108\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
@@ -44,9 +45,11 @@
     </Reference>
     <Reference Include="Geckofx-Core, Version=45.0.31.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <HintPath>..\..\packages\Geckofx45.45.0.31\lib\net45\Geckofx-Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Geckofx-Winforms, Version=45.0.31.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <HintPath>..\..\packages\Geckofx45.45.0.31\lib\net45\Geckofx-Winforms.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -82,10 +85,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationFramework">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpAvi">
       <HintPath>..\..\packages\SharpAvi.2.1.0\lib\net45\SharpAvi.dll</HintPath>
@@ -96,51 +99,51 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Core">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing.Design">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Forms">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xaml">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Net.Http">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Trinet.Core.IO.Ntfs, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0aeaaa20a328a46c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Trinet.Core.IO.Ntfs.4.0.0\lib\net35\Trinet.Core.IO.Ntfs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
