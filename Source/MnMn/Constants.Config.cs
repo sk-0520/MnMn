@@ -154,9 +154,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static bool SettingApplicationNetworkLogicUsingCustomUserAgent => appConfig.Get("setting-application-network-logic-using-custom-ua", bool.Parse);
         public static string SettingApplicationNetworkLogicCustomUserAgentFormat => appConfig.Get("setting-application-network-logic-custom-ua-format");
-        public static bool SettingApplicationNetworkUsingBrowserCustomUserAgent => appConfig.Get("setting-application-network-browser-using-custom-ua", bool.Parse);
-        public static string SettingApplicationNetworkBrowserCustomDefaultUserAgentFormat => appConfig.Get("setting-application-network-browser-custom-default-ua-format");
-        public static string SettingApplicationNetworkBrowserCustomGeckofxUserAgentFormat => appConfig.Get("setting-application-network-browser-custom-geckofx-ua-format");
+        public static bool SettingApplicationNetworkBrowserUsingCustomUserAgent => appConfig.Get("setting-application-network-browser-using-custom-ua", bool.Parse);
+        public static string SettingApplicationNetworkBrowserCustomUserAgentFormat => appConfig.Get("setting-application-network-browser-custom-ua-format");
 
 
         /// <summary>

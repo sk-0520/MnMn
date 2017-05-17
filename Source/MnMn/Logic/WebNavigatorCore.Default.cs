@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -43,7 +44,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     partial class WebNavigatorCore
     {
+        #region define
+
+        enum UOU
+        {
+            URLMON_OPTION_USERAGENT = 0x10000001,
+            URLMON_OPTION_USERAGENT_REFRESH = 0x10000002
+        }
+
+        [DllImport("urlmon.dll", CharSet = CharSet.Ansi)]
+        private static extern int UrlMkSetSessionOption(UOU dwOption, string pBuffer, int dwBufferLength, int dwReserved);
+
+        #endregion
+
         #region function
+
+        static void InitializeDefault()
+        {
+            var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+            Mediation.Logger.Information("IE version: " + ieVersion);
+            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+
+            if(NetworkSetting.BrowserUsingCustomUserAgent) {
+                var userAgentText = NetworkUtility.GetUserAgentText(NetworkSetting.BrowserCustomUserAgentFormat);
+                if(!string.IsNullOrEmpty(userAgentText)) {
+                    UrlMkSetSessionOption(UOU.URLMON_OPTION_USERAGENT, userAgentText, userAgentText.Length, 0);
+                }
+            }
+        }
+
 
         public static WebBrowser CreateDefaultBrowser()
         {

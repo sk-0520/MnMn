@@ -78,6 +78,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             GeckoPreferences.User["browser.cache.disk.enable"] = false;
             GeckoPreferences.User["browser.cache.disk.capacity"] = 0;
 
+            if(NetworkSetting.BrowserUsingCustomUserAgent) {
+                var userAgentText = NetworkUtility.GetUserAgentText(NetworkSetting.BrowserCustomUserAgentFormat);
+                if(!string.IsNullOrEmpty(userAgentText)) {
+                    GeckoPreferences.User["general.useragent.override"] = userAgentText;
+                }
+            }
+
             var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.WebNavigatorGeckoFxPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {
                 //GeckoPreferences.Load(preferencesFilePath);

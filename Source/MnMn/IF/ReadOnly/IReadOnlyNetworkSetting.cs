@@ -13,6 +13,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
         bool LogicUsingCustomUserAgent { get; }
         string LogicUserAgentFormat { get; }
 
+        bool BrowserUsingCustomUserAgent { get; }
+        string BrowserCustomUserAgentFormat { get; }
+
         #endregion
     }
 }

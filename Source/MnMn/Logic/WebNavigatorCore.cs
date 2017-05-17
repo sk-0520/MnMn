@@ -89,13 +89,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        static void InitializeDefault()
-        {
-            var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
-            Mediation.Logger.Information("IE version: " + ieVersion);
-            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
-        }
-
         /// <summary>
         /// 初期化。
         /// </summary>

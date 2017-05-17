@@ -15,9 +15,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 
         [DataMember]
         public bool LogicUsingCustomUserAgent { get; set; } = Constants.SettingApplicationNetworkLogicUsingCustomUserAgent;
-
         [DataMember]
         public string LogicUserAgentFormat { get; set; } = Constants.SettingApplicationNetworkLogicCustomUserAgentFormat;
+
+        [DataMember]
+        public bool BrowserUsingCustomUserAgent { get; set; } = Constants.SettingApplicationNetworkBrowserUsingCustomUserAgent;
+        [DataMember]
+        public string BrowserCustomUserAgentFormat { get; set; }=Constants.SettingApplicationNetworkBrowserCustomUserAgentFormat;
 
         #endregion
     }
