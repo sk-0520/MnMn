@@ -13,15 +13,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     {
         #region IReadOnlyNetworkSetting
 
-        [DataMember]
-        public bool LogicUsingCustomUserAgent { get; set; } = Constants.SettingApplicationNetworkLogicUsingCustomUserAgent;
-        [DataMember]
-        public string LogicUserAgentFormat { get; set; } = Constants.SettingApplicationNetworkLogicCustomUserAgentFormat;
 
         [DataMember]
-        public bool BrowserUsingCustomUserAgent { get; set; } = Constants.SettingApplicationNetworkBrowserUsingCustomUserAgent;
+        public NetworkUserAgentSettingModel LogicUserAgent { get; set; } = new NetworkUserAgentSettingModel() {
+            UsingCustomUserAgent = Constants.SettingApplicationNetworkLogicUsingCustomUserAgent,
+            CustomUserAgentFormat = Constants.SettingApplicationNetworkLogicCustomUserAgentFormat,
+        };
+        IReadOnlyUserAgent IReadOnlyNetworkSetting.LogicUserAgent => LogicUserAgent;
+
         [DataMember]
-        public string BrowserCustomUserAgentFormat { get; set; }=Constants.SettingApplicationNetworkBrowserCustomUserAgentFormat;
+        public NetworkUserAgentSettingModel BrowserUserAgent { get; set; } = new NetworkUserAgentSettingModel() {
+            UsingCustomUserAgent = Constants.SettingApplicationNetworkBrowserUsingCustomUserAgent,
+            CustomUserAgentFormat = Constants.SettingApplicationNetworkBrowserCustomUserAgentFormat,
+        };
+        IReadOnlyUserAgent IReadOnlyNetworkSetting.BrowserUserAgent => BrowserUserAgent;
 
         #endregion
     }

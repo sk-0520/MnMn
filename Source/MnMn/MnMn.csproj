@@ -309,8 +309,10 @@
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetExpression.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyNetworkProxy.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />
-    <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyUserAgent.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyDefinedElement.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoSearchDefine.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
@@ -451,7 +453,9 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoContentsSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoOfficialSearchModel.cs" />
+    <Compile Include="Model\Setting\NetworkProxySettingModel.cs" />
     <Compile Include="Model\Setting\NetworkSettingModel.cs" />
+    <Compile Include="Model\Setting\NetworkUserAgentSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDmcItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />

@@ -10,11 +10,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
     {
         #region property
 
-        bool LogicUsingCustomUserAgent { get; }
-        string LogicUserAgentFormat { get; }
-
-        bool BrowserUsingCustomUserAgent { get; }
-        string BrowserCustomUserAgentFormat { get; }
+        IReadOnlyUserAgent LogicUserAgent { get; }
+        IReadOnlyUserAgent BrowserUserAgent { get; }
 
         #endregion
     }

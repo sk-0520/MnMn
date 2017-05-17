@@ -140,26 +140,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public bool LogicUsingCustomUserAgent
         {
-            get { return AppSetting.Network.LogicUsingCustomUserAgent; }
-            set { SetPropertyValue(AppSetting.Network, value); }
+            get { return AppSetting.Network.LogicUserAgent.UsingCustomUserAgent; }
+            set { SetPropertyValue(AppSetting.Network.LogicUserAgent, value, nameof(AppSetting.Network.BrowserUserAgent.UsingCustomUserAgent)); }
         }
 
         public string LogicUserAgentFormat
         {
-            get { return AppSetting.Network.LogicUserAgentFormat; }
-            set { SetPropertyValue(AppSetting.Network, value); }
+            get { return AppSetting.Network.LogicUserAgent.CustomUserAgentFormat; }
+            set { SetPropertyValue(AppSetting.Network.LogicUserAgent, value, nameof(AppSetting.Network.BrowserUserAgent.CustomUserAgentFormat)); }
         }
 
         public bool BrowserUsingCustomUserAgent
         {
-            get { return AppSetting.Network.BrowserUsingCustomUserAgent; }
-            set { SetPropertyValue(AppSetting.Network, value); }
+            get { return AppSetting.Network.BrowserUserAgent.UsingCustomUserAgent; }
+            set { SetPropertyValue(AppSetting.Network.BrowserUserAgent, value, nameof(AppSetting.Network.BrowserUserAgent.UsingCustomUserAgent)); }
         }
 
         public string BrowserCustomUserAgentFormat
         {
-            get { return AppSetting.Network.BrowserCustomUserAgentFormat; }
-            set { SetPropertyValue(AppSetting.Network, value); }
+            get { return AppSetting.Network.BrowserUserAgent.CustomUserAgentFormat; }
+            set { SetPropertyValue(AppSetting.Network.BrowserUserAgent, value, nameof(AppSetting.Network.BrowserUserAgent.CustomUserAgentFormat)); }
         }
 
         public bool WebNavigatorGeckoFxScanPlugin

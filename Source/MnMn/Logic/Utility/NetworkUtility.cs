@@ -36,11 +36,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             Debug.Assert(networkSetting != null);
 
             string userAgentText = null;
-            if(networkSetting.LogicUsingCustomUserAgent) {
-                userAgentText = GetUserAgentText(networkSetting.LogicUserAgentFormat);
+            if(networkSetting.LogicUserAgent.UsingCustomUserAgent) {
+                userAgentText = GetUserAgentText(networkSetting.LogicUserAgent.CustomUserAgentFormat);
             }
             if(string.IsNullOrEmpty(userAgentText)) {
-                userAgentText = GetUserAgentText(networkSetting.LogicUserAgentFormat);
+                userAgentText = GetUserAgentText(networkSetting.LogicUserAgent.CustomUserAgentFormat);
             }
 
             return userAgentText;
