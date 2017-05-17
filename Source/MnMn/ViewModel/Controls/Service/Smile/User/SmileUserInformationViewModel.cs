@@ -68,6 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public SmileUserInformationViewModel(Mediation mediation, string userId, bool isMyAccount)
         {
             Mediation = mediation;
+            NetworkSetting = Mediation.GetNetworkSetting();
             UserId = userId;
             IsMyAccount = isMyAccount;
 

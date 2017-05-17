@@ -111,47 +111,63 @@
           </StackPanel>
         </GroupBox>
 
-        <GroupBox Header="ブラウザ">
+        <GroupBox Header="ネットワーク">
           <StackPanel>
-            <TextBlock Margin="{StaticResource BottomMargin}">*通常使用でさわんなくていいです*</TextBlock>
-            <Expander Header="GeckoFx" mamc:ControlsHelper.ContentCharacterCasing="Normal">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}">logic ua</CheckBox>
+              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LogicUserAgentFormat}" />
+            </Grid>
+            <GroupBox Header="ブラウザ">
               <StackPanel>
-                <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
+                <Expander Header="GeckoFx *通常使用でさわんなくていいです*" mamc:ControlsHelper.ContentCharacterCasing="Normal">
+                  <StackPanel>
+                    <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
 
-                <GroupBox Margin="{StaticResource TopMargin}" Header="☠ danger zone ☠">
-                  <Grid>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="Auto" />
-                      <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                    <GroupBox Margin="{StaticResource TopMargin}" Header="☠ danger zone ☠">
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                      <CheckBox VerticalAlignment="Bottom" IsChecked="{Binding WebNavigatorGeckoFxOwnResponsibility.Value}" Margin="{StaticResource BottomMargin}">自分が何をしようとしているか理解している</CheckBox>
-                      <Button Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}" Margin="{StaticResource TopMargin}" Style="{StaticResource AccentedSquareButtonStyle}">プラグインディレクトリを開発用に構築する</Button>
-                    </StackPanel>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                          <CheckBox VerticalAlignment="Bottom" IsChecked="{Binding WebNavigatorGeckoFxOwnResponsibility.Value}" Margin="{StaticResource BottomMargin}">自分が何をしようとしているか理解している</CheckBox>
+                          <Button Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}" Margin="{StaticResource TopMargin}" Style="{StaticResource AccentedSquareButtonStyle}">プラグインディレクトリを開発用に構築する</Button>
+                        </StackPanel>
 
-                    <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="{StaticResource AllMargin}" >
-                      <StackPanel.Resources>
-                        <Style TargetType="TextBlock">
-                          <Setter Property="TextWrapping" Value="Wrap" />
-                        </Style>
-                      </StackPanel.Resources>
-                      <TextBlock FontWeight="Bold">**開発者が開発用環境を同一にするために使う機能です**</TextBlock>
-                      <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
-                      <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
-                      <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
-                      <TextBlock>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="{StaticResource AllMargin}" >
+                          <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                              <Setter Property="TextWrapping" Value="Wrap" />
+                            </Style>
+                          </StackPanel.Resources>
+                          <TextBlock FontWeight="Bold">**開発者が開発用環境を同一にするために使う機能です**</TextBlock>
+                          <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
+                          <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
+                          <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
+                          <TextBlock>
                         構築するプラグインはあなたの端末で動作しない可能性があり、<LineBreak/>
                         動作しない場合に問い合わせをいただいても何もできません。
-                      </TextBlock>
-                    </StackPanel>
-                  </Grid>
-                </GroupBox>
-              </StackPanel>
+                          </TextBlock>
+                        </StackPanel>
+                      </Grid>
+                    </GroupBox>
+                  </StackPanel>
 
-            </Expander>
+                </Expander>
+              </StackPanel>
+            </GroupBox>
           </StackPanel>
         </GroupBox>
+
       </StackPanel>
     </ScrollViewer>
     <!-- タブ移動出来るけど今はいいや -->

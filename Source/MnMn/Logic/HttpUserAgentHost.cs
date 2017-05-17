@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -33,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         public HttpUserAgentHost(IReadOnlyNetworkSetting networkSetting)
         {
+            Debug.Assert(networkSetting != null);
+
             NetworkSetting = networkSetting;
         }
 
