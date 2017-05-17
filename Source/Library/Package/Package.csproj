@@ -195,7 +195,6 @@
     <Compile Include="stackoverflow.com\ScrollIntoViewForListBox.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Firefox\omni.ja" />
     <None Include="LibVlc\plugins\plugins.dat" />
     <None Include="packages.config" />
