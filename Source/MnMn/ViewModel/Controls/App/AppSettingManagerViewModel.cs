@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetPropertyValue(AppSetting.Network.LogicUserAgent, value, nameof(AppSetting.Network.BrowserUserAgent.CustomUserAgentFormat)); }
         }
 
-        public NetworkProxySettingModel LogicProxy => AppSetting.Network.LogicProxy;
+        public NetworkProxySettingViewModel LogicProxy => new NetworkProxySettingViewModel(AppSetting.Network.LogicProxy);
 
         public bool BrowserUsingCustomUserAgent
         {
@@ -163,6 +163,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get { return AppSetting.Network.BrowserUserAgent.CustomUserAgentFormat; }
             set { SetPropertyValue(AppSetting.Network.BrowserUserAgent, value, nameof(AppSetting.Network.BrowserUserAgent.CustomUserAgentFormat)); }
         }
+
+        public NetworkProxySettingViewModel BrowserProxy => new NetworkProxySettingViewModel(AppSetting.Network.BrowserProxy);
 
         public bool WebNavigatorGeckoFxScanPlugin
         {
