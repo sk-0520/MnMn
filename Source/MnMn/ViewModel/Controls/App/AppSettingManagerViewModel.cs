@@ -150,6 +150,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetPropertyValue(AppSetting.Network.LogicUserAgent, value, nameof(AppSetting.Network.BrowserUserAgent.CustomUserAgentFormat)); }
         }
 
+        public NetworkProxySettingModel LogicProxy => AppSetting.Network.LogicProxy;
+
         public bool BrowserUsingCustomUserAgent
         {
             get { return AppSetting.Network.BrowserUserAgent.UsingCustomUserAgent; }

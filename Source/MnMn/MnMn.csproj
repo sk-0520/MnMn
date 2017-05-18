@@ -511,6 +511,7 @@
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\FinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\InformationViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\NetworkProxySettingViewModel.cs" />
     <Compile Include="ViewModel\Controls\PagerFinderProvider.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryItemFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryGroupFinderViewModel.cs" />
@@ -565,6 +566,9 @@
       <DependentUpon>AppGeneralBrowserManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\FocusedTabControl.cs" />
+    <Compile Include="View\Controls\ProxySetting.xaml.cs">
+      <DependentUpon>ProxySetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\ScaleSlider.xaml.cs">
       <DependentUpon>ScaleSlider.xaml</DependentUpon>
     </Compile>
@@ -1086,6 +1090,10 @@
       <SubType>Designer</SubType>
     </None>
     <Page Include="View\Controls\App\AppDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\ProxySetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

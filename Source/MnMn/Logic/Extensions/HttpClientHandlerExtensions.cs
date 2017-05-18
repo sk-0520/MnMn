@@ -13,17 +13,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
     {
         #region function
 
-        public static bool SetProxy(this HttpClientHandler httpClientHandler, IReadOnlyNetworkProxy networkProcy)
+        public static void SetProxy(this HttpClientHandler httpClientHandler, IReadOnlyNetworkProxy networkProcy)
         {
             var proxy = new WebProxy(networkProcy.ServerAddress);
             if(networkProcy.UsingAuth) {
                 var auth = new NetworkCredential(networkProcy.UserName, networkProcy.Password);
                 proxy.Credentials = auth;
             }
-
+            httpClientHandler.UseProxy = true;
             httpClientHandler.Proxy = proxy;
-
-            return true;
         }
 
         #endregion

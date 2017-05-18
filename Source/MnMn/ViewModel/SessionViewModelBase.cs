@@ -165,12 +165,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             if(NetworkUtility.CanSetProxy(this, NetworkSetting.LogicProxy)) {
                 LastProxyChangedTimestamp = NetworkSetting.LogicProxy.ChangedTimestamp;
-                if(ClientHandler.SetProxy(NetworkSetting.LogicProxy)) {
-                    ClientHandler.UseProxy = true;
-                } else {
-                    ClientHandler.UseProxy = false;
-                }
-            } else if(ClientHandler.UseProxy) {
+                ClientHandler.SetProxy(NetworkSetting.LogicProxy);
+            } else if(!ClientHandler.UseProxy) {
                 ClientHandler.UseProxy = false;
             }
 
