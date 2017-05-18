@@ -16,8 +16,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         public bool UsingCustomProxy { get; set; }
         [DataMember]
         public string ServerAddress { get; set; }
-        [DataMember]
-        public int ServerPort { get; set; }
 
         [DataMember]
         public bool UsingAuth { get; set; }
