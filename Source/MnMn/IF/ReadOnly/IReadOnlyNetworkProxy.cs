@@ -13,5 +13,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 
         bool UsingAuth { get; }
         string UserName { get; }
+
+        DateTime ChangedTimestamp { get; }
     }
 }

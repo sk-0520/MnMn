@@ -26,5 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
     public interface IHttpUserAgentCreator
     {
         HttpClient CreateHttpUserAgent();
+
+        DateTime LastProxyChangedTimestamp { get; }
     }
 }

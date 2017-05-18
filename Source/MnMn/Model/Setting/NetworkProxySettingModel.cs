@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public string UserName { get; set; }
 
+        [IgnoreDataMember]
+        public DateTime ChangedTimestamp { get; set; } = DateTime.Now;
+
         #endregion
     }
 }

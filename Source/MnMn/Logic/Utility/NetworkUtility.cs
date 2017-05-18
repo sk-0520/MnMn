@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
@@ -45,6 +46,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
             return userAgentText;
         }
+
+        public static bool CanSetProxy(DateTime judgeTime, IReadOnlyNetworkProxy networkProxy)
+        {
+            if(networkProxy.UsingCustomProxy) {
+                if(judgeTime < networkProxy.ChangedTimestamp) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool CanSetProxy(IHttpUserAgentCreator httpUserAgentCreator, IReadOnlyNetworkProxy networkProxy)
+        {
+            return CanSetProxy(httpUserAgentCreator.LastProxyChangedTimestamp, networkProxy);
+        }
+
 
         #endregion
     }

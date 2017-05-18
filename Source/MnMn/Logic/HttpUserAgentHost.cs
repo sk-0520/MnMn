@@ -69,8 +69,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region ICreateHttpUserAgent
 
+        public DateTime LastProxyChangedTimestamp { get; protected set; } = DateTime.MinValue;
+
         public HttpClient CreateHttpUserAgent()
         {
+            if(NetworkUtility.CanSetProxy(this, NetworkSetting.LogicProxy)) {
+                LastProxyChangedTimestamp = NetworkSetting.LogicProxy.ChangedTimestamp;
+                if(ClientHandler.SetProxy(NetworkSetting.LogicProxy)) {
+                    ClientHandler.UseProxy = true;
+                } else {
+                    ClientHandler.UseProxy = false;
+                }
+            } else if(ClientHandler.UseProxy) {
+                ClientHandler.UseProxy = false;
+            }
+
             var httpUserAgent = new HttpClient(ClientHandler, false);
             httpUserAgent.SetLogicUserAgentText(NetworkSetting);
 
