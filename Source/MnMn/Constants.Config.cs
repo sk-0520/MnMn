@@ -64,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static TimeSpan AppSystemBreakTime => appConfig.Get("app-system-break-time", TimeSpan.Parse);
 
+        public static TimeSpan NetworkProxySettingRefreshTime => appConfig.Get("network-proxy-setting-refresh-time", TimeSpan.Parse);
+
         public static WebNavigatorEngine WebNavigatorEngine => appConfig.Get("web_navigator-engine", s => EnumUtility.Parse<WebNavigatorEngine>(s, false));
         public static string WebNavigatorGeckoFxLibraryDirectoryName => appConfig.Get("web_navigator-geckofx-lib-dir-name");
         public static string WebNavigatorGeckoFxProfileDirectoryName => appConfig.Get("web_navigator-geckofx-profile-dir-name");
