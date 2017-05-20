@@ -44,7 +44,7 @@
       <mamc:NumericUpDown Grid.Column="2" Minimum="0" Maximum="65535" HasDecimals="False" Value="{Binding ServerPort}" Margin="{StaticResource VerticalContrlMargin}" />
     </Grid>
 
-    <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding UsingAuth}" Margin="{StaticResource VerticalContrlMargin}">プロキシ接続に認証を使用する</CheckBox>
+    <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding UsingAuth}" Margin="{StaticResource VerticalContrlMargin}">経由に認証が必要</CheckBox>
 
     <Label Grid.Row="3" Grid.Column="0">ユーザー名</Label>
     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserName}" Style="{StaticResource VerticalTextBox}" />

@@ -115,7 +115,7 @@
 
         <GroupBox Header="ネットワーク">
           <StackPanel>
-            <GroupBox Header="プログラム内部通信処理">
+            <GroupBox Header="プログラム通信処理">
               <StackPanel>
                 <Grid>
                   <Grid.RowDefinitions>
