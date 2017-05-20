@@ -553,6 +553,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             Exit += App_Exit;
             MainWindow.Loaded += MainWindow_Loaded;
             SplashWindow.commandClose.Visibility = Visibility.Collapsed;
+            MainWindow.ShowActivated = SplashWindow.IsActive;
             MainWindow.Show();
 
             // ここで現在情報取得！
