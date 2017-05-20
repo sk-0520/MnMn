@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool AppCrashReportIsDebug => appConfig.Get("app-crash-report-is-debug", bool.Parse);
 
         public static TimeSpan AppSystemBreakTime => appConfig.Get("app-system-break-time", TimeSpan.Parse);
+        public static bool ApplicationCheckNetworkAvailable => appConfig.Get("app-check-network-available", bool.Parse);
 
         public static TimeSpan NetworkProxySettingRefreshTime => appConfig.Get("network-proxy-setting-refresh-time", TimeSpan.Parse);
 
