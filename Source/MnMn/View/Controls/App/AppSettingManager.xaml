@@ -126,8 +126,8 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}">通信UA変更</CheckBox>
-                  <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="通信処理のユーザーエージェントを変更する場合に入力してください" Text="{Binding LogicUserAgentFormat}" />
+                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}" Margin="{StaticResource RightMargin}">通信UA変更</CheckBox>
+                  <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="通信処理のユーザーエージェントを変更する場合に入力してください" Text="{Binding LogicUserAgentFormat}" Style="{StaticResource VerticalTextBox}" />
                 </Grid>
 
                 <GroupBox Header="プロキシ設定 (要再起動とは言わないけど再起動した方がいいです)">
@@ -147,8 +147,8 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}">内蔵ブラウザUA変更 (要再起動)</CheckBox>
-                  <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="内蔵ブラウザのユーザーエージェントを変更する場合に入力してください" Text="{Binding BrowserCustomUserAgentFormat}" />
+                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}" Margin="{StaticResource RightMargin}">内蔵ブラウザUA変更 (要再起動)</CheckBox>
+                  <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="内蔵ブラウザのユーザーエージェントを変更する場合に入力してください" Text="{Binding BrowserCustomUserAgentFormat}" Style="{StaticResource VerticalTextBox}"/>
                 </Grid>
 
                 <GroupBox Header="プロキシ設定 (要再起動)">
