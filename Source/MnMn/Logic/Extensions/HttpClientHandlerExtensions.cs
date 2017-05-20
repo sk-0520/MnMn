@@ -14,11 +14,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
     {
         #region function
 
-        public static void SetProxy(this HttpClientHandler httpClientHandler, IReadOnlyNetworkProxy networkProcy, ILogger logger)
+        public static void SetProxy(this HttpClientHandler httpClientHandler, IReadOnlyNetworkProxy networkProxy, ILogger logger)
         {
-            var proxy = new WebProxy(networkProcy.ServerAddress);
-            if(networkProcy.UsingAuth) {
-                var auth = new NetworkCredential(networkProcy.UserName, networkProcy.Password);
+            var proxy = new WebProxy(networkProxy.ServerAddress, networkProxy.ServerPort);
+            if(networkProxy.UsingAuth) {
+                var auth = new NetworkCredential(networkProxy.UserName, networkProxy.Password);
                 proxy.Credentials = auth;
             }
             if(!httpClientHandler.UseProxy) {
