@@ -565,7 +565,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     return Task.CompletedTask;
                 } else {
                     SetRelationVideoItems(items);
-                    var loader = new SmileVideoInformationLoader(items, NetworkSetting);
+                    var loader = new SmileVideoInformationLoader(items, NetworkSetting, Mediation.Logger);
                     return loader.LoadThumbnaiImageAsync(Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(_ => {
                         RelationVideoLoadState = LoadState.Loaded;
                     });
@@ -594,7 +594,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             Setting.Bookmark.Correction();
 
-            var userAgentHost = new HttpUserAgentHost(NetworkSetting);
+            var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
             var client = userAgentHost.CreateHttpUserAgent();
             var tasks = MarketItems
                 .Where(i => !i.IsStandby)

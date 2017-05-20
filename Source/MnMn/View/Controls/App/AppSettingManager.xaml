@@ -12,6 +12,8 @@
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
 
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignHeight="600" d:DesignWidth="600"
@@ -113,20 +115,7 @@
 
         <GroupBox Header="ネットワーク">
           <StackPanel>
-            <Grid>
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-              </Grid.RowDefinitions>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
-
-              <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}">通信UA変更</CheckBox>
-              <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="通信処理のユーザーエージェントを変更する場合に入力してください" Text="{Binding LogicUserAgentFormat}" />
-            </Grid>
-
-            <GroupBox Header="ブラウザ" Margin="{StaticResource TopMargin}">
+            <GroupBox Header="プログラム通信処理">
               <StackPanel>
                 <Grid>
                   <Grid.RowDefinitions>
@@ -137,9 +126,34 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}">内蔵ブラウザUA変更 (要再起動)</CheckBox>
-                  <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="内蔵ブラウザのユーザーエージェントを変更する場合に入力してください" Text="{Binding BrowserCustomUserAgentFormat}" />
+                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}" Margin="{StaticResource RightMargin}">通信UA変更</CheckBox>
+                  <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="通信処理のユーザーエージェントを変更する場合に入力してください" Text="{Binding LogicUserAgentFormat}" Style="{StaticResource VerticalTextBox}" />
                 </Grid>
+
+                <GroupBox Header="プロキシ設定 (要再起動とは言わないけど再起動した方がいいです)">
+                  <app_view_controls:ProxySetting DataContext="{Binding LogicProxy, Mode=OneWay}" />
+                </GroupBox>
+              </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="ブラウザ">
+              <StackPanel>
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}" Margin="{StaticResource RightMargin}">内蔵ブラウザUA変更 (要再起動)</CheckBox>
+                  <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="内蔵ブラウザのユーザーエージェントを変更する場合に入力してください" Text="{Binding BrowserCustomUserAgentFormat}" Style="{StaticResource VerticalTextBox}"/>
+                </Grid>
+
+                <GroupBox Header="プロキシ設定 (要再起動)">
+                  <app_view_controls:ProxySetting DataContext="{Binding BrowserProxy, Mode=OneWay}" />
+                </GroupBox>
 
                 <Expander Header="GeckoFx *通常使用でさわんなくていいです*" mamc:ControlsHelper.ContentCharacterCasing="Normal" Margin="{StaticResource TopMargin}">
                   <StackPanel>

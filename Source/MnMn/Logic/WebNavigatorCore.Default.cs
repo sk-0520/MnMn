@@ -65,8 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Mediation.Logger.Information("IE version: " + ieVersion);
             SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
 
-            if(NetworkSetting.BrowserUsingCustomUserAgent) {
-                var userAgentText = NetworkUtility.GetUserAgentText(NetworkSetting.BrowserCustomUserAgentFormat);
+            if(NetworkSetting.BrowserUserAgent.UsingCustomUserAgent) {
+                var userAgentText = NetworkUtility.GetUserAgentText(NetworkSetting.BrowserUserAgent.CustomUserAgentFormat);
                 if(!string.IsNullOrEmpty(userAgentText)) {
                     UrlMkSetSessionOption(UOU.URLMON_OPTION_USERAGENT, userAgentText, userAgentText.Length, 0);
                 }

@@ -22,6 +22,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
@@ -29,8 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoInformationLoader: InformationLoader<SmileVideoInformationViewModel>
     {
-        public SmileVideoInformationLoader(IEnumerable<SmileVideoInformationViewModel> informations, IReadOnlyNetworkSetting networkSetting)
-            : base(informations, new HttpUserAgentHost(networkSetting))
+        public SmileVideoInformationLoader(IEnumerable<SmileVideoInformationViewModel> informations, IReadOnlyNetworkSetting networkSetting, ILogger logger)
+            : base(informations, new HttpUserAgentHost(networkSetting, logger))
         { }
 
         public override Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)

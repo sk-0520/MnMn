@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
         public async Task<RawSmileMarketVideoRelationModel> LoadVideoRelationAsync(string videoId)
         {
-            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting), SmileMediationKey.marketVideoRelation, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileMediationKey.marketVideoRelation, ServiceType.Smile)) {
                 page.ReplaceUriParameters["video-id"] = videoId;
                 var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!feedResult.IsSuccess) {

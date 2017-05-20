@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             DownloadingProgress?.Report(0);
             SetDownloadTitle(null);
 
-            using(var host = new HttpUserAgentHost(NetworkSetting))
+            using(var host = new HttpUserAgentHost(NetworkSetting, Mediation.Logger))
             using(var userAgent = host.CreateHttpUserAgent()) {
                 userAgent.Timeout = Constants.ArchiveLightweightUpdateTimeout;
                 using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {

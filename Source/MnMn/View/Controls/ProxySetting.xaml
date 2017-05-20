@@ -1,0 +1,60 @@
+﻿<!--
+  DataContext に NetworkProxySettingViewModel を設定すること。
+  わざわざプロパティ作るのもうしんどいわ。
+-->
+<UserControl
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.ProxySetting"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+
+  xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignHeight="300" d:DesignWidth="300"
+>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding UsingCustomProxy}" Margin="{StaticResource VerticalContrlMargin}">プロキシサーバーを経由する</CheckBox>
+
+    <Label Grid.Row="1" Grid.Column="0">サーバーアドレス</Label>
+    <Grid Grid.Row="1" Grid.Column="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="7*" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="3*" />
+      </Grid.ColumnDefinitions>
+      <TextBox Grid.Column="0" Text="{Binding ServerAddress}" Style="{StaticResource VerticalTextBox}" />
+      <Label Grid.Column="1" Margin="{StaticResource LeftMargin}">ポート</Label>
+      <mamc:NumericUpDown Grid.Column="2" Minimum="0" Maximum="65535" HasDecimals="False" Value="{Binding ServerPort}" Margin="{StaticResource VerticalContrlMargin}" />
+    </Grid>
+
+    <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding UsingAuth}" Margin="{StaticResource VerticalContrlMargin}">経由に認証が必要</CheckBox>
+
+    <Label Grid.Row="3" Grid.Column="0">ユーザー名</Label>
+    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserName}" Style="{StaticResource VerticalTextBox}" />
+
+    <Label Grid.Row="4" Grid.Column="0">パスワード</Label>
+    <PasswordBox Grid.Row="4" Grid.Column="1"  Style="{StaticResource VerticalPasswordBox}" >
+      <i:Interaction.Behaviors>
+        <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding Password, Mode=TwoWay}" />
+      </i:Interaction.Behaviors>
+    </PasswordBox>
+
+  </Grid>
+</UserControl>

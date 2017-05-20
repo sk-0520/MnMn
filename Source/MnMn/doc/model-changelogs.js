@@ -118,7 +118,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#493: proxy 設定可能にする',
+						'comments': [
+							'MnMn -> 設定 -> ネットワーク'
+						]
 					},
 					{
 						'revision': '',

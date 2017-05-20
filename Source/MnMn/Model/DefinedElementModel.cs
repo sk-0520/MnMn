@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <para>記述の正しい外部設定が用いられる前提のデータ定義を持ち運ぶ。</para>
     /// </summary>
     [Serializable]
-    public class DefinedElementModel: ModelBase, IDeepClone, ReadOnlyDefinedElement
+    public class DefinedElementModel: ModelBase, IDeepClone, IReadOnlyDefinedElement
     {
         #region variable
 
