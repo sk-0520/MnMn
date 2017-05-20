@@ -45,6 +45,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public int ServerPort
+        {
+            get { return Model.ServerPort; }
+            set
+            {
+                if(SetModelValue(value)) {
+                    StartChangeParameter();
+                }
+            }
+        }
         public bool UsingAuth
         {
             get { return Model.UsingAuth; }

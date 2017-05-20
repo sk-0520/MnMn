@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
     {
         bool UsingCustomProxy { get; }
         string ServerAddress { get; }
+        int ServerPort { get; }
 
         bool UsingAuth { get; }
         string UserName { get; }

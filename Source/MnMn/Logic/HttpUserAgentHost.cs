@@ -22,6 +22,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
@@ -32,16 +33,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class HttpUserAgentHost: DisposeFinalizeBase, IHttpUserAgentCreator
     {
-        public HttpUserAgentHost(IReadOnlyNetworkSetting networkSetting)
+        public HttpUserAgentHost(IReadOnlyNetworkSetting networkSetting, ILogger logger)
         {
             Debug.Assert(networkSetting != null);
 
             NetworkSetting = networkSetting;
+            Logger = logger;
         }
 
         #region property
 
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
+        protected ILogger Logger { get; }
 
         /// <summary>
         /// HttpClient用ハンドラ。
@@ -75,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(NetworkUtility.CanSetProxy(this, NetworkSetting.LogicProxy)) {
                 LastProxyChangedTimestamp = NetworkSetting.LogicProxy.ChangedTimestamp;
-                ClientHandler.SetProxy(NetworkSetting.LogicProxy);
+                ClientHandler.SetProxy(NetworkSetting.LogicProxy, Logger);
             } else if(!ClientHandler.UseProxy) {
                 ClientHandler.UseProxy = false;
             }

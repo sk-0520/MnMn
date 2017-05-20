@@ -57,6 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
 
             NetworkSetting = Mediation.GetNetworkSetting();
+            Logger = Mediation.Logger;
         }
 
         public SmileLiveInformationViewModel(Mediation mediation, FeedSmileLiveItemModel feed)

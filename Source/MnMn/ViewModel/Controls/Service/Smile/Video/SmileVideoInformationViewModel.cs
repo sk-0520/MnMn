@@ -104,6 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             InformationFlags = informationFlags;
 
             NetworkSetting = Mediation.GetNetworkSetting();
+            Logger = Mediation.Logger;
         }
 
         public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoThumbModel thumb, int number)

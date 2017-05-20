@@ -312,7 +312,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     o => {
                         IsOpenDevelopmentMenu = false;
 
-                        var userAgentHost = new HttpUserAgentHost(NetworkSetting);
+                        var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
                         var host = userAgentHost.CreateHttpUserAgent();
                         host.GetStringAsync(HttpUri).ContinueWith(t => {
                             if(t.IsFaulted) {

@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 
             NetworkSetting = Mediation.GetNetworkSetting();
 
-            HttpUserAgentHost = new HttpUserAgentHost(NetworkSetting);
+            HttpUserAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
         }
 
         #region property

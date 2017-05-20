@@ -63,7 +63,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return CanSetProxy(httpUserAgentCreator.LastProxyChangedTimestamp, networkProxy);
         }
 
-
         #endregion
     }
 }

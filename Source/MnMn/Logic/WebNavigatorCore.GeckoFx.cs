@@ -85,6 +85,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
             }
 
+            if(NetworkSetting.BrowserProxy.UsingCustomProxy) {
+                if(!string.IsNullOrWhiteSpace(NetworkSetting.BrowserProxy.ServerAddress)) {
+                    var address = NetworkSetting.BrowserProxy.ServerAddress;
+                    var port = NetworkSetting.BrowserProxy.ServerPort;
+
+                    GeckoPreferences.Default["network.proxy.http"] = address;
+                    GeckoPreferences.Default["network.proxy.http_port"] = port;
+
+                    GeckoPreferences.Default["network.proxy.ssl"] = address;
+                    GeckoPreferences.Default["network.proxy.ssl_port"] = port;
+
+                    GeckoPreferences.Default["network.proxy.type"] = 1;
+
+                    if(NetworkSetting.BrowserProxy.UsingAuth) {
+                        GeckoPreferences.User["network.proxy.login"] = NetworkSetting.BrowserProxy.UserName;
+                        GeckoPreferences.User["network.proxy.password"] = NetworkSetting.BrowserProxy.Password;
+                    }
+                }
+            }
+
             var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.WebNavigatorGeckoFxPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {
                 //GeckoPreferences.Load(preferencesFilePath);
@@ -226,7 +246,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var downloadFilePath = dialog.FileName;
             var downloadFile = new FileInfo(downloadFilePath);
 
-            var download = new WebNavigatorFileDownloadItemViewModel(Mediation, downloadUri, downloadFile, new HttpUserAgentHost(NetworkSetting));
+            var download = new WebNavigatorFileDownloadItemViewModel(Mediation, downloadUri, downloadFile, new HttpUserAgentHost(NetworkSetting, Mediation.Logger));
             download.LoadImageAsync();
 
             Mediation.Order(new DownloadOrderModel(download, true, ServiceType.Application));

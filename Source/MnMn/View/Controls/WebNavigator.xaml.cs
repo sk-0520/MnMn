@@ -1519,7 +1519,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             var browser = (GeckoWebBrowser)sender;
-            var element = browser.Document.ElementFromPoint(e.ClientX, e.ClientY);
+            var element = browser.Document?.ElementFromPoint(e.ClientX, e.ClientY);
             string hrefValue = null;
             if(element != null) {
                 var elements = WebNavigatorCore.GetRootElementsGeckoFx(element).ToList();
