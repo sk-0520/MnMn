@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                             }
                         }
                     },
-                    o => Session.IsLoggedIn
+                    o => Session.IsLoggedIn && !string.IsNullOrWhiteSpace(InputVideoId)
                 );
             }
         }
