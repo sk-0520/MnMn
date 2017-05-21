@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 };
                 KillProcess(process, true);
 
-                var isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(3).TotalMilliseconds));
+                var isRestart = !process.WaitForExit((int)(TimeSpan.FromMinutes(3).TotalMilliseconds));
                 if(isRestart && !process.HasExited) {
                     KillProcess(process, false);
                 }
