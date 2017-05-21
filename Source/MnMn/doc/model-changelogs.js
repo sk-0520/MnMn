@@ -85,32 +85,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.64.1',
-		'isRc': true,
+		'date': '2017/05/21',
+		'version': '0.65.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '8111a1aa76bc039a3d3077350476f76316895ba2',
 						'subject': '#492: User-Agent きちんとする',
 						'comments': [
 							'きちんとするのもしんどいし設定項目にしてユーザーに任せた',
@@ -118,19 +101,15 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'c3724a63a11ac5026c3ffeb1f7971f687bca782b',
 						'subject': '#493: proxy 設定可能にする',
 						'comments': [
 							'MnMn -> 設定 -> ネットワーク'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '833d68608cce01a83e82a38f690971261653ba0b',
 						'subject': '#384: URLからも動画を開けるようにする'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -138,59 +117,39 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'df3b3c9f00d3dcd29665cd81c7f922d7ad4581c9',
 						'subject': '#567: ver 0.63.0 から .NET Framework で提供されるアセンブリまで配布モジュールに含んでいる',
 						'comments': [
 							'かなり前から準備しといてよかったアップデート時スクリプト実行機能'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'a43a241bb65c2641a71ac167c6f9f6ce6755c6ce',
 						'subject': '#568: スプラッシュスクリーンがアクティブでなければ起動時のメインウィンドウは前面に表示しないべき',
 						'comments': [
-							'無理だった。から非アクティブにしといた'
+							'無理だった。から、非アクティブにしといた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'a43a241bb65c2641a71ac167c6f9f6ce6755c6ce',
 						'subject': '#376: 起動時にネットワーク接続できないと死ぬ',
 						'comments': [
 							'再現しないからわっかんね'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '9e2793da993953358cdcd0f9590727b437e8ba2c',
 						'subject': '内蔵ブラウザのメモリ履歴初期化時に発生するぬるぽ修正'
 					},
 					{
-						'revision': '',
+						'revision': '75ff9ade7492a823d3c26fc891c6dcdb7f949c3b',
 						'class': 'open',
 						'subject': '#552: (新)アップデート処理がファイルハンドル掴んでて成功しない',
 						'comments': [
 							'イベント終了後のプロセス監視処理が端末速度に依存したミスっぽさ半端なかったぞ',
-							'旧アップデート処理と内容変わっちゃったのがすごく心配'
+							'旧アップデート処理と内容変わっちゃったのがすごく心配',
+							'本件に関しては 0.66.0 アップデート時に動く予定'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
