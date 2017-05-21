@@ -125,6 +125,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#384: URLからも動画を開けるようにする'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
