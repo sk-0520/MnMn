@@ -24,7 +24,10 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
@@ -33,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
     /// セッションを管理する。
     /// <para>基本的なログイン・ログアウトをサポート。</para>
     /// </summary>
-    public abstract class SessionViewModelBase: ViewModelBase, ICreateHttpUserAgent
+    public abstract class SessionViewModelBase: ViewModelBase, IHttpUserAgentCreator
     {
         #region define
 
@@ -52,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public SessionViewModelBase(Mediation mediation)
         {
             Mediation = mediation;
+            NetworkSetting = Mediation.GetNetworkSetting();
         }
 
         #region property
@@ -59,7 +63,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// 内部連携。
         /// </summary>
-        public Mediation Mediation { get; private set; }
+        protected Mediation Mediation { get; private set; }
+        protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>
         /// HttpClient用ハンドラ。
@@ -154,9 +159,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region ICreateHttpUserAgent
 
+        public DateTime LastProxyChangedTimestamp { get; protected set; } = DateTime.MinValue;
+
         public HttpClient CreateHttpUserAgent()
         {
-            return new HttpClient(ClientHandler, false);
+            if(NetworkUtility.CanSetProxy(this, NetworkSetting.LogicProxy)) {
+                LastProxyChangedTimestamp = NetworkSetting.LogicProxy.ChangedTimestamp;
+                ClientHandler.SetProxy(NetworkSetting.LogicProxy, Mediation.Logger);
+            } else if(!ClientHandler.UseProxy) {
+                ClientHandler.UseProxy = false;
+            }
+
+            var httpUserAgent = new HttpClient(ClientHandler, false);
+            httpUserAgent.SetLogicUserAgentText(NetworkSetting);
+
+            return httpUserAgent;
         }
 
         #endregion

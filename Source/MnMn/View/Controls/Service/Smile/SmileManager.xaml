@@ -28,8 +28,9 @@
   <DockPanel>
     <ToolBar DockPanel.Dock="Top">
       <TextBox
-        mamc:TextBoxHelper.Watermark="動画ID: smXXXXXX"
+        mamc:TextBoxHelper.Watermark="smXXXXXX or watch/NNNNNN or 動画ページURI"
         mamc:TextBoxHelper.ButtonCommand="{Binding OpenVideoPlayerCommand}"
+        Width="350"
         Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}"
         Style="{StaticResource SearchTextBox}"
       >

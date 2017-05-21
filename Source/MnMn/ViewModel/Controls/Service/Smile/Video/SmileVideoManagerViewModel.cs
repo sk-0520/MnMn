@@ -251,10 +251,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync())).ContinueWith(_ => {
                 // 裏で走らせとく
-                CheckUpdateAsync().ContinueWith(t => {
+                if(NetworkUtility.IsNetworkAvailable) {
+                    CheckUpdateAsync().ContinueWith(t => {
+                        CheckItLaterCheckTimer.Stop();
+                        CheckItLaterCheckTimer.Start();
+                    });
+                } else {
                     CheckItLaterCheckTimer.Stop();
                     CheckItLaterCheckTimer.Start();
-                });
+                }
             });
         }
 

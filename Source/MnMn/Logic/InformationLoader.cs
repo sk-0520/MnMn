@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -27,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     public class InformationLoader<TInformationViewModel>
         where TInformationViewModel : InformationViewModelBase
     {
-        public InformationLoader(IEnumerable<TInformationViewModel> informations, ICreateHttpUserAgent createHttpUserAgent)
+        public InformationLoader(IEnumerable<TInformationViewModel> informations, IHttpUserAgentCreator createHttpUserAgent)
         {
             InformationItems = new List<TInformationViewModel>(informations);
             CreateHttpUserAgent = createHttpUserAgent;
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region property
 
         protected IReadOnlyList<TInformationViewModel> InformationItems { get; }
-        protected ICreateHttpUserAgent CreateHttpUserAgent { get; }
+        protected IHttpUserAgentCreator CreateHttpUserAgent { get; }
 
         #endregion
 
@@ -44,27 +45,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public virtual Task LoadThumbnaiImageAsync(CacheSpan cacheSpan)
         {
-            var host = new HttpUserAgentHost();
-            var userAgent = host.CreateHttpUserAgent();
+            var userAgent = CreateHttpUserAgent.CreateHttpUserAgent();
             var tasks = InformationItems.Select(i => i.LoadThumbnaiImageAsync(cacheSpan, userAgent));
 
             return Task.WhenAll(tasks).ContinueWith(t => {
                 t.Dispose();
                 userAgent.Dispose();
-                host.Dispose();
             });
         }
 
         public virtual Task LoadInformationAsync(CacheSpan cacheSpan)
         {
-            var host = new HttpUserAgentHost();
-            var userAgent = host.CreateHttpUserAgent();
+            var userAgent = CreateHttpUserAgent.CreateHttpUserAgent();
             var tasks = InformationItems.Select(i => i.LoadInformationAsync(cacheSpan, userAgent));
 
             return Task.WhenAll(tasks).ContinueWith(t => {
                 t.Dispose();
                 userAgent.Dispose();
-                host.Dispose();
             });
         }
 

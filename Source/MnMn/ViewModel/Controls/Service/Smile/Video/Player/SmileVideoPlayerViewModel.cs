@@ -565,7 +565,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     return Task.CompletedTask;
                 } else {
                     SetRelationVideoItems(items);
-                    var loader = new SmileVideoInformationLoader(items);
+                    var loader = new SmileVideoInformationLoader(items, NetworkSetting, Mediation.Logger);
                     return loader.LoadThumbnaiImageAsync(Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(_ => {
                         RelationVideoLoadState = LoadState.Loaded;
                     });
@@ -592,7 +592,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMarketCacheDirectoryName);
             var marketDir = Directory.CreateDirectory(cachedDirPath);
 
-            var userAgentHost = new HttpUserAgentHost();
+            Setting.Bookmark.Correction();
+
+            var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
             var client = userAgentHost.CreateHttpUserAgent();
             var tasks = MarketItems
                 .Where(i => !i.IsStandby)

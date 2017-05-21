@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     return true;
 
                 case SmileMediationKey.inputGetVideoId: {
-                        var s = SmileIdUtility.GetVideoId(inputValue as string);
+                        var s = SmileIdUtility.GetVideoId(inputValue as string, Mediation);
                         outputValue = s;
                         return outputValue != null;
                     }

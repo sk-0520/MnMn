@@ -57,6 +57,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
@@ -101,6 +102,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation = mediation;
             ThumbnailLoadState = LoadState.None;
             InformationFlags = informationFlags;
+
+            NetworkSetting = Mediation.GetNetworkSetting();
+            Logger = Mediation.Logger;
         }
 
         public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoThumbModel thumb, int number)

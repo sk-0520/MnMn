@@ -78,6 +78,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public bool SystemBreakSuppression { get; set; }= Constants.SettingApplicationSystemBreakSuppression;
 
+        [DataMember]
+        public NetworkSettingModel Network { get; set; } = new NetworkSettingModel();
+
         #region service
 
         [DataMember]

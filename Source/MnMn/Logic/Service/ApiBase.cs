@@ -20,6 +20,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 {
@@ -28,11 +34,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
         public ApiBase(Mediation mediation)
         {
             Mediation = mediation;
+
+            NetworkSetting = Mediation.GetNetworkSetting();
+
+            HttpUserAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
         }
 
         #region property
 
         protected Mediation Mediation { get; }
+        protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>
         /// セッション操作を行うか。
@@ -43,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
             set { throw new NotSupportedException(); }
         }
 
-        protected HttpUserAgentHost HttpUserAgentHost { get; set; } = new HttpUserAgentHost();
+        protected HttpUserAgentHost HttpUserAgentHost { get; set; }
 
         #endregion
 

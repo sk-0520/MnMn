@@ -21,13 +21,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
     public class SmileLiveInformationLoader: InformationLoader<SmileLiveInformationViewModel>
     {
-        public SmileLiveInformationLoader(IEnumerable<SmileLiveInformationViewModel> informations, ICreateHttpUserAgent createHttpUserAgent)
+        public SmileLiveInformationLoader(IEnumerable<SmileLiveInformationViewModel> informations, IHttpUserAgentCreator createHttpUserAgent)
             : base(informations, createHttpUserAgent)
         { }
     }

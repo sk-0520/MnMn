@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             LightweightUpdateCheckState = UpdateCheckState.UnChecked;
             LightweightUpdateModel = null;
 
-            using(var userAgentHost = new HttpUserAgentHost())
+            using(var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger))
             using(var userAgent = userAgentHost.CreateHttpUserAgent()) {
                 var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
 
@@ -239,7 +239,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             LightweightUpdateModel = null;
 
             try {
-                var client = new HttpClient();
+                var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
+                var client = userAgentHost.CreateHttpUserAgent();
                 Mediation.Logger.Trace("update check: " + Constants.AppUriUpdate);
                 var response = await client.GetAsync(Constants.AppUriUpdate);
 
@@ -334,7 +335,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         Task LoadChangelogAsync()
         {
             if(UpdateCheckState == UpdateCheckState.CurrentIsOld) {
-                var client = new HttpClient();
+                var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
+                var client = userAgentHost.CreateHttpUserAgent();
                 return client.GetStringAsync(Constants.AppUriChangelogRelease).ContinueWith(t => {
                     var htmlSource = t.Result;
                     UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
@@ -476,7 +478,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         return true;
                     });
 
-                    var download = new AppUpdateDownloadItemViewModel(Mediation, ArchiveUri, archiveFile, new HttpUserAgentHost());
+                    var download = new AppUpdateDownloadItemViewModel(Mediation, ArchiveUri, archiveFile, new HttpUserAgentHost(NetworkSetting, Mediation.Logger));
                     Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
 
                     task = download.StartAsync().ContinueWith(t => {
@@ -557,9 +559,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return Task.CompletedTask;
             }
 
-            return CheckVersionAsync().ContinueWith(t => {
+            if(NetworkUtility.IsNetworkAvailable) {
+                return CheckVersionAsync().ContinueWith(t => {
+                    BackgroundUpdateCheckTimer.Start();
+                });
+            } else {
                 BackgroundUpdateCheckTimer.Start();
-            });
+                return Task.CompletedTask;
+            }
         }
 
         public override Task UninitializeAsync()

@@ -576,13 +576,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override Task LoadInformationAsync(IEnumerable<SmileVideoInformationViewModel> informationItems, CacheSpan informationCacheSpan)
         {
-            var loader = new SmileVideoInformationLoader(informationItems);
+            var loader = new SmileVideoInformationLoader(informationItems, NetworkSetting, Mediation.Logger);
             return loader.LoadInformationAsync(informationCacheSpan);
         }
 
         protected override Task LoadImageAsync(IEnumerable<SmileVideoInformationViewModel> informationItems, CacheSpan imageCacheSpan)
         {
-            var loader = new SmileVideoInformationLoader(informationItems);
+            var loader = new SmileVideoInformationLoader(informationItems, NetworkSetting, Mediation.Logger);
             return loader.LoadThumbnaiImageAsync(imageCacheSpan);
         }
 

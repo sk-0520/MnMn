@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 .Select(i => i.Key + "=" + i.Value)
             ;
             var content = new StringContent(string.Join("&", parameters), encoding, "application/x-www-form-urlencoded");
-            var host = new HttpUserAgentHost();
+            var host = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
             var client = host.CreateHttpUserAgent();
             return client.PostAsync(Constants.AppUriQuestionnaire, content).ContinueWith(t => {
                 Mediation.Logger.Trace(t.Result.StatusCode.ToString(), t.Result.ToString());

@@ -63,6 +63,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool AppCrashReportIsDebug => appConfig.Get("app-crash-report-is-debug", bool.Parse);
 
         public static TimeSpan AppSystemBreakTime => appConfig.Get("app-system-break-time", TimeSpan.Parse);
+        public static bool ApplicationCheckNetworkAvailable => appConfig.Get("app-check-network-available", bool.Parse);
+
+        public static TimeSpan NetworkProxySettingRefreshTime => appConfig.Get("network-proxy-setting-refresh-time", TimeSpan.Parse);
 
         public static WebNavigatorEngine WebNavigatorEngine => appConfig.Get("web_navigator-engine", s => EnumUtility.Parse<WebNavigatorEngine>(s, false));
         public static string WebNavigatorGeckoFxLibraryDirectoryName => appConfig.Get("web_navigator-geckofx-lib-dir-name");
@@ -99,6 +102,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static TimeSpan AutoRebootJudgeTime => appConfig.Get("auto-reboot-judge-time", TimeSpan.Parse);
 
         public static TimeSpan UninitializeAsyncWaitTime => appConfig.Get("uninitialize_async-wait-time", TimeSpan.Parse);
+
+        public static string ApplicationLogicUserAgentFormat => appConfig.Get("application-logic-ua-format");
 
         public static bool ForceMoreOptionsShow => appConfig.Get("force-more-options-show", bool.Parse);
 
@@ -149,6 +154,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         ///<para>plugin.scan.plid.all</para>
         /// </summary>
         public static bool SettingApplicationWebNavigatorGeckoFxScanPlugin => appConfig.Get("setting-application-web_navigator-geckofx-scan-plugin", bool.Parse);
+
+        public static bool SettingApplicationNetworkLogicUsingCustomUserAgent => appConfig.Get("setting-application-network-logic-using-custom-ua", bool.Parse);
+        public static string SettingApplicationNetworkLogicCustomUserAgentFormat => appConfig.Get("setting-application-network-logic-custom-ua-format");
+        public static bool SettingApplicationNetworkBrowserUsingCustomUserAgent => appConfig.Get("setting-application-network-browser-using-custom-ua", bool.Parse);
+        public static string SettingApplicationNetworkBrowserCustomUserAgentFormat => appConfig.Get("setting-application-network-browser-custom-ua-format");
+
 
         /// <summary>
         /// ウィンドウ: 左

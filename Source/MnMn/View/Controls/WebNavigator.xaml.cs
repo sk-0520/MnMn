@@ -874,7 +874,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             DoAction(
                 b => { },
                 b => Dispatcher.Invoke(() => {
-                    if(b.History.Count > 0) {
+                    if(b.History?.Count > 0) {
                         b.History.Clear();
                     }
                 })
@@ -1519,7 +1519,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             var browser = (GeckoWebBrowser)sender;
-            var element = browser.Document.ElementFromPoint(e.ClientX, e.ClientY);
+            var element = browser.Document?.ElementFromPoint(e.ClientX, e.ClientY);
             string hrefValue = null;
             if(element != null) {
                 var elements = WebNavigatorCore.GetRootElementsGeckoFx(element).ToList();
