@@ -25,6 +25,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -95,11 +96,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                 return CreateCommand(
                     o => {
                         if(!string.IsNullOrWhiteSpace(InputVideoId)) {
-                            OpenVideoPlayerAsync(InputVideoId.Trim()).ConfigureAwait(false);
-                            InputVideoId = string.Empty;
+                            var inputValue = InputVideoId.Trim();
+                            if(Mediation.ConvertValue(out var outputValue, typeof(string), SmileMediationKey.inputGetVideoId, inputValue, typeof(string), ServiceType.Smile)) {
+                                OpenVideoPlayerAsync((string)outputValue).ConfigureAwait(false);
+                                InputVideoId = string.Empty;
+                            }
                         }
                     },
-                    o => Session.IsLoggedIn
+                    o => Session.IsLoggedIn && !string.IsNullOrWhiteSpace(InputVideoId)
                 );
             }
         }

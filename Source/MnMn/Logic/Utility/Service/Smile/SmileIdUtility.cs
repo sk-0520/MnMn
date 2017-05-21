@@ -20,6 +20,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
@@ -44,41 +46,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetVideoId(string inputValue)
+        public static string GetVideoId(string inputValue, IGetExpression getExpression)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
             }
 
-            var regFormat = new Regex(
-                $@"
-                (
-                    watch
-                    \/
-                )?
-                (?<VIDEO_ID>
-                    (sm|nm|so) # 他にもあるっぽいけど別段困らない
-                    \d+
-                )
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
-            );
-            var match = regFormat.Match(inputValue);
+            var videoIdPrefix = getExpression.GetExpression("get-expression-video-id", "prefix-id", ServiceType.Smile);
+            var match = videoIdPrefix.Regex.Match(inputValue);
             if(match.Success) {
                 return match.Groups["VIDEO_ID"].Value;
             } else {
-                var regNumber = new Regex(
-                    @"
-                    watch
-                    \/
-                    (?<VIDEO_ID>
-                        \d+
-                    )
-                    ",
-                    RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
-                );
-
-                var numberMatch = regNumber.Match(inputValue);
+                var videoIdNumber = getExpression.GetExpression("get-expression-video-id", "number-id", ServiceType.Smile);
+                var numberMatch = videoIdNumber.Regex.Match(inputValue);
                 if(numberMatch.Success) {
                     return numberMatch.Groups["VIDEO_ID"].Value;
                 }
