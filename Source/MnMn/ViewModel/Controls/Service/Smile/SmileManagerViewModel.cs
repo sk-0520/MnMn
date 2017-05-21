@@ -97,7 +97,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                     o => {
                         if(!string.IsNullOrWhiteSpace(InputVideoId)) {
                             var inputValue = InputVideoId.Trim();
-                            if(Mediation.ConvertValue(out var outputValue, typeof(string), SmileMediationKey.inputGetVideoId, inputValue, typeof(string), ServiceType.Smile)) {
+                            object outputValue;
+                            if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetVideoId, inputValue, typeof(string), ServiceType.Smile)) {
                                 OpenVideoPlayerAsync((string)outputValue).ConfigureAwait(false);
                                 InputVideoId = string.Empty;
                             }
