@@ -68,4 +68,31 @@
 			</data>
 		</item>
 	</element>
+	<element key="get-expression-video-id">
+		<item id="prefix-id" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase">
+			<data>
+				<![CDATA[
+					(
+						watch
+						\/
+					)?
+					(?<VIDEO_ID>
+						(sm|nm|so) # 他にもあるっぽいけど別段困らない
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+		<item id="number-id" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase">
+			<data>
+				<![CDATA[
+					watch
+					\/
+					(?<VIDEO_ID>
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+	</element>
 </expressions>
