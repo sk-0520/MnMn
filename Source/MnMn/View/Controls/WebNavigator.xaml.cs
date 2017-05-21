@@ -874,7 +874,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             DoAction(
                 b => { },
                 b => Dispatcher.Invoke(() => {
-                    if(b.History.Count > 0) {
+                    if(b.History?.Count > 0) {
                         b.History.Clear();
                     }
                 })
