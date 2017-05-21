@@ -559,9 +559,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return Task.CompletedTask;
             }
 
-            return CheckVersionAsync().ContinueWith(t => {
+            if(NetworkUtility.IsNetworkAvailable) {
+                return CheckVersionAsync().ContinueWith(t => {
+                    BackgroundUpdateCheckTimer.Start();
+                });
+            } else {
                 BackgroundUpdateCheckTimer.Start();
-            });
+                return Task.CompletedTask;
+            }
         }
 
         public override Task UninitializeAsync()

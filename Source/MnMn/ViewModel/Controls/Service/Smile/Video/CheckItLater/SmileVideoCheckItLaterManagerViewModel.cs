@@ -24,6 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
@@ -121,6 +122,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         public override async Task InitializeAsync()
         {
+            if(!NetworkUtility.IsNetworkAvailable) {
+                Mediation.Logger.Information("skip check it later");
+                return;
+            }
             // 動画IDの補正処理
             foreach(var item in Setting.CheckItLater) {
                 if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId)) {

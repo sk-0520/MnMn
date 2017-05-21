@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -13,6 +14,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
     public static class NetworkUtility
     {
+        #region property
+
+        /// <summary>
+        /// ネットワーク接続が有効か確認。
+        /// <para>インターネットじゃなくてネットワーク接続である点に留意。繋がってればインターネットいけると楽観視する。</para>
+        /// <para><see cref="Constants.ApplicationCheckNetworkAvailable"/>で実際にチェックするか分岐する。</para>
+        /// </summary>
+        public static bool IsNetworkAvailable
+        {
+            get
+            {
+                if(!Constants.ApplicationCheckNetworkAvailable) {
+                    return true;
+                }
+
+                var available = NetworkInterface.GetIsNetworkAvailable();
+                return available;
+            }
+        }
+
+        #endregion
         #region function
 
         public static string GetUserAgentText(string userAgentFormat)
