@@ -980,6 +980,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override async Task InitializeAsync()
         {
+            if(!NetworkUtility.IsNetworkAvailable) {
+                Mediation.Logger.Information("skip milist");
+                return;
+            }
+
             // 動画IDの補正処理
             foreach(var bookmark in BookmarkUserMyListPairs.ModelList) {
                 foreach(var item in bookmark.Videos.Select((v,i) => new { VideoId = v, Index = i})) {

@@ -168,7 +168,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             await InitializeMarketAsync();
 
             if(Session.EnabledStartupAutoLogin) {
-                await Session.LoginAsync();
+                if(NetworkUtility.IsNetworkAvailable) {
+                    await Session.LoginAsync();
+                } else {
+                    Mediation.Logger.Information("skip smile login");
+                }
 
                 // TODO: ログインできない場合は設定画面へ
                 if(Session.LoginState != LoginState.LoggedIn) {
