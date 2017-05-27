@@ -492,6 +492,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
+                if(IsMultiInformationSource) {
+                    var multiLength = new[] {
+                        Thumb?.CommentNum,
+                        FeedDetail?.CommentNum,
+                        ContentsSearch?.CommentCounter,
+                        OfficialSearch?.NumRes,
+                    };
+
+                    return multiLength
+                        .Where(s => !string.IsNullOrEmpty(s))
+                        .Select(s => RawValueUtility.ConvertInteger(s))
+                        .Max()
+                    ;
+                }
+
                 switch(InformationSource) {
                     case SmileVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertInteger(Thumb.CommentNum);
