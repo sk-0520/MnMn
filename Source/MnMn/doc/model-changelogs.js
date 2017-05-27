@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'SmileVideoPlayerViewModel.PlayMovie -> NullReferenceException'
 					},
 					{
 						'revision': '',

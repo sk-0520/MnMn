@@ -382,6 +382,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 sw.Start();
                 Mediation.Logger.Debug($"{VideoId}: play invoke...");
                 Player.Dispatcher.Invoke(new Action(() => {
+                    if(Player == null) {
+                        Mediation.Logger.Debug($"{VideoId}: play is null");
+                        return;
+                    }
+
                     Player.IsMute = IsMute;
                     Player.Volume = Volume;
 
