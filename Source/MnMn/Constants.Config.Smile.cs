@@ -433,6 +433,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static double SettingServiceSmileVideoPlayerViewScale => appConfig.Get("setting-service-smile-smilevideo-player-vuew-scale", double.Parse);
 
+        public static bool SettingServiceSmileVideoPlayerShowNavigatorFullScreen => appConfig.Get("setting-service-smile-smilevideo-player-show-navigator-fullscreen", bool.Parse);
+
         /// <summary>
         /// コメントを表示するか。
         /// </summary>
