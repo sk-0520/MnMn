@@ -633,6 +633,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand SwitchGlobalCommentFilering
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        IsEnabledGlobalCommentFilering = !IsEnabledGlobalCommentFilering;
+                    },
+                    o => Information != null
+                );
+            }
+        }
+
         #endregion
     }
 }

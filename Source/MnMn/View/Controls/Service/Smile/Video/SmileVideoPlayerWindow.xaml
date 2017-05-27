@@ -278,6 +278,7 @@
     </KeyBinding>
 
     <KeyBinding Key="F7" Command="{Binding SwitchMuteCommand}" />
+    <KeyBinding Key="F12" Command="{Binding SwitchGlobalCommentFilering}" />
   </mamc:MetroWindow.InputBindings>
   <mamc:MetroWindow.Style>
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
