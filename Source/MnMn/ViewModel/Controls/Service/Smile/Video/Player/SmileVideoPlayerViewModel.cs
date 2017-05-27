@@ -259,6 +259,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ChangePlayerSize(double width, double height)
         {
+            var w = View.ActualWidth - Player.ActualWidth;
+            var h = View.ActualHeight - Player.ActualHeight;
+
+            if(w < 0 || h < 0) {
+                Mediation.Logger.Warning($"{nameof(w)}: {w}, {nameof(h)}: {h}");
+                return;
+            }
+
             var leaveSize = new Size(
                 View.ActualWidth - Player.ActualWidth,
                 View.ActualHeight - Player.ActualHeight
