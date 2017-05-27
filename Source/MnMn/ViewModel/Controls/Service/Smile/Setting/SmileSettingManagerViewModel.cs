@@ -193,6 +193,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 
+        public bool ShowNavigatorFullScreen
+        {
+            get { return Setting.Video.Player.ShowNavigatorFullScreen; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
         public bool KeySpaceToPause
         {
             get { return Setting.Video.Player.KeySpaceToPause; }

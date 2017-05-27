@@ -1147,6 +1147,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool CanChangeCommentEnabledArea { get; private set; }
 
+        public bool ShowNavigatorFullScreen { get { return Setting.Player.ShowNavigatorFullScreen; } }
+
         #endregion
     }
 }

@@ -840,21 +840,30 @@
 
           </Grid>
 
-          <Grid VerticalAlignment="Bottom">
+          <Grid VerticalAlignment="Bottom" Background="{DynamicResource ControlBackgroundBrush}">
             <Grid.Style>
               <Style TargetType="Grid">
                 <Style.Triggers>
-                  <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
-                    <Setter Property="Grid.Row" Value="1" />
-                    <Setter Property="Opacity" Value="1" />
-                  </DataTrigger>
-                  <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
-                    <Setter Property="Grid.Row" Value="0" />
-                    <Setter Property="Opacity" Value="0" />
-                  </DataTrigger>
                   <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
                       <Condition Binding="{Binding IsNormalWindow}" Value="False" />
+                      <Condition Binding="{Binding ShowNavigatorFullScreen}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Grid.Row" Value="0" />
+                    <Setter Property="Opacity" Value="0" />
+                  </MultiDataTrigger>
+                  <!--<MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                      <Condition Binding="{Binding IsNormalWindow}" Value="False" />
+                      <Condition Binding="{Binding ShowNavigatorFullScreen}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Grid.Row" Value="1" />
+                    <Setter Property="Opacity" Value="1" />
+                  </MultiDataTrigger>-->
+                  <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                      <Condition Binding="{Binding IsNormalWindow}" Value="False" />
+                      <Condition Binding="{Binding ShowNavigatorFullScreen}" Value="False" />
                       <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
                     </MultiDataTrigger.Conditions>
                     <MultiDataTrigger.EnterActions>
@@ -873,6 +882,8 @@
                     </MultiDataTrigger.ExitActions>
                   </MultiDataTrigger>
                 </Style.Triggers>
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="Opacity" Value="1" />
               </Style>
             </Grid.Style>
             <Grid.RowDefinitions>
@@ -910,7 +921,7 @@
               StartSeekChangingCommand="{Binding StartSeekChangingCommand}"
               EndSeekChangeCommand="{Binding EndSeekChangeCommand}"
             >
-              <app_view_controls:Navigationbar.Style>
+              <!--<app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">
                   <Style.Triggers>
                     <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
@@ -918,7 +929,7 @@
                     </DataTrigger>
                   </Style.Triggers>
                 </Style>
-              </app_view_controls:Navigationbar.Style>
+              </app_view_controls:Navigationbar.Style>-->
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton ToolTip="フルスクリーン" IsChecked="{Binding IsNormalWindow, Converter={StaticResource LogicalNotConverter}, Mode=OneWay}" Command="{Binding SwitchFullScreenCommand}">
