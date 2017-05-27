@@ -1057,6 +1057,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(Information.IsEnabledGlobalCommentFilering != value) {
                         Information.IsEnabledGlobalCommentFilering = value;
                         ApprovalComment();
+                        CallOnPropertyChange(nameof(IsEnabledGlobalCommentFilering));
                     }
                 }
             }

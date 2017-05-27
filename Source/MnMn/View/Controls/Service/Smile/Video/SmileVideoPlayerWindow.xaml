@@ -1644,9 +1644,34 @@
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
-                  <Canvas Style="{StaticResource IconCanvas-24x24}">
-                    <Path Data="{StaticResource Image_Filter}" Style="{StaticResource MinimumDefaultIconPath}" />
-                  </Canvas>
+                  <Control>
+                    <Control.Style>
+                      <Style TargetType="Control">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsEnabledGlobalCommentFilering}" Value="True">
+                            <Setter Property="Template">
+                              <Setter.Value>
+                                <ControlTemplate>
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_Filter-Fill}" Style="{StaticResource MinimumAccentIconPath}" />
+                                  </Canvas>
+                                </ControlTemplate>
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="Template">
+                          <Setter.Value>
+                            <ControlTemplate>
+                              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                <Path Data="{StaticResource Image_Filter}" Style="{StaticResource MinimumDefaultIconPath}" />
+                              </Canvas>
+                            </ControlTemplate>
+                          </Setter.Value>
+                        </Setter>
+                      </Style>
+                    </Control.Style>
+                  </Control>
                 </Viewbox>
                 <TextBlock>フィルタ</TextBlock>
               </StackPanel>

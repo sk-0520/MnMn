@@ -167,7 +167,6 @@
 
   <Style x:Key="MinimumAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
-    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
     <Setter Property="Stroke" Value="{DynamicResource BlackBrush}" />
     <Setter Property="StrokeThickness" Value="1" />
     <Setter Property="Clip" Value="{Binding Data, RelativeSource={RelativeSource Self}}" />
