@@ -100,8 +100,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             {
                 if(SetVariableValue(ref this._currentFinder, value)) {
                     if(CurrentFinder != null) {
-                        DetachmentChildProprtyChange(CurrentFinder);
-                        AttachmentChildProprtyChange(CurrentFinder);
+                        DetachChildProprtyChange(CurrentFinder);
+                        AttachChildProprtyChange(CurrentFinder);
                     }
                 }
             }
@@ -169,12 +169,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             ChangedSelectedPage(this, e);
         }
 
-        public void AttachmentChildProprtyChange(INotifyPropertyChanged target)
+        public void AttachChildProprtyChange(INotifyPropertyChanged target)
         {
             PropertyChangedListener.Add(target);
         }
 
-        public void DetachmentChildProprtyChange(INotifyPropertyChanged target)
+        public void DetachChildProprtyChange(INotifyPropertyChanged target)
         {
             PropertyChangedListener.Remove(target);
         }
@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                         SelectedPage.IsChecked = true;
                     }
                     if(oldSelectedPage != null) {
-                        DetachmentChildProprtyChange(oldSelectedPage.ViewModel);
+                        DetachChildProprtyChange(oldSelectedPage.ViewModel);
                         oldSelectedPage.IsChecked = false;
                     }
 
@@ -304,7 +304,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                         var pageVm = (PageViewModel<TChildFinderViewModel>)o;
                         if(pageVm.LoadState != LoadState.Loaded) {
                             SelectedPage = pageVm;
-                            AttachmentChildProprtyChange(pageVm.ViewModel);
+                            AttachChildProprtyChange(pageVm.ViewModel);
                             pageVm.ViewModel.LoadDefaultCacheAsync().ConfigureAwait(true);
                         } else {
                             SelectedPage = pageVm;

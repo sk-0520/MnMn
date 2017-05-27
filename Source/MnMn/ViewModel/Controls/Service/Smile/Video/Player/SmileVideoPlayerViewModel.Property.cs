@@ -1057,6 +1057,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(Information.IsEnabledGlobalCommentFilering != value) {
                         Information.IsEnabledGlobalCommentFilering = value;
                         ApprovalComment();
+                        CallOnPropertyChange(nameof(IsEnabledGlobalCommentFilering));
                     }
                 }
             }
@@ -1145,6 +1146,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         SmileVideoCommentViewModel CommentScriptDefault { get; set; }
 
         public bool CanChangeCommentEnabledArea { get; private set; }
+
+        public bool ShowNavigatorFullScreen { get { return Setting.Player.ShowNavigatorFullScreen; } }
+
+        public bool ForceNavigatorbarOperation
+        {
+            get { return this._forceNavigatorbarOperation; }
+            set { SetVariableValue(ref this._forceNavigatorbarOperation, value); }
+        }
 
         #endregion
     }

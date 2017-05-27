@@ -119,6 +119,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _isOpenWorkingPlayer;
 
+        bool _forceNavigatorbarOperation;
+
         #endregion
     }
 }

@@ -259,6 +259,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ChangePlayerSize(double width, double height)
         {
+            var w = View.ActualWidth - Player.ActualWidth;
+            var h = View.ActualHeight - Player.ActualHeight;
+
+            if(w < 0 || h < 0) {
+                Mediation.Logger.Warning($"{nameof(w)}: {w}, {nameof(h)}: {h}");
+                return;
+            }
+
             var leaveSize = new Size(
                 View.ActualWidth - Player.ActualWidth,
                 View.ActualHeight - Player.ActualHeight
@@ -382,6 +390,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 sw.Start();
                 Mediation.Logger.Debug($"{VideoId}: play invoke...");
                 Player.Dispatcher.Invoke(new Action(() => {
+                    if(Player == null) {
+                        Mediation.Logger.Debug($"{VideoId}: play is null");
+                        return;
+                    }
+
                     Player.IsMute = IsMute;
                     Player.Volume = Volume;
 
@@ -1364,13 +1377,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void AttachmentEvent()
+        void AttachEvent()
         {
             EnabledCommentControl.MouseEnter += EnabledCommentControl_MouseEnter;
             EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
 
             View.Loaded += View_Loaded;
             View.Activated += View_Activated;
+            View.KeyDown += View_KeyDown;
+            View.KeyUp += View_KeyUp;
             View.Closing += View_Closing;
             Player.MouseDown += Player_MouseDown;
             Player.PositionChanged += Player_PositionChanged;
@@ -1381,12 +1396,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             DetailComment.LostFocus += DetailComment_LostFocus;
         }
 
-        void DetachmentEvent()
+        void DetachEvent()
         {
             if(View != null) {
                 View.Loaded -= View_Loaded;
                 View.Loaded -= View_LoadedAutoPlay;
                 View.Activated -= View_Activated;
+                View.KeyDown -= View_KeyDown;
+                View.KeyUp -= View_KeyUp;
                 View.Closing -= View_Closing;
                 View.Deactivated -= View_Deactivated;
             }
@@ -1709,6 +1726,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SafeDownloadedSize = 0;
             CommentScriptDefault = null;
             MarketLoadState = LoadState.None;
+            ForceNavigatorbarOperation = false;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
@@ -1766,7 +1784,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var content = Navigationbar.ExstendsContent as Panel;
             EnabledCommentControl = UIUtility.FindLogicalChildren<Control>(content).ElementAt(1);
 
-            AttachmentEvent();
+            AttachEvent();
 
             Debug.WriteLine(View.IsInitialized);
         }
@@ -1864,7 +1882,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                DetachmentEvent();
+                DetachEvent();
 
                 if(PlayerCursorHider != null) {
                     PlayerCursorHider.Dispose();
@@ -1898,8 +1916,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             SetMediaAndPlay();
         }
-
-
 
         private void View_Closing(object sender, CancelEventArgs e)
         {
@@ -1935,6 +1951,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             Mediation.Order(new AppCleanMemoryOrderModel(true, true));
         }
+
+        private void View_KeyDown(object sender, KeyEventArgs e)
+        {
+            var mods = Keyboard.Modifiers;
+            var showNavigator = mods.HasFlag(ModifierKeys.Control | ModifierKeys.Shift);
+            if(showNavigator) {
+                ForceNavigatorbarOperation = true;
+            }
+        }
+        private void View_KeyUp(object sender, KeyEventArgs e)
+        {
+            ForceNavigatorbarOperation = false;
+        }
+
 
         private void Player_PositionChanged(object sender, EventArgs e)
         {

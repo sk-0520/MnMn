@@ -453,7 +453,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 var writer = new StreamWriter(new FileStream(logFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
                     AutoFlush = true,
                 };
-                logger.AttachmentStream(writer, true);
+                logger.AttachStream(writer, true);
                 logger.LoggerConfig.PutsStream = true;
             }
 

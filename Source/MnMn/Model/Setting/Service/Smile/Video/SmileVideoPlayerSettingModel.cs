@@ -221,6 +221,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public double ViewScale { get; set; } = Constants.SettingServiceSmileVideoPlayerViewScale;
 
+        [DataMember]
+        public bool ShowNavigatorFullScreen { get; set; } = Constants.SettingServiceSmileVideoPlayerShowNavigatorFullScreen;
+
         #endregion
     }
 }

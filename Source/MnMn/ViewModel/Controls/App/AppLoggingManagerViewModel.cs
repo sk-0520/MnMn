@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         if(!VariableConstants.HasOptionLogDirectoryPath) {
                             Mediation.Logger.LoggerConfig.PutsStream = false;
                         }
-                        ((AppLogger)Mediation.Logger).DetachmentStream(Writer);
+                        ((AppLogger)Mediation.Logger).DetachStream(Writer);
                         Writer.Dispose();
                         Writer = null;
                     }
@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         AutoFlush = true,
                     };
                     Mediation.Logger.LoggerConfig.PutsStream = true;
-                    ((AppLogger)Mediation.Logger).AttachmentStream(Writer, true);
+                    ((AppLogger)Mediation.Logger).AttachStream(Writer, true);
                     return true;
                 } catch(Exception ex) {
                     Mediation.Logger.Error(ex);
