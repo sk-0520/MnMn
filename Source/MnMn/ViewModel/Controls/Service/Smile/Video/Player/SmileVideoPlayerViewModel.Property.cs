@@ -1149,6 +1149,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool ShowNavigatorFullScreen { get { return Setting.Player.ShowNavigatorFullScreen; } }
 
+        public bool ForceNavigatorbarOperation
+        {
+            get { return this._forceNavigatorbarOperation; }
+            set { SetVariableValue(ref this._forceNavigatorbarOperation, value); }
+        }
+
         #endregion
     }
 }

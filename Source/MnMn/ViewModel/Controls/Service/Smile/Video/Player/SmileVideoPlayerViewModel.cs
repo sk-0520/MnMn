@@ -1376,6 +1376,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             View.Loaded += View_Loaded;
             View.Activated += View_Activated;
+            View.KeyDown += View_KeyDown;
+            View.KeyUp += View_KeyUp;
             View.Closing += View_Closing;
             Player.MouseDown += Player_MouseDown;
             Player.PositionChanged += Player_PositionChanged;
@@ -1392,6 +1394,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.Loaded -= View_Loaded;
                 View.Loaded -= View_LoadedAutoPlay;
                 View.Activated -= View_Activated;
+                View.KeyDown -= View_KeyDown;
+                View.KeyUp -= View_KeyUp;
                 View.Closing -= View_Closing;
                 View.Deactivated -= View_Deactivated;
             }
@@ -1714,6 +1718,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SafeDownloadedSize = 0;
             CommentScriptDefault = null;
             MarketLoadState = LoadState.None;
+            ForceNavigatorbarOperation = false;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
@@ -1904,8 +1909,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SetMediaAndPlay();
         }
 
-
-
         private void View_Closing(object sender, CancelEventArgs e)
         {
             //TODO: closingはまずくね…?
@@ -1940,6 +1943,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             Mediation.Order(new AppCleanMemoryOrderModel(true, true));
         }
+
+        private void View_KeyDown(object sender, KeyEventArgs e)
+        {
+            var mods = Keyboard.Modifiers;
+            var showNavigator = mods.HasFlag(ModifierKeys.Control | ModifierKeys.Shift);
+            if(showNavigator) {
+                ForceNavigatorbarOperation = true;
+            }
+        }
+        private void View_KeyUp(object sender, KeyEventArgs e)
+        {
+            ForceNavigatorbarOperation = false;
+        }
+
 
         private void Player_PositionChanged(object sender, EventArgs e)
         {

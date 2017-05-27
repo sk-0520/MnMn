@@ -864,6 +864,7 @@
                     <MultiDataTrigger.Conditions>
                       <Condition Binding="{Binding IsNormalWindow}" Value="False" />
                       <Condition Binding="{Binding ShowNavigatorFullScreen}" Value="False" />
+                      <Condition Binding="{Binding ForceNavigatorbarOperation}" Value="False" />
                       <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
                     </MultiDataTrigger.Conditions>
                     <MultiDataTrigger.EnterActions>
@@ -877,6 +878,27 @@
                       <BeginStoryboard>
                         <Storyboard FillBehavior="Stop">
                           <DoubleAnimation Duration="00:00:01" Storyboard.TargetProperty="Opacity" To="0" />
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </MultiDataTrigger.ExitActions>
+                  </MultiDataTrigger>
+                  <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                      <Condition Binding="{Binding IsNormalWindow}" Value="False" />
+                      <Condition Binding="{Binding ShowNavigatorFullScreen}" Value="False" />
+                      <Condition Binding="{Binding ForceNavigatorbarOperation}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.EnterActions>
+                      <BeginStoryboard>
+                        <Storyboard>
+                          <DoubleAnimation Duration="00:00:00.25" Storyboard.TargetProperty="Opacity" To="1" />
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </MultiDataTrigger.EnterActions>
+                    <MultiDataTrigger.ExitActions>
+                      <BeginStoryboard>
+                        <Storyboard FillBehavior="Stop">
+                          <DoubleAnimation Duration="00:00:00.25" Storyboard.TargetProperty="Opacity" To="0" />
                         </Storyboard>
                       </BeginStoryboard>
                     </MultiDataTrigger.ExitActions>
