@@ -241,6 +241,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// 元にしている動画生情報。
         /// </summary>
         public SmileVideoInformationSource InformationSource { get; private set; }
+        /// <summary>
+        /// 元にしている動画生情報は複数あるか。
+        /// </summary>
+        public bool IsMultiInformationSource { get; private set; }
 
         /// <summary>
         /// ページ読み込み状態。
@@ -428,6 +432,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
+                if(IsMultiInformationSource) {
+                    var multiLength = new[] {
+                        Thumb?.Length,
+                        FeedDetail?.Length,
+                        OfficialSearch?.Length
+                    };
+
+                    return multiLength
+                        .Where(s => !string.IsNullOrEmpty(s))
+                        .Select(s => SmileVideoGetthumbinfoUtility.ConvertTimeSpan(s))
+                        .Max()
+                    ;
+                }
+
                 switch(InformationSource) {
                     case SmileVideoInformationSource.Getthumbinfo:
                         return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(Thumb.Length);
@@ -1419,6 +1437,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 Thumb = rawGetthumbinfo.Thumb;
                 InformationSource = SmileVideoInformationSource.Getthumbinfo;
+
+                IsMultiInformationSource = true;
+
                 var propertyNames = new[] {
                     nameof(Length),
                     nameof(HasLength),
