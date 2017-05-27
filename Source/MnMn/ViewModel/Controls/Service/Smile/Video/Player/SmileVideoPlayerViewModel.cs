@@ -1364,7 +1364,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void AttachmentEvent()
+        void AttachEvent()
         {
             EnabledCommentControl.MouseEnter += EnabledCommentControl_MouseEnter;
             EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
@@ -1381,7 +1381,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             DetailComment.LostFocus += DetailComment_LostFocus;
         }
 
-        void DetachmentEvent()
+        void DetachEvent()
         {
             if(View != null) {
                 View.Loaded -= View_Loaded;
@@ -1766,7 +1766,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var content = Navigationbar.ExstendsContent as Panel;
             EnabledCommentControl = UIUtility.FindLogicalChildren<Control>(content).ElementAt(1);
 
-            AttachmentEvent();
+            AttachEvent();
 
             Debug.WriteLine(View.IsInitialized);
         }
@@ -1864,7 +1864,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                DetachmentEvent();
+                DetachEvent();
 
                 if(PlayerCursorHider != null) {
                     PlayerCursorHider.Dispose();
