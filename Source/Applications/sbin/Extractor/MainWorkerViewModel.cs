@@ -387,7 +387,9 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 Directory.CreateDirectory(dirPath);
                 var filePath = Path.Combine(dirPath, fileName);
                 var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read);
-                Writer = new StreamWriter(stream);
+                Writer = new StreamWriter(stream) {
+                    AutoFlush = true,
+                };
             }
 
             try {
@@ -514,6 +516,10 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                 LogItems.Add(log);
                 ListLog.ScrollIntoView(log);
+                Writer.WriteLine($"[{log.Timestamp:yyyy-MM-dd_HH-mm-ss}] {log.Kind}: {log.Message}");
+                if(log.HasDetail) {
+                    Writer.WriteLine(log.Detail);
+                }
             }));
         }
 
