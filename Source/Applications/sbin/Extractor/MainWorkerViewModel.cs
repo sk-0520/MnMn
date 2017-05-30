@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         MainWindow View { get; set; }
         ListBox ListLog { get; set; }
 
+        TextWriter Writer { get; set; }
+
         public CollectionModel<LogItemViewModel> LogItems { get; } = new CollectionModel<LogItemViewModel>();
 
         public bool CanInput
@@ -150,6 +152,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             ListLog = View.listLog;
 
             View.ContentRendered += View_ContentRendered;
+            View.Closed += View_Closed;
         }
 
         string GetCommandValue(CommandLine commandLine, string option)
@@ -378,6 +381,15 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         {
             CanInput = false;
 
+            if(Writer == null) {
+                var fileName = $"extractor_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log";
+                var dirPath = Path.Combine(Environment.ExpandEnvironmentVariables("%APPDATA%"), "MnMn", "extractor");
+                Directory.CreateDirectory(dirPath);
+                var filePath = Path.Combine(dirPath, fileName);
+                var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+                Writer = new StreamWriter(stream);
+            }
+
             try {
                 if(!File.Exists(ArchiveFilePath)) {
                     throw new Exception($"not found {ArchiveFilePath}");
@@ -518,6 +530,10 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
+        private void View_Closed(object sender, EventArgs e)
+        {
+            Writer?.Dispose();
+        }
 
     }
 }
