@@ -28,6 +28,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         delegate bool TryParse<TValue>(string input, out TValue result);
         const string scriptFileName = "UpdaterScript.cs";
+        const int expandRertyMaxCount = 5;
+        readonly TimeSpan expandRetryWaitTime = TimeSpan.FromSeconds(3);
 
         #endregion
 
@@ -264,7 +266,23 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         void ExpandEntry(ZipArchiveEntry entry, string expandPath)
         {
             AddInformationLog($"Expand: {expandPath}", $"name = {entry.Name}, length = {entry.Length}");
-            entry.ExtractToFile(expandPath, true);
+            Exception lastException;
+            var i = 0;
+            do {
+                try {
+                    entry.ExtractToFile(expandPath, true);
+                    return;
+                } catch(Exception ex) {
+                    AddWarningLog($"{i + 1}/{expandRertyMaxCount}{ex.Message}", ex.ToString());
+                    lastException = ex;
+                }
+                if(i + 1 < expandRertyMaxCount) {
+                    AddInformationLog($"{i + 1}/{expandRertyMaxCount}, wait...");
+                    Thread.Sleep((int)this.expandRetryWaitTime.TotalMilliseconds);
+                }
+            } while(++i < expandRertyMaxCount);
+
+            throw lastException;
         }
 
         void ExpandArchive()
@@ -389,7 +407,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     Console.SetOut(writer);
 
                     var us = assembly.CreateInstance("UpdaterScript");
-                        us.GetType().GetMethod("Main").Invoke(us, new object[] { new [] {
+                    us.GetType().GetMethod("Main").Invoke(us, new object[] { new [] {
                         ScriptFilePath,
                         ExpandDirectoryPath,
                         Platform
@@ -520,7 +538,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 try {
                     var text = Encoding.UTF8.GetString(stream.ToArray());
                     Clipboard.SetText(text);
-                }catch(Exception ex) {
+                } catch(Exception ex) {
                     AddErrorLog(ex.Message, ex.ToString());
                 }
             }
