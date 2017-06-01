@@ -263,7 +263,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         void ExpandEntry(ZipArchiveEntry entry, string expandPath)
         {
-            AddInformationLog($"Expand: {expandPath}");
+            AddInformationLog($"Expand: {expandPath}", $"name = {entry.Name}, length = {entry.Length}");
             entry.ExtractToFile(expandPath, true);
         }
 
@@ -528,9 +528,9 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         #region function
 
-        void AddInformationLog(string message)
+        void AddInformationLog(string message, string detail = null)
         {
-            var log = new LogItemViewModel(LogKind.Information, message, null);
+            var log = new LogItemViewModel(LogKind.Information, message, detail);
             AddLog(log);
         }
 
@@ -557,8 +557,11 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                 LogItems.Add(log);
                 ListLog.ScrollIntoView(log);
-                Writer.WriteLine($"[{log.Timestamp:yyyy-MM-dd_HH-mm-ss}] {log.Kind}: {log.Message}");
+                var header = $"[{log.Timestamp:yyyy-MM-dd_HH-mm-ss}] {log.Kind}";
+                var splitter = ": ";
+                Writer.WriteLine($"{header}{splitter}{log.Message}");
                 if(log.HasDetail) {
+                    Writer.Write(new String(' ', header.Length + splitter.Length));
                     Writer.WriteLine(log.Detail);
                 }
             }));
