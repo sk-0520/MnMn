@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         const string scriptFileName = "UpdaterScript.cs";
         const int expandRertyMaxCount = 5;
         readonly TimeSpan expandRetryWaitTime = TimeSpan.FromSeconds(3);
+        readonly TimeSpan closedWaitTime = TimeSpan.FromSeconds(5);
 
         #endregion
 
@@ -260,6 +261,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     KillProcess(process, false);
                 }
                 AddInformationLog($"Close: HasExited = {process.HasExited}, time = {killStopwatch.Elapsed}");
+                AddInformationLog($"Wait: sleep({closedWaitTime})");
+                Thread.Sleep((int)this.closedWaitTime.TotalMilliseconds);
             }
         }
 
