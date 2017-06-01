@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         bool _canInput = true;
 
         bool _autoExecute;
+        bool _isEnabledAutoExecute = true;
 
         string _archiveFilePath;
         string _expandDirectoryPath;
@@ -79,6 +80,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         {
             get { return this._autoExecute; }
             set { SetVariableValue(ref this._autoExecute, value); }
+        }
+
+        public bool IsEnabledAutoExecute
+        {
+            get { return this._isEnabledAutoExecute; }
+            set { SetVariableValue(ref this._isEnabledAutoExecute, value); }
         }
 
         string EventName { get; set; }
@@ -241,12 +248,21 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 };
                 KillProcess(process, true);
 
+                AddInformationLog("Wait: process exit...");
                 var isRestart = !process.WaitForExit((int)(TimeSpan.FromMinutes(3).TotalMilliseconds));
+                AddInformationLog($"Exit: {!isRestart}");
                 if(isRestart && !process.HasExited) {
+                    AddInformationLog($"Kill: process");
                     KillProcess(process, false);
                 }
-                AddInformationLog($"Kill -> {isRestart}, Time = {killStopwatch.Elapsed}");
+                AddInformationLog($"Close: HasExited = {process.HasExited}, time = {killStopwatch.Elapsed}");
             }
+        }
+
+        void ExpandEntry(ZipArchiveEntry entry, string expandPath)
+        {
+            AddInformationLog($"Expand: {expandPath}");
+            entry.ExtractToFile(expandPath, true);
         }
 
         void ExpandArchive()
@@ -259,7 +275,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             if(File.Exists(renamePath)) {
                 File.Delete(renamePath);
             }
-            AddInformationLog($"Rename -> {myPath} => {renamePath}");
+            AddInformationLog($"Rename: {myPath} => {renamePath}");
             File.Move(myPath, renamePath);
 
             // 置き換え開始
@@ -270,14 +286,13 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     if(!Directory.Exists(dirPath)) {
                         Directory.CreateDirectory(dirPath);
                     }
-                    AddInformationLog($"Expand -> {expandPath}");
-                    entry.ExtractToFile(expandPath, true);
+                    ExpandEntry(entry, expandPath);
                 }
             }
 
             // Updater使用バージョンの場合は展開プログラムがないので下位互換として現在処理中展開プログラムを実行可能な状態にしておく
             if(!File.Exists(myPath)) {
-                AddInformationLog($"Restore -> {renamePath} => {myPath}");
+                AddInformationLog($"Restore: {renamePath} => {myPath}");
                 File.Copy(renamePath, myPath, true);
             }
 
@@ -423,12 +438,16 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 }
             }).ContinueWith(async t => {
                 if(!t.IsFaulted) {
-                    AutoExecute = false;
-                    Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
+                    if(AutoExecute) {
+                        IsEnabledAutoExecute = false;
+                        AutoExecute = false;
 
-                    await Task.Delay(TimeSpan.FromSeconds(5));
+                        Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
 
-                    Application.Current.Shutdown();
+                        await Task.Delay(TimeSpan.FromSeconds(5));
+
+                        Application.Current.Shutdown();
+                    }
                 } else {
                     AddErrorLog(t.Exception.ToString());
                 }
