@@ -139,7 +139,7 @@
                 </Style>
               </WrapPanel.Resources>
               <TextBlock>
-                <Hyperlink Command="{Binding OutputLogsCommand}">ログをファイル出力</Hyperlink>
+                <Hyperlink Command="{Binding OpenLogFileCommand}">ログディレクトリを開く</Hyperlink>
               </TextBlock>
               <TextBlock>
                 <Hyperlink Command="{Binding CopyLogsCommand}">全ログをコピー</Hyperlink>

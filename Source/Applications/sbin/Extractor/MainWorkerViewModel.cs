@@ -53,6 +53,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         ListBox ListLog { get; set; }
 
         TextWriter Writer { get; set; }
+        string LogFilePath { get; set; }
 
         public CollectionModel<LogItemViewModel> LogItems { get; } = new CollectionModel<LogItemViewModel>();
 
@@ -120,12 +121,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
-        public ICommand OutputLogsCommand
+        public ICommand OpenLogFileCommand
         {
             get
             {
                 return CreateCommand(
-                    o => OutputLogsFromDialog(),
+                    o => OpenLogFile(),
                     o => LogItems.Any()
                 );
             }
@@ -385,8 +386,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 var fileName = $"extractor_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log";
                 var dirPath = Path.Combine(Environment.ExpandEnvironmentVariables("%APPDATA%"), "MnMn", "extractor");
                 Directory.CreateDirectory(dirPath);
-                var filePath = Path.Combine(dirPath, fileName);
-                var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+                LogFilePath = Path.Combine(dirPath, fileName);
+                var stream = new FileStream(LogFilePath, FileMode.Create, FileAccess.Write, FileShare.Read);
                 Writer = new StreamWriter(stream) {
                     AutoFlush = true,
                 };
@@ -459,6 +460,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
+        [Obsolete]
         void OutputLogsFromDialog()
         {
             var dialog = new SaveFileDialog() {
@@ -469,6 +471,21 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             };
             if(dialog.ShowDialog().GetValueOrDefault()) {
                 OutputLog(dialog.FileName);
+            }
+        }
+
+        void OpenLogFile()
+        {
+            try {
+                Process.Start("explorer", $"/select,\"{LogFilePath}\"");
+            } catch(Exception ex) {
+                AddErrorLog(ex.Message, ex.ToString());
+                try {
+                    var dirPath = Path.GetDirectoryName(LogFilePath);
+                    Process.Start(dirPath);
+                } catch(Exception ex2) {
+                    AddErrorLog(ex2.Message, ex2.ToString());
+                }
             }
         }
 
