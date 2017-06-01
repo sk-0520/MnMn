@@ -57,7 +57,7 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Label Grid.Row="0" Grid.Column="0">archive</Label>
+      <Label Grid.Row="0" Grid.Column="0">アーカイブ</Label>
       <Grid Grid.Row="0" Grid.Column="1" IsEnabled="{Binding CanInput}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
@@ -71,7 +71,7 @@
         </ComboBox>
       </Grid>
 
-      <Label Grid.Row="1" Grid.Column="0">expand</Label>
+      <Label Grid.Row="1" Grid.Column="0">展開先</Label>
       <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanInput}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
