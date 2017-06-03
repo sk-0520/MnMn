@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             var usingVideoId = GetSafeVideoId(search.ContentId);
 
             var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
-
+            result.MergeSource(search);
             result.IncrementReference();
 
             return result;
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             var usingVideoId = GetSafeVideoId(search.Id);
 
             var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
-
+            result.MergeSource(search);
             result.IncrementReference();
 
             return result;
@@ -155,6 +155,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             var tempResult = new SmileVideoInformationViewModel(Mediation, feed, UnOrdered, informationFlags);
             var usingVideoId = GetSafeVideoId(tempResult.VideoId);
             var result = GetVideoInformationFromCorrectionId(usingVideoId, tempResult);
+            result.MergeSource(feed);
             result.IncrementReference();
 
             return result;
