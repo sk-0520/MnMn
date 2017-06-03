@@ -85,49 +85,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.66.1',
-		'isRc': true,
+		'date': '2017/06/09',
+		'version': '0.67.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '15ec0e79f5ff1beb235e9a9ff4ae64ae1e7bbf63',
 						'class': 'open',
 						'subject': '#552: (新)アップデート処理がファイルハンドル掴んでて成功しない',
 						'comments': [
@@ -140,31 +106,27 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '58878e947f1695a34b15f0687edbfa05f513795f',
 						'subject': '#585: 流れるコメントにフォーカス(TabStop)を与えんとする博愛の是非に非しかない'
 					},
 					{
-						'revision': '',
+						'revision': '26ea2a9204fa14fba6e2e56eac154d021f91c005',
 						'subject': '#582: MnMn 終了時に走るログアウト処理もネットワーク接続を確認する'
 					},
 					{
-						'revision': '',
+						'revision': '9fd811d4e33d932c55c7628c408345af3580da78',
 						'subject': '#581: 動画情報取得時にキャッシュされた動画情報に対してソース情報も織り交ぜる'
 					},
 					{
-						'revision': '',
+						'revision': '0309b79409edb4cd6aeda2cb82609de62aa24b0c',
 						'subject': '#586: クラッシュレポートより: プレイヤーでぬるるん'
 					},
 					{
-						'revision': '',
+						'revision': 'db1ea0e1a2ac4ebfa86bc6d725933bd6bc511a1d',
 						'subject': '#587: (新)アップデート処理完了時に MnMn を手動起動可能にする',
 						'comments': [
 							'ちょっともうワケわからんことなってきた'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -172,19 +134,11 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'e6312664ce7938a2f68f19307d1bddb353bf10e6',
 						'subject': '#583: アップデート時の更新履歴に手動DL用のURIを付与する',
 						'comments': [
 							'アップデート内容表示の最下部に適当なリンクを追加'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
