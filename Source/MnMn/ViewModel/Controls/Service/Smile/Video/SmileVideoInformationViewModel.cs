@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     /// <summary>
     /// 動画情報。
     /// </summary>
-    public class SmileVideoInformationViewModel: InformationViewModelBase, IGarbageCollection
+    public class SmileVideoInformationViewModel : InformationViewModelBase, IGarbageCollection
     {
         #region variable
 
@@ -176,8 +176,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         RawSmileVideoThumbModel Thumb { get; set; }
         FeedSmileVideoItemModel Feed { get; set; }
-        RawSmileContentsSearchItemModel ContentsSearch { get; }
-        RawSmileVideoSearchItemModel OfficialSearch { get; }
+        RawSmileContentsSearchItemModel ContentsSearch { get; set; }
+        RawSmileVideoSearchItemModel OfficialSearch { get; set; }
         /// <summary>
         /// フィードデータの詳細部。
         /// </summary>
@@ -1436,6 +1436,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             return CheckResultModel.Success(largeSize);
+        }
+
+        public void MergeSource(RawSmileContentsSearchItemModel search)
+        {
+            ContentsSearch = search;
+            IsMultiInformationSource = true;
+        }
+
+        public void MergeSource(RawSmileVideoSearchItemModel search)
+        {
+            OfficialSearch = search;
+            IsMultiInformationSource = true;
+        }
+
+        public void MergeSource(FeedSmileVideoItemModel feed)
+        {
+            Feed = feed;
+            FeedDetail = SmileVideoFeedUtility.ConvertRawDescription(Feed.Description);
+            FeedDetail.VideoId = SmileVideoFeedUtility.GetVideoId(Feed);
+            FeedDetail.Title = SmileVideoFeedUtility.GetTitle(Feed.Title);
+            IsMultiInformationSource = true;
         }
 
         #endregion

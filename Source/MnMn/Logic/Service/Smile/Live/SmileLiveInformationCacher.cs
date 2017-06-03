@@ -8,9 +8,9 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
-    public class SmileLiveInformationCaching: InformationCacherBase<SmileVideoInformationViewModel>
+    public class SmileLiveInformationCacher: InformationCacherBase<SmileVideoInformationViewModel>
     {
-        public SmileLiveInformationCaching(Mediation mediation)
+        public SmileLiveInformationCacher(Mediation mediation)
             : base(mediation)
         {}
 

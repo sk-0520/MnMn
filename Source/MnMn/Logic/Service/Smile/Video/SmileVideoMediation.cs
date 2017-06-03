@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             Setting = setting;
 
-            InformationCaching = new SmileVideoInformationCaching(Mediation);
+            InformationCaching = new SmileVideoInformationCacher(Mediation);
 
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         SmileVideoSettingModel Setting { get; }
 
-        SmileVideoInformationCaching InformationCaching { get; }
+        SmileVideoInformationCacher InformationCaching { get; }
 
         SmileVideoRankingModel Ranking { get; }
         SmileVideoSearchModel Search { get; }
