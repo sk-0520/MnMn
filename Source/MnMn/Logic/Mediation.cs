@@ -41,6 +41,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge;
@@ -96,6 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
+            IdleTalk = new IdleTalkMediation(this);
         }
 
         #region property
@@ -111,6 +113,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// ニコニコ関係。
         /// </summary>
         internal SmileMediation Smile { get; private set; }
+
+        internal IdleTalkMediation IdleTalk { get; }
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
 

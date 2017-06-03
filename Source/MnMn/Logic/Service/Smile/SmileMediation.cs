@@ -296,7 +296,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     return LiveMediation.GetRequestMapping(key, replaceMap, serviceType);
 
                 default:
-                    ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
+                    ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
                     throw new NotImplementedException();
             }
         }

@@ -221,7 +221,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetExpressionCore(key, id, serviceType);
         }
 
-
         public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {

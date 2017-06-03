@@ -336,6 +336,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileLiveName { get; } = "live";
         /// <summary>
+        /// サービス名: Twitter。
+        /// </summary>
+        public static string ServiceIdleTalkName { get; } = "idle-talk";
+        /// <summary>
+        /// サービス名: TwitterのTweet。
+        /// </summary>
+        public static string ServiceIdleTalkMutterName { get; } = "mutter";
+        /// <summary>
         ///
         /// </summary>
         public static string BinaryDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "bin"); } }
@@ -413,6 +421,23 @@ namespace ContentTypeTextNet.MnMn.MnMn
         //public static string SmileLivePlayerContainerPath { get; } = Path.Combine(SmileLivePlayerDirectoryPath, "container.html");
 
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
+
+        public static string DefineIdleTalkDirectoryPath { get; } = Path.Combine(DefineServiceDirectoryPath, ServiceIdleTalkName);
+        public static string DefineIdleTalkMutterDirectoryPath { get; } = Path.Combine(DefineIdleTalkDirectoryPath, ServiceIdleTalkMutterName);
+
+        public static string IdleTalkUriListPath { get; } = null;
+        public static string IdleTalkUriParametersListPath { get; } = null;
+        public static string IdleTalkRequestHeadersListPath { get; } = null;
+        public static string IdleTalkRequestParametersListPath { get; } = null;
+        public static string IdleTalkRequestMappingsListPath { get; } = null;
+        public static string IdleTalkExpressionsPath { get; } = null;
+
+        public static string IdleTalkMutterUriListPath { get; } = Path.Combine(DefineIdleTalkMutterDirectoryPath, "uri-list.xml");
+        public static string IdleTalkMutterUriParametersListPath { get; } = Path.Combine(DefineIdleTalkMutterDirectoryPath, "uri-params.xml");
+        public static string IdleTalkMutterRequestHeadersListPath { get; } = Path.Combine(DefineIdleTalkMutterDirectoryPath, "request-headers.xml");
+        public static string IdleTalkMutterRequestParametersListPath { get; } = Path.Combine(DefineIdleTalkMutterDirectoryPath, "request-params.xml");
+        public static string IdleTalkMutterRequestMappingsListPath { get; } = Path.Combine(DefineIdleTalkMutterDirectoryPath, "request-mappings.xml");
+        public static string IdleTalkMutterExpressionsPath { get; } = Path.Combine(DefineIdleTalkMutterDirectoryPath, "expressions.xml");
 
         ///// <summary>
         ///// TODO: カルチャからどうこうしたい。

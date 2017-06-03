@@ -242,9 +242,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void tweetPost()
         {
             var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
-
-            UriUtility
-
         }
     }
 #endif

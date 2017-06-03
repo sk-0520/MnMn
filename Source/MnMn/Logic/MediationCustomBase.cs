@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        internal abstract object RequestShowView(ShowViewRequestModel reque);
+        internal abstract object RequestShowView(ShowViewRequestModel requet);
 
         internal abstract void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack);
 
