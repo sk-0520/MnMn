@@ -48,12 +48,12 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Define
         /// <summary>
         /// Twitter。
         /// </summary>
-        [XmlEnum("idle-talk")]
+        [XmlEnum("idle_talk")]
         IdleTalk,
         /// <summary>
         /// ツイート。
         /// </summary>
-        [XmlEnum("idle-talk-mutter")]
+        [XmlEnum("idle_talk-mutter")]
         IdleTalkMutter,
     }
 }

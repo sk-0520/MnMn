@@ -338,7 +338,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// サービス名: Twitter。
         /// </summary>
-        public static string ServiceIdleTalkName { get; } = "idle-talk";
+        public static string ServiceIdleTalkName { get; } = "idle_talk";
         /// <summary>
         /// サービス名: TwitterのTweet。
         /// </summary>
