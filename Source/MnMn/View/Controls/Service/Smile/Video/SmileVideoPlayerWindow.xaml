@@ -770,7 +770,7 @@
           <ColumnDefinition Width="{Binding CommentAreaLength.Value, Mode=TwoWay}" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" x:Name="viewPlayer">
+        <Grid Grid.Column="0" x:Name="viewPlayer" Focusable="False">
           <Grid.Style>
             <Style>
               <Style.Triggers>

@@ -141,7 +141,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#585: 流れるコメントにフォーカス(TabStop)を与えんとする博愛の是非に非しかない'
 					},
 					{
 						'revision': '',
