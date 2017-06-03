@@ -236,6 +236,7 @@
     <Compile Include="Define\PointingGestureChangeKind.cs" />
     <Compile Include="Define\PointingGestureDirection.cs" />
     <Compile Include="Define\PointingGestureState.cs" />
+    <Compile Include="Define\Service\IdleTalk\Mutter\IdleTalkMutterMediationKey.cs" />
     <Compile Include="Define\Service\QuestionnaireKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
@@ -668,6 +669,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\image\changelog\0.53.0\444.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\idle-talk\mutter\uri-list.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\idle-talk\mutter\uri-params.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\expressions.xml">

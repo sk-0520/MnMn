@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+	<param key="mutter-post-page">
+		<item key="text" value="" encode="uri" />
+		<item key="url" value="${url}" force="true" />
+		<item key="via" value="${via}" force="true" />
+		<item key="in_reply_to" value="${in_reply_to}" force="true" />
+		<item key="related" value="${related}" force="true" />
+		<item key="original_referer" value="${original_referer}" force="true" />
+		<item key="lang" value="${lang}" force="true" />
+	</param>
+</parameters>
