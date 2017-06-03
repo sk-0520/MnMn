@@ -197,7 +197,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             }
 
             if(Session.IsLoggedIn) {
-                await Session.LogoutAsync().ConfigureAwait(false);
+                if(NetworkUtility.IsNetworkAvailable) {
+                    await Session.LogoutAsync().ConfigureAwait(false);
+                }
             }
         }
 

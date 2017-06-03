@@ -1592,7 +1592,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ResetSwf()
         {
-            PlayFile.Refresh();
+            PlayFile?.Refresh();
         }
 
         protected override void OnLoadVideoEnd()

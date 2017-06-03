@@ -28,6 +28,9 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         delegate bool TryParse<TValue>(string input, out TValue result);
         const string scriptFileName = "UpdaterScript.cs";
+        const int expandRertyMaxCount = 5;
+        readonly TimeSpan expandRetryWaitTime = TimeSpan.FromSeconds(3);
+        readonly TimeSpan closedWaitTime = TimeSpan.FromSeconds(5);
 
         #endregion
 
@@ -36,11 +39,14 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         bool _canInput = true;
 
         bool _autoExecute;
+        bool _isEnabledAutoExecute = true;
 
         string _archiveFilePath;
         string _expandDirectoryPath;
 
         string _platform;
+
+        bool _canExecute;
 
         #endregion
 
@@ -51,6 +57,11 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         MainWindow View { get; set; }
         ListBox ListLog { get; set; }
+
+        TextWriter Writer { get; set; }
+        string LogFilePath { get; set; }
+
+        bool IsRenamed { get; set; }
 
         public CollectionModel<LogItemViewModel> LogItems { get; } = new CollectionModel<LogItemViewModel>();
 
@@ -78,6 +89,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             set { SetVariableValue(ref this._autoExecute, value); }
         }
 
+        public bool IsEnabledAutoExecute
+        {
+            get { return this._isEnabledAutoExecute; }
+            set { SetVariableValue(ref this._isEnabledAutoExecute, value); }
+        }
+
         string EventName { get; set; }
         int ProcessId { get; set; }
 
@@ -90,6 +107,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         {
             get { return this._platform; }
             set { SetVariableValue(ref this._platform, value); }
+        }
+
+        public bool CanExecute
+        {
+            get { return this._canExecute; }
+            set { SetVariableValue(ref this._canExecute, value); }
         }
 
         #endregion
@@ -118,12 +141,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
-        public ICommand OutputLogsCommand
+        public ICommand OpenLogFileCommand
         {
             get
             {
                 return CreateCommand(
-                    o => OutputLogsFromDialog(),
+                    o => OpenLogFile(),
                     o => LogItems.Any()
                 );
             }
@@ -140,6 +163,17 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
+        public ICommand ExecuteApplicationCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ExecuteApplication(),
+                    o => CanExecute && File.Exists(RebootApplicationPath)
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -150,6 +184,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             ListLog = View.listLog;
 
             View.ContentRendered += View_ContentRendered;
+            View.Closed += View_Closed;
         }
 
         string GetCommandValue(CommandLine commandLine, string option)
@@ -237,12 +272,39 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 };
                 KillProcess(process, true);
 
+                AddInformationLog("Wait: process exit...");
                 var isRestart = !process.WaitForExit((int)(TimeSpan.FromMinutes(3).TotalMilliseconds));
+                AddInformationLog($"Exit: {!isRestart}");
                 if(isRestart && !process.HasExited) {
+                    AddInformationLog($"Kill: process");
                     KillProcess(process, false);
                 }
-                AddInformationLog($"Kill -> {isRestart}, Time = {killStopwatch.Elapsed}");
+                AddInformationLog($"Close: HasExited = {process.HasExited}, time = {killStopwatch.Elapsed}");
+                AddInformationLog($"Wait: sleep({closedWaitTime})");
+                Thread.Sleep((int)this.closedWaitTime.TotalMilliseconds);
             }
+        }
+
+        void ExpandEntry(ZipArchiveEntry entry, string expandPath)
+        {
+            AddInformationLog($"Expand: {expandPath}", $"name = {entry.Name}, length = {entry.Length}");
+            Exception lastException;
+            var i = 0;
+            do {
+                try {
+                    entry.ExtractToFile(expandPath, true);
+                    return;
+                } catch(Exception ex) {
+                    AddWarningLog($"{i + 1}/{expandRertyMaxCount}{ex.Message}", ex.ToString());
+                    lastException = ex;
+                }
+                if(i + 1 < expandRertyMaxCount) {
+                    AddInformationLog($"{i + 1}/{expandRertyMaxCount}, wait...");
+                    Thread.Sleep((int)this.expandRetryWaitTime.TotalMilliseconds);
+                }
+            } while(++i < expandRertyMaxCount);
+
+            throw lastException;
         }
 
         void ExpandArchive()
@@ -252,11 +314,14 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             var myDir = Path.GetDirectoryName(myPath);
 
             var renamePath = Path.ChangeExtension(myPath, "expand-old");
-            if(File.Exists(renamePath)) {
-                File.Delete(renamePath);
+            if(!IsRenamed) {
+                if(File.Exists(renamePath)) {
+                    File.Delete(renamePath);
+                }
+                AddInformationLog($"Rename: {myPath} => {renamePath}");
+                File.Move(myPath, renamePath);
+                IsRenamed = true;
             }
-            AddInformationLog($"Rename -> {myPath} => {renamePath}");
-            File.Move(myPath, renamePath);
 
             // 置き換え開始
             using(var archive = new ZipArchive(new FileStream(ArchiveFilePath, FileMode.Open, FileAccess.Read, FileShare.None), ZipArchiveMode.Read)) {
@@ -266,14 +331,13 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     if(!Directory.Exists(dirPath)) {
                         Directory.CreateDirectory(dirPath);
                     }
-                    AddInformationLog($"Expand -> {expandPath}");
-                    entry.ExtractToFile(expandPath, true);
+                    ExpandEntry(entry, expandPath);
                 }
             }
 
             // Updater使用バージョンの場合は展開プログラムがないので下位互換として現在処理中展開プログラムを実行可能な状態にしておく
             if(!File.Exists(myPath)) {
-                AddInformationLog($"Restore -> {renamePath} => {myPath}");
+                AddInformationLog($"Restore: {renamePath} => {myPath}");
                 File.Copy(renamePath, myPath, true);
             }
 
@@ -365,7 +429,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     Console.SetOut(writer);
 
                     var us = assembly.CreateInstance("UpdaterScript");
-                        us.GetType().GetMethod("Main").Invoke(us, new object[] { new [] {
+                    us.GetType().GetMethod("Main").Invoke(us, new object[] { new [] {
                         ScriptFilePath,
                         ExpandDirectoryPath,
                         Platform
@@ -377,6 +441,18 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         Task ExecuteAsync()
         {
             CanInput = false;
+            CanExecute = false;
+
+            if(Writer == null) {
+                var fileName = $"extractor_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log";
+                var dirPath = Path.Combine(Environment.ExpandEnvironmentVariables("%APPDATA%"), "MnMn", "extractor");
+                Directory.CreateDirectory(dirPath);
+                LogFilePath = Path.Combine(dirPath, fileName);
+                var stream = new FileStream(LogFilePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+                Writer = new StreamWriter(stream) {
+                    AutoFlush = true,
+                };
+            }
 
             try {
                 if(!File.Exists(ArchiveFilePath)) {
@@ -408,12 +484,18 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 }
             }).ContinueWith(async t => {
                 if(!t.IsFaulted) {
-                    AutoExecute = false;
-                    Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
+                    if(AutoExecute) {
+                        IsEnabledAutoExecute = false;
+                        AutoExecute = false;
 
-                    await Task.Delay(TimeSpan.FromSeconds(5));
+                        ExecuteApplication();
 
-                    Application.Current.Shutdown();
+                        await Task.Delay(TimeSpan.FromSeconds(5));
+
+                        Application.Current.Shutdown();
+                    } else {
+                        CanExecute = true;
+                    }
                 } else {
                     AddErrorLog(t.Exception.ToString());
                 }
@@ -422,6 +504,15 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 CommandManager.InvalidateRequerySuggested();
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void ExecuteApplication()
+        {
+            try {
+                Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
+            } catch(Exception ex) {
+                AddErrorLog(ex.Message, ex.ToString());
+            }
         }
 
         void WriteStream(Stream stream)
@@ -445,6 +536,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
+        [Obsolete]
         void OutputLogsFromDialog()
         {
             var dialog = new SaveFileDialog() {
@@ -458,6 +550,21 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
+        void OpenLogFile()
+        {
+            try {
+                Process.Start("explorer", $"/select,\"{LogFilePath}\"");
+            } catch(Exception ex) {
+                AddErrorLog(ex.Message, ex.ToString());
+                try {
+                    var dirPath = Path.GetDirectoryName(LogFilePath);
+                    Process.Start(dirPath);
+                } catch(Exception ex2) {
+                    AddErrorLog(ex2.Message, ex2.ToString());
+                }
+            }
+        }
+
         void CopyLogs()
         {
             using(var stream = new MemoryStream()) {
@@ -465,7 +572,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 try {
                     var text = Encoding.UTF8.GetString(stream.ToArray());
                     Clipboard.SetText(text);
-                }catch(Exception ex) {
+                } catch(Exception ex) {
                     AddErrorLog(ex.Message, ex.ToString());
                 }
             }
@@ -473,9 +580,9 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         #region function
 
-        void AddInformationLog(string message)
+        void AddInformationLog(string message, string detail = null)
         {
-            var log = new LogItemViewModel(LogKind.Information, message, null);
+            var log = new LogItemViewModel(LogKind.Information, message, detail);
             AddLog(log);
         }
 
@@ -502,6 +609,13 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                 LogItems.Add(log);
                 ListLog.ScrollIntoView(log);
+                var header = $"[{log.Timestamp:yyyy-MM-dd_HH-mm-ss}] {log.Kind}";
+                var splitter = ": ";
+                Writer.WriteLine($"{header}{splitter}{log.Message}");
+                if(log.HasDetail) {
+                    Writer.Write(new String(' ', header.Length + splitter.Length));
+                    Writer.WriteLine(log.Detail);
+                }
             }));
         }
 
@@ -518,6 +632,10 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
+        private void View_Closed(object sender, EventArgs e)
+        {
+            Writer?.Dispose();
+        }
 
     }
 }

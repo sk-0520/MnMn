@@ -57,7 +57,7 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Label Grid.Row="0" Grid.Column="0">archive</Label>
+      <Label Grid.Row="0" Grid.Column="0">アーカイブ</Label>
       <Grid Grid.Row="0" Grid.Column="1" IsEnabled="{Binding CanInput}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
@@ -71,7 +71,7 @@
         </ComboBox>
       </Grid>
 
-      <Label Grid.Row="1" Grid.Column="0">expand</Label>
+      <Label Grid.Row="1" Grid.Column="0">展開先</Label>
       <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanInput}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
@@ -139,10 +139,14 @@
                 </Style>
               </WrapPanel.Resources>
               <TextBlock>
-                <Hyperlink Command="{Binding OutputLogsCommand}">ログをファイル出力</Hyperlink>
+                <Hyperlink Command="{Binding OpenLogFileCommand}">ログディレクトリを開く</Hyperlink>
               </TextBlock>
               <TextBlock>
                 <Hyperlink Command="{Binding CopyLogsCommand}">全ログをコピー</Hyperlink>
+              </TextBlock>
+              <CheckBox Content="自動的に起動" IsChecked="{Binding AutoExecute}" IsEnabled="{Binding IsEnabledAutoExecute}"/>
+              <TextBlock>
+                <Hyperlink Command="{Binding ExecuteApplicationCommand}">展開済みプログラムを起動</Hyperlink>
               </TextBlock>
             </WrapPanel>
           </Grid>
