@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <uri>
-	<item key="mutter-post-page" uri="https://twitter.com/intent/twee" param="query" />
+	<item key="mutter-post-page" uri="https://twitter.com/intent/tweet" param="query" />
 </uri>

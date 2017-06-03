@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -65,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //user_id();
             //exp();
             //search();
-            tweetPost();
+            //tweetPost();
         }
 
         async void login()
@@ -242,6 +243,23 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void tweetPost()
         {
             var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+
+            var sv = ServiceType.IdleTalkMutter;
+            var key = "mutter-post-page";
+
+            var map = new StringsModel() {
+                ["url"] = "url",
+                ["text"] = "あいう",
+                ["via"] = "via",
+                ["in_reply_to"] = "",
+                ["related"] = "related",
+                ["original_referer"] = "original_referer",
+                ["lang"] = "lang",
+            };
+
+            var rawUri = mediation.GetUri(key, map, sv);
+            var convertedUri = mediation.ConvertUri(key, rawUri.Uri, sv);
+            Debug.WriteLine(convertedUri);
         }
     }
 #endif
