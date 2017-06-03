@@ -46,6 +46,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         string _platform;
 
+        bool _canExecute;
+
         #endregion
 
         public MainWorkerViewModel()
@@ -107,6 +109,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             set { SetVariableValue(ref this._platform, value); }
         }
 
+        public bool CanExecute
+        {
+            get { return this._canExecute; }
+            set { SetVariableValue(ref this._canExecute, value); }
+        }
+
         #endregion
 
         #region command
@@ -151,6 +159,17 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 return CreateCommand(
                     o => CopyLogs(),
                     o => LogItems.Any()
+                );
+            }
+        }
+
+        public ICommand ExecuteApplicationCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ExecuteApplication(),
+                    o => CanExecute && File.Exists(RebootApplicationPath)
                 );
             }
         }
@@ -422,6 +441,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         Task ExecuteAsync()
         {
             CanInput = false;
+            CanExecute = false;
 
             if(Writer == null) {
                 var fileName = $"extractor_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log";
@@ -468,11 +488,13 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                         IsEnabledAutoExecute = false;
                         AutoExecute = false;
 
-                        Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
+                        ExecuteApplication();
 
                         await Task.Delay(TimeSpan.FromSeconds(5));
 
                         Application.Current.Shutdown();
+                    } else {
+                        CanExecute = true;
                     }
                 } else {
                     AddErrorLog(t.Exception.ToString());
@@ -482,6 +504,15 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 CommandManager.InvalidateRequerySuggested();
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void ExecuteApplication()
+        {
+            try {
+                Process.Start(RebootApplicationPath, RebootApplicationCommandLine);
+            } catch(Exception ex) {
+                AddErrorLog(ex.Message, ex.ToString());
+            }
         }
 
         void WriteStream(Stream stream)
