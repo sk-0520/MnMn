@@ -65,6 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //user_id();
             //exp();
             //search();
+            tweetPost();
         }
 
         async void login()
@@ -236,6 +237,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
             };
             var uri = mediation.GetUri("video-search", map, Library.Bridging.Define.ServiceType.SmileVideo);
             Debug.WriteLine(uri);
+        }
+
+        void tweetPost()
+        {
+            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+
+            UriUtility
+
         }
     }
 #endif

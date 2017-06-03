@@ -536,4 +536,10 @@
 
 MnMn 終了時に専用設定ファイルが開かれます。</value>
   </data>
+  <data name="String_App_Define_ServiceType_IdleTalk" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="String_App_Define_ServiceType_IdleTalk_Mutter" xml:space="preserve">
+    <value>Tweet</value>
+  </data>
 </root>

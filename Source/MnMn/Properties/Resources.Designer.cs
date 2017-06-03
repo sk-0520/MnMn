@@ -843,6 +843,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   Twitter に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_IdleTalk {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_IdleTalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Tweet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_IdleTalk_Mutter {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_IdleTalk_Mutter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ニコニコ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_ServiceType_Smile {
