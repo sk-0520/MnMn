@@ -95,6 +95,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk.Mutter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -1510,6 +1511,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             } else if(!isUp && currentIndex < comments.Count - 1) {
                 SelectedComment = comments[currentIndex + 1];
             }
+        }
+
+        void OpenIdleTalkMutter(bool openDefaultBrowser)
+        {
+            var serviceType = ServiceType.IdleTalkMutter;
+            var key = IdleTalkMutterMediationKey.postPage;
+
+            var map = new StringsModel() {
+                ["url"] = Information.WatchUrl.OriginalString,
+                ["text"] = string.Empty,
+                ["via"] = string.Empty,
+                ["in_reply_to"] = string.Empty,
+                ["related"] = string.Empty,
+                ["original_referer"] = string.Empty,
+                ["lang"] = string.Empty,
+            };
+
+            var rawUri = Mediation.GetUri(key, map, serviceType);
+            var convertedUri = Mediation.ConvertUri(key, rawUri.Uri, serviceType);
+            Uri uri;
+            if(Uri.TryCreate(convertedUri, UriKind.RelativeOrAbsolute, out uri)) {
+                if(openDefaultBrowser) {
+                    ShellUtility.OpenUriInDefaultBrowser(uri, Mediation.Logger);
+                } else {
+                    DescriptionUtility.OpenUriInAppBrowser(uri, Mediation);
+                }
+            }
+
         }
 
         #endregion

@@ -14,6 +14,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
@@ -604,7 +605,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         ShellUtility.OpenUriInDefaultBrowser(Information.WatchUrl, Mediation.Logger);
-                    }
+                    },
+                    o => Information != null
                 );
             }
         }
@@ -641,6 +643,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         IsEnabledGlobalCommentFilering = !IsEnabledGlobalCommentFilering;
                     },
+                    o => Information != null
+                );
+            }
+        }
+
+        public ICommand OpenIdleTalkMutterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => OpenIdleTalkMutter((bool)o),
                     o => Information != null
                 );
             }

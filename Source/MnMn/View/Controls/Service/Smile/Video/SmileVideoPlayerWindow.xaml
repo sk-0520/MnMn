@@ -301,7 +301,35 @@
   <mamc:MetroWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
-        <Button Cursor="Hand" Margin="{StaticResource RightMargin}" Command="{Binding OpenDefaultBrowserCommand}">視聴ページ</Button>
+        <Button Cursor="Hand" Command="{Binding OpenIdleTalkMutterCommand}" CommandParameter="{StaticResource True}">
+          <Button.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="標準ブラウザで開く" Command="{Binding OpenIdleTalkMutterCommand}" CommandParameter="{StaticResource True}">
+                <MenuItem.Icon>
+                  <Image Style="{StaticResource SmallIconImage}" Source="{Binding Source={x:Static app_logic:WebNavigatorCore.DefaultBrowserIcon}}" />
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="内蔵ブラウザで開く" Command="{Binding OpenIdleTalkMutterCommand}" CommandParameter="{StaticResource False}">
+                <MenuItem.Icon>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Browser}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </MenuItem.Icon>
+              </MenuItem>
+            </ContextMenu>
+          </Button.ContextMenu>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource SmallItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Service-IdleTalk}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <TextBlock>つぶやく</TextBlock>
+          </StackPanel>
+        </Button>
+        <Button Cursor="Hand" Command="{Binding OpenDefaultBrowserCommand}">視聴ページ</Button>
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
       </StackPanel>
     </mamc:WindowCommands>
