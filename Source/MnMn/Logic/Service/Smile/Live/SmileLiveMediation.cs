@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
@@ -61,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
         {
             var windowViewModels = Players
                 .Select(p => (SmileLivePlayerViewModel)p.DataContext)
-                .ToList()
+                .ToEvalSequence()
             ;
             return new ResponseModel(request, windowViewModels);
         }

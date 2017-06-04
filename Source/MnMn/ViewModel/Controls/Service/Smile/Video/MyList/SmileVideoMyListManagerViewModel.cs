@@ -697,7 +697,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var myList = GetMyListApi();
             var myListIds = AccountSortMyListItems
                 .Select(f => f.MyListId)
-                .ToList()
+                .ToEvalSequence()
             ;
             var sortResult = await myList.SortAccountGroupAsync(myListIds);
 
@@ -774,7 +774,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var list = Enumerable
                     .Range(1, pageCount)
                     .Select(i => new SmileVideoMyListFinderPageViewModel(Mediation, i + 1, query))
-                    .ToList()
+                    .ToEvalSequence()
                 ;
                 list.Insert(0, new SmileVideoMyListFinderPageViewModel(Mediation, finders, query));
                 var pages = list

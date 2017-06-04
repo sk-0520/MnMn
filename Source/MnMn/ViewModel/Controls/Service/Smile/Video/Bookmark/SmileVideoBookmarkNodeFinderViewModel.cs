@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             DataObject data;
             if(SelectedFinderItem.IsChecked.GetValueOrDefault()) {
-                var items = GetCheckedItems().ToList();
+                var items = GetCheckedItems().ToEvalSequence();
                 data = new DataObject(typeof(IEnumerable<SmileVideoFinderItemViewModel>), items);
             } else {
                 data = new DataObject(SelectedFinderItem.GetType(), SelectedFinderItem);

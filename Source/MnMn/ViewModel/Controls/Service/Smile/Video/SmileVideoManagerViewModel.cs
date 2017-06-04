@@ -289,7 +289,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var items = ManagerChildren
                 .Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan, force))
-                .ToList()
+                .ToEvalSequence()
             ;
             items.Add(GarbageCollectionCahceVideosAsync(garbageCollectionLevel, cacheSpan, force));
 

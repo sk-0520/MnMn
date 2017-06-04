@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
 {
@@ -18,9 +20,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static IList<TSource> ToEvalSequence<TSource>(this IEnumerable<TSource> source)
+        public static EvalCollectionModel<TSource> ToEvalSequence<TSource>(this IEnumerable<TSource> source)
         {
-            return source.ToList();
+            return new EvalCollectionModel<TSource>(source);
         }
 
         #endregion

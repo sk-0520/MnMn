@@ -455,7 +455,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 )
                 .Where(i => i.ViewModel.NowShowing)
                 .Where(i => i.ViewModel.ElapsedTime + SmileVideoCommentUtility.correctionTime + CommentStyleSetting.ShowTime < PlayTime)
-                .ToList()
+                .ToEvalSequence()
             ;
 
             foreach(var commentItem in commentItems) {
@@ -848,7 +848,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var filterList = defineKeys
                 .Join(Mediation.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
                 .Select(e => SmileVideoCommentUtility.ConvertFromDefined(e))
-                .ToList()
+                .ToEvalSequence()
             ;
 
             ApprovalCommentCustomFilterItems(comments, isGlobalFilter, filterList);
@@ -1498,7 +1498,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             var comments = CommentItems
                 .Cast<SmileVideoCommentViewModel>()
-                .ToList()
+                .ToEvalSequence()
             ;
             var currentIndex = comments.IndexOf(SelectedComment);
             if(currentIndex == -1) {

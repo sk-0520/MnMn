@@ -531,7 +531,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     if(dstNode != null) {
                         var videoItems = finderItems.Select(i => i.Information.ToVideoItemModel());
                         dstNode.VideoItems.AddRange(videoItems);
-                        foreach(var item in finderItems.ToList()) {
+                        foreach(var item in finderItems.ToEvalSequence()) {
                             SelectedBookmarkNodeFinder.RemoveItem(item);
                         }
                         SelectedBookmarkNodeFinder.SelectedFinderItem = SelectedBookmarkNodeFinder.FinderItems.Cast<SmileVideoFinderItemViewModel>().FirstOrDefault();

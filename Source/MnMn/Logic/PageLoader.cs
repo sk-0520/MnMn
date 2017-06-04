@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 singleContent.Remove(key);
                             }
                         }
-                        var convertedContent = singleContent.ToList();
+                        var convertedContent = singleContent.ToEvalSequence();
                         if(hasMultiValue) {
                             foreach(var pair in multiContents) {
                                 var ms = new MultiStrings(pair.Value);

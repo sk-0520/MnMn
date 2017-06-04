@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -142,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         void MakeUsingCategory()
         {
             // 初期化で読み込みが動いちゃう対応
-            IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> items = GetLinearRankingElementList(RankingModel.Items).ToList();
+            IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> items = GetLinearRankingElementList(RankingModel.Items).ToEvalSequence();
             var removeItems = items.Where(i => Setting.Ranking.IgnoreCategoryItems.Any(s => s == i.Key));
             if(removeItems.Any()) {
                 var removedItems = items.Except(removeItems);
@@ -151,21 +152,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                 }
             }
 
-            var categoryItems = new List<SmileVideoRankingCategoryDefinedElementViewModel>(items);
+            IList<SmileVideoRankingCategoryDefinedElementViewModel> categoryItems = new List<SmileVideoRankingCategoryDefinedElementViewModel>(items);
 
             if(!Session.IsLoggedIn || !Session.IsOver18) {
                 var expitems = categoryItems
                     .Where(c => c.Extends.ContainsKey("age"))
                     .Where(c => Session.Age < int.Parse(c.Extends["age"]))
                 ;
-                categoryItems = categoryItems.Except(expitems).ToList();
+                categoryItems = categoryItems.Except(expitems).ToEvalSequence();
             }
             CategoryItems = null;
             SelectedCategory = categoryItems.FirstOrDefault(m => m.Model.Key == Setting.Ranking.DefaultCategoryKey) ?? categoryItems.First();
             CategoryItems = CollectionModel.Create(categoryItems);
             CallOnPropertyChange(nameof(CategoryItems));
 
-            CurrentIgnoreCategoryItems = Setting.Ranking.IgnoreCategoryItems.ToList();
+            CurrentIgnoreCategoryItems = Setting.Ranking.IgnoreCategoryItems.ToEvalSequence();
         }
 
         IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)

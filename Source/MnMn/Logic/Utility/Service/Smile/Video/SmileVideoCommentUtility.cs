@@ -294,7 +294,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .Where(c => !c.NowShowing)
                 .Where(c => !c.IsNiwanLanguage) // #405
                 .Where(c => InShowTime(c, prevTime, nowTime))
-                .ToList()
+                .ToEvalSequence()
             ;
             if(newComments.Any()) {
                 foreach(var commentViewModel in newComments.Where(c => !c.HasCommentScript)) {

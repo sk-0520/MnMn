@@ -439,7 +439,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var items = checkedItems
                 .Select(i => i.Information.ToVideoItemModel())
-                .ToList()
+                .ToEvalSequence()
             ;
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items)));
         }
