@@ -40,6 +40,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge;
@@ -84,12 +85,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             WebNavigatorBridge = LoadModelFromFile<WebNavigatorBridgeModel>(Constants.ApplicationWebNavigatorBridgePath);
             WebNavigatorNavigatingItems = WebNavigatorBridge.Navigating.Items
                 .Select(i => new WebNavigatorNavigatingItemViewModel(i))
-                .ToList()
+                .ToEvalSequence()
             ;
 
             WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items
                 .Select(i => new WebNavigatorContextMenuItemViewModel(i))
-                .ToList()
+                .ToEvalSequence()
             ;
             WebNavigatorContextMenuMap = WebNavigatorContextMenuItems.ToDictionary(i => i.Key, i => i);
 
@@ -565,7 +566,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(appLoggingParameter != null) {
                 var logs = ManagerPack.AppManager.AppInformationManager.AppLoggingManager.LogListViewer;
                 if(appLoggingParameter.GetClone) {
-                    logs = logs.ToList();
+                    logs = logs.ToEvalSequence();
                 }
 
                 return new ResponseModel(request, logs);

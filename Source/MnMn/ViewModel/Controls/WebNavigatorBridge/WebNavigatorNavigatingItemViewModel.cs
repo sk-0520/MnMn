@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 
@@ -32,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
                 if(this._conditions == null) {
                     this._conditions = DefinedModel.Conditions
                         .Select(i => new WebNavigatorPageConditionViewModel(i))
-                        .ToList()
+                        .ToEvalSequence()
                     ;
                 }
 

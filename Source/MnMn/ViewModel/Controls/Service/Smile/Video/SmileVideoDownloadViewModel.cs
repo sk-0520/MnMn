@@ -438,9 +438,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // 動画ソースを選りすぐる
             var sendMux = model.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
             var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(sendMux, Setting.Download.VideoWeight);
-            sendMux.VideoSrcIds.InitializeRange(sendVideoWeights.ToArray());
+            sendMux.VideoSrcIds.InitializeRange(sendVideoWeights.ToEvalSequence());
             var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(sendMux, Setting.Download.AudioWeight);
-            sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToArray());
+            sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvalSequence());
 
             var result = await dmc.LoadAsync(DmcApiUri, model);
 

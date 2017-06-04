@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.Run(async () => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-                var cacheDirInfos = baseDirInfo.GetDirectories("*", SearchOption.TopDirectoryOnly).ToArray();
+                var cacheDirInfos = baseDirInfo.GetDirectories("*", SearchOption.TopDirectoryOnly).ToEvalSequence();
                 long totalSize = 0;
                 foreach(var dir in cacheDirInfos) {
                     var result = await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan, force);
@@ -289,7 +289,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var items = ManagerChildren
                 .Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan, force))
-                .ToList()
+                .ToEvalSequence()
             ;
             items.Add(GarbageCollectionCahceVideosAsync(garbageCollectionLevel, cacheSpan, force));
 

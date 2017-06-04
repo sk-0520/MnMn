@@ -31,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -504,7 +505,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var removeItems = SearchHistoryList.ModelList
                 .Where(m => m.TotalCount == 0)
-                .ToList()
+                .ToEvalSequence()
             ;
 
             if(removeItems.Any()) {

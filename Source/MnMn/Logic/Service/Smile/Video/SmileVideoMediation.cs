@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var windowViewModels = Players
                 .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
-                .ToList()
+                .ToEvalSequence()
             ;
             return new ResponseModel(request, windowViewModels);
         }

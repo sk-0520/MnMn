@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 
@@ -15,11 +16,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
     {
         #region variable
 
-        List<WebNavigatorElementConditionItemViewModel> _conditions;
+        IReadOnlyList<WebNavigatorElementConditionItemViewModel> _conditions;
 
         #endregion
 
-        public WebNavigatorContextMenuItemViewModel(WebNavigatorContextMenuItemModel model) 
+        public WebNavigatorContextMenuItemViewModel(WebNavigatorContextMenuItemModel model)
             : base(model)
         { }
 
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
                 if(this._conditions == null) {
                     this._conditions = DefinedModel.Conditions
                         .Select(c => new WebNavigatorElementConditionItemViewModel(c))
-                        .ToList()
+                        .ToEvalSequence()
                     ;
                 }
 

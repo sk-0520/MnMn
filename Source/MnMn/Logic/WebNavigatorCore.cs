@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(executeData.Arguments.Any(s => s.IndexOf("%1") != -1)) {
                 arguments = executeData.Arguments.Select(s => s.Replace("%1", uri.OriginalString));
             } else {
-                var list = executeData.Arguments.ToList();
+                var list = executeData.Arguments.ToEvalSequence();
                 list.Add(uri.OriginalString);
                 arguments = list;
             }
@@ -370,7 +370,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 // TODO: ワイルドカードは若干の妥協
                 var files = directory.EnumerateFiles(filter.First().Wildcard.First(), SearchOption.TopDirectoryOnly)
                     .Select(f => f.Name)
-                    .ToList()
+                    .ToEvalSequence()
                 ;
                 downladFileName = TextUtility.ToUnique(downladFileName, files, StringComparison.OrdinalIgnoreCase, (n, i) => {
                     var name = Path.GetFileNameWithoutExtension(n);

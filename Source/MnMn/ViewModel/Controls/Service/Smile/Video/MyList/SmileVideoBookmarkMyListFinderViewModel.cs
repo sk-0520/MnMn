@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
@@ -58,9 +59,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var originTags = value.Split(Constants.SmileMyListBookmarkTagTokenSplitter)
                     .Select(s => s.Trim())
                     .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .ToArray()
+                    .ToEvalSequence()
                 ;
-                var distinctNoOrderTags = new List<string>(originTags.Length);
+                var distinctNoOrderTags = new List<string>(originTags.Count);
                 foreach(var tag in originTags) {
                     if(!distinctNoOrderTags.Contains(tag)) {
                         distinctNoOrderTags.Add(tag);

@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {

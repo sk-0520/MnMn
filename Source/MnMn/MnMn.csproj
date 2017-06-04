@@ -318,6 +318,7 @@
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Logic\Extensions\HttpClientHandlerExtensions.cs" />
+    <Compile Include="Logic\Extensions\LinqExtensions.cs" />
     <Compile Include="Logic\Extensions\Service\Smile\Video\SmileVideoSearchModelExtensions.cs" />
     <Compile Include="Logic\OctetPerTime.cs" />
     <Compile Include="Logic\DelegateDragAndDrop.cs" />
@@ -375,6 +376,7 @@
     <Compile Include="Model\CrashReportSessionModel.cs" />
     <Compile Include="Model\CrashReportSettingModel.cs" />
     <Compile Include="Model\DragParameterModel.cs" />
+    <Compile Include="Model\EvalSequence.cs" />
     <Compile Include="Model\LightweightUpdateModel.cs" />
     <Compile Include="Model\ExpressionElementModel.cs" />
     <Compile Include="Model\ExpressionItemModel.cs" />

@@ -29,6 +29,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
@@ -62,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             var baseItem = tabItems.FirstOrDefault();
 
             if(baseItem != null) {
-                return tabItems.Where(t => t.Parent == baseItem.Parent).ToList();
+                return tabItems.Where(t => t.Parent == baseItem.Parent).ToEvalSequence();
             }
 
             return new List<TabItem>();
