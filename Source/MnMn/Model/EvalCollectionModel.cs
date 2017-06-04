@@ -7,7 +7,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class EvalCollectionModel<TValue> : CollectionModel<TValue>
+    public class EvalCollectionModel<TValue> : List<TValue>
     {
         public EvalCollectionModel()
             : base()

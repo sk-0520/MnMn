@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
     {
         #region variable
 
-        CollectionModel<WebNavigatorElementConditionItemViewModel> _conditions;
+        IReadOnlyList<WebNavigatorElementConditionItemViewModel> _conditions;
 
         #endregion
 
