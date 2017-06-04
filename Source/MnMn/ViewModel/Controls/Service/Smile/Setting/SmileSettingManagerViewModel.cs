@@ -42,7 +42,7 @@ using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileSettingManagerViewModel: ManagerViewModelBase
+    public class SmileSettingManagerViewModel : ManagerViewModelBase
     {
         #region variable
 
@@ -313,6 +313,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             }
         }
 
+        public bool AutoInputVideoTitle
+        {
+            get { return Setting.IdleTalkMutter.AutoInputVideoTitle; }
+            set { SetPropertyValue(Setting.IdleTalkMutter, value); }
+        }
+        public bool AutoInputWatchPageUri
+        {
+            get { return Setting.IdleTalkMutter.AutoInputWatchPageUri; }
+            set { SetPropertyValue(Setting.IdleTalkMutter, value); }
+        }
+        public string AutoInputHashTags
+        {
+            get { return Setting.IdleTalkMutter.AutoInputHashTags; }
+            set { SetPropertyValue(Setting.IdleTalkMutter, value); }
+        }
         #endregion
 
         #region command
