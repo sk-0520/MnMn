@@ -368,7 +368,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ShowContinuousPlaybackMenu = false;
 
-            var items = GetCheckedItems().ToArray();
+            var items = GetCheckedItems().ToEvalSequence();
 
             if(!items.Any()) {
                 return Task.CompletedTask;
@@ -376,7 +376,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var playList = items
                 .Select(i => i.Information)
-                .ToArray()
+                .ToEvalSequence()
             ;
 
             foreach(var item in items) {

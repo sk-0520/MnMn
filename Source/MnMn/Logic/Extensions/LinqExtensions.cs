@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static IList<TSource> ToSimpleSequence<TSource>(this IEnumerable<TSource> source)
+        public static IList<TSource> ToEvalSequence<TSource>(this IEnumerable<TSource> source)
         {
             return source.ToList();
         }

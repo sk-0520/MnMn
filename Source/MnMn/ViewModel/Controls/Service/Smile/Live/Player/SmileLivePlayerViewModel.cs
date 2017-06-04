@@ -332,7 +332,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             var bodyElement = browser.Document.Body;
             var firstElements = bodyElement.ChildNodes
                 .OfType<GeckoHtmlElement>()
-                .ToArray()
+                .ToEvalSequence()
             ;
 
             foreach(var element in firstElements) {
@@ -366,7 +366,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             var bodyElement = browser.Document.Body;
             var firstElements = bodyElement.ChildNodes
                 .OfType<GeckoHtmlElement>()
-                .ToArray()
+                .ToEvalSequence()
             ;
 
             foreach(var element in firstElements) {

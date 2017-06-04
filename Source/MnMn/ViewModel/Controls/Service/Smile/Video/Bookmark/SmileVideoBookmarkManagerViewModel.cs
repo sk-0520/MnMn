@@ -493,7 +493,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             IsDragOver = false;
             DragOverBookmarkNode = null;
-            foreach(var node in GetNodes(n => n.IsDragOver).ToArray()) {
+            foreach(var node in GetNodes(n => n.IsDragOver).ToEvalSequence()) {
                 node.IsDragOver = false;
             }
         }

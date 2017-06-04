@@ -330,7 +330,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                 if(Directory.Exists(filePath)) {
                     var files = Directory.EnumerateFiles(filePath)
                         .Where(f => IsEnabledVideoFilePath(f) || IsEnabledMsgFilePath(f))
-                        .ToArray()
+                        .ToEvalSequence()
                     ;
 
                     var video = files.FirstOrDefault(f => IsEnabledVideoFilePath(f));

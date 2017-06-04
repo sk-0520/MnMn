@@ -31,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -96,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .Where(i => i.ViewModel.CommentVertical == commentViewModel.CommentVertical)
                 .GroupBy(i => (int)Canvas.GetTop(i.Element))
                 .IfOrderByAsc(g => g.Key, isAsc)
-                .ToArray()
+                .ToEvalSequence()
             ;
 
             var commentAreaHeight = (int)commentArea.Height;
@@ -108,7 +109,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var start = isAsc ? 0 : commentAreaHeight - myHeight;
             var last = isAsc ? commentAreaHeight - myHeight : 0;
 
-            if(lineList.Length == 0) {
+            if(!lineList.Any()) {
                 // コメントない
                 return start;
             }
@@ -305,7 +306,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                         .OrderBy(i => i.ViewModel.ElapsedTime)
                         .ThenBy(i => i.ViewModel.Number)
                         .Take(showingCommentList.Count - displayCommentLimitCount)
-                        .ToArray()
+                        .ToEvalSequence()
                     ;
                     foreach(var item in removeList) {
                         item.Clock.Controller.SkipToFill();

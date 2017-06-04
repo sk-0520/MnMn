@@ -27,6 +27,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -129,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void RemoveCheckedVideos(IEnumerable<SmileVideoFinderItemViewModel> finderItems)
         {
-            foreach(var finderItem in finderItems.ToArray()) {
+            foreach(var finderItem in finderItems.ToEvalSequence()) {
                 var index = FinderItemList.IndexOf(finderItem);
                 FinderItemList.RemoveAt(index);
                 Node.VideoItems.RemoveAt(index);

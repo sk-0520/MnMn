@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         var singleContent = Mediation.ConvertRequestParameter(Key, rawContent, ServiceType);
                         var multiContents = singleContent
                             .Where(p => p.Value.Any(c => c == MultiStrings.defaultSeparator))
-                            .ToArray()
+                            .ToEvalSequence()
                         ;
                         var hasMultiValue = multiContents.Any();
                         if(hasMultiValue) {

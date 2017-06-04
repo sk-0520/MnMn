@@ -433,7 +433,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ClearComment()
         {
-            foreach(var data in ShowingCommentList.ToArray()) {
+            foreach(var data in ShowingCommentList.ToEvalSequence()) {
                 data.Clock.Controller.SkipToFill();
                 data.Clock.Controller.Remove();
             }
@@ -992,7 +992,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ChangedCommentContent()
         {
-            foreach(var comment in ShowingCommentList.ToArray()) {
+            foreach(var comment in ShowingCommentList.ToEvalSequence()) {
                 comment.ViewModel.ChangeActualContent();
                 comment.ViewModel.ChangeTextShow();
             }

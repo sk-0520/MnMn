@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 var paremtElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='content_672']");
                 var baseElements = paremtElement.SelectNodes(".//div/div").Where(be => be.InnerText.Length > 0);
                 foreach(var baseElement in baseElements) {
-                    var paragraphElements = baseElement.SelectNodes(".//p")?.ToArray();
+                    var paragraphElements = baseElement.SelectNodes(".//p")?.ToEvalSequence();
                     if(paragraphElements == null) {
                         continue;
                     }
@@ -286,7 +286,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                     .Where(n => n.Name == "script")
                     .Select(e => e.InnerText)
                     .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .ToArray()
+                    .ToEvalSequence()
                     //.FirstOrDefault(s => regToken.IsMatch(s))
                 ;
 
