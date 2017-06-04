@@ -20,9 +20,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
         /// <typeparam name="TSource"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static EvalCollectionModel<TSource> ToEvalSequence<TSource>(this IEnumerable<TSource> source)
+        public static EvalSequence<TSource> ToEvalSequence<TSource>(this IEnumerable<TSource> source)
         {
-            return new EvalCollectionModel<TSource>(source);
+            return new EvalSequence<TSource>(source);
         }
 
         #endregion
