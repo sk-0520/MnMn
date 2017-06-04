@@ -94,7 +94,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#591: ファインダーから投稿者を表示する'
 					},
 					{
 						'revision': '',

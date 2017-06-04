@@ -39,6 +39,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
@@ -297,6 +298,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand ShowPosterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var userId = SelectedFinderItem.Information.UserId;
+                        SmileDescriptionUtility.OpenUserId(userId, Mediation);
+                    },
+                    o => SelectedFinderItem != null && !SelectedFinderItem.Information.IsChannelVideo
+                );
+            }
+        }
 
         #endregion
 

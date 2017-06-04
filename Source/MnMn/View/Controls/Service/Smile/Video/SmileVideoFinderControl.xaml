@@ -495,6 +495,9 @@
 
               <MenuItem.ItemsSource>
                 <CompositeCollection>
+                  <MenuItem Header="投稿者を検索" Command="{Binding ShowPosterCommand}" Style="{StaticResource {x:Type MenuItem}}" />
+                  <Separator Style="{StaticResource TagSeparator}" />
+
                   <MenuItem IsCheckable="True" IsChecked="{Binding FinderSearchType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:SearchType.Tag}}" Header="{Binding Source={x:Static app_define:SearchType.Tag}, Converter={StaticResource EnumDisplayConverter}}" Style="{StaticResource {x:Type MenuItem}}" />
                   <MenuItem IsCheckable="True" IsChecked="{Binding FinderSearchType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:SearchType.Keyword}}" Header="{Binding Source={x:Static app_define:SearchType.Keyword}, Converter={StaticResource EnumDisplayConverter}}" Style="{StaticResource {x:Type MenuItem}}" />
 
