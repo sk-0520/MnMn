@@ -45,5 +45,15 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Define
         /// </summary>
         [XmlEnum("smile-live")]
         SmileLive,
+        /// <summary>
+        /// Twitter。
+        /// </summary>
+        [XmlEnum("idle_talk")]
+        IdleTalk,
+        /// <summary>
+        /// ツイート。
+        /// </summary>
+        [XmlEnum("idle_talk-mutter")]
+        IdleTalkMutter,
     }
 }

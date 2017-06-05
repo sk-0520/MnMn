@@ -41,6 +41,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge;
@@ -96,6 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
+            IdleTalk = new IdleTalkMediation(this);
         }
 
         #region property
@@ -111,6 +113,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// ニコニコ関係。
         /// </summary>
         internal SmileMediation Smile { get; private set; }
+
+        internal IdleTalkMediation IdleTalk { get; }
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
 
@@ -614,6 +618,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileLive:
                     return Smile.Request(request);
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.Request(request);
+
                 default:
                     ThrowNotSupportRequest(request);
                     throw new NotImplementedException();
@@ -649,6 +657,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileLive:
                     return Smile.GetUri(key, replaceMap, serviceType);
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.GetUri(key, replaceMap, serviceType);
+
                 default:
                     ThrowNotSupportGetUri(key, replaceMap, serviceType);
                     throw new NotImplementedException();
@@ -662,6 +674,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
                     return Smile.ConvertUri(key, uri, serviceType);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.ConvertUri(key, uri, serviceType);
 
                 default:
                     ThrowNotSupportConvertUri(key, uri, serviceType);
@@ -677,6 +693,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileLive:
                     return Smile.GetRequestHeader(key, replaceMap, serviceType);
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.GetRequestHeader(key, replaceMap, serviceType);
+
                 default:
                     ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
                     throw new NotImplementedException();
@@ -690,6 +710,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
                     return Smile.ConvertRequestHeader(key, requestHeaders, serviceType);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.ConvertRequestHeader(key, requestHeaders, serviceType);
 
                 default:
                     ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
@@ -705,6 +729,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileLive:
                     return Smile.GetRequestParameter(key, replaceMap, serviceType);
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.GetRequestParameter(key, replaceMap, serviceType);
+
                 default:
                     ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
                     throw new NotImplementedException();
@@ -718,6 +746,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
                     return Smile.GetRequestMapping(key, replaceMap, serviceType);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.GetRequestMapping(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
@@ -733,6 +765,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileLive:
                     return Smile.GetExpression(key, serviceType);
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.GetExpression(key, serviceType);
+
                 default:
                     ThrowNotSupportGetExpression(key, serviceType);
                     throw new NotImplementedException();
@@ -746,6 +782,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
                     return Smile.GetExpression(key, id, serviceType);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.GetExpression(key, id, serviceType);
 
                 default:
                     ThrowNotSupportGetExpression(key, id, serviceType);
@@ -761,6 +801,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileLive:
                     return Smile.ConvertRequestParameter(key, requestParams, serviceType);
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.ConvertRequestParameter(key, requestParams, serviceType);
+
                 default:
                     ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
                     throw new NotImplementedException();
@@ -775,6 +819,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileLive:
                     return Smile.ConvertRequestMapping(key, mapping, serviceType);
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.ConvertRequestMapping(key, mapping, serviceType);
+
                 default:
                     ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
                     throw new NotImplementedException();
@@ -788,6 +836,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
                     return Smile.CheckResponseHeader(key, uri, headers, serviceType);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.CheckResponseHeader(key, uri, headers, serviceType);
 
                 default:
                     ThrowNotSupportCheckResponseHeader(key, uri, headers, serviceType);
@@ -804,6 +856,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     Smile.ConvertBinary(key, uri, stream, serviceType);
                     break;
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    IdleTalk.ConvertBinary(key, uri, stream, serviceType);
+                    break;
+
                 default:
                     ThrowNotSupportConvertBinary(key, uri, stream, serviceType);
                     throw new NotImplementedException();
@@ -817,6 +874,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
                     return Smile.GetEncoding(key, uri, stream, serviceType);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.GetEncoding(key, uri, stream, serviceType);
 
                 default:
                     ThrowNotSupportGetEncoding(key, uri, stream, serviceType);
@@ -832,6 +893,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileLive:
                     return Smile.ConvertString(key, uri, text, serviceType);
 
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.ConvertString(key, uri, text, serviceType);
+
                 default:
                     ThrowNotSupportConvertString(key, uri, text, serviceType);
                     throw new NotImplementedException();
@@ -845,6 +910,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
                     return Smile.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
 
                 default:
                     ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
