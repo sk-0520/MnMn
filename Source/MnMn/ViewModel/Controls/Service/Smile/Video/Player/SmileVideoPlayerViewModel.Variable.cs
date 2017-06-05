@@ -121,6 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _forceNavigatorbarOperation;
 
+        bool _showPlayListTab;
+
         #endregion
     }
 }

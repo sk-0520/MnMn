@@ -1774,7 +1774,7 @@
               </TabControl>
             </Grid>
           </TabItem>
-          <TabItem Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <TabItem IsSelected="{Binding ShowPlayListTab}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1790,6 +1790,7 @@
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
 
               <Grid Grid.Row="0">
@@ -1933,6 +1934,10 @@
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
               </ScrollViewer>
+
+              <Grid Grid.Row="1">
+
+              </Grid>
             </Grid>
 
           </TabItem>
