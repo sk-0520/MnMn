@@ -1970,7 +1970,7 @@
                     </RadioButton>
 
                     <RadioButton Grid.Row="1" Grid.Column="0" Content="新規" IsChecked="{Binding IsNewBookmark}" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewBookmarkName, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" mamc:TextBoxHelper.Watermark="ブックマーク名" Text="{Binding NewBookmarkName, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
 
                   </Grid>
 

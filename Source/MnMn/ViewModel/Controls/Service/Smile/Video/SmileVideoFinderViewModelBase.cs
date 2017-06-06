@@ -399,12 +399,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var vm = new SmileVideoPlayerViewModel(Mediation);
             vm.IsRandomPlay = isRandom;
-            if(playerPreparationAction != null) {
-                playerPreparationAction(vm);
-            }
 
             try {
                 var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                if(playerPreparationAction != null) {
+                    playerPreparationAction(vm);
+                }
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
                 return task;
             } catch(SmileVideoCanNotPlayItemInPlayListException ex) {

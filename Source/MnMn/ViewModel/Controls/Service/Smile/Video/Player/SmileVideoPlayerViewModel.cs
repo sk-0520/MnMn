@@ -1557,6 +1557,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 var nodeViewModel = Mediation.GetResultFromRequest<SmileVideoBookmarkNodeViewModel>(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(null, newBookmark)));
                 SelectedBookmark = nodeViewModel;
 
+                // View 側初期化
+                NewBookmarkName = string.Empty;
                 this._bookmarkItems = null;
                 CallOnPropertyChange(nameof(BookmarkItems));
             } else {
