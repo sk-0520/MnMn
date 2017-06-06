@@ -157,8 +157,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                     case SmileVideoProcess.Bookmark: {
                             var param = (SmileVideoProcessBookmarkParameterModel)smileProcessRequest.Parameter;
-                            var result = ManagerPack.BookmarkManager.AddBookmarkItems(param.Bookmark, param.VideoItems);
-                            return new ResponseModel(request, result);
+                            if(param.IsNewNode) {
+                                var result = ManagerPack.BookmarkManager.CreateBookmark(param.ParentBookmark, param.NewNode);
+                                return new ResponseModel(request, result);
+                            } else {
+                                if(param.AddItems) {
+                                    var result = ManagerPack.BookmarkManager.AddBookmarkItems(param.ParentBookmark, param.VideoItems);
+                                    return new ResponseModel(request, result);
+                                } else {
+                                    var result = ManagerPack.BookmarkManager.InitializeBookmarkItems(param.ParentBookmark, param.VideoItems);
+                                    return new ResponseModel(request, result);
+                                }
+                            }
                         }
 
                     case SmileVideoProcess.UnorganizedBookmark: {

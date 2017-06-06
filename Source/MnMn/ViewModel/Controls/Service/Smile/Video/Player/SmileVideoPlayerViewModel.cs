@@ -1545,6 +1545,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         }
 
+        void SavePlayListToBookmark()
+        {
+            //if(SelectedBookmark == null) {
+
+            //}
+            //Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items, false)));
+            //PlayListItems[0]
+            //PlayListItems.Select()
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel

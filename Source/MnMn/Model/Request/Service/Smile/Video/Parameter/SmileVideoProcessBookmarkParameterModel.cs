@@ -11,17 +11,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
 {
     public class SmileVideoProcessBookmarkParameterModel: SmileVideoProcessParameterModelBase
     {
-        public SmileVideoProcessBookmarkParameterModel(SmileVideoBookmarkNodeViewModel bookmark, IEnumerable<SmileVideoVideoItemModel> videoItems)
+        public SmileVideoProcessBookmarkParameterModel(SmileVideoBookmarkNodeViewModel parentBookmark, IEnumerable<SmileVideoVideoItemModel> videoItems, bool addItems)
             : base(SmileVideoProcess.Bookmark)
         {
-            Bookmark = bookmark;
+            IsNewNode = false;
+
+            ParentBookmark = parentBookmark;
             VideoItems = videoItems;
+            AddItems = addItems;
         }
 
-        #region 
+        public SmileVideoProcessBookmarkParameterModel(SmileVideoBookmarkNodeViewModel parentBookmark, SmileVideoBookmarkItemSettingModel newNode)
+            : base(SmileVideoProcess.Bookmark)
+        {
+            IsNewNode = true;
 
-        public SmileVideoBookmarkNodeViewModel Bookmark { get; }
+            ParentBookmark = parentBookmark;
+            NewNode = newNode;
+        }
+
+        #region
+
+        public bool IsNewNode { get; }
+
+        public SmileVideoBookmarkNodeViewModel ParentBookmark { get; }
         public IEnumerable<SmileVideoVideoItemModel> VideoItems { get; }
+        public SmileVideoBookmarkItemSettingModel NewNode { get; }
+        public bool AddItems { get; }
 
         #endregion
     }

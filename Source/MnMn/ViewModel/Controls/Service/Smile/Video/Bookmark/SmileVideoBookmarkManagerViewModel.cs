@@ -45,7 +45,7 @@ using Package.stackoverflow.com;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
-    public class SmileVideoBookmarkManagerViewModel: SmileVideoCustomManagerViewModelBase, IDropable
+    public class SmileVideoBookmarkManagerViewModel : SmileVideoCustomManagerViewModelBase, IDropable
     {
         #region variable
 
@@ -340,6 +340,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             targetNodeViewModel.VideoItems.AddRange(videoItems);
 
             return targetNodeViewModel.VideoItems.Skip(index);
+        }
+
+        public IEnumerable<SmileVideoVideoItemModel> InitializeBookmarkItems(SmileVideoBookmarkNodeViewModel targetNodeViewModel, IEnumerable<SmileVideoVideoItemModel> videoItems)
+        {
+            targetNodeViewModel.VideoItems.Clear();
+            targetNodeViewModel.VideoItems.AddRange(videoItems);
+
+            return targetNodeViewModel.VideoItems;
+        }
+
+        public SmileVideoBookmarkNodeViewModel CreateBookmark(SmileVideoBookmarkNodeViewModel parentNode, SmileVideoBookmarkItemSettingModel newNode)
+        {
+            if(parentNode == null) {
+                parentNode = Node;
+            }
+
+            var pair = parentNode.NodeList.Add(newNode, null);
+            return pair.ViewModel;
         }
 
         public SmileVideoVideoItemModel AddUnorganizedBookmark(SmileVideoVideoItemModel videoItem)

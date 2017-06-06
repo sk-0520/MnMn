@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return base.ContinuousPlaybackAsync(isRandom, vm => {
                 // 通常状態でのブックマーク内全選択であればこのブックマークを選択状態にする
                 if(SelectedSortType == SmileVideoSortType.Number && IsAscending) {
-                    if(vm.PlayListItems.Count == GetCheckedItems().Count()) {
+                    if(vm.PlayListItems.Count == FinderItemsViewer.Count) {
                         vm.SelectedBookmark = Node;
                     }
                 }

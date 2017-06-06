@@ -1935,8 +1935,40 @@
                 </ItemsControl>
               </ScrollViewer>
 
-              <Grid Grid.Row="1">
+              <Grid Grid.Row="2">
+                <StackPanel>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition />
+                      <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
+                    <RadioButton Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  IsChecked="{Binding IsNewBookmark, Converter={StaticResource LogicalNotConverter}}">
+                      <RadioButton.Style>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedBookmark}" Value="{x:Null}">
+                              <Setter Property="IsEnabled" Value="False" />
+                              <Setter Property="Content" Value="ブックマーク未選択" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="IsEnabled" Value="True" />
+                          <Setter Property="Content" Value="{Binding SelectedBookmark.Name}" />
+                        </Style>
+                      </RadioButton.Style>
+                    </RadioButton>
+
+                    <RadioButton Grid.Row="1" Grid.Column="0" Content="新規" IsChecked="{Binding IsNewBookmark}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewBookmarkName}" Margin="{StaticResource LeftMargin}" />
+
+                  </Grid>
+
+                  <Button Command="{Binding SavePlayListToBookmarkCommand}">保存</Button>
+                </StackPanel>
               </Grid>
             </Grid>
 

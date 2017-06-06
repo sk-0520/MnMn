@@ -459,7 +459,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .Select(i => i.Information.ToVideoItemModel())
                 .ToEvalSequence()
             ;
-            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items)));
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items, true)));
         }
 
         void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)
