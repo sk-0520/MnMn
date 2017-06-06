@@ -1547,12 +1547,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void SavePlayListToBookmark()
         {
-            //if(SelectedBookmark == null) {
+            var items = PlayListItems.Select(i => i.ToVideoItemModel());
 
-            //}
-            //Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items, false)));
-            //PlayListItems[0]
-            //PlayListItems.Select()
+            if(IsNewBookmark) {
+                var newBookmark = new SmileVideoBookmarkItemSettingModel() {
+                    Name = NewBookmarkName,
+                };
+                newBookmark.Items.AddRange(items);
+                var nodeViewModel = Mediation.GetResultFromRequest<SmileVideoBookmarkNodeViewModel>(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(null, newBookmark)));
+                SelectedBookmark = nodeViewModel;
+
+                this._bookmarkItems = null;
+                CallOnPropertyChange(nameof(BookmarkItems));
+            } else {
+                Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(SelectedBookmark, items, false)));
+            }
         }
 
         #endregion

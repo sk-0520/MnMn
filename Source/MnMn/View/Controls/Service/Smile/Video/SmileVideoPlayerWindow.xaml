@@ -1935,7 +1935,7 @@
                 </ItemsControl>
               </ScrollViewer>
 
-              <Grid Grid.Row="2">
+              <Expander Grid.Row="2" ExpandDirection="Up" Header="ブックマーク保存">
                 <StackPanel>
                   <Grid>
                     <Grid.RowDefinitions>
@@ -1957,19 +1957,37 @@
                             </DataTrigger>
                           </Style.Triggers>
                           <Setter Property="IsEnabled" Value="True" />
-                          <Setter Property="Content" Value="{Binding SelectedBookmark.Name}" />
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <TextBlock>
+                                <Run>既存:</Run>
+                                <Run FontWeight="Bold" Text="{Binding SelectedBookmark.Name}" />
+                              </TextBlock>
+                            </Setter.Value>
+                          </Setter>
                         </Style>
                       </RadioButton.Style>
                     </RadioButton>
 
                     <RadioButton Grid.Row="1" Grid.Column="0" Content="新規" IsChecked="{Binding IsNewBookmark}" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewBookmarkName}" Margin="{StaticResource LeftMargin}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewBookmarkName, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
 
                   </Grid>
 
-                  <Button Command="{Binding SavePlayListToBookmarkCommand}">保存</Button>
+                  <Button Command="{Binding SavePlayListToBookmarkCommand}">
+                    <Button.Style>
+                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsNewBookmark}" Value="True">
+                            <Setter Property="Content" Value="ブックマーク作成" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="Content" Value="ブックマーク上書き" />
+                      </Style>
+                    </Button.Style>
+                  </Button>
                 </StackPanel>
-              </Grid>
+              </Expander>
             </Grid>
 
           </TabItem>
