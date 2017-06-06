@@ -41,6 +41,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 {
@@ -525,9 +526,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             DoSearchAction(nameof(SwitchShowFilter));
         }
 
-        internal override Task ContinuousPlaybackAsync(bool isRandom)
+        internal override Task ContinuousPlaybackAsync(bool isRandom, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
-            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
+            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom, playerPreparationAction);
         }
 
         public override bool IsAscending

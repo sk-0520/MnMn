@@ -659,6 +659,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand SavePlayListToBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => SavePlayListToBookmark(),
+                    o => PlayListItems.Any() && ((!IsNewBookmark) || (IsNewBookmark && !string.IsNullOrEmpty(NewBookmarkName)))
+                );
+            }
+        }
+
         #endregion
     }
 }

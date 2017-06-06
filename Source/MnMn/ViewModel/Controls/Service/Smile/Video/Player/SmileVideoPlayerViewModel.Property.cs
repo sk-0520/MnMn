@@ -758,7 +758,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool IsSelectedMarket
         {
             get { return this._isSelectedMarket; }
-            set { if(SetVariableValue(ref this._isSelectedMarket, value)) {
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedMarket, value)) {
                     if(IsSelectedMarket && MarketLoadState == LoadState.None) {
                         LoadMarketItemsAsync().ConfigureAwait(false);
                     }
@@ -1154,6 +1156,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._forceNavigatorbarOperation; }
             set { SetVariableValue(ref this._forceNavigatorbarOperation, value); }
         }
+
+        public bool ShowPlayListTab
+        {
+            get { return this._showPlayListTab; }
+            set { SetVariableValue(ref this._showPlayListTab, value); }
+        }
+
+        public SmileVideoBookmarkNodeViewModel SelectedBookmark
+        {
+            get { return this._selectedBookmark; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedBookmark, value)) {
+                    IsNewBookmark = SelectedBookmark == null;
+                }
+            }
+        }
+
+        public string NewBookmarkName
+        {
+            get { return this._newBookmarkName; }
+            set { SetVariableValue(ref this._newBookmarkName, value); }
+        }
+
+        public bool IsNewBookmark
+        {
+            get { return this._isNewBookmark; }
+            set { SetVariableValue(ref this._isNewBookmark, value); }
+        }
+
 
         #endregion
     }

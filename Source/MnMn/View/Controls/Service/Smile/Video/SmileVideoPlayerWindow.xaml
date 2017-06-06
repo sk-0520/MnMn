@@ -1774,7 +1774,7 @@
               </TabControl>
             </Grid>
           </TabItem>
-          <TabItem Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <TabItem IsSelected="{Binding ShowPlayListTab}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1790,6 +1790,7 @@
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
 
               <Grid Grid.Row="0">
@@ -1933,6 +1934,60 @@
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
               </ScrollViewer>
+
+              <Expander Grid.Row="2" ExpandDirection="Up" Header="ブックマーク保存">
+                <StackPanel>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition />
+                      <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <RadioButton Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  IsChecked="{Binding IsNewBookmark, Converter={StaticResource LogicalNotConverter}}">
+                      <RadioButton.Style>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedBookmark}" Value="{x:Null}">
+                              <Setter Property="IsEnabled" Value="False" />
+                              <Setter Property="Content" Value="ブックマーク未選択" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="IsEnabled" Value="True" />
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <TextBlock>
+                                <Run>既存:</Run>
+                                <Run FontWeight="Bold" Text="{Binding SelectedBookmark.Name}" />
+                              </TextBlock>
+                            </Setter.Value>
+                          </Setter>
+                        </Style>
+                      </RadioButton.Style>
+                    </RadioButton>
+
+                    <RadioButton Grid.Row="1" Grid.Column="0" Content="新規" IsChecked="{Binding IsNewBookmark}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" mamc:TextBoxHelper.Watermark="ブックマーク名" Text="{Binding NewBookmarkName, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
+
+                  </Grid>
+
+                  <Button Command="{Binding SavePlayListToBookmarkCommand}">
+                    <Button.Style>
+                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsNewBookmark}" Value="True">
+                            <Setter Property="Content" Value="ブックマーク作成" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="Content" Value="ブックマーク上書き" />
+                      </Style>
+                    </Button.Style>
+                  </Button>
+                </StackPanel>
+              </Expander>
             </Grid>
 
           </TabItem>

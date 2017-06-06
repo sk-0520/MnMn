@@ -378,7 +378,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        internal virtual Task ContinuousPlaybackAsync(bool isRandom)
+        internal virtual Task ContinuousPlaybackAsync(bool isRandom, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
             ShowContinuousPlaybackMenu = false;
 
@@ -399,8 +399,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var vm = new SmileVideoPlayerViewModel(Mediation);
             vm.IsRandomPlay = isRandom;
+
             try {
                 var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                if(playerPreparationAction != null) {
+                    playerPreparationAction(vm);
+                }
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
                 return task;
             } catch(SmileVideoCanNotPlayItemInPlayListException ex) {
@@ -455,7 +459,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .Select(i => i.Information.ToVideoItemModel())
                 .ToEvalSequence()
             ;
-            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items)));
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items, true)));
         }
 
         void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)

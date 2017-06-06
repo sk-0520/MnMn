@@ -682,8 +682,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
         {
-            var videoItem = Information.ToVideoItemModel();
-            bookmarkNode.VideoItems.Add(videoItem);
+            var singleVideoItems = new[] { Information.ToVideoItemModel() };
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmarkNode, singleVideoItems, true)));
         }
 
         Task<SmileJsonResultModel> AddMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
@@ -1543,6 +1543,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
 
+        }
+
+        void SavePlayListToBookmark()
+        {
+            var items = PlayListItems.Select(i => i.ToVideoItemModel());
+
+            if(IsNewBookmark) {
+                var newBookmark = new SmileVideoBookmarkItemSettingModel() {
+                    Name = NewBookmarkName,
+                };
+                newBookmark.Items.AddRange(items);
+                var nodeViewModel = Mediation.GetResultFromRequest<SmileVideoBookmarkNodeViewModel>(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(null, newBookmark)));
+                SelectedBookmark = nodeViewModel;
+
+                // View 側初期化
+                NewBookmarkName = string.Empty;
+                this._bookmarkItems = null;
+                CallOnPropertyChange(nameof(BookmarkItems));
+            } else {
+                Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(SelectedBookmark, items, false)));
+            }
         }
 
         #endregion

@@ -45,7 +45,7 @@ using Package.stackoverflow.com;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
-    public class SmileVideoBookmarkManagerViewModel: SmileVideoCustomManagerViewModelBase, IDropable
+    public class SmileVideoBookmarkManagerViewModel : SmileVideoCustomManagerViewModelBase, IDropable
     {
         #region variable
 
@@ -342,6 +342,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return targetNodeViewModel.VideoItems.Skip(index);
         }
 
+        public IEnumerable<SmileVideoVideoItemModel> InitializeBookmarkItems(SmileVideoBookmarkNodeViewModel targetNodeViewModel, IEnumerable<SmileVideoVideoItemModel> videoItems)
+        {
+            targetNodeViewModel.VideoItems.Clear();
+            targetNodeViewModel.VideoItems.AddRange(videoItems);
+
+            return targetNodeViewModel.VideoItems;
+        }
+
+        public SmileVideoBookmarkNodeViewModel CreateBookmark(SmileVideoBookmarkNodeViewModel parentNode, SmileVideoBookmarkItemSettingModel newNode)
+        {
+            if(parentNode == null) {
+                parentNode = Node;
+            }
+
+            var pair = parentNode.NodeList.Add(newNode, null);
+            return pair.ViewModel;
+        }
+
         public SmileVideoVideoItemModel AddUnorganizedBookmark(SmileVideoVideoItemModel videoItem)
         {
             Node.VideoItems.Add(videoItem);
@@ -555,14 +573,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
 
             if(playList.Any()) {
-                var vm = new SmileVideoPlayerViewModel(Mediation);
-                vm.IsRandomPlay = isRandom;
+                var playerViewModel = new SmileVideoPlayerViewModel(Mediation);
+                playerViewModel.IsRandomPlay = isRandom;
+                playerViewModel.SelectedBookmark = node;
+
                 try {
-                    var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-                    Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
+                    var task = playerViewModel.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                    Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, playerViewModel, ShowViewState.Foreground));
                 } catch(SmileVideoCanNotPlayItemInPlayListException ex) {
                     Mediation.Logger.Warning(ex);
-                    vm.Dispose();
+                    playerViewModel.Dispose();
                 }
             } else {
                 Mediation.Logger.Warning($"{node.Name}: {nameof(playList)}: empty");
