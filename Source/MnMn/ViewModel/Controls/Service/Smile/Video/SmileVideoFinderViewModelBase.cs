@@ -378,7 +378,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        internal virtual Task ContinuousPlaybackAsync(bool isRandom)
+        internal virtual Task ContinuousPlaybackAsync(bool isRandom, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
             ShowContinuousPlaybackMenu = false;
 
@@ -399,6 +399,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var vm = new SmileVideoPlayerViewModel(Mediation);
             vm.IsRandomPlay = isRandom;
+            if(playerPreparationAction != null) {
+                playerPreparationAction(vm);
+            }
+
             try {
                 var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));

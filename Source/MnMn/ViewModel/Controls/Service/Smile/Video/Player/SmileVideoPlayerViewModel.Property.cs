@@ -1161,6 +1161,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._showPlayListTab, value); }
         }
 
+        public SmileVideoBookmarkNodeViewModel SelectedBookmark { get; set; }
+
         #endregion
     }
 }
