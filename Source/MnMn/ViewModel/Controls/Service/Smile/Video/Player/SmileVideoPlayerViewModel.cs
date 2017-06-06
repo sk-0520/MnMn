@@ -682,8 +682,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
         {
-            var videoItem = Information.ToVideoItemModel();
-            bookmarkNode.VideoItems.Add(videoItem);
+            var singleVideoItems = new[] { Information.ToVideoItemModel() };
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmarkNode, singleVideoItems, true)));
         }
 
         Task<SmileJsonResultModel> AddMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
