@@ -1864,7 +1864,7 @@
                   <RowDefinition Height="*" />
                   <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox x:Name="listPlaylist" Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding Source={StaticResource PlayListItems}}" SelectedItem="{Binding SelectedPlayListItem}">
+                <ListBox x:Name="listPlayList" Grid.Row="0" VirtualizingPanel.ScrollUnit="Item" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding Source={StaticResource PlayListItems}}" SelectedItem="{Binding SelectedPlayListItem}">
                   <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                       <Setter Property="HorizontalAlignment" Value="Stretch" />

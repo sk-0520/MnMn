@@ -48,6 +48,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 using MahApps.Metro.Controls;
 using Meta.Vlc.Wpf;
 using OxyPlot;
+using Package.stackoverflow.com;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -99,6 +100,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// コメント有効位置抑制スライダー要素。
         /// </summary>
         Control EnabledCommentControl { get; set; }
+        /// <summary>
+        /// プレイリスト一覧。
+        /// </summary>
+        ItemsControl ListPlaylist { get; set; }
 
         CursorHider PlayerCursorHider { get; set; }
 
@@ -1167,7 +1172,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool ShowPlayListTab
         {
             get { return this._showPlayListTab; }
-            set { SetVariableValue(ref this._showPlayListTab, value); }
+            set
+            {
+                if(SetVariableValue(ref this._showPlayListTab, value)) {
+                    if(ShowPlayListTab && Information != null && ListPlaylist != null) {
+                        ScrollActiveVideoInPlayList(Information);
+                    }
+                }
+            }
         }
 
         public SmileVideoBookmarkNodeViewModel SelectedBookmark

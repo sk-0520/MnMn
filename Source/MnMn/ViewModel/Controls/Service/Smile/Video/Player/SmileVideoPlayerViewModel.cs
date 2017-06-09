@@ -1566,6 +1566,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void ScrollActiveVideoInPlayList(SmileVideoInformationViewModel videoInformation)
+        {
+            ListPlaylist?.ScrollToCenterOfView(videoInformation, true, false);
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1599,6 +1604,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             AddHistory(videoInformation);
 
             SetCheckedCheckItLater(videoInformation.VideoId, videoInformation.WatchUrl);
+
+            ScrollActiveVideoInPlayList(videoInformation);
 
             return base.LoadAsync(videoInformation, false, thumbCacheSpan, imageCacheSpan);
         }
@@ -1828,6 +1835,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Navigationbar = View.seekbar;
             CommentView = View.commentView;
             DetailComment = View.detailComment;
+            ListPlaylist = View.listPlayList;
+
             PlayerCursorHider = new Logic.View.CursorHider(Player);
 
             // 初期設定
