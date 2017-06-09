@@ -491,6 +491,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// プレイリスト。
         /// </summary>
         public PlayListManager<SmileVideoInformationViewModel> PlayListItems { get; } = new PlayListManager<SmileVideoInformationViewModel>();
+
         /// <summary>
         /// 関連動画読込状態。
         /// </summary>
@@ -1157,6 +1158,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._forceNavigatorbarOperation, value); }
         }
 
+        public bool ShowCommentTab
+        {
+            get { return this._showCommentTab; }
+            set { SetVariableValue(ref this._showCommentTab, value); }
+        }
+
         public bool ShowPlayListTab
         {
             get { return this._showPlayListTab; }
@@ -1186,6 +1193,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isNewBookmark, value); }
         }
 
+
+        public SmileVideoInformationViewModel SelectedPlayListItem
+        {
+            get { return this._selectedPlayListItem; }
+            set { SetVariableValue(ref this._selectedPlayListItem, value); }
+        }
 
         #endregion
     }

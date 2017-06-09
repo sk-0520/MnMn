@@ -121,10 +121,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _forceNavigatorbarOperation;
 
+        bool _showCommentTab;
         bool _showPlayListTab;
         SmileVideoBookmarkNodeViewModel _selectedBookmark;
         string _newBookmarkName;
         bool _isNewBookmark = true;
+
+        SmileVideoInformationViewModel _selectedPlayListItem;
 
         #endregion
     }
