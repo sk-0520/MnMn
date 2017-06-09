@@ -246,8 +246,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 
         Task PlayInputFileAsync(string videoFilePath, string commentFilePath)
         {
-            var videoFile = new FileInfo(videoFilePath);
-            var commentFile = new FileInfo(commentFilePath);
+            var videoFile = new FileInfo(videoFilePath ?? "NUL");
+            var commentFile = new FileInfo(commentFilePath ?? "NUL");
 
             var vm = new SmileVideoLaboratoryPlayerViewModel(Mediation);
             var task = vm.LoadAsync(videoFile, commentFile);

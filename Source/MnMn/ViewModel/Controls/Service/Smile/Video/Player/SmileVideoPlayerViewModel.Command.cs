@@ -648,7 +648,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand OpenIdleTalkMutterCommand
+        public virtual ICommand OpenIdleTalkMutterCommand
         {
             get
             {
