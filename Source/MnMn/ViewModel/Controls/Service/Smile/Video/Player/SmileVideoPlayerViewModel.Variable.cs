@@ -126,6 +126,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         string _newBookmarkName;
         bool _isNewBookmark = true;
 
+        SmileVideoInformationViewModel _selectedPlayListItem;
+
         #endregion
     }
 }

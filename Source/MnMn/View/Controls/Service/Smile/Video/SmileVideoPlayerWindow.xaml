@@ -1938,7 +1938,7 @@
                   <RowDefinition Height="*" />
                   <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox x:Name="listPlaylist" Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding Source={StaticResource PlayListItems}}">
+                <ListBox x:Name="listPlaylist" Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding Source={StaticResource PlayListItems}}" SelectedItem="{Binding SelectedPlayListItem}">
                   <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                       <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -1998,7 +1998,32 @@
                   </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Grid Grid.Row="1"></Grid>
+                <Grid Grid.Row="1">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+
+                  <RepeatButton Grid.Column="1" Command="{Binding UpSelectedPlayListItemCommand}">
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
+                  </RepeatButton>
+                  <RepeatButton Grid.Column="2" Command="{Binding DownSelectedPlayListItemCommand}">
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
+                  </RepeatButton>
+
+                  <Button Grid.Column="3" Command="{Binding RemoveSelectedPlayListItemCommand}">削除</Button>
+
+                </Grid>
               </Grid>
 
               <Expander Grid.Row="2" ExpandDirection="Up" Header="ブックマーク保存">

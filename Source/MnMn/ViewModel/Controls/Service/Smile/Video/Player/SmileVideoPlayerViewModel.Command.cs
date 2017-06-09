@@ -670,6 +670,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand UpSelectedPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ItemsControlUtility.MoveItem(PlayListItems, SelectedPlayListItem, true),
+                    o => SelectedPlayListItem != null && ItemsControlUtility.CanMoveNext(PlayListItems, SelectedPlayListItem, true)
+                );
+            }
+        }
+
+        public ICommand DownSelectedPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ItemsControlUtility.MoveItem(PlayListItems, SelectedPlayListItem, false),
+                    o => SelectedPlayListItem != null && ItemsControlUtility.CanMoveNext(PlayListItems, SelectedPlayListItem, false)
+                );
+            }
+        }
+
+        public ICommand RemoveSelectedPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => PlayListItems.Remove(SelectedPlayListItem),
+                    o => SelectedPlayListItem != null && SelectedPlayListItem != Information
+                );
+            }
+        }
+
         #endregion
     }
 }
