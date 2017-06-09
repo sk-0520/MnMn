@@ -1859,7 +1859,7 @@
 
               </Grid>
 
-              <ScrollViewer x:Name="listPlaylist" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
+              <!--<ScrollViewer x:Name="listPlaylist" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
                 <ItemsControl ItemsSource="{Binding Source={StaticResource PlayListItems}}">
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -1873,7 +1873,7 @@
                             <ColumnDefinition Width="Auto" />
                           </Grid.ColumnDefinitions>
 
-                          <!-- ここまでやんなくてもよかったんだけどメニューと違って再生のマークが別プレイヤーで再生されてるとき用に一応仕組みだけ構築 -->
+                          --><!-- ここまでやんなくてもよかったんだけどメニューと違って再生のマークが別プレイヤーで再生されてるとき用に一応仕組みだけ構築 --><!--
                           <ContentControl Grid.Column="0">
                             <ContentControl.Style>
                               <Style TargetType="ContentControl">
@@ -1913,27 +1913,93 @@
                             Command="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                             CommandParameter="{Binding}"
                             Style="{StaticResource Hyperlink}"
-                            HorizontalAlignment="Stretch"
                           />
 
-                          <!-- 上とか下とかの移動処理 -->
-                          <!--<StackPanel Grid.Column="0"></StackPanel>-->
+                          --><!-- 上とか下とかの移動処理 -->
+                          <!--<StackPanel Grid.Column="0"></StackPanel>--><!--
 
                         </Grid>
                       </StackPanel>
 
-                      <!--
+                      --><!--
                       NOTE: デザインの都合上セパレータを消す必要ない感じ
                       <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
                           <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
                         </DataTrigger>
                       </DataTemplate.Triggers>
-                      -->
+                      --><!--
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
-              </ScrollViewer>
+              </ScrollViewer>-->
+              <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ListBox x:Name="listPlaylist" Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding Source={StaticResource PlayListItems}}">
+                  <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                      <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    </Style>
+                  </ListBox.ItemContainerStyle>
+                  <ListBox.ItemTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- ここまでやんなくてもよかったんだけどメニューと違って再生のマークが別プレイヤーで再生されてるとき用に一応仕組みだけ構築 -->
+                        <Control Grid.Column="0">
+                          <Control.Style>
+                            <Style TargetType="Control">
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                  <Setter Property="Template">
+                                    <Setter.Value>
+                                      <ControlTemplate>
+                                        <Viewbox Style="{StaticResource SmallItemBox}">
+                                          <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                            <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource SmallAccentIconPath}" />
+                                          </Canvas>
+                                        </Viewbox>
+                                      </ControlTemplate>
+                                    </Setter.Value>
+                                  </Setter>
+                                </DataTrigger>
+                              </Style.Triggers>
+                              <Setter Property="Template">
+                                <Setter.Value>
+                                  <ControlTemplate>
+                                    <Viewbox Style="{StaticResource SmallItemBox}">
+                                      <Canvas Style="{StaticResource IconCanvas-24x24}" />
+                                    </Viewbox>
+                                  </ControlTemplate>
+                                </Setter.Value>
+                              </Setter>
+                            </Style>
+                          </Control.Style>
+                        </Control>
+
+                        <Button
+                          Focusable="False"
+                          Grid.Column="1"
+                          Content="{Binding Title}"
+                          Command="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                          CommandParameter="{Binding}"
+                          Style="{StaticResource Hyperlink}"
+                        />
+
+                      </Grid>
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Grid Grid.Row="1"></Grid>
+              </Grid>
 
               <Expander Grid.Row="2" ExpandDirection="Up" Header="ブックマーク保存">
                 <StackPanel>
