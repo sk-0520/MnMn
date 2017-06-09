@@ -681,6 +681,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ReleaseSelectedPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => SelectedPlayListItem = null,
+                    o => SelectedPlayListItem != null
+                );
+            }
+        }
+
         public ICommand DownSelectedPlayListItemCommand
         {
             get
