@@ -708,7 +708,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o => PlayListItems.Remove(SelectedPlayListItem),
+                    o => {
+                        PlayListItems.Remove(SelectedPlayListItem);
+                        if(PlayListItems.Count == 1) {
+                            ShowPlayListTab = false;
+                            ShowCommentTab = true;
+                        }
+                    },
                     o => SelectedPlayListItem != null && SelectedPlayListItem != Information
                 );
             }

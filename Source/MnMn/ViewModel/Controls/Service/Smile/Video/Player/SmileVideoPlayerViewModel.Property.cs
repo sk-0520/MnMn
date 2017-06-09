@@ -1158,6 +1158,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._forceNavigatorbarOperation, value); }
         }
 
+        public bool ShowCommentTab
+        {
+            get { return this._showCommentTab; }
+            set { SetVariableValue(ref this._showCommentTab, value); }
+        }
+
         public bool ShowPlayListTab
         {
             get { return this._showPlayListTab; }

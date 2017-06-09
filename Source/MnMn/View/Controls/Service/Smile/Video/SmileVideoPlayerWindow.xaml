@@ -1191,7 +1191,7 @@
         />
 
         <TabControl Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource FinderTab}">
-          <TabItem>
+          <TabItem IsSelected="{Binding ShowCommentTab}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1859,80 +1859,6 @@
 
               </Grid>
 
-              <!--<ScrollViewer x:Name="listPlaylist" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
-                <ItemsControl ItemsSource="{Binding Source={StaticResource PlayListItems}}">
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                      <StackPanel>
-                        <Separator x:Name="separator" />
-
-                        <Grid>
-                          <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                          </Grid.ColumnDefinitions>
-
-                          --><!-- ここまでやんなくてもよかったんだけどメニューと違って再生のマークが別プレイヤーで再生されてるとき用に一応仕組みだけ構築 --><!--
-                          <ContentControl Grid.Column="0">
-                            <ContentControl.Style>
-                              <Style TargetType="ContentControl">
-                                <Style.Triggers>
-                                  <DataTrigger Binding="{Binding IsPlaying}" Value="True">
-                                    <Setter Property="ContentTemplate">
-                                      <Setter.Value>
-                                        <DataTemplate>
-                                          <Viewbox Style="{StaticResource SmallItemBox}">
-                                            <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                              <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource SmallAccentIconPath}" />
-                                            </Canvas>
-                                          </Viewbox>
-                                        </DataTemplate>
-                                      </Setter.Value>
-                                    </Setter>
-                                  </DataTrigger>
-                                </Style.Triggers>
-                                <Setter Property="ContentTemplate">
-                                  <Setter.Value>
-                                    <DataTemplate>
-                                      <Viewbox Style="{StaticResource SmallItemBox}">
-                                        <Canvas Style="{StaticResource IconCanvas-24x24}" />
-                                      </Viewbox>
-                                    </DataTemplate>
-                                  </Setter.Value>
-                                </Setter>
-                              </Style>
-                            </ContentControl.Style>
-
-                          </ContentControl>
-
-                          <Button
-                            Focusable="False"
-                            Grid.Column="1"
-                            Content="{Binding Title}"
-                            Command="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                            CommandParameter="{Binding}"
-                            Style="{StaticResource Hyperlink}"
-                          />
-
-                          --><!-- 上とか下とかの移動処理 -->
-                          <!--<StackPanel Grid.Column="0"></StackPanel>--><!--
-
-                        </Grid>
-                      </StackPanel>
-
-                      --><!--
-                      NOTE: デザインの都合上セパレータを消す必要ない感じ
-                      <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                          <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
-                        </DataTrigger>
-                      </DataTemplate.Triggers>
-                      --><!--
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-              </ScrollViewer>-->
               <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                   <RowDefinition Height="*" />
