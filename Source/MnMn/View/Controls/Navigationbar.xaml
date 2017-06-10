@@ -121,7 +121,7 @@
                     <Thumb.Template>
                       <ControlTemplate>
                         <Grid>
-                          <Rectangle 
+                          <Rectangle
                             x:Name="IndeterminateSolidFill"
                             Margin="{TemplateBinding BorderThickness}"
                             Fill="{DynamicResource AccentColorBrush}"
@@ -249,7 +249,7 @@
         </Viewbox>
       </ToggleButton>
 
-      <Control Grid.Column="1">
+      <Control x:Name="volume" Grid.Column="1">
         <Control.Template>
           <ControlTemplate>
             <Grid>
@@ -257,24 +257,26 @@
                 x:Name="PART_AudioMute"
                 IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LogicalNotConverter}}"
               >
-                <Viewbox Style="{StaticResource SmallIconBox}">
-                  <Canvas Style="{StaticResource IconCanvas-24x24}">
-                    <Path>
-                      <Path.Resources>
-                        <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
-                          <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True">
-                              <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Audio-Off}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False">
-                              <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Audio-On}" />
-                            </DataTrigger>
-                          </Style.Triggers>
-                        </Style>
-                      </Path.Resources>
-                    </Path>
-                  </Canvas>
-                </Viewbox>
+                <Grid>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path>
+                        <Path.Resources>
+                          <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True">
+                                <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Audio-Off}" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False">
+                                <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Audio-On}" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </Path.Resources>
+                      </Path>
+                    </Canvas>
+                  </Viewbox>
+                </Grid>
               </ToggleButton>
               <Canvas Panel.ZIndex="100">
                 <Border
@@ -300,6 +302,19 @@
                   />
                 </Border>
               </Canvas>
+              <ProgressBar
+                Margin="3"
+                Height="3"
+                VerticalAlignment="Bottom"
+                BorderThickness="1"
+                BorderBrush="{StaticResource SeperatorBrush}"
+                Background="{x:Null}"
+                Minimum="{Binding VolumeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Maximum="{Binding VolumeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Foreground="{StaticResource AccentColorBrush2}"
+              >
+              </ProgressBar>
             </Grid>
 
             <ControlTemplate.Triggers>
@@ -322,6 +337,7 @@
           </ControlTemplate>
         </Control.Template>
       </Control>
+
       <ContentControl
         Grid.Column="2"
         Content="{Binding ExstendsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
