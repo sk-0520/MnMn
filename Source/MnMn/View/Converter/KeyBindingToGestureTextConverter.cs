@@ -28,7 +28,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
                 return value;
             }
 
-            return $"{keyBinding.Modifiers} + {keyBinding.Key}";
+            var keys = new List<string>(5);
+
+            // 装飾キー
+            if(keyBinding.Modifiers != ModifierKeys.None) {
+                if(keyBinding.Modifiers.HasFlag(ModifierKeys.Windows)) {
+                    keys.Add("Windows");
+                }
+                if(keyBinding.Modifiers.HasFlag(ModifierKeys.Control)) {
+                    keys.Add("Ctrl");
+                }
+                if(keyBinding.Modifiers.HasFlag(ModifierKeys.Shift)) {
+                    keys.Add("Shift");
+                }
+                if(keyBinding.Modifiers.HasFlag(ModifierKeys.Alt)) {
+                    keys.Add("Alt");
+                }
+            }
+
+            keys.Add(keyBinding.Key.ToString());
+
+            return string.Join(" + ", keys);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
