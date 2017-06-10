@@ -78,6 +78,7 @@
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
       <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
+      <app_view_converter:KeyBindingToGestureTextConverter x:Key="KeyBindingToGestureTextConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
@@ -176,6 +177,10 @@
           </EventTrigger>
         </ControlTemplate.Triggers>
       </ControlTemplate>
+
+      <KeyBinding x:Key="NextVideoKey" Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
+      <KeyBinding x:Key="PrevVideoKey" Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />
+
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
   <mamc:MetroWindow.InputBindings>
@@ -191,8 +196,10 @@
     <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding StopCommand}" />
     <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
 
-    <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
-    <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />
+    <!--<KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />-->
+    <!--<KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />-->
+    <StaticResource ResourceKey="NextVideoKey" />
+    <StaticResource ResourceKey="PrevVideoKey" />
 
     <KeyBinding Key="Right" Command="{Binding ChangeSeekVideoPositionCommand}">
       <KeyBinding.CommandParameter>
@@ -452,8 +459,7 @@
           </MenuItem.Header>
           <MenuItem.ItemsSource>
             <CompositeCollection>
-              <!-- ショートカット名バインドしたかったけど今のレイアウトだとできなんだ -->
-              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="Ctrl + F">
+              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="{Binding Source={StaticResource NextVideoKey}, Converter={StaticResource KeyBindingToGestureTextConverter}}">
                 <MenuItem.Style>
                   <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                     <Style.Triggers>
@@ -482,7 +488,7 @@
                   </Style>
                 </MenuItem.Style>
               </MenuItem>
-              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="Ctrl + B" Style="{StaticResource {x:Type MenuItem}}">
+              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="{Binding Source={StaticResource PrevVideoKey}, Converter={StaticResource KeyBindingToGestureTextConverter}}" Style="{StaticResource {x:Type MenuItem}}">
                 <MenuItem.Icon>
                   <Viewbox Style="{StaticResource SmallIconBox}">
                     <Canvas Style="{StaticResource IconCanvas-24x24}">
