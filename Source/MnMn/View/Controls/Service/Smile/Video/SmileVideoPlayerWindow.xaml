@@ -2221,7 +2221,7 @@
                             </MenuItem>
                             <Separator />
                             <MenuItem Header="現在のプレイヤーで再生" Command="{Binding DataContext.MenuOpenVideoIdLinkCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}" />
-                            <MenuItem Header="新規プレイヤーで再生"  Command="{Binding DataContext.MenuOpenVideoIdLinkInNewWindowCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}" />
+                            <MenuItem Header="新規プレイヤーで開く"  Command="{Binding DataContext.MenuOpenVideoIdLinkInNewWindowCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}" />
                             <Separator />
                             <MenuItem Header="タグをコピー" Command="{Binding DataContext.CopyTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>

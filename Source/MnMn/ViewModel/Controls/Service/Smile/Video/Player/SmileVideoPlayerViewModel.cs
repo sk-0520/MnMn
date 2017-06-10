@@ -1889,11 +1889,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         var videoId = o as string;
                         OpenVideoLinkAsync(videoId).ConfigureAwait(false);
                     }
+                    , o => !string.IsNullOrWhiteSpace((string)o)
                 );
             }
         }
         public ICommand MenuOpenVideoIdLinkCommand => OpenVideoIdLinkCommand;
-        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
+        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false), o => !string.IsNullOrWhiteSpace((string)o)); } }
         public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
         public ICommand MenuAddPlayListVideoIdLinkCommand
         {
