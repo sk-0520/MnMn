@@ -2220,6 +2220,25 @@
                               </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
+                            <MenuItem Header="現在のプレイヤーで再生" Command="{Binding DataContext.MenuOpenVideoIdLinkCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}">
+                              <MenuItem.Icon>
+                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource SmallDefaultIconPath}" />
+                                  </Canvas>
+                                </Viewbox>
+                              </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="新規プレイヤーで開く" Command="{Binding DataContext.MenuOpenVideoIdLinkInNewWindowCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}">
+                              <MenuItem.Icon>
+                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_OpenInNewWindow}" Style="{StaticResource SmallDefaultIconPath}" />
+                                  </Canvas>
+                                </Viewbox>
+                              </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
                             <MenuItem Header="タグをコピー" Command="{Binding DataContext.CopyTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
                                 <Viewbox Style="{StaticResource SmallIconBox}">
@@ -2244,6 +2263,13 @@
                           CommandParameter="{Binding}"
                         >
                           <TextBlock Text="{Binding TagName, Mode=OneTime}" />
+                        </Button>
+                        <Button Visibility="{Binding HasVideoId, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding DataContext.OpenVideoIdLinkCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding VideoIdFromTagName}" Style="{StaticResource Hyperlink}" >
+                          <Viewbox Style="{StaticResource {x:Type Viewbox}}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                              <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource MinimumLinkIconPath}" />
+                            </Canvas>
+                          </Viewbox>
                         </Button>
                         <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Viewbox Style="{StaticResource {x:Type Viewbox}}">
