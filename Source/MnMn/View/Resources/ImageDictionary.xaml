@@ -162,6 +162,9 @@
   <!-- https://materialdesignicons.com/icon/fullscreen-exit -->
   <Geometry x:Key="Image_FullScreen-Exit">M14,14H19V16H16V19H14V14M5,14H10V19H8V16H5V14M8,5H10V10H5V8H8V5M19,8V10H14V5H16V8H19Z</Geometry>
 
+  <!-- https://materialdesignicons.com/icon/open-in-new -->
+  <Geometry x:Key="Image_OpenInNewWindow">M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z</Geometry>
+
   <!-- https://materialdesignicons.com/icon/lock-outline -->
   <Geometry x:Key="Image_Lock">M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,20V10H6V20H18M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10C4,8.89 4.89,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z</Geometry>
 

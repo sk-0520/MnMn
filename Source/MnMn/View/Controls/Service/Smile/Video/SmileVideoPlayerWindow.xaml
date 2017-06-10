@@ -2220,8 +2220,24 @@
                               </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="現在のプレイヤーで再生" Command="{Binding DataContext.MenuOpenVideoIdLinkCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}" />
-                            <MenuItem Header="新規プレイヤーで開く"  Command="{Binding DataContext.MenuOpenVideoIdLinkInNewWindowCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}" />
+                            <MenuItem Header="現在のプレイヤーで再生" Command="{Binding DataContext.MenuOpenVideoIdLinkCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}">
+                              <MenuItem.Icon>
+                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource SmallDefaultIconPath}" />
+                                  </Canvas>
+                                </Viewbox>
+                              </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="新規プレイヤーで開く" Command="{Binding DataContext.MenuOpenVideoIdLinkInNewWindowCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}">
+                              <MenuItem.Icon>
+                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_OpenInNewWindow}" Style="{StaticResource SmallDefaultIconPath}" />
+                                  </Canvas>
+                                </Viewbox>
+                              </MenuItem.Icon>
+                            </MenuItem>
                             <Separator />
                             <MenuItem Header="タグをコピー" Command="{Binding DataContext.CopyTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>

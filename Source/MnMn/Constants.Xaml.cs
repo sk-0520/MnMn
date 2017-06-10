@@ -20,6 +20,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public const string xamlImage_Copy = "Image_Copy";
         /// <summary>
+        /// 新しいウィンドウ系。
+        /// </summary>
+        public const string xamlImage_OpenInNewWindow = "Image_OpenInNewWindow";
+        /// <summary>
+        /// 再生。
+        /// </summary>
+        public const string xamlImage_Navigationbar_Play = "Image_Navigationbar_Play";
+        /// <summary>
         /// 未整理のブックマーク
         /// </summary>
         public const string xamlImage_Bookmark_Unorganized = "Image_Bookmark-Unorganized";
