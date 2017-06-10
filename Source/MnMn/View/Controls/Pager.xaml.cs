@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
             var pageItems = PageItems
                 .Cast<PageViewModelBase>()
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
 
             var currentItem = pageItems.FirstOrDefault(p => p.IsChecked.GetValueOrDefault());

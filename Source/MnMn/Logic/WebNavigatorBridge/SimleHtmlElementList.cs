@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge
         public SimleHtmlElementList(Regex tagNameRegex, IEnumerable<SimpleHtmlElement> nodes)
         {
             TagNameRegex = tagNameRegex;
-            Nodes = nodes.ToEvalSequence();
+            Nodes = nodes.ToEvaluatedSequence();
             NodesPath = GetNodesPath(Nodes);
 
             HitTagNameInNodesPath = TagNameRegex.IsMatch(NodesPath);
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge
             for(var i = 0; i < Nodes.Count; i++) {
                 var currentElements = Nodes
                     .Take(i + 1)
-                    .ToEvalSequence()
+                    .ToEvaluatedSequence()
                 ;
                 var elementsCurrentNodePath = GetNodesPath(currentElements);
                 if(TagNameRegex.IsMatch(elementsCurrentNodePath)) {

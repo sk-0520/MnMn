@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items, int seed, IReadOnlyDictionary<int, TModel> playedItems)
         {
-            var baseItems = items.ToEvalSequence();
+            var baseItems = items.ToEvaluatedSequence();
             var itemsCount = baseItems.Count;
             if(itemsCount == 1) {
                 return 0;

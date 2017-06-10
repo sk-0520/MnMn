@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             var span = Constants.ServiceSmileVideoCheckItLaterCacheSpan;
             var gcItems = Setting.CheckItLater
                 .Where(c => !span.IsCacheTime(c.CheckTimestamp))
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
             foreach(var gcItem in gcItems) {
                 Setting.CheckItLater.Remove(gcItem);

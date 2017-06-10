@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 control.inputIgnoreOverlapTime.Value = (int)control.Filtering.IgnoreOverlapTime.TotalSeconds;
                 var defineItems = control.Filtering.CommentDefineItems
                     .Select(de => new SmileVideoCommentFilteringElementViewModel(de))
-                    .ToEvalSequence()
+                    .ToEvaluatedSequence()
                 ;
                 foreach(var item in defineItems) {
                     item.IsChecked = control.Filtering.DefineKeys.Any(k => k == item.Key);

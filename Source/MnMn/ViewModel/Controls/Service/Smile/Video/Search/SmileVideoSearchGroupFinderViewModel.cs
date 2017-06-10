@@ -586,7 +586,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         var preList = Enumerable.Range(1, pageCount - correctionPage)
                             .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, searchFinder.Method, searchFinder.Sort, Type, searchFinder.Query, (i + 1) * define.MaximumCount, define.MaximumCount))
                             .Select((v, i) => new PageViewModel<SmileVideoSearchItemFinderViewModel>(v, i + 2))
-                            .ToEvalSequence()
+                            .ToEvaluatedSequence()
                         ;
                         var pageVm = new PageViewModel<SmileVideoSearchItemFinderViewModel>(searchFinder, 1) {
                             LoadState = LoadState.Loaded,

@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         var singleContent = Mediation.ConvertRequestParameter(Key, rawContent, ServiceType);
                         var multiContents = singleContent
                             .Where(p => p.Value.Any(c => c == MultiStrings.defaultSeparator))
-                            .ToEvalSequence()
+                            .ToEvaluatedSequence()
                         ;
                         var hasMultiValue = multiContents.Any();
                         if(hasMultiValue) {
@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 singleContent.Remove(key);
                             }
                         }
-                        var convertedContent = singleContent.ToEvalSequence();
+                        var convertedContent = singleContent.ToEvaluatedSequence();
                         if(hasMultiValue) {
                             foreach(var pair in multiContents) {
                                 var ms = new MultiStrings(pair.Value);

@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         {
             var items = GetCheckedItems()
                 .Select(i => i.Information)
-                .ToEvalSequence();
+                .ToEvaluatedSequence();
             ;
 
             if(items.Any()) {

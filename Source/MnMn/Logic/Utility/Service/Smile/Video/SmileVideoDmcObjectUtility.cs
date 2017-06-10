@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .Select(b => b.Source)
             ;
 
-            return items.ToEvalSequence();
+            return items.ToEvaluatedSequence();
         }
 
         static IList<string> GetSortedAudioWeights(IEnumerable<string> videos)
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .Select(b => b.Source)
             ;
 
-            return items.ToEvalSequence();
+            return items.ToEvaluatedSequence();
         }
 
         // 勘違いテストから始めたのでテスト互換用に残してる(内部で呼んでる関数が大事)

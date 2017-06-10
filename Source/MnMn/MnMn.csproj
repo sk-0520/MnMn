@@ -380,7 +380,7 @@
     <Compile Include="Model\CrashReportSessionModel.cs" />
     <Compile Include="Model\CrashReportSettingModel.cs" />
     <Compile Include="Model\DragParameterModel.cs" />
-    <Compile Include="Model\EvalSequence.cs" />
+    <Compile Include="Model\EvaluatedSequence.cs" />
     <Compile Include="Model\LightweightUpdateModel.cs" />
     <Compile Include="Model\ExpressionElementModel.cs" />
     <Compile Include="Model\ExpressionItemModel.cs" />

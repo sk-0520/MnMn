@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             var groups = InformationItems
                 .GroupBy(i => i.ThumbnailUri.IsAbsoluteUri ? i.ThumbnailUri.Host : string.Empty)
                 .OrderByDescending(g => g.Count())
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
             foreach(var group in groups) {
                 var groupTask = Task.Run(() => {

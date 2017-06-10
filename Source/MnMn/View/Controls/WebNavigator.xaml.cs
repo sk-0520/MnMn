@@ -1002,7 +1002,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             var rootElements = WebNavigatorCore.GetRootElementsGeckoFx(element);
             model.RootNodes = rootElements
                 .Select(elm => WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(elm))
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
         }
 
@@ -1404,7 +1404,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 var contextMenuDefineParameter = new WebNavigatorParameterModel(null, null, WebNavigatorEngine.GeckoFx, WebNavigatorParameterKind.ContextMenuDefine);
                 var contextMenuDefineResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuDefineResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuDefineParameter));
                 //ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
-                ContextMenu.ItemsSource = contextMenuDefineResult.Items.Select(MakeContextMenuItem).ToEvalSequence();
+                ContextMenu.ItemsSource = contextMenuDefineResult.Items.Select(MakeContextMenuItem).ToEvaluatedSequence();
             }
 
             var contextMenuParameter = new WebNavigatorContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
@@ -1422,7 +1422,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 var menuItems = ContextMenu.Items
                     .Cast<Control>()
                     .Select(c => new { View = c, Define = (WebNavigatorContextMenuItemViewModel)c.DataContext })
-                    .ToEvalSequence()
+                    .ToEvaluatedSequence()
                 ;
                 foreach(var menuItem in menuItems) {
                     contextMenuItemParameter.Key = menuItem.Define.Key;
@@ -1471,7 +1471,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 var showMenuItems = menuItems
                     .SelectValueIndex()
                     .Where(i => i.Value.View.Visibility == Visibility.Visible)
-                    .ToEvalSequence()
+                    .ToEvaluatedSequence()
                 ;
                 foreach(var showMenuItem in showMenuItems.SelectValueIndex()) {
                     if(0 < showMenuItem.Index && showMenuItem.Value.Value.Define.IsSeparator) {
@@ -1522,7 +1522,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             var element = browser.Document?.ElementFromPoint(e.ClientX, e.ClientY);
             string hrefValue = null;
             if(element != null) {
-                var elements = WebNavigatorCore.GetRootElementsGeckoFx(element).ToEvalSequence();
+                var elements = WebNavigatorCore.GetRootElementsGeckoFx(element).ToEvaluatedSequence();
                 elements.Add(element);
 
                 var anchorElement = elements.LastOrDefault(elm => elm.TagName.ToUpper() == "A");

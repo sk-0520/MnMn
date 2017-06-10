@@ -511,7 +511,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             IsDragOver = false;
             DragOverBookmarkNode = null;
-            foreach(var node in GetNodes(n => n.IsDragOver).ToEvalSequence()) {
+            foreach(var node in GetNodes(n => n.IsDragOver).ToEvaluatedSequence()) {
                 node.IsDragOver = false;
             }
         }
@@ -549,7 +549,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     if(dstNode != null) {
                         var videoItems = finderItems.Select(i => i.Information.ToVideoItemModel());
                         dstNode.VideoItems.AddRange(videoItems);
-                        foreach(var item in finderItems.ToEvalSequence()) {
+                        foreach(var item in finderItems.ToEvaluatedSequence()) {
                             SelectedBookmarkNodeFinder.RemoveItem(item);
                         }
                         SelectedBookmarkNodeFinder.SelectedFinderItem = SelectedBookmarkNodeFinder.FinderItems.Cast<SmileVideoFinderItemViewModel>().FirstOrDefault();

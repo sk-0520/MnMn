@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var originTags = value.Split(Constants.SmileMyListBookmarkTagTokenSplitter)
                     .Select(s => s.Trim())
                     .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .ToEvalSequence()
+                    .ToEvaluatedSequence()
                 ;
                 var distinctNoOrderTags = new List<string>(originTags.Count);
                 foreach(var tag in originTags) {

@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var market = new Market(mediation);
             //var model = await market.LoadVideoRelationAsync("sm9");
             var model = await market.LoadVideoRelationAsync("sm14027065");
-            var items = SmileMarketUtility.GetVideoRelationItems(model).ToEvalSequence();
+            var items = SmileMarketUtility.GetVideoRelationItems(model).ToEvaluatedSequence();
         }
 
         void user_id()

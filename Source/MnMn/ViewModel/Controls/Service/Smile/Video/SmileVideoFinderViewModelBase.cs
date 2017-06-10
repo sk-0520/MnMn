@@ -382,7 +382,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ShowContinuousPlaybackMenu = false;
 
-            var items = GetCheckedItems().ToEvalSequence();
+            var items = GetCheckedItems().ToEvaluatedSequence();
 
             if(!items.Any()) {
                 return Task.CompletedTask;
@@ -390,7 +390,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var playList = items
                 .Select(i => i.Information)
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
 
             foreach(var item in items) {
@@ -457,7 +457,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var items = checkedItems
                 .Select(i => i.Information.ToVideoItemModel())
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items, true)));
         }

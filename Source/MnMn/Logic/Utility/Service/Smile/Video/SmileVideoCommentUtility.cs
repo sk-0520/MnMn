@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .Where(i => i.ViewModel.CommentVertical == commentViewModel.CommentVertical)
                 .GroupBy(i => (int)Canvas.GetTop(i.Element))
                 .IfOrderByAsc(g => g.Key, isAsc)
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
 
             var commentAreaHeight = (int)commentArea.Height;
@@ -294,7 +294,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .Where(c => !c.NowShowing)
                 .Where(c => !c.IsNiwanLanguage) // #405
                 .Where(c => InShowTime(c, prevTime, nowTime))
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
             if(newComments.Any()) {
                 foreach(var commentViewModel in newComments.Where(c => !c.HasCommentScript)) {
@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                         .OrderBy(i => i.ViewModel.ElapsedTime)
                         .ThenBy(i => i.ViewModel.Number)
                         .Take(showingCommentList.Count - displayCommentLimitCount)
-                        .ToEvalSequence()
+                        .ToEvaluatedSequence()
                     ;
                     foreach(var item in removeList) {
                         item.Clock.Controller.SkipToFill();

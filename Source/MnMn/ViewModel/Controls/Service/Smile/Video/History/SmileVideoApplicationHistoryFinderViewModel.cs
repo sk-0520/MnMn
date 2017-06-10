@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         protected override Task<CheckModel> RemoveCheckedItemsAsync()
         {
             var items = GetCheckedItems()
-                .ToEvalSequence();
+                .ToEvaluatedSequence();
             ;
 
             if(items.Any()) {

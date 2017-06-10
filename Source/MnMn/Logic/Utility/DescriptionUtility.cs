@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
                 try {
                     var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
-                    document.Blocks.AddRange(flowDocument.Blocks.ToEvalSequence());
+                    document.Blocks.AddRange(flowDocument.Blocks.ToEvaluatedSequence());
                 } catch(XamlParseException ex) {
                     logger.Error(ex);
                     var error = new Paragraph();

@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             var rankingDefine = Mediation.GetResultFromRequest<SmileVideoRankingModel>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
             RankingCategoryItems = rankingDefine.Items
                 .Select(i => new SmileVideoRankingGroupViewModel(i))
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
             foreach(var item in RankingCategoryItems.SelectMany(i => i.Items)) {
                 item.IsChecked = !Setting.Video.Ranking.IgnoreCategoryItems.Any(s => s == item.Key);

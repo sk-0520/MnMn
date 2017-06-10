@@ -86,12 +86,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             WebNavigatorBridge = LoadModelFromFile<WebNavigatorBridgeModel>(Constants.ApplicationWebNavigatorBridgePath);
             WebNavigatorNavigatingItems = WebNavigatorBridge.Navigating.Items
                 .Select(i => new WebNavigatorNavigatingItemViewModel(i))
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
 
             WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items
                 .Select(i => new WebNavigatorContextMenuItemViewModel(i))
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
             WebNavigatorContextMenuMap = WebNavigatorContextMenuItems.ToDictionary(i => i.Key, i => i);
 
@@ -570,7 +570,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(appLoggingParameter != null) {
                 var logs = ManagerPack.AppManager.AppInformationManager.AppLoggingManager.LogListViewer;
                 if(appLoggingParameter.GetClone) {
-                    logs = logs.ToEvalSequence();
+                    logs = logs.ToEvaluatedSequence();
                 }
 
                 return new ResponseModel(request, logs);

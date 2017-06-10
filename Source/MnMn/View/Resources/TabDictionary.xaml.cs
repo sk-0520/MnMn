@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             var baseItem = tabItems.FirstOrDefault();
 
             if(baseItem != null) {
-                return tabItems.Where(t => t.Parent == baseItem.Parent).ToEvalSequence();
+                return tabItems.Where(t => t.Parent == baseItem.Parent).ToEvaluatedSequence();
             }
 
             return new List<TabItem>();

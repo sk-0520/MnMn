@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
                 if(this._targetItems == null) {
                     this._targetItems = Model.TargetItems
                         .Select(i => new WebNavigatorElementConditionTagViewModel(i))
-                        .ToEvalSequence()
+                        .ToEvaluatedSequence()
                     ;
                 }
 

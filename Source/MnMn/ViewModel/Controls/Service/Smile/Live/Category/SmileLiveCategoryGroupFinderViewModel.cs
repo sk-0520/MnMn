@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
                         var preList = Enumerable.Range(1, pageCount - 1)
                             .Select((n, i) => new SmileLiveCategoryItemFinderViewModel(Mediation, CategoryModel, searchFinder.Sort, searchFinder.Order, searchFinder.Category, i + 1))
                             .Select((v, i) => new PageViewModel<SmileLiveCategoryItemFinderViewModel>(v, i + 2))
-                            .ToEvalSequence()
+                            .ToEvaluatedSequence()
                         ;
                         var pageVm = new PageViewModel<SmileLiveCategoryItemFinderViewModel>(searchFinder, 1) {
                             LoadState = LoadState.Loaded,

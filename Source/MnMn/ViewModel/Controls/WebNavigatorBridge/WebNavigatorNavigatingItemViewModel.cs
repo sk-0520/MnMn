@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
                 if(this._conditions == null) {
                     this._conditions = DefinedModel.Conditions
                         .Select(i => new WebNavigatorPageConditionViewModel(i))
-                        .ToEvalSequence()
+                        .ToEvaluatedSequence()
                     ;
                 }
 

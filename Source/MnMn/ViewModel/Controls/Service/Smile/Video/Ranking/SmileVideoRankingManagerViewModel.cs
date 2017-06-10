@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         void MakeUsingCategory()
         {
             // 初期化で読み込みが動いちゃう対応
-            IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> items = GetLinearRankingElementList(RankingModel.Items).ToEvalSequence();
+            IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> items = GetLinearRankingElementList(RankingModel.Items).ToEvaluatedSequence();
             var removeItems = items.Where(i => Setting.Ranking.IgnoreCategoryItems.Any(s => s == i.Key));
             if(removeItems.Any()) {
                 var removedItems = items.Except(removeItems);
@@ -159,14 +159,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                     .Where(c => c.Extends.ContainsKey("age"))
                     .Where(c => Session.Age < int.Parse(c.Extends["age"]))
                 ;
-                categoryItems = categoryItems.Except(expitems).ToEvalSequence();
+                categoryItems = categoryItems.Except(expitems).ToEvaluatedSequence();
             }
             CategoryItems = null;
             SelectedCategory = categoryItems.FirstOrDefault(m => m.Model.Key == Setting.Ranking.DefaultCategoryKey) ?? categoryItems.First();
             CategoryItems = CollectionModel.Create(categoryItems);
             CallOnPropertyChange(nameof(CategoryItems));
 
-            CurrentIgnoreCategoryItems = Setting.Ranking.IgnoreCategoryItems.ToEvalSequence();
+            CurrentIgnoreCategoryItems = Setting.Ranking.IgnoreCategoryItems.ToEvaluatedSequence();
         }
 
         IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)

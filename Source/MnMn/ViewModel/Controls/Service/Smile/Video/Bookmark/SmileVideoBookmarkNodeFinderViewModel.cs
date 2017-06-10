@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void RemoveCheckedVideos(IEnumerable<SmileVideoFinderItemViewModel> finderItems)
         {
-            foreach(var finderItem in finderItems.ToEvalSequence()) {
+            foreach(var finderItem in finderItems.ToEvaluatedSequence()) {
                 var index = FinderItemList.IndexOf(finderItem);
                 FinderItemList.RemoveAt(index);
                 Node.VideoItems.RemoveAt(index);
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             DataObject data;
             if(SelectedFinderItem.IsChecked.GetValueOrDefault()) {
-                var items = GetCheckedItems().ToEvalSequence();
+                var items = GetCheckedItems().ToEvaluatedSequence();
                 data = new DataObject(typeof(IEnumerable<SmileVideoFinderItemViewModel>), items);
             } else {
                 data = new DataObject(SelectedFinderItem.GetType(), SelectedFinderItem);

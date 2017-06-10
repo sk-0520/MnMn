@@ -15,9 +15,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         public SmileVideoRankingGroupViewModel(SmileVideoCategoryGroupModel model)
             : base(model)
         {
-            Items = Model.Categories.Select(i => new SmileVideoRankingSelectItemViewModel(i)).ToEvalSequence();
+            Items = Model.Categories.Select(i => new SmileVideoRankingSelectItemViewModel(i)).ToEvaluatedSequence();
             RootItem = Items.First();
-            Children = Items.Skip(1).ToEvalSequence();
+            Children = Items.Skip(1).ToEvaluatedSequence();
         }
 
         #region property

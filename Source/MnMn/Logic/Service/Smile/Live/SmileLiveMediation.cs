@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
         {
             var windowViewModels = Players
                 .Select(p => (SmileLivePlayerViewModel)p.DataContext)
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
             return new ResponseModel(request, windowViewModels);
         }

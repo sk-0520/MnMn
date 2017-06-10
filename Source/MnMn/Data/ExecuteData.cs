@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Data
             if(arguments == null) {
                 Arguments = new CollectionModel<string>();
             } else {
-                Arguments = arguments.ToEvalSequence();
+                Arguments = arguments.ToEvaluatedSequence();
             }
         }
 

@@ -505,7 +505,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var removeItems = SearchHistoryList.ModelList
                 .Where(m => m.TotalCount == 0)
-                .ToEvalSequence()
+                .ToEvaluatedSequence()
             ;
 
             if(removeItems.Any()) {
