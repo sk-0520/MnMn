@@ -2245,6 +2245,24 @@
                         >
                           <TextBlock Text="{Binding TagName, Mode=OneTime}" />
                         </Button>
+                        <Button Command="{Binding DataContext.OpenVideoIdLinkCommand, RelativeSource={RelativeSource AncestorType=Window}}" >
+                          <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource Hyperlink}">
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding HasVideoId}" Value="True">
+                                  <Setter Property="Visibility" Value="Visible" />
+                                  <Setter Property="CommandParameter" Value="{Binding VideoIdFromTagName}" />
+                                </DataTrigger>
+                              </Style.Triggers>
+                              <Setter Property="Visibility" Value="Collapsed" />
+                            </Style>
+                          </Button.Style>
+                          <Viewbox Style="{StaticResource {x:Type Viewbox}}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                              <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource MinimumLinkIconPath}" />
+                            </Canvas>
+                          </Viewbox>
+                        </Button>
                         <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Viewbox Style="{StaticResource {x:Type Viewbox}}">
                             <Canvas Style="{StaticResource IconCanvas-24x24}" >
