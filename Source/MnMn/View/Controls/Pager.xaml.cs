@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 using Package.stackoverflow.com;
 
@@ -144,7 +145,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
             var pageItems = PageItems
                 .Cast<PageViewModelBase>()
-                .ToList()
+                .ToEvaluatedSequence()
             ;
 
             var currentItem = pageItems.FirstOrDefault(p => p.IsChecked.GetValueOrDefault());

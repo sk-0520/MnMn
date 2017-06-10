@@ -39,6 +39,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
@@ -297,6 +298,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand ShowPosterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var userId = SelectedFinderItem.Information.UserId;
+                        SmileDescriptionUtility.OpenUserId(userId, Mediation);
+                    },
+                    o => SelectedFinderItem != null && !SelectedFinderItem.Information.IsChannelVideo
+                );
+            }
+        }
 
         #endregion
 
@@ -364,11 +378,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        internal virtual Task ContinuousPlaybackAsync(bool isRandom)
+        internal virtual Task ContinuousPlaybackAsync(bool isRandom, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
             ShowContinuousPlaybackMenu = false;
 
-            var items = GetCheckedItems().ToArray();
+            var items = GetCheckedItems().ToEvaluatedSequence();
 
             if(!items.Any()) {
                 return Task.CompletedTask;
@@ -376,7 +390,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var playList = items
                 .Select(i => i.Information)
-                .ToArray()
+                .ToEvaluatedSequence()
             ;
 
             foreach(var item in items) {
@@ -385,8 +399,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var vm = new SmileVideoPlayerViewModel(Mediation);
             vm.IsRandomPlay = isRandom;
+
             try {
                 var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                if(playerPreparationAction != null) {
+                    playerPreparationAction(vm);
+                }
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
                 return task;
             } catch(SmileVideoCanNotPlayItemInPlayListException ex) {
@@ -439,9 +457,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var items = checkedItems
                 .Select(i => i.Information.ToVideoItemModel())
-                .ToList()
+                .ToEvaluatedSequence()
             ;
-            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items)));
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmark, items, true)));
         }
 
         void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)

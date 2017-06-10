@@ -843,6 +843,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   Twitter に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_IdleTalk {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_IdleTalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Tweet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_IdleTalk_Mutter {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_IdleTalk_Mutter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ニコニコ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_ServiceType_Smile {
@@ -1226,7 +1244,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   新規プレイヤーで再生 に類似しているローカライズされた文字列を検索します。
+        ///   新規プレイヤーで開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow {
             get {

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+	<param key="mutter-post-page">
+		<item key="text" value="${text}" encode="uri" />
+		<item key="url" value="${url}" force="true" encode="uri" />
+		<item key="via" value="${via}" force="true"  encode="uri"/>
+		<item key="in_reply_to" value="${in_reply_to}" force="true" encode="uri" />
+		<item key="related" value="${related}" force="true" encode="uri" />
+		<item key="original_referer" value="${original_referer}" force="true" encode="uri" />
+		<item key="hashtags" value="${hashtags}" force="true" encode="uri" />
+		<item key="lang" value="${lang}" force="true" />
+	</param>
+</parameters>

@@ -22,13 +22,14 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="1200"
+  d:DesignHeight="1800"
   d:DesignWidth="600"
 >
   <UserControl.Resources>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+      <cttn_sl_view_converter:AutoColorConverter x:Key="AutoColorConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
     </ResourceDictionary>
@@ -333,10 +334,46 @@
               <WrapPanel Grid.Row="4" Grid.Column="1">
                 <RadioButton Style="{StaticResource HorizontalRadioButton}" IsChecked="{Binding BackgroundKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:BackgroundKind.AutoColor}}"   Content="{Binding Source={x:Static app_define_ui_player:BackgroundKind.AutoColor}, Converter={StaticResource EnumDisplayConverter}}" />
                 <RadioButton Style="{StaticResource HorizontalRadioButton}" IsChecked="{Binding BackgroundKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:BackgroundKind.SimpleColor}}" Content="{Binding Source={x:Static app_define_ui_player:BackgroundKind.SimpleColor}, Converter={StaticResource EnumDisplayConverter}}" />
-                <ComboBox ItemsSource="{Binding BackgroundColors}" SelectedItem="{Binding BackgroundColor}" />
+                <ComboBox ItemsSource="{Binding BackgroundColors}" SelectedItem="{Binding BackgroundColor}">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Ellipse StrokeThickness="1" Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}" Margin="{StaticResource ItemMargin}">
+                          <Ellipse.Fill>
+                            <SolidColorBrush Color="{Binding }" />
+                          </Ellipse.Fill>
+                          <Ellipse.Stroke>
+                            <SolidColorBrush Color="{Binding Fill.Color, RelativeSource={RelativeSource AncestorType=Ellipse}, Converter={StaticResource AutoColorConverter}}" />
+                          </Ellipse.Stroke>
+                        </Ellipse>
+                        <TextBlock Text="{Binding }" />
+                      </StackPanel>
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
               </WrapPanel>
             </Grid>
           </StackPanel>
+        </GroupBox>
+
+        <GroupBox mamc:ControlsHelper.ContentCharacterCasing="Normal" Header="Twitter 連携">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding AutoInputVideoTitle}">視聴動画タイトルを付与する</CheckBox>
+            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding AutoInputWatchPageUri}">視聴ページ URI を付与する</CheckBox>
+
+            <Label Grid.Row="2" Grid.Column="0">ハッシュタグ</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource VerticalTextBox}" Text="{Binding AutoInputHashTags, UpdateSourceTrigger=PropertyChanged}" />
+          </Grid>
         </GroupBox>
 
         <GroupBox Header="ランキング">

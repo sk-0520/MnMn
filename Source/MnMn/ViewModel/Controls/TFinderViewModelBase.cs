@@ -13,6 +13,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
@@ -185,7 +186,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         internal virtual void ToggleAllCheck()
         {
-            var items = FinderItems.Cast<TFinderItemViewModel>().ToArray();
+            var items = FinderItems.Cast<TFinderItemViewModel>().ToEvaluatedSequence();
             var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
 
             foreach(var item in items) {
@@ -214,7 +215,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             var prevInformations = FinderItemList
                 .Select(i => i.Information)
-                .ToArray()
+                .ToEvaluatedSequence()
             ;
             foreach(var item in prevInformations) {
                 item.DecrementReference();
@@ -224,7 +225,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 .Select((v, i) => new { Information = v, Index = i })
                 .Where(v => v.Information != null)
                 .Select(v => CreateFinderItem(v.Information, BaseNumber + v.Index + 1))
-                .ToArray()
+                .ToEvaluatedSequence()
             ;
 
             return LoadInformationAsync(finderItems.Select(i => i.Information), informationCacheSpan).ContinueWith(t => {

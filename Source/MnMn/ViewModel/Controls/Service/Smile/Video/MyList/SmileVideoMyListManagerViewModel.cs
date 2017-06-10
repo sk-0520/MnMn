@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 if(SetVariableValue(ref this._isSelectedBookmark, value)) {
                     if(IsSelectedBookmark) {
                         var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
-                        var items = setting.MyList.Bookmark.ToArray();
+                        var items = setting.MyList.Bookmark.ToEvaluatedSequence();
                         BookmarkUserMyListPairs.Clear();
                         foreach(var item in items) {
                             BookmarkUserMyListPairs.Add(item, null);
@@ -670,9 +670,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             var videoIdList = accountFinder.GetCheckedItems()
                 .Select(v => v.Information.VideoId)
-                .ToArray()
+                .ToEvaluatedSequence()
             ;
-            if(videoIdList.Length == 0) {
+            if(!videoIdList.Any()) {
                 return CheckModel.Failure();
             }
             var myList = GetMyListApi();
@@ -697,7 +697,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var myList = GetMyListApi();
             var myListIds = AccountSortMyListItems
                 .Select(f => f.MyListId)
-                .ToList()
+                .ToEvaluatedSequence()
             ;
             var sortResult = await myList.SortAccountGroupAsync(myListIds);
 
@@ -774,7 +774,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var list = Enumerable
                     .Range(1, pageCount)
                     .Select(i => new SmileVideoMyListFinderPageViewModel(Mediation, i + 1, query))
-                    .ToList()
+                    .ToEvaluatedSequence()
                 ;
                 list.Insert(0, new SmileVideoMyListFinderPageViewModel(Mediation, finders, query));
                 var pages = list
@@ -862,7 +862,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                         var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, SmileVideoInformationFlags.None));
                         return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                     })
-                    .ToArray()
+                    .ToEvaluatedSequence()
                 ;
 
                 var exceptVideoViewModel = newViewModels
@@ -870,7 +870,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     .Except(nowMyList.Videos)
                     .Select(v => newViewModels.First(i => i.VideoId == v))
                     .Select(i => i.ToVideoItemModel())
-                    .ToArray()
+                    .ToEvaluatedSequence()
                 ;
 
                 if(exceptVideoViewModel.Any()) {
@@ -907,7 +907,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         void SetTagItems()
         {
-            var prevItems = BookmarkTagItems.ToArray();
+            var prevItems = BookmarkTagItems.ToEvaluatedSequence();
             foreach(var item in prevItems) {
                 TagItemPropertyChangedListener.Remove(item);
             }
@@ -921,7 +921,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 .OrderBy(s => s)
                 .Distinct()
                 .Select(s => new SmileVideoMyListBookmarkFilterViewModel(s))
-                .ToArray()
+                .ToEvaluatedSequence()
             ;
             foreach(var item in tagNames) {
                 var prev = prevItems.FirstOrDefault(t => t.TagName == item.TagName);
@@ -947,7 +947,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var targetTags = BookmarkTagItems.Where(b => b.IsChecked.GetValueOrDefault());
 
             var vm = (SmileVideoBookmarkMyListFinderViewModel)obj;
-            var myTags = vm.TagNameItems.ToArray();
+            var myTags = vm.TagNameItems.ToEvaluatedSequence();
             var show = targetTags.All(t => myTags.Any(s => s == t.TagName));
 
             return show;

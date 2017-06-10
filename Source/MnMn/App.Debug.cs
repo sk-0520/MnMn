@@ -23,8 +23,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api;
@@ -64,6 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //user_id();
             //exp();
             //search();
+            //tweetPost();
         }
 
         async void login()
@@ -198,7 +201,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var market = new Market(mediation);
             //var model = await market.LoadVideoRelationAsync("sm9");
             var model = await market.LoadVideoRelationAsync("sm14027065");
-            var items = SmileMarketUtility.GetVideoRelationItems(model).ToList();
+            var items = SmileMarketUtility.GetVideoRelationItems(model).ToEvaluatedSequence();
         }
 
         void user_id()
@@ -235,6 +238,28 @@ namespace ContentTypeTextNet.MnMn.MnMn
             };
             var uri = mediation.GetUri("video-search", map, Library.Bridging.Define.ServiceType.SmileVideo);
             Debug.WriteLine(uri);
+        }
+
+        void tweetPost()
+        {
+            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+
+            var sv = ServiceType.IdleTalkMutter;
+            var key = "mutter-post-page";
+
+            var map = new StringsModel() {
+                ["url"] = "url",
+                ["text"] = "あいう",
+                ["via"] = "via",
+                ["in_reply_to"] = "",
+                ["related"] = "related",
+                ["original_referer"] = "original_referer",
+                ["lang"] = "lang",
+            };
+
+            var rawUri = mediation.GetUri(key, map, sv);
+            var convertedUri = mediation.ConvertUri(key, rawUri.Uri, sv);
+            Debug.WriteLine(convertedUri);
         }
     }
 #endif

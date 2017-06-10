@@ -22,6 +22,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
@@ -92,7 +93,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 //control.FilteringViewModelItemsSource = control.Filtering.CommentFilterList.ViewModelList;
                 control.selectIgnoreOverlapWord.IsChecked = control.Filtering.IgnoreOverlapWord;
                 control.inputIgnoreOverlapTime.Value = (int)control.Filtering.IgnoreOverlapTime.TotalSeconds;
-                var defineItems = control.Filtering.CommentDefineItems.Select(de => new SmileVideoCommentFilteringElementViewModel(de)).ToArray();
+                var defineItems = control.Filtering.CommentDefineItems
+                    .Select(de => new SmileVideoCommentFilteringElementViewModel(de))
+                    .ToEvaluatedSequence()
+                ;
                 foreach(var item in defineItems) {
                     item.IsChecked = control.Filtering.DefineKeys.Any(k => k == item.Key);
                 }

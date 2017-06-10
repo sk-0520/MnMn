@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -105,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items, int seed, IReadOnlyDictionary<int, TModel> playedItems)
         {
-            var baseItems = items.ToList();
+            var baseItems = items.ToEvaluatedSequence();
             var itemsCount = baseItems.Count;
             if(itemsCount == 1) {
                 return 0;

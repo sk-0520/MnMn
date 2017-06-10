@@ -354,7 +354,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
                     return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 })
-                .ToArray()
+                .ToEvaluatedSequence()
             ;
 
             var exceptVideoViewModel = newViewModels
@@ -362,7 +362,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 .Except(nowBookmark.Videos)
                 .Select(v => newViewModels.First(i => i.VideoId == v))
                 .Select(i => i.ToVideoItemModel())
-                .ToArray()
+                .ToEvaluatedSequence()
             ;
 
             if(exceptVideoViewModel.Any()) {

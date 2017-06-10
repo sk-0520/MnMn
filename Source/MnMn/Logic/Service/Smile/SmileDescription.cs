@@ -90,8 +90,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     var link = (string)outputValue;
 
                     var menuItems = new DescriptionContextMenuBase[] {
-                        new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoId, nameof(ISmileDescription.MenuOpenVideoIdLinkCommand), null),
-                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow, nameof(ISmileDescription.MenuOpenVideoIdLinkInNewWindowCommand), null),
+                        new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoId, nameof(ISmileDescription.MenuOpenVideoIdLinkCommand), null, Constants.xamlImage_Navigationbar_Play, Constants.xamlStyle_SmallDefaultIconPath),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow, nameof(ISmileDescription.MenuOpenVideoIdLinkInNewWindowCommand), null, Constants.xamlImage_OpenInNewWindow, Constants.xamlStyle_SmallDefaultIconPath),
                         new DescriptionContextMenuSeparator(),
                         new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddPlayListVideoId, nameof(ISmileDescription.MenuAddPlayListVideoIdLinkCommand), null, Constants.xamlImage_Playlist_Add, Constants.xamlStyle_SmallDefaultIconPath),
                         new DescriptionContextMenuSeparator(),

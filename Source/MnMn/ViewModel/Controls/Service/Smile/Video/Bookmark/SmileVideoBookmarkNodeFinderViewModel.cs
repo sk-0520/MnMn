@@ -27,11 +27,13 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
@@ -129,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void RemoveCheckedVideos(IEnumerable<SmileVideoFinderItemViewModel> finderItems)
         {
-            foreach(var finderItem in finderItems.ToArray()) {
+            foreach(var finderItem in finderItems.ToEvaluatedSequence()) {
                 var index = FinderItemList.IndexOf(finderItem);
                 FinderItemList.RemoveAt(index);
                 Node.VideoItems.RemoveAt(index);
@@ -206,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             DataObject data;
             if(SelectedFinderItem.IsChecked.GetValueOrDefault()) {
-                var items = GetCheckedItems().ToList();
+                var items = GetCheckedItems().ToEvaluatedSequence();
                 data = new DataObject(typeof(IEnumerable<SmileVideoFinderItemViewModel>), items);
             } else {
                 data = new DataObject(SelectedFinderItem.GetType(), SelectedFinderItem);
@@ -219,6 +221,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             };
 
             return CheckResultModel.Success(param);
+        }
+
+        internal override Task ContinuousPlaybackAsync(bool isRandom, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
+        {
+            if(playerPreparationAction != null) {
+                throw new ArgumentException($"{nameof(playerPreparationAction)} is not null!!");
+            }
+
+            return base.ContinuousPlaybackAsync(isRandom, vm => {
+                // 通常状態でのブックマーク内全選択であればこのブックマークを選択状態にする
+                if(SelectedSortType == SmileVideoSortType.Number && IsAscending) {
+                    if(vm.PlayListItems.Count == FinderItemsViewer.Count) {
+                        vm.SelectedBookmark = Node;
+                    }
+                }
+            });
         }
 
         #endregion

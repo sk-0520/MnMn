@@ -78,6 +78,7 @@
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
       <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
+      <app_view_converter:KeyBindingToGestureTextConverter x:Key="KeyBindingToGestureTextConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
@@ -176,6 +177,10 @@
           </EventTrigger>
         </ControlTemplate.Triggers>
       </ControlTemplate>
+
+      <KeyBinding x:Key="NextVideoKey" Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
+      <KeyBinding x:Key="PrevVideoKey" Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />
+
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
   <mamc:MetroWindow.InputBindings>
@@ -191,8 +196,10 @@
     <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding StopCommand}" />
     <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
 
-    <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
-    <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />
+    <!--<KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />-->
+    <!--<KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />-->
+    <StaticResource ResourceKey="NextVideoKey" />
+    <StaticResource ResourceKey="PrevVideoKey" />
 
     <KeyBinding Key="Right" Command="{Binding ChangeSeekVideoPositionCommand}">
       <KeyBinding.CommandParameter>
@@ -301,7 +308,35 @@
   <mamc:MetroWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
-        <Button Cursor="Hand" Margin="{StaticResource RightMargin}" Command="{Binding OpenDefaultBrowserCommand}">視聴ページ</Button>
+        <Button Cursor="Hand" Command="{Binding OpenIdleTalkMutterCommand}" CommandParameter="{StaticResource True}">
+          <Button.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="標準ブラウザで開く" Command="{Binding OpenIdleTalkMutterCommand}" CommandParameter="{StaticResource True}">
+                <MenuItem.Icon>
+                  <Image Style="{StaticResource SmallIconImage}" Source="{Binding Source={x:Static app_logic:WebNavigatorCore.DefaultBrowserIcon}}" />
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="内蔵ブラウザで開く" Command="{Binding OpenIdleTalkMutterCommand}" CommandParameter="{StaticResource False}">
+                <MenuItem.Icon>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Browser}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </MenuItem.Icon>
+              </MenuItem>
+            </ContextMenu>
+          </Button.ContextMenu>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource SmallItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Service-IdleTalk}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <TextBlock>つぶやく</TextBlock>
+          </StackPanel>
+        </Button>
+        <Button Cursor="Hand" Command="{Binding OpenDefaultBrowserCommand}">視聴ページ</Button>
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
       </StackPanel>
     </mamc:WindowCommands>
@@ -424,8 +459,7 @@
           </MenuItem.Header>
           <MenuItem.ItemsSource>
             <CompositeCollection>
-              <!-- ショートカット名バインドしたかったけど今のレイアウトだとできなんだ -->
-              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="Ctrl + F">
+              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="{Binding Source={StaticResource NextVideoKey}, Converter={StaticResource KeyBindingToGestureTextConverter}}">
                 <MenuItem.Style>
                   <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                     <Style.Triggers>
@@ -454,7 +488,7 @@
                   </Style>
                 </MenuItem.Style>
               </MenuItem>
-              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="Ctrl + B" Style="{StaticResource {x:Type MenuItem}}">
+              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="{Binding Source={StaticResource PrevVideoKey}, Converter={StaticResource KeyBindingToGestureTextConverter}}" Style="{StaticResource {x:Type MenuItem}}">
                 <MenuItem.Icon>
                   <Viewbox Style="{StaticResource SmallIconBox}">
                     <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -1163,7 +1197,7 @@
         />
 
         <TabControl Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource FinderTab}">
-          <TabItem>
+          <TabItem IsSelected="{Binding ShowCommentTab}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1746,7 +1780,7 @@
               </TabControl>
             </Grid>
           </TabItem>
-          <TabItem Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <TabItem IsSelected="{Binding ShowPlayListTab}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1762,6 +1796,7 @@
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
 
               <Grid Grid.Row="0">
@@ -1830,81 +1865,154 @@
 
               </Grid>
 
-              <ScrollViewer x:Name="listPlaylist" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
-                <ItemsControl ItemsSource="{Binding Source={StaticResource PlayListItems}}">
-                  <ItemsControl.ItemTemplate>
+              <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ListBox x:Name="listPlayList" Grid.Row="0" VirtualizingPanel.ScrollUnit="Item" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding Source={StaticResource PlayListItems}}" SelectedItem="{Binding SelectedPlayListItem}">
+                  <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                      <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    </Style>
+                  </ListBox.ItemContainerStyle>
+                  <ListBox.ItemTemplate>
                     <DataTemplate>
-                      <StackPanel>
-                        <Separator x:Name="separator" />
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                        <Grid>
-                          <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                          </Grid.ColumnDefinitions>
+                        <!-- ここまでやんなくてもよかったんだけどメニューと違って再生のマークが別プレイヤーで再生されてるとき用に一応仕組みだけ構築 -->
+                        <Control Grid.Column="0">
+                          <Control.Style>
+                            <Style TargetType="Control">
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                  <Setter Property="Template">
+                                    <Setter.Value>
+                                      <ControlTemplate>
+                                        <Viewbox Style="{StaticResource SmallItemBox}">
+                                          <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                            <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource SmallAccentIconPath}" />
+                                          </Canvas>
+                                        </Viewbox>
+                                      </ControlTemplate>
+                                    </Setter.Value>
+                                  </Setter>
+                                </DataTrigger>
+                              </Style.Triggers>
+                              <Setter Property="Template">
+                                <Setter.Value>
+                                  <ControlTemplate>
+                                    <Viewbox Style="{StaticResource SmallItemBox}">
+                                      <Canvas Style="{StaticResource IconCanvas-24x24}" />
+                                    </Viewbox>
+                                  </ControlTemplate>
+                                </Setter.Value>
+                              </Setter>
+                            </Style>
+                          </Control.Style>
+                        </Control>
 
-                          <!-- ここまでやんなくてもよかったんだけどメニューと違って再生のマークが別プレイヤーで再生されてるとき用に一応仕組みだけ構築 -->
-                          <ContentControl Grid.Column="0">
-                            <ContentControl.Style>
-                              <Style TargetType="ContentControl">
-                                <Style.Triggers>
-                                  <DataTrigger Binding="{Binding IsPlaying}" Value="True">
-                                    <Setter Property="ContentTemplate">
-                                      <Setter.Value>
-                                        <DataTemplate>
-                                          <Viewbox Style="{StaticResource SmallItemBox}">
-                                            <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                              <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource SmallAccentIconPath}" />
-                                            </Canvas>
-                                          </Viewbox>
-                                        </DataTemplate>
-                                      </Setter.Value>
-                                    </Setter>
-                                  </DataTrigger>
-                                </Style.Triggers>
-                                <Setter Property="ContentTemplate">
-                                  <Setter.Value>
-                                    <DataTemplate>
-                                      <Viewbox Style="{StaticResource SmallItemBox}">
-                                        <Canvas Style="{StaticResource IconCanvas-24x24}" />
-                                      </Viewbox>
-                                    </DataTemplate>
-                                  </Setter.Value>
-                                </Setter>
-                              </Style>
-                            </ContentControl.Style>
+                        <Button
+                          Focusable="False"
+                          Grid.Column="1"
+                          Content="{Binding Title}"
+                          Command="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                          CommandParameter="{Binding}"
+                          Style="{StaticResource Hyperlink}"
+                        />
 
-                          </ContentControl>
-
-                          <Button
-                            Focusable="False"
-                            Grid.Column="1"
-                            Content="{Binding Title}"
-                            Command="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                            CommandParameter="{Binding}"
-                            Style="{StaticResource Hyperlink}"
-                            HorizontalAlignment="Stretch"
-                          />
-
-                          <!-- 上とか下とかの移動処理 -->
-                          <!--<StackPanel Grid.Column="0"></StackPanel>-->
-
-                        </Grid>
-                      </StackPanel>
-
-                      <!--
-                      NOTE: デザインの都合上セパレータを消す必要ない感じ
-                      <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                          <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
-                        </DataTrigger>
-                      </DataTemplate.Triggers>
-                      -->
+                      </Grid>
                     </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-              </ScrollViewer>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Grid Grid.Row="1">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+
+                  <Button Grid.Column="0" Margin="{StaticResource RightMargin}" Command="{Binding ReleaseSelectedPlayListItemCommand}">解除</Button>
+
+                  <RepeatButton Grid.Column="1" Command="{Binding UpSelectedPlayListItemCommand}">
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
+                  </RepeatButton>
+                  <RepeatButton Grid.Column="2" Command="{Binding DownSelectedPlayListItemCommand}">
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
+                  </RepeatButton>
+
+                  <Button Grid.Column="3" Margin="{StaticResource LeftMargin}" Command="{Binding RemoveSelectedPlayListItemCommand}">削除</Button>
+
+                </Grid>
+              </Grid>
+
+              <Expander Grid.Row="2" ExpandDirection="Up" Header="ブックマーク保存">
+                <StackPanel>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition />
+                      <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <RadioButton Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  IsChecked="{Binding IsNewBookmark, Converter={StaticResource LogicalNotConverter}}">
+                      <RadioButton.Style>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedBookmark}" Value="{x:Null}">
+                              <Setter Property="IsEnabled" Value="False" />
+                              <Setter Property="Content" Value="ブックマーク未選択" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="IsEnabled" Value="True" />
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <TextBlock>
+                                <Run>既存:</Run>
+                                <Run FontWeight="Bold" Text="{Binding SelectedBookmark.Name}" />
+                              </TextBlock>
+                            </Setter.Value>
+                          </Setter>
+                        </Style>
+                      </RadioButton.Style>
+                    </RadioButton>
+
+                    <RadioButton Grid.Row="1" Grid.Column="0" Content="新規" IsChecked="{Binding IsNewBookmark}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" mamc:TextBoxHelper.Watermark="ブックマーク名" Text="{Binding NewBookmarkName, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
+
+                  </Grid>
+
+                  <Button Command="{Binding SavePlayListToBookmarkCommand}">
+                    <Button.Style>
+                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsNewBookmark}" Value="True">
+                            <Setter Property="Content" Value="ブックマーク作成" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="Content" Value="ブックマーク上書き" />
+                      </Style>
+                    </Button.Style>
+                  </Button>
+                </StackPanel>
+              </Expander>
             </Grid>
 
           </TabItem>
@@ -2112,6 +2220,25 @@
                               </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
+                            <MenuItem Header="現在のプレイヤーで再生" Command="{Binding DataContext.MenuOpenVideoIdLinkCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}">
+                              <MenuItem.Icon>
+                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource SmallDefaultIconPath}" />
+                                  </Canvas>
+                                </Viewbox>
+                              </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="新規プレイヤーで開く" Command="{Binding DataContext.MenuOpenVideoIdLinkInNewWindowCommand, Source={x:Reference root}}" CommandParameter="{Binding VideoIdFromTagName}">
+                              <MenuItem.Icon>
+                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_OpenInNewWindow}" Style="{StaticResource SmallDefaultIconPath}" />
+                                  </Canvas>
+                                </Viewbox>
+                              </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
                             <MenuItem Header="タグをコピー" Command="{Binding DataContext.CopyTagCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
                                 <Viewbox Style="{StaticResource SmallIconBox}">
@@ -2136,6 +2263,13 @@
                           CommandParameter="{Binding}"
                         >
                           <TextBlock Text="{Binding TagName, Mode=OneTime}" />
+                        </Button>
+                        <Button Visibility="{Binding HasVideoId, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding DataContext.OpenVideoIdLinkCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding VideoIdFromTagName}" Style="{StaticResource Hyperlink}" >
+                          <Viewbox Style="{StaticResource {x:Type Viewbox}}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                              <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource MinimumLinkIconPath}" />
+                            </Canvas>
+                          </Viewbox>
                         </Button>
                         <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Viewbox Style="{StaticResource {x:Type Viewbox}}">

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Data
 {
@@ -13,9 +15,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Data
             ApplicationPath = applicationPath;
 
             if(arguments == null) {
-                Arguments = new List<string>();
+                Arguments = new CollectionModel<string>();
             } else {
-                Arguments = arguments.ToList();
+                Arguments = arguments.ToEvaluatedSequence();
             }
         }
 

@@ -48,6 +48,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 using MahApps.Metro.Controls;
 using Meta.Vlc.Wpf;
 using OxyPlot;
+using Package.stackoverflow.com;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -99,6 +100,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// コメント有効位置抑制スライダー要素。
         /// </summary>
         Control EnabledCommentControl { get; set; }
+        /// <summary>
+        /// プレイリスト一覧。
+        /// </summary>
+        ItemsControl ListPlaylist { get; set; }
 
         CursorHider PlayerCursorHider { get; set; }
 
@@ -491,6 +496,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// プレイリスト。
         /// </summary>
         public PlayListManager<SmileVideoInformationViewModel> PlayListItems { get; } = new PlayListManager<SmileVideoInformationViewModel>();
+
         /// <summary>
         /// 関連動画読込状態。
         /// </summary>
@@ -758,7 +764,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool IsSelectedMarket
         {
             get { return this._isSelectedMarket; }
-            set { if(SetVariableValue(ref this._isSelectedMarket, value)) {
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedMarket, value)) {
                     if(IsSelectedMarket && MarketLoadState == LoadState.None) {
                         LoadMarketItemsAsync().ConfigureAwait(false);
                     }
@@ -1153,6 +1161,55 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._forceNavigatorbarOperation; }
             set { SetVariableValue(ref this._forceNavigatorbarOperation, value); }
+        }
+
+        public bool ShowCommentTab
+        {
+            get { return this._showCommentTab; }
+            set { SetVariableValue(ref this._showCommentTab, value); }
+        }
+
+        public bool ShowPlayListTab
+        {
+            get { return this._showPlayListTab; }
+            set
+            {
+                if(SetVariableValue(ref this._showPlayListTab, value)) {
+                    if(ShowPlayListTab && Information != null && ListPlaylist != null) {
+                        ScrollActiveVideoInPlayList(Information);
+                    }
+                }
+            }
+        }
+
+        public SmileVideoBookmarkNodeViewModel SelectedBookmark
+        {
+            get { return this._selectedBookmark; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedBookmark, value)) {
+                    IsNewBookmark = SelectedBookmark == null;
+                }
+            }
+        }
+
+        public string NewBookmarkName
+        {
+            get { return this._newBookmarkName; }
+            set { SetVariableValue(ref this._newBookmarkName, value); }
+        }
+
+        public bool IsNewBookmark
+        {
+            get { return this._isNewBookmark; }
+            set { SetVariableValue(ref this._isNewBookmark, value); }
+        }
+
+
+        public SmileVideoInformationViewModel SelectedPlayListItem
+        {
+            get { return this._selectedPlayListItem; }
+            set { SetVariableValue(ref this._selectedPlayListItem, value); }
         }
 
         #endregion

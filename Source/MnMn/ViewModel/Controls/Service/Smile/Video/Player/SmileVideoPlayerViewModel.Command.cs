@@ -14,6 +14,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
@@ -604,7 +605,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         ShellUtility.OpenUriInDefaultBrowser(Information.WatchUrl, Mediation.Logger);
-                    }
+                    },
+                    o => Information != null
                 );
             }
         }
@@ -642,6 +644,78 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         IsEnabledGlobalCommentFilering = !IsEnabledGlobalCommentFilering;
                     },
                     o => Information != null
+                );
+            }
+        }
+
+        public virtual ICommand OpenIdleTalkMutterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => OpenIdleTalkMutter((bool)o),
+                    o => Information != null
+                );
+            }
+        }
+
+        public ICommand SavePlayListToBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => SavePlayListToBookmark(),
+                    o => PlayListItems.Any() && ((!IsNewBookmark) || (IsNewBookmark && !string.IsNullOrEmpty(NewBookmarkName)))
+                );
+            }
+        }
+
+        public ICommand UpSelectedPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ItemsControlUtility.MoveItem(PlayListItems, SelectedPlayListItem, true),
+                    o => SelectedPlayListItem != null && ItemsControlUtility.CanMoveNext(PlayListItems, SelectedPlayListItem, true)
+                );
+            }
+        }
+
+        public ICommand ReleaseSelectedPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => SelectedPlayListItem = null,
+                    o => SelectedPlayListItem != null
+                );
+            }
+        }
+
+        public ICommand DownSelectedPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ItemsControlUtility.MoveItem(PlayListItems, SelectedPlayListItem, false),
+                    o => SelectedPlayListItem != null && ItemsControlUtility.CanMoveNext(PlayListItems, SelectedPlayListItem, false)
+                );
+            }
+        }
+
+        public ICommand RemoveSelectedPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        PlayListItems.Remove(SelectedPlayListItem);
+                        if(PlayListItems.Count == 1) {
+                            ShowPlayListTab = false;
+                            ShowCommentTab = true;
+                        }
+                    },
+                    o => SelectedPlayListItem != null && SelectedPlayListItem != Information
                 );
             }
         }

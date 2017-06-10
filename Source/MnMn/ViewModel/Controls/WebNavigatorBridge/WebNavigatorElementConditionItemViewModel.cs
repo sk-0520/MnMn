@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
                 if(this._targetItems == null) {
                     this._targetItems = Model.TargetItems
                         .Select(i => new WebNavigatorElementConditionTagViewModel(i))
-                        .ToList()
+                        .ToEvaluatedSequence()
                     ;
                 }
 

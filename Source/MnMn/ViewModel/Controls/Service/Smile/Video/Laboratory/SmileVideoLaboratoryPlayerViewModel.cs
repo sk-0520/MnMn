@@ -169,6 +169,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             }
         }
 
+        public override ICommand OpenIdleTalkMutterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => Mediation.Logger.Debug("ついっついー"),
+                    o => false
+                );
+            }
+        }
+
         #endregion
     }
 }

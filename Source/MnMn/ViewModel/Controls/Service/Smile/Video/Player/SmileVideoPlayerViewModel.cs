@@ -95,6 +95,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk.Mutter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -433,7 +435,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ClearComment()
         {
-            foreach(var data in ShowingCommentList.ToArray()) {
+            foreach(var data in ShowingCommentList.ToEvaluatedSequence()) {
                 data.Clock.Controller.SkipToFill();
                 data.Clock.Controller.Remove();
             }
@@ -455,7 +457,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 )
                 .Where(i => i.ViewModel.NowShowing)
                 .Where(i => i.ViewModel.ElapsedTime + SmileVideoCommentUtility.correctionTime + CommentStyleSetting.ShowTime < PlayTime)
-                .ToList()
+                .ToEvaluatedSequence()
             ;
 
             foreach(var commentItem in commentItems) {
@@ -680,8 +682,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
         {
-            var videoItem = Information.ToVideoItemModel();
-            bookmarkNode.VideoItems.Add(videoItem);
+            var singleVideoItems = new[] { Information.ToVideoItemModel() };
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(bookmarkNode, singleVideoItems, true)));
         }
 
         Task<SmileJsonResultModel> AddMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
@@ -848,7 +850,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var filterList = defineKeys
                 .Join(Mediation.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
                 .Select(e => SmileVideoCommentUtility.ConvertFromDefined(e))
-                .ToList()
+                .ToEvaluatedSequence()
             ;
 
             ApprovalCommentCustomFilterItems(comments, isGlobalFilter, filterList);
@@ -992,7 +994,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ChangedCommentContent()
         {
-            foreach(var comment in ShowingCommentList.ToArray()) {
+            foreach(var comment in ShowingCommentList.ToEvaluatedSequence()) {
                 comment.ViewModel.ChangeActualContent();
                 comment.ViewModel.ChangeTextShow();
             }
@@ -1498,7 +1500,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             var comments = CommentItems
                 .Cast<SmileVideoCommentViewModel>()
-                .ToList()
+                .ToEvaluatedSequence()
             ;
             var currentIndex = comments.IndexOf(SelectedComment);
             if(currentIndex == -1) {
@@ -1510,6 +1512,63 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             } else if(!isUp && currentIndex < comments.Count - 1) {
                 SelectedComment = comments[currentIndex + 1];
             }
+        }
+
+        void OpenIdleTalkMutter(bool openDefaultBrowser)
+        {
+            var smileSetting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+
+            var serviceType = ServiceType.IdleTalkMutter;
+            var key = IdleTalkMutterMediationKey.postPage;
+
+            var map = new StringsModel() {
+                ["url"] = smileSetting.IdleTalkMutter.AutoInputWatchPageUri ? Information.WatchUrl.OriginalString: string.Empty,
+                ["text"] = smileSetting.IdleTalkMutter.AutoInputVideoTitle ? Information.Title : string.Empty,
+                ["via"] = string.Empty,
+                ["in_reply_to"] = string.Empty,
+                ["related"] = string.Empty,
+                ["original_referer"] = string.Empty,
+                ["hashtags"] = smileSetting.IdleTalkMutter.AutoInputHashTags,
+                ["lang"] = string.Empty,
+            };
+
+            var rawUri = Mediation.GetUri(key, map, serviceType);
+            var convertedUri = Mediation.ConvertUri(key, rawUri.Uri, serviceType);
+            Uri uri;
+            if(Uri.TryCreate(convertedUri, UriKind.RelativeOrAbsolute, out uri)) {
+                if(openDefaultBrowser) {
+                    ShellUtility.OpenUriInDefaultBrowser(uri, Mediation.Logger);
+                } else {
+                    DescriptionUtility.OpenUriInAppBrowser(uri, Mediation);
+                }
+            }
+
+        }
+
+        void SavePlayListToBookmark()
+        {
+            var items = PlayListItems.Select(i => i.ToVideoItemModel());
+
+            if(IsNewBookmark) {
+                var newBookmark = new SmileVideoBookmarkItemSettingModel() {
+                    Name = NewBookmarkName,
+                };
+                newBookmark.Items.AddRange(items);
+                var nodeViewModel = Mediation.GetResultFromRequest<SmileVideoBookmarkNodeViewModel>(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(null, newBookmark)));
+                SelectedBookmark = nodeViewModel;
+
+                // View 側初期化
+                NewBookmarkName = string.Empty;
+                this._bookmarkItems = null;
+                CallOnPropertyChange(nameof(BookmarkItems));
+            } else {
+                Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessBookmarkParameterModel(SelectedBookmark, items, false)));
+            }
+        }
+
+        void ScrollActiveVideoInPlayList(SmileVideoInformationViewModel videoInformation)
+        {
+            ListPlaylist?.ScrollToCenterOfView(videoInformation, true, false);
         }
 
         #endregion
@@ -1545,6 +1604,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             AddHistory(videoInformation);
 
             SetCheckedCheckItLater(videoInformation.VideoId, videoInformation.WatchUrl);
+
+            ScrollActiveVideoInPlayList(videoInformation);
 
             return base.LoadAsync(videoInformation, false, thumbCacheSpan, imageCacheSpan);
         }
@@ -1774,6 +1835,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Navigationbar = View.seekbar;
             CommentView = View.commentView;
             DetailComment = View.detailComment;
+            ListPlaylist = View.listPlayList;
+
             PlayerCursorHider = new Logic.View.CursorHider(Player);
 
             // 初期設定
@@ -1826,11 +1889,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         var videoId = o as string;
                         OpenVideoLinkAsync(videoId).ConfigureAwait(false);
                     }
+                    , o => !string.IsNullOrWhiteSpace((string)o)
                 );
             }
         }
         public ICommand MenuOpenVideoIdLinkCommand => OpenVideoIdLinkCommand;
-        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
+        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false), o => !string.IsNullOrWhiteSpace((string)o)); } }
         public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
         public ICommand MenuAddPlayListVideoIdLinkCommand
         {

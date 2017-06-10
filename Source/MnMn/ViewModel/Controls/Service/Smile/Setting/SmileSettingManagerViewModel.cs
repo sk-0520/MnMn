@@ -42,7 +42,7 @@ using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileSettingManagerViewModel: ManagerViewModelBase
+    public class SmileSettingManagerViewModel : ManagerViewModelBase
     {
         #region variable
 
@@ -60,7 +60,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             PropertyChangedListener = new PropertyChangedWeakEventListener(RankingSelectItem_PropertyChanged);
 
             var rankingDefine = Mediation.GetResultFromRequest<SmileVideoRankingModel>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
-            RankingCategoryItems = rankingDefine.Items.Select(i => new SmileVideoRankingGroupViewModel(i)).ToList();
+            RankingCategoryItems = rankingDefine.Items
+                .Select(i => new SmileVideoRankingGroupViewModel(i))
+                .ToEvaluatedSequence()
+            ;
             foreach(var item in RankingCategoryItems.SelectMany(i => i.Items)) {
                 item.IsChecked = !Setting.Video.Ranking.IgnoreCategoryItems.Any(s => s == item.Key);
                 PropertyChangedListener.Add(item);
@@ -310,6 +313,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             }
         }
 
+        public bool AutoInputVideoTitle
+        {
+            get { return Setting.IdleTalkMutter.AutoInputVideoTitle; }
+            set { SetPropertyValue(Setting.IdleTalkMutter, value); }
+        }
+        public bool AutoInputWatchPageUri
+        {
+            get { return Setting.IdleTalkMutter.AutoInputWatchPageUri; }
+            set { SetPropertyValue(Setting.IdleTalkMutter, value); }
+        }
+        public string AutoInputHashTags
+        {
+            get { return Setting.IdleTalkMutter.AutoInputHashTags; }
+            set { SetPropertyValue(Setting.IdleTalkMutter, value); }
+        }
         #endregion
 
         #region command

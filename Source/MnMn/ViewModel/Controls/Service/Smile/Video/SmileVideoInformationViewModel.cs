@@ -1352,7 +1352,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var dmcCheckes = new List<CheckResultModel<long>>();
 
             try {
-                var dmcFiles = CacheDirectory.EnumerateFiles("*-video.*.dmc.*", SearchOption.TopDirectoryOnly).ToArray();
+                var dmcFiles = CacheDirectory.EnumerateFiles("*-video.*.dmc.*", SearchOption.TopDirectoryOnly).ToEvaluatedSequence();
                 foreach(var dmcFile in dmcFiles) {
                     var check = GarbageCollectionFromFile(dmcFile, cacheSpan, force);
                     if(check.IsSuccess) {

@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
             var removeItems = GetCheckedItems()
                 .Select(i => i.Information)
-                .ToArray();
+                .ToEvaluatedSequence();
             ;
 
             var errors = new List<CheckModel>();

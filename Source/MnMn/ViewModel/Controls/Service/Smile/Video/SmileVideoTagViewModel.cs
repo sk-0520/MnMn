@@ -20,6 +20,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -63,6 +65,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._existPedia; }
             set { SetVariableValue(ref this._existPedia, value); }
+        }
+
+        public bool HasVideoId
+        {
+            get { return !string.IsNullOrWhiteSpace(GetVideoIdFromTagName()); }
+        }
+
+        public string VideoIdFromTagName
+        {
+            get
+            {
+                return GetVideoIdFromTagName();
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        string GetVideoIdFromTagName()
+        {
+            if(!string.IsNullOrWhiteSpace(TagName)) {
+                var inputValue = TagName.Trim();
+                object outputValue;
+                if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetVideoId, inputValue, typeof(string), ServiceType.Smile)) {
+                    return (string)outputValue;
+                }
+            }
+
+            return string.Empty;
         }
 
         #endregion

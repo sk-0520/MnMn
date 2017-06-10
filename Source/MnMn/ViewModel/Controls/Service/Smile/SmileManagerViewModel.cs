@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
                 var files = marketDir.EnumerateFiles()
                     .Where(f => !cacheSpan.IsCacheTime(f.CreationTime))
-                    .ToList()
+                    .ToEvaluatedSequence()
                 ;
                 foreach(var file in files) {
                     try {

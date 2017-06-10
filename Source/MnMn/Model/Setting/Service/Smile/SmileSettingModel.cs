@@ -28,7 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 {
     [DataContract]
-    public class SmileSettingModel: ModelBase
+    public class SmileSettingModel : ModelBase
     {
         #region property
 
@@ -46,6 +46,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 
         [DataMember]
         public SmileUserSettingModel User { get; set; } = new SmileUserSettingModel();
+
+        [DataMember]
+        public SmileIdleTalkMutterSettingModel IdleTalkMutter { get; set; } = new SmileIdleTalkMutterSettingModel();
 
         #endregion
     }

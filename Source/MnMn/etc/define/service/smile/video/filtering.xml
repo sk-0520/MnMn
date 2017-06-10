@@ -66,6 +66,17 @@
 			<extend key="ignore-case" value="true" />
 		</extends>
 	</element>
+	<element key="song">
+		<words>
+			<word key="ja-jp" value="空耳の時間" />
+		</words>
+		<extends>
+			<extend key="target" value="Comment" />
+			<extend key="type" value="Regex" />
+			<extend key="pattern" value="[♪♬🎵♩♫🎶]$" />
+			<extend key="ignore-case" value="true" />
+		</extends>
+	</element>
 	<element key="device">
 		<words>
 			<word key="ja-jp" value="あのゲーム機" />
