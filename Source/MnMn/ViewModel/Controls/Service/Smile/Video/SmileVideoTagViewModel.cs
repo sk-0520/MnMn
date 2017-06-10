@@ -76,12 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                var videoId = GetVideoIdFromTagName();
-                if(string.IsNullOrWhiteSpace(videoId)) {
-                    throw new InvalidOperationException($"{nameof(GetVideoIdFromTagName)}: {TagName}");
-                }
-
-                return videoId;
+                return GetVideoIdFromTagName();
             }
         }
 
