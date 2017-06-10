@@ -317,6 +317,13 @@
                   </Style.Triggers>
                 </Style>
               </MenuItem.Style>
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
               <MenuItem.CommandParameter>
                 <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
                   <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Application}" />
@@ -344,6 +351,13 @@
                   </Style.Triggers>
                 </Style>
               </MenuItem.Style>
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_OpenInNewWindow}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
               <MenuItem.CommandParameter>
                 <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
                   <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Application}" />
