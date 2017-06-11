@@ -453,6 +453,11 @@
             </MenuItem>
 
             <Separator />
+
+            <MenuItem Header="酷使するプレイヤーのプレイリストに追加" Command="{Binding AddPlayListCommand}" CommandParameter="{Binding}" />
+
+            <Separator />
+
             <MenuItem Header="クリップボードにコピー" SubmenuOpened="CopyMenuItem_SubmenuOpened">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
