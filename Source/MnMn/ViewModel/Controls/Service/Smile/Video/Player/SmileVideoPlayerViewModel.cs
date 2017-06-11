@@ -743,13 +743,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private async Task AddPlayListAync(string videoId)
         {
-            var videoInformation = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
-            if(videoInformation != null) {
-                PlayListItems.Add(videoInformation);
-                CanPlayNextVieo.Value = true;
+            var information = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
+            if(information != null) {
+                AddPlayList(information);
             }
         }
 
+        public void AddPlayList(SmileVideoInformationViewModel information)
+        {
+            if(information == null) {
+                throw new ArgumentNullException(nameof(information));
+            }
+
+            PlayListItems.Add(information);
+            CanPlayNextVieo.Value = true;
+        }
 
         void RefreshFilteringComment()
         {
