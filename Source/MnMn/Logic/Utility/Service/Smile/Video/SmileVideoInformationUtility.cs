@@ -184,6 +184,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return true;
         }
 
+        public static bool IsEquals(SmileVideoInformationViewModel a, SmileVideoInformationViewModel b)
+        {
+            if(a == null) {
+                throw new ArgumentNullException(nameof(a));
+            }
+            if(b == null) {
+                throw new ArgumentNullException(nameof(b));
+            }
+
+            if(a == b) {
+                return true;
+            }
+
+            return SmileVideoVideoItemUtility.IsEquals(a.ToVideoItemModel(), b.ToVideoItemModel());
+        }
+
         #endregion
     }
 }

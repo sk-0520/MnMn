@@ -755,8 +755,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 throw new ArgumentNullException(nameof(information));
             }
 
-            PlayListItems.Add(information);
-            CanPlayNextVieo.Value = true;
+            if(PlayListItems.All(i => !SmileVideoInformationUtility.IsEquals(information, i))) {
+                PlayListItems.Add(information);
+                CanPlayNextVieo.Value = true;
+            }
         }
 
         void RefreshFilteringComment()
