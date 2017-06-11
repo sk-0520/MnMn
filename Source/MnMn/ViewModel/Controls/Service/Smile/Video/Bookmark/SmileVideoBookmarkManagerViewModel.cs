@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
@@ -360,10 +361,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return pair.ViewModel;
         }
 
+        /// <summary>
+        /// 未整理のブックマークへ登録。
+        /// </summary>
+        /// <param name="videoItem"></param>
+        /// <returns>登録した動画。 登録済みの場合は null が返る(というか登録できない)。</returns>
         public SmileVideoVideoItemModel AddUnorganizedBookmark(SmileVideoVideoItemModel videoItem)
         {
-            Node.VideoItems.Add(videoItem);
-            return Node.VideoItems.Last();
+            if(Node.VideoItems.All(i => !SmileVideoVideoItemUtility.IsEquals(videoItem, i))) {
+                Node.VideoItems.Add(videoItem);
+                return Node.VideoItems.Last();
+            }
+
+            return null;
         }
 
         void InsertNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)

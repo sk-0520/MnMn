@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 return true;
             }
 
-            if(a.WatchUrl.OriginalString != b.WatchUrl.OriginalString) {
+            if(a.WatchUrl.OriginalString == b.WatchUrl.OriginalString) {
                 return true;
             }
 
