@@ -4,6 +4,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,7 +18,14 @@
   <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 
     <ToggleButton x:Name="commandScale" Margin="{StaticResource RightMargin}" Style="{StaticResource ChromelessButtonStyle}">
-      <TextBlock VerticalAlignment="Center" Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat={}{0}%, Converter={StaticResource DoubleToPercentConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" />
+      <StackPanel Style="{StaticResource ItemPanel}">
+        <Viewbox Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Zoom}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <TextBlock VerticalAlignment="Center" Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat={}{0}%, Converter={StaticResource DoubleToPercentConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" />
+      </StackPanel>
     </ToggleButton>
 
     <!-- RepeatButton じゃなくていいですん -->
