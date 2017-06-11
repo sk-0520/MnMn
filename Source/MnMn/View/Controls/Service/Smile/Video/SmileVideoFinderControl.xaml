@@ -454,7 +454,7 @@
 
             <Separator />
 
-            <MenuItem Header="酷使するプレイヤーのプレイリストに追加" Command="{Binding AddPlayListCommand}" CommandParameter="{Binding}" />
+            <MenuItem Header="酷使するプレイヤーのプレイリストに追加" Command="{Binding AddPlayListCommand}" />
 
             <Separator />
 

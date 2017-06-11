@@ -250,7 +250,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 return CreateCommand(
-                    o => { },
+                    o => {
+                        var player = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
+                            .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
+                            .FirstOrDefault(p => p.IsWorkingPlayer.Value)
+                        ;
+                        if(player != null) {
+                            player.AddPlayList(SelectedFinderItem.Information);
+                        }
+                    },
                     o => {
                         if(SelectedFinderItem != null) {
                             var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
