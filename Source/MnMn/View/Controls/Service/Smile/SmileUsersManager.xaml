@@ -127,7 +127,7 @@
       <app_view_controls:FocusedTabControl.ContentTemplate>
         <DataTemplate>
           <Grid>
-            <TabControl TabStripPlacement="Top">
+            <TabControl TabStripPlacement="Top" Style="{StaticResource FinderTab}">
               <TabItem Header="ユーザー情報" IsSelected="{Binding IsUserSelected}">
                 <Grid>
                   <Grid.ColumnDefinitions>
