@@ -454,6 +454,26 @@
 
             <Separator />
 
+            <MenuItem Header="酷使するプレイヤーのプレイリストに追加" Command="{Binding AddPlayListCommand}">
+              <MenuItem.Icon>
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Playlist-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </MenuItem.Icon>
+            </MenuItem>
+            <!--
+            だりぃ
+            <MenuItem Header="指定プレイヤーにプレイリスト追加" ItemsSource="{Binding }">
+              <MenuItem.Icon>
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </MenuItem.Icon>
+            </MenuItem>
+            -->
+
+            <Separator />
+
             <MenuItem Header="クリップボードにコピー" SubmenuOpened="CopyMenuItem_SubmenuOpened">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
