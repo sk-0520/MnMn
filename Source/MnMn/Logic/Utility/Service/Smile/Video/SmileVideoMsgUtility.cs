@@ -215,26 +215,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             Regex regColorCode = null;
             if(isPremium) {
                 var plusColorMap = new Dictionary<string, Color>() {
-                    { "niconicowhite", (Color)ColorConverter.ConvertFromString("#CCCC99") },
                     { "white2", (Color)ColorConverter.ConvertFromString("#CCCC99")},
+                    { "niconicowhite", (Color)ColorConverter.ConvertFromString("#CCCC99") },
 
-                    { "truered", (Color)ColorConverter.ConvertFromString("#CC0033") },
                     { "red2", (Color)ColorConverter.ConvertFromString("#CC0033") },
+                    { "truered", (Color)ColorConverter.ConvertFromString("#CC0033") },
 
-                    { "passionorange", (Color)ColorConverter.ConvertFromString("#FF6600") },
+                    { "pink2", (Color)ColorConverter.ConvertFromString("#FF33CC") },
+
                     { "orange2", (Color)ColorConverter.ConvertFromString("#FF6600") },
+                    { "passionorange", (Color)ColorConverter.ConvertFromString("#FF6600") },
 
-                    { "madyellow", (Color)ColorConverter.ConvertFromString("#999900") },
                     { "yellow2", (Color)ColorConverter.ConvertFromString("#999900") },
+                    { "madyellow", (Color)ColorConverter.ConvertFromString("#999900") },
 
-                    { "elementalgreen", (Color)ColorConverter.ConvertFromString("#00CC66") },
                     { "green2", (Color)ColorConverter.ConvertFromString("#00CC66") },
+                    { "elementalgreen", (Color)ColorConverter.ConvertFromString("#00CC66") },
 
-                    { "marineblue", (Color)ColorConverter.ConvertFromString("#33FFFC") },
+                    { "cyan2", (Color)ColorConverter.ConvertFromString("#00CCCC") },
+
                     { "blue2", (Color)ColorConverter.ConvertFromString("#33FFFC") },
+                    { "marineblue", (Color)ColorConverter.ConvertFromString("#33FFFC") },
 
-                    { "nobleviolet", (Color)ColorConverter.ConvertFromString("#6633CC") },
                     { "purple2", (Color)ColorConverter.ConvertFromString("#6633CC") },
+                    { "nobleviolet", (Color)ColorConverter.ConvertFromString("#6633CC") },
+
+                    { "black2", (Color)ColorConverter.ConvertFromString("#666666") },
                 };
                 foreach(var pair in plusColorMap) {
                     colorMap.Add(pair.Key, pair.Value);
@@ -279,15 +285,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
                 { (Color)ColorConverter.ConvertFromString("#CC0033"), "truered" },
 
+                { (Color)ColorConverter.ConvertFromString("#FF33CC"), "pink2" },
+
                 { (Color)ColorConverter.ConvertFromString("#FF6600"), "passionorange" },
 
                 { (Color)ColorConverter.ConvertFromString("#999900"), "madyellow" },
 
                 { (Color)ColorConverter.ConvertFromString("#00CC66"), "elementalgreen" },
 
+                { (Color)ColorConverter.ConvertFromString("#00CCCC"), "cyan2" },
+
                 { (Color)ColorConverter.ConvertFromString("#33FFFC"), "marineblue" },
 
                 { (Color)ColorConverter.ConvertFromString("#6633CC"), "nobleviolet" },
+
+                { (Color)ColorConverter.ConvertFromString("#black2"), "black2"},
             };
             string result;
             if(colorMap.TryGetValue(color, out result)) {
