@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var result = new FeedSmileVideoModel();
-            foreach(var model in Setting.History) {
+            foreach(var model in Setting.History.Take(Constants.ServiceSmileVideoPlayHistoryViewCount)) {
                 var item = new FeedSmileVideoItemModel();
 
                 item.Title = model.VideoTitle;
