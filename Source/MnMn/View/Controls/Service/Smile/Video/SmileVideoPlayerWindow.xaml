@@ -1752,7 +1752,7 @@
               <StackPanel Grid.Row="0">
                 <CheckBox IsChecked="{Binding IsEnabledOriginalPosterFilering}" Style="{StaticResource VerticalCheckBox}">投稿者コメントもフィルタ対象にする</CheckBox>
               </StackPanel>
-              <TabControl Grid.Row="1">
+              <TabControl Grid.Row="1" Style="{StaticResource FinderTab}">
                 <TabItem Header="この動画">
                   <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering x:Name="localFilter">
                     <i:Interaction.Triggers>
