@@ -351,6 +351,7 @@
     <Compile Include="Logic\Utility\NetworkUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMarketUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmilePediaUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoVideoItemUtility.cs" />
     <Compile Include="Logic\Utility\ShellUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveGetPlayerStatusUtility.cs" />
     <Compile Include="Logic\Utility\StreamUtility.cs" />

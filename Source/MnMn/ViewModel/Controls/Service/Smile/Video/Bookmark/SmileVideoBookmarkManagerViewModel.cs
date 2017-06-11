@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
@@ -334,14 +335,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             pair.ViewModel.IsSelected = true;
         }
 
+        /// <summary>
+        /// ブックマーク追加。
+        /// </summary>
+        /// <param name="targetNodeViewModel">親とする対象ブックマークノード。</param>
+        /// <param name="videoItems">登録する動画。</param>
+        /// <returns>登録した動画。</returns>
         public IEnumerable<SmileVideoVideoItemModel> AddBookmarkItems(SmileVideoBookmarkNodeViewModel targetNodeViewModel, IEnumerable<SmileVideoVideoItemModel> videoItems)
         {
-            var index = targetNodeViewModel.VideoItems.Count;
-            targetNodeViewModel.VideoItems.AddRange(videoItems);
+            //var index = targetNodeViewModel.VideoItems.Count;
+            //targetNodeViewModel.VideoItems.AddRange(videoItems);
 
-            return targetNodeViewModel.VideoItems.Skip(index);
+            //return targetNodeViewModel.VideoItems.Skip(index);
+            var addItems = videoItems
+                .Where(i => targetNodeViewModel.VideoItems.All(i2 => !SmileVideoVideoItemUtility.IsEquals(i, i2)))
+                .ToEvaluatedSequence()
+            ;
+
+            if(addItems.Any()) {
+                targetNodeViewModel.VideoItems.AddRange(addItems);
+                return addItems;
+            }
+
+            return Enumerable.Empty<SmileVideoVideoItemModel>();
         }
 
+        /// <summary>
+        /// ブックマーク初期化。
+        /// </summary>
+        /// <param name="targetNodeViewModel">親とする対象ブックマークノード。</param>
+        /// <param name="videoItems">登録する動画。</param>
+        /// <returns>登録した動画。</returns>
         public IEnumerable<SmileVideoVideoItemModel> InitializeBookmarkItems(SmileVideoBookmarkNodeViewModel targetNodeViewModel, IEnumerable<SmileVideoVideoItemModel> videoItems)
         {
             targetNodeViewModel.VideoItems.Clear();
@@ -350,6 +374,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return targetNodeViewModel.VideoItems;
         }
 
+        /// <summary>
+        /// ブックマークを新規作成。
+        /// </summary>
+        /// <param name="parentNode">親となるブックマークノード。 null の場合は最上位となる。</param>
+        /// <param name="newNode">登録する動画。</param>
+        /// <returns>登録したノード</returns>
         public SmileVideoBookmarkNodeViewModel CreateBookmark(SmileVideoBookmarkNodeViewModel parentNode, SmileVideoBookmarkItemSettingModel newNode)
         {
             if(parentNode == null) {
@@ -360,10 +390,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return pair.ViewModel;
         }
 
+        /// <summary>
+        /// 未整理のブックマークへ登録。
+        /// </summary>
+        /// <param name="videoItem"></param>
+        /// <returns>登録した動画。 登録済みの場合は null が返る(というか登録できない)。</returns>
         public SmileVideoVideoItemModel AddUnorganizedBookmark(SmileVideoVideoItemModel videoItem)
         {
-            Node.VideoItems.Add(videoItem);
-            return Node.VideoItems.Last();
+            if(Node.VideoItems.All(i => !SmileVideoVideoItemUtility.IsEquals(videoItem, i))) {
+                Node.VideoItems.Add(videoItem);
+                return Node.VideoItems.Last();
+            }
+
+            return null;
         }
 
         void InsertNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)
@@ -589,6 +628,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
+        void FilterIssue611(SmileVideoBookmarkNodeViewModel node)
+        {
+            var items = new List<SmileVideoVideoItemModel>(node.VideoItems.Count);
+            foreach(var nodeItem in node.VideoItems) {
+                if(items.All(i => !SmileVideoVideoItemUtility.IsEquals(i, nodeItem))) {
+                    items.Add(nodeItem);
+                }
+            }
+            node.VideoItems.InitializeRange(items);
+
+            foreach(var nodeItem in node.NodeItems) {
+                FilterIssue611(nodeItem);
+            }
+        }
+
         #endregion
 
         #region SmileVideoCustomManagerViewModelBase
@@ -619,6 +673,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         public override Task InitializeAsync()
         {
+            // #611
+            FilterIssue611(Node);
+
             return Task.CompletedTask;
         }
 
