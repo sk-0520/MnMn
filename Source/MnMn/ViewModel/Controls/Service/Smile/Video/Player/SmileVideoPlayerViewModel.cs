@@ -1735,7 +1735,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!PlayListItems.Any()) {
                 PlayListItems.Add(Information);
             }
-            if(Session.IsLoggedIn && Session.IsPremium && CommandColorItems.Count == SmileVideoMsgUtility.normalCommentColors.Length) {
+            if(Session.IsLoggedIn && Session.IsPremium && CommandColorItems.Count == SmileVideoMsgUtility.normalCommentColors.Count) {
                 CommandColorItems.AddRange(SmileVideoMsgUtility.premiumCommentColors);
             }
 
