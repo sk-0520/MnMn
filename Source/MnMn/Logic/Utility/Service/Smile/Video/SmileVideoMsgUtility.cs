@@ -234,50 +234,54 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static Color GetForeColor(IEnumerable<string> commands, bool isPremium)
         {
-            var colorMap = new Dictionary<string, Color>() {
-                { "white",  Colors.White },
-                { "red",    Colors.Red },
-                { "pink",   Colors.Pink },
-                { "orange", Colors.Orange },
-                { "yellow", Colors.Yellow },
-                { "green",  Colors.Green },
-                { "cyan",   Colors.Cyan },
-                { "blue",   Colors.Blue },
-                { "purple", Colors.Purple },
-                { "black",  Colors.Black },
-            };
+            //var colorMap = new Dictionary<string, Color>() {
+            //    { "white",  Colors.White },
+            //    { "red",    Colors.Red },
+            //    { "pink",   Colors.Pink },
+            //    { "orange", Colors.Orange },
+            //    { "yellow", Colors.Yellow },
+            //    { "green",  Colors.Green },
+            //    { "cyan",   Colors.Cyan },
+            //    { "blue",   Colors.Blue },
+            //    { "purple", Colors.Purple },
+            //    { "black",  Colors.Black },
+            //};
+            var colorMap = new Dictionary<string, Color>();
+            foreach(var pair in normalCommentColorMap) {
+                colorMap.Add(pair.Key, pair.Value);
+            }
 
             Regex regColorCode = null;
             if(isPremium) {
-                var plusColorMap = new Dictionary<string, Color>() {
-                    { "white2", (Color)ColorConverter.ConvertFromString("#CCCC99")},
-                    { "niconicowhite", (Color)ColorConverter.ConvertFromString("#CCCC99") },
+                //var plusColorMap = new Dictionary<string, Color>() {
+                //    { "white2", (Color)ColorConverter.ConvertFromString("#CCCC99")},
+                //    { "niconicowhite", (Color)ColorConverter.ConvertFromString("#CCCC99") },
 
-                    { "red2", (Color)ColorConverter.ConvertFromString("#CC0033") },
-                    { "truered", (Color)ColorConverter.ConvertFromString("#CC0033") },
+                //    { "red2", (Color)ColorConverter.ConvertFromString("#CC0033") },
+                //    { "truered", (Color)ColorConverter.ConvertFromString("#CC0033") },
 
-                    { "pink2", (Color)ColorConverter.ConvertFromString("#FF33CC") },
+                //    { "pink2", (Color)ColorConverter.ConvertFromString("#FF33CC") },
 
-                    { "orange2", (Color)ColorConverter.ConvertFromString("#FF6600") },
-                    { "passionorange", (Color)ColorConverter.ConvertFromString("#FF6600") },
+                //    { "orange2", (Color)ColorConverter.ConvertFromString("#FF6600") },
+                //    { "passionorange", (Color)ColorConverter.ConvertFromString("#FF6600") },
 
-                    { "yellow2", (Color)ColorConverter.ConvertFromString("#999900") },
-                    { "madyellow", (Color)ColorConverter.ConvertFromString("#999900") },
+                //    { "yellow2", (Color)ColorConverter.ConvertFromString("#999900") },
+                //    { "madyellow", (Color)ColorConverter.ConvertFromString("#999900") },
 
-                    { "green2", (Color)ColorConverter.ConvertFromString("#00CC66") },
-                    { "elementalgreen", (Color)ColorConverter.ConvertFromString("#00CC66") },
+                //    { "green2", (Color)ColorConverter.ConvertFromString("#00CC66") },
+                //    { "elementalgreen", (Color)ColorConverter.ConvertFromString("#00CC66") },
 
-                    { "cyan2", (Color)ColorConverter.ConvertFromString("#00CCCC") },
+                //    { "cyan2", (Color)ColorConverter.ConvertFromString("#00CCCC") },
 
-                    { "blue2", (Color)ColorConverter.ConvertFromString("#33FFFC") },
-                    { "marineblue", (Color)ColorConverter.ConvertFromString("#33FFFC") },
+                //    { "blue2", (Color)ColorConverter.ConvertFromString("#33FFFC") },
+                //    { "marineblue", (Color)ColorConverter.ConvertFromString("#33FFFC") },
 
-                    { "purple2", (Color)ColorConverter.ConvertFromString("#6633CC") },
-                    { "nobleviolet", (Color)ColorConverter.ConvertFromString("#6633CC") },
+                //    { "purple2", (Color)ColorConverter.ConvertFromString("#6633CC") },
+                //    { "nobleviolet", (Color)ColorConverter.ConvertFromString("#6633CC") },
 
-                    { "black2", (Color)ColorConverter.ConvertFromString("#666666") },
-                };
-                foreach(var pair in plusColorMap) {
+                //    { "black2", (Color)ColorConverter.ConvertFromString("#666666") },
+                //};
+                foreach(var pair in premiumCommentColorMap) {
                     colorMap.Add(pair.Key, pair.Value);
                 }
 
