@@ -402,6 +402,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoSearchPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "search.xml");
         public static string SmileVideoMyListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "mylist.xml");
         public static string SmileVideoFilteringPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "filtering.xml");
+        public static string SmileVideoMsgPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "msg.xml");
 
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";

@@ -128,7 +128,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#608: コメントの色定義が甘い',
+						'comments': [
+							'色定義を外部化',
+							"<MnMn>\\etc\\define\\service\\smile\\video\\msg.xml"
+						]
 					},
 					{
 						'revision': '',
