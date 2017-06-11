@@ -459,6 +459,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchThumbnailStyleModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoMsgModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoContentsSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoOfficialSearchModel.cs" />
     <Compile Include="Model\Setting\NetworkProxySettingModel.cs" />
@@ -708,6 +709,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\live\expressions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\video\msg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\web-navigator.tt">

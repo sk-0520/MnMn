@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<msg>
+
+	<!-- 色定義 -->
+	<colors>
+		<element key="#FFFFFF">
+			<extends>
+				<extend key="commands" value="white, default" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#FF0000">
+			<extends>
+				<extend key="commands" value="red" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#FF8080">
+			<extends>
+				<extend key="commands" value="pink" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#FFC000">
+			<extends>
+				<extend key="commands" value="orange" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#FFFF00">
+			<extends>
+				<extend key="commands" value="yellow" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#00FF00">
+			<extends>
+				<extend key="commands" value="green" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#00FFFF">
+			<extends>
+				<extend key="commands" value="cyan" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#0000FF">
+			<extends>
+				<extend key="commands" value="blue" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#C000FF">
+			<extends>
+				<extend key="commands" value="purple" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+		<element key="#000000">
+			<extends>
+				<extend key="commands" value="black" />
+				<extend key="premium" value="false" />
+			</extends>
+		</element>
+
+		<element key="#CCCC99">
+			<extends>
+				<extend key="commands" value="white2, niconicowhite" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#CC0033">
+			<extends>
+				<extend key="commands" value="red2, truered" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#FF33CC">
+			<extends>
+				<extend key="commands" value="pink2" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#FF6600">
+			<extends>
+				<extend key="commands" value="orange2, passionorange" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#999900">
+			<extends>
+				<extend key="commands" value="yellow2, madyellow" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#00CC66">
+			<extends>
+				<extend key="commands" value="green2, elementalgreen" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#00CCCC">
+			<extends>
+				<extend key="commands" value="cyan2" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#3399FF">
+			<extends>
+				<extend key="commands" value="blue2, marineblue" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#6633CC">
+			<extends>
+				<extend key="commands" value="purple2, nobleviolet" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+		<element key="#666666">
+			<extends>
+				<extend key="commands" value="black2" />
+				<extend key="premium" value="true" />
+			</extends>
+		</element>
+
+
+	</colors>
+
+</msg>

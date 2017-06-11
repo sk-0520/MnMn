@@ -21,7 +21,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
@@ -55,6 +57,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         };
 
         #endregion
+
+        static SmileVideoMsgUtility()
+        {
+            // 定義データの読み込み
+            //SerializeUtility
+            var model = SerializeUtility.LoadXmlSerializeFromFile<SmileVideoMsgModel>(Constants.SmileVideoMsgPath);
+
+        }
 
         #region function
 
