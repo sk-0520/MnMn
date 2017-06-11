@@ -64,7 +64,7 @@
       </StatusBarItem>
 
       <StatusBarItem DockPanel.Dock="Right" >
-        <app_view_controls:ScaleSlider Value="{Binding ViewScale}"  DockPanel.Dock="Right" />
+        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" Margin="{StaticResource HorizonMargin}" />
       </StatusBarItem>
 
       <Image Source="/Resources/Service/Smile/Smile.png" Style="{StaticResource SmallItemImage}" />
