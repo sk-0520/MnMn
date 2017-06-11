@@ -112,16 +112,11 @@
         <Setter Property="Height" Value="16" />
       </Style>
 
-      <Style x:Key="StatePanel" TargetType="Canvas">
-        <Setter Property="Width" Value="18" />
-        <Setter Property="Height" Value="18" />
-      </Style>
-
       <Style x:Key="StateControl" TargetType="app_view_controls:LoadStateNavigator">
         <Setter Property="Width" Value="6" />
         <Setter Property="Height" Value="6" />
-        <Setter Property="Canvas.Left" Value="10" />
-        <Setter Property="Canvas.Top" Value="10" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="LoadedToVisibility" Value="Visible" />
       </Style>
 
@@ -599,7 +594,7 @@
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" Margin="{StaticResource HorizonMargin}" />
       </StatusBarItem>
 
-      <ToggleButton x:Name="switchInformation">
+      <ToggleButton x:Name="switchInformation" Padding="{StaticResource HorizonMargin}">
         <ToggleButton.Style>
           <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
             <Style.Triggers>
@@ -612,14 +607,14 @@
             </Style.Triggers>
           </Style>
         </ToggleButton.Style>
-        <Canvas Style="{StaticResource StatePanel}">
+        <Grid>
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Information}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
           <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
-        </Canvas>
+        </Grid>
       </ToggleButton>
       <TextBlock>
         <TextBlock>[</TextBlock>
@@ -650,30 +645,30 @@
           <Path Data="{StaticResource Image_Worker}" Style="{StaticResource SmallAccentIconPath}" />
         </Canvas>
       </Viewbox>
-      <Canvas Style="{StaticResource StatePanel}">
+      <Grid>
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Image}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Style="{StaticResource StateControl}" />
-      </Canvas>
-      <Canvas Style="{StaticResource StatePanel}">
+      </Grid>
+      <Grid>
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Comment}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" Style="{StaticResource StateControl}" />
-      </Canvas>
-      <Canvas Style="{StaticResource StatePanel}">
+      </Grid>
+      <Grid>
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Video}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
-      </Canvas>
+      </Grid>
       <ContentControl>
         <ContentControl.Style>
           <Style TargetType="ContentControl">
