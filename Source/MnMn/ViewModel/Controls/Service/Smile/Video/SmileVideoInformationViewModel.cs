@@ -564,6 +564,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
+
+        public string WatchUrlString
+        {
+            get
+            {
+                try {
+                    return WatchUrl?.OriginalString;
+                } catch(NotImplementedException) {
+                    return string.Empty;
+                }
+            }
+        }
+
         public SmileVideoThumbType ThumbType { get { return SmileVideoGetthumbinfoUtility.ConvertThumbType(Thumb.ThumbType); } }
         public bool Embeddable { get { return SmileVideoGetthumbinfoUtility.IsEmbeddable(Thumb.Embeddable); } }
         public bool LivePlay { get { return SmileVideoGetthumbinfoUtility.IsLivePlay(Thumb.NoLivePlay); } }

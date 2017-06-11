@@ -480,6 +480,7 @@
                   <MenuItem Header="ユーザー名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="チャンネルID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="チャンネル名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="視聴ページ" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.WatchUrlString}"  Style="{StaticResource {x:Type MenuItem}}"/>
 
                   <Separator Style="{StaticResource TagSeparator}" />
                   <CollectionContainer Collection="{Binding Source={StaticResource TagList}}" />
