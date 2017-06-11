@@ -628,6 +628,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
+        void FilterIssue611(SmileVideoBookmarkNodeViewModel node)
+        {
+            var items = new List<SmileVideoVideoItemModel>(node.VideoItems.Count);
+            foreach(var nodeItem in node.VideoItems) {
+                if(items.All(i => !SmileVideoVideoItemUtility.IsEquals(i, nodeItem))) {
+                    items.Add(nodeItem);
+                }
+            }
+            node.VideoItems.InitializeRange(items);
+
+            foreach(var nodeItem in node.NodeItems) {
+                FilterIssue611(nodeItem);
+            }
+        }
+
         #endregion
 
         #region SmileVideoCustomManagerViewModelBase
@@ -658,6 +673,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         public override Task InitializeAsync()
         {
+            // #611
+            FilterIssue611(Node);
+
             return Task.CompletedTask;
         }
 
