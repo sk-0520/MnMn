@@ -335,14 +335,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             pair.ViewModel.IsSelected = true;
         }
 
+        /// <summary>
+        /// ブックマーク追加。
+        /// </summary>
+        /// <param name="targetNodeViewModel">親とする対象ブックマークノード。</param>
+        /// <param name="videoItems">登録する動画。</param>
+        /// <returns>登録した動画。</returns>
         public IEnumerable<SmileVideoVideoItemModel> AddBookmarkItems(SmileVideoBookmarkNodeViewModel targetNodeViewModel, IEnumerable<SmileVideoVideoItemModel> videoItems)
         {
-            var index = targetNodeViewModel.VideoItems.Count;
-            targetNodeViewModel.VideoItems.AddRange(videoItems);
+            //var index = targetNodeViewModel.VideoItems.Count;
+            //targetNodeViewModel.VideoItems.AddRange(videoItems);
 
-            return targetNodeViewModel.VideoItems.Skip(index);
+            //return targetNodeViewModel.VideoItems.Skip(index);
+            var addItems = videoItems
+                .Where(i => targetNodeViewModel.VideoItems.All(i2 => !SmileVideoVideoItemUtility.IsEquals(i, i2)))
+                .ToEvaluatedSequence()
+            ;
+
+            if(addItems.Any()) {
+                targetNodeViewModel.VideoItems.AddRange(addItems);
+                return addItems;
+            }
+
+            return Enumerable.Empty<SmileVideoVideoItemModel>();
         }
 
+        /// <summary>
+        /// ブックマーク初期化。
+        /// </summary>
+        /// <param name="targetNodeViewModel">親とする対象ブックマークノード。</param>
+        /// <param name="videoItems">登録する動画。</param>
+        /// <returns>登録した動画。</returns>
         public IEnumerable<SmileVideoVideoItemModel> InitializeBookmarkItems(SmileVideoBookmarkNodeViewModel targetNodeViewModel, IEnumerable<SmileVideoVideoItemModel> videoItems)
         {
             targetNodeViewModel.VideoItems.Clear();
@@ -351,6 +374,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return targetNodeViewModel.VideoItems;
         }
 
+        /// <summary>
+        /// ブックマークを新規作成。
+        /// </summary>
+        /// <param name="parentNode">親となるブックマークノード。 null の場合は最上位となる。</param>
+        /// <param name="newNode">登録する動画。</param>
+        /// <returns>登録したノード</returns>
         public SmileVideoBookmarkNodeViewModel CreateBookmark(SmileVideoBookmarkNodeViewModel parentNode, SmileVideoBookmarkItemSettingModel newNode)
         {
             if(parentNode == null) {
