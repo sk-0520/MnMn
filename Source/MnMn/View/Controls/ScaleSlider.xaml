@@ -13,14 +13,14 @@
   <UserControl.Resources>
     <app_view_converter:DoubleToPercentConverter x:Key="DoubleToPercentConverter" />
   </UserControl.Resources>
-  <StackPanel Orientation="Horizontal">
+  <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 
-    <ToggleButton x:Name="commandScale" Margin="{StaticResource RightMargin}">
-      <TextBlock VerticalAlignment="Center" Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat={}{0}%, Converter={StaticResource DoubleToPercentConverter}}" />
+    <ToggleButton x:Name="commandScale" Margin="{StaticResource RightMargin}" Style="{StaticResource ChromelessButtonStyle}">
+      <TextBlock VerticalAlignment="Center" Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat={}{0}%, Converter={StaticResource DoubleToPercentConverter}}" Foreground="{DynamicResource IdealForegroundColorBrush}" />
     </ToggleButton>
 
     <!-- RepeatButton じゃなくていいですん -->
-    <Button Command="{Binding ScaleDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <Button Command="{Binding ScaleDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource ChromelessButtonStyle}">
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <Path Data="{StaticResource Image_Zoom-Down}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -49,7 +49,7 @@
       </Slider.Style>
     </Slider>
 
-    <Button Command="{Binding ScaleUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <Button Command="{Binding ScaleUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource ChromelessButtonStyle}">
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <Path Data="{StaticResource Image_Zoom-Up}" Style="{StaticResource SmallDefaultIconPath}" />
