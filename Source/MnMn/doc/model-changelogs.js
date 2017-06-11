@@ -177,7 +177,13 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#617: コメントサイズの外部化',
+						'comments': [
+							'てっきり外部化してると思ったけど完全に定数埋め込みで恥の多い実装を送って来ました',
+							'通常コメントサイズに対して以下キーを掛けて最終サイズを決定する',
+							'`service-smile-smilevideo-player-comment-big`',
+							'`service-smile-smilevideo-player-comment-small`'
+						]
 					},
 					{
 						'revision': '',

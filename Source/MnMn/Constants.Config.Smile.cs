@@ -202,6 +202,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static bool ServiceSmileVideoPlayerCommentEffect => appConfig.Get("service-smile-smilevideo-player-comment-effect", bool.Parse);
 
+        public static double ServiceSmilevideoPlayerCommentBig => appConfig.Get("service-smile-smilevideo-player-comment-big", double.Parse);
+        public static double ServiceSmilevideoPlayerCommentSmall => appConfig.Get("service-smile-smilevideo-player-comment-small", double.Parse);
+
         /// <summary>
         /// 関連動画のソート。
         /// </summary>
