@@ -337,7 +337,6 @@
           </StackPanel>
         </Button>
         <Button Cursor="Hand" Command="{Binding OpenDefaultBrowserCommand}">視聴ページ</Button>
-        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
       </StackPanel>
     </mamc:WindowCommands>
   </mamc:MetroWindow.RightWindowCommands>
@@ -594,6 +593,10 @@
           </Style>
         </StatusBarItem.Style>
         <ResizeGrip />
+      </StatusBarItem>
+
+      <StatusBarItem DockPanel.Dock="Right" >
+        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" Margin="{StaticResource HorizonMargin}" />
       </StatusBarItem>
 
       <ToggleButton x:Name="switchInformation">
