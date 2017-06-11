@@ -123,6 +123,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static int ServiceSmileVideoPlayHistoryCount => appConfig.Get("service-smile-smilevideo-play-history-count", int.Parse);
         /// <summary>
+        /// 再生履歴数。
+        /// <para>View上の保持数</para>
+        /// </summary>
+        public static int ServiceSmileVideoPlayHistoryViewCount => appConfig.Get("service-smile-smilevideo-play-history-view-count", int.Parse);
+        /// <summary>
         /// あとで見るの保持数。
         /// <para>非表示を含めた全体数。</para>
         /// </summary>
