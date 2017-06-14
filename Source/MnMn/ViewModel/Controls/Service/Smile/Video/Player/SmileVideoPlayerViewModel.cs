@@ -962,7 +962,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void AddHistoryCore(SmileVideoPlayHistoryModel historyModel)
         {
-            Setting.History.Insert(0, historyModel);
+            //Setting.History.Insert(0, historyModel);
+            AppUtility.AddHistoryItem(Setting.History, historyModel);
         }
 
         protected virtual void AddHistory(SmileVideoInformationViewModel information)

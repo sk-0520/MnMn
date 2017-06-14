@@ -279,7 +279,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             }
             //UserBookmarkCollection.Insert(0, item, null);
             AppUtility.PlusItem(UserBookmarkCollection, item, null);
-            
+
             RefreshUser();
 
             if(information.IsPublicPost) {
@@ -332,7 +332,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 UserHistoryCollection.Remove(existItem);
                 item = existItem;
             }
-            UserHistoryCollection.Insert(0, item, null);
+            //UserHistoryCollection.Insert(0, item, null);
+            AppUtility.AddHistoryItem(UserHistoryCollection, item, null);
         }
 
         async Task<IEnumerable<SmileVideoVideoItemModel>> CheckBookmarkPostAsync(string userId)
