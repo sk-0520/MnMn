@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public CollectionModel<SmileUserInformationViewModel> UserItems { get; } = new CollectionModel<SmileUserInformationViewModel>();
         public SmileLoginUserInformationViewModel LoginUser { get; private set; }
 
-        DispatcherTimer CheckItLaterCheckTimer = new DispatcherTimer() {
+        DispatcherTimer CheckItLaterCheckTimer { get; } = new DispatcherTimer() {
             Interval = Constants.ServiceSmileUserCheckItLaterCheckTime,
         };
 
@@ -277,7 +277,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             if(existItem != null) {
                 return;
             }
-            UserBookmarkCollection.Insert(0, item, null);
+            //UserBookmarkCollection.Insert(0, item, null);
+            AppUtility.PlusItem(UserBookmarkCollection, item, null);
+
             RefreshUser();
 
             if(information.IsPublicPost) {
@@ -330,7 +332,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 UserHistoryCollection.Remove(existItem);
                 item = existItem;
             }
-            UserHistoryCollection.Insert(0, item, null);
+            //UserHistoryCollection.Insert(0, item, null);
+            AppUtility.AddHistoryItem(UserHistoryCollection, item, null);
         }
 
         async Task<IEnumerable<SmileVideoVideoItemModel>> CheckBookmarkPostAsync(string userId)

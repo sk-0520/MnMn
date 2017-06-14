@@ -115,7 +115,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 model = existModel;
             }
             model.UpdateTimestamp = DateTime.Now;
-            setting.MyList.History.Insert(0, model);
+            //setting.MyList.History.Insert(0, model);
+            AppUtility.AddHistoryItem(setting.MyList.History, model);
         }
 
         protected virtual Task<FeedSmileVideoModel> LoadFeedCoreAsync()

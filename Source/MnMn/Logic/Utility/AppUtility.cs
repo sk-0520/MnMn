@@ -27,10 +27,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -251,6 +254,120 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// 共通データ追加処理。
+        /// <para>視覚データに対して使用する前提。</para>
+        /// </summary>
+        /// <typeparam name="IValue"></typeparam>
+        /// <param name="targetCollection"></param>
+        /// <param name="addItem"></param>
+        public static void PlusItem<IValue>(IList<IValue> targetCollection, IValue addItem)
+        {
+            if(targetCollection == null) {
+                throw new ArgumentNullException(nameof(targetCollection));
+            }
+
+            targetCollection.Insert(0, addItem);
+        }
+
+        /// <summary>
+        /// 共通データ追加処理。
+        /// <para>視覚データに対して使用する前提。</para>
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <param name="targetCollection"></param>
+        /// <param name="addItem"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static TViewModel PlusItem<TModel, TViewModel>(MVMPairCollectionBase<TModel, TViewModel> targetCollection, TModel addItem, object data)
+            where TModel : ModelBase
+            where TViewModel : ViewModelBase
+        {
+            if(targetCollection == null) {
+                throw new ArgumentNullException(nameof(targetCollection));
+            }
+
+            var pair = targetCollection.Insert(0, addItem, data);
+            return pair.ViewModel;
+        }
+
+        /// <summary>
+        /// 共通データ追加処理。
+        /// <para>視覚データに対して使用する前提。</para>
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <param name="targetCollection"></param>
+        /// <param name="addItem"></param>
+        public static void PlusItem<TModel, TViewModel>(MVMPairCollectionBase<TModel, TViewModel> targetCollection, MVMPair<TModel, TViewModel> addItem)
+            where TModel : ModelBase
+            where TViewModel : ViewModelBase
+        {
+            if(targetCollection == null) {
+                throw new ArgumentNullException(nameof(targetCollection));
+            }
+
+            targetCollection.Insert(0, addItem);
+        }
+
+        /// <summary>
+        /// 共通履歴データ追加処理。
+        /// <para>視覚データに対して使用する前提。</para>
+        /// </summary>
+        /// <typeparam name="IValue"></typeparam>
+        /// <param name="targetCollection"></param>
+        /// <param name="addItem"></param>
+        public static void AddHistoryItem<IValue>(IList<IValue> targetCollection, IValue addItem)
+        {
+            if(targetCollection == null) {
+                throw new ArgumentNullException(nameof(targetCollection));
+            }
+
+            targetCollection.Insert(0, addItem);
+        }
+
+        /// <summary>
+        /// 共通履歴データ追加処理。
+        /// <para>視覚データに対して使用する前提。</para>
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <param name="targetCollection"></param>
+        /// <param name="addItem"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static TViewModel AddHistoryItem<TModel, TViewModel>(MVMPairCollectionBase<TModel, TViewModel> targetCollection, TModel addItem, object data)
+            where TModel : ModelBase
+            where TViewModel : ViewModelBase
+        {
+            if(targetCollection == null) {
+                throw new ArgumentNullException(nameof(targetCollection));
+            }
+
+            var pair = targetCollection.Insert(0, addItem, data);
+            return pair.ViewModel;
+        }
+
+        /// <summary>
+        /// 共通履歴データ追加処理。
+        /// <para>視覚データに対して使用する前提。</para>
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <param name="targetCollection"></param>
+        /// <param name="addItem"></param>
+        public static void AddHistoryItem<TModel, TViewModel>(MVMPairCollectionBase<TModel, TViewModel> targetCollection, MVMPair<TModel, TViewModel> addItem)
+            where TModel : ModelBase
+            where TViewModel : ViewModelBase
+        {
+            if(targetCollection == null) {
+                throw new ArgumentNullException(nameof(targetCollection));
+            }
+
+            targetCollection.Insert(0, addItem);
         }
 
         #endregion
