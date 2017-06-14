@@ -830,6 +830,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             CheckUtility.DebugEnforceNotNull(finder);
 
+            if(BookmarkUserMyListPairs.Any(i => i.Model.MyListId == finder.MyListId)) {
+                Mediation.Logger.Trace($"mylist dup: {finder.MyListId}");
+                return;
+            }
+
             var model = new SmileMyListBookmarkItemModel() {
                 MyListId = finder.MyListId,
                 MyListName = finder.MyListName,
