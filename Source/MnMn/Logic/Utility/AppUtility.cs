@@ -282,7 +282,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         /// <param name="addItem"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static TViewModel PlusItem<TModel, TViewModel>(MVMPairCollectionBase<TModel, TViewModel> targetCollection, TModel addItem, object data = null)
+        public static TViewModel PlusItem<TModel, TViewModel>(MVMPairCollectionBase<TModel, TViewModel> targetCollection, TModel addItem, object data)
             where TModel : ModelBase
             where TViewModel : ViewModelBase
         {

@@ -277,7 +277,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             if(existItem != null) {
                 return;
             }
-            UserBookmarkCollection.Insert(0, item, null);
+            //UserBookmarkCollection.Insert(0, item, null);
+            AppUtility.PlusItem(UserBookmarkCollection, item, null);
+            
             RefreshUser();
 
             if(information.IsPublicPost) {
