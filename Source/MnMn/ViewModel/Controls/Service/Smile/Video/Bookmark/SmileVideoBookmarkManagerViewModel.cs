@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -349,11 +350,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             //return targetNodeViewModel.VideoItems.Skip(index);
             var addItems = videoItems
                 .Where(i => targetNodeViewModel.VideoItems.All(i2 => !SmileVideoVideoItemUtility.IsEquals(i, i2)))
+                .Reverse()
                 .ToEvaluatedSequence()
             ;
 
             if(addItems.Any()) {
-                targetNodeViewModel.VideoItems.AddRange(addItems);
+                //targetNodeViewModel.VideoItems.AddRange(addItems);
+                foreach(var addItem in addItems) {
+                    AppUtility.PlusItem(targetNodeViewModel.VideoItems, addItem);
+                }
                 return addItems;
             }
 
@@ -398,7 +403,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public SmileVideoVideoItemModel AddUnorganizedBookmark(SmileVideoVideoItemModel videoItem)
         {
             if(Node.VideoItems.All(i => !SmileVideoVideoItemUtility.IsEquals(videoItem, i))) {
-                Node.VideoItems.Add(videoItem);
+                //Node.VideoItems.Add(videoItem);
+                AppUtility.PlusItem(Node.VideoItems, videoItem);
                 return Node.VideoItems.Last();
             }
 
