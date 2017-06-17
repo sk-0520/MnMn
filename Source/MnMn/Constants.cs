@@ -170,19 +170,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// ニコニコ動画: ユーザーデータキャッシュ時間。
         /// </summary>
-        public static CacheSpan ServiceSmileUserDataCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        public static CacheSpan ServiceSmileUserDataCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileUserDataCacheTime);
         /// <summary>
         /// ニコニコ動画: ユーザー画像キャッシュ時間。
         /// </summary>
-        public static CacheSpan ServiceSmileUserImageCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(3));
+        public static CacheSpan ServiceSmileUserImageCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileUserImageCacheTime);
         /// <summary>
         /// ニコニコ動画: マイリストキャッシュ時間。
         /// </summary>
-        public static CacheSpan ServiceSmileMyListCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        public static CacheSpan ServiceSmileMyListCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileMyListCacheTime);
         /// <summary>
         /// ニコニコ動画: 動画情報キャッシュ時間。
         /// </summary>
-        public static CacheSpan ServiceSmileVideoThumbCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        public static CacheSpan ServiceSmileVideoThumbCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileVideoThumbCacheTime);
         /// <summary>
         /// ニコニコ動画: 動画サムネイルキャッシュ時間。
         /// </summary>
@@ -190,19 +190,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// ニコニコ動画: コメントキャッシュ時間。
         /// </summary>
-        public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
+        public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileVideoMsgCacheTime);
         /// <summary>
         /// ニコニコ動画: 関連動画情報キャッシュ時間。
         /// </summary>
-        public static CacheSpan ServiceSmileVideoRelationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
+        public static CacheSpan ServiceSmileVideoRelationCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileVideoRelationCacheTime);
         /// <summary>
         /// ニコニコ動画: あとで見る の保持有効期間。
         /// </summary>
-        public static CacheSpan ServiceSmileVideoCheckItLaterCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(7));
+        public static CacheSpan ServiceSmileVideoCheckItLaterCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileVideoCheckItLaterCacheTime);
         /// <summary>
         /// ニコニコ生放送: 動画情報キャッシュ時間。
         /// </summary>
-        public static CacheSpan ServiceSmileLiveInformationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        public static CacheSpan ServiceSmileLiveInformationCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileLiveInformationCacheTime);
         /// <summary>
         /// ニコニコ生放送: 動画サムネイルキャッシュ時間。
         /// </summary>
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// ニコニコ市場: 動画サムネイルキャッシュ時間。
         /// </summary>
-        public static CacheSpan ServiceSmileMarketImageCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(7));
+        public static CacheSpan ServiceSmileMarketImageCacheSpan => new CacheSpan(DateTime.Now, ServiceSmileMarketImageCacheTime);
         /// <summary>
         /// sbin/
         /// </summary>
