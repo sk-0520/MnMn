@@ -94,7 +94,8 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'compatibility',
+						'subject': '検索ワードのピン止めは廃止しました'
 					},
 					{
 						'revision': '',
@@ -205,6 +206,10 @@
 					{
 						'revision': '',
 						'subject': '#609: プレイヤー管轄の再生状態をローカライズする'
+					},
+					{
+						'revision': '',
+						'subject': '#619: 検索ワードのピン止め機能を廃止する'
 					},
 					{
 						'revision': '',

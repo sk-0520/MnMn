@@ -51,11 +51,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return SearchType.Keyword;
         }
 
+        [Obsolete]
         public static SmileVideoSearchPinModel FindPinItem(IEnumerable<SmileVideoSearchPinModel> items, string query, SearchType searchType)
         {
             return items.FirstOrDefault(p => p.SearchType == searchType && p.Query == query);
         }
 
+        [Obsolete]
         public static bool IsPinItem(IEnumerable<SmileVideoSearchPinModel> items, string query, SearchType searchType)
         {
             return FindPinItem(items, query, searchType) != null;

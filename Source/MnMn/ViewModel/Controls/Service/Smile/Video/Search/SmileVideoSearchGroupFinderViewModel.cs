@@ -203,6 +203,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._notfound, value); }
         }
 
+        [Obsolete]
         /// <summary>
         /// ピン止めされているか。
         /// </summary>
@@ -281,6 +282,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        [Obsolete]
         public ICommand SwitchPinCommand
         {
             get { return CreateCommand(o => SwitchPin()); }
@@ -295,6 +297,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             CallOnPropertyChange(ChangePagePropertyNames);
         }
 
+        [Obsolete]
         void SwitchPin()
         {
             if(IsPin) {
@@ -304,6 +307,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        [Obsolete]
         void AddPin()
         {
             var item = new SmileVideoSearchPinModel() {
@@ -317,6 +321,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             CallOnPropertyChangeDisplayItem();
         }
 
+        [Obsolete]
         void RemovePin()
         {
             var item = SmileVideoSearchUtility.FindPinItem(Setting.Search.SearchPinItems, Query, Type);
@@ -547,11 +552,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             base.CallOnPropertyChangeDisplayItem();
 
-            var propertyNames = new[] {
-                nameof(IsPin),
-            };
+            //[Obsolete]
+            //var propertyNames = new[] {
+            //    nameof(IsPin),
+            //};
 
-            CallOnPropertyChange(propertyNames);
+            //CallOnPropertyChange(propertyNames);
         }
 
 

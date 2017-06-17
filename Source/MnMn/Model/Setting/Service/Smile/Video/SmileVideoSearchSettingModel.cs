@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// ピン止め。
         /// </summary>
+        [Obsolete]
         [DataMember]
         public CollectionModel<SmileVideoSearchPinModel> SearchPinItems { get; set; } = new CollectionModel<SmileVideoSearchPinModel>();
     }

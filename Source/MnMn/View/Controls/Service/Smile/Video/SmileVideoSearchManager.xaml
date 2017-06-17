@@ -468,11 +468,11 @@
       <app_view_controls:FocusedTabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
-            <StackPanel.ContextMenu>
+            <!--<StackPanel.ContextMenu>
               <ContextMenu>
                 <MenuItem Header="ピン止め" IsChecked="{Binding IsPin, Mode=OneWay}" Command="{Binding SwitchPinCommand}" />
               </ContextMenu>
-            </StackPanel.ContextMenu>
+            </StackPanel.ContextMenu>-->
 
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
             <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
@@ -504,7 +504,7 @@
             />
             <Button Style="{StaticResource TabReloadButton}" />
 
-            <Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <!--<Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" >
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Pin}" Style="{StaticResource SmallDefaultIconPath}" />
               </Canvas>
@@ -520,7 +520,7 @@
                   </Style.Triggers>
                 </Style>
               </Button.Style>
-            </Button>
+            </Button>-->
           </StackPanel>
         </DataTemplate>
       </app_view_controls:FocusedTabControl.ItemTemplate>

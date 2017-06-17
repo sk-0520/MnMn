@@ -134,11 +134,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set
             {
                 if(SetVariableValue(ref this._selectedSearchGroup, value)) {
-                    if(SelectedSearchGroup != null) {
-                        if(SelectedSearchGroup.IsPin && SelectedSearchGroup.FinderLoadState == SourceLoadState.None) {
-                            SelectedSearchGroup.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ConfigureAwait(false);
-                        }
-                    }
+                    //[Obsolete]
+                    //if(SelectedSearchGroup != null) {
+                    //    if(SelectedSearchGroup.IsPin && SelectedSearchGroup.FinderLoadState == SourceLoadState.None) {
+                    //        SelectedSearchGroup.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ConfigureAwait(false);
+                    //    }
+                    //}
                 }
             }
         }
@@ -398,6 +399,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query, true);
         }
 
+        [Obsolete]
         public Task LoadSearchFromPinAsync(SmileVideoSearchPinModel pin)
         {
             if(string.IsNullOrWhiteSpace(pin.Query)) {
@@ -554,15 +556,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             RemoveInvalidHistoryItems();
 
-            if(!Setting.Search.SearchPinItems.Any()) {
-                return Task.CompletedTask;
-            }
-
-            var tasks = Setting.Search.SearchPinItems.Select(p => LoadSearchFromPinAsync(p));
-
-            return Task.WhenAll(tasks).ContinueWith(t => {
-                SelectedSearchGroup = SearchGroups.First();
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            //[Obsolete]
+            //if(!Setting.Search.SearchPinItems.Any()) {
+            //    return Task.CompletedTask;
+            //}
+            //
+            //var tasks = Setting.Search.SearchPinItems.Select(p => LoadSearchFromPinAsync(p));
+            //
+            //return Task.WhenAll(tasks).ContinueWith(t => {
+            //    SelectedSearchGroup = SearchGroups.First();
+            //}, TaskScheduler.FromCurrentSynchronizationContext());
+            return Task.CompletedTask;
         }
 
         public override Task UninitializeAsync()
