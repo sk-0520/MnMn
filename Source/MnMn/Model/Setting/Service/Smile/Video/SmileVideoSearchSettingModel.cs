@@ -61,5 +61,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [Obsolete]
         [DataMember]
         public CollectionModel<SmileVideoSearchPinModel> SearchPinItems { get; set; } = new CollectionModel<SmileVideoSearchPinModel>();
+
+        /// <summary>
+        /// 検索ブックマーク。
+        /// </summary>
+        [DataMember]
+        public CollectionModel<SmileVideoSearchBookmarkItemModel> SearchBookmarkItems { get; set; } = new CollectionModel<SmileVideoSearchBookmarkItemModel>();
     }
 }

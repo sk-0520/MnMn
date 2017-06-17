@@ -484,6 +484,7 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommonSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoLaboratorySettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchBookmarkItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchPinModel.cs" />
     <Compile Include="Model\Setting\ThemeSettingModel.cs" />
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
