@@ -219,7 +219,18 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#631: App.config に入っていない定数を追い出す',
+						'comments': [
+							'`service-smile-user-data-cache-time`: ニコニコユーザー情報キャッシュ時間',
+							'`service-smile-user-image-cache-time`: ニコニコユーザー画像キャッシュ時間',
+							'`service-smile-mylist-cache-time`: ニコニコマイリストキャッシュ時間',
+							'`service-smile-market-image-cache-time`: ニコニコ市場サムネイルキャッシュ時間',
+							'`service-smile-smilevideo-thumb-cache-time`: ニコニコ動画情報キャッシュ時間',
+							'`service-smile-smilevideo-msg-cache-time`: ニコニコ動画コメントキャッシュ時間',
+							'`service-smile-smilevideo-relation-cache-time`: ニコニコ動画関連動画情報キャッシュ時間',
+							'`service-smile-smilevideo-check_it_later-cache-time`: ニコニコ動画あとで見る の保持有効期間',
+							'`service-smile-live-information-cache-time`: ニコニコ生放送動画情報キャッシュ時間'
+						]
 					},
 					{
 						'revision': '',
