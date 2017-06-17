@@ -45,7 +45,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 {
-    public class SmileVideoSearchManagerViewModel: SmileVideoCustomManagerViewModelBase
+    public class SmileVideoSearchManagerViewModel : SmileVideoCustomManagerViewModelBase
     {
         #region variable
 
@@ -79,6 +79,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             SearchHistoryList = new MVMPairCreateDelegationCollection<SmileVideoSearchHistoryModel, SmileVideoSearchHistoryViewModel>(Setting.Search.SearchHistoryItems, default(object), CreateSearchHistory);
             SearchHistoryItems = CollectionViewSource.GetDefaultView(SearchHistoryList.ViewModelList);
+
+            SearchBookmarkCollection = new MVMPairCreateDelegationCollection<SmileVideoSearchBookmarkItemModel, SmileVideoSearchBookmarkItemViewModel>(Setting.Search.SearchBookmarkItems, default(object), CreateSearchBookmark);
+            SearchBookmarkItems = CollectionViewSource.GetDefaultView(SearchBookmarkCollection.ViewModelList);
         }
 
         #region property
@@ -225,6 +228,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get { return new GridLength(Setting.Search.SearchFinderWidth, GridUnitType.Star); }
             set { SetPropertyValue(Setting.Search, value.Value); }
         }
+
+        MVMPairCreateDelegationCollection<SmileVideoSearchBookmarkItemModel, SmileVideoSearchBookmarkItemViewModel> SearchBookmarkCollection { get; }
+        public ICollectionView SearchBookmarkItems { get; }
 
         #endregion
 
@@ -379,6 +385,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         static SmileVideoSearchHistoryViewModel CreateSearchHistory(SmileVideoSearchHistoryModel model, object data)
         {
             return new SmileVideoSearchHistoryViewModel(model);
+        }
+
+        private SmileVideoSearchBookmarkItemViewModel CreateSearchBookmark(SmileVideoSearchBookmarkItemModel model, object data)
+        {
+            return new SmileVideoSearchBookmarkItemViewModel(model);
         }
 
         Task SearchSimpleAsync(string query, SearchType searchType)

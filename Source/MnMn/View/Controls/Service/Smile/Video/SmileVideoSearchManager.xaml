@@ -410,7 +410,11 @@
       </Grid.ColumnDefinitions>
 
       <Grid Visibility="{Binding ShowSearchBookmark, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <ScrollViewer>
+          <ItemsControl ItemsSource="{Binding SearchBookmarkItems}">
 
+          </ItemsControl>
+        </ScrollViewer>
       </Grid>
 
       <GridSplitter Grid.Column="1" Visibility="{Binding ShowSearchBookmark, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource DefaultVericalGridSplitter}" />
