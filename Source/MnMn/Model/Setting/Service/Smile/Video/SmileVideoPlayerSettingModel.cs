@@ -66,6 +66,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public bool AutoScrollCommentList { get; set; } = Constants.SettingServiceSmileVideoPlayerAutoScrollCommentList;
 
         /// <summary>
+        /// コメントリスト内にカーソルがある場合は自動スクロールを抑制するか。
+        /// </summary>
+        [DataMember]
+        public bool DisbaledAutoScrollCommentListOverCursor { get; set; } = Constants.SettingServiceSmileVideoPlayerDisbaledAutoScrollCommentListOverCursor;
+
+        /// <summary>
         /// コメントを表示するか。
         /// </summary>
         [DataMember]

@@ -553,6 +553,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 .FirstOrDefault(c => SmileVideoCommentUtility.InShowTime(c, PrevPlayedTime, PlayTime))
             ;
             if(nowTimelineItem != null) {
+                if(Setting.Player.DisbaledAutoScrollCommentListOverCursor && CommentView.IsMouseOver) {
+                    return;
+                }
+
                 CommentView.ScrollToCenterOfView(nowTimelineItem, true, false);
             }
         }
