@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
@@ -27,18 +28,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// 停止。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_PlayerState_Stop))]
         Stop,
         /// <summary>
         /// 再生中。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_PlayerState_Playing))]
         Playing,
         /// <summary>
         /// 一時停止。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_PlayerState_Pause))]
         Pause,
         /// <summary>
         /// バッファ中。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_PlayerState_Buffering))]
         Buffering,
     }
 }

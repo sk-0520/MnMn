@@ -618,11 +618,7 @@
           <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
         </Grid>
       </ToggleButton>
-      <TextBlock>
-        <TextBlock>[</TextBlock>
-        <TextBlock Text="{Binding PlayerState, Mode=OneWay}"/>
-        <TextBlock>]</TextBlock>
-      </TextBlock>
+      <TextBlock Text="{Binding PlayerState, Mode=OneWay, Converter={StaticResource EnumDisplayConverter}}"/>
       <Viewbox ToolTip="酷使するプレイヤーウィンドウ！" Style="{StaticResource SmallIconBox}" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}" >
         <Viewbox.ContextMenu>
           <ContextMenu IsOpen="{Binding IsOpenWorkingPlayer}" ItemsSource="{Binding WorkingPlayerItems}">

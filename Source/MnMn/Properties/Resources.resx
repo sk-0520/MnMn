@@ -542,4 +542,16 @@ MnMn 終了時に専用設定ファイルが開かれます。</value>
   <data name="String_App_Define_ServiceType_IdleTalk_Mutter" xml:space="preserve">
     <value>Tweet</value>
   </data>
+  <data name="String_App_Define_PlayerState_Buffering" xml:space="preserve">
+    <value>待機</value>
+  </data>
+  <data name="String_App_Define_PlayerState_Pause" xml:space="preserve">
+    <value>中断</value>
+  </data>
+  <data name="String_App_Define_PlayerState_Playing" xml:space="preserve">
+    <value>再生</value>
+  </data>
+  <data name="String_App_Define_PlayerState_Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
 </root>
