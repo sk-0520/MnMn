@@ -406,6 +406,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerAutoScrollCommentList => appConfig.Get("setting-service-smile-smilevideo-player-auto-scroll-comment-list", bool.Parse);
         /// <summary>
+        /// コメントリスト内にカーソルがある場合は自動スクロールを抑制するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerDisbaledAutoScrollCommentListOverCursor => appConfig.Get("setting-service-smile-smilevideo-player-disabled-auto-scroll-comment-list-over-cursor", bool.Parse);
+        /// <summary>
         /// 詳細部を表示するか。
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerShowDetailArea => appConfig.Get("setting-service-smile-smilevideo-player-show-detail-area", bool.Parse);
