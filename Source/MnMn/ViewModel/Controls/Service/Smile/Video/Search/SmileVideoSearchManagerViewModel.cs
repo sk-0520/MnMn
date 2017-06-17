@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -207,6 +208,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public CollectionModel<SmileVideoTagViewModel> TrendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
         bool UsingIme { get; set; }
+
+        public bool ShowSearchBookmark
+        {
+            get { return Setting.Search.ShowSearchBookmark; }
+            set { SetPropertyValue(Setting.Search, value); }
+        }
+
+        public GridLength SearchBookmarkWidth
+        {
+            get { return new GridLength(Setting.Search.SearchBookmarkWidth, GridUnitType.Star); }
+            set { SetPropertyValue(Setting.Search, value.Value); }
+        }
+        public GridLength SearchFinderWidth
+        {
+            get { return new GridLength(Setting.Search.SearchFinderWidth, GridUnitType.Star); }
+            set { SetPropertyValue(Setting.Search, value.Value); }
+        }
 
         #endregion
 

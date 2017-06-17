@@ -63,6 +63,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public CollectionModel<SmileVideoSearchPinModel> SearchPinItems { get; set; } = new CollectionModel<SmileVideoSearchPinModel>();
 
         /// <summary>
+        /// 検索ブックマーク表示状態。
+        /// </summary>
+        [DataMember]
+        public bool ShowSearchBookmark { get; set; } = false;
+
+        [DataMember]
+        public double SearchBookmarkWidth { get; set; } = Constants.SettingServiceSmileVideoSearchBookmarkWidth;
+        [DataMember]
+        public double SearchFinderWidth { get; set; } = Constants.SettingServiceSmileVideoSearchFinderWidth;
+
+        /// <summary>
         /// 検索ブックマーク。
         /// </summary>
         [DataMember]
