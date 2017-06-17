@@ -59,6 +59,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileMyListReloadWaitTime => appConfig.Get("service-smile-mylist-reload-wait-time", TimeSpan.Parse);
 
+        public static TimeSpan ServiceSmileUserDataCacheTime = appConfig.Get("service-smile-user-data-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileUserImageCacheTime = appConfig.Get("service-smile-user-image-cache-time", TimeSpan.Parse);
+
+        public static TimeSpan ServiceSmileMyListCacheTime = appConfig.Get("service-smile-mylist-cache-time", TimeSpan.Parse);
+
+        public static TimeSpan ServiceSmileMarketImageCacheTime = appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
+
         /// <summary>
         /// マイリストのタイトルから除外する文字列。
         /// <para>先頭。</para>
@@ -229,6 +236,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static SmileVideoSearchType ServiceSmileVideoSearchType => appConfig.Get("service-smile-smilevideo-search-type", s => EnumUtility.Parse< SmileVideoSearchType>(s));
 
+        public static TimeSpan ServiceSmileVideoThumbCacheTime = appConfig.Get("service-smile-smilevideo-thumb-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileVideoMsgCacheTime = appConfig.Get("service-smile-smilevideo-msg-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileVideoRelationCacheTime = appConfig.Get("service-smile-smilevideo-relation-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileVideoCheckItLaterCacheTime = appConfig.Get("service-smile-smilevideo-check_it_later-cache-time", TimeSpan.Parse);
 
         #region live
 
@@ -236,6 +247,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 動画データ取得中になんかエラー発生から再開のリトライ数。
         /// </summary>
         public static int ServiceSmileLiveCategoryBaseCount => appConfig.Get("service-smile-smilelive-category-base-count", int.Parse);
+
+        public static TimeSpan ServiceSmileLiveInformationCacheTime = appConfig.Get("service-smile-live-information-cache-time", TimeSpan.Parse);
 
         #endregion
 
