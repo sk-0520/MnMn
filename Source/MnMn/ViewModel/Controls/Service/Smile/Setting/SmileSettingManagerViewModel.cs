@@ -190,6 +190,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 
+        public bool DisbaledAutoScrollCommentListOverCursor
+        {
+            get {return Setting.Video.Player.DisbaledAutoScrollCommentListOverCursor;}
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
         public bool CanChangeCommentEnabledArea
         {
             get { return Setting.Video.Player.CanChangeCommentEnabledArea; }
