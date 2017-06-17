@@ -34,6 +34,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         //public OrderBy OrderBy { get; set; }
 
         /// <summary>
+        /// 更新チェックを行うか。
+        /// </summary>
+        public bool IsCheckUpdate { get; set; } = Constants.SettingServiceSmileVideoSearchIsCheckUpdate;
+
+        /// <summary>
         /// 現在の差分動画。
         /// </summary>
         [DataMember]

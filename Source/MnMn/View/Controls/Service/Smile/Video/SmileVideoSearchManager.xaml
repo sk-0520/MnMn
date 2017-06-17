@@ -412,7 +412,14 @@
       <Grid Visibility="{Binding ShowSearchBookmark, Converter={StaticResource BooleanToVisibilityConverter}}">
         <ScrollViewer>
           <ItemsControl ItemsSource="{Binding SearchBookmarkItems}">
-
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <StackPanel>
+                  <TextBlock Text="{Binding Query}" />
+                  <TextBlock Text="{Binding IsCheckUpdate}" />
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
           </ItemsControl>
         </ScrollViewer>
       </Grid>

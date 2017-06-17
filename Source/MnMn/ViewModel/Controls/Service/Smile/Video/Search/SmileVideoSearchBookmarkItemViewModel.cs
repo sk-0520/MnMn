@@ -13,5 +13,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public SmileVideoSearchBookmarkItemViewModel(SmileVideoSearchBookmarkItemModel model)
             : base(model)
         { }
+
+        #region property
+
+        public string Query => Model.Query;
+
+        public bool IsCheckUpdate
+        {
+            get { return Model.IsCheckUpdate; }
+            set { SetModelValue(value); }
+        }
+
+        #endregion
     }
 }
