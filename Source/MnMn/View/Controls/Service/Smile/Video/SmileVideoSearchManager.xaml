@@ -448,7 +448,7 @@
             <StackPanel Style="{StaticResource TabHeader}">
               <StackPanel.ContextMenu>
                 <ContextMenu>
-                  <MenuItem Header="ピン止め" IsChecked="{Binding IsBookmark, Mode=OneWay}" Command="{Binding SwitchBookmarkCommand}" />
+                  <MenuItem Header="ブックマーク" IsChecked="{Binding IsBookmark, Mode=OneWay}" Command="{Binding SwitchBookmarkCommand}" />
                 </ContextMenu>
               </StackPanel.ContextMenu>
 

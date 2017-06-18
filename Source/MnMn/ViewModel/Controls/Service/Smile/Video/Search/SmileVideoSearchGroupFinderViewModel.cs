@@ -205,18 +205,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._notfound, value); }
         }
 
-        [Obsolete]
         /// <summary>
-        /// ピン止めされているか。
+        /// ブックマークされているか。
         /// </summary>
-        public bool IsPin
-        {
-            get
-            {
-                return SmileVideoSearchUtility.IsPinItem(Setting.Search.SearchPinItems, Query, Type);
-            }
-        }
-
         public bool IsBookmark
         {
             get
@@ -292,12 +283,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        [Obsolete]
-        public ICommand SwitchPinCommand
-        {
-            get { return CreateCommand(o => SwitchPin()); }
-        }
-
         public ICommand SwitchBookmarkCommand
         {
             get { return CreateCommand(o => SwitchBookmark()); }
@@ -310,41 +295,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         void CallPageItemOnPropertyChange()
         {
             CallOnPropertyChange(ChangePagePropertyNames);
-        }
-
-        [Obsolete]
-        void SwitchPin()
-        {
-            if(IsPin) {
-                RemovePin();
-            } else {
-                AddPin();
-            }
-        }
-
-        [Obsolete]
-        void AddPin()
-        {
-            var item = new SmileVideoSearchPinModel() {
-                MethodKey = SelectedMethod.Key,
-                SortKey = SelectedSort.Key,
-                Query = this.Query,
-                SearchType = Type,
-            };
-            Setting.Search.SearchPinItems.Add(item);
-
-            CallOnPropertyChangeDisplayItem();
-        }
-
-        [Obsolete]
-        void RemovePin()
-        {
-            var item = SmileVideoSearchUtility.FindPinItem(Setting.Search.SearchPinItems, Query, Type);
-            if(item != null) {
-                Setting.Search.SearchPinItems.Remove(item);
-            }
-
-            CallOnPropertyChangeDisplayItem();
         }
 
         void SwitchBookmark()
