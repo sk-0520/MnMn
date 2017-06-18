@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         SmileVideoSettingModel Setting { get; }
 
-        DispatcherTimer CheckItLaterCheckTimer = new DispatcherTimer() {
+        DispatcherTimer CheckItLaterCheckTimer { get; } = new DispatcherTimer() {
             Interval = Constants.ServiceSmileVideoCheckItLaterCheckTime,
         };
 
@@ -138,15 +138,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Task CheckUpdateAsync()
         {
             var mylistTask = MyListManager.CheckMyListAsync();
+            var tagBookmarkTask = SearchManager.UpdateBookmarkAsync();
 
-            return Task.WhenAll(mylistTask).ContinueWith(t => {
+            return Task.WhenAll(mylistTask, tagBookmarkTask).ContinueWith(t => {
                 var addItemList = new List<SmileVideoVideoItemModel>();
 
                 var myListItems = mylistTask.Result;
-
                 foreach(var item in myListItems) {
-                    //var addItem = CheckItLaterManager.AddLater(item);
-                    //addItemList.Add(addItem);
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
+                }
+
+                var tagBookmarkItems = tagBookmarkTask.Result;
+                foreach(var item in tagBookmarkItems) {
                     Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
                 }
             });

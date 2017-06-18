@@ -6,6 +6,7 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoSearchManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -420,8 +421,6 @@
             <ItemsControl.ItemTemplate>
               <DataTemplate>
                 <StackPanel>
-                  <Separator x:Name="separator" Margin="{StaticResource BigIndependentVericalMargin}" Style="{StaticResource Indent}" />
-
                   <Button HorizontalAlignment="Stretch" Style="{StaticResource Hyperlink}" Command="{Binding DataContext.SearchBookmarkCommand, ElementName=root}" CommandParameter="{Binding}">
                     <Grid>
                       <Grid.ColumnDefinitions>
@@ -454,38 +453,67 @@
                   <Separator Style="{StaticResource Indent}" Height="{StaticResource SeparatorHeight}" />
                   <Grid>
                     <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Padding="0" MinWidth="0" MinHeight="0"  Command="{Binding DataContext.RemoveBookmarkCommand, ElementName=root}" CommandParameter="{Binding}" Margin="{StaticResource RightMargin}">
-                      <Viewbox Style="{StaticResource SmallIconBox}">
-                        <Canvas Style="{StaticResource IconCanvas-24x24}">
-                          <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
-                        </Canvas>
-                      </Viewbox>
-                    </Button>
-                    <CheckBox Grid.Column="1" IsChecked="{Binding IsCheckUpdate}">
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsCheckUpdate}">
+                      <CheckBox.Resources>
+                        <sys:String x:Key="UpdateText">更新チェック</sys:String>
+                      </CheckBox.Resources>
                       <CheckBox.Style>
                         <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding SearchType}" Value="Tag">
                               <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SearchType}" Value="Tag" />
+                                <Condition Binding="{Binding IsLoading}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <Grid>
+                                    <Grid.ColumnDefinitions>
+                                      <ColumnDefinition Width="Auto" />
+                                      <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{StaticResource UpdateText}" />
+                                    <mamc:MetroProgressBar Grid.Column="1" IsIndeterminate="True" />
+                                  </Grid>
+                                </Setter.Value>
+                              </Setter>
+                            </MultiDataTrigger>
                           </Style.Triggers>
                           <Setter Property="IsEnabled" Value="False" />
+                          <Setter Property="Content" Value="{StaticResource UpdateText}" />
                         </Style>
                       </CheckBox.Style>
-                      更新チェック
                     </CheckBox>
+                    <Button Grid.Column="1" Padding="0" MinWidth="0" MinHeight="0"  Command="{Binding DataContext.RemoveBookmarkCommand, ElementName=root}" CommandParameter="{Binding}" Margin="{StaticResource RightMargin}">
+                      <Viewbox Style="{StaticResource SmallIconBox}">
+                        <Canvas Style="{StaticResource IconCanvas-24x24}">
+                          <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
+                        </Canvas>
+                      </Viewbox>
+                    </Button>
                   </Grid>
+
+                  <!-- 表示強制 -->
+                  <Separator x:Name="separator" Margin="{StaticResource BigIndependentVericalMargin}" Style="{StaticResource Indent}" />
                 </StackPanel>
 
+                <!--
+                自動ソートの影響で順序が固定じゃないから除去
                 <DataTemplate.Triggers>
                   <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
                     <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
                   </DataTrigger>
                 </DataTemplate.Triggers>
+                -->
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
@@ -514,7 +542,7 @@
           <DataTemplate>
             <StackPanel Style="{StaticResource TabHeader}">
               <StackPanel.ContextMenu>
-                <ContextMenu>
+                <ContextMenu IsOpen="{Binding IsOpenHeaderContextMenu}">
                   <MenuItem Header="ブックマーク" IsChecked="{Binding IsBookmark, Mode=OneWay}" Command="{Binding SwitchBookmarkCommand}" />
                 </ContextMenu>
               </StackPanel.ContextMenu>

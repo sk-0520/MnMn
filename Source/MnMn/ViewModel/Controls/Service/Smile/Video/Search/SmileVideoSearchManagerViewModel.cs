@@ -30,17 +30,21 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -508,7 +512,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             selectViewModel.History = historyViewModel;
 
             if(isLoad) {
-                return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+                return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(async t => {
+                    // 検索ブックマークに格納されてれば動画を更新する
+                    // 更新処理で差分を少なくするため非更新対象でも関係なく処理する
+                    if(Constants.ServiceSmileVideoTagFeedItemSearchingUpdate && selectViewModel.Type == SearchType.Tag) {
+                        var bookmark = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, selectViewModel.Query, selectViewModel.Type);
+                        if(bookmark != null) {
+                            var pair = SearchBookmarkCollection.First(b => b.Model == bookmark);
+                            var bookmarkViewModel = pair.ViewModel;
+                            // 更新中ならそれに譲る
+                            if(!bookmarkViewModel.IsLoading) {
+                                bookmarkViewModel.IsLoading = true;
+                                try {
+                                    var newItems = await CheckUpdateBookmarkAsync(bookmarkViewModel);
+                                    if(newItems.Any()) {
+                                        bookmarkViewModel.VideoIds.AddRange(newItems.Select(i => i.VideoId));
+                                    }
+                                } finally {
+                                    bookmarkViewModel.IsLoading = false;
+                                }
+                            }
+                        }
+                    }
+                });
             } else {
                 return Task.CompletedTask;
             }
@@ -595,16 +621,61 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public SmileVideoSearchBookmarkItemViewModel AddBookmark(SmileVideoSearchBookmarkItemModel item)
+        async Task<IReadOnlyList<string>> GetVideoIdsAsync(string tagName)
+        {
+            var tag = new Tag(Mediation);
+
+            var resultVideoIds = new List<string>(Constants.ServiceSmileVideoTagFeedItemCount * Constants.ServiceSmileVideoTagFeedCount);
+            foreach(var i in Enumerable.Range(0, Constants.ServiceSmileVideoTagFeedCount)) {
+                var pageNumber = i + 1;
+                if(1 < i && i != Constants.ServiceSmileVideoTagFeedCount - 1) {
+                    await Task.Delay(Constants.ServiceSmileVideoTagFeedWaitTime);
+                }
+                var feed = await tag.LoadTagFeedAsync(tagName, Constants.ServiceSmileVideoTagFeedSort, Constants.ServiceSmileVideoTagFeedOrder, pageNumber);
+                if(feed.Channel.Items.Any()) {
+                    foreach(var item in feed.Channel.Items) {
+                        var rawVideoId = SmileVideoFeedUtility.GetVideoId(item);
+                        if(SmileIdUtility.NeedCorrectionVideoId(rawVideoId)) {
+                            // Taskで無理やり操作性まともにしてる
+                            var information = await Task.Run(() => {
+                                var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
+                                return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                            });
+                            resultVideoIds.Add(information.VideoId);
+                        } else {
+                            resultVideoIds.Add(rawVideoId);
+                        }
+                    }
+                } else {
+                    break;
+                }
+            }
+
+            return resultVideoIds;
+        }
+
+        public Task<SmileVideoSearchBookmarkItemViewModel> AddBookmarkAsync(SmileVideoSearchBookmarkItemModel item)
         {
             var existsItem = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, item.Query, item.SearchType);
             if(existsItem != null) {
                 var pair = SearchBookmarkCollection.First(p => p.Model == existsItem);
-                return pair.ViewModel;
+                return Task.FromResult(pair.ViewModel);
             }
 
             var addPair = SearchBookmarkCollection.Add(item, null);
-            return addPair.ViewModel;
+            var newViewModel = addPair.ViewModel;
+
+            if(newViewModel.SearchType == SearchType.Keyword) {
+                return Task.FromResult(newViewModel);
+            }
+
+            newViewModel.IsLoading = true;
+            return GetVideoIdsAsync(newViewModel.Query).ContinueWith(t => {
+                var items = t.Result;
+                newViewModel.VideoIds.InitializeRange(items);
+                newViewModel.IsLoading = false;
+                return newViewModel;
+            });
         }
 
         public bool RemoveBookmark(SmileVideoSearchBookmarkItemModel item)
@@ -615,6 +686,65 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 指定ブックマークの更新チェック。
+        /// </summary>
+        /// <param name="bookmark"></param>
+        /// <returns>更新差分。</returns>
+        Task<IReadOnlyList<SmileVideoVideoItemModel>> CheckUpdateBookmarkAsync(IReadOnlySmileVideoSearchBookmarkItem bookmark)
+        {
+            return GetVideoIdsAsync(bookmark.Query).ContinueWith(t => {
+                var items = t.Result;
+
+                var videoItems = items.Select(
+                    i => {
+                        var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(i, Constants.ServiceSmileVideoThumbCacheSpan));
+                        var infoTask = Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                        return infoTask.Result;
+                    })
+                    .Select(i => i.ToVideoItemModel())
+                    .ToEvaluatedSequence()
+                ;
+
+                var exceptVideoItems = videoItems
+                    .Select(i => i.VideoId)
+                    .Except(bookmark.VideoIds)
+                    .Select(s => videoItems.First(i => i.VideoId == s))
+                    .ToEvaluatedSequence()
+                ;
+
+                return (IReadOnlyList<SmileVideoVideoItemModel>)exceptVideoItems;
+            });
+        }
+
+        public async Task<IReadOnlyList<SmileVideoVideoItemModel>> UpdateBookmarkAsync()
+        {
+            var updateAllItems = new List<SmileVideoVideoItemModel>();
+
+            var updateTargetItems = SearchBookmarkCollection.ViewModelList
+                .Where(i => i.SearchType == SearchType.Tag)
+                .Where(i => i.IsCheckUpdate)
+                .Where(i => !i.IsLoading)
+                .ToEvaluatedSequence()
+            ;
+
+            foreach(var bookmark in updateTargetItems) {
+                try {
+                    bookmark.IsLoading = true;
+
+                    var updateVideos = await CheckUpdateBookmarkAsync(bookmark);
+                    if(updateVideos.Any()) {
+                        updateAllItems.AddRange(updateVideos);
+                        bookmark.VideoIds.AddRange(updateVideos.Select(i => i.VideoId));
+                    }
+                } finally {
+                    bookmark.IsLoading = false;
+                }
+            }
+
+            return updateAllItems;
         }
 
         #endregion

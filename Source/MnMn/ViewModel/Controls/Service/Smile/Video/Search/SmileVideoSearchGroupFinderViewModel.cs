@@ -80,6 +80,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         bool _notfound;
 
+        bool _isOpenHeaderContextMenu;
+
         #endregion
 
         public SmileVideoSearchGroupFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, SearchType type, string query)
@@ -244,6 +246,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public bool IsOpenHeaderContextMenu
+        {
+            get { return this._isOpenHeaderContextMenu; }
+            set
+            {
+                if(SetVariableValue(ref this._isOpenHeaderContextMenu, value)) {
+                    if(IsOpenHeaderContextMenu) {
+                        CallOnPropertyChangeDisplayItem();
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region command
@@ -309,15 +324,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         void AddBookmark()
         {
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(true, Query, Type)));
-
-            CallOnPropertyChangeDisplayItem();
         }
 
         void RemoveBookmark()
         {
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, Query, Type)));
-
-            CallOnPropertyChangeDisplayItem();
         }
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
