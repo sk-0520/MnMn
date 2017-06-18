@@ -23,6 +23,9 @@
   <Thickness x:Key="IndependentMargin">2</Thickness>
   <Thickness x:Key="IndependentHorizonMargin">2,0</Thickness>
   <Thickness x:Key="IndependentVericalMargin">0,2</Thickness>
+  <Thickness x:Key="BigIndependentMargin">8</Thickness>
+  <Thickness x:Key="BigIndependentHorizonMargin">8,0</Thickness>
+  <Thickness x:Key="BigIndependentVericalMargin">0,8</Thickness>
   <sys:Double x:Key="BitMarginWidth">1</sys:Double>
   <sys:Double x:Key="HalfMarginWidth">4</sys:Double>
   <sys:Double x:Key="BaseMarginWidth">8</sys:Double>

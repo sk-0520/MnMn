@@ -38,6 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -379,6 +380,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public ICommand SearchBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var viewModel = (SmileVideoSearchBookmarkItemViewModel)o;
+                    var parameter = new SmileVideoSearchParameterModel() {
+                        SearchType = viewModel.SearchType,
+                        Query = viewModel.Query,
+                    };
+
+                    LoadSearchFromParameterAsync(parameter).ConfigureAwait(false);
+                });
+            }
+        }
+
+        public ICommand RemoveBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var viewModel = (SmileVideoSearchBookmarkItemViewModel)o;
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, viewModel.Query, viewModel.SearchType)));
+                });
+            }
+        }
         #endregion
 
         #region function

@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// 更新チェックを行うか。
         /// </summary>
+        [DataMember]
         public bool IsCheckUpdate { get; set; } = Constants.SettingServiceSmileVideoSearchIsCheckUpdate;
 
         /// <summary>

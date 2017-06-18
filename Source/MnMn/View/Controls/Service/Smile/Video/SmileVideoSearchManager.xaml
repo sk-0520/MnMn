@@ -410,15 +410,64 @@
       </Grid.ColumnDefinitions>
 
       <Grid Visibility="{Binding ShowSearchBookmark, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <ScrollViewer>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
           <ItemsControl ItemsSource="{Binding SearchBookmarkItems}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <StackPanel Margin="{StaticResource BigIndependentMargin}" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
               <DataTemplate>
                 <StackPanel>
-                  <TextBlock Text="{Binding Query}" />
-                  <TextBlock Text="{Binding IsCheckUpdate}" />
-                  <Button>remove</Button>
+                  <Separator x:Name="separator" Style="{StaticResource BigIndent}" />
+
+                  <Button Style="{StaticResource Hyperlink}" Command="{Binding DataContext.SearchBookmarkCommand, ElementName=root}" CommandParameter="{Binding}">
+                    <StackPanel Style="{StaticResource ItemPanel}">
+                      <Viewbox Style="{StaticResource SmallItemBox}">
+                        <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                          <Path>
+                            <Path.Resources>
+                              <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                                <Style.Triggers>
+                                  <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                                    <Setter Property="Data" Value="{StaticResource Image_Tag}" />
+                                  </DataTrigger>
+                                  <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
+                                    <Setter Property="Data" Value="{StaticResource Image_Keyword}" />
+                                  </DataTrigger>
+                                </Style.Triggers>
+                              </Style>
+                            </Path.Resources>
+                          </Path>
+                        </Canvas>
+                      </Viewbox>
+                      <TextBlock Text="{Binding Query, Mode=OneTime}" />
+                    </StackPanel>
+                  </Button>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsCheckUpdate}">更新チェック</CheckBox>
+                    <Button Grid.Column="1" Padding="{StaticResource IndependentMargin}" MinWidth="0" MinHeight="0"  Command="{Binding DataContext.RemoveBookmarkCommand, ElementName=root}" CommandParameter="{Binding}">
+
+                      <Viewbox Style="{StaticResource SmallIconBox}">
+                        <Canvas Style="{StaticResource IconCanvas-24x24}">
+                          <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
+                        </Canvas>
+                      </Viewbox>
+                    </Button>
+                  </Grid>
                 </StackPanel>
+
+                <DataTemplate.Triggers>
+                  <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                    <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
+                  </DataTrigger>
+                </DataTemplate.Triggers>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
@@ -486,19 +535,19 @@
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Pin}" Style="{StaticResource SmallDefaultIconPath}" />
               </Canvas>
-            </Viewbox>
-            <Button>
-              <Button.Style>
-                <Style TargetType="Button" BasedOn="{StaticResource TabCloseButton}">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsPin}" Value="True">
-                      <Setter Property="Visibility" Value="Collapsed" />
-                      <Setter Property="Tag" Value="{x:Null}" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </Button.Style>
-            </Button>-->
+            </Viewbox>-->
+              <Button>
+                <Button.Style>
+                  <Style TargetType="Button" BasedOn="{StaticResource TabCloseButton}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding IsPin}" Value="True">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="Tag" Value="{x:Null}" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </Button.Style>
+              </Button>
             </StackPanel>
           </DataTemplate>
         </app_view_controls:FocusedTabControl.ItemTemplate>
@@ -538,10 +587,10 @@
                   </ScrollViewer>
 
                   <app_view_controls:Pager
-                  Grid.Column="2"
-                  PageItems="{Binding PageItems}"
-                  Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoFinderControl}}"
-                />
+                    Grid.Column="2"
+                    PageItems="{Binding PageItems}"
+                    Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoFinderControl}}"
+                  />
                 </Grid>
               </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
             </app_view_controls_service_smile_video:SmileVideoFinderControl>
