@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -41,6 +42,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -595,6 +597,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        SmileVideoInformationViewModel GetVideoInformation(FeedSmileVideoItemModel channelItem)
+        {
+            var rawVideoId = SmileVideoFeedUtility.GetVideoId(channelItem);
+            var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(channelItem, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
+            var information = Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+
+            return information;
+        }
+
+        async Task<IReadOnlyList<string>> GetVideoIdsAsync(string tagName)
+        {
+            var tag = new Tag(Mediation);
+
+            var resultVideoIds = new List<string>(Constants.ServiceSmileVideoTagFeedItemCount * Constants.ServiceSmileVideoTagFeedCount);
+            foreach(var i in Enumerable.Range(0, Constants.ServiceSmileVideoTagFeedCount)) {
+                var pageNumber = i + 1;
+                var feed = await tag.LoadTagFeedAsync(tagName, Constants.ServiceSmileVideoTagFeedSort, Constants.ServiceSmileVideoTagFeedOrder, pageNumber);
+
+                foreach(var item in feed.Channel.Items) {
+                    var info = GetVideoInformation(item);
+                    resultVideoIds.Add(info.VideoId);
+                }
+            }
+
+            return resultVideoIds;
+        }
+
         public Task<SmileVideoSearchBookmarkItemViewModel> AddBookmarkAsync(SmileVideoSearchBookmarkItemModel item)
         {
             var existsItem = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, item.Query, item.SearchType);
@@ -604,7 +633,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
 
             var addPair = SearchBookmarkCollection.Add(item, null);
-            return Task.FromResult(addPair.ViewModel);
+            return GetVideoIdsAsync(addPair.Model.Query).ContinueWith(t => {
+                var items = t.Result;
+                addPair.Model.Videos.AddRange(items);
+                return addPair.ViewModel;
+            });
         }
 
         public bool RemoveBookmark(SmileVideoSearchBookmarkItemModel item)
