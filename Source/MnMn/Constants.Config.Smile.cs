@@ -241,6 +241,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static TimeSpan ServiceSmileVideoRelationCacheTime = appConfig.Get("service-smile-smilevideo-relation-cache-time", TimeSpan.Parse);
         public static TimeSpan ServiceSmileVideoCheckItLaterCacheTime = appConfig.Get("service-smile-smilevideo-check_it_later-cache-time", TimeSpan.Parse);
 
+        public static string ServiceSmileVideoTagFeedSort => appConfig.Get("service-smile-smilevideo-tag-feed-sort");
+        public static string ServiceSmileVideoTagFeedOrder => appConfig.Get("service-smile-smilevideo-tag-feed-order");
+        public static int ServiceSmileVideoTagFeedCount => appConfig.Get("service-smile-smilevideo-tag-feed-count", int.Parse);
+
         #region live
 
         /// <summary>
