@@ -6,6 +6,7 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoSearchManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -457,6 +458,9 @@
                     </Grid.ColumnDefinitions>
 
                     <CheckBox Grid.Column="0" IsChecked="{Binding IsCheckUpdate}">
+                      <CheckBox.Resources>
+                        <sys:String x:Key="UpdateText">更新チェック</sys:String>
+                      </CheckBox.Resources>
                       <CheckBox.Style>
                         <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                           <Style.Triggers>
@@ -471,13 +475,21 @@
                               <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                               <Setter Property="Content">
                                 <Setter.Value>
-                                  <mamc:MetroProgressBar IsIndeterminate="True" />
+                                  <Grid>
+                                    <Grid.ColumnDefinitions>
+                                      <ColumnDefinition Width="Auto" />
+                                      <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Grid.Column="0" Text="{StaticResource UpdateText}" />
+                                    <mamc:MetroProgressBar Grid.Column="1" IsIndeterminate="True" />
+                                  </Grid>
                                 </Setter.Value>
                               </Setter>
                             </MultiDataTrigger>
                           </Style.Triggers>
                           <Setter Property="IsEnabled" Value="False" />
-                          <Setter Property="Content" Value="更新チェック" />
+                          <Setter Property="Content" Value="{StaticResource UpdateText}" />
                         </Style>
                       </CheckBox.Style>
                     </CheckBox>
