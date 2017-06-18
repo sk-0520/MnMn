@@ -420,11 +420,16 @@
             <ItemsControl.ItemTemplate>
               <DataTemplate>
                 <StackPanel>
-                  <Separator x:Name="separator" Style="{StaticResource BigIndent}" />
+                  <Separator x:Name="separator" Margin="{StaticResource BigIndependentVericalMargin}" Style="{StaticResource Indent}" />
 
-                  <Button Style="{StaticResource Hyperlink}" Command="{Binding DataContext.SearchBookmarkCommand, ElementName=root}" CommandParameter="{Binding}">
-                    <StackPanel Style="{StaticResource ItemPanel}">
-                      <Viewbox Style="{StaticResource SmallItemBox}">
+                  <Button HorizontalAlignment="Stretch" Style="{StaticResource Hyperlink}" Command="{Binding DataContext.SearchBookmarkCommand, ElementName=root}" CommandParameter="{Binding}">
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+
+                      <Viewbox Grid.Column="0" Style="{StaticResource SmallItemBox}">
                         <Canvas Style="{StaticResource IconCanvas-24x24}" >
                           <Path>
                             <Path.Resources>
@@ -442,24 +447,37 @@
                           </Path>
                         </Canvas>
                       </Viewbox>
-                      <TextBlock Text="{Binding Query, Mode=OneTime}" />
-                    </StackPanel>
+
+                      <TextBlock Grid.Column="1" Text="{Binding Query, Mode=OneTime}" TextTrimming="CharacterEllipsis"  />
+                    </Grid>
                   </Button>
+                  <Separator Style="{StaticResource Indent}" Height="{StaticResource SeparatorHeight}" />
                   <Grid>
                     <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="*" />
                       <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Grid.Column="0" IsChecked="{Binding IsCheckUpdate}">更新チェック</CheckBox>
-                    <Button Grid.Column="1" Padding="{StaticResource IndependentMargin}" MinWidth="0" MinHeight="0"  Command="{Binding DataContext.RemoveBookmarkCommand, ElementName=root}" CommandParameter="{Binding}">
-
+                    <Button Grid.Column="0" Padding="0" MinWidth="0" MinHeight="0"  Command="{Binding DataContext.RemoveBookmarkCommand, ElementName=root}" CommandParameter="{Binding}" Margin="{StaticResource RightMargin}">
                       <Viewbox Style="{StaticResource SmallIconBox}">
                         <Canvas Style="{StaticResource IconCanvas-24x24}">
                           <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
                         </Canvas>
                       </Viewbox>
                     </Button>
+                    <CheckBox Grid.Column="1" IsChecked="{Binding IsCheckUpdate}">
+                      <CheckBox.Style>
+                        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                              <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="IsEnabled" Value="False" />
+                        </Style>
+                      </CheckBox.Style>
+                      更新チェック
+                    </CheckBox>
                   </Grid>
                 </StackPanel>
 

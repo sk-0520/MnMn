@@ -84,6 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             SearchBookmarkCollection = new MVMPairCreateDelegationCollection<SmileVideoSearchBookmarkItemModel, SmileVideoSearchBookmarkItemViewModel>(Setting.Search.SearchBookmarkItems, default(object), CreateSearchBookmark);
             SearchBookmarkItems = CollectionViewSource.GetDefaultView(SearchBookmarkCollection.ViewModelList);
             SearchBookmarkItems.SortDescriptions.Add(new SortDescription(nameof(SmileVideoSearchBookmarkItemViewModel.Query), ListSortDirection.Ascending));
+            SearchBookmarkItems.SortDescriptions.Add(new SortDescription(nameof(SmileVideoSearchBookmarkItemViewModel.SearchType), ListSortDirection.Descending));
         }
 
         #region property
