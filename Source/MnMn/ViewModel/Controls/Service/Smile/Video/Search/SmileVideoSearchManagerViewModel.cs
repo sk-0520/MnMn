@@ -598,15 +598,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        SmileVideoInformationViewModel GetVideoInformation(FeedSmileVideoItemModel channelItem)
-        {
-            var rawVideoId = SmileVideoFeedUtility.GetVideoId(channelItem);
-            var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(channelItem, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
-            var information = Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
-
-            return information;
-        }
-
         async Task<IReadOnlyList<string>> GetVideoIdsAsync(string tagName)
         {
             var tag = new Tag(Mediation);
@@ -619,10 +610,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
                 var feed = await tag.LoadTagFeedAsync(tagName, Constants.ServiceSmileVideoTagFeedSort, Constants.ServiceSmileVideoTagFeedOrder, pageNumber);
                 if(feed.Channel.Items.Any()) {
-                    // ここがボトルネック
+                    // Taskで無理やり操作性まともにしてる
                     foreach(var item in feed.Channel.Items) {
-                        var info = GetVideoInformation(item);
-                        resultVideoIds.Add(info.VideoId);
+                        var information =await Task.Run(() => {
+                            var rawVideoId = SmileVideoFeedUtility.GetVideoId(item);
+                            var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
+                            return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                        });
+                        resultVideoIds.Add(information.VideoId);
                     }
                 } else {
                     break;
