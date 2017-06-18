@@ -30,6 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public CollectionModel<string> VideoIds => Model.Videos;
 
+        public bool IsLoading { get; set; } = false;
+
         #endregion
     }
 }

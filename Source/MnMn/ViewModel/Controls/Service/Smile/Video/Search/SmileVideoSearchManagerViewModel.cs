@@ -645,9 +645,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return Task.FromResult(newViewModel);
             }
 
+            newViewModel.IsLoading = true;
             return GetVideoIdsAsync(newViewModel.Query).ContinueWith(t => {
                 var items = t.Result;
                 newViewModel.VideoIds.InitializeRange(items);
+                newViewModel.IsLoading = false;
                 return newViewModel;
             });
         }
