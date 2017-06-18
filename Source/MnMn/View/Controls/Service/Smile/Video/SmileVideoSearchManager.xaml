@@ -480,7 +480,7 @@
                                       <ColumnDefinition Width="Auto" />
                                       <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    
+
                                     <TextBlock Grid.Column="0" Text="{StaticResource UpdateText}" />
                                     <mamc:MetroProgressBar Grid.Column="1" IsIndeterminate="True" />
                                   </Grid>
@@ -542,7 +542,7 @@
           <DataTemplate>
             <StackPanel Style="{StaticResource TabHeader}">
               <StackPanel.ContextMenu>
-                <ContextMenu>
+                <ContextMenu IsOpen="{Binding IsOpenHeaderContextMenu}">
                   <MenuItem Header="ブックマーク" IsChecked="{Binding IsBookmark, Mode=OneWay}" Command="{Binding SwitchBookmarkCommand}" />
                 </ContextMenu>
               </StackPanel.ContextMenu>
