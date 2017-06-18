@@ -512,7 +512,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             selectViewModel.History = historyViewModel;
 
             if(isLoad) {
-                return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+                return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(async t => {
+                    // 検索ブックマークに格納されてれば動画を更新する
+                    // 非更新対象 関係なく処理する
+                    if(Constants.ServiceSmileVideoTagFeedItemSearchingUpdate && selectViewModel.Type == SearchType.Tag) {
+                        var bookmark = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, selectViewModel.Query, selectViewModel.Type);
+                        if(bookmark != null) {
+                            var pair = SearchBookmarkCollection.First(b => b.Model == bookmark);
+                            var bookmarkViewModel = pair.ViewModel;
+                            bookmarkViewModel.IsLoading = true;
+                            try {
+                                var newItems = await CheckUpdateBookmarkAsync(bookmarkViewModel);
+                                if(newItems.Any()) {
+                                    bookmarkViewModel.VideoIds.AddRange(newItems.Select(i => i.VideoId));
+                                }
+                            } finally {
+                                bookmarkViewModel.IsLoading = false;
+                            }
+                        }
+                    }
+                });
             } else {
                 return Task.CompletedTask;
             }
