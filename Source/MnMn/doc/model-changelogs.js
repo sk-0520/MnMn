@@ -95,7 +95,10 @@
 					{
 						'revision': '',
 						'class': 'compatibility',
-						'subject': '検索ワードのピン止めは廃止しました'
+						'subject': '検索ワードのピン止めは廃止しました',
+						'comments': [
+							'ブックマークになりました'
+						]
 					},
 					{
 						'revision': '',
@@ -134,6 +137,10 @@
 					{
 						'revision': '',
 						'subject': '#612: コメントリストの自動スクロールを一時的に抑制する'
+					},
+					{
+						'revision': '',
+						'subject': '#620: 検索ワードをブックマークする'
 					},
 					{
 						'revision': '',

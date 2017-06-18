@@ -38,6 +38,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -203,15 +205,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._notfound, value); }
         }
 
-        [Obsolete]
         /// <summary>
-        /// ピン止めされているか。
+        /// ブックマークされているか。
         /// </summary>
-        public bool IsPin
+        public bool IsBookmark
         {
             get
             {
-                return SmileVideoSearchUtility.IsPinItem(Setting.Search.SearchPinItems, Query, Type);
+                return SmileVideoSearchUtility.IsBookmarkItem(Setting.Search.SearchBookmarkItems, Query, Type);
             }
         }
 
@@ -282,10 +283,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        [Obsolete]
-        public ICommand SwitchPinCommand
+        public ICommand SwitchBookmarkCommand
         {
-            get { return CreateCommand(o => SwitchPin()); }
+            get { return CreateCommand(o => SwitchBookmark()); }
         }
 
         #endregion
@@ -297,37 +297,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             CallOnPropertyChange(ChangePagePropertyNames);
         }
 
-        [Obsolete]
-        void SwitchPin()
+        void SwitchBookmark()
         {
-            if(IsPin) {
-                RemovePin();
+            if(IsBookmark) {
+                RemoveBookmark();
             } else {
-                AddPin();
+                AddBookmark();
             }
         }
 
-        [Obsolete]
-        void AddPin()
+        void AddBookmark()
         {
-            var item = new SmileVideoSearchPinModel() {
-                MethodKey = SelectedMethod.Key,
-                SortKey = SelectedSort.Key,
-                Query = this.Query,
-                SearchType = Type,
-            };
-            Setting.Search.SearchPinItems.Add(item);
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(true, Query, Type)));
 
             CallOnPropertyChangeDisplayItem();
         }
 
-        [Obsolete]
-        void RemovePin()
+        void RemoveBookmark()
         {
-            var item = SmileVideoSearchUtility.FindPinItem(Setting.Search.SearchPinItems, Query, Type);
-            if(item != null) {
-                Setting.Search.SearchPinItems.Remove(item);
-            }
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, Query, Type)));
 
             CallOnPropertyChangeDisplayItem();
         }
@@ -552,12 +540,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             base.CallOnPropertyChangeDisplayItem();
 
-            //[Obsolete]
-            //var propertyNames = new[] {
-            //    nameof(IsPin),
-            //};
+            var propertyNames = new[] {
+                nameof(IsBookmark),
+            };
 
-            //CallOnPropertyChange(propertyNames);
+            CallOnPropertyChange(propertyNames);
         }
 
 

@@ -400,6 +400,7 @@
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessUnorganizedBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoBookmarkResultModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessSearchBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\WebNavigatorProcessRequestModel.cs" />
     <Compile Include="Model\Request\WebNavigatorRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
@@ -484,6 +485,7 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommonSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoLaboratorySettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchBookmarkItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchPinModel.cs" />
     <Compile Include="Model\Setting\ThemeSettingModel.cs" />
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
@@ -555,6 +557,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Variable.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchBookmarkItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\TFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorContextMenuItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorDefinedElementViewModelBase.cs" />

@@ -177,6 +177,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                             return new ResponseModel(request, result);
                         }
 
+                    case SmileVideoProcess.SearchBookmark: {
+                            var param = (SmileVideoProcessSearchBookmarkParameterModel)smileProcessRequest.Parameter;
+                            var item = new SmileVideoSearchBookmarkItemModel() {
+                                Query = param.Query,
+                                SearchType = param.SearchType,
+                            };
+                            if(param.AddBookmark) {
+                                var result = ManagerPack.SearchManager.AddBookmark(item);
+                                return new ResponseModel(request, result);
+                            } else {
+                                var result = ManagerPack.SearchManager.RemoveBookmark(item);
+                                return new ResponseModel(request, result);
+                            }
+                        }
+
                     default:
                         throw new NotImplementedException();
                 }

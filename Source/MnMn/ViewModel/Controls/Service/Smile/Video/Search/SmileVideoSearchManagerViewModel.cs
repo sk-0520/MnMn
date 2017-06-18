@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -37,6 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -44,7 +46,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 {
-    public class SmileVideoSearchManagerViewModel: SmileVideoCustomManagerViewModelBase
+    public class SmileVideoSearchManagerViewModel : SmileVideoCustomManagerViewModelBase
     {
         #region variable
 
@@ -78,6 +80,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             SearchHistoryList = new MVMPairCreateDelegationCollection<SmileVideoSearchHistoryModel, SmileVideoSearchHistoryViewModel>(Setting.Search.SearchHistoryItems, default(object), CreateSearchHistory);
             SearchHistoryItems = CollectionViewSource.GetDefaultView(SearchHistoryList.ViewModelList);
+
+            SearchBookmarkCollection = new MVMPairCreateDelegationCollection<SmileVideoSearchBookmarkItemModel, SmileVideoSearchBookmarkItemViewModel>(Setting.Search.SearchBookmarkItems, default(object), CreateSearchBookmark);
+            SearchBookmarkItems = CollectionViewSource.GetDefaultView(SearchBookmarkCollection.ViewModelList);
+            SearchBookmarkItems.SortDescriptions.Add(new SortDescription(nameof(SmileVideoSearchBookmarkItemViewModel.Query), ListSortDirection.Ascending));
+            SearchBookmarkItems.SortDescriptions.Add(new SortDescription(nameof(SmileVideoSearchBookmarkItemViewModel.SearchType), ListSortDirection.Descending));
         }
 
         #region property
@@ -207,6 +214,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public CollectionModel<SmileVideoTagViewModel> TrendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
         bool UsingIme { get; set; }
+
+        public bool ShowSearchBookmark
+        {
+            get { return Setting.Search.ShowSearchBookmark; }
+            set { SetPropertyValue(Setting.Search, value); }
+        }
+
+        public GridLength SearchBookmarkWidth
+        {
+            get { return new GridLength(Setting.Search.SearchBookmarkWidth, GridUnitType.Star); }
+            set { SetPropertyValue(Setting.Search, value.Value); }
+        }
+        public GridLength SearchFinderWidth
+        {
+            get { return new GridLength(Setting.Search.SearchFinderWidth, GridUnitType.Star); }
+            set { SetPropertyValue(Setting.Search, value.Value); }
+        }
+
+        MVMPairCreateDelegationCollection<SmileVideoSearchBookmarkItemModel, SmileVideoSearchBookmarkItemViewModel> SearchBookmarkCollection { get; }
+        public ICollectionView SearchBookmarkItems { get; }
 
         #endregion
 
@@ -354,6 +381,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public ICommand SearchBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var viewModel = (SmileVideoSearchBookmarkItemViewModel)o;
+                    var parameter = new SmileVideoSearchParameterModel() {
+                        SearchType = viewModel.SearchType,
+                        Query = viewModel.Query,
+                    };
+
+                    LoadSearchFromParameterAsync(parameter).ConfigureAwait(false);
+                });
+            }
+        }
+
+        public ICommand RemoveBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var viewModel = (SmileVideoSearchBookmarkItemViewModel)o;
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, viewModel.Query, viewModel.SearchType)));
+                });
+            }
+        }
         #endregion
 
         #region function
@@ -361,6 +414,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         static SmileVideoSearchHistoryViewModel CreateSearchHistory(SmileVideoSearchHistoryModel model, object data)
         {
             return new SmileVideoSearchHistoryViewModel(model);
+        }
+
+        private SmileVideoSearchBookmarkItemViewModel CreateSearchBookmark(SmileVideoSearchBookmarkItemModel model, object data)
+        {
+            return new SmileVideoSearchBookmarkItemViewModel(model);
         }
 
         Task SearchSimpleAsync(string query, SearchType searchType)
@@ -535,6 +593,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             if(e.TextComposition.CompositionText.Length == 0) {
                 UsingIme = false;
             }
+        }
+
+        public SmileVideoSearchBookmarkItemViewModel AddBookmark(SmileVideoSearchBookmarkItemModel item)
+        {
+            var existsItem = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, item.Query, item.SearchType);
+            if(existsItem != null) {
+                var pair = SearchBookmarkCollection.First(p => p.Model == existsItem);
+                return pair.ViewModel;
+            }
+
+            var addPair = SearchBookmarkCollection.Add(item, null);
+            return addPair.ViewModel;
+        }
+
+        public bool RemoveBookmark(SmileVideoSearchBookmarkItemModel item)
+        {
+            var existsItem = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, item.Query, item.SearchType);
+            if(existsItem != null) {
+                return SearchBookmarkCollection.Remove(existsItem);
+            }
+
+            return false;
         }
 
         #endregion
