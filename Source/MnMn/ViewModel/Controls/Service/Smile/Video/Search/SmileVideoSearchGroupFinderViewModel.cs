@@ -38,6 +38,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -215,6 +217,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public bool IsBookmark
+        {
+            get
+            {
+                return SmileVideoSearchUtility.IsBookmarkItem(Setting.Search.SearchBookmarkItems, Query, Type);
+            }
+        }
+
         public override SourceLoadState FinderLoadState
         {
             get
@@ -288,6 +298,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get { return CreateCommand(o => SwitchPin()); }
         }
 
+        public ICommand SwitchBookmarkCommand
+        {
+            get { return CreateCommand(o => SwitchBookmark()); }
+        }
+
         #endregion
 
         #region function
@@ -328,6 +343,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             if(item != null) {
                 Setting.Search.SearchPinItems.Remove(item);
             }
+
+            CallOnPropertyChangeDisplayItem();
+        }
+
+        void SwitchBookmark()
+        {
+            if(IsBookmark) {
+                RemoveBookmark();
+            } else {
+                AddBookmark();
+            }
+        }
+
+        void AddBookmark()
+        {
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(true, Query, Type)));
+
+            CallOnPropertyChangeDisplayItem();
+        }
+
+        void RemoveBookmark()
+        {
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, Query, Type)));
 
             CallOnPropertyChangeDisplayItem();
         }
@@ -552,12 +590,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             base.CallOnPropertyChangeDisplayItem();
 
-            //[Obsolete]
-            //var propertyNames = new[] {
-            //    nameof(IsPin),
-            //};
+            var propertyNames = new[] {
+                nameof(IsBookmark),
+            };
 
-            //CallOnPropertyChange(propertyNames);
+            CallOnPropertyChange(propertyNames);
         }
 
 

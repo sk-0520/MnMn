@@ -62,5 +62,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             return FindPinItem(items, query, searchType) != null;
         }
+
+        public static SmileVideoSearchBookmarkItemModel FindBookmarkItem(IEnumerable<SmileVideoSearchBookmarkItemModel> items, string query, SearchType searchType)
+        {
+            return items.FirstOrDefault(p => p.SearchType == searchType && p.Query == query);
+        }
+
+        public static bool IsBookmarkItem(IEnumerable<SmileVideoSearchBookmarkItemModel> items, string query, SearchType searchType)
+        {
+            return FindBookmarkItem(items, query, searchType) != null;
+        }
+
     }
 }

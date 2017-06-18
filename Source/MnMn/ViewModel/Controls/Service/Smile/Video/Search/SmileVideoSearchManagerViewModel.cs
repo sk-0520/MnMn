@@ -567,6 +567,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public SmileVideoSearchBookmarkItemViewModel AddBookmark(SmileVideoSearchBookmarkItemModel item)
+        {
+            var existsItem = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, item.Query, item.SearchType);
+            if(existsItem != null) {
+                var pair = SearchBookmarkCollection.First(p => p.Model == existsItem);
+                return pair.ViewModel;
+            }
+
+            var addPair = SearchBookmarkCollection.Add(item, null);
+            return addPair.ViewModel;
+        }
+
+        public bool RemoveBookmark(SmileVideoSearchBookmarkItemModel item)
+        {
+            var existsItem = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, item.Query, item.SearchType);
+            if(existsItem != null) {
+                return SearchBookmarkCollection.Remove(existsItem);
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region ManagerViewModelBase

@@ -417,6 +417,7 @@
                 <StackPanel>
                   <TextBlock Text="{Binding Query}" />
                   <TextBlock Text="{Binding IsCheckUpdate}" />
+                  <Button>remove</Button>
                 </StackPanel>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -445,11 +446,11 @@
         <app_view_controls:FocusedTabControl.ItemTemplate>
           <DataTemplate>
             <StackPanel Style="{StaticResource TabHeader}">
-              <!--<StackPanel.ContextMenu>
-              <ContextMenu>
-                <MenuItem Header="ピン止め" IsChecked="{Binding IsPin, Mode=OneWay}" Command="{Binding SwitchPinCommand}" />
-              </ContextMenu>
-            </StackPanel.ContextMenu>-->
+              <StackPanel.ContextMenu>
+                <ContextMenu>
+                  <MenuItem Header="ピン止め" IsChecked="{Binding IsBookmark, Mode=OneWay}" Command="{Binding SwitchBookmarkCommand}" />
+                </ContextMenu>
+              </StackPanel.ContextMenu>
 
               <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
               <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
