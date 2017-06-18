@@ -38,6 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
@@ -610,14 +611,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
                 var feed = await tag.LoadTagFeedAsync(tagName, Constants.ServiceSmileVideoTagFeedSort, Constants.ServiceSmileVideoTagFeedOrder, pageNumber);
                 if(feed.Channel.Items.Any()) {
-                    // Taskで無理やり操作性まともにしてる
                     foreach(var item in feed.Channel.Items) {
-                        var information =await Task.Run(() => {
-                            var rawVideoId = SmileVideoFeedUtility.GetVideoId(item);
-                            var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
-                            return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
-                        });
-                        resultVideoIds.Add(information.VideoId);
+                        var rawVideoId = SmileVideoFeedUtility.GetVideoId(item);
+                        if(SmileIdUtility.NeedCorrectionVideoId(rawVideoId)) {
+                            // Taskで無理やり操作性まともにしてる
+                            var information = await Task.Run(() => {
+                                var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
+                                return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                            });
+                            resultVideoIds.Add(information.VideoId);
+                        } else {
+                            resultVideoIds.Add(rawVideoId);
+                        }
                     }
                 } else {
                     break;
