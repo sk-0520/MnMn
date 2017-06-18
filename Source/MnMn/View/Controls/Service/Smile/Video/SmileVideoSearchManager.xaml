@@ -420,8 +420,6 @@
             <ItemsControl.ItemTemplate>
               <DataTemplate>
                 <StackPanel>
-                  <Separator x:Name="separator" Margin="{StaticResource BigIndependentVericalMargin}" Style="{StaticResource Indent}" />
-
                   <Button HorizontalAlignment="Stretch" Style="{StaticResource Hyperlink}" Command="{Binding DataContext.SearchBookmarkCommand, ElementName=root}" CommandParameter="{Binding}">
                     <Grid>
                       <Grid.ColumnDefinitions>
@@ -479,13 +477,19 @@
                       更新チェック
                     </CheckBox>
                   </Grid>
+
+                  <!-- 表示強制 -->
+                  <Separator x:Name="separator" Margin="{StaticResource BigIndependentVericalMargin}" Style="{StaticResource Indent}" />
                 </StackPanel>
 
+                <!--
+                自動ソートの影響で順序が固定じゃないから除去
                 <DataTemplate.Triggers>
                   <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
                     <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
                   </DataTrigger>
                 </DataTemplate.Triggers>
+                -->
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>

@@ -696,7 +696,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var updateAllItems = new List<SmileVideoVideoItemModel>();
 
-            foreach(var bookmark in SearchBookmarkCollection.ViewModelList) {
+            var updateTargetItems = SearchBookmarkCollection.ViewModelList
+                .Where(i => i.SearchType == SearchType.Tag)
+                .Where(i => !i.IsCheckUpdate)
+                .Where(i => !i.IsLoading)
+                .ToEvaluatedSequence()
+            ;
+
+            foreach(var bookmark in updateTargetItems) {
                 try {
                     bookmark.IsLoading = true;
 
