@@ -619,6 +619,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
                 var feed = await tag.LoadTagFeedAsync(tagName, Constants.ServiceSmileVideoTagFeedSort, Constants.ServiceSmileVideoTagFeedOrder, pageNumber);
                 if(feed.Channel.Items.Any()) {
+                    // ここがボトルネック
                     foreach(var item in feed.Channel.Items) {
                         var info = GetVideoInformation(item);
                         resultVideoIds.Add(info.VideoId);
@@ -678,7 +679,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 var videoItems = items.Select(
                     i => {
                         var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(i, Constants.ServiceSmileVideoThumbCacheSpan));
-                        return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                        var infoTask = Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                        return infoTask.Result;
                     })
                     .Select(i => i.ToVideoItemModel())
                     .ToEvaluatedSequence()
@@ -695,7 +697,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             });
         }
 
-        async Task UpdateBookmarkAsync()
+        public async Task<IReadOnlyList<SmileVideoVideoItemModel>> UpdateBookmarkAsync()
         {
             var updateAllItems = new List<SmileVideoVideoItemModel>();
 
@@ -713,9 +715,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
             }
 
-            foreach(var item in updateAllItems) {
-                Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
-            }
+            return updateAllItems;
         }
 
         #endregion
