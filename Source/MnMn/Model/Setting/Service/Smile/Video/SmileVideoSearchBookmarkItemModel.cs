@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoSearchBookmarkItemModel: SettingModelBase
+    public class SmileVideoSearchBookmarkItemModel: SettingModelBase, IReadOnlySmileVideoSearchBookmarkItem
     {
         #region proeprty
 
@@ -44,6 +45,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public CollectionModel<string> Videos { get; set; } = new CollectionModel<string>();
+
+        #endregion
+
+        #region IReadOnlySmileVideoSearchBookmarkItem
+
+        public IReadOnlyList<string> VideoIds => Videos;
 
         #endregion
     }

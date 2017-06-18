@@ -30,6 +30,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -662,6 +663,59 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 指定ブックマークの更新チェック。
+        /// </summary>
+        /// <param name="bookmark"></param>
+        /// <returns>更新差分。</returns>
+        Task<IReadOnlyList<SmileVideoVideoItemModel>> CheckUpdateBookmarkAsync(IReadOnlySmileVideoSearchBookmarkItem bookmark)
+        {
+            return GetVideoIdsAsync(bookmark.Query).ContinueWith(t => {
+                var items = t.Result;
+
+                var videoItems = items.Select(
+                    i => {
+                        var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(i, Constants.ServiceSmileVideoThumbCacheSpan));
+                        return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    })
+                    .Select(i => i.ToVideoItemModel())
+                    .ToEvaluatedSequence()
+                ;
+
+                var exceptVideoItems = videoItems
+                    .Select(i => i.VideoId)
+                    .Except(bookmark.VideoIds)
+                    .Select(s => videoItems.First(i => i.VideoId == s))
+                    .ToEvaluatedSequence()
+                ;
+
+                return (IReadOnlyList<SmileVideoVideoItemModel>)exceptVideoItems;
+            });
+        }
+
+        async Task UpdateBookmarkAsync()
+        {
+            var updateAllItems = new List<SmileVideoVideoItemModel>();
+
+            foreach(var bookmark in SearchBookmarkCollection.ViewModelList) {
+                try {
+                    bookmark.IsLoading = true;
+
+                    var updateVideos = await CheckUpdateBookmarkAsync(bookmark);
+                    if(updateVideos.Any()) {
+                        updateAllItems.AddRange(updateVideos);
+                        bookmark.VideoIds.AddRange(updateVideos.Select(i => i.VideoId));
+                    }
+                } finally {
+                    bookmark.IsLoading = false;
+                }
+            }
+
+            foreach(var item in updateAllItems) {
+                Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
+            }
         }
 
         #endregion
