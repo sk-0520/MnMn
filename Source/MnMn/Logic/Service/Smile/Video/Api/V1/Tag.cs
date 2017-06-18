@@ -20,12 +20,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
@@ -117,6 +119,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var result = ConvertTagListFromTrend(response.Result);
                 return result;
             });
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="sort">未入力: コメントが新しい順,f: 投稿が新しい順,v: 再生が多い順,r: コメントが多い順,m: マイリストが多い順,l: 時間が長い順</param>
+        /// <param name="order"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
+        Task<FeedSmileVideoModel> LoadTagFeedCoreAsync(string tag, string sort, string order, int pageNumber)
+        {
+            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.tagFeed, ServiceType.SmileVideo);
+            page.ReplaceUriParameters["query"] = tag;
+            page.ReplaceUriParameters["sort"] = sort;
+            page.ReplaceUriParameters["order"] = order;
+            page.ReplaceUriParameters["page"] = pageNumber == 0 ? string.Empty: page.ToString() ;
+
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
+                page.Dispose();
+                var response = t.Result;
+
+                if(!response.IsSuccess) {
+                    return null;
+                } else {
+                    using(var stream = StreamUtility.ToUtf8Stream(response.Result)) {
+                        return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                    }
+                }
+            });
+        }
+
+        public Task<FeedSmileVideoModel> LoadTagFeedAsync(string tag, string sort, string order, int pageNumber)
+        {
+            return LoadTagFeedCoreAsync(tag, sort, order, pageNumber);
         }
 
         #endregion
