@@ -41,7 +41,7 @@
       <ColumnDefinition Width="{Binding ItemsWidth, Mode=TwoWay}" />
     </Grid.ColumnDefinitions>
 
-    <TabControl Grid.Column="0">
+    <TabControl Grid.Column="0" Style="{StaticResource FinderTab}">
       <TabItem Header="ブックマーク">
         <Grid>
           <Grid.RowDefinitions>
@@ -127,7 +127,7 @@
       <app_view_controls:FocusedTabControl.ContentTemplate>
         <DataTemplate>
           <Grid>
-            <TabControl TabStripPlacement="Top">
+            <TabControl TabStripPlacement="Top" Style="{StaticResource FinderTab}">
               <TabItem Header="ユーザー情報" IsSelected="{Binding IsUserSelected}">
                 <Grid>
                   <Grid.ColumnDefinitions>

@@ -128,6 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// <summary>
         /// 指定動画IDは補正処理が必要か。
         /// <para>nnnn 形式から xxnnnn 形式に変換が必要かを返す。</para>
+        /// <para>こいつは単独呼び出しOKとする(妥協)。</para>
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>

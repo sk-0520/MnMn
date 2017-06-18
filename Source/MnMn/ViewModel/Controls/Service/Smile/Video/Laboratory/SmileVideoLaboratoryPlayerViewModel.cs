@@ -160,11 +160,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             {
                 return CreateCommand(
                     o => {
+                        if(VideoFile == null) {
+                            return;
+                        }
+
                         VideoFile.Refresh();
                         if(VideoFile.Exists) {
                             ShellUtility.OpenDirectory(VideoFile.Directory, Mediation.Logger);
                         }
-                    }
+                    },
+                    o => VideoFile != null
                 );
             }
         }

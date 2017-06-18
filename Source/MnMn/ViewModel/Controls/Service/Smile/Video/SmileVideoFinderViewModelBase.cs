@@ -51,6 +51,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
@@ -240,6 +241,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => AddUnorganizedBookmark(SelectedFinderItem),
                     o => IsEnabledUnorganizedBookmarkMenu && SelectedFinderItem != null
+                );
+            }
+        }
+
+        public ICommand AddPlayListCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var player = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
+                            .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
+                            .FirstOrDefault(p => p.IsWorkingPlayer.Value)
+                        ;
+                        if(player != null) {
+                            player.AddPlayList(SelectedFinderItem.Information);
+                        }
+                    },
+                    o => {
+                        if(SelectedFinderItem != null) {
+                            var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
+                                .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
+                            ;
+                            return players.Any();
+                        }
+                        return false;
+                    }
                 );
             }
         }

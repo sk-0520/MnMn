@@ -92,7 +92,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 item.CheckTimestamp = DateTime.Now;
                 item.IsChecked = false;
             }
-            Setting.CheckItLater.Insert(0, item);
+            //Setting.CheckItLater.Insert(0, item);
+            AppUtility.PlusItem(Setting.CheckItLater, item);
 
             CallOnPropertyChangeDisplayItem();
 

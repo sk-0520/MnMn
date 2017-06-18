@@ -6,6 +6,7 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoSearchManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -54,16 +55,24 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-      <!--mamc-->
       <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="120" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
+      <ToggleButton ToolTip="ブックマーク" Margin="{StaticResource RightMargin}" IsChecked="{Binding ShowSearchBookmark}">
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Bookmark}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+      </ToggleButton>
+
       <app_view_controls_service_smile_video:SmileVideoSearchContext
-        Grid.Column="0"
+        Grid.Column="1"
         SelectedMethod="{Binding SelectedMethod}"
         SelectedSort="{Binding SelectedSort}"
         MethodItems="{Binding MethodItems}"
@@ -72,7 +81,7 @@
 
       <ComboBox
         x:Name="listSearch"
-        Grid.Column="1"
+        Grid.Column="2"
         ScrollViewer.CanContentScroll="True"
         mamc:TextBoxHelper.Watermark="検索タグ・ワード"
         IsEditable="True"
@@ -362,42 +371,7 @@
         </ComboBox.ItemTemplateSelector>
       </ComboBox>
 
-      <!--<xctk:SplitButton Grid.Column="2" Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
-        <xctk:SplitButton.Content>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock>
-              <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding SelectedSearchType}" Value="Keyword">
-                      <Setter Property="Text" Value="キーワード" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding SelectedSearchType}" Value="Tag">
-                      <Setter Property="Text" Value="タグ" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </TextBlock.Style>
-            </TextBlock>
-            <TextBlock>検索</TextBlock>
-          </StackPanel>
-        </xctk:SplitButton.Content>
-        <xctk:SplitButton.DropDownContent>
-          <StackPanel>
-            <MenuItem Header="タグ" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" Style="{StaticResource {x:Type MenuItem}}">
-              <MenuItem.Icon>
-                <Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />
-              </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="キーワード" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" Style="{StaticResource {x:Type MenuItem}}">
-              <MenuItem.Icon>
-                <Image Source="/Resources/SearchType/Keyword.png" Style="{StaticResource ItemImage}" />
-              </MenuItem.Icon>
-            </MenuItem>
-          </StackPanel>
-        </xctk:SplitButton.DropDownContent>
-      </xctk:SplitButton>-->
-      <mamc:SplitButton Grid.Column="2" Command="{Binding SearchCommand}" IsExpanded="{Binding ShowSearchTypeArea, Mode=TwoWay}" SelectedItem="{Binding SelectedSearchType}" ItemsSource="{Binding SearchTypeItems}">
+      <mamc:SplitButton Grid.Column="3" Command="{Binding SearchCommand}" IsExpanded="{Binding ShowSearchTypeArea, Mode=TwoWay}" SelectedItem="{Binding SelectedSearchType}" ItemsSource="{Binding SearchTypeItems}">
         <mamc:SplitButton.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
@@ -425,153 +399,254 @@
         </mamc:SplitButton.ItemTemplate>
       </mamc:SplitButton>
 
-      <!--<xctk:DropDownButton Grid.Column="3" IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
-        <xctk:DropDownButton.DropDownContent>
-          <Border>
-            <StackPanel Orientation="Horizontal">
-              <GroupBox Visibility="{Binding Session.IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <GroupBox.Header>
-                  <StackPanel Orientation="Horizontal">
-                    <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
-                    <TextBlock Text="おすすめ" />
-                    <Button Command="{Binding LoadRecommendTagCommand}" Style="{StaticResource ReloadButton}" />
-                  </StackPanel>
-                </GroupBox.Header>
-                <ItemsControl Template="{StaticResource TagsItemsTemplate}" ItemsSource="{Binding RecommendTagItems}" />
-              </GroupBox>
-
-              <GroupBox>
-                <GroupBox.Header>
-                  <StackPanel Orientation="Horizontal">
-                    <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding TrendTagLoadState}" />
-                    <TextBlock Text="トレンド" />
-                    <Button Command="{Binding LoadTrendTagCommand}" Style="{StaticResource ReloadButton}" />
-                  </StackPanel>
-                </GroupBox.Header>
-                <ItemsControl Template="{StaticResource TagsItemsTemplate}" ItemsSource="{Binding TrendTagItems}" />
-              </GroupBox>
-            </StackPanel>
-          </Border>
-        </xctk:DropDownButton.DropDownContent>
-      </xctk:DropDownButton>-->
-
-      <Button x:Name="tagList" Grid.Column="3" Margin="{StaticResource LeftMargin}" Content="タグ一覧" Command="{Binding ShowTagAreaCommand}" />
+      <Button x:Name="tagList" Grid.Column="4" Margin="{StaticResource LeftMargin}" Content="タグ一覧" Command="{Binding ShowTagAreaCommand}" />
 
     </Grid>
 
-    <app_view_controls:FocusedTabControl
-      Grid.Row="1"
-      ItemsSource="{Binding SearchGroups}"
-      SelectedItem="{Binding SelectedSearchGroup}"
-      Style="{StaticResource FinderTab}"
-    >
-      <app_view_controls:FocusedTabControl.ItemTemplate>
-        <DataTemplate>
-          <StackPanel Style="{StaticResource TabHeader}">
-            <StackPanel.ContextMenu>
-              <ContextMenu>
-                <MenuItem Header="ピン止め" IsChecked="{Binding IsPin, Mode=OneWay}" Command="{Binding SwitchPinCommand}" />
-              </ContextMenu>
-            </StackPanel.ContextMenu>
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="{Binding SearchBookmarkWidth, Mode=TwoWay}" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="{Binding SearchFinderWidth, Mode=TwoWay}" />
+      </Grid.ColumnDefinitions>
 
-            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
-            <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
-            <Viewbox DockPanel.Dock="Left" Style="{StaticResource SmallItemBox}">
-              <Canvas Style="{StaticResource IconCanvas-24x24}" >
-                <Path>
-                  <Path.Resources>
-                    <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding Type}" Value="Tag">
-                          <Setter Property="Data" Value="{StaticResource Image_Tag}" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Type}" Value="Keyword">
-                          <Setter Property="Data" Value="{StaticResource Image_Keyword}" />
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </Path.Resources>
-                </Path>
-              </Canvas>
-            </Viewbox>
+      <Grid Visibility="{Binding ShowSearchBookmark, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+          <ItemsControl ItemsSource="{Binding SearchBookmarkItems}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <StackPanel Margin="{StaticResource BigIndependentMargin}" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <StackPanel>
+                  <Button HorizontalAlignment="Stretch" Style="{StaticResource Hyperlink}" Command="{Binding DataContext.SearchBookmarkCommand, ElementName=root}" CommandParameter="{Binding}">
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
 
-            <app_view_controls_service_smile_video:SmileVideoSearchContext
-              SelectedMethod="{Binding SelectedMethod}"
-              SelectedSort="{Binding SelectedSort}"
-              MethodItems="{Binding MethodItems}"
-              SortItems="{Binding SortItems}"
-              IsEnabled="{Binding CanLoad}"
-            />
-            <Button Style="{StaticResource TabReloadButton}" />
+                      <Viewbox Grid.Column="0" Style="{StaticResource SmallItemBox}">
+                        <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                          <Path>
+                            <Path.Resources>
+                              <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                                <Style.Triggers>
+                                  <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                                    <Setter Property="Data" Value="{StaticResource Image_Tag}" />
+                                  </DataTrigger>
+                                  <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
+                                    <Setter Property="Data" Value="{StaticResource Image_Keyword}" />
+                                  </DataTrigger>
+                                </Style.Triggers>
+                              </Style>
+                            </Path.Resources>
+                          </Path>
+                        </Canvas>
+                      </Viewbox>
 
-            <Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" >
+                      <TextBlock Grid.Column="1" Text="{Binding Query, Mode=OneTime}" TextTrimming="CharacterEllipsis"  />
+                    </Grid>
+                  </Button>
+                  <Separator Style="{StaticResource Indent}" Height="{StaticResource SeparatorHeight}" />
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsCheckUpdate}">
+                      <CheckBox.Resources>
+                        <sys:String x:Key="UpdateText">更新チェック</sys:String>
+                      </CheckBox.Resources>
+                      <CheckBox.Style>
+                        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                              <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SearchType}" Value="Tag" />
+                                <Condition Binding="{Binding IsLoading}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <Grid>
+                                    <Grid.ColumnDefinitions>
+                                      <ColumnDefinition Width="Auto" />
+                                      <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{StaticResource UpdateText}" />
+                                    <mamc:MetroProgressBar Grid.Column="1" IsIndeterminate="True" />
+                                  </Grid>
+                                </Setter.Value>
+                              </Setter>
+                            </MultiDataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="IsEnabled" Value="False" />
+                          <Setter Property="Content" Value="{StaticResource UpdateText}" />
+                        </Style>
+                      </CheckBox.Style>
+                    </CheckBox>
+                    <Button Grid.Column="1" Padding="0" MinWidth="0" MinHeight="0"  Command="{Binding DataContext.RemoveBookmarkCommand, ElementName=root}" CommandParameter="{Binding}" Margin="{StaticResource RightMargin}">
+                      <Viewbox Style="{StaticResource SmallIconBox}">
+                        <Canvas Style="{StaticResource IconCanvas-24x24}">
+                          <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
+                        </Canvas>
+                      </Viewbox>
+                    </Button>
+                  </Grid>
+
+                  <!-- 表示強制 -->
+                  <Separator x:Name="separator" Margin="{StaticResource BigIndependentVericalMargin}" Style="{StaticResource Indent}" />
+                </StackPanel>
+
+                <!--
+                自動ソートの影響で順序が固定じゃないから除去
+                <DataTemplate.Triggers>
+                  <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                    <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
+                  </DataTrigger>
+                </DataTemplate.Triggers>
+                -->
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </Grid>
+
+      <GridSplitter Grid.Column="1" Visibility="{Binding ShowSearchBookmark, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource DefaultVericalGridSplitter}" />
+
+      <app_view_controls:FocusedTabControl
+        ItemsSource="{Binding SearchGroups}"
+        SelectedItem="{Binding SelectedSearchGroup}"
+      >
+        <app_view_controls:FocusedTabControl.Style>
+          <Style TargetType="app_view_controls:FocusedTabControl" BasedOn="{StaticResource FinderTab}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ShowSearchBookmark}" Value="True">
+                <Setter Property="Grid.Column" Value="2" />
+              </DataTrigger>
+            </Style.Triggers>
+
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Grid.ColumnSpan" Value="3" />
+          </Style>
+        </app_view_controls:FocusedTabControl.Style>
+        <app_view_controls:FocusedTabControl.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Style="{StaticResource TabHeader}">
+              <StackPanel.ContextMenu>
+                <ContextMenu IsOpen="{Binding IsOpenHeaderContextMenu}">
+                  <MenuItem Header="ブックマーク" IsChecked="{Binding IsBookmark, Mode=OneWay}" Command="{Binding SwitchBookmarkCommand}" />
+                </ContextMenu>
+              </StackPanel.ContextMenu>
+
+              <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
+              <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
+              <Viewbox DockPanel.Dock="Left" Style="{StaticResource SmallItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                  <Path>
+                    <Path.Resources>
+                      <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding Type}" Value="Tag">
+                            <Setter Property="Data" Value="{StaticResource Image_Tag}" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Type}" Value="Keyword">
+                            <Setter Property="Data" Value="{StaticResource Image_Keyword}" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Path.Resources>
+                  </Path>
+                </Canvas>
+              </Viewbox>
+
+              <app_view_controls_service_smile_video:SmileVideoSearchContext
+                SelectedMethod="{Binding SelectedMethod}"
+                SelectedSort="{Binding SelectedSort}"
+                MethodItems="{Binding MethodItems}"
+                SortItems="{Binding SortItems}"
+                IsEnabled="{Binding CanLoad}"
+              />
+              <Button Style="{StaticResource TabReloadButton}" />
+
+              <!--<Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" >
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Pin}" Style="{StaticResource SmallDefaultIconPath}" />
               </Canvas>
-            </Viewbox>
-            <Button>
-              <Button.Style>
-                <Style TargetType="Button" BasedOn="{StaticResource TabCloseButton}">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsPin}" Value="True">
-                      <Setter Property="Visibility" Value="Collapsed" />
-                      <Setter Property="Tag" Value="{x:Null}" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </Button.Style>
-            </Button>
-          </StackPanel>
-        </DataTemplate>
-      </app_view_controls:FocusedTabControl.ItemTemplate>
-      <app_view_controls:FocusedTabControl.ContentTemplate>
-        <DataTemplate>
-          <app_view_controls_service_smile_video:SmileVideoFinderControl x:Name="finder" DataContext="{Binding}">
-            <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
-              <Grid Height="32">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="7*" />
-                  <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
+            </Viewbox>-->
+              <Button>
+                <Button.Style>
+                  <Style TargetType="Button" BasedOn="{StaticResource TabCloseButton}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding IsPin}" Value="True">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="Tag" Value="{x:Null}" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </Button.Style>
+              </Button>
+            </StackPanel>
+          </DataTemplate>
+        </app_view_controls:FocusedTabControl.ItemTemplate>
+        <app_view_controls:FocusedTabControl.ContentTemplate>
+          <DataTemplate>
+            <app_view_controls_service_smile_video:SmileVideoFinderControl x:Name="finder" DataContext="{Binding}">
+              <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+                <Grid Height="32">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="7*" />
+                    <ColumnDefinition Width="3*" />
+                  </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding TotalCount, StringFormat=検索件数: {0}}" />
+                  <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding TotalCount, StringFormat=検索件数: {0}}" />
 
-                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                  <ItemsControl ItemsSource="{Binding RelationTagItems}">
-                    <ItemsControl.ItemsPanel>
-                      <ItemsPanelTemplate>
-                        <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" />
-                      </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                      <DataTemplate>
-                        <Button
-                          Style="{StaticResource Hyperlink}"
-                          Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoSearchManager} }"
-                          CommandParameter="{Binding}"
-                          Margin="{StaticResource IndependentHorizonMargin}"
-                        >
-                          <TextBlock Text="{Binding TagName, Mode=OneTime}" />
-                        </Button>
-                      </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                  </ItemsControl>
-                </ScrollViewer>
+                  <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding RelationTagItems}">
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Button
+                            Style="{StaticResource Hyperlink}"
+                            Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoSearchManager} }"
+                            CommandParameter="{Binding}"
+                            Margin="{StaticResource IndependentHorizonMargin}"
+                          >
+                            <TextBlock Text="{Binding TagName, Mode=OneTime}" />
+                          </Button>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </ScrollViewer>
 
-                <app_view_controls:Pager
-                  Grid.Column="2"
-                  PageItems="{Binding PageItems}"
-                  Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoFinderControl}}"
-                />
-              </Grid>
-            </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
-          </app_view_controls_service_smile_video:SmileVideoFinderControl>
+                  <app_view_controls:Pager
+                    Grid.Column="2"
+                    PageItems="{Binding PageItems}"
+                    Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoFinderControl}}"
+                  />
+                </Grid>
+              </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+            </app_view_controls_service_smile_video:SmileVideoFinderControl>
 
-        </DataTemplate>
-      </app_view_controls:FocusedTabControl.ContentTemplate>
+          </DataTemplate>
+        </app_view_controls:FocusedTabControl.ContentTemplate>
 
-    </app_view_controls:FocusedTabControl>
+      </app_view_controls:FocusedTabControl>
+    </Grid>
+
 
     <mamc:Flyout Grid.Row="0" Grid.RowSpan="2" Visibility="Hidden" Style="{StaticResource FinderFlyout}" Header="{Binding Content, ElementName=tagList}" IsOpen="{Binding ShowTagArea}">
       <StackPanel Orientation="Horizontal">

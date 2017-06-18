@@ -453,6 +453,27 @@
             </MenuItem>
 
             <Separator />
+
+            <MenuItem Header="酷使するプレイヤーのプレイリストに追加" Command="{Binding AddPlayListCommand}">
+              <MenuItem.Icon>
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Playlist-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </MenuItem.Icon>
+            </MenuItem>
+            <!--
+            だりぃ
+            <MenuItem Header="指定プレイヤーにプレイリスト追加" ItemsSource="{Binding }">
+              <MenuItem.Icon>
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </MenuItem.Icon>
+            </MenuItem>
+            -->
+
+            <Separator />
+
             <MenuItem Header="クリップボードにコピー" SubmenuOpened="CopyMenuItem_SubmenuOpened">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
@@ -480,6 +501,7 @@
                   <MenuItem Header="ユーザー名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="チャンネルID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="チャンネル名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="視聴ページ" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.WatchUrlString}"  Style="{StaticResource {x:Type MenuItem}}"/>
 
                   <Separator Style="{StaticResource TagSeparator}" />
                   <CollectionContainer Collection="{Binding Source={StaticResource TagList}}" />

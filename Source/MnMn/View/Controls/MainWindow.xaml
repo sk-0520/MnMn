@@ -46,13 +46,6 @@
     <!-- 大元のスタイルが適用されない対応 -->
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}" />
   </mamc:MetroWindow.Style>
-  <mamc:MetroWindow.RightWindowCommands>
-    <mamc:WindowCommands>
-      <StackPanel Orientation="Horizontal">
-        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
-      </StackPanel>
-    </mamc:WindowCommands>
-  </mamc:MetroWindow.RightWindowCommands>
 
   <DockPanel>
     <StatusBar DockPanel.Dock="Bottom">
@@ -71,6 +64,7 @@
       </StatusBarItem>
 
       <StatusBarItem DockPanel.Dock="Right" >
+        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" Margin="{StaticResource HorizonMargin}" />
       </StatusBarItem>
 
       <Image Source="/Resources/Service/Smile/Smile.png" Style="{StaticResource SmallItemImage}" />

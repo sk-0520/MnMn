@@ -27,5 +27,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         CheckItLater,
         Bookmark,
         UnorganizedBookmark,
+        SearchBookmark,
     }
 }

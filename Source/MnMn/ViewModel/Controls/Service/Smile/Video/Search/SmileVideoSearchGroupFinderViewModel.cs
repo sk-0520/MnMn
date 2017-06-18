@@ -38,6 +38,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -77,6 +79,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         PageViewModel<SmileVideoSearchItemFinderViewModel> _selectedPage;
 
         bool _notfound;
+
+        bool _isOpenHeaderContextMenu;
 
         #endregion
 
@@ -204,13 +208,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         }
 
         /// <summary>
-        /// ピン止めされているか。
+        /// ブックマークされているか。
         /// </summary>
-        public bool IsPin
+        public bool IsBookmark
         {
             get
             {
-                return SmileVideoSearchUtility.IsPinItem(Setting.Search.SearchPinItems, Query, Type);
+                return SmileVideoSearchUtility.IsBookmarkItem(Setting.Search.SearchBookmarkItems, Query, Type);
             }
         }
 
@@ -238,6 +242,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     }
                 } else {
                     SelectedPage.ViewModel.FinderLoadState = value;
+                }
+            }
+        }
+
+        public bool IsOpenHeaderContextMenu
+        {
+            get { return this._isOpenHeaderContextMenu; }
+            set
+            {
+                if(SetVariableValue(ref this._isOpenHeaderContextMenu, value)) {
+                    if(IsOpenHeaderContextMenu) {
+                        CallOnPropertyChangeDisplayItem();
+                    }
                 }
             }
         }
@@ -281,9 +298,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public ICommand SwitchPinCommand
+        public ICommand SwitchBookmarkCommand
         {
-            get { return CreateCommand(o => SwitchPin()); }
+            get { return CreateCommand(o => SwitchBookmark()); }
         }
 
         #endregion
@@ -295,36 +312,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             CallOnPropertyChange(ChangePagePropertyNames);
         }
 
-        void SwitchPin()
+        void SwitchBookmark()
         {
-            if(IsPin) {
-                RemovePin();
+            if(IsBookmark) {
+                RemoveBookmark();
             } else {
-                AddPin();
+                AddBookmark();
             }
         }
 
-        void AddPin()
+        void AddBookmark()
         {
-            var item = new SmileVideoSearchPinModel() {
-                MethodKey = SelectedMethod.Key,
-                SortKey = SelectedSort.Key,
-                Query = this.Query,
-                SearchType = Type,
-            };
-            Setting.Search.SearchPinItems.Add(item);
-
-            CallOnPropertyChangeDisplayItem();
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(true, Query, Type)));
         }
 
-        void RemovePin()
+        void RemoveBookmark()
         {
-            var item = SmileVideoSearchUtility.FindPinItem(Setting.Search.SearchPinItems, Query, Type);
-            if(item != null) {
-                Setting.Search.SearchPinItems.Remove(item);
-            }
-
-            CallOnPropertyChangeDisplayItem();
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, Query, Type)));
         }
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
@@ -548,7 +552,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             base.CallOnPropertyChangeDisplayItem();
 
             var propertyNames = new[] {
-                nameof(IsPin),
+                nameof(IsBookmark),
             };
 
             CallOnPropertyChange(propertyNames);

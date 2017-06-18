@@ -36,6 +36,13 @@
 		<item key="video" value="${video-id}" />
 	</param>
 
+	<param key="video-tag-feed">
+		<item key="rss" value="2.0" />
+		<item key="page" value="${page}" force="true" />
+		<item key="sort" value="${sort}" force="true" />
+		<item key="order" value="${order}" force="true" />
+	</param>
+
 	<param key="video-recommendation-page">
 		<item key="ref" value="top_recoall" />
 	</param>

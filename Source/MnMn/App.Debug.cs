@@ -67,6 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //exp();
             //search();
             //tweetPost();
+            //tagRss();
         }
 
         async void login()
@@ -260,6 +261,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var rawUri = mediation.GetUri(key, map, sv);
             var convertedUri = mediation.ConvertUri(key, rawUri.Uri, sv);
             Debug.WriteLine(convertedUri);
+        }
+
+        async void tagRss()
+        {
+            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var tag = new Tag(mediation);
+            var feed = await tag.LoadTagFeedAsync("TEST", "f", "", 0);
         }
     }
 #endif

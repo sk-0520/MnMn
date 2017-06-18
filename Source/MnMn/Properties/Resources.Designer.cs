@@ -523,6 +523,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   待機 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_PlayerState_Buffering {
+            get {
+                return ResourceManager.GetString("String_App_Define_PlayerState_Buffering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中断 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_PlayerState_Pause {
+            get {
+                return ResourceManager.GetString("String_App_Define_PlayerState_Pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_PlayerState_Playing {
+            get {
+                return ResourceManager.GetString("String_App_Define_PlayerState_Playing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   停止 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_PlayerState_Stop {
+            get {
+                return ResourceManager.GetString("String_App_Define_PlayerState_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   キーワード に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_SearchType_Keyword {

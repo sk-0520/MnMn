@@ -51,14 +51,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return SearchType.Keyword;
         }
 
-        public static SmileVideoSearchPinModel FindPinItem(IEnumerable<SmileVideoSearchPinModel> items, string query, SearchType searchType)
+        public static SmileVideoSearchBookmarkItemModel FindBookmarkItem(IEnumerable<SmileVideoSearchBookmarkItemModel> items, string query, SearchType searchType)
         {
             return items.FirstOrDefault(p => p.SearchType == searchType && p.Query == query);
         }
 
-        public static bool IsPinItem(IEnumerable<SmileVideoSearchPinModel> items, string query, SearchType searchType)
+        public static bool IsBookmarkItem(IEnumerable<SmileVideoSearchBookmarkItemModel> items, string query, SearchType searchType)
         {
-            return FindPinItem(items, query, searchType) != null;
+            return FindBookmarkItem(items, query, searchType) != null;
         }
+
     }
 }

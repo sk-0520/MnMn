@@ -59,6 +59,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileMyListReloadWaitTime => appConfig.Get("service-smile-mylist-reload-wait-time", TimeSpan.Parse);
 
+        public static TimeSpan ServiceSmileUserDataCacheTime = appConfig.Get("service-smile-user-data-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileUserImageCacheTime = appConfig.Get("service-smile-user-image-cache-time", TimeSpan.Parse);
+
+        public static TimeSpan ServiceSmileMyListCacheTime = appConfig.Get("service-smile-mylist-cache-time", TimeSpan.Parse);
+
+        public static TimeSpan ServiceSmileMarketImageCacheTime = appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
+
         /// <summary>
         /// マイリストのタイトルから除外する文字列。
         /// <para>先頭。</para>
@@ -119,8 +126,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int ServiceSmileVideoSearchHistoryCount => appConfig.Get("service-smile-smilevideo-search-history-count", int.Parse);
         /// <summary>
         /// 再生履歴数。
+        /// <para>データ上の保持数</para>
         /// </summary>
         public static int ServiceSmileVideoPlayHistoryCount => appConfig.Get("service-smile-smilevideo-play-history-count", int.Parse);
+        /// <summary>
+        /// 再生履歴数。
+        /// <para>View上の保持数</para>
+        /// </summary>
+        public static int ServiceSmileVideoPlayHistoryViewCount => appConfig.Get("service-smile-smilevideo-play-history-view-count", int.Parse);
         /// <summary>
         /// あとで見るの保持数。
         /// <para>非表示を含めた全体数。</para>
@@ -202,6 +215,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static bool ServiceSmileVideoPlayerCommentEffect => appConfig.Get("service-smile-smilevideo-player-comment-effect", bool.Parse);
 
+        public static double ServiceSmilevideoPlayerCommentBig => appConfig.Get("service-smile-smilevideo-player-comment-big", double.Parse);
+        public static double ServiceSmilevideoPlayerCommentSmall => appConfig.Get("service-smile-smilevideo-player-comment-small", double.Parse);
+
         /// <summary>
         /// 関連動画のソート。
         /// </summary>
@@ -220,6 +236,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static SmileVideoSearchType ServiceSmileVideoSearchType => appConfig.Get("service-smile-smilevideo-search-type", s => EnumUtility.Parse< SmileVideoSearchType>(s));
 
+        public static TimeSpan ServiceSmileVideoThumbCacheTime = appConfig.Get("service-smile-smilevideo-thumb-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileVideoMsgCacheTime = appConfig.Get("service-smile-smilevideo-msg-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileVideoRelationCacheTime = appConfig.Get("service-smile-smilevideo-relation-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileVideoCheckItLaterCacheTime = appConfig.Get("service-smile-smilevideo-check_it_later-cache-time", TimeSpan.Parse);
+
+        public static int ServiceSmileVideoTagFeedItemCount => appConfig.Get("service-smile-smilevideo-tag-feed-item-count", int.Parse);
+        public static bool ServiceSmileVideoTagFeedItemSearchingUpdate => appConfig.Get("service-smile-smilevideo-tag-feed-item-searching-update", bool.Parse);
+        public static TimeSpan ServiceSmileVideoTagFeedWaitTime => appConfig.Get("service-smile-smilevideo-tag-feed-wait-time", TimeSpan.Parse);
+        public static string ServiceSmileVideoTagFeedSort => appConfig.Get("service-smile-smilevideo-tag-feed-sort");
+        public static string ServiceSmileVideoTagFeedOrder => appConfig.Get("service-smile-smilevideo-tag-feed-order");
+        public static int ServiceSmileVideoTagFeedCount => appConfig.Get("service-smile-smilevideo-tag-feed-count", int.Parse);
 
         #region live
 
@@ -227,6 +254,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 動画データ取得中になんかエラー発生から再開のリトライ数。
         /// </summary>
         public static int ServiceSmileLiveCategoryBaseCount => appConfig.Get("service-smile-smilelive-category-base-count", int.Parse);
+
+        public static TimeSpan ServiceSmileLiveInformationCacheTime = appConfig.Get("service-smile-live-information-cache-time", TimeSpan.Parse);
 
         #endregion
 
@@ -303,6 +332,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         [Obsolete]
         public static int SettingServiceSmileVideoSearchCount => appConfig.Get("setting-service-smile-smilevideo-search-count", int.Parse);
+        public static double SettingServiceSmileVideoSearchBookmarkWidth => appConfig.Get("setting-service-smile-smilevideo-search-bookmark-width", double.Parse);
+        public static double SettingServiceSmileVideoSearchFinderWidth => appConfig.Get("setting-service-smile-smilevideo-search-finder-width", double.Parse);
+        public static bool SettingServiceSmileVideoSearchIsCheckUpdate => appConfig.Get("setting-service-smile-smilevideo-search-is-check-update", bool.Parse);
         /// <summary>
         /// 動画情報を取得するか。
         /// </summary>
@@ -383,6 +415,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// コメントを自動スクロールするか。
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerAutoScrollCommentList => appConfig.Get("setting-service-smile-smilevideo-player-auto-scroll-comment-list", bool.Parse);
+        /// <summary>
+        /// コメントリスト内にカーソルがある場合は自動スクロールを抑制するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerDisbaledAutoScrollCommentListOverCursor => appConfig.Get("setting-service-smile-smilevideo-player-disabled-auto-scroll-comment-list-over-cursor", bool.Parse);
         /// <summary>
         /// 詳細部を表示するか。
         /// </summary>

@@ -553,6 +553,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 .FirstOrDefault(c => SmileVideoCommentUtility.InShowTime(c, PrevPlayedTime, PlayTime))
             ;
             if(nowTimelineItem != null) {
+                if(Setting.Player.DisbaledAutoScrollCommentListOverCursor && CommentView.IsMouseOver) {
+                    return;
+                }
+
                 CommentView.ScrollToCenterOfView(nowTimelineItem, true, false);
             }
         }
@@ -743,13 +747,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private async Task AddPlayListAync(string videoId)
         {
-            var videoInformation = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
-            if(videoInformation != null) {
-                PlayListItems.Add(videoInformation);
-                CanPlayNextVieo.Value = true;
+            var information = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
+            if(information != null) {
+                AddPlayList(information);
             }
         }
 
+        public void AddPlayList(SmileVideoInformationViewModel information)
+        {
+            if(information == null) {
+                throw new ArgumentNullException(nameof(information));
+            }
+
+            if(PlayListItems.All(i => !SmileVideoInformationUtility.IsEquals(information, i))) {
+                PlayListItems.Add(information);
+                CanPlayNextVieo.Value = true;
+            }
+        }
 
         void RefreshFilteringComment()
         {
@@ -952,7 +966,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void AddHistoryCore(SmileVideoPlayHistoryModel historyModel)
         {
-            Setting.History.Insert(0, historyModel);
+            //Setting.History.Insert(0, historyModel);
+            AppUtility.AddHistoryItem(Setting.History, historyModel);
         }
 
         protected virtual void AddHistory(SmileVideoInformationViewModel information)
@@ -1735,7 +1750,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!PlayListItems.Any()) {
                 PlayListItems.Add(Information);
             }
-            if(Session.IsLoggedIn && Session.IsPremium && CommandColorItems.Count == SmileVideoMsgUtility.normalCommentColors.Length) {
+            if(Session.IsLoggedIn && Session.IsPremium && CommandColorItems.Count == SmileVideoMsgUtility.normalCommentColors.Count) {
                 CommandColorItems.AddRange(SmileVideoMsgUtility.premiumCommentColors);
             }
 

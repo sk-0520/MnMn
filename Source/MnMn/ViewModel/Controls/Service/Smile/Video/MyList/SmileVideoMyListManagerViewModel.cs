@@ -830,13 +830,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             CheckUtility.DebugEnforceNotNull(finder);
 
+            if(BookmarkUserMyListPairs.Any(i => i.Model.MyListId == finder.MyListId)) {
+                Mediation.Logger.Trace($"mylist dup: {finder.MyListId}");
+                return;
+            }
+
             var model = new SmileMyListBookmarkItemModel() {
                 MyListId = finder.MyListId,
                 MyListName = finder.MyListName,
             };
             model.Videos.InitializeRange(finder.FinderItemsViewer.Select(i => i.Information.VideoId));
-            // 見た目履歴と違うけどまぁいいや
-            BookmarkUserMyListPairs.Add(model, null);
+            //// 見た目履歴と違うけどまぁいいや
+            //BookmarkUserMyListPairs.Add(model, null);
+            AppUtility.PlusItem(BookmarkUserMyListPairs, model, null);
             BookmarkUserMyListItems.Refresh();
         }
 

@@ -316,6 +316,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyPassword.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUserAgent.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyDefinedElement.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchBookmarkItem.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoSearchDefine.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
@@ -351,6 +352,7 @@
     <Compile Include="Logic\Utility\NetworkUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMarketUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmilePediaUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoVideoItemUtility.cs" />
     <Compile Include="Logic\Utility\ShellUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveGetPlayerStatusUtility.cs" />
     <Compile Include="Logic\Utility\StreamUtility.cs" />
@@ -399,6 +401,7 @@
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessUnorganizedBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoBookmarkResultModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessSearchBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\WebNavigatorProcessRequestModel.cs" />
     <Compile Include="Model\Request\WebNavigatorRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
@@ -459,6 +462,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchThumbnailStyleModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoMsgModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoContentsSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoOfficialSearchModel.cs" />
     <Compile Include="Model\Setting\NetworkProxySettingModel.cs" />
@@ -482,6 +486,7 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommonSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoLaboratorySettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchBookmarkItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchPinModel.cs" />
     <Compile Include="Model\Setting\ThemeSettingModel.cs" />
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
@@ -553,6 +558,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Variable.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchBookmarkItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\TFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorContextMenuItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorDefinedElementViewModelBase.cs" />
@@ -708,6 +714,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\live\expressions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\video\msg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\web-navigator.tt">

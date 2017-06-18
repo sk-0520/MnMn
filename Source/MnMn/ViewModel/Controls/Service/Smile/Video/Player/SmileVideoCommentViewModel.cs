@@ -360,10 +360,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     return baseSize;
 
                 case SmileVideoCommentSize.Small:
-                    return baseSize * 0.8;
+                    return baseSize * Constants.ServiceSmilevideoPlayerCommentSmall;
 
                 case SmileVideoCommentSize.Big:
-                    return baseSize * 1.2;
+                    return baseSize * Constants.ServiceSmilevideoPlayerCommentBig;
 
                 default:
                     throw new NotImplementedException();

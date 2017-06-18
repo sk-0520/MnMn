@@ -24,6 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
+    [Obsolete]
     [DataContract]
     public class SmileVideoSearchPinModel: SettingModelBase
     {
