@@ -613,11 +613,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             var resultVideoIds = new List<string>(Constants.ServiceSmileVideoTagFeedItemCount * Constants.ServiceSmileVideoTagFeedCount);
             foreach(var i in Enumerable.Range(0, Constants.ServiceSmileVideoTagFeedCount)) {
                 var pageNumber = i + 1;
+                if(1 < i && i != Constants.ServiceSmileVideoTagFeedCount - 1) {
+                    await Task.Delay(Constants.ServiceSmileVideoTagFeedWaitTime);
+                }
                 var feed = await tag.LoadTagFeedAsync(tagName, Constants.ServiceSmileVideoTagFeedSort, Constants.ServiceSmileVideoTagFeedOrder, pageNumber);
-
-                foreach(var item in feed.Channel.Items) {
-                    var info = GetVideoInformation(item);
-                    resultVideoIds.Add(info.VideoId);
+                if(feed.Channel.Items.Any()) {
+                    foreach(var item in feed.Channel.Items) {
+                        var info = GetVideoInformation(item);
+                        resultVideoIds.Add(info.VideoId);
+                    }
+                } else {
+                    break;
                 }
             }
 
@@ -633,10 +639,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
 
             var addPair = SearchBookmarkCollection.Add(item, null);
-            return GetVideoIdsAsync(addPair.Model.Query).ContinueWith(t => {
+            var newViewModel = addPair.ViewModel;
+
+            if(newViewModel.SearchType == SearchType.Keyword) {
+                return Task.FromResult(newViewModel);
+            }
+
+            return GetVideoIdsAsync(newViewModel.Query).ContinueWith(t => {
                 var items = t.Result;
-                addPair.Model.Videos.AddRange(items);
-                return addPair.ViewModel;
+                newViewModel.VideoIds.InitializeRange(items);
+                return newViewModel;
             });
         }
 

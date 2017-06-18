@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             page.ReplaceUriParameters["query"] = tag;
             page.ReplaceUriParameters["sort"] = sort;
             page.ReplaceUriParameters["order"] = order;
-            page.ReplaceUriParameters["page"] = pageNumber == 0 ? string.Empty: page.ToString() ;
+            page.ReplaceUriParameters["page"] = pageNumber == 0 ? string.Empty: pageNumber.ToString() ;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
                 page.Dispose();
