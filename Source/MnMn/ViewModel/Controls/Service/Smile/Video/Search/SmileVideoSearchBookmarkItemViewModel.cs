@@ -13,6 +13,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 {
     public class SmileVideoSearchBookmarkItemViewModel : SingleModelWrapperViewModelBase<SmileVideoSearchBookmarkItemModel>, IReadOnlySmileVideoSearchBookmarkItem
     {
+        #region variable
+
+        bool _isLoading = false;
+
+        #endregion
+
         public SmileVideoSearchBookmarkItemViewModel(SmileVideoSearchBookmarkItemModel model)
             : base(model)
         { }
@@ -31,7 +37,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public CollectionModel<string> VideoIds => Model.Videos;
 
-        public bool IsLoading { get; set; } = false;
+        public bool IsLoading
+        {
+            get { return this._isLoading; }
+            set { SetVariableValue(ref this._isLoading, value); }
+        }
 
         #endregion
 

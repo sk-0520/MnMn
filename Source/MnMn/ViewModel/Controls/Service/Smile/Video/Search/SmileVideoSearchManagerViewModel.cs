@@ -703,7 +703,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             var updateTargetItems = SearchBookmarkCollection.ViewModelList
                 .Where(i => i.SearchType == SearchType.Tag)
-                .Where(i => !i.IsCheckUpdate)
+                .Where(i => i.IsCheckUpdate)
                 .Where(i => !i.IsLoading)
                 .ToEvaluatedSequence()
             ;

@@ -452,30 +452,42 @@
                   <Separator Style="{StaticResource Indent}" Height="{StaticResource SeparatorHeight}" />
                   <Grid>
                     <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Padding="0" MinWidth="0" MinHeight="0"  Command="{Binding DataContext.RemoveBookmarkCommand, ElementName=root}" CommandParameter="{Binding}" Margin="{StaticResource RightMargin}">
-                      <Viewbox Style="{StaticResource SmallIconBox}">
-                        <Canvas Style="{StaticResource IconCanvas-24x24}">
-                          <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
-                        </Canvas>
-                      </Viewbox>
-                    </Button>
-                    <CheckBox Grid.Column="1" IsChecked="{Binding IsCheckUpdate}">
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsCheckUpdate}">
                       <CheckBox.Style>
                         <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding SearchType}" Value="Tag">
                               <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SearchType}" Value="Tag" />
+                                <Condition Binding="{Binding IsLoading}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <mamc:MetroProgressBar IsIndeterminate="True" />
+                                </Setter.Value>
+                              </Setter>
+                            </MultiDataTrigger>
                           </Style.Triggers>
                           <Setter Property="IsEnabled" Value="False" />
+                          <Setter Property="Content" Value="更新チェック" />
                         </Style>
                       </CheckBox.Style>
-                      更新チェック
                     </CheckBox>
+                    <Button Grid.Column="1" Padding="0" MinWidth="0" MinHeight="0"  Command="{Binding DataContext.RemoveBookmarkCommand, ElementName=root}" CommandParameter="{Binding}" Margin="{StaticResource RightMargin}">
+                      <Viewbox Style="{StaticResource SmallIconBox}">
+                        <Canvas Style="{StaticResource IconCanvas-24x24}">
+                          <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
+                        </Canvas>
+                      </Viewbox>
+                    </Button>
                   </Grid>
 
                   <!-- 表示強制 -->
