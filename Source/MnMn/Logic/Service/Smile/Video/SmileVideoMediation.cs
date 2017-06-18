@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                                 SearchType = param.SearchType,
                             };
                             if(param.AddBookmark) {
-                                var result = ManagerPack.SearchManager.AddBookmark(item);
+                                var result = ManagerPack.SearchManager.AddBookmarkAsync(item);
                                 return new ResponseModel(request, result);
                             } else {
                                 var result = ManagerPack.SearchManager.RemoveBookmark(item);

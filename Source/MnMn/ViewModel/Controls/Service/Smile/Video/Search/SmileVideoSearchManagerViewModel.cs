@@ -595,16 +595,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public SmileVideoSearchBookmarkItemViewModel AddBookmark(SmileVideoSearchBookmarkItemModel item)
+        public Task<SmileVideoSearchBookmarkItemViewModel> AddBookmarkAsync(SmileVideoSearchBookmarkItemModel item)
         {
             var existsItem = SmileVideoSearchUtility.FindBookmarkItem(SearchBookmarkCollection.ModelList, item.Query, item.SearchType);
             if(existsItem != null) {
                 var pair = SearchBookmarkCollection.First(p => p.Model == existsItem);
-                return pair.ViewModel;
+                return Task.FromResult(pair.ViewModel);
             }
 
             var addPair = SearchBookmarkCollection.Add(item, null);
-            return addPair.ViewModel;
+            return Task.FromResult(addPair.ViewModel);
         }
 
         public bool RemoveBookmark(SmileVideoSearchBookmarkItemModel item)
