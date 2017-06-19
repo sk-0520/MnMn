@@ -411,19 +411,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(!VariableConstants.IsSafeModeExecute) {
                 if(order.IsBackup) {
                     var baseName = $"{Constants.GetNowTimestampFileName()}_ver.{Constants.ApplicationVersionNumber.ToString()}";
-                    var fileName = PathUtility.AppendExtension(baseName, "json.gz");
+                    var fileName = PathUtility.AppendExtension(baseName, "zip");
                     var backupDirectory = VariableConstants.GetBackupDirectory();
+
+                    var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
+                    FileUtility.MakeFileParentDirectory(backupFilePath);
+
                     FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern, OrderBy.Descending, Constants.BackupSettingCount, e => {
                         Logger.Warning(e);
                         return true;
                     });
-                    var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
-                    FileUtility.MakeFileParentDirectory(backupFilePath);
 
-                    // 1ファイル集約の元 gzip でポン!
-                    using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
-                        using(var input = File.OpenRead(settingFilePath)) {
-                            input.CopyTo(output);
+                    #region #639 保守
+                    // #623 後処理の gzip ローテート
+                    var zipCount = Directory.EnumerateFiles(backupDirectory.FullName, Constants.BackupSearchPattern).Count();
+                    var issue623RemoveCount = Constants.BackupSettingCount - zipCount;
+                    if(0 < issue623RemoveCount) {
+                        FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern_Issue623, OrderBy.Descending, issue623RemoveCount, e => {
+                            Logger.Warning(e);
+                            return true;
+                        });
+                    }
+                    #endregion
+
+                    using(var archive = new ZipArchive(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None), ZipArchiveMode.Create)) {
+                        var settingFileArchive = archive.CreateEntry(VariableConstants.SettingFileName, CompressionLevel.Optimal);
+                        using(var entryStream = settingFileArchive.Open()) {
+                            using(var settingStream = new FileStream(settingFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
+                                settingStream.CopyTo(entryStream);
+                            }
                         }
                     }
                 }
