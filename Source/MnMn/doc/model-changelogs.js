@@ -136,6 +136,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#535: クラッシュレポートより: System.InvalidCastException: 指定されたキャストは有効ではありません。'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
