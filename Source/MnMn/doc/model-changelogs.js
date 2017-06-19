@@ -145,7 +145,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#635: twitter互換用コードの配置ディレクトリを作るの忘れてる'
 					},
 					{
 						'revision': '',

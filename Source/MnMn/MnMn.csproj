@@ -800,6 +800,12 @@
     <Content Include="etc\script\spaghetti\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\script\spaghetti\service\idle_talk\mutter\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\script\spaghetti\service\idle_talk\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\script\spaghetti\service\smile\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
