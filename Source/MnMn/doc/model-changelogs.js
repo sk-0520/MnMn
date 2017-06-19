@@ -149,7 +149,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#634: i と u が近くて vuew-scale だから恥ずかしい'
 					},
 					{
 						'revision': '',

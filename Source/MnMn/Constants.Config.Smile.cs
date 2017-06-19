@@ -467,7 +467,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static BackgroundKind SettingServiceSmileVideoPlayerBackgroundKind => appConfig.Get("setting-service-smile-smilevideo-player-background-kind", s => EnumUtility.Parse<BackgroundKind>(s, false));
         public static Color SettingServiceSmileVideoPlayerBackgroundColor => appConfig.Get("setting-service-smile-smilevideo-player-background-color", s => (Color)ColorConverter.ConvertFromString(s));
 
-        public static double SettingServiceSmileVideoPlayerViewScale => appConfig.Get("setting-service-smile-smilevideo-player-vuew-scale", double.Parse);
+        public static double SettingServiceSmileVideoPlayerViewScale => appConfig.Get("setting-service-smile-smilevideo-player-view-scale", double.Parse);
 
         public static bool SettingServiceSmileVideoPlayerShowNavigatorFullScreen => appConfig.Get("setting-service-smile-smilevideo-player-show-navigator-fullscreen", bool.Parse);
 
@@ -542,7 +542,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingServiceSmileLivePlayerShowDetailArea => appConfig.Get("setting-service-smile-smilelive-player-show-detail-area", bool.Parse);
 
-        public static double SettingServiceSmileLivePlayerViewScale => appConfig.Get("setting-service-smile-smilelive-player-vuew-scale", double.Parse);
+        public static double SettingServiceSmileLivePlayerViewScale => appConfig.Get("setting-service-smile-smilelive-player-view-scale", double.Parse);
 
         #endregion
 
