@@ -77,6 +77,41 @@
         <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
       </TabControl.LayoutTransform>
 
+      <TabItem>
+        <TabItem.Resources>
+          <Geometry x:Key="a">M 5 1 L 4 2 L 9 6 L 1 6 L 1 19 L 4 19 L 4 22 L 6 22 L 6 19 L 18 19 L 18 22 L 20 22 L 20 19 L 23 19 L 23 6 L 15 6 L 20 2 L 19 1 L 13 6 L 11 6 L 5 1 z M 5.9648438 8.2851562 A 2.3034711 1.8764066 0 0 1 8.2675781 10.162109 A 2.3034711 1.8764066 0 0 1 5.9648438 12.039062 A 2.3034711 1.8764066 0 0 1 3.6601562 10.162109 A 2.3034711 1.8764066 0 0 1 5.9648438 8.2851562 z M 18.205078 9.5097656 A 2.3034711 1.8764066 0 0 1 20.507812 11.384766 A 2.3034711 1.8764066 0 0 1 18.205078 13.261719 A 2.3034711 1.8764066 0 0 1 15.902344 11.384766 A 2.3034711 1.8764066 0 0 1 18.205078 9.5097656 z M 12 14 L 15.123047 17.408203 L 8.8769531 17.408203 L 12 14 z</Geometry>
+          <Style TargetType="Canvas" BasedOn="{StaticResource IconCanvas-24x24}" />
+        </TabItem.Resources>
+        <StackPanel Orientation="Horizontal">
+          <Viewbox Style="{StaticResource MinimumIconBox}">
+            <Canvas>
+              <Path Data="{StaticResource a}" Style="{StaticResource SmallDefaultIconPath}"/>
+            </Canvas>
+          </Viewbox>
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas>
+              <Path Data="{StaticResource a}" Style="{StaticResource SmallDefaultIconPath}"/>
+            </Canvas>
+          </Viewbox>
+          <Viewbox Style="{StaticResource NormalIconBox}">
+            <Canvas>
+              <Path Data="{StaticResource a}" Style="{StaticResource SmallDefaultIconPath}"/>
+            </Canvas>
+          </Viewbox>
+          <Viewbox Style="{StaticResource BigIconBox}">
+            <Canvas>
+              <Path Data="{StaticResource a}" Style="{StaticResource SmallDefaultIconPath}"/>
+            </Canvas>
+          </Viewbox>
+          <Viewbox Style="{StaticResource LargeIconBox}">
+            <Canvas>
+              <Path Data="{StaticResource a}" Style="{StaticResource SmallDefaultIconPath}"/>
+            </Canvas>
+          </Viewbox>
+
+        </StackPanel>
+      </TabItem>
+
       <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
           <Image Source="/Resources/Service/Smile/Service-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}">
