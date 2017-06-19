@@ -433,7 +433,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     }
 
                     using(var archive = new ZipArchive(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None), ZipArchiveMode.Create)) {
-                        var settingFileArchive = archive.CreateEntry(settingFilePath, CompressionLevel.Optimal);
+                        var settingFileArchive = archive.CreateEntry(VariableConstants.SettingFileName, CompressionLevel.Optimal);
                         using(var entryStream = settingFileArchive.Open()) {
                             using(var settingStream = new FileStream(settingFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
                                 settingStream.CopyTo(entryStream);
