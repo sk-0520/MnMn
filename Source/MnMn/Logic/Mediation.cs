@@ -422,6 +422,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         return true;
                     });
 
+                    #region #639 保守
                     // #623 後処理の gzip ローテート
                     var zipCount = Directory.EnumerateFiles(backupDirectory.FullName, Constants.BackupSearchPattern).Count();
                     var issue623RemoveCount = Constants.BackupSettingCount - zipCount;
@@ -431,6 +432,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             return true;
                         });
                     }
+                    #endregion
 
                     using(var archive = new ZipArchive(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None), ZipArchiveMode.Create)) {
                         var settingFileArchive = archive.CreateEntry(VariableConstants.SettingFileName, CompressionLevel.Optimal);
