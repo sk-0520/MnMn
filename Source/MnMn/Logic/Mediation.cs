@@ -411,14 +411,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(!VariableConstants.IsSafeModeExecute) {
                 if(order.IsBackup) {
                     var baseName = $"{Constants.GetNowTimestampFileName()}_ver.{Constants.ApplicationVersionNumber.ToString()}";
-                    var fileName = PathUtility.AppendExtension(baseName, "json.gz");
+                    var fileName = PathUtility.AppendExtension(baseName, "zip");
                     var backupDirectory = VariableConstants.GetBackupDirectory();
+
+                    var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
+                    FileUtility.MakeFileParentDirectory(backupFilePath);
+
                     FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern, OrderBy.Descending, Constants.BackupSettingCount, e => {
                         Logger.Warning(e);
                         return true;
                     });
-                    var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
-                    FileUtility.MakeFileParentDirectory(backupFilePath);
 
                     // 1ファイル集約の元 gzip でポン!
                     using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
@@ -426,6 +428,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             input.CopyTo(output);
                         }
                     }
+
+
+                    FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern_Issue623, OrderBy.Descending, Constants.BackupSettingCount, e => {
+                        Logger.Warning(e);
+                        return true;
+                    });
                 }
             } else {
                 Logger.Information("skip backup: safe mode");
