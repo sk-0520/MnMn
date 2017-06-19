@@ -628,7 +628,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             var resultVideoIds = new List<string>(Constants.ServiceSmileVideoTagFeedItemCount * Constants.ServiceSmileVideoTagFeedCount);
             foreach(var i in Enumerable.Range(0, Constants.ServiceSmileVideoTagFeedCount)) {
                 var pageNumber = i + 1;
-                if(1 < i && i != Constants.ServiceSmileVideoTagFeedCount - 1) {
+                if(0 < i && i < Constants.ServiceSmileVideoTagFeedCount) {
                     await Task.Delay(Constants.ServiceSmileVideoTagFeedWaitTime);
                 }
                 var feed = await tag.LoadTagFeedAsync(tagName, Constants.ServiceSmileVideoTagFeedSort, Constants.ServiceSmileVideoTagFeedOrder, pageNumber);

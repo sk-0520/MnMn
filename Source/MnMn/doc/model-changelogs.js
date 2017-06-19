@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#637: 検索フィードの更新待ちカウントがTimeSpanで狂ってる'
 					},
 					{
 						'revision': '',
