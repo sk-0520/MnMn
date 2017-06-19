@@ -422,18 +422,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         return true;
                     });
 
-                    // 1ファイル集約の元 gzip でポン!
-                    using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
-                        using(var input = File.OpenRead(settingFilePath)) {
-                            input.CopyTo(output);
-                        }
+                    // #623 後処理の gzip ローテート
+                    var zipCount = Directory.EnumerateFiles(backupDirectory.FullName, Constants.BackupSearchPattern).Count();
+                    var issue623RemoveCount = Constants.BackupSettingCount - zipCount;
+                    if(0 < issue623RemoveCount) {
+                        FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern_Issue623, OrderBy.Descending, issue623RemoveCount, e => {
+                            Logger.Warning(e);
+                            return true;
+                        });
                     }
 
-
-                    FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern_Issue623, OrderBy.Descending, Constants.BackupSettingCount, e => {
-                        Logger.Warning(e);
-                        return true;
-                    });
+                    using(var archive = new ZipArchive(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None), ZipArchiveMode.Create)) {
+                        var settingFileArchive = archive.CreateEntry(settingFilePath, CompressionLevel.Optimal);
+                        using(var entryStream = settingFileArchive.Open()) {
+                            using(var settingStream = new FileStream(settingFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
+                                settingStream.CopyTo(entryStream);
+                            }
+                        }
+                    }
                 }
             } else {
                 Logger.Information("skip backup: safe mode");
