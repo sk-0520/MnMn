@@ -52,21 +52,25 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.4"
-     inkscape:cx="12.046071"
+     inkscape:cx="12.059663"
      inkscape:cy="11.909509"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      showgrid="true"
      units="px"
-     inkscape:window-width="1343"
+     inkscape:window-width="1152"
      inkscape:window-height="718"
-     inkscape:window-x="189"
-     inkscape:window-y="100"
+     inkscape:window-x="1145"
+     inkscape:window-y="124"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
        id="grid4505"
-       dotted="false" />
+       dotted="false"
+       enabled="true"
+       visible="true"
+       snapvisiblegridlinesonly="true"
+       spacingx="0.26458334" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -86,10 +90,10 @@
      inkscape:label="レイヤー 2">
     <path
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26499999;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       d="M 0.26458333,5.0270833 V 1.5875 H 2.38125 L 1.0583333,0.52916667 1.3229167,0.26458333 2.9104167,1.5875 H 3.4395833 L 5.0270833,0.26458333 5.2916667,0.52916667 3.96875,1.5875 h 2.1166667 v 3.4395833 l -0.79375,0 v 0.79375 H 4.7625 v -0.79375 l -3.175,0 v 0.79375 H 1.0583333 v -0.79375 H 0.26458333"
+       d="M 0.26458333,5.0270833 V 4.7625 l 0,-3.175 0,-0.2645833 H 0.52916667 2.38125 L 0.52916667,0.52916667 0.79375,0.26458333 3.175,1.3229167 v 0 L 5.55625,0.26458333 5.8208333,0.52916667 3.96875,1.3229167 H 5.8208333 6.0854167 V 1.5875 4.7625 5.0270833 l -0.2645834,0 H 5.55625 l -0.2645833,0 0,0.2645834 V 5.55625 l 0,0.2645833 -0.2645834,0 H 4.7625 4.4979167 V 5.55625 5.2916667 5.0270833 H 4.2333333 2.1166667 1.8520833 V 5.2916667 5.55625 5.8208333 H 1.5875 1.3229167 l -0.2645834,0 V 5.55625 5.2916667 5.0270833 H 0.79374998 0.52916667 0.26458333"
        id="path4503"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccccccccccccc" />
+       sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccccccccccccc" />
     <ellipse
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.31808272;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
        id="path4522"
