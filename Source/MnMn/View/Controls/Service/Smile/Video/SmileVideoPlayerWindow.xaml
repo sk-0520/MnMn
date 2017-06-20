@@ -679,7 +679,14 @@
                 <Setter Property="ToolTip" Value="旧型式: エコノミー" />
                 <Setter Property="Content">
                   <Setter.Value>
-                    <Image Source="/Resources/Service/Smile/Video/Player/EconomyMode.png" Style="{StaticResource SmallIconImage}" />
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Viewbox.Effect>
+                        <BlurEffect Radius="4" />
+                      </Viewbox.Effect>
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Service-Smile}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </Setter.Value>
                 </Setter>
               </MultiDataTrigger>
@@ -691,7 +698,11 @@
                 <Setter Property="ToolTip" Value="旧型式: 通常画質" />
                 <Setter Property="Content">
                   <Setter.Value>
-                    <Image Source="/Resources/Service/Smile/Video/Player/NormalMode.png" Style="{StaticResource SmallIconImage}" />
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Service-Smile}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </Setter.Value>
                 </Setter>
               </MultiDataTrigger>
@@ -713,7 +724,14 @@
                 </Setter>
                 <Setter Property="Content">
                   <Setter.Value>
-                    <Image Source="/Resources/Service/Smile/Video/Player/DmcMode.png" Style="{StaticResource SmallIconImage}" />
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Viewbox.Effect>
+                        <DropShadowEffect Color="{DynamicResource WhiteColor}" Direction="0" BlurRadius="4" ShadowDepth="0" />
+                      </Viewbox.Effect>
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Service-Smile}" Style="{StaticResource SmallAccentIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </Setter.Value>
                 </Setter>
               </DataTrigger>

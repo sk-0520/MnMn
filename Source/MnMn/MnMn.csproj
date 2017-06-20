@@ -1109,9 +1109,7 @@
     <Resource Include="Resources\MnMn-Update_App.png" />
     <Resource Include="Resources\MnMn-Update_Lightweight.png" />
     <Resource Include="Resources\MnMn-Header.png" />
-    <Resource Include="Resources\Service\Smile\Service-Header.png" />
     <Resource Include="Resources\MnMn.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <Content Include="bat\safe-mode.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1452,9 +1450,6 @@
     </None>
     <Resource Include="Resources\Service\Smile\Service-Smile.ico" />
     <Resource Include="Resources\MnMn.ico" />
-    <Resource Include="Resources\Service\Smile\Video\Player\EconomyMode.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\NormalMode.png" />
-    <Resource Include="Resources\Service\Smile\Smile.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
