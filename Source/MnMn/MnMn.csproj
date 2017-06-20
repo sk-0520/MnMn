@@ -1113,6 +1113,9 @@
     <Content Include="bat\safe-mode.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="bat\log.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\app.manifest" />
     <None Include="Resources\File\Xaml\DescriptionLink.xaml">
       <SubType>Designer</SubType>
