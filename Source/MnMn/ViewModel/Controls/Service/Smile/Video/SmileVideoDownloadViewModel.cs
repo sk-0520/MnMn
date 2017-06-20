@@ -385,7 +385,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var with = model.Data.Session;
                 var session = info.SelectToken("session_api");
 
-                var uri = session["api_urls"].First().Value<string>();
+                //var uri = session["api_urls"].First().Value<string>();
+                var uri = session["urls"].First()["url"].Value<string>();
 
                 with.RecipeId = session["recipe_id"].Value<string>();
                 with.ContentId = session["content_id"].Value<string>();
