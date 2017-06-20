@@ -85,13 +85,21 @@
 	},
 	*/
 	{
-		'date': '2017/06/18',
-		'version': '0.69.0',
+		'date': '2017/06/20',
+		'version': '0.69.1',
 		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
+					{
+						'revision': '',
+						'subject': '#641 により緊急リリース',
+						'comments': [
+							'試験してないから頼むべ',
+							'追々 #641 で調査する'
+						]
+					},
 					{
 						'revision': '',
 						'subject': '検索ワードのピン止めを廃止しました',
@@ -151,6 +159,13 @@
 			{
 				'type': 'fixes',
 				'logs': [
+					{
+						'revision': '',
+						'subject': '#641: DMC形式のDLが出来ない',
+						'comments': [
+							'んもう！'
+						]
+					},
 					{
 						'revision': '2d6464bfe1b0836af874b4381b601398bdcaa18f',
 						'subject': '#608: コメントの色定義が甘い',
