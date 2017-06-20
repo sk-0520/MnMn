@@ -160,7 +160,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'e650885067c37c1c5cf4ecd7f84bc2b9355843a0',
 						'subject': '#641: DMC形式のDLが出来ない',
 						'comments': [
 							'んもう！'
