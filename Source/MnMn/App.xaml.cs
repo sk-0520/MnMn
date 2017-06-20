@@ -429,6 +429,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //}
         }
 
+        void InitializeEnvironmentVariables()
+        {
+            Environment.SetEnvironmentVariable("MNMN_DESKTOP", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
+        }
+
         #endregion
 
         #region Application
@@ -445,6 +450,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var logger = new Pe.PeMain.Logic.AppLogger();
             logger.IsStock = true;
+
+            InitializeEnvironmentVariables();
 
             // ログオプションのあれこれ
             if(VariableConstants.HasOptionLogDirectoryPath) {
