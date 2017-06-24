@@ -230,6 +230,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public bool ShowNavigatorFullScreen { get; set; } = Constants.SettingServiceSmileVideoPlayerShowNavigatorFullScreen;
 
+        [DataMember]
+        public TopmostKind TopmostKind { get; set; } = Constants.SettingServiceSmileVideoPlayerTopmostKind;
+
         #endregion
     }
 }

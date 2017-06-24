@@ -471,6 +471,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static bool SettingServiceSmileVideoPlayerShowNavigatorFullScreen => appConfig.Get("setting-service-smile-smilevideo-player-show-navigator-fullscreen", bool.Parse);
 
+        public static TopmostKind SettingServiceSmileVideoPlayerTopmostKind => appConfig.Get("setting-service-smile-smilevideo-player-topmost-kind", s => EnumUtility.Parse<TopmostKind>(s, false));
+
         /// <summary>
         /// コメントを表示するか。
         /// </summary>
