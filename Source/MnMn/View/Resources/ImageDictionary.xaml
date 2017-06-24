@@ -165,6 +165,9 @@
   <!-- https://materialdesignicons.com/icon/fullscreen-exit -->
   <Geometry x:Key="Image_FullScreen-Exit">M14,14H19V16H16V19H14V14M5,14H10V19H8V16H5V14M8,5H10V10H5V8H8V5M19,8V10H14V5H16V8H19Z</Geometry>
 
+  <!-- https://materialdesignicons.com/icon/undo-variant -->
+  <Geometry x:Key="Image_Reset">M13.5,7A6.5,6.5 0 0,1 20,13.5A6.5,6.5 0 0,1 13.5,20H10V18H13.5C16,18 18,16 18,13.5C18,11 16,9 13.5,9H7.83L10.91,12.09L9.5,13.5L4,8L9.5,2.5L10.92,3.91L7.83,7H13.5M6,18H8V20H6V18Z</Geometry>
+
   <!-- https://materialdesignicons.com/icon/open-in-new -->
   <Geometry x:Key="Image_OpenInNewWindow">M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z</Geometry>
 

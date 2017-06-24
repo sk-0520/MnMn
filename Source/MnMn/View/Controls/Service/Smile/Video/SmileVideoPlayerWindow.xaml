@@ -566,7 +566,7 @@
         <Menu.Resources>
           <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}" />
         </Menu.Resources>
-        <MenuItem Header="プレイヤー領域">
+        <MenuItem Header="領域">
           <MenuItem Header="動画サイズ: 50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
           <MenuItem Header="動画サイズ: 75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
           <MenuItem Header="動画サイズ: 100%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="100"  />
@@ -576,9 +576,21 @@
           <MenuItem Header="動画サイズ: 公式サイズ(16:9)" Command="{Binding ChangePlayerSizeFromOfficial16x9Command}"/>
           <MenuItem Header="動画サイズ: 公式サイズ(4:3)" Command="{Binding ChangePlayerSizeFromOfficial4x3Command}"/>
           <Separator />
-          <MenuItem Header="フルスクリーン" Command="{Binding ChangeFullScreenCommand}" />
+          <MenuItem Header="フルスクリーン" Command="{Binding ChangeFullScreenCommand}">
+            <MenuItem.Icon>
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_FullScreen}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </MenuItem.Icon>
+          </MenuItem>
           <Separator />
-          <MenuItem Header="プレイヤー領域をリセット" Command="{Binding ResetPlayerAreaCommand}" CommandParameter="200" />
+          <MenuItem Header="プレイヤー領域をリセット" Command="{Binding ResetPlayerAreaCommand}" CommandParameter="200">
+            <MenuItem.Icon>
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Reset}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </MenuItem.Icon>
+          </MenuItem>
         </MenuItem>
       </Menu>
 
