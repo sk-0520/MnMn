@@ -138,6 +138,15 @@
 					},
 					{
 						'revision': '',
+						'subject': '#645: 動画プレイヤー(ウィンドウ状態)の最前面表示設定を行う',
+						'comments': [
+							'プレイヤー -> 設定 -> 最前面設定',
+							'再生中のみ最前面設定はクセがあるので細かい制御は `service-smile-smilevideo-player-active-topmost-playing-restart` でよろしく。正直何が正しいのか分からん',
+							'つーか WPF でところどころバインドが変な挙動するの勘弁してほしいね、Forms ちっくに書いてしまった'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
