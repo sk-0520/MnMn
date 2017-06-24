@@ -85,32 +85,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.69.2',
-		'isRc': true,
+		'date': '2017/06/25',
+		'version': '0.70.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '4526dcacc9a1f0bc0da5e39f0094005d9e1e2122',
 						'subject': '#623: 設定ファイルのアーカイブを gzip から zip に置き換える',
 						'comments': [
 							'*.gz のローテート処理は #639 で数世代保守する',
@@ -118,7 +101,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'e24717b31000cf5d7f6424c09d9e6673a08216bd',
 						'subject': '#624: ニコニコのアイコンをベクターにする',
 						'comments': [
 							'ダサい',
@@ -128,7 +111,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '29766ed09c7ebbe4dfd7bf2cf38cbcaa8f1de0ee',
 						'subject': '#633: ログ出力用のバッチファイル作成',
 						'comments': [
 							"<MnMn>\\bat\\log.bat",
@@ -137,17 +120,13 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'f075fd524625ff17b8e7f5c510ad383f6f35e370',
 						'subject': '#645: 動画プレイヤー(ウィンドウ状態)の最前面表示設定を行う',
 						'comments': [
 							'プレイヤー -> 設定 -> 最前面設定',
 							'再生中のみ最前面設定はクセがあるので細かい制御は `service-smile-smilevideo-player-active-topmost-playing-restart` でよろしく。正直何が正しいのか分からん',
 							'つーか WPF でところどころバインドが変な挙動するの勘弁してほしいね、Forms ちっくに書いてしまった'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -155,31 +134,31 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '4ce36a55d830bb937d0d3b119a01498f31ba5023',
 						'subject': '#637: 検索フィードの更新待ちカウントがTimeSpanで狂ってる'
 					},
 					{
-						'revision': '',
+						'revision': '47d3526a1f54d305dc2add69e86e5143ca67094f',
 						'subject': '#636: 検索ブックマークコンテキストメニュー初回表示が隠れる'
 					},
 					{
-						'revision': '',
+						'revision': '17cb9b0d8cddc3ca3beee3315e197b3ccaf5a0f3',
 						'subject': '#535: クラッシュレポートより: System.InvalidCastException: 指定されたキャストは有効ではありません。'
 					},
 					{
-						'revision': '',
+						'revision': '23d9a656956780f6d81b8b94efcc694f47f5ab3a',
 						'subject': '#634: i と u が近くて vuew-scale だから恥ずかしい'
 					},
 					{
-						'revision': '',
+						'revision': 'c192496e0ff0822c6cd5ced73a5d0ad5b62ffe9d',
 						'subject': '#648: Twitterアイコンが気にくわん'
 					},
 					{
-						'revision': '',
+						'revision': 'fc4e0f7244c7ad83e7c4d5dc38ee50806940d515',
 						'subject': '#649: プレイヤー上部メニューの「プレイヤー領域」を「領域」に変更'
 					},
 					{
-						'revision': '',
+						'revision': '54aed368ec7b59bc93730307773e5c0f3cfa506e',
 						'subject': '#618: 酷使するプレイヤーの切り替えが多分これ開発者しか操作できてないのでわかりやすくする',
 						'comments': [
 							'プレイヤー -> メニュー -> 酷使するプレイヤー',
@@ -187,16 +166,12 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '6aa7b264518231fbb108bd5609e40011c1ee160f',
 						'subject': '#650: おみくじ状態でラボプレイヤーが落ちる',
 						'comments': [
 							'分からん',
 							'一応手を入れたけどまだおみくじ状態継続'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -204,22 +179,18 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '6b0b191b68d59c17944f63c1e6e2e84d875e2811',
 						'subject': '#635: twitter互換用コードの配置ディレクトリを作るの忘れてる'
 					},
 					{
-						'revision': '',
+						'revision': '1f24650cdbd36fd2ac3029d6b14d99398e7f526a',
 						'class': 'nuget',
 						'subject': '#638: Newtonsoft.Json 10.0.2 -> 10.0.2'
 					},
 					{
-						'revision': '',
+						'revision': 'b477b541e3f9cfbb40a4be577380eefa98ac2f63',
 						'class': 'nuget',
 						'subject': '#647: Meta.Vlc　16.11.19 -> 17.6.20'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
