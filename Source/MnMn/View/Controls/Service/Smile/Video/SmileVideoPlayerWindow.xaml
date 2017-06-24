@@ -566,7 +566,7 @@
         <Menu.Resources>
           <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}" />
         </Menu.Resources>
-        <MenuItem Header="プレイヤー領域">
+        <MenuItem Header="領域">
           <MenuItem Header="動画サイズ: 50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
           <MenuItem Header="動画サイズ: 75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
           <MenuItem Header="動画サイズ: 100%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="100"  />
