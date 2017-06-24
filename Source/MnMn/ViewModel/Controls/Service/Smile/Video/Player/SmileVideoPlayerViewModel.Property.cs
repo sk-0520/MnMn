@@ -217,6 +217,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._topmost, value); }
         }
 
+        public TopmostKind TopmostKind
+        {
+            get { return this._topmostKind; }
+            set { SetVariableValue(ref this._topmostKind, value); }
+        }
+
         public WindowState State
         {
             get { return this._state; }

@@ -379,6 +379,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ウィンドウ最前面状態。
         /// </summary>
         public static bool SettingServiceSmileVideoWindowTopmost => appConfig.Get("setting-service-smile-smilevideo-player-window-topmost", bool.Parse);
+
+        public static TopmostKind SettingServiceSmileVideoPlayerTopmostKind => appConfig.Get("setting-service-smile-smilevideo-player-topmost-kind", s => EnumUtility.Parse<TopmostKind>(s, false));
+
         /// <summary>
         /// 予期せぬ停止から次の動画へ移るまでの待機時間。
         /// </summary>
@@ -470,8 +473,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static double SettingServiceSmileVideoPlayerViewScale => appConfig.Get("setting-service-smile-smilevideo-player-view-scale", double.Parse);
 
         public static bool SettingServiceSmileVideoPlayerShowNavigatorFullScreen => appConfig.Get("setting-service-smile-smilevideo-player-show-navigator-fullscreen", bool.Parse);
-
-        public static TopmostKind SettingServiceSmileVideoPlayerTopmostKind => appConfig.Get("setting-service-smile-smilevideo-player-topmost-kind", s => EnumUtility.Parse<TopmostKind>(s, false));
 
         /// <summary>
         /// コメントを表示するか。
