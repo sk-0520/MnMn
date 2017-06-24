@@ -354,16 +354,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetMedia()
         {
             if(!IsSettedMedia && !IsViewClosed) {
-                Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
-                Player.RebuildPlayer();
-
                 if(PlayFile == null) {
                     Mediation.Logger.Warning($"{VideoId}: {nameof(PlayFile)} is null", Session.LoginState);
                     return;
                 }
 
-                Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
-                Player.LoadMedia(PlayFile.FullName);
+                Player.Dispatcher.Invoke(new Action(() => {
+                    Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
+                    Player.RebuildPlayer();
+
+                    Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
+                    Player.LoadMedia(PlayFile.FullName);
+                }));
 
                 IsSettedMedia = true;
             }
