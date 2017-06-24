@@ -163,6 +163,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#648: Twitterアイコンが気にくわん'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
