@@ -159,6 +159,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#634: i と u が近くて vuew-scale だから恥ずかしい'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
@@ -172,12 +176,13 @@
 					},
 					{
 						'revision': '',
-						'subject': '#634: i と u が近くて vuew-scale だから恥ずかしい'
+						'class': 'nuget',
+						'subject': '#638: Newtonsoft.Json 10.0.2 -> 10.0.2'
 					},
 					{
 						'revision': '',
 						'class': 'nuget',
-						'subject': '#638: Newtonsoft.Json 10.0.2 -> 10.0.2'
+						'subject': '#647: Meta.Vlc　16.11.19 -> 17.6.20'
 					},
 					{
 						'revision': '',
