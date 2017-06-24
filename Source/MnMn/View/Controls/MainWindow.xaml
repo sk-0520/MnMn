@@ -78,7 +78,7 @@
         </Viewbox>
         <TextBlock>
           <Run Text="{Binding SmileSession.LoginState, Converter={StaticResource EnumDisplayConverter}, Mode=OneWay}" />
-          <Run Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
+          <Run Text="{Binding SmileSession.LastLoginTime, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}, Mode=OneWay}" />
         </TextBlock>
       </StackPanel>
     </StatusBar>
