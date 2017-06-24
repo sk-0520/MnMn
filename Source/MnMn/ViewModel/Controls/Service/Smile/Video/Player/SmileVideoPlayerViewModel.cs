@@ -97,6 +97,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk.Mutter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -1581,7 +1582,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var key = IdleTalkMutterMediationKey.postPage;
 
             var map = new StringsModel() {
-                ["url"] = smileSetting.IdleTalkMutter.AutoInputWatchPageUri ? Information.WatchUrl.OriginalString: string.Empty,
+                ["url"] = smileSetting.IdleTalkMutter.AutoInputWatchPageUri ? Information.WatchUrl.OriginalString : string.Empty,
                 ["text"] = smileSetting.IdleTalkMutter.AutoInputVideoTitle ? Information.Title : string.Empty,
                 ["via"] = string.Empty,
                 ["in_reply_to"] = string.Empty,
@@ -1630,9 +1631,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ListPlaylist?.ScrollToCenterOfView(videoInformation, true, false);
         }
 
-#endregion
+        IEnumerable<SmileVideoPlayerViewModel> GetEnabledPlayers()
+        {
+            var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
+                .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
+            ;
 
-#region SmileVideoDownloadViewModel
+            return players;
+        }
+
+        #endregion
+
+        #region SmileVideoDownloadViewModel
 
         public override Task LoadAsync(SmileVideoInformationViewModel videoInformation, bool forceEconomy, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
@@ -1879,9 +1889,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-#endregion
+        #endregion
 
-#region ISetView
+        #region ISetView
 
         public void SetView(FrameworkElement view)
         {
@@ -1911,9 +1921,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Debug.WriteLine(View.IsInitialized);
         }
 
-#endregion
+        #endregion
 
-#region ICloseView
+        #region ICloseView
 
         public void Close()
         {
@@ -1922,9 +1932,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-#endregion
+        #endregion
 
-#region ISmileDescription
+        #region ISmileDescription
 
         public ImageSource DefaultBrowserIcon { get; } = WebNavigatorCore.DefaultBrowserIcon;
 
@@ -1998,9 +2008,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-#endregion
+        #endregion
 
-#region SmileVideoDownloadViewModel
+        #region SmileVideoDownloadViewModel
 
         protected override void Dispose(bool disposing)
         {
@@ -2024,9 +2034,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             base.Dispose(disposing);
         }
 
-#endregion
+        #endregion
 
-#region event
+        #region event
 
         void View_Loaded(object sender, RoutedEventArgs e)
         {
@@ -2279,6 +2289,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-#endregion
+        #endregion
     }
 }

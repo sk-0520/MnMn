@@ -1074,7 +1074,7 @@
               IsOpen="{TemplateBinding IsOpen}"
               PlacementTarget="{Binding ElementName=PART_Border}"
               PopupAnimation="Fade"
-              StaysOpen="True"
+              StaysOpen="False"
             >
               <Border Background="{DynamicResource WindowBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}" BorderThickness="1">
                 <ContentPresenter Content="{TemplateBinding DropDownContent}" />
