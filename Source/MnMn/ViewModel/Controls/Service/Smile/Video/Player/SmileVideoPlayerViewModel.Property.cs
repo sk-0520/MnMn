@@ -221,7 +221,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public TopmostKind TopmostKind
         {
             get { return this._topmostKind; }
-            set { SetVariableValue(ref this._topmostKind, value); }
+            set
+            {
+                if(SetVariableValue(ref this._topmostKind, value)) {
+                    ChangeTopmostState();
+                }
+            }
         }
 
         public WindowState State
@@ -655,7 +660,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public PlayerState PlayerState
         {
             get { return this._playerState; }
-            set { SetVariableValue(ref this._playerState, value); }
+            set
+            {
+                if(SetVariableValue(ref this._playerState, value)) {
+                    ChangeTopmostState();
+                }
+            }
         }
 
         /// <summary>
@@ -1104,6 +1114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 if(SetVariableValue(ref this._isNormalWindow, value)) {
                     CallOnPropertyChange(nameof(PlayerShowCommentArea));
+                    ChangeTopmostState();
                 }
             }
         }

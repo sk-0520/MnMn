@@ -286,12 +286,11 @@
   <mamc:MetroWindow.Style>
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Style.Triggers>
-        <!--
+
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
           <Setter Property="Topmost" Value="{Binding Topmost}" />
         </DataTrigger>
-        -->
-        <MultiDataTrigger>
+        <!--<MultiDataTrigger>
           <MultiDataTrigger.Conditions>
             <Condition Binding="{Binding IsNormalWindow}" Value="True" />
             <Condition Binding="{Binding TopmostKind}" Value="Playing" />
@@ -307,9 +306,9 @@
           </MultiDataTrigger.Conditions>
           <Setter Property="Topmost" Value="True" />
           <Setter Property="Background" Value="Yellow" />
-        </MultiDataTrigger>
+        </MultiDataTrigger>-->
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
-          <Setter Property="Topmost" Value="True" />
+          <!--<Setter Property="Topmost" Value="True" />-->
           <Setter Property="BorderThickness" Value="0" />
           <Setter Property="ResizeMode" Value="NoResize" />
           <Setter Property="IgnoreTaskbarOnMaximize" Value="True" />

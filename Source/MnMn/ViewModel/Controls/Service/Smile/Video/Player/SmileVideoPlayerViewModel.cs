@@ -1298,19 +1298,48 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public void MoveForeground()
         {
-#if !DEBUG
-#   error TOPMOST!
+            if(View == null) {
+                return;
+            }
+
             // 経験則上これが一番確実という悲しさ
-            if(!Topmost) {
+            if(!View.Topmost) {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    Topmost = true;
+                    View.Topmost = true;
                 }), DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
                     t.Dispose();
-                    Topmost = false;
+                    ChangeTopmostState();
                     View.Activate();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
-#endif
+        }
+
+        void ChangeTopmostState()
+        {
+            if(View == null) {
+                return;
+            }
+
+            if(IsNormalWindow) {
+                switch(TopmostKind) {
+                    case Define.UI.Player.TopmostKind.Default:
+                        View.Topmost = false;
+                        break;
+
+                    case Define.UI.Player.TopmostKind.Playing:
+                        View.Topmost = PlayerState == PlayerState.Playing;
+                        break;
+
+                    case Define.UI.Player.TopmostKind.Always:
+                        View.Topmost = true;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            } else {
+                View.Topmost = true;
+            }
         }
 
         void ChangeVolume(bool isUp)
