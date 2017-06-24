@@ -291,6 +291,23 @@
           <Setter Property="Topmost" Value="{Binding Topmost}" />
         </DataTrigger>
         -->
+        <MultiDataTrigger>
+          <MultiDataTrigger.Conditions>
+            <Condition Binding="{Binding IsNormalWindow}" Value="True" />
+            <Condition Binding="{Binding TopmostKind}" Value="Playing" />
+            <Condition Binding="{Binding PlayerState}" Value="Playing" />
+          </MultiDataTrigger.Conditions>
+          <Setter Property="Topmost" Value="True" />
+          <Setter Property="Background" Value="Red" />
+        </MultiDataTrigger>
+        <MultiDataTrigger>
+          <MultiDataTrigger.Conditions>
+            <Condition Binding="{Binding IsNormalWindow}" Value="True" />
+            <Condition Binding="{Binding TopmostKind}" Value="Always" />
+          </MultiDataTrigger.Conditions>
+          <Setter Property="Topmost" Value="True" />
+          <Setter Property="Background" Value="Yellow" />
+        </MultiDataTrigger>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
           <Setter Property="Topmost" Value="True" />
           <Setter Property="BorderThickness" Value="0" />
@@ -301,6 +318,7 @@
       <Setter Property="ShowCloseButton" Value="{Binding IsNormalWindow}" />
       <Setter Property="ShowMaxRestoreButton" Value="{Binding IsNormalWindow}" />
       <Setter Property="ShowMinButton" Value="{Binding IsNormalWindow}" />
+      <Setter Property="Topmost" Value="False" />
     </Style>
   </mamc:MetroWindow.Style>
   <mamc:MetroWindow.RightWindowCommands>
