@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Top = PlayerSetting.Window.Top;
             Width = PlayerSetting.Window.Width;
             Height = PlayerSetting.Window.Height;
-            Topmost = PlayerSetting.Window.Topmost;
+            //Topmost = PlayerSetting.Window.Topmost;
 
             TopmostKind = PlayerSetting.TopmostKind;
 
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PlayerSetting.Window.Top = Top;
             PlayerSetting.Window.Width = Width;
             PlayerSetting.Window.Height = Height;
-            PlayerSetting.Window.Topmost = Topmost;
+            //PlayerSetting.Window.Topmost = Topmost;
 
             PlayerSetting.TopmostKind = TopmostKind;
 
@@ -1298,6 +1298,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public void MoveForeground()
         {
+#if !DEBUG
+#   error TOPMOST!
             // 経験則上これが一番確実という悲しさ
             if(!Topmost) {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
@@ -1308,6 +1310,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     View.Activate();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
+#endif
         }
 
         void ChangeVolume(bool isUp)
@@ -1590,9 +1593,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ListPlaylist?.ScrollToCenterOfView(videoInformation, true, false);
         }
 
-        #endregion
+#endregion
 
-        #region SmileVideoDownloadViewModel
+#region SmileVideoDownloadViewModel
 
         public override Task LoadAsync(SmileVideoInformationViewModel videoInformation, bool forceEconomy, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
@@ -1839,9 +1842,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-        #endregion
+#endregion
 
-        #region ISetView
+#region ISetView
 
         public void SetView(FrameworkElement view)
         {
@@ -1871,9 +1874,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Debug.WriteLine(View.IsInitialized);
         }
 
-        #endregion
+#endregion
 
-        #region ICloseView
+#region ICloseView
 
         public void Close()
         {
@@ -1882,9 +1885,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        #endregion
+#endregion
 
-        #region ISmileDescription
+#region ISmileDescription
 
         public ImageSource DefaultBrowserIcon { get; } = WebNavigatorCore.DefaultBrowserIcon;
 
@@ -1958,9 +1961,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        #endregion
+#endregion
 
-        #region SmileVideoDownloadViewModel
+#region SmileVideoDownloadViewModel
 
         protected override void Dispose(bool disposing)
         {
@@ -1984,9 +1987,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             base.Dispose(disposing);
         }
 
-        #endregion
+#endregion
 
-        #region event
+#region event
 
         void View_Loaded(object sender, RoutedEventArgs e)
         {
@@ -2239,6 +2242,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        #endregion
+#endregion
     }
 }

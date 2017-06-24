@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _top;
         double _width;
         double _height;
+        [Obsolete]
         bool _topmost;
 
         TopmostKind _topmostKind;

@@ -211,6 +211,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 最前面表示状態。
         /// </summary>
+        [Obsolete]
         public bool Topmost
         {
             get { return this._topmost; }
