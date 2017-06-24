@@ -23,6 +23,7 @@ using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 
@@ -44,7 +45,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _top;
         double _width;
         double _height;
+        [Obsolete]
         bool _topmost;
+
+        TopmostKind _topmostKind;
 
         double _viewScale;
 

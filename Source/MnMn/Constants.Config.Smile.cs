@@ -248,6 +248,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ServiceSmileVideoTagFeedOrder => appConfig.Get("service-smile-smilevideo-tag-feed-order");
         public static int ServiceSmileVideoTagFeedCount => appConfig.Get("service-smile-smilevideo-tag-feed-count", int.Parse);
 
+        public static bool ServiceSmileVideoPlayerActiveTopmostPlayingRestart => appConfig.Get("service-smile-smilevideo-player-active-topmost-playing-restart", bool.Parse);
+
         #region live
 
         /// <summary>
@@ -379,6 +381,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ウィンドウ最前面状態。
         /// </summary>
         public static bool SettingServiceSmileVideoWindowTopmost => appConfig.Get("setting-service-smile-smilevideo-player-window-topmost", bool.Parse);
+
+        public static TopmostKind SettingServiceSmileVideoPlayerTopmostKind => appConfig.Get("setting-service-smile-smilevideo-player-topmost-kind", s => EnumUtility.Parse<TopmostKind>(s, false));
+
         /// <summary>
         /// 予期せぬ停止から次の動画へ移るまでの待機時間。
         /// </summary>

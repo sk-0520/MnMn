@@ -242,6 +242,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoSearchType.cs" />
+    <Compile Include="Define\UI\Player\TopmostKind.cs" />
     <Compile Include="Define\UpdatedResult.cs" />
     <Compile Include="Define\WebNavigatorContextMenuKey.cs" />
     <Compile Include="Define\CacheState.cs" />

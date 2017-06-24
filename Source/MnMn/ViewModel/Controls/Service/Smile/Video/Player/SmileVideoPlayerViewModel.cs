@@ -150,7 +150,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Top = PlayerSetting.Window.Top;
             Width = PlayerSetting.Window.Width;
             Height = PlayerSetting.Window.Height;
-            Topmost = PlayerSetting.Window.Topmost;
+            //Topmost = PlayerSetting.Window.Topmost;
+
+            TopmostKind = PlayerSetting.TopmostKind;
 
             ViewScale = PlayerSetting.ViewScale;
 
@@ -182,7 +184,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PlayerSetting.Window.Top = Top;
             PlayerSetting.Window.Width = Width;
             PlayerSetting.Window.Height = Height;
-            PlayerSetting.Window.Topmost = Topmost;
+            //PlayerSetting.Window.Topmost = Topmost;
+
+            PlayerSetting.TopmostKind = TopmostKind;
 
             PlayerSetting.ViewScale = ViewScale;
 
@@ -1294,15 +1298,55 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public void MoveForeground()
         {
+            if(View == null) {
+                return;
+            }
+
             // 経験則上これが一番確実という悲しさ
-            if(!Topmost) {
+            if(!View.Topmost) {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    Topmost = true;
+                    View.Topmost = true;
                 }), DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
                     t.Dispose();
-                    Topmost = false;
+                    ChangeTopmostState();
                     View.Activate();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        }
+
+        void ChangeTopmostState()
+        {
+            if(View == null) {
+                return;
+            }
+
+            if(IsNormalWindow) {
+                switch(TopmostKind) {
+                    case Define.UI.Player.TopmostKind.Default:
+                        View.Topmost = false;
+                        break;
+
+                    case Define.UI.Player.TopmostKind.Playing:
+                        View.Topmost = PlayerState == PlayerState.Playing;
+                        if(!View.Topmost && !View.IsActive) {
+                            var hWnd = NativeMethods.GetForegroundWindow();
+                            WindowsUtility.ShowActive(hWnd);
+                        } else if(View.Topmost && !View.IsActive) {
+                            if(Constants.ServiceSmileVideoPlayerActiveTopmostPlayingRestart) {
+                                View.Activate();
+                            }
+                        }
+                        break;
+
+                    case Define.UI.Player.TopmostKind.Always:
+                        View.Topmost = true;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            } else {
+                View.Topmost = true;
             }
         }
 
@@ -1586,9 +1630,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ListPlaylist?.ScrollToCenterOfView(videoInformation, true, false);
         }
 
-        #endregion
+#endregion
 
-        #region SmileVideoDownloadViewModel
+#region SmileVideoDownloadViewModel
 
         public override Task LoadAsync(SmileVideoInformationViewModel videoInformation, bool forceEconomy, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
@@ -1835,9 +1879,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-        #endregion
+#endregion
 
-        #region ISetView
+#region ISetView
 
         public void SetView(FrameworkElement view)
         {
@@ -1867,9 +1911,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Debug.WriteLine(View.IsInitialized);
         }
 
-        #endregion
+#endregion
 
-        #region ICloseView
+#region ICloseView
 
         public void Close()
         {
@@ -1878,9 +1922,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        #endregion
+#endregion
 
-        #region ISmileDescription
+#region ISmileDescription
 
         public ImageSource DefaultBrowserIcon { get; } = WebNavigatorCore.DefaultBrowserIcon;
 
@@ -1954,9 +1998,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        #endregion
+#endregion
 
-        #region SmileVideoDownloadViewModel
+#region SmileVideoDownloadViewModel
 
         protected override void Dispose(bool disposing)
         {
@@ -1980,9 +2024,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             base.Dispose(disposing);
         }
 
-        #endregion
+#endregion
 
-        #region event
+#region event
 
         void View_Loaded(object sender, RoutedEventArgs e)
         {
@@ -2235,6 +2279,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        #endregion
+#endregion
     }
 }
