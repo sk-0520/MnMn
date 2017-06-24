@@ -1332,7 +1332,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                             var hWnd = NativeMethods.GetForegroundWindow();
                             WindowsUtility.ShowActive(hWnd);
                         } else if(View.Topmost && !View.IsActive) {
-                            View.Activate();
+                            if(Constants.ServiceSmileVideoPlayerActiveTopmostPlayingRestart) {
+                                View.Activate();
+                            }
                         }
                         break;
 

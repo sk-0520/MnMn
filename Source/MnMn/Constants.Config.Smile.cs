@@ -248,6 +248,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ServiceSmileVideoTagFeedOrder => appConfig.Get("service-smile-smilevideo-tag-feed-order");
         public static int ServiceSmileVideoTagFeedCount => appConfig.Get("service-smile-smilevideo-tag-feed-count", int.Parse);
 
+        public static bool ServiceSmileVideoPlayerActiveTopmostPlayingRestart => appConfig.Get("service-smile-smilevideo-player-active-topmost-playing-restart", bool.Parse);
+
         #region live
 
         /// <summary>
