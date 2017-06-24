@@ -1328,6 +1328,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                     case Define.UI.Player.TopmostKind.Playing:
                         View.Topmost = PlayerState == PlayerState.Playing;
+                        if(!View.Topmost && !View.IsActive) {
+                            var hWnd = NativeMethods.GetForegroundWindow();
+                            WindowsUtility.ShowActive(hWnd);
+                        }
                         break;
 
                     case Define.UI.Player.TopmostKind.Always:
