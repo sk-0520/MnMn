@@ -287,9 +287,9 @@
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Style.Triggers>
 
-        <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
+        <!--<DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
           <Setter Property="Topmost" Value="{Binding Topmost}" />
-        </DataTrigger>
+        </DataTrigger>-->
         <!--<MultiDataTrigger>
           <MultiDataTrigger.Conditions>
             <Condition Binding="{Binding IsNormalWindow}" Value="True" />
@@ -317,7 +317,6 @@
       <Setter Property="ShowCloseButton" Value="{Binding IsNormalWindow}" />
       <Setter Property="ShowMaxRestoreButton" Value="{Binding IsNormalWindow}" />
       <Setter Property="ShowMinButton" Value="{Binding IsNormalWindow}" />
-      <Setter Property="Topmost" Value="False" />
     </Style>
   </mamc:MetroWindow.Style>
   <mamc:MetroWindow.RightWindowCommands>
