@@ -92,6 +92,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 
         public override bool IsPremiumAccount { get; } = true;
 
+        public override ICommand SwitchWorkingPlayerCommand => CreateCommand(o => { }, o => false);
+
         protected override void AddHistory(SmileVideoInformationViewModel information)
         {
             IgnoreLaboratory();

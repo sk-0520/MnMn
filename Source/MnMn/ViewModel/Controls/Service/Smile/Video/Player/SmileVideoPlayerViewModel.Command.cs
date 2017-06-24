@@ -611,7 +611,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand SwitchWorkingPlayerCommand
+        public virtual ICommand SwitchWorkingPlayerCommand
         {
             get
             {
