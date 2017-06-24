@@ -542,7 +542,7 @@
           <DataTemplate>
             <StackPanel Style="{StaticResource TabHeader}">
               <StackPanel.ContextMenu>
-                <ContextMenu IsOpen="{Binding IsOpenHeaderContextMenu}">
+                <ContextMenu IsOpen="{Binding IsOpenHeaderContextMenu, Mode=OneWayToSource}">
                   <MenuItem Header="ブックマーク" IsChecked="{Binding IsBookmark, Mode=OneWay}" Command="{Binding SwitchBookmarkCommand}" />
                 </ContextMenu>
               </StackPanel.ContextMenu>

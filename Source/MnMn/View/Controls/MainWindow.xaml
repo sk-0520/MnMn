@@ -67,9 +67,20 @@
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" Margin="{StaticResource HorizonMargin}" />
       </StatusBarItem>
 
-      <Image Source="/Resources/Service/Smile/Smile.png" Style="{StaticResource SmallItemImage}" />
-      <TextBlock Text="{Binding SmileSession.LoginState, Converter={StaticResource EnumDisplayConverter}, Mode=OneWay}" />
-      <TextBlock Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
+      <StackPanel Style="{StaticResource ItemPanel}">
+        <Viewbox Style="{StaticResource SmallItemBox}">
+          <Viewbox.Effect>
+            <DropShadowEffect Color="{DynamicResource WhiteColor}" Direction="0" BlurRadius="4" ShadowDepth="0" />
+          </Viewbox.Effect>
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Service-Smile}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <TextBlock>
+          <Run Text="{Binding SmileSession.LoginState, Converter={StaticResource EnumDisplayConverter}, Mode=OneWay}" />
+          <Run Text="{Binding SmileSession.LastLoginTime, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}, Mode=OneWay}" />
+        </TextBlock>
+      </StackPanel>
     </StatusBar>
 
     <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
@@ -79,13 +90,16 @@
 
       <TabItem DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Image Source="/Resources/Service/Smile/Service-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}">
-            <Image.ToolTip>
+          <Viewbox Style="{StaticResource BigIconBox}">
+            <Viewbox.ToolTip>
               <ToolTip Style="{StaticResource SelectionTabToolTip}">
-                <TextBlock>ニコニコ</TextBlock>
+                <TextBlock Text="ニコニコ" />
               </ToolTip>
-            </Image.ToolTip>
-          </Image>
+            </Viewbox.ToolTip>
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Service-Smile}" Style="{StaticResource BigDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
         </TabItem.Header>
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>

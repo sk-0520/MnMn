@@ -21,6 +21,7 @@
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
+  xmlns:app_define_ui_player="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.UI.Player"
   xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
@@ -51,6 +52,7 @@
   <mamc:MetroWindow.Resources>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_sl_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
       <sys:Boolean x:Key="True">True</sys:Boolean>
@@ -285,11 +287,29 @@
   <mamc:MetroWindow.Style>
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Style.Triggers>
-        <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
+
+        <!--<DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
           <Setter Property="Topmost" Value="{Binding Topmost}" />
-        </DataTrigger>
-        <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
+        </DataTrigger>-->
+        <!--<MultiDataTrigger>
+          <MultiDataTrigger.Conditions>
+            <Condition Binding="{Binding IsNormalWindow}" Value="True" />
+            <Condition Binding="{Binding TopmostKind}" Value="Playing" />
+            <Condition Binding="{Binding PlayerState}" Value="Playing" />
+          </MultiDataTrigger.Conditions>
           <Setter Property="Topmost" Value="True" />
+          <Setter Property="Background" Value="Red" />
+        </MultiDataTrigger>
+        <MultiDataTrigger>
+          <MultiDataTrigger.Conditions>
+            <Condition Binding="{Binding IsNormalWindow}" Value="True" />
+            <Condition Binding="{Binding TopmostKind}" Value="Always" />
+          </MultiDataTrigger.Conditions>
+          <Setter Property="Topmost" Value="True" />
+          <Setter Property="Background" Value="Yellow" />
+        </MultiDataTrigger>-->
+        <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
+          <!--<Setter Property="Topmost" Value="True" />-->
           <Setter Property="BorderThickness" Value="0" />
           <Setter Property="ResizeMode" Value="NoResize" />
           <Setter Property="IgnoreTaskbarOnMaximize" Value="True" />
@@ -547,7 +567,7 @@
         <Menu.Resources>
           <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}" />
         </Menu.Resources>
-        <MenuItem Header="プレイヤー領域">
+        <MenuItem Header="領域">
           <MenuItem Header="動画サイズ: 50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
           <MenuItem Header="動画サイズ: 75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
           <MenuItem Header="動画サイズ: 100%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="100"  />
@@ -557,11 +577,88 @@
           <MenuItem Header="動画サイズ: 公式サイズ(16:9)" Command="{Binding ChangePlayerSizeFromOfficial16x9Command}"/>
           <MenuItem Header="動画サイズ: 公式サイズ(4:3)" Command="{Binding ChangePlayerSizeFromOfficial4x3Command}"/>
           <Separator />
-          <MenuItem Header="フルスクリーン" Command="{Binding ChangeFullScreenCommand}" />
+          <MenuItem Header="フルスクリーン" Command="{Binding ChangeFullScreenCommand}">
+            <MenuItem.Icon>
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_FullScreen}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </MenuItem.Icon>
+          </MenuItem>
           <Separator />
-          <MenuItem Header="プレイヤー領域をリセット" Command="{Binding ResetPlayerAreaCommand}" CommandParameter="200" />
+          <MenuItem Header="プレイヤー領域をリセット" Command="{Binding ResetPlayerAreaCommand}" CommandParameter="200">
+            <MenuItem.Icon>
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Reset}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </MenuItem.Icon>
+          </MenuItem>
         </MenuItem>
       </Menu>
+
+      <xctk:SplitButton BorderThickness="0" IsOpen="{Binding IsOpenWorkingPlayer, Mode=TwoWay}" Command="{Binding SwitchWorkingPlayerCommand}" >
+        <xctk:SplitButton.Content>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource SmallItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Control>
+                  <Control.Style>
+                    <Style TargetType="Control">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsWorkingPlayer.Value}" Value="True">
+                          <Setter Property="Template">
+                            <Setter.Value>
+                              <ControlTemplate>
+                                <Path Data="{StaticResource Image_Worker}" Style="{StaticResource SmallAccentIconPath}" />
+                              </ControlTemplate>
+                            </Setter.Value>
+                          </Setter>
+                          <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                      <Setter Property="Template">
+                        <Setter.Value>
+                          <ControlTemplate>
+                            <Path Data="{StaticResource Image_Worker}" Style="{StaticResource SmallDefaultIconPath}" />
+                          </ControlTemplate>
+                        </Setter.Value>
+                      </Setter>
+                      <Setter Property="Opacity" Value="0.5" />
+                    </Style>
+                  </Control.Style>
+                </Control>
+              </Canvas>
+            </Viewbox>
+            <TextBlock>酷使するプレイヤー</TextBlock>
+          </StackPanel>
+        </xctk:SplitButton.Content>
+        <xctk:SplitButton.DropDownContent>
+          <ItemsControl ItemsSource="{Binding WorkingPlayerItems}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <MenuItem Header="{Binding Title}" Command="{Binding SwitchWorkingPlayerCommand}" IsChecked="{Binding IsWorkingPlayer.Value}">
+                  <MenuItem.Style>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                      <Style.Triggers>
+                        <DataTrigger Value="True">
+                          <DataTrigger.Binding>
+                            <MultiBinding Converter="{StaticResource LogicalMultiEqualConverter}">
+                              <MultiBinding.Bindings>
+                                <Binding Path="." />
+                                <Binding Path="DataContext" ElementName="root" />
+                              </MultiBinding.Bindings>
+                            </MultiBinding>
+                          </DataTrigger.Binding>
+                          <Setter Property="FontWeight" Value="Bold" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </MenuItem.Style>
+                </MenuItem>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </xctk:SplitButton.DropDownContent>
+      </xctk:SplitButton>
 
     </ToolBar>
 
@@ -619,30 +716,6 @@
         </Grid>
       </ToggleButton>
       <TextBlock Text="{Binding PlayerState, Mode=OneWay, Converter={StaticResource EnumDisplayConverter}}"/>
-      <Viewbox ToolTip="酷使するプレイヤーウィンドウ！" Style="{StaticResource SmallIconBox}" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}" >
-        <Viewbox.ContextMenu>
-          <ContextMenu IsOpen="{Binding IsOpenWorkingPlayer}" ItemsSource="{Binding WorkingPlayerItems}">
-            <ContextMenu.ItemContainerStyle>
-              <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding IsWorkingPlayer.Value}" Value="True">
-                    <Setter Property="FontWeight" Value="Bold" />
-                  </DataTrigger>
-                </Style.Triggers>
-                <Setter Property="Header" Value="{Binding Title}"/>
-                <Setter Property="Command" Value="{Binding SwitchWorkingPlayerCommand}"/>
-                <Setter Property="IsChecked" Value="{Binding IsWorkingPlayer.Value}" />
-              </Style>
-            </ContextMenu.ItemContainerStyle>
-          </ContextMenu>
-        </Viewbox.ContextMenu>
-        <Viewbox.Effect>
-          <DropShadowEffect Color="{DynamicResource WindowColor}" ShadowDepth="0" BlurRadius="2" />
-        </Viewbox.Effect>
-        <Canvas Style="{StaticResource IconCanvas-24x24}" Background="Transparent">
-          <Path Data="{StaticResource Image_Worker}" Style="{StaticResource SmallAccentIconPath}" />
-        </Canvas>
-      </Viewbox>
       <Grid>
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -679,7 +752,14 @@
                 <Setter Property="ToolTip" Value="旧型式: エコノミー" />
                 <Setter Property="Content">
                   <Setter.Value>
-                    <Image Source="/Resources/Service/Smile/Video/Player/EconomyMode.png" Style="{StaticResource SmallIconImage}" />
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Viewbox.Effect>
+                        <BlurEffect Radius="4" />
+                      </Viewbox.Effect>
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Service-Smile}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </Setter.Value>
                 </Setter>
               </MultiDataTrigger>
@@ -691,7 +771,11 @@
                 <Setter Property="ToolTip" Value="旧型式: 通常画質" />
                 <Setter Property="Content">
                   <Setter.Value>
-                    <Image Source="/Resources/Service/Smile/Video/Player/NormalMode.png" Style="{StaticResource SmallIconImage}" />
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Service-Smile}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </Setter.Value>
                 </Setter>
               </MultiDataTrigger>
@@ -713,7 +797,14 @@
                 </Setter>
                 <Setter Property="Content">
                   <Setter.Value>
-                    <Image Source="/Resources/Service/Smile/Video/Player/DmcMode.png" Style="{StaticResource SmallIconImage}" />
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Viewbox.Effect>
+                        <DropShadowEffect Color="{DynamicResource WhiteColor}" Direction="0" BlurRadius="4" ShadowDepth="0" />
+                      </Viewbox.Effect>
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Service-Smile}" Style="{StaticResource SmallAccentIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </Setter.Value>
                 </Setter>
               </DataTrigger>
@@ -2034,6 +2125,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -2085,11 +2177,21 @@
                 <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.Outline}}" />
               </WrapPanel>
 
-              <CheckBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding CommentConvertPairYenSlash}" Style="{StaticResource VerticalCheckBox}">
+              <Label Grid.Row="7" Grid.Column="0" Content="最前面表示"  Margin="{StaticResource BottomMargin}" />
+              <WrapPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="{StaticResource BottomMargin}">
+                <WrapPanel.Resources>
+                  <Style TargetType="RadioButton"  BasedOn="{StaticResource HorizontalRadioButton}" />
+                </WrapPanel.Resources>
+                <RadioButton VerticalAlignment="Center" Content="通常" IsChecked="{Binding TopmostKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:TopmostKind.Default}}" />
+                <RadioButton VerticalAlignment="Center" Content="再生中のみ" IsChecked="{Binding TopmostKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:TopmostKind.Playing}}" />
+                <RadioButton VerticalAlignment="Center" Content="常時" IsChecked="{Binding TopmostKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:TopmostKind.Always}}" />
+              </WrapPanel>
+
+              <CheckBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding CommentConvertPairYenSlash}" Style="{StaticResource VerticalCheckBox}">
                 <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
               </CheckBox>
 
-              <CheckBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding FillBackgroundOriginalPoster}" Style="{StaticResource VerticalCheckBox}">投稿者コメントの背景を塗りつぶす</CheckBox>
+              <CheckBox Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding FillBackgroundOriginalPoster}" Style="{StaticResource VerticalCheckBox}">投稿者コメントの背景を塗りつぶす</CheckBox>
 
             </Grid>
           </TabItem>

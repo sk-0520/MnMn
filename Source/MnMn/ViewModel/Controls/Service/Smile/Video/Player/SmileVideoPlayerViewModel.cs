@@ -97,6 +97,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk.Mutter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -150,7 +151,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Top = PlayerSetting.Window.Top;
             Width = PlayerSetting.Window.Width;
             Height = PlayerSetting.Window.Height;
-            Topmost = PlayerSetting.Window.Topmost;
+            //Topmost = PlayerSetting.Window.Topmost;
+
+            TopmostKind = PlayerSetting.TopmostKind;
 
             ViewScale = PlayerSetting.ViewScale;
 
@@ -182,7 +185,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PlayerSetting.Window.Top = Top;
             PlayerSetting.Window.Width = Width;
             PlayerSetting.Window.Height = Height;
-            PlayerSetting.Window.Topmost = Topmost;
+            //PlayerSetting.Window.Topmost = Topmost;
+
+            PlayerSetting.TopmostKind = TopmostKind;
 
             PlayerSetting.ViewScale = ViewScale;
 
@@ -349,16 +354,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetMedia()
         {
             if(!IsSettedMedia && !IsViewClosed) {
-                Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
-                Player.RebuildPlayer();
-
                 if(PlayFile == null) {
                     Mediation.Logger.Warning($"{VideoId}: {nameof(PlayFile)} is null", Session.LoginState);
                     return;
                 }
 
-                Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
-                Player.LoadMedia(PlayFile.FullName);
+                Player.Dispatcher.Invoke(new Action(() => {
+                    Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
+                    Player.RebuildPlayer();
+
+                    Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
+                    Player.LoadMedia(PlayFile.FullName);
+                }));
 
                 IsSettedMedia = true;
             }
@@ -1294,15 +1301,55 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public void MoveForeground()
         {
+            if(View == null) {
+                return;
+            }
+
             // 経験則上これが一番確実という悲しさ
-            if(!Topmost) {
+            if(!View.Topmost) {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    Topmost = true;
+                    View.Topmost = true;
                 }), DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
                     t.Dispose();
-                    Topmost = false;
+                    ChangeTopmostState();
                     View.Activate();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        }
+
+        void ChangeTopmostState()
+        {
+            if(View == null) {
+                return;
+            }
+
+            if(IsNormalWindow) {
+                switch(TopmostKind) {
+                    case Define.UI.Player.TopmostKind.Default:
+                        View.Topmost = false;
+                        break;
+
+                    case Define.UI.Player.TopmostKind.Playing:
+                        View.Topmost = PlayerState == PlayerState.Playing;
+                        if(!View.Topmost && !View.IsActive) {
+                            var hWnd = NativeMethods.GetForegroundWindow();
+                            WindowsUtility.ShowActive(hWnd);
+                        } else if(View.Topmost && !View.IsActive) {
+                            if(Constants.ServiceSmileVideoPlayerActiveTopmostPlayingRestart) {
+                                View.Activate();
+                            }
+                        }
+                        break;
+
+                    case Define.UI.Player.TopmostKind.Always:
+                        View.Topmost = true;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            } else {
+                View.Topmost = true;
             }
         }
 
@@ -1537,7 +1584,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var key = IdleTalkMutterMediationKey.postPage;
 
             var map = new StringsModel() {
-                ["url"] = smileSetting.IdleTalkMutter.AutoInputWatchPageUri ? Information.WatchUrl.OriginalString: string.Empty,
+                ["url"] = smileSetting.IdleTalkMutter.AutoInputWatchPageUri ? Information.WatchUrl.OriginalString : string.Empty,
                 ["text"] = smileSetting.IdleTalkMutter.AutoInputVideoTitle ? Information.Title : string.Empty,
                 ["via"] = string.Empty,
                 ["in_reply_to"] = string.Empty,
@@ -1584,6 +1631,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ScrollActiveVideoInPlayList(SmileVideoInformationViewModel videoInformation)
         {
             ListPlaylist?.ScrollToCenterOfView(videoInformation, true, false);
+        }
+
+        IEnumerable<SmileVideoPlayerViewModel> GetEnabledPlayers()
+        {
+            var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
+                .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
+            ;
+
+            return players;
         }
 
         #endregion

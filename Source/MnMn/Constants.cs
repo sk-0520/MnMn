@@ -305,9 +305,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string BackupDirectoryName { get; } = "backup";
         /// <summary>
+        /// 既存バックアップファイルローテートパターン。
+        /// <para>#623でzipに変わるからその互換性保持。</para>
+        /// </summary>
+        public static string BackupSearchPattern_Issue623 { get; } = "*.json.gz";
+        /// <summary>
         /// バックアップファイルローテートパターン。
         /// </summary>
-        public static string BackupSearchPattern { get; } = "*.json.gz";
+        public static string BackupSearchPattern { get; } = "*.zip";
 
         public static string PublicExportFileNamePattern { get; } = "*.zip";
 

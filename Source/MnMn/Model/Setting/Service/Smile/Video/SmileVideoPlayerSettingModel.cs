@@ -122,6 +122,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
             Topmost = Constants.SettingServiceSmileVideoWindowTopmost,
         };
 
+        [DataMember]
+        public TopmostKind TopmostKind { get; set; } = Constants.SettingServiceSmileVideoPlayerTopmostKind;
+
         /// <summary>
         /// コメント有効表示領域を使用するか。
         /// <para>予約: 今のところ設定に持たせない。</para>

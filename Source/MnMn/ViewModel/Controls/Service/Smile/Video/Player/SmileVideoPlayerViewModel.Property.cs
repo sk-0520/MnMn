@@ -143,9 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(!IsOpenWorkingPlayer && value) {
-                    var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
-                        .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
-                    ;
+                    var players = GetEnabledPlayers();
                     WorkingPlayerItems.InitializeRange(players.OrderBy(p => p.CreatedTimestamp));
                 }
                 SetVariableValue(ref this._isOpenWorkingPlayer, value);
@@ -211,10 +209,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 最前面表示状態。
         /// </summary>
+        [Obsolete]
         public bool Topmost
         {
             get { return this._topmost; }
             set { SetVariableValue(ref this._topmost, value); }
+        }
+
+        public TopmostKind TopmostKind
+        {
+            get { return this._topmostKind; }
+            set
+            {
+                if(SetVariableValue(ref this._topmostKind, value)) {
+                    ChangeTopmostState();
+                }
+            }
         }
 
         public WindowState State
@@ -648,7 +658,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public PlayerState PlayerState
         {
             get { return this._playerState; }
-            set { SetVariableValue(ref this._playerState, value); }
+            set
+            {
+                if(SetVariableValue(ref this._playerState, value)) {
+                    ChangeTopmostState();
+                }
+            }
         }
 
         /// <summary>
@@ -1097,6 +1112,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 if(SetVariableValue(ref this._isNormalWindow, value)) {
                     CallOnPropertyChange(nameof(PlayerShowCommentArea));
+                    ChangeTopmostState();
                 }
             }
         }
