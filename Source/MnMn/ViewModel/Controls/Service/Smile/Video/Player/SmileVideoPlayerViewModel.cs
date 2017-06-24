@@ -97,6 +97,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk.Mutter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -1630,9 +1631,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ListPlaylist?.ScrollToCenterOfView(videoInformation, true, false);
         }
 
-#endregion
+        IEnumerable<SmileVideoPlayerViewModel> GetEnabledPlayers()
+        {
+            var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
+                .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
+            ;
 
-#region SmileVideoDownloadViewModel
+            return players;
+        }
+
+        #endregion
+
+        #region SmileVideoDownloadViewModel
 
         public override Task LoadAsync(SmileVideoInformationViewModel videoInformation, bool forceEconomy, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {

@@ -143,9 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(!IsOpenWorkingPlayer && value) {
-                    var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
-                        .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
-                    ;
+                    var players = GetEnabledPlayers();
                     WorkingPlayerItems.InitializeRange(players.OrderBy(p => p.CreatedTimestamp));
                 }
                 SetVariableValue(ref this._isOpenWorkingPlayer, value);

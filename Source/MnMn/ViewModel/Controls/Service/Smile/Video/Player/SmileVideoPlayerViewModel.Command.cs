@@ -618,12 +618,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         if(!IsViewClosed) {
-                            var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo))
-                                .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel))
-                            ;
+                            var players = GetEnabledPlayers();
                             if(players.Any(p => p == this)) {
                                 foreach(var p in players) {
                                     p.IsWorkingPlayer.Value = false;
+                                    p.IsOpenWorkingPlayer = false;
                                 }
                                 IsWorkingPlayer.Value = true;
 

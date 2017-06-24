@@ -594,6 +594,23 @@
         </MenuItem>
       </Menu>
 
+      <xctk:SplitButton BorderThickness="0" IsOpen="{Binding IsOpenWorkingPlayer, Mode=TwoWay}" Command="{Binding SwitchWorkingPlayerCommand}" >
+        <xctk:SplitButton.Content>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <TextBlock>酷使するプレイヤー</TextBlock>
+          </StackPanel>
+        </xctk:SplitButton.Content>
+        <xctk:SplitButton.DropDownContent>
+          <ItemsControl ItemsSource="{Binding WorkingPlayerItems}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <MenuItem Header="{Binding Title}" Command="{Binding SwitchWorkingPlayerCommand}" IsChecked="{Binding IsWorkingPlayer.Value}" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </xctk:SplitButton.DropDownContent>
+      </xctk:SplitButton>
+
     </ToolBar>
 
     <StatusBar DockPanel.Dock="Bottom" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}" >
