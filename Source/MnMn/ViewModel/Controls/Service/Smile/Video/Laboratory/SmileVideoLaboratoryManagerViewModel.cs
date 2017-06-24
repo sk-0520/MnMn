@@ -157,6 +157,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                         var videoFilePath = PlayInputVideoSourceFilePath;
                         var msgFilePath = PlayInputMessageSourceFilePath;
 
+                        if(string.IsNullOrWhiteSpace(videoFilePath)) {
+                            videoFilePath = null;
+                        }
+                        if(string.IsNullOrWhiteSpace(msgFilePath)) {
+                            msgFilePath = null;
+                        }
+
                         PlayInputFileAsync(videoFilePath, msgFilePath);
                     },
                     o => {
