@@ -52,6 +52,7 @@
   <mamc:MetroWindow.Resources>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_sl_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
       <sys:Boolean x:Key="True">True</sys:Boolean>
@@ -597,6 +598,36 @@
       <xctk:SplitButton BorderThickness="0" IsOpen="{Binding IsOpenWorkingPlayer, Mode=TwoWay}" Command="{Binding SwitchWorkingPlayerCommand}" >
         <xctk:SplitButton.Content>
           <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource SmallItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Control>
+                  <Control.Style>
+                    <Style TargetType="Control">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsWorkingPlayer.Value}" Value="True">
+                          <Setter Property="Template">
+                            <Setter.Value>
+                              <ControlTemplate>
+                                <Path Data="{StaticResource Image_Worker}" Style="{StaticResource SmallAccentIconPath}" />
+                              </ControlTemplate>
+                            </Setter.Value>
+                          </Setter>
+                          <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                      <Setter Property="Template">
+                        <Setter.Value>
+                          <ControlTemplate>
+                            <Path Data="{StaticResource Image_Worker}" Style="{StaticResource SmallDefaultIconPath}" />
+                          </ControlTemplate>
+                        </Setter.Value>
+                      </Setter>
+                      <Setter Property="Opacity" Value="0.5" />
+                    </Style>
+                  </Control.Style>
+                </Control>
+              </Canvas>
+            </Viewbox>
             <TextBlock>酷使するプレイヤー</TextBlock>
           </StackPanel>
         </xctk:SplitButton.Content>
@@ -604,7 +635,25 @@
           <ItemsControl ItemsSource="{Binding WorkingPlayerItems}">
             <ItemsControl.ItemTemplate>
               <DataTemplate>
-                <MenuItem Header="{Binding Title}" Command="{Binding SwitchWorkingPlayerCommand}" IsChecked="{Binding IsWorkingPlayer.Value}" />
+                <MenuItem Header="{Binding Title}" Command="{Binding SwitchWorkingPlayerCommand}" IsChecked="{Binding IsWorkingPlayer.Value}">
+                  <MenuItem.Style>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                      <Style.Triggers>
+                        <DataTrigger Value="True">
+                          <DataTrigger.Binding>
+                            <MultiBinding Converter="{StaticResource LogicalMultiEqualConverter}">
+                              <MultiBinding.Bindings>
+                                <Binding Path="." />
+                                <Binding Path="DataContext" ElementName="root" />
+                              </MultiBinding.Bindings>
+                            </MultiBinding>
+                          </DataTrigger.Binding>
+                          <Setter Property="FontWeight" Value="Bold" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </MenuItem.Style>
+                </MenuItem>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
