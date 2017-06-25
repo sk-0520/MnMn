@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
@@ -30,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <para>キーがなければ値のみ使用する。</para>
     /// </summary>
     [Serializable]
-    public class ParameterItemModel: KeyModelBase
+    public class ParameterItemModel: KeyModelBase, IReadOnlyParameterItem
     {
         #region property
 

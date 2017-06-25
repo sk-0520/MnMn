@@ -327,6 +327,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkProxy.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyParameterItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyPassword.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyRaw.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUriItem.cs" />
