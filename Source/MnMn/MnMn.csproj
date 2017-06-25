@@ -317,6 +317,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyExpressionItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpressions.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyKey.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyMappingItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkProxy.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />

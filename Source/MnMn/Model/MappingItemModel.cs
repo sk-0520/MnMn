@@ -23,10 +23,11 @@ using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class MappingItemModel: KeyModelBase
+    public class MappingItemModel: KeyModelBase, IReadOnlyMappingItem
     {
         #region define
 
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         #endregion
 
-        #region property
+        #region IReadOnlyMappingItem
 
         [XmlAttribute("type")]
         public MappingItemType Type { get; set; }
@@ -55,8 +56,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         [XmlElement("bracket")]
         public CollectionModel<MappingItemBracketModel> Brackets { get; set; } = new CollectionModel<MappingItemBracketModel>();
+        IReadOnlyList<IReadOnlyMappingItemNode> IReadOnlyMappingItem.Brackets => Brackets;
         [XmlElement("custom")]
         public CollectionModel<MappingItemCustomModel> Customs { get; set; } = new CollectionModel<MappingItemCustomModel>();
+        IReadOnlyList<IReadOnlyMappingItemNode> IReadOnlyMappingItem.Customs => Customs;
 
         /// <summary>
         /// キーが存在するか。
