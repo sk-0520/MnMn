@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected ParametersModel RequestParameterList { get; private set; }
 
-        protected MappingsModel RequestMappingList { get; }
+        protected IReadOnlyMappings RequestMappingList { get; }
 
         protected ExpressionLoader Expression { get; }
 
@@ -365,7 +365,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ;
         }
 
-        protected string BuildMapping(string s, string target, MappingItemModel item)
+        protected string BuildMapping(string s, string target, IReadOnlyMappingItem item)
         {
             var bracket = item.Brackets.FirstOrDefault(b => b.Target == target);
             if(bracket == null) {
@@ -374,7 +374,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return $"{bracket.Open}{s}{bracket.Close}";
         }
 
-        protected string ToMappingItemString(MappingItemModel item, IDictionary<string, string> replaceMap)
+        protected string ToMappingItemString(IReadOnlyMappingItem item, IDictionary<string, string> replaceMap)
         {
             var value = ReplaceString(item.Value, replaceMap);
 
