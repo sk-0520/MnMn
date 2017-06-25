@@ -326,6 +326,8 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoFinderFilteringParameter.cs" />
+    <Compile Include="IF\ReadOnly\Setting\IReadOnlyFilteringItem.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyNetworkProxy.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyNetworkSetting.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyParameter.cs" />
@@ -343,6 +345,7 @@
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchBookmarkItem.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchDefine.cs" />
     <Compile Include="IF\ReadOnly\WebNavigatorBridge\IReadOnlyWebNavigatorDefinedElement.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoFinderFilteringItem.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Logic\Extensions\HttpClientHandlerExtensions.cs" />

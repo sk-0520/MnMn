@@ -21,13 +21,14 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
     [DataContract]
-    public class FilteringItemSettingModel: SettingModelBase
+    public class FilteringItemSettingModel: SettingModelBase, IReadOnlyFilteringItem
     {
-        #region property
+        #region IReadOnlyFilteringItem
 
         /// <summary>
         /// 有効無効。

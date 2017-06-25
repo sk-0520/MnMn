@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
@@ -27,9 +28,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     /// ファインダーフィルタの必要データ。
     /// <para>引数でやってたけど多い。</para>
     /// </summary>
-    public struct SmileVideoFinderFilteringParameterModel
+    public struct SmileVideoFinderFilteringParameterModel: IReadOnlySmileVideoFinderFilteringParameter
     {
-        #region property
+        #region IReadOnlySmileVideoFinderFilteringParameter
 
         public string VideoId { get; set; }
         public string Title { get; set; }
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         public string ChannelId { get; set; }
         public string ChannelName { get; set; }
         public string Description { get; set; }
-        public IEnumerable<SmileVideoTagViewModel> Tags { get; set; }
+        public IReadOnlyList<SmileVideoTagViewModel> Tags { get; set; }
 
         #endregion
     }
