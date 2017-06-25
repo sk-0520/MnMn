@@ -72,13 +72,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static IReadOnlyDictionary<string, string> EmptyMap { get; } = new Dictionary<string, string>();
 
-        protected UrisModel UriList { get; private set; }
+        protected IReadOnlyUris UriList { get; private set; }
 
-        protected ParametersModel UriParameterList { get; private set; }
+        protected IReadOnlyParameters UriParameterList { get; private set; }
 
-        protected ParametersModel RequestHeaderList { get; private set; }
+        protected IReadOnlyParameters RequestHeaderList { get; private set; }
 
-        protected ParametersModel RequestParameterList { get; private set; }
+        protected IReadOnlyParameters RequestParameterList { get; private set; }
 
         protected IReadOnlyMappings RequestMappingList { get; }
 
@@ -220,7 +220,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IDictionary<string, string> replaceMap)
+        string ToUriParameterString(IReadOnlyParameterItem pair, UriParameterType type, IDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
 
