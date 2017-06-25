@@ -29,6 +29,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -58,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region property
 
         AppSettingModel AppSetting { get; }
-        ThemeDefineModel ThemeDefine { get; }
+        IReadOnlyThemeDefine ThemeDefine { get; }
 
         public FewViewModel<bool> WebNavigatorGeckoFxOwnResponsibility { get; } = new FewViewModel<bool>(false);
         public FewViewModel<bool> RebuildingWebNavigatorGeckoFxPlugin { get; } = new FewViewModel<bool>(false);
@@ -109,13 +110,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 }
             }
         }
-        public CollectionModel<DefinedElementModel> ApplicationThemeItems
+        public IReadOnlyList<IReadOnlyDefinedElement> ApplicationThemeItems
         {
             get { return ThemeDefine.ApplicationItems; }
         }
-        public CollectionModel<DefinedElementModel> BaseThemeItems { get; }
+        public IReadOnlyList<IReadOnlyDefinedElement> BaseThemeItems { get; }
 
-        public CollectionModel<DefinedElementModel> AccentItems
+        public IReadOnlyList<IReadOnlyDefinedElement> AccentItems
         {
             get { return ThemeDefine.AccentItems; }
         }

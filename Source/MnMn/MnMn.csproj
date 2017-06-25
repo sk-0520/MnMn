@@ -332,6 +332,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyParameters.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyPassword.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyRaw.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyThemeDefine.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUriItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUris.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUserAgent.cs" />
