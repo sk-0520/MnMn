@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
 {
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
     /// <para>キー自体は<see cref="ContentTypeTextNet.MnMn.MnMn.Define.WebNavigatorContextMenuKey"/>で定義してるはず。</para>
     /// </summary>
     [Serializable]
-    public class WebNavigatorContextMenuItemModel: WebNavigatorDefinedElementModelBase
+    public class WebNavigatorContextMenuItemModel: WebNavigatorDefinedElementModelBase, IReadOnlyWebNavigatorContextMenuItem
     {
         #region property
 
@@ -26,6 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
         /// </summary>
         [XmlArray("conditions"), XmlArrayItem("condition")]
         public CollectionModel<WebNavigatorElementConditionItemModel> Conditions { get; set; } = new CollectionModel<WebNavigatorElementConditionItemModel>();
+        IReadOnlyList<IReadOnlyWebNavigatorElementConditionItem> IReadOnlyWebNavigatorContextMenuItem.Conditions => Conditions;
 
         #endregion
     }
