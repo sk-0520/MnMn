@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
             return GetRequestMappingCore(key, replaceMap, serviceType);
         }
 
-        public override IExpression GetExpression(string key, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
             if(serviceType != ServiceType.IdleTalkMutter) {
                 ThrowNotSupportGetExpression(key, serviceType);
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
             return GetExpressionCore(key, serviceType);
         }
 
-        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             if(serviceType != ServiceType.IdleTalkMutter) {
                 ThrowNotSupportGetExpression(key, id, serviceType);

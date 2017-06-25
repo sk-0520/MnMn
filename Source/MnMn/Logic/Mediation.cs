@@ -774,7 +774,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override IExpression GetExpression(string key, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -792,7 +792,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:

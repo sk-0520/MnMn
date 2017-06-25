@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -52,19 +53,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        IExpression GetExpressionCore(string key, string id)
+        Expression GetExpressionCore(string key, string id)
         {
             // valuetupleのためにnugetとかイヤなんすけど。。。
             var pair = new KeyValuePair<string, string>(key, id);
             return ExpressionCache.Get(pair, () => CreateExpression(key, id));
         }
 
-        public IExpression GetExpression(string key)
+        public IReadOnlyExpression GetExpression(string key)
         {
             return GetExpressionCore(key, string.Empty);
         }
 
-        public IExpression GetExpression(string key, string id)
+        public IReadOnlyExpression GetExpression(string key, string id)
         {
             if(string.IsNullOrEmpty(id)) {
                 throw new ArgumentException(nameof(id));

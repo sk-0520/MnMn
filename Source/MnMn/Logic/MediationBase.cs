@@ -443,12 +443,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        protected IExpression GetExpressionCore(string key, ServiceType serviceType)
+        protected IReadOnlyExpression GetExpressionCore(string key, ServiceType serviceType)
         {
             return Expression.GetExpression(key);
         }
 
-        protected IExpression GetExpressionCore(string key, string id, ServiceType serviceType)
+        protected IReadOnlyExpression GetExpressionCore(string key, string id, ServiceType serviceType)
         {
             return Expression.GetExpression(key, id);
         }
@@ -631,12 +631,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetExpression
 
-        public virtual IExpression GetExpression(string key, ServiceType serviceType)
+        public virtual IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IExpression GetExpression(string key, string id, ServiceType serviceType)
+        public virtual IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

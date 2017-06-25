@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
             }
         }
 
-        public override IExpression GetExpression(string key, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.IdleTalk:
@@ -190,7 +190,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
             }
         }
 
-        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.IdleTalk:

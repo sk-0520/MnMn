@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetRequestMappingCore(key, replaceMap, serviceType);
         }
 
-        public override IExpression GetExpression(string key, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetExpression(key, serviceType);
@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetExpressionCore(key, serviceType);
         }
 
-        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetExpression(key, id, serviceType);

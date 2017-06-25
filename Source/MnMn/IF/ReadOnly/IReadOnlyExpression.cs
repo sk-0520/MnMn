@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF
+namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    public interface IExpression: IReadOnlyKey
+    public interface IReadOnlyExpression: IReadOnlyKey
     {
         #region property
 
