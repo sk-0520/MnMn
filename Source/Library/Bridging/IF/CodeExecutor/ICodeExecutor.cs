@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor
@@ -22,7 +23,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor
 
         #region function
 
-        void Initialize(CodeInitializeModel initializeModel);
+        void Initialize(IReadOnlyCodeInitialize initializeModel);
 
         bool Compile(CompileParameterModel compilerParameter, string source, string className);
 
