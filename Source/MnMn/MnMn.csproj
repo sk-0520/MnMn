@@ -342,6 +342,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyWebNavigatorTag.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchBookmarkItem.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchDefine.cs" />
+    <Compile Include="IF\ReadOnly\WebNavigatorBridge\IReadOnlyWebNavigatorDefinedElement.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Logic\Extensions\HttpClientHandlerExtensions.cs" />
