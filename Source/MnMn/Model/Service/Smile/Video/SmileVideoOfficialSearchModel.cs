@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     [Serializable]
-    public class SmileVideoOfficialSearchModel: ModelBase, ISmileVideoSearchDefine
+    public class SmileVideoOfficialSearchModel: ModelBase, IReadOnlySmileVideoSearchDefine
     {
         #region ISmileVideoSearchDefine
 

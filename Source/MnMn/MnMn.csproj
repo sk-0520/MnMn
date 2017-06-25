@@ -318,7 +318,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyUserAgent.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyDefinedElement.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchBookmarkItem.cs" />
-    <Compile Include="IF\Service\Smile\Video\ISmileVideoSearchDefine.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchDefine.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Logic\Extensions\HttpClientHandlerExtensions.cs" />

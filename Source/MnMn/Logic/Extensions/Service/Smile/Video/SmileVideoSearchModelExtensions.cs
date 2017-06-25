@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video
         /// <summary>
         /// 公式検索・コンテンツサーチを透過的に切り替え。
         /// </summary>
-        public static ISmileVideoSearchDefine GetSearchTypeDefine(this SmileVideoSearchModel model, SmileVideoSearchType searchType)
+        public static IReadOnlySmileVideoSearchDefine GetSearchTypeDefine(this SmileVideoSearchModel model, SmileVideoSearchType searchType)
         {
             switch(searchType) {
                 case Define.Service.Smile.Video.SmileVideoSearchType.Official:
@@ -30,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video
             }
         }
 
-        public static ISmileVideoSearchDefine GetDefaultSearchTypeDefine(this SmileVideoSearchModel model)
+        public static IReadOnlySmileVideoSearchDefine GetDefaultSearchTypeDefine(this SmileVideoSearchModel model)
         {
             return GetSearchTypeDefine(model, Constants.ServiceSmileVideoSearchType);
         }
