@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
             return GetRequestParameterCore(key, replaceMap, serviceType);
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.IdleTalkMutter) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);

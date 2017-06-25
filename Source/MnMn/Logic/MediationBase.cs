@@ -405,7 +405,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected MappingResultModel GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IReadOnlyMappingResult GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var result = new MappingResultModel();
             var mapping = RequestMappingList.Mappings
@@ -622,7 +622,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        public virtual MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

@@ -756,7 +756,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:

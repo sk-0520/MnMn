@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetRequestParameterCore(key, replaceMap, serviceType);
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);

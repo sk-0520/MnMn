@@ -20,12 +20,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class MappingResultModel: ModelBase
+    public class MappingResultModel: ModelBase, IReadOnlyMappingResult
     {
+        #region IReadOnlyMappingResult
+
         public string ContentType { get; set; }
         public string Result { get; set; }
+
+        #endregion
     }
 }

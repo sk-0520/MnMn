@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
             }
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.IdleTalk:

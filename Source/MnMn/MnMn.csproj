@@ -323,6 +323,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemCustom.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkProxy.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />
