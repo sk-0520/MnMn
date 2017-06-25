@@ -30,15 +30,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <para>キーがなければ値のみ使用する。</para>
     /// </summary>
     [Serializable]
-    public class ParameterItemModel: ModelBase
+    public class ParameterItemModel: KeyModelBase
     {
         #region property
 
-        /// <summary>
-        /// キー。
-        /// </summary>
-        [XmlAttribute("key")]
-        public string Key { get; set; }
         /// <summary>
         /// 値。
         /// </summary>

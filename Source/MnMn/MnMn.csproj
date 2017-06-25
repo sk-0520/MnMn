@@ -389,6 +389,7 @@
     <Compile Include="Model\CrashReportSettingModel.cs" />
     <Compile Include="Model\DragParameterModel.cs" />
     <Compile Include="Model\EvaluatedSequence.cs" />
+    <Compile Include="Model\KeyModelBase.cs" />
     <Compile Include="Model\LightweightUpdateModel.cs" />
     <Compile Include="Model\ExpressionElementModel.cs" />
     <Compile Include="Model\ExpressionItemModel.cs" />

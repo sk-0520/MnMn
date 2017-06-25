@@ -26,7 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class MappingItemModel: ModelBase
+    public class MappingItemModel: KeyModelBase
     {
         #region define
 
@@ -37,9 +37,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         #endregion
 
         #region property
-
-        [XmlAttribute("key")]
-        public string Key { get; set; }
 
         [XmlAttribute("type")]
         public MappingItemType Type { get; set; }

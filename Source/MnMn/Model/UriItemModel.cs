@@ -30,15 +30,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// URI定義。
     /// </summary>
     [Serializable]
-    public class UriItemModel : ModelBase, IReadOnlyUriItem
+    public class UriItemModel : KeyModelBase, IReadOnlyUriItem
     {
         #region IReadOnlyUriItem
 
-        /// <summary>
-        /// URIの検索キー。
-        /// </summary>
-        [XmlAttribute("key")]
-        public string Key { get; set; }
         /// <summary>
         /// 加工前URI。
         /// <para>完全なURIではない。</para>

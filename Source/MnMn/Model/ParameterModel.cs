@@ -29,14 +29,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// URIパラメータ。
     /// </summary>
     [Serializable]
-    public class ParameterModel: ModelBase
+    public class ParameterModel: KeyModelBase
     {
         #region property
-        /// <summary>
-        /// URIパラメータの検索キー。
-        /// </summary>
-        [XmlAttribute("key")]
-        public string Key { get; set; }
 
         /// <summary>
         /// URIパラメータのキーと値。

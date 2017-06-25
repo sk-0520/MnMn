@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <para>記述の正しい外部設定が用いられる前提のデータ定義を持ち運ぶ。</para>
     /// </summary>
     [Serializable]
-    public class DefinedElementModel: ModelBase, IDeepClone, IReadOnlyDefinedElement
+    public class DefinedElementModel: KeyModelBase, IDeepClone, IReadOnlyDefinedElement
     {
         #region variable
 
@@ -45,13 +45,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         #endregion
 
         #region property
-
-        /// <summary>
-        /// 要素の検索キー。
-        /// </summary>
-        [XmlAttribute("key")]
-        [IsDeepClone]
-        public string Key { get; set; }
 
         /// <summary>
         /// 要素表記文言。
