@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -561,7 +562,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return DoFunction(
-                    b => ((WebNavigatorTagModel)b.Tag).Mediation,
+                    b => ((IReadOnlyWebNavigatorTag)b.Tag).Mediation,
                     b => b.Mediation
                 );
             }
@@ -1088,7 +1089,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                 var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
                 DoAction(
-                    b => { ((WebNavigatorTagModel)b.Tag).Mediation.Request(processRequest); },
+                    b => { ((IReadOnlyWebNavigatorTag)b.Tag).Mediation.Request(processRequest); },
                     b => { (b.Mediation).Request(processRequest); }
                 );
             }
