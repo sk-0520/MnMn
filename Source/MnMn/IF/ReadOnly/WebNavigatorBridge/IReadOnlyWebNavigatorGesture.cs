@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge
 {
-    public interface IReadOnlyWebNavigatorGestureElement: IReadOnlyWebNavigatorDefinedElement
+    public interface IReadOnlyWebNavigatorGesture
     {
         #region property
 
-        IReadOnlyList<PointingGestureDirection> Directions { get; }
+        IReadOnlyList<IReadOnlyWebNavigatorGestureElement> Items { get; }
 
         #endregion
     }
