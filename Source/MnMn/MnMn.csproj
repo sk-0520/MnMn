@@ -326,12 +326,12 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
-    <Compile Include="IF\ReadOnly\IReadOnlyNetworkProxy.cs" />
-    <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />
+    <Compile Include="IF\ReadOnly\Setting\IReadOnlyNetworkProxy.cs" />
+    <Compile Include="IF\ReadOnly\Setting\IReadOnlyNetworkSetting.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyParameter.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyParameterItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyParameters.cs" />
-    <Compile Include="IF\ReadOnly\IReadOnlyPassword.cs" />
+    <Compile Include="IF\ReadOnly\Setting\IReadOnlyPassword.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyRaw.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyThemeDefine.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUriItem.cs" />

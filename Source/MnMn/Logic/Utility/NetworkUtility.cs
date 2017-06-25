@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 return available;
             }
         }
-
+        
         #endregion
         #region function
 
