@@ -40,6 +40,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -1301,7 +1302,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region IGarbageCollection
 
-        CheckResultModel<long> GarbageCollectionFromFile(FileInfo file, CacheSpan cacheSpan, bool force)
+        IReadOnlyCheckResult<long> GarbageCollectionFromFile(FileInfo file, CacheSpan cacheSpan, bool force)
         {
             try {
                 file.Refresh();
@@ -1363,7 +1364,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 needSave = true;
             }
 
-            var dmcCheckes = new List<CheckResultModel<long>>();
+            var dmcCheckes = new List<IReadOnlyCheckResult<long>>();
 
             try {
                 var dmcFiles = CacheDirectory.EnumerateFiles("*-video.*.dmc.*", SearchOption.TopDirectoryOnly).ToEvaluatedSequence();
@@ -1428,7 +1429,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
 
-        public CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
+        public IReadOnlyCheckResult<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             if(!CanGarbageCollection) {
                 return CheckResultModel.Failure<long>();

@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -30,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region property
 
         public Func<UIElement, MouseEventArgs, bool> CanDragStartFunc { get; set; }
-        public Func<UIElement, MouseEventArgs, CheckResultModel<DragParameterModel>> GetDragParameterFunc { get; set; }
+        public Func<UIElement, MouseEventArgs, IReadOnlyCheckResult<DragParameterModel>> GetDragParameterFunc { get; set; }
         public Action<UIElement, DragEventArgs> DragEnterAction { get; set; }
         public Action<UIElement, DragEventArgs> DragLeaveAction { get; set; }
         public Action<UIElement, DragEventArgs> DragOverAction { get; set; }
@@ -49,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return false;
         }
 
-        protected override CheckResultModel<DragParameterModel> GetDragParameter(UIElement sender, MouseEventArgs e)
+        protected override IReadOnlyCheckResult<DragParameterModel> GetDragParameter(UIElement sender, MouseEventArgs e)
         {
             if(GetDragParameterFunc != null) {
                 return GetDragParameterFunc(sender, e);

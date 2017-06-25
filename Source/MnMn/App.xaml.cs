@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -150,7 +151,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         /// <param name="logger">ロガー。</param>
         /// <returns>真: 読み込めた, 偽: 読み込めなかった。</returns>
-        CheckResultModel<AppSettingModel> LoadSetting(ILogger logger)
+        IReadOnlyCheckResult<AppSettingModel> LoadSetting(ILogger logger)
         {
             var dir = VariableConstants.GetSettingDirectory();
             var fileName = VariableConstants.SettingFileName;

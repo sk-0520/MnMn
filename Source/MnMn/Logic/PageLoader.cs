@@ -289,7 +289,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// 一連の処理を自動化してテキストデータを返す。
         /// </summary>
         /// <returns></returns>
-        public async Task<CheckResultModel<string>> GetResponseTextAsync(Define.PageLoaderMethod httpMethod)
+        public async Task<IReadOnlyCheckResult<string>> GetResponseTextAsync(Define.PageLoaderMethod httpMethod)
         {
             try {
                 MakeUri();

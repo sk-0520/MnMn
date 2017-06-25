@@ -1131,7 +1131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             return false;
         }
 
-        CheckResultModel<ICommand> GetGestureCommand(Mediation mediation, IEnumerable<PointingGestureItem> items)
+        IReadOnlyCheckResult<ICommand> GetGestureCommand(Mediation mediation, IEnumerable<PointingGestureItem> items)
         {
             if(GestureDefineElements == null) {
                 var parameter = new WebNavigatorParameterModel(null, EventArgs.Empty, WebNavigatorCore.Engine, WebNavigatorParameterKind.Gesture);

@@ -308,6 +308,7 @@
     <Compile Include="IF\IDescription.cs" />
     <Compile Include="IF\IDownloadItem.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
+    <Compile Include="IF\IReadOnlyCheckResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpression.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetExpression.cs" />
