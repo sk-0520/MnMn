@@ -145,7 +145,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#629: 精神衛生のための ReadOnly',
+						'comments': [
+							'さすがに全部はしんどい、以後 見つけて手が空いてれば対応する'
+						]
 					},
 					{
 						'revision': '',
