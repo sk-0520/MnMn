@@ -21,10 +21,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class MappingModel: KeyModelBase
+    public class MappingModel: KeyModelBase, IReadOnlyMapping
     {
         #region property
 
@@ -36,12 +37,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// </summary>
         [XmlElement("item")]
         public CollectionModel<MappingItemModel> Items { get; set; } = new CollectionModel<MappingItemModel>();
+        IReadOnlyList<IReadOnlyMappingItem> IReadOnlyMapping.Items => Items;
 
         /// <summary>
         /// マッピング元データ。
         /// </summary>
         [XmlElement("content")]
         public MappingContentModel Content { get; set; } = new MappingContentModel();
+        IReadOnlyMappingContent IReadOnlyMapping.Content => Content;
 
         #endregion
     }

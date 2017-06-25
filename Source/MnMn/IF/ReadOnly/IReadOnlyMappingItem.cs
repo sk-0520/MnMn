@@ -7,7 +7,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    interface IReadOnlyMappingItem
+    public interface IReadOnlyMappingItem
     {
         #region property
 

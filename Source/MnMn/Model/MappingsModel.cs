@@ -21,16 +21,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     [Serializable, XmlRoot("mappings")]
-    public class MappingsModel: ModelBase
+    public class MappingsModel: ModelBase, IReadOnlyMappings
     {
         #region property
 
         [XmlElement("mapping")]
         public CollectionModel<MappingModel> Mappings { get; set; } = new CollectionModel<MappingModel>();
+        IReadOnlyList<IReadOnlyMapping> IReadOnlyMappings.Mappings => Mappings;
 
         #endregion
     }
