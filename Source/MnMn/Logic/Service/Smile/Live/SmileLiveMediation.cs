@@ -23,10 +23,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -149,7 +151,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return RequestCore(request);
         }
 
-        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -194,7 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetRequestParameterCore(key, replaceMap, serviceType);
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
@@ -203,7 +205,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetRequestMappingCore(key, replaceMap, serviceType);
         }
 
-        public override IExpression GetExpression(string key, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetExpression(key, serviceType);
@@ -212,7 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetExpressionCore(key, serviceType);
         }
 
-        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetExpression(key, id, serviceType);
@@ -239,7 +241,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return ConvertRequestMappingCore(key, mapping, serviceType);
         }
 
-        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override IReadOnlyCheck CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             return CheckResponseHeaderCore(key, uri, headers, serviceType);
         }

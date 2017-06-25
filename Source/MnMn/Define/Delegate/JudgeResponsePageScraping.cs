@@ -20,6 +20,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
@@ -30,5 +31,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Delegate
     /// </summary>
     /// <param name="response"></param>
     /// <returns>真を返せば後続処理を継続。</returns>
-    public delegate CheckModel JudgeResponsePageScraping(HttpResponseMessage response);
+    public delegate IReadOnlyCheck JudgeResponsePageScraping(HttpResponseMessage response);
 }

@@ -23,18 +23,19 @@ using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
     /// <para>http://stackoverflow.com/questions/1379888/how-do-you-serialize-a-string-as-cdata-using-xmlserializer?answertab=votes#tab-top</para>
     /// </summary>
-    public class MappingContentModel: ModelBase
+    public class MappingContentModel: ModelBase, IReadOnlyMappingContent
     {
-        #region property
+        #region IReadOnlyMappingContent
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [XmlAttribute("trim")]
         public MappingContentTrim Trim {get;set;}

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 {
     public class WebNavigatorGestureResultModel : WebNavigatorResultModel
     {
-        public WebNavigatorGestureResultModel(IReadOnlyList<WebNavigatorGestureElementModel> items)
+        public WebNavigatorGestureResultModel(IReadOnlyList<IReadOnlyWebNavigatorGestureElement> items)
             : base(false)
         {
             GestureItems = items;
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 
         #region property
 
-        public IReadOnlyList<WebNavigatorGestureElementModel> GestureItems { get; }
+        public IReadOnlyList<IReadOnlyWebNavigatorGestureElement> GestureItems { get; }
 
         #endregion
     }

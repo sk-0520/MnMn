@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -36,8 +37,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
     {
         #region variable
 
-        DefinedElementModel _selectedPeriod;
-        DefinedElementModel _selectedTarget;
+        IReadOnlyDefinedElement _selectedPeriod;
+        IReadOnlyDefinedElement _selectedTarget;
 
         SmileVideoRankingCategoryDefinedElementViewModel _selectedCategory;
 
@@ -63,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         public IList<DefinedElementModel> PeriodItems { get { return RankingModel.Periods.Items; } }
         public IList<DefinedElementModel> TargetItems { get { return RankingModel.Targets.Items; } }
 
-        public DefinedElementModel SelectedPeriod
+        public IReadOnlyDefinedElement SelectedPeriod
         {
             get { return this._selectedPeriod; }
             set
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                 }
             }
         }
-        public DefinedElementModel SelectedTarget
+        public IReadOnlyDefinedElement SelectedTarget
         {
             get { return this._selectedTarget; }
             set
@@ -194,7 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             return LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, nowCategory.Model);
         }
 
-        Task LoadRankingCategoryCoreAsync(DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
+        Task LoadRankingCategoryCoreAsync(IReadOnlyDefinedElement period, IReadOnlyDefinedElement target, IReadOnlyDefinedElement category)
         {
             // 存在する場合は該当タブへ遷移
             var selectViewModel = RestrictUtility.IsNotNull(

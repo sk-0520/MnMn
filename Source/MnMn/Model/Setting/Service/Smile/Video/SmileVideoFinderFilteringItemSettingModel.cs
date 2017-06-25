@@ -21,13 +21,14 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoFinderFilteringItemSettingModel: FilteringItemSettingModel
+    public class SmileVideoFinderFilteringItemSettingModel: FilteringItemSettingModel, IReadOnlySmileVideoFinderFilteringItem
     {
-        #region property
+        #region IReadOnlySmileVideoFinderFilteringItem
 
         /// <summary>
         /// 対象。

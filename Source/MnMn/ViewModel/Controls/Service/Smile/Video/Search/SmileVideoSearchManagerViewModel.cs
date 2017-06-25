@@ -30,6 +30,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -54,8 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
     {
         #region variable
 
-        DefinedElementModel _selectedMethod;
-        DefinedElementModel _selectedSort;
+        IReadOnlyDefinedElement _selectedMethod;
+        IReadOnlyDefinedElement _selectedSort;
         //DefinedElementModel _selectedType;
 
         string _inputQuery;
@@ -106,13 +107,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public IList<DefinedElementModel> MethodItems => SearchModel.GetDefaultSearchTypeDefine().Methods;
-        public IList<DefinedElementModel> SortItems => SearchModel.GetDefaultSearchTypeDefine().Sort;
-        public IList<DefinedElementModel> TypeItems => SearchModel.GetDefaultSearchTypeDefine().Type;
+        public IReadOnlyList<IReadOnlyDefinedElement> MethodItems => SearchModel.GetDefaultSearchTypeDefine().Methods;
+        public IReadOnlyList<IReadOnlyDefinedElement> SortItems => SearchModel.GetDefaultSearchTypeDefine().Sort;
+        public IReadOnlyList<IReadOnlyDefinedElement> TypeItems => SearchModel.GetDefaultSearchTypeDefine().Type;
 
         public CollectionModel<SmileVideoSearchGroupFinderViewModel> SearchGroups { get; } = new CollectionModel<SmileVideoSearchGroupFinderViewModel>();
 
-        public DefinedElementModel SelectedMethod
+        public IReadOnlyDefinedElement SelectedMethod
         {
             get { return this._selectedMethod; }
             set
@@ -122,7 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
             }
         }
-        public DefinedElementModel SelectedSort
+        public IReadOnlyDefinedElement SelectedSort
         {
             get { return this._selectedSort; }
             set
@@ -474,7 +475,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             return SearchCoreAsync(method, sort, pin.SearchType, pin.Query, false);
         }
 
-        Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, SearchType type, string query, bool isLoad)
+        Task SearchCoreAsync(IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort, SearchType type, string query, bool isLoad)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 

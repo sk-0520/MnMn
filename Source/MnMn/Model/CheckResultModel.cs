@@ -20,10 +20,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class CheckResultModel<T>: CheckModel
+    public class CheckResultModel<T>: CheckModel, IReadOnlyCheckResult<T>
     {
         public CheckResultModel(bool isSuccess, T result, object detail, string message)
             : base(isSuccess, detail, message)
@@ -37,24 +38,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         #endregion
 
-        #region function 
+        #region function
 
         #endregion
     }
 
     public static class CheckResultModel
     {
-        public static CheckResultModel<T> Success<T>(T result)
+        public static IReadOnlyCheckResult<T> Success<T>(T result)
         {
             return new CheckResultModel<T>(true, result, null, null);
         }
 
-        public static CheckResultModel<T> Failure<T>()
+        public static IReadOnlyCheckResult<T> Failure<T>()
         {
             return new CheckResultModel<T>(false, default(T), null, null);
         }
 
-        public static CheckResultModel<T> Failure<T>(string message)
+        public static IReadOnlyCheckResult<T> Failure<T>(string message)
         {
             return new CheckResultModel<T>(false, default(T), null, message);
         }

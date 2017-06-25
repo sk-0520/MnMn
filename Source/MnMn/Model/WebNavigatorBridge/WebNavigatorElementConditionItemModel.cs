@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
 {
     [Serializable]
-    public class WebNavigatorElementConditionItemModel: ModelBase
+    public class WebNavigatorElementConditionItemModel: ModelBase, IReadOnlyWebNavigatorElementConditionItem
     {
         #region property
 
@@ -34,12 +35,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
         /// </summary>
         [XmlArray("targets"), XmlArrayItem("target")]
         public CollectionModel<WebNavigatorElementConditionTagModel> TargetItems { get; set; } = new CollectionModel<WebNavigatorElementConditionTagModel>();
+        IReadOnlyList<IReadOnlyWebNavigatorElementConditionTag> IReadOnlyWebNavigatorElementConditionItem.TargetItems => TargetItems;
 
         /// <summary>
         /// 最終的に使用されるパラメータ。
         /// </summary>
         [XmlElement("parameter")]
         public WebNavigatorElementConditionParameterModel Parameter { get; set; } = new WebNavigatorElementConditionParameterModel();
+        IReadOnlyWebNavigatorElementConditionParameter IReadOnlyWebNavigatorElementConditionItem.Parameter => Parameter;
 
         #endregion
     }

@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
@@ -28,12 +29,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// パラメータ一覧。
     /// </summary>
     [Serializable, XmlRoot("parameters")]
-    public class ParametersModel: ModelBase
+    public class ParametersModel: ModelBase, IReadOnlyParameters
     {
         #region property
 
         [XmlElement("param")]
         public CollectionModel<ParameterModel> Parameters { get; set; } = new CollectionModel<ParameterModel>();
+        IReadOnlyList<IReadOnlyParameter> IReadOnlyParameters.Parameters => Parameters;
 
         #endregion
     }

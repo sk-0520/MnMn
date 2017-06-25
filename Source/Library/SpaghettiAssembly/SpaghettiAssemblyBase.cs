@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor;
 
@@ -171,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 
         protected abstract CodeDomProvider CreateProvider(IDictionary<string, string> options);
 
-        public virtual void Initialize(CodeInitializeModel initializeModel)
+        public virtual void Initialize(IReadOnlyCodeInitialize initializeModel)
         {
             if(IsInitialized) {
                 throw new InvalidOperationException(nameof(IsInitialized));
@@ -256,7 +257,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             }
         }
 
-        public bool Compile(CompileParameterModel compilerParameter, string source, string className)
+        public bool Compile(IReadOnlyCompileParameter compilerParameter, string source, string className)
         {
             NeedInitialized();
 

@@ -6,19 +6,19 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF
+namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    public interface IExpression
+    public interface IReadOnlyExpressionItem
     {
         #region property
 
-        string Key { get; }
         string Id { get; }
 
         ExpressionItemKind Kind { get; }
 
-        Regex Regex { get; }
-        string XPath { get; }
+        RegexOptions RegexOptions { get; }
+
+        IReadOnlyCData Data { get; }
 
         #endregion
     }

@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    public interface IReadOnlyPassword
+    public interface IReadOnlyRaw
     {
-        string Password { get; }
+        #region IReadOnlyRaw
+
+        /// <summary>
+        /// 生値。
+        /// </summary>
+        string Raw { get; }
+
+        #endregion
     }
 }

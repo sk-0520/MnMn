@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
 {
     [Serializable]
-    public class WebNavigatorElementConditionTagModel: ModelBase
+    public class WebNavigatorElementConditionTagModel: ModelBase, IReadOnlyWebNavigatorElementConditionTag
     {
-        #region property
+        #region IReadOnlyWebNavigatorElementConditionTag
 
         [XmlAttribute("tag")]
         public string TagNamePattern { get; set; }

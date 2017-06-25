@@ -19,13 +19,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
     public class SmileVideoSearchSettingResultModel
     {
-        public SmileVideoSearchSettingResultModel(DefinedElementModel method, DefinedElementModel sort)
+        public SmileVideoSearchSettingResultModel(IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort)
         {
             Method = method;
             Sort = sort;
@@ -33,8 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 
         #region property
 
-        public DefinedElementModel Method {get;}
-        public DefinedElementModel Sort { get;}
+        public IReadOnlyDefinedElement Method {get;}
+        public IReadOnlyDefinedElement Sort { get;}
 
         #endregion
     }

@@ -32,6 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
@@ -72,8 +73,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #region variable
 
-        DefinedElementModel _selectedMethod;
-        DefinedElementModel _selectedSort;
+        IReadOnlyDefinedElement _selectedMethod;
+        IReadOnlyDefinedElement _selectedSort;
 
         int _totalCount;
         PageViewModel<SmileVideoSearchItemFinderViewModel> _selectedPage;
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchGroupFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, SearchType type, string query)
+        public SmileVideoSearchGroupFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort, SearchType type, string query)
             : base(mediation, 0)
         {
             SearchModel = searchModel;
@@ -103,8 +104,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchItemFinderViewModel SearchFinder { get; set; }
 
-        public IList<DefinedElementModel> MethodItems => SearchModel.GetDefaultSearchTypeDefine().Methods;
-        public IList<DefinedElementModel> SortItems => SearchModel.GetDefaultSearchTypeDefine().Sort;
+        public IReadOnlyList<IReadOnlyDefinedElement> MethodItems => SearchModel.GetDefaultSearchTypeDefine().Methods;
+        public IReadOnlyList<IReadOnlyDefinedElement> SortItems => SearchModel.GetDefaultSearchTypeDefine().Sort;
 
         public string Query { get; }
         public SearchType Type { get; }
@@ -112,10 +113,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         PropertyChangedWeakEventListener PagerPropertyChangedListener { get; }
         PropertyChangedWeakEventListener SearchPropertyChangedListener { get; }
 
-        public DefinedElementModel LoadingMethod { get; private set; }
-        public DefinedElementModel LoadingSort { get; private set; }
+        public IReadOnlyDefinedElement LoadingMethod { get; private set; }
+        public IReadOnlyDefinedElement LoadingSort { get; private set; }
 
-        public DefinedElementModel SelectedMethod
+        public IReadOnlyDefinedElement SelectedMethod
         {
             get { return this._selectedMethod; }
             set
@@ -127,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
             }
         }
-        public DefinedElementModel SelectedSort
+        public IReadOnlyDefinedElement SelectedSort
         {
             get { return this._selectedSort; }
             set
@@ -331,7 +332,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, Query, Type)));
         }
 
-        DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
+        static IReadOnlyDefinedElement GetContextElemetFromChangeElement(IEnumerable<IReadOnlyDefinedElement> items, IReadOnlyDefinedElement element)
         {
             if(items.Any(i => i == element)) {
                 return element;
@@ -340,7 +341,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public void SetContextElements(DefinedElementModel method, DefinedElementModel sort)
+        public void SetContextElements(IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort)
         {
             SelectedPage = null;
 
@@ -352,8 +353,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var isReload = (bool)extends;
 
-            DefinedElementModel nowMethod;
-            DefinedElementModel nowSort;
+            IReadOnlyDefinedElement nowMethod;
+            IReadOnlyDefinedElement nowSort;
             if(isReload) {
                 nowMethod = SelectedMethod;
                 nowSort = SelectedSort;

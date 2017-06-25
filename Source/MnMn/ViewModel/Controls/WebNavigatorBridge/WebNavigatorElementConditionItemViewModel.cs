@@ -5,13 +5,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 {
-    public class WebNavigatorElementConditionItemViewModel: SingleModelWrapperViewModelBase<WebNavigatorElementConditionItemModel>
+    public class WebNavigatorElementConditionItemViewModel: SingleModelWrapperViewModelBase<IReadOnlyWebNavigatorElementConditionItem>
     {
         #region variable
 
@@ -22,7 +23,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         #endregion
 
-        public WebNavigatorElementConditionItemViewModel(WebNavigatorElementConditionItemModel model)
+        public WebNavigatorElementConditionItemViewModel(IReadOnlyWebNavigatorElementConditionItem model)
             : base(model)
         { }
 

@@ -30,9 +30,11 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -71,15 +73,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static IReadOnlyDictionary<string, string> EmptyMap { get; } = new Dictionary<string, string>();
 
-        protected UrisModel UriList { get; private set; }
+        protected IReadOnlyUris UriList { get; private set; }
 
-        protected ParametersModel UriParameterList { get; private set; }
+        protected IReadOnlyParameters UriParameterList { get; private set; }
 
-        protected ParametersModel RequestHeaderList { get; private set; }
+        protected IReadOnlyParameters RequestHeaderList { get; private set; }
 
-        protected ParametersModel RequestParameterList { get; private set; }
+        protected IReadOnlyParameters RequestParameterList { get; private set; }
 
-        protected MappingsModel RequestMappingList { get; }
+        protected IReadOnlyMappings RequestMappingList { get; }
 
         protected ExpressionLoader Expression { get; }
 
@@ -203,7 +205,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        protected UriItemModel GetUriItem(string key) => UriList.Items.FirstOrDefault(ui => ui.Key == key);
+        protected IReadOnlyUriItem GetUriItem(string key) => UriList.Items.FirstOrDefault(ui => ui.Key == key);
 
         string ToParameterEncodeTypeString(string s, ParameterEncode encodeType)
         {
@@ -219,7 +221,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IDictionary<string, string> replaceMap)
+        string ToUriParameterString(IReadOnlyParameterItem pair, UriParameterType type, IDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
 
@@ -253,7 +255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected UriResultModel GetFormatedUri(UriItemModel uriItem, IDictionary<string, string> replaceMap)
+        protected IReadOnlyUriResult GetFormatedUri(IReadOnlyUriItem uriItem, IDictionary<string, string> replaceMap)
         {
             var result = new UriResultModel() {
                 Uri = ReplaceString(uriItem.Uri, replaceMap).Trim(),
@@ -297,7 +299,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        protected UriResultModel GetUriCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IReadOnlyUriResult GetUriCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var uriItem = GetUriItem(key);
             if(uriItem != null) {
@@ -364,7 +366,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ;
         }
 
-        protected string BuildMapping(string s, string target, MappingItemModel item)
+        protected string BuildMapping(string s, string target, IReadOnlyMappingItem item)
         {
             var bracket = item.Brackets.FirstOrDefault(b => b.Target == target);
             if(bracket == null) {
@@ -373,7 +375,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return $"{bracket.Open}{s}{bracket.Close}";
         }
 
-        protected string ToMappingItemString(MappingItemModel item, IDictionary<string, string> replaceMap)
+        protected string ToMappingItemString(IReadOnlyMappingItem item, IDictionary<string, string> replaceMap)
         {
             var value = ReplaceString(item.Value, replaceMap);
 
@@ -404,7 +406,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected MappingResultModel GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IReadOnlyMappingResult GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var result = new MappingResultModel();
             var mapping = RequestMappingList.Mappings
@@ -442,12 +444,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        protected IExpression GetExpressionCore(string key, ServiceType serviceType)
+        protected IReadOnlyExpression GetExpressionCore(string key, ServiceType serviceType)
         {
             return Expression.GetExpression(key);
         }
 
-        protected IExpression GetExpressionCore(string key, string id, ServiceType serviceType)
+        protected IReadOnlyExpression GetExpressionCore(string key, string id, ServiceType serviceType)
         {
             return Expression.GetExpression(key, id);
         }
@@ -482,7 +484,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return uri;
         }
 
-        protected CheckModel CheckResponseHeaderCore(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        protected IReadOnlyCheck CheckResponseHeaderCore(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             if(Script.HasKey(key)) {
                 var result = Script.CheckResponseHeader(key, uri, headers, serviceType);
@@ -589,7 +591,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetUri
 
-        public virtual UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -621,7 +623,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        public virtual MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -630,12 +632,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetExpression
 
-        public virtual IExpression GetExpression(string key, ServiceType serviceType)
+        public virtual IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IExpression GetExpression(string key, string id, ServiceType serviceType)
+        public virtual IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -664,7 +666,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IResponseCompatibility
 
-        public virtual CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public virtual IReadOnlyCheck CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

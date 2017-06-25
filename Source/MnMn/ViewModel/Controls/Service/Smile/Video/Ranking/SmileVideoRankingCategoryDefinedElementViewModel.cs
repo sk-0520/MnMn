@@ -19,13 +19,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking
 {
     public class SmileVideoRankingCategoryDefinedElementViewModel: DefinedElementViewModelBase
     {
-        public SmileVideoRankingCategoryDefinedElementViewModel(DefinedElementModel model, bool isRoot)
+        public SmileVideoRankingCategoryDefinedElementViewModel(IReadOnlyDefinedElement model, bool isRoot)
             : base(model)
         {
             IsRoot = isRoot;
