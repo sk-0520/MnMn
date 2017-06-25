@@ -28,16 +28,12 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     [Serializable]
-    public struct DefinedKeyValuePairModel: IModel, IReadOnlyKey
+    public struct DefinedKeyValuePairModel: IModel, IReadOnlyDefinedKeyValuePair
     {
-        #region property
+        #region IReadOnlyDefinedKeyValuePair
 
         [XmlAttribute("value")]
         public string Value { get; set; }
-
-        #endregion
-
-        #region IReadOnlyKey
 
         [XmlAttribute("key")]
         public string Key { get; set; }
