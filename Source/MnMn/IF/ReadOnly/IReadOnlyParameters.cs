@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    interface IReadOnlyParameters
+    public interface IReadOnlyParameters
     {
         #region property
 

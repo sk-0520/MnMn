@@ -329,6 +329,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyParameter.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyParameterItem.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyParameters.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyPassword.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyRaw.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUriItem.cs" />
