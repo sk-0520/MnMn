@@ -328,6 +328,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoFinderFilteringParameter.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoRankingGroup.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyFilteringItem.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyNetworkProxy.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyNetworkSetting.cs" />
