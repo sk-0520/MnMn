@@ -71,6 +71,7 @@
     <Compile Include="IF\CodeExecutor\ICodeExecutor.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyCheck.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyCodeInitialize.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyCompileParameter.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CodeExecutor\CodeInitializeModel.cs" />
     <Compile Include="Model\CodeExecutor\CompileParameterModel.cs" />

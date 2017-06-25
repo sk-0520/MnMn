@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor
 
         void Initialize(IReadOnlyCodeInitialize initializeModel);
 
-        bool Compile(CompileParameterModel compilerParameter, string source, string className);
+        bool Compile(IReadOnlyCompileParameter compilerParameter, string source, string className);
 
         bool HasType(Type type);
 

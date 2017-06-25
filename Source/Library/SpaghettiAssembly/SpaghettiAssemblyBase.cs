@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             }
         }
 
-        public bool Compile(CompileParameterModel compilerParameter, string source, string className)
+        public bool Compile(IReadOnlyCompileParameter compilerParameter, string source, string className)
         {
             NeedInitialized();
 
