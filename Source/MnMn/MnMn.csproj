@@ -313,6 +313,7 @@
     <Compile Include="IF\IGetExpression.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyCData.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyKey.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkProxy.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyNetworkSetting.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyPassword.cs" />

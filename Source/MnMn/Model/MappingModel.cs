@@ -24,15 +24,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class MappingModel: ModelBase
+    public class MappingModel: KeyModelBase
     {
         #region property
-
-        /// <summary>
-        /// マッピングの検索キー。
-        /// </summary>
-        [XmlAttribute("key")]
-        public string Key { get; set; }
 
         [XmlAttribute("content-type")]
         public string ContentType { get; set; }
