@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
@@ -28,12 +29,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// URI定義リスト。
     /// </summary>
     [Serializable, XmlRoot("uri")]
-    public class UrisModel: ModelBase
+    public class UrisModel: ModelBase, IReadOnlyUris
     {
         #region property
 
         [XmlElement("item")]
         public CollectionModel<UriItemModel> Items { get; set; } = new CollectionModel<UriItemModel>();
+        IReadOnlyList<IReadOnlyUriItem> IReadOnlyUris.Items => Items;
 
         #endregion
     }

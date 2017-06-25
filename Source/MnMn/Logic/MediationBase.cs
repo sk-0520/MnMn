@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -203,7 +204,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        protected UriItemModel GetUriItem(string key) => UriList.Items.FirstOrDefault(ui => ui.Key == key);
+        protected IReadOnlyUriItem GetUriItem(string key) => UriList.Items.FirstOrDefault(ui => ui.Key == key);
 
         string ToParameterEncodeTypeString(string s, ParameterEncode encodeType)
         {
@@ -253,7 +254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected UriResultModel GetFormatedUri(UriItemModel uriItem, IDictionary<string, string> replaceMap)
+        protected UriResultModel GetFormatedUri(IReadOnlyUriItem uriItem, IDictionary<string, string> replaceMap)
         {
             var result = new UriResultModel() {
                 Uri = ReplaceString(uriItem.Uri, replaceMap).Trim(),
