@@ -10,7 +10,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
     {
         #region property
 
-        public IReadOnlyList<IReadOnlyParameter> Parameters { get; }
+        /// <summary>
+        /// URIパラメータのキーと値。
+        /// </summary>
+        IReadOnlyList<IReadOnlyParameterItem> Items { get; }
 
         #endregion
     }

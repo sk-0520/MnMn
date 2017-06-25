@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// URIパラメータ。
     /// </summary>
     [Serializable]
-    public class ParameterModel: KeyModelBase
+    public class ParameterModel: KeyModelBase, IReadOnlyParameter
     {
         #region property
 
@@ -38,6 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// </summary>
         [XmlElement("item")]
         public CollectionModel<ParameterItemModel> Items { get; set; } = new CollectionModel<ParameterItemModel>();
+        IReadOnlyList<IReadOnlyParameterItem> IReadOnlyParameter.Items => Items;
 
         #endregion
     }
