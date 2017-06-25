@@ -10,6 +10,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
             }
         }
 
-        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.IdleTalk:

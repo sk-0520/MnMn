@@ -21,12 +21,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
     public interface IGetUri
     {
-        UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
+        IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
     }
 }

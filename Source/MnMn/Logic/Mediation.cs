@@ -40,6 +40,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
@@ -662,7 +663,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Application:

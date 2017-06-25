@@ -319,6 +319,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyUris.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyUserAgent.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyDefinedElement.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyUriResult.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchBookmarkItem.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoSearchDefine.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />

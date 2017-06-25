@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected UriResultModel GetFormatedUri(IReadOnlyUriItem uriItem, IDictionary<string, string> replaceMap)
+        protected IReadOnlyUriResult GetFormatedUri(IReadOnlyUriItem uriItem, IDictionary<string, string> replaceMap)
         {
             var result = new UriResultModel() {
                 Uri = ReplaceString(uriItem.Uri, replaceMap).Trim(),
@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        protected UriResultModel GetUriCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IReadOnlyUriResult GetUriCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var uriItem = GetUriItem(key);
             if(uriItem != null) {
@@ -590,7 +590,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetUri
 
-        public virtual UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
