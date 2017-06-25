@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge
 {
-    public interface IReadOnlyWebNavigatorNavigatingItem
+    public interface IReadOnlyWebNavigatorNavigatingItem: IReadOnlyWebNavigatorDefinedElement
     {
         #region property
 

@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -554,7 +555,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public ServiceType ServiceType { get; set; }
 
         public CollectionModel<PointingGestureItem> GestureItems { get; } = new CollectionModel<PointingGestureItem>();
-        IReadOnlyList<WebNavigatorGestureElementModel> GestureDefineElements { get; set; }
+        IReadOnlyList<IReadOnlyWebNavigatorGestureElement> GestureDefineElements { get; set; }
         IReadOnlyDictionary<string, ICommand> GestureCommands { get; set; }
 
         Mediation Mediation

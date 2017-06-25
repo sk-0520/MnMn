@@ -42,6 +42,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
@@ -106,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         AppSettingModel Setting { get; }
 
-        WebNavigatorBridgeModel WebNavigatorBridge { get; }
+        IReadOnlyWebNavigatorBridge WebNavigatorBridge { get; }
         IReadOnlyList<WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingItems { get; }
         IReadOnlyList<WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
         IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuMap { get; }

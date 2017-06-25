@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -194,7 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             return LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, nowCategory.Model);
         }
 
-        Task LoadRankingCategoryCoreAsync(DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
+        Task LoadRankingCategoryCoreAsync(DefinedElementModel period, DefinedElementModel target, IReadOnlyDefinedElement category)
         {
             // 存在する場合は該当タブへ遷移
             var selectViewModel = RestrictUtility.IsNotNull(

@@ -23,7 +23,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    public interface IReadOnlyDefinedElement: IDisplayText, IReadOnlyKey
+    public interface IReadOnlyDefinedElement: IDisplayText, IReadOnlyKey, IModel
     {
         #region property
 
