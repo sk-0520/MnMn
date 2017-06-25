@@ -56,10 +56,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         [XmlElement("bracket")]
         public CollectionModel<MappingItemBracketModel> Brackets { get; set; } = new CollectionModel<MappingItemBracketModel>();
-        IReadOnlyList<IReadOnlyMappingItemNode> IReadOnlyMappingItem.Brackets => Brackets;
+        IReadOnlyList<IReadOnlyMappingItemBracket> IReadOnlyMappingItem.Brackets => Brackets;
         [XmlElement("custom")]
         public CollectionModel<MappingItemCustomModel> Customs { get; set; } = new CollectionModel<MappingItemCustomModel>();
-        IReadOnlyList<IReadOnlyMappingItemNode> IReadOnlyMappingItem.Customs => Customs;
+        IReadOnlyList<IReadOnlyMappingItemCustom> IReadOnlyMappingItem.Customs => Customs;
 
         /// <summary>
         /// キーが存在するか。

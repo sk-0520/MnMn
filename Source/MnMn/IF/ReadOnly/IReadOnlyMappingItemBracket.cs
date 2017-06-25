@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    public interface IReadOnlyMappingItemNode
+    interface IReadOnlyMappingItemBracket: IReadOnlyMappingItemNode
     {
         #region property
 
-        string Target { get; }
+        string Open { get; }
+
+        string Close { get; }
 
         #endregion
     }

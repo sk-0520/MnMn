@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 
         string Failure { get; set; }
 
-        IReadOnlyList<IReadOnlyMappingItemNode> Brackets { get; }
-        IReadOnlyList<IReadOnlyMappingItemNode> Customs { get; }
+        IReadOnlyList<IReadOnlyMappingItemBracket> Brackets { get; }
+        IReadOnlyList<IReadOnlyMappingItemCustom> Customs { get; }
 
         /// <summary>
         /// キーが存在するか。
