@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             return Task.FromResult(result);
         }
 
-        protected override Task<CheckModel> RemoveCheckedItemsAsync()
+        protected override Task<IReadOnlyCheck> RemoveCheckedItemsAsync()
         {
             var items = GetCheckedItems()
                 .ToEvaluatedSequence();

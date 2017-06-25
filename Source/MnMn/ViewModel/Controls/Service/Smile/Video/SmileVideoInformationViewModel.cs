@@ -33,6 +33,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
@@ -1065,7 +1066,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <param name="isSave"></param>
         /// <param name="usingDmc">ダウンロードにDMC形式を使用するか</param>
         /// <returns></returns>
-        public Task<CheckModel> LoadGetflvAsync(bool isSave, bool usingDmc)
+        public Task<IReadOnlyCheck> LoadGetflvAsync(bool isSave, bool usingDmc)
         {
             if(InformationLoadState == LoadState.Failure) {
                 return Task.FromResult(CheckModel.Failure());

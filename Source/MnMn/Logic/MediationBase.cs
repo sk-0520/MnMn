@@ -30,6 +30,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -483,7 +484,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return uri;
         }
 
-        protected CheckModel CheckResponseHeaderCore(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        protected IReadOnlyCheck CheckResponseHeaderCore(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             if(Script.HasKey(key)) {
                 var result = Script.CheckResponseHeader(key, uri, headers, serviceType);
@@ -665,7 +666,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IResponseCompatibility
 
-        public virtual CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public virtual IReadOnlyCheck CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

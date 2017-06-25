@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -235,7 +236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
             }
         }
 
-        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override IReadOnlyCheck CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.IdleTalk:

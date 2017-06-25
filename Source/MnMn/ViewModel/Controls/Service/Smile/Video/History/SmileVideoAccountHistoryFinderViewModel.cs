@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -99,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             });
         }
 
-        protected async override Task<CheckModel> RemoveCheckedItemsAsync()
+        protected async override Task<IReadOnlyCheck> RemoveCheckedItemsAsync()
         {
             var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
             if(!GetCheckedItems().Any()) {

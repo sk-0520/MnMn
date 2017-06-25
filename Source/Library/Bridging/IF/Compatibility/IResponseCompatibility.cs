@@ -22,6 +22,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
         /// <param name="headers">レスポンスヘッダ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
-        CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType);
+        IReadOnlyCheck CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType);
         /// <summary>
         /// 受信後に呼び出されるバイナリ変換処理。
         /// </summary>

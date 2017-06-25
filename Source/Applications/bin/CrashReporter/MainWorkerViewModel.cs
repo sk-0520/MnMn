@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using Newtonsoft.Json.Linq;
 
@@ -230,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
             }
         }
 
-        Task<CheckModel> SendCoreAsync()
+        Task<IReadOnlyCheck> SendCoreAsync()
         {
             var map = new Dictionary<string, string>() {
                 [ConfigurationManager.AppSettings.Get("send-param-data")] = ReportFileData,
