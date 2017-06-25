@@ -32,10 +32,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 
         [XmlArray("method"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> Methods { get; set; } = new CollectionModel<DefinedElementModel>();
+        IReadOnlyList<DefinedElementModel> IReadOnlySmileVideoSearchDefine.Methods => Methods;
+
         [XmlArray("sort"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> Sort { get; set; } = new CollectionModel<DefinedElementModel>();
+        IReadOnlyList<DefinedElementModel> IReadOnlySmileVideoSearchDefine.Sort => Sort;
+
         [XmlArray("type"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> Type { get; set; } = new CollectionModel<DefinedElementModel>();
+        IReadOnlyList<DefinedElementModel> IReadOnlySmileVideoSearchDefine.Type => Type;
 
         #endregion
     }

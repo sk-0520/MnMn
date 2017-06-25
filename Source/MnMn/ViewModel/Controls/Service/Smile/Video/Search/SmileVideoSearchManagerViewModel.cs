@@ -106,9 +106,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public IList<DefinedElementModel> MethodItems => SearchModel.GetDefaultSearchTypeDefine().Methods;
-        public IList<DefinedElementModel> SortItems => SearchModel.GetDefaultSearchTypeDefine().Sort;
-        public IList<DefinedElementModel> TypeItems => SearchModel.GetDefaultSearchTypeDefine().Type;
+        public IReadOnlyList<DefinedElementModel> MethodItems => SearchModel.GetDefaultSearchTypeDefine().Methods;
+        public IReadOnlyList<DefinedElementModel> SortItems => SearchModel.GetDefaultSearchTypeDefine().Sort;
+        public IReadOnlyList<DefinedElementModel> TypeItems => SearchModel.GetDefaultSearchTypeDefine().Type;
 
         public CollectionModel<SmileVideoSearchGroupFinderViewModel> SearchGroups { get; } = new CollectionModel<SmileVideoSearchGroupFinderViewModel>();
 

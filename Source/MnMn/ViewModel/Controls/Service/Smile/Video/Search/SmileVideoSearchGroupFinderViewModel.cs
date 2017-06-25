@@ -103,8 +103,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchItemFinderViewModel SearchFinder { get; set; }
 
-        public IList<DefinedElementModel> MethodItems => SearchModel.GetDefaultSearchTypeDefine().Methods;
-        public IList<DefinedElementModel> SortItems => SearchModel.GetDefaultSearchTypeDefine().Sort;
+        public IReadOnlyList<DefinedElementModel> MethodItems => SearchModel.GetDefaultSearchTypeDefine().Methods;
+        public IReadOnlyList<DefinedElementModel> SortItems => SearchModel.GetDefaultSearchTypeDefine().Sort;
 
         public string Query { get; }
         public SearchType Type { get; }

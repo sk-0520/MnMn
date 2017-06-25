@@ -15,9 +15,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video
         int MaximumIndex { get; }
         int MaximumCount { get; }
 
-        CollectionModel<DefinedElementModel> Methods { get; }
-        CollectionModel<DefinedElementModel> Sort { get; }
-        CollectionModel<DefinedElementModel> Type { get; }
+        IReadOnlyList<DefinedElementModel> Methods { get; }
+        IReadOnlyList<DefinedElementModel> Sort { get; }
+        IReadOnlyList<DefinedElementModel> Type { get; }
 
         #endregion
     }
