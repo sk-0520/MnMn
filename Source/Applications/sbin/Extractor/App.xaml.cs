@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             viewModel.SetView(view);
             viewModel.Initialize();
 
-            view.Show();
+            view.Show();MessageBox.Show(Environment.ExpandEnvironmentVariables("%Path%"));
         }
 
         #endregion
