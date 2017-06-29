@@ -438,6 +438,39 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
+        void CollectionEnvironment()
+        {
+            var environmentPropertyNames = new[] {
+                nameof(Environment.CommandLine),
+                nameof(Environment.CurrentDirectory),
+                nameof(Environment.Is64BitOperatingSystem),
+                nameof(Environment.Is64BitProcess),
+                nameof(Environment.OSVersion),
+                nameof(Environment.ProcessorCount),
+                nameof(Environment.SystemDirectory),
+                nameof(Environment.SystemPageSize),
+                nameof(Environment.TickCount),
+                nameof(Environment.UserDomainName),
+                nameof(Environment.UserName),
+                nameof(Environment.Version),
+                nameof(Environment.WorkingSet),
+            };
+            var environmentType = typeof(Environment);
+            var environments = environmentPropertyNames
+                .Select(s => new { Name = s, Property = environmentType.GetProperty(s) })
+                .Select(i => new { Name = i.Name, Property = i.Property, Value = i.Property.GetValue(null) })
+                .Select(i => $"{i.Name}: {i.Value}")
+            ;
+            AddInformationLog(environmentType.FullName, string.Join(Environment.NewLine, environments));
+
+            var envValues = Environment.GetEnvironmentVariables()
+                .Cast<System.Collections.DictionaryEntry>()
+                .Select(p => $"{p.Key}: {p.Value}")
+            ;
+            AddInformationLog($"{nameof(Environment)}.{nameof(Environment.GetEnvironmentVariables)}", string.Join(Environment.NewLine, envValues));
+
+        }
+
         Task ExecuteAsync()
         {
             CanInput = false;
@@ -452,6 +485,9 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 Writer = new StreamWriter(stream) {
                     AutoFlush = true,
                 };
+
+                // 環境情報のログ出力
+                CollectionEnvironment();
             }
 
             try {
