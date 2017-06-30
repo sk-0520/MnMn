@@ -34,9 +34,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 var standbyElement = thumbnailElement.SelectSingleNode(".//span[last()][not(@id)]");
 
                 item.CashRegisterUrl = cashRegisterElement.GetAttributeValue("href", string.Empty);
-                item.ThumbnailUrl = imageElement.GetAttributeValue("src", string.Empty);
+                item.ThumbnailUrl = imageElement?.GetAttributeValue("src", string.Empty);
                 item.Standby = standbyElement?.InnerText;
-                item.Title = imageElement.GetAttributeValue("alt", imageElement.GetAttributeValue("title", string.Empty));
+                item.Title = imageElement?.GetAttributeValue("alt", imageElement.GetAttributeValue("title", string.Empty));
 
                 var makerElement = itemElement.SelectSingleNode(".//*[@class='maker']");
                 if(makerElement != null) {
