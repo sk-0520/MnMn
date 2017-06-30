@@ -133,6 +133,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ShowRankingCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+
+                    }
+                );
+            }
+        }
+
         public ICommand OpenPediaInSystemBrowserCommand
         {
             get

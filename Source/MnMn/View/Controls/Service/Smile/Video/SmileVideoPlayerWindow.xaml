@@ -2370,7 +2370,7 @@
                             </Canvas>
                           </Viewbox>
                         </Button>
-                        <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.ShowRankingCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Viewbox Style="{StaticResource MinimumIconBox}">
                             <Canvas Style="{StaticResource IconCanvas-24x24}">
                               <Path Data="{StaticResource Image_Ranking}" Style="{StaticResource MinimumLinkIconPath}" />
