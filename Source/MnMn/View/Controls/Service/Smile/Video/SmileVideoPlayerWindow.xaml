@@ -2355,6 +2355,7 @@
                             <Path Data="{StaticResource Image_Lock}" Style="{StaticResource MinimumDefaultIconPath}" />
                           </Canvas>
                         </Viewbox>
+
                         <Button
                           Style="{StaticResource Hyperlink}"
                           Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
@@ -2366,6 +2367,13 @@
                           <Viewbox Style="{StaticResource {x:Type Viewbox}}">
                             <Canvas Style="{StaticResource IconCanvas-24x24}" >
                               <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource MinimumLinkIconPath}" />
+                            </Canvas>
+                          </Viewbox>
+                        </Button>
+                        <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                          <Viewbox Style="{StaticResource MinimumIconBox}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}">
+                              <Path Data="{StaticResource Image_Ranking}" Style="{StaticResource MinimumLinkIconPath}" />
                             </Canvas>
                           </Viewbox>
                         </Button>
