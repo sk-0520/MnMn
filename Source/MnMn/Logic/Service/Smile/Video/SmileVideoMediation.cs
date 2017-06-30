@@ -466,9 +466,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return plaingItem.View;
                 }
             } else {
-                var finder = request.ShowRequestParameter as SmileVideoSearchParameterModel;
-                if(finder != null) {
-                    ManagerPack.SearchManager.LoadSearchFromParameterAsync(finder).ConfigureAwait(false);
+                var search = request.ShowRequestParameter as SmileVideoSearchParameterModel;
+                if(search != null) {
+                    ManagerPack.SearchManager.LoadSearchFromParameterAsync(search).ConfigureAwait(false);
                     return ManagerPack.SearchManager;
                 } else {
                     var mylist = request.ShowRequestParameter as SmileVideoSearchMyListParameterModel;
@@ -479,6 +479,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         ManagerPack.MyListManager.IsSelectedHistory = false;
                         ManagerPack.MyListManager.IsSelectedSearch = true;
                         return ManagerPack.MyListManager;
+                    } else {
+                        var rankingName = request.ShowRequestParameter as SmileVideoRankingCategoryNameParameterModel;
+                        if(rankingName != null) {
+                            ManagerPack.RankingManager.LoadRankingCategoryFromParameterAsync(rankingName).ConfigureAwait(false);
+                            return ManagerPack.RankingManager;
+                        }
                     }
                 }
             }

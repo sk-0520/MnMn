@@ -25,9 +25,11 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -46,10 +48,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #endregion
 
-        public SmileVideoRankingManagerViewModel(Mediation mediation, SmileVideoRankingModel rankingModel)
+        public SmileVideoRankingManagerViewModel(Mediation mediation, IReadOnlySmileVideoRanking rankingDefine)
             : base(mediation)
         {
-            RankingModel = rankingModel;
+            RankingDefine = rankingDefine;
 
             SelectedPeriod = PeriodItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultPeriodKey) ?? PeriodItems.First();
             SelectedTarget = TargetItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultTargetKey) ?? TargetItems.First();
@@ -57,12 +59,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region property
 
-        SmileVideoRankingModel RankingModel { get; set; }
+        IReadOnlySmileVideoRanking RankingDefine { get; set; }
 
         IReadOnlyList<string> CurrentIgnoreCategoryItems { get; set; }
 
-        public IList<DefinedElementModel> PeriodItems { get { return RankingModel.Periods.Items; } }
-        public IList<DefinedElementModel> TargetItems { get { return RankingModel.Targets.Items; } }
+        public IReadOnlyList<IReadOnlyDefinedElement> PeriodItems { get { return RankingDefine.Periods.Items; } }
+        public IReadOnlyList<IReadOnlyDefinedElement> TargetItems { get { return RankingDefine.Targets.Items; } }
 
         public IReadOnlyDefinedElement SelectedPeriod
         {
@@ -144,7 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         void MakeUsingCategory()
         {
             // 初期化で読み込みが動いちゃう対応
-            IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> items = GetLinearRankingElementList(RankingModel.Items).ToEvaluatedSequence();
+            IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> items = GetLinearRankingElementList(RankingDefine.Items).ToEvaluatedSequence();
             var removeItems = items.Where(i => Setting.Ranking.IgnoreCategoryItems.Any(s => s == i.Key));
             if(removeItems.Any()) {
                 var removedItems = items.Except(removeItems);
@@ -170,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             CurrentIgnoreCategoryItems = Setting.Ranking.IgnoreCategoryItems.ToEvaluatedSequence();
         }
 
-        IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)
+        IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> GetLinearRankingElementList(IEnumerable<IReadOnlySmileVideoCategoryGroup> items)
         {
             foreach(var item in items) {
                 if(item.IsSingleCategory) {
@@ -186,13 +188,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             }
         }
 
-        public Task LoadRankingCategoryAsync()
+        Task LoadRankingCategoryAsync()
         {
             var nowPeriod = SelectedPeriod;
             var nowTarget = SelectedTarget;
             var nowCategory = SelectedCategory;
 
             return LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, nowCategory.Model);
+        }
+
+        public Task LoadRankingCategoryFromParameterAsync(SmileVideoRankingCategoryNameParameterModel parameter)
+        {
+            if(string.IsNullOrWhiteSpace(parameter.CategoryName)) {
+                return Task.CompletedTask;
+            }
+
+            if(CategoryItems == null) {
+                MakeUsingCategory();
+            }
+
+            var targetCategory = CategoryItems.FirstOrDefault(c => c.DisplayText == parameter.CategoryName);
+            if(targetCategory == null) {
+                Mediation.Logger.Warning($"not found: {parameter.CategoryName}");
+                return Task.CompletedTask;
+            }
+
+            var nowPeriod = SelectedPeriod;
+            var nowTarget = SelectedTarget;
+
+            return LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, targetCategory.Model);
         }
 
         Task LoadRankingCategoryCoreAsync(IReadOnlyDefinedElement period, IReadOnlyDefinedElement target, IReadOnlyDefinedElement category)
@@ -205,7 +229,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                     return viewModel;
                 },
                 () => {
-                    var viewModel = new SmileVideoRankingCategoryFinderViewModel(Mediation, RankingModel, period, target, category);
+                    var viewModel = new SmileVideoRankingCategoryFinderViewModel(Mediation, RankingDefine, period, target, category);
                     RankingCategoryGroupItems.Add(viewModel);
 
                     return viewModel;

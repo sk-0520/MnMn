@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #endregion
 
-        public SmileVideoRankingCategoryFinderViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, IReadOnlyDefinedElement period, IReadOnlyDefinedElement target, IReadOnlyDefinedElement category)
+        public SmileVideoRankingCategoryFinderViewModel(Mediation mediation, IReadOnlySmileVideoRanking rankingModel, IReadOnlyDefinedElement period, IReadOnlyDefinedElement target, IReadOnlyDefinedElement category)
             : base(mediation, 0)
         {
             PeriodItems = new CollectionModel<DefinedElementModel>(rankingModel.Periods.Items.Select(i => (DefinedElementModel)i.DeepClone()));

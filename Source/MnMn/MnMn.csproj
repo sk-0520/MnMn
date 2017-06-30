@@ -327,7 +327,9 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoCategoryGroup.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoFinderFilteringParameter.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoRanking.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoRankingGroup.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyFilteringItem.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyNetworkProxy.cs" />
@@ -442,6 +444,7 @@
     <Compile Include="Model\Request\Parameter\WebNavigatorProcessParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessUnorganizedBookmarkParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoRankingCategoryNameParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoBookmarkResultModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessSearchBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\WebNavigatorProcessRequestModel.cs" />
