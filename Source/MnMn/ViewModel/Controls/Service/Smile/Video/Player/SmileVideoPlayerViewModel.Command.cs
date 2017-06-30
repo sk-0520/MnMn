@@ -148,6 +148,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         };
 
                         Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+                    },
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+
+                        var rankingDefine = Mediation.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+                        var rankingCategory = rankingDefine.Items
+                            .SelectMany(i => i.Categories)
+                            .FirstOrDefault(c => c.Words.Values.Any(s => string.Equals(s, tag.TagName, StringComparison.InvariantCultureIgnoreCase)))
+                        ;
+                        if(rankingCategory == null) {
+                            return false;
+                        }
+
+                        return !Setting.Ranking.IgnoreCategoryItems.Any(i => i == rankingCategory.Key);
                     }
                 );
             }
