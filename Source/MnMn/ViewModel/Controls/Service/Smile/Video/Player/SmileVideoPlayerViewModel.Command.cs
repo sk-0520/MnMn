@@ -147,6 +147,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         };
 
                         Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+                    },
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+
+                        //Mediation.Smile.VideoMediation.
+
+                        return true;
                     }
                 );
             }
