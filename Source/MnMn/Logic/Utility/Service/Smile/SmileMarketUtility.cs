@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             foreach(var itemElement in itemElements) {
                 var item = new SmileMarketVideoItemModel();
 
-                var thumbnailElement = itemElement.SelectSingleNode(".//*[@class='thumbnail']");
+                var thumbnailElement = itemElement.Descendants().First(n => n.Attributes.Contains("class") && n.Attributes["class"].Value.Contains("thumbnail"));
                 var cashRegisterElement = thumbnailElement.SelectSingleNode(".//a");
                 var imageElement = thumbnailElement.SelectSingleNode(".//img");
                 var standbyElement = thumbnailElement.SelectSingleNode(".//span[last()][not(@id)]");
