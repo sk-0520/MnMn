@@ -451,7 +451,7 @@
       </Menu>
 
       <Separator Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" />
-      <Button Command="{Binding LoadPrevPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <Button Padding="0" Command="{Binding LoadPrevPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
         <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -528,7 +528,7 @@
 
         </MenuItem>
       </Menu>
-      <Button Command="{Binding LoadNextPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <Button Padding="0" Command="{Binding LoadNextPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
         <Button.Style>
           <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Style.Triggers>
@@ -595,7 +595,7 @@
         </MenuItem>
       </Menu>
 
-      <xctk:SplitButton BorderThickness="0" IsOpen="{Binding IsOpenWorkingPlayer, Mode=TwoWay}" Command="{Binding SwitchWorkingPlayerCommand}" >
+      <xctk:SplitButton Padding="0" BorderThickness="0" IsOpen="{Binding IsOpenWorkingPlayer, Mode=TwoWay}" Command="{Binding SwitchWorkingPlayerCommand}" >
         <xctk:SplitButton.Content>
           <StackPanel Style="{StaticResource ItemPanel}">
             <Viewbox Style="{StaticResource SmallItemBox}">
