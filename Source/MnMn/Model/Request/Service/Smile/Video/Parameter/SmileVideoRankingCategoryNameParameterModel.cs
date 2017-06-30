@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
     {
         #region property
 
-        public string CategoryName { get; }
+        public string CategoryName { get; set; }
 
         #endregion
     }

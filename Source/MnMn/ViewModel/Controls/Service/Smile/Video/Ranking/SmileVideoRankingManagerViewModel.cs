@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             }
         }
 
-        public Task LoadRankingCategoryAsync()
+        Task LoadRankingCategoryAsync()
         {
             var nowPeriod = SelectedPeriod;
             var nowTarget = SelectedTarget;
