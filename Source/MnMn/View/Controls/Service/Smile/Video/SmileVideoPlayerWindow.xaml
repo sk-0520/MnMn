@@ -2286,15 +2286,6 @@
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
                       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <StackPanel.Style>
-                          <Style TargetType="StackPanel">
-                            <Style.Triggers>
-                              <DataTrigger Binding="{Binding IsLocked}" Value="True">
-                                <Setter Property="ToolTip" Value="カテゴリタグ" />
-                              </DataTrigger>
-                            </Style.Triggers>
-                          </Style>
-                        </StackPanel.Style>
                         <StackPanel.ContextMenu>
                           <ContextMenu>
                             <!-- NOTE: x:Reference 使わないと System.Windows.Data Error: 4 -->
@@ -2303,6 +2294,15 @@
                                 <Viewbox Style="{StaticResource SmallIconBox}">
                                   <Canvas Style="{StaticResource IconCanvas-24x24}">
                                     <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
+                                  </Canvas>
+                                </Viewbox>
+                              </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="ランキング表示" Command="{Binding DataContext.ShowRankingCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+                              <MenuItem.Icon>
+                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_Ranking}" Style="{StaticResource SmallDefaultIconPath}" />
                                   </Canvas>
                                 </Viewbox>
                               </MenuItem.Icon>

@@ -151,6 +151,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     },
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
+                        if(tag == null) {
+                            // プレイヤー立ち上げ中はぬるりん
+                            return false;
+                        }
 
                         var rankingDefine = Mediation.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
                         var rankingCategory = rankingDefine.Items
