@@ -145,6 +145,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#454: 市場の画像が取得できない'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
