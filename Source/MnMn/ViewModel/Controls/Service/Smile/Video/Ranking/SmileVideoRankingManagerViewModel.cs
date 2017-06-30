@@ -28,6 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -193,6 +194,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             var nowCategory = SelectedCategory;
 
             return LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, nowCategory.Model);
+        }
+
+        public Task LoadRankingCategoryFromParameterAsync(SmileVideoRankingCategoryNameParameterModel parameter)
+        {
+            if(string.IsNullOrWhiteSpace(parameter.CategoryName)) {
+                return Task.CompletedTask;
+            }
+
+            var nowPeriod = SelectedPeriod;
+            var nowTarget = SelectedTarget;
+
+            // TODO
+            var targetCategory = CategoryItems.First();
+
+            return LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, targetCategory.Model);
         }
 
         Task LoadRankingCategoryCoreAsync(IReadOnlyDefinedElement period, IReadOnlyDefinedElement target, IReadOnlyDefinedElement category)
