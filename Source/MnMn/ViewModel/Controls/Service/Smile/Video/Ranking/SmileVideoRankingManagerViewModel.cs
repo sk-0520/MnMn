@@ -203,11 +203,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                 return Task.CompletedTask;
             }
 
+            if(CategoryItems == null) {
+                MakeUsingCategory();
+            }
+
+            var targetCategory = CategoryItems.FirstOrDefault(c => c.DisplayText == parameter.CategoryName);
+            if(targetCategory == null) {
+                Mediation.Logger.Warning($"not found: {parameter.CategoryName}");
+                return Task.CompletedTask;
+            }
+
             var nowPeriod = SelectedPeriod;
             var nowTarget = SelectedTarget;
-
-            // TODO
-            var targetCategory = CategoryItems.First();
 
             return LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, targetCategory.Model);
         }

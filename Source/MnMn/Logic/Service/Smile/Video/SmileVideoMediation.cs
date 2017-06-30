@@ -483,6 +483,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         var rankingName = request.ShowRequestParameter as SmileVideoRankingCategoryNameParameterModel;
                         if(rankingName != null) {
                             ManagerPack.RankingManager.LoadRankingCategoryFromParameterAsync(rankingName).ConfigureAwait(false);
+                            return ManagerPack.RankingManager;
                         }
                     }
                 }
