@@ -44,9 +44,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 }
 
                 var actionElement = itemElement.SelectSingleNode(".//*[@class='action']");
-                var buyElement = actionElement.SelectSingleNode(".//*[@class='buy']");
-                var clickElement = actionElement.SelectSingleNode(".//*[@class='click']");
-                var videoElement = actionElement.SelectSingleNode(".//span[last()][not(@class)]"); // この動画でクリック
+                var buyElement = actionElement?.SelectSingleNode(".//*[@class='buy']");
+                var clickElement = actionElement?.SelectSingleNode(".//*[@class='click']");
+                var videoElement = actionElement?.SelectSingleNode(".//span[last()][not(@class)]"); // この動画でクリック
 
                 if(buyElement != null) {
                     item.BuyCount = TrimCountNoise(buyElement.InnerText);
