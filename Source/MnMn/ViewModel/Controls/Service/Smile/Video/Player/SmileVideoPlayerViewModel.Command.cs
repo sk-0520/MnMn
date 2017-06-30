@@ -148,11 +148,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         };
 
                         Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
-                    },
-                    o => {
-                        var tag = (SmileVideoTagViewModel)o;
-                        var rankingDefine = Mediation.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
-                        return rankingDefine.Items.Any(i => i.Categories.Any(c => c.Words.Values.Any(s => string.Equals(s, tag.TagName, StringComparison.InvariantCultureIgnoreCase))));
                     }
                 );
             }
