@@ -85,41 +85,16 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.70.1',
-		'isRc': true,
+		'date': '2017/07/01',
+		'version': '0.71.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'c4c2e38495bbb6316fca69d6eedd22431d514077',
 						'subject': '#646: タグがランキングに存在すればランキングを表示できるようにする'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -127,7 +102,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '019ab94d23c001a6e0db851551f6dca7abe1dd25',
 						'class': 'open',
 						'subject': '#552: (新)アップデート処理がファイルハンドル掴んでて成功しない',
 						'comments': [
@@ -136,20 +111,16 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '0331f27c82f2ec3546ab84e5ab8698ee5fcc340e',
 						'subject': '#654: プレイヤーメニュー部の高さがでこぼこしてる'
 					},
 					{
-						'revision': '',
+						'revision': '9bdd5afcd7ef1e44d5d70896b2f7c1ef3da6a92f',
 						'subject': '#655: タグから大百科開くボタンの活性タイミングが何かしらのイベント後で気持ち悪い'
 					},
 					{
-						'revision': '',
+						'revision': 'cb415862ef6380bc642e80b8c27a6374e6564a13',
 						'subject': '#454: 市場の画像が取得できない'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -157,19 +128,15 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '76ad96847bfee39ad972d94c14b631c338edd3b5',
 						'subject': '#629: 精神衛生のための ReadOnly',
 						'comments': [
 							'さすがに全部はしんどい、以後 見つけて手が空いてれば対応する'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '8fe70025c8380f4e173cf690ff493f0607484528',
 						'subject': '#607: 更新履歴を一定の件数でファイル分割したい'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
