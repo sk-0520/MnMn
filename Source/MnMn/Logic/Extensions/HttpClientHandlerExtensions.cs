@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
 {

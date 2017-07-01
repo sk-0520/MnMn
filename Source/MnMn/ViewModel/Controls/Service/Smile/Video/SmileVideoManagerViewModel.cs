@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
@@ -73,9 +74,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CheckItLaterCheckTimer.Tick += CheckItLaterCheckTimer_Tick;
 
-            var rankingResponse = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
-            var rankingModel = (SmileVideoRankingModel)rankingResponse.Result;
-            RankingManager = new SmileVideoRankingManagerViewModel(Mediation, rankingModel);
+            var rankingDefine = Mediation.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+            RankingManager = new SmileVideoRankingManagerViewModel(Mediation, rankingDefine);
 
             var searchResponse = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
             var searchModel = (SmileVideoSearchModel)searchResponse.Result;

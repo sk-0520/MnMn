@@ -6,11 +6,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    internal class Expression: IExpression
+    internal class Expression: IReadOnlyExpression
     {
         #region variable
 

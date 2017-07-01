@@ -22,6 +22,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
@@ -29,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     /// カテゴリ。
     /// </summary>
     [Serializable]
-    public class SmileVideoRankingGroupModel: ModelBase
+    public class SmileVideoRankingGroupModel: ModelBase, IReadOnlySmileVideoRankingGroup
     {
         #region property
 
@@ -38,6 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         /// </summary>
         [XmlElement("element")]
         public CollectionModel<DefinedElementModel> Items { get; set; } = new CollectionModel<DefinedElementModel>();
+        IReadOnlyList<IReadOnlyDefinedElement> IReadOnlySmileVideoRankingGroup.Items => Items;
 
         #endregion
     }

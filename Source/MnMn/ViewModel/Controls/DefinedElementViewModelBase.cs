@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
@@ -28,9 +29,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
     /// DefinedElementModelを表示のためになんかするViewModel。
     /// <para>DefinedElementModelの設計としてただ文字列を表示するだけなのでViewModelは不要だが、たまーに独自の何かを持たせることがあるのでその基底として使用する。</para>
     /// </summary>
-    public class DefinedElementViewModelBase: SingleModelWrapperViewModelBase<DefinedElementModel>
+    public class DefinedElementViewModelBase: SingleModelWrapperViewModelBase<IReadOnlyDefinedElement>, IReadOnlyKey
     {
-        public DefinedElementViewModelBase(DefinedElementModel model)
+        public DefinedElementViewModelBase(IReadOnlyDefinedElement model)
             : base(model)
         { }
 
@@ -44,6 +45,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public IReadOnlyDictionary<string, string> Extends => Model.Extends;
+
+        #endregion
+
+        #region IReadOnlyKey
+
         public string Key
         {
             get
@@ -52,15 +59,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
-        public IReadOnlyDictionary<string, string> Extends => Model.Extends;
-
         #endregion
     }
 
     public class DefinedElementViewModelBase<TDefinedElementModel>: DefinedElementViewModelBase
-        where TDefinedElementModel : DefinedElementModel
+        where TDefinedElementModel : IReadOnlyDefinedElement
     {
-        public DefinedElementViewModelBase(TDefinedElementModel model) : base(model)
+        public DefinedElementViewModelBase(TDefinedElementModel model) 
+            : base(model)
         {
             DefinedModel = model;
         }

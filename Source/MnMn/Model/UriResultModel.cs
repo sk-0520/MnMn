@@ -21,12 +21,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class UriResultModel: ModelBase
+    public class UriResultModel: ModelBase, IReadOnlyUriResult
     {
-        #region property
+        #region IReadOnlyUriResult
 
         public string Uri { get; set; }
 

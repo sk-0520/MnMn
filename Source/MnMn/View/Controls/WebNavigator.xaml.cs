@@ -31,6 +31,8 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -553,7 +555,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public ServiceType ServiceType { get; set; }
 
         public CollectionModel<PointingGestureItem> GestureItems { get; } = new CollectionModel<PointingGestureItem>();
-        IReadOnlyList<WebNavigatorGestureElementModel> GestureDefineElements { get; set; }
+        IReadOnlyList<IReadOnlyWebNavigatorGestureElement> GestureDefineElements { get; set; }
         IReadOnlyDictionary<string, ICommand> GestureCommands { get; set; }
 
         Mediation Mediation
@@ -561,7 +563,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return DoFunction(
-                    b => ((WebNavigatorTagModel)b.Tag).Mediation,
+                    b => ((IReadOnlyWebNavigatorTag)b.Tag).Mediation,
                     b => b.Mediation
                 );
             }
@@ -1088,7 +1090,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                 var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
                 DoAction(
-                    b => { ((WebNavigatorTagModel)b.Tag).Mediation.Request(processRequest); },
+                    b => { ((IReadOnlyWebNavigatorTag)b.Tag).Mediation.Request(processRequest); },
                     b => { (b.Mediation).Request(processRequest); }
                 );
             }
@@ -1130,7 +1132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             return false;
         }
 
-        CheckResultModel<ICommand> GetGestureCommand(Mediation mediation, IEnumerable<PointingGestureItem> items)
+        IReadOnlyCheckResult<ICommand> GetGestureCommand(Mediation mediation, IEnumerable<PointingGestureItem> items)
         {
             if(GestureDefineElements == null) {
                 var parameter = new WebNavigatorParameterModel(null, EventArgs.Empty, WebNavigatorCore.Engine, WebNavigatorParameterKind.Gesture);

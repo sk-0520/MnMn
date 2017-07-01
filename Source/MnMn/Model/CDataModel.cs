@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     [Serializable]
-    public sealed class CDataModel: ModelBase
+    public sealed class CDataModel: ModelBase, IReadOnlyCData
     {
         #region property
 

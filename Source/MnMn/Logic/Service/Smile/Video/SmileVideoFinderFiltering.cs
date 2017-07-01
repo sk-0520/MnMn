@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoFinderFiltering: Filtering
     {
-        public SmileVideoFinderFiltering(SmileVideoFinderFilteringItemSettingModel setting)
+        public SmileVideoFinderFiltering(IReadOnlySmileVideoFinderFilteringItem setting)
             : base(setting)
         {
             SubSetting = setting;
@@ -37,13 +38,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region property
 
-        SmileVideoFinderFilteringItemSettingModel SubSetting { get; }
+        IReadOnlySmileVideoFinderFilteringItem SubSetting { get; }
 
         #endregion
 
         #region function
 
-        public bool Check(SmileVideoFinderFilteringParameterModel parameter)
+        public bool Check(IReadOnlySmileVideoFinderFilteringParameter parameter)
         {
             switch(SubSetting.Target) {
                 case SmileVideoFinderFilteringTarget.VideoId:

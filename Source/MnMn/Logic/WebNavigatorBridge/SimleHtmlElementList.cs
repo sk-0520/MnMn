@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
@@ -43,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge
         }
 
         public MatchSmileHtmlElement MatchElement<TModel>(WebNavigatorElementConditionTagViewModelBase<TModel> targetElement)
-            where TModel : WebNavigatorElementConditionTagModel
+            where TModel : IReadOnlyWebNavigatorElementConditionTag
         {
             for(var i = 0; i < Nodes.Count; i++) {
                 var currentElements = Nodes

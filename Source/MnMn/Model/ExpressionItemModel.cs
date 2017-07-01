@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     [Serializable]
-    public class ExpressionItemModel : ModelBase
+    public class ExpressionItemModel : ModelBase, IReadOnlyExpressionItem
     {
-        #region property
+        #region IReadOnlyExpressionElement
 
         [XmlAttribute("id")]
         public string Id { get; set; }
@@ -26,6 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         [XmlElement("data")]
         public CDataModel Data { get; set; } = new CDataModel();
+        IReadOnlyCData IReadOnlyExpressionItem.Data => Data;
 
         #endregion
     }

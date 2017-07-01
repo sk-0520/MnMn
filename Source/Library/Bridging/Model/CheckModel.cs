@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.Model
 {
@@ -27,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model
     /// 結果を格納。
     /// <para>成功と状態、その他もろもろ。</para>
     /// </summary>
-    public class CheckModel: ModelBase
+    public class CheckModel: ModelBase, IReadOnlyCheck
     {
         public CheckModel(bool isSuccess, object detail, string message)
         {
@@ -54,24 +55,24 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model
 
         #endregion
 
-        #region function 
+        #region function
 
-        public static CheckModel Success()
+        public static IReadOnlyCheck Success()
         {
             return new CheckModel(true, null, null);
         }
 
-        public static CheckModel Failure()
+        public static IReadOnlyCheck Failure()
         {
             return new CheckModel(false, null, null);
         }
 
-        public static CheckModel Failure(string message)
+        public static IReadOnlyCheck Failure(string message)
         {
             return new CheckModel(false, null, message);
         }
 
-        public static CheckModel Failure(Exception ex)
+        public static IReadOnlyCheck Failure(Exception ex)
         {
             return new CheckModel(false, ex, ex.ToString());
         }

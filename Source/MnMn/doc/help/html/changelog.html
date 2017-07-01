@@ -15,13 +15,15 @@
 	<script src="../script/help.js"></script>
 
 	<script src="../../model-changelogs.js"></script>
+	<script src="../../archive-changelogs.js"></script>
 	<script>
 		$(function () {
 			var $parent = $('#parent');
 
 			var htmlList = [];
-			for (var i = 0, i_max = changelogs.length; i < i_max; i++) {
-				var log = makeChangeLogBlock(changelogs[i], false, '../image/changelog');
+			var array = changelogs.concat(archive_changelogs);
+			for (var i = 0, i_max = array.length; i < i_max; i++) {
+				var log = makeChangeLogBlock(array[i], false, '../image/changelog');
 				if (log.contents) {
 					htmlList.push(log.title.toCode());
 					htmlList.push(log.contents.toCode());

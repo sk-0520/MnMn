@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor
 {
@@ -12,9 +13,9 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor
     /// <see cref="CompilerParameters"/>のシリアライズ用データ。
     /// </summary>
     [Serializable]
-    public class CompileParameterModel:ModelBase
+    public class CompileParameterModel : ModelBase, IReadOnlyCompileParameter
     {
-        #region property
+        #region IReadOnlyCompileParameter
 
         //
         // 概要:
@@ -61,8 +62,10 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor
         public int WarningLevel { get; set; } = 4;
 
         public CollectionModel<string> AssemblyNames { get; set; } = new CollectionModel<string>();
+        IReadOnlyList<string> IReadOnlyCompileParameter.AssemblyNames => AssemblyNames;
 
         public CollectionModel<KeyValuePair<string, string>> ProviderOptions { get; set; } = new CollectionModel<KeyValuePair<string, string>>();
+        IReadOnlyList<KeyValuePair<string, string>> IReadOnlyCompileParameter.ProviderOptions => ProviderOptions;
 
         #endregion
     }

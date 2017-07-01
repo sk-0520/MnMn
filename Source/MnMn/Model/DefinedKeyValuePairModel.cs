@@ -23,19 +23,20 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     [Serializable]
-    public struct DefinedKeyValuePairModel: IModel
+    public struct DefinedKeyValuePairModel: IModel, IReadOnlyDefinedKeyValuePair
     {
-        #region property
-
-        [XmlAttribute("key")]
-        public string Key { get; set; }
+        #region IReadOnlyDefinedKeyValuePair
 
         [XmlAttribute("value")]
         public string Value { get; set; }
+
+        [XmlAttribute("key")]
+        public string Key { get; set; }
 
         #endregion
 

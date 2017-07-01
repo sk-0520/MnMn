@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
 {
-    public class WebNavigatorElementConditionParameterModel: WebNavigatorElementConditionTagModel
+    public class WebNavigatorElementConditionParameterModel: WebNavigatorElementConditionTagModel, IReadOnlyWebNavigatorElementConditionParameter
     {
-        #region property
+        #region IReadOnlyWebNavigatorElementConditionParameter
 
         [XmlAttribute("param")]
         public string ParameterSource { get; set; }

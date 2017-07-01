@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
+namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting
 {
     public interface IReadOnlyNetworkProxy: IReadOnlyPassword
     {

@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
@@ -29,14 +30,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// URI定義。
     /// </summary>
     [Serializable]
-    public class UriItemModel : ModelBase
+    public class UriItemModel : KeyModelBase, IReadOnlyUriItem
     {
-        #region property
-        /// <summary>
-        /// URIの検索キー。
-        /// </summary>
-        [XmlAttribute("key")]
-        public string Key { get; set; }
+        #region IReadOnlyUriItem
+
         /// <summary>
         /// 加工前URI。
         /// <para>完全なURIではない。</para>

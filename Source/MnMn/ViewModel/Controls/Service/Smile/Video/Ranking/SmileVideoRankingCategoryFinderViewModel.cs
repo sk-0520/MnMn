@@ -35,6 +35,8 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -50,12 +52,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
     {
         #region variable
 
-        DefinedElementModel _selectedPeriod;
-        DefinedElementModel _selectedTarget;
+        IReadOnlyDefinedElement _selectedPeriod;
+        IReadOnlyDefinedElement _selectedTarget;
 
         #endregion
 
-        public SmileVideoRankingCategoryFinderViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
+        public SmileVideoRankingCategoryFinderViewModel(Mediation mediation, IReadOnlySmileVideoRanking rankingModel, IReadOnlyDefinedElement period, IReadOnlyDefinedElement target, IReadOnlyDefinedElement category)
             : base(mediation, 0)
         {
             PeriodItems = new CollectionModel<DefinedElementModel>(rankingModel.Periods.Items.Select(i => (DefinedElementModel)i.DeepClone()));
@@ -67,10 +69,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region property
 
-        public IEnumerable<DefinedElementModel> PeriodItems { get; private set; }
-        public IEnumerable<DefinedElementModel> TargetItems { get; private set; }
+        public IReadOnlyList<IReadOnlyDefinedElement> PeriodItems { get; private set; }
+        public IReadOnlyList<IReadOnlyDefinedElement> TargetItems { get; private set; }
 
-        public DefinedElementModel SelectedPeriod
+        public IReadOnlyDefinedElement SelectedPeriod
         {
             get { return this._selectedPeriod; }
             set
@@ -82,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                 }
             }
         }
-        public DefinedElementModel SelectedTarget
+        public IReadOnlyDefinedElement SelectedTarget
         {
             get { return this._selectedTarget; }
             set
@@ -95,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             }
         }
 
-        public DefinedElementModel Category { get; private set; }
+        public IReadOnlyDefinedElement Category { get; private set; }
 
         public string CategoryName => Category.DisplayText;
 
@@ -107,7 +109,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region function
 
-        DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
+        static IReadOnlyDefinedElement GetContextElemetFromChangeElement(IEnumerable<IReadOnlyDefinedElement> items, IReadOnlyDefinedElement element)
         {
             if(items.Any(i => i == element)) {
                 return element;
@@ -116,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             }
         }
 
-        public void SetContextElements(DefinedElementModel period, DefinedElementModel target)
+        public void SetContextElements(IReadOnlyDefinedElement period, IReadOnlyDefinedElement target)
         {
             SelectedPeriod = GetContextElemetFromChangeElement(PeriodItems, period);
             SelectedTarget = GetContextElemetFromChangeElement(TargetItems, target);

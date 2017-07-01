@@ -451,7 +451,7 @@
       </Menu>
 
       <Separator Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" />
-      <Button Command="{Binding LoadPrevPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <Button Padding="0" Command="{Binding LoadPrevPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
         <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -528,7 +528,7 @@
 
         </MenuItem>
       </Menu>
-      <Button Command="{Binding LoadNextPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <Button Padding="0" Command="{Binding LoadNextPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
         <Button.Style>
           <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Style.Triggers>
@@ -595,7 +595,7 @@
         </MenuItem>
       </Menu>
 
-      <xctk:SplitButton BorderThickness="0" IsOpen="{Binding IsOpenWorkingPlayer, Mode=TwoWay}" Command="{Binding SwitchWorkingPlayerCommand}" >
+      <xctk:SplitButton Padding="0" BorderThickness="0" IsOpen="{Binding IsOpenWorkingPlayer, Mode=TwoWay}" Command="{Binding SwitchWorkingPlayerCommand}" >
         <xctk:SplitButton.Content>
           <StackPanel Style="{StaticResource ItemPanel}">
             <Viewbox Style="{StaticResource SmallItemBox}">
@@ -2298,6 +2298,15 @@
                                 </Viewbox>
                               </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Header="ランキング表示" Command="{Binding DataContext.ShowRankingCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+                              <MenuItem.Icon>
+                                <Viewbox Style="{StaticResource SmallIconBox}">
+                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                    <Path Data="{StaticResource Image_Ranking}" Style="{StaticResource SmallDefaultIconPath}" />
+                                  </Canvas>
+                                </Viewbox>
+                              </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem Header="大百科を標準ブラウザで開く" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
                                 <Image Style="{StaticResource SmallIconImage}" Source="{Binding Source={x:Static app_logic:WebNavigatorCore.DefaultBrowserIcon}}" />
@@ -2355,6 +2364,7 @@
                             <Path Data="{StaticResource Image_Lock}" Style="{StaticResource MinimumDefaultIconPath}" />
                           </Canvas>
                         </Viewbox>
+
                         <Button
                           Style="{StaticResource Hyperlink}"
                           Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
@@ -2366,6 +2376,13 @@
                           <Viewbox Style="{StaticResource {x:Type Viewbox}}">
                             <Canvas Style="{StaticResource IconCanvas-24x24}" >
                               <Path Data="{StaticResource Image_Navigationbar_Play}" Style="{StaticResource MinimumLinkIconPath}" />
+                            </Canvas>
+                          </Viewbox>
+                        </Button>
+                        <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.ShowRankingCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding IsRankingCategory, Converter={StaticResource BooleanToVisibilityConverter}}">
+                          <Viewbox Style="{StaticResource MinimumIconBox}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}">
+                              <Path Data="{StaticResource Image_Ranking}" Style="{StaticResource MinimumLinkIconPath}" />
                             </Canvas>
                           </Viewbox>
                         </Button>

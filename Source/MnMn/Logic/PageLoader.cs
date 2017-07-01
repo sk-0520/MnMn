@@ -25,10 +25,12 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Delegate;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
@@ -39,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// ページ取得からあれこれ解析まで一通り頑張る人。
     /// <para>こまごま public だけど基本的に <see cref="GetResponseTextAsync"/> のみで使い捨て。</para>
     /// </summary>
-    public class PageLoader: DisposeFinalizeBase
+    public class PageLoader: DisposeFinalizeBase, IReadOnlyKey
     {
         public PageLoader(Mediation mediation, IHttpUserAgentCreator userAgentCreator, string key, ServiceType serviceType)
         {
@@ -61,10 +63,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         HttpClient HttpUserAgent { get; set; }
 
-        /// <summary>
-        /// 各種URI・パラメータ取得用キー。
-        /// </summary>
-        public string Key { get; private set; }
         /// <summary>
         /// 使用目的サービス。
         /// </summary>
@@ -260,7 +258,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return method[httpMethod];
         }
 
-        protected CheckModel CheckResponseHeaders(HttpResponseMessage response)
+        protected IReadOnlyCheck CheckResponseHeaders(HttpResponseMessage response)
         {
             return Mediation.CheckResponseHeader(Key, Uri, response.Headers, ServiceType);
         }
@@ -291,7 +289,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// 一連の処理を自動化してテキストデータを返す。
         /// </summary>
         /// <returns></returns>
-        public async Task<CheckResultModel<string>> GetResponseTextAsync(Define.PageLoaderMethod httpMethod)
+        public async Task<IReadOnlyCheckResult<string>> GetResponseTextAsync(Define.PageLoaderMethod httpMethod)
         {
             try {
                 MakeUri();
@@ -353,6 +351,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 OnExitProcess();
             }
         }
+
+        #endregion
+
+        #region IReadOnlyKey
+
+        /// <summary>
+        /// 各種URI・パラメータ取得用キー。
+        /// </summary>
+        public string Key { get; private set; }
 
         #endregion
 

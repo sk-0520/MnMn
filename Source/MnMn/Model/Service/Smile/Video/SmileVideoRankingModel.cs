@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
@@ -30,19 +31,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     /// ランキング一覧。
     /// </summary>
     [Serializable, XmlRoot("ranking")]
-    public class SmileVideoRankingModel: ModelBase
+    public class SmileVideoRankingModel: ModelBase, IReadOnlySmileVideoRanking
     {
+        #region IReadOnlySmileVideoRanking
+
         [XmlElement("periods")]
         public SmileVideoRankingGroupModel Periods { get; set; } = new SmileVideoRankingGroupModel();
+        IReadOnlySmileVideoRankingGroup IReadOnlySmileVideoRanking.Periods => Periods;
 
         [XmlElement("targets")]
         public SmileVideoRankingGroupModel Targets { get; set; } = new SmileVideoRankingGroupModel();
+        IReadOnlySmileVideoRankingGroup IReadOnlySmileVideoRanking.Targets => Targets;
 
         /// <summary>
         /// 各カテゴリの大枠。
         /// </summary>
         [XmlElement("categories")]
         public CollectionModel<SmileVideoCategoryGroupModel> Items { get; set; } = new CollectionModel<SmileVideoCategoryGroupModel>();
+        IReadOnlyList<IReadOnlySmileVideoCategoryGroup> IReadOnlySmileVideoRanking.Items => Items;
 
+        #endregion
     }
 }

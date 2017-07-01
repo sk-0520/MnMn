@@ -16,6 +16,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -354,7 +355,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IResponseCompatibility
 
-        public CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public IReadOnlyCheck CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             return DoFunc<CheckModel>(key, false, true, 1, typeof(IResponseCompatibility), nameof(IResponseCompatibility.CheckResponseHeader), key, uri, headers, serviceType);
         }

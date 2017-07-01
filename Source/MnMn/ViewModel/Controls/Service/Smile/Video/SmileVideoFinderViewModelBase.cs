@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
@@ -520,7 +521,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return false;
         }
 
-        protected virtual CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
+        protected virtual IReadOnlyCheckResult<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
         {
             return CheckResultModel.Failure<DragParameterModel>();
         }

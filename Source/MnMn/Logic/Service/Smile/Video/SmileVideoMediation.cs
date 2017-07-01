@@ -26,11 +26,13 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -310,7 +312,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return RequestCore(request);
         }
 
-        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -355,7 +357,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestParameterCore(key, replaceMap, serviceType);
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
@@ -364,7 +366,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestMappingCore(key, replaceMap, serviceType);
         }
 
-        public override IExpression GetExpression(string key, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetExpression(key, serviceType);
@@ -373,7 +375,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetExpressionCore(key, serviceType);
         }
 
-        public override IExpression GetExpression(string key, string id, ServiceType serviceType)
+        public override IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetExpression(key, id, serviceType);
@@ -400,7 +402,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return ConvertRequestMappingCore(key, mapping, serviceType);
         }
 
-        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override IReadOnlyCheck CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             return CheckResponseHeaderCore(key, uri, headers, serviceType);
         }
@@ -464,9 +466,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return plaingItem.View;
                 }
             } else {
-                var finder = request.ShowRequestParameter as SmileVideoSearchParameterModel;
-                if(finder != null) {
-                    ManagerPack.SearchManager.LoadSearchFromParameterAsync(finder).ConfigureAwait(false);
+                var search = request.ShowRequestParameter as SmileVideoSearchParameterModel;
+                if(search != null) {
+                    ManagerPack.SearchManager.LoadSearchFromParameterAsync(search).ConfigureAwait(false);
                     return ManagerPack.SearchManager;
                 } else {
                     var mylist = request.ShowRequestParameter as SmileVideoSearchMyListParameterModel;
@@ -477,6 +479,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         ManagerPack.MyListManager.IsSelectedHistory = false;
                         ManagerPack.MyListManager.IsSelectedSearch = true;
                         return ManagerPack.MyListManager;
+                    } else {
+                        var rankingName = request.ShowRequestParameter as SmileVideoRankingCategoryNameParameterModel;
+                        if(rankingName != null) {
+                            ManagerPack.RankingManager.LoadRankingCategoryFromParameterAsync(rankingName).ConfigureAwait(false);
+                            return ManagerPack.RankingManager;
+                        }
                     }
                 }
             }

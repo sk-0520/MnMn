@@ -22,20 +22,22 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class Filtering
     {
-        public Filtering(FilteringItemSettingModel setting)
+        public Filtering(IReadOnlyFilteringItem setting)
         {
             Setting = setting;
         }
 
         #region property
 
-        protected FilteringItemSettingModel Setting { get; }
+        protected IReadOnlyFilteringItem Setting { get; }
+
         Regex RegexChecker { get; set; } = null;
         bool IsInvalidRegex { get; set; } = false;
 

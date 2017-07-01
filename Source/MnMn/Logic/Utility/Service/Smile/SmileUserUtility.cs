@@ -22,6 +22,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using HtmlAgilityPack;
 
@@ -102,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return false;
         }
 
-        public static CheckResultModel<Gender> GetGender(string accountElementInnerText)
+        public static IReadOnlyCheckResult<Gender> GetGender(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 性別
@@ -130,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Failure<Gender>();
         }
 
-        public static CheckResultModel<DateTime> GetBirthday(string accountElementInnerText)
+        public static IReadOnlyCheckResult<DateTime> GetBirthday(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 生年月日
@@ -156,7 +157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Failure<DateTime>();
         }
 
-        public static CheckResultModel<string> GetLocation(string accountElementInnerText)
+        public static IReadOnlyCheckResult<string> GetLocation(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 地域
@@ -191,7 +192,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return result;
         }
 
-        public static CheckResultModel<string> GetPageLink(HtmlNode node, string className)
+        public static IReadOnlyCheckResult<string> GetPageLink(HtmlNode node, string className)
         {
             var element = FindNodeOrDefaultFromClassName(node, className);
             if(element == null) {

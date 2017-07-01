@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 {
     public abstract class WebNavigatorDefinedElementViewModelBase<TWebNavigatorDefinedElementModel>: DefinedElementViewModelBase<TWebNavigatorDefinedElementModel>
-        where TWebNavigatorDefinedElementModel : WebNavigatorDefinedElementModelBase
+        where TWebNavigatorDefinedElementModel : IReadOnlyWebNavigatorDefinedElement
     {
-        public WebNavigatorDefinedElementViewModelBase(TWebNavigatorDefinedElementModel model) 
+        public WebNavigatorDefinedElementViewModelBase(TWebNavigatorDefinedElementModel model)
             : base(model)
         { }
 

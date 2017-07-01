@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video
 {
-    public interface ISmileVideoSearchDefine
+    public interface IReadOnlySmileVideoSearchDefine
     {
         #region proeprty
 
         int MaximumIndex { get; }
         int MaximumCount { get; }
 
-        CollectionModel<DefinedElementModel> Methods { get; }
-        CollectionModel<DefinedElementModel> Sort { get; }
-        CollectionModel<DefinedElementModel> Type { get; }
+        IReadOnlyList<DefinedElementModel> Methods { get; }
+        IReadOnlyList<DefinedElementModel> Sort { get; }
+        IReadOnlyList<DefinedElementModel> Type { get; }
 
         #endregion
     }

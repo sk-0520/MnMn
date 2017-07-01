@@ -10,6 +10,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
@@ -17,6 +18,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
@@ -128,6 +130,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         var tagViewModel = (SmileVideoTagViewModel)o;
 
                         SearchTag(tagViewModel);
+                    }
+                );
+            }
+        }
+
+        public ICommand ShowRankingCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+
+                        var parameter = new SmileVideoRankingCategoryNameParameterModel() {
+                            CategoryName = tag.TagName,
+                        };
+
+                        Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+                    },
+                    o => {
+                        var tag = (SmileVideoTagViewModel)o;
+                        if(tag == null) {
+                            // プレイヤー立ち上げ中はぬるりん
+                            return false;
+                        }
+
+                        var rankingDefine = Mediation.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+                        var rankingCategory = rankingDefine.Items
+                            .SelectMany(i => i.Categories)
+                            .FirstOrDefault(c => c.Words.Values.Any(s => string.Equals(s, tag.TagName, StringComparison.InvariantCultureIgnoreCase)))
+                        ;
+                        if(rankingCategory == null) {
+                            return false;
+                        }
+
+                        return !Setting.Ranking.IgnoreCategoryItems.Any(i => i == rankingCategory.Key);
                     }
                 );
             }

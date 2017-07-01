@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 {
-    public class WebNavigatorContextMenuItemViewModel: WebNavigatorDefinedElementViewModelBase<WebNavigatorContextMenuItemModel>
+    public class WebNavigatorContextMenuItemViewModel: WebNavigatorDefinedElementViewModelBase<IReadOnlyWebNavigatorContextMenuItem>
     {
         #region variable
 
@@ -20,7 +21,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         #endregion
 
-        public WebNavigatorContextMenuItemViewModel(WebNavigatorContextMenuItemModel model)
+        public WebNavigatorContextMenuItemViewModel(IReadOnlyWebNavigatorContextMenuItem model)
             : base(model)
         { }
 

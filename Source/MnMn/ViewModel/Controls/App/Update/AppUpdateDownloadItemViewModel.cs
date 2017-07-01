@@ -16,6 +16,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using Microsoft.Win32.SafeHandles;
@@ -29,6 +30,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
         { }
 
         #region function
+
+        void SetStartInfoEnvironment(ProcessStartInfo startInfo)
+        {
+            // #552@自身の Path は除外する
+            var myDirPath = Constants.AssemblyRootDirectoryPath;
+            if(myDirPath.Last() == Path.DirectorySeparatorChar) {
+                myDirPath = myDirPath.Substring(0, myDirPath.Length - 1);
+            }
+            var pathValue = startInfo.Environment["PATH"];
+            Mediation.Logger.Information("default path", pathValue);
+            var pathItems = pathValue.Split(';')
+                .Where(s => !s.StartsWith(myDirPath, StringComparison.OrdinalIgnoreCase))
+            ;
+            var newPathValue = string.Join(";", pathItems);
+            Mediation.Logger.Information("update path", newPathValue);
+            startInfo.Environment["PATH"] = newPathValue;
+        }
 
         void ExceuteUpdate()
         {
@@ -51,6 +69,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                 { "platform",   Environment.Is64BitProcess ? "x64": "x86" },
             };
             startInfo.Arguments = string.Join(" ", argsMap.Select(p => $"/{p.Key}=\"{p.Value}\""));
+
+            SetStartInfoEnvironment(startInfo);
+
+            startInfo.UseShellExecute = false;
 
             Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
 

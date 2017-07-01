@@ -21,22 +21,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     [Serializable, XmlRoot("theme")]
-    public class ThemeDefineModel: RawModelBase
+    public class ThemeDefineModel: ModelBase, IReadOnlyThemeDefine
     {
         #region property
 
         [XmlArray("application"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> ApplicationItems { get; set; } = new CollectionModel<DefinedElementModel>();
+        IReadOnlyList<IReadOnlyDefinedElement> IReadOnlyThemeDefine.ApplicationItems => ApplicationItems;
 
         [XmlArray("base"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> BaseItems { get; set; } = new CollectionModel<DefinedElementModel>();
+        IReadOnlyList<IReadOnlyDefinedElement> IReadOnlyThemeDefine.BaseItems => BaseItems;
 
         [XmlArray("accent"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> AccentItems { get; set; } = new CollectionModel<DefinedElementModel>();
+        IReadOnlyList<IReadOnlyDefinedElement> IReadOnlyThemeDefine.AccentItems => AccentItems;
 
         #endregion
     }

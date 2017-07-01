@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 

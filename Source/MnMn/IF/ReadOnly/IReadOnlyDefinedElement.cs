@@ -23,11 +23,9 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 {
-    public interface IReadOnlyDefinedElement: IDisplayText
+    public interface IReadOnlyDefinedElement: IDisplayText, IReadOnlyKey, IModel, IDeepClone
     {
         #region property
-
-        string Key { get; }
 
         IReadOnlyDictionary<string, string> Words { get; }
 

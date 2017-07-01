@@ -28,15 +28,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             foreach(var itemElement in itemElements) {
                 var item = new SmileMarketVideoItemModel();
 
-                var thumbnailElement = itemElement.SelectSingleNode(".//*[@class='thumbnail']");
+                var thumbnailElement = itemElement.Descendants().First(n => n.Attributes.Contains("class") && n.Attributes["class"].Value.Contains("thumbnail"));
                 var cashRegisterElement = thumbnailElement.SelectSingleNode(".//a");
                 var imageElement = thumbnailElement.SelectSingleNode(".//img");
                 var standbyElement = thumbnailElement.SelectSingleNode(".//span[last()][not(@id)]");
 
                 item.CashRegisterUrl = cashRegisterElement.GetAttributeValue("href", string.Empty);
-                item.ThumbnailUrl = imageElement.GetAttributeValue("src", string.Empty);
+                item.ThumbnailUrl = imageElement?.GetAttributeValue("src", string.Empty);
                 item.Standby = standbyElement?.InnerText;
-                item.Title = imageElement.GetAttributeValue("alt", imageElement.GetAttributeValue("title", string.Empty));
+                item.Title = imageElement?.GetAttributeValue("alt", imageElement.GetAttributeValue("title", string.Empty));
 
                 var makerElement = itemElement.SelectSingleNode(".//*[@class='maker']");
                 if(makerElement != null) {
@@ -44,9 +44,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 }
 
                 var actionElement = itemElement.SelectSingleNode(".//*[@class='action']");
-                var buyElement = actionElement.SelectSingleNode(".//*[@class='buy']");
-                var clickElement = actionElement.SelectSingleNode(".//*[@class='click']");
-                var videoElement = actionElement.SelectSingleNode(".//span[last()][not(@class)]"); // この動画でクリック
+                var buyElement = actionElement?.SelectSingleNode(".//*[@class='buy']");
+                var clickElement = actionElement?.SelectSingleNode(".//*[@class='click']");
+                var videoElement = actionElement?.SelectSingleNode(".//span[last()][not(@class)]"); // この動画でクリック
 
                 if(buyElement != null) {
                     item.BuyCount = TrimCountNoise(buyElement.InnerText);

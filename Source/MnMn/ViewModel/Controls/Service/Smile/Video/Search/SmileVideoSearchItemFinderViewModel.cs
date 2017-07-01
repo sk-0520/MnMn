@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions.Service.Smile.Video;
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchItemFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, SearchType type, string query, int index, int count)
+        public SmileVideoSearchItemFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort, SearchType type, string query, int index, int count)
             : base(mediation, index)
         {
             SearchModel = searchModel;
@@ -66,8 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchModel SearchModel { get; }
 
-        public DefinedElementModel Method { get; }
-        public DefinedElementModel Sort { get; }
+        public IReadOnlyDefinedElement Method { get; }
+        public IReadOnlyDefinedElement Sort { get; }
         public SearchType Type { get; }
         public string Query { get; }
 

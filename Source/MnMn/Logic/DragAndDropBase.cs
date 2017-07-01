@@ -24,6 +24,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -47,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region function
 
         protected abstract bool CanDragStart(UIElement sender, MouseEventArgs e);
-        protected abstract CheckResultModel<DragParameterModel> GetDragParameter(UIElement sender, MouseEventArgs e);
+        protected abstract IReadOnlyCheckResult<DragParameterModel> GetDragParameter(UIElement sender, MouseEventArgs e);
 
         void MouseDownCore(UIElement sender, MouseEventArgs e)
         {

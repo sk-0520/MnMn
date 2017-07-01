@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -489,7 +490,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return SelectedBookmarkNode != null;
         }
 
-        CheckResultModel<DragParameterModel> GetDragParameterNode(UIElement sender, MouseEventArgs e)
+        IReadOnlyCheckResult<DragParameterModel> GetDragParameterNode(UIElement sender, MouseEventArgs e)
         {
             IsDragOver = true;
 
