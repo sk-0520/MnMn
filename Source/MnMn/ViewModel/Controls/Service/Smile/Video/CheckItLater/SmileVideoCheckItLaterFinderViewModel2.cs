@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             IdAndUrlLaterMap.Clear();
 
             var result = new FeedSmileVideoModel();
-            foreach(var model in Setting.CheckItLater.Where(c => !c.IsChecked)) {
+            foreach(var model in SettedVideoItems) {
                 if(IdAndUrlLaterMap.ContainsKey(model.VideoId)) {
                     continue;
                 }

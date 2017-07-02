@@ -171,6 +171,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 Setting.CheckItLater.Remove(item);
                 item.CheckTimestamp = DateTime.Now;
                 item.IsChecked = false;
+                // 下位互換の Unknown を指定値で上書き
+                item.CheckItLaterFrom = checkItLaterFrom;
             }
 
             var checkItLaterFromTag = videoItem.VolatileTag as IReadOnlySmileVideoCheckItLaterFrom;
@@ -195,7 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             ;
 
             AllItemsFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { }, CheckItLaterItem);
-
+            ManualOperationFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { }, CheckItLaterItem.Where(i => i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.ManualOperation || i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.Unknown));
         }
 
         #endregion
