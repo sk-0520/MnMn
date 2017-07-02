@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -27,5 +28,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     /// 設定基底。
     /// </summary>
     public class SettingModelBase: ModelBase
-    { }
+    {
+        #region property
+
+        /// <summary>
+        /// 永続性の対象外として使用する怪しいデータ。
+        /// <para>これに頼るときはよっぽどなんか困った時。</para>
+        /// </summary>
+        [IgnoreDataMember]
+        public object VolatileTag { get; set; }
+
+        #endregion
+    }
 }
