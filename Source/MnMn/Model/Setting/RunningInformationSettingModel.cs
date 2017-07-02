@@ -20,13 +20,14 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
     [DataContract]
-    public class RunningInformationSettingModel: SettingModelBase
+    public class RunningInformationSettingModel: SettingModelBase, IReadOnlyRunningInformationSetting
     {
-        #region property
+        #region IReadOnlyRunningInformationSetting
 
         /// <summary>
         /// 使用許諾OK。

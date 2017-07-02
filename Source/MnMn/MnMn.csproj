@@ -327,6 +327,10 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
+    <Compile Include="IF\ReadOnly\Setting\IReadOnlyRunningInformationSetting.cs" />
+    <Compile Include="IF\ReadOnly\Setting\IReadOnlyThemeSetting.cs" />
+    <Compile Include="IF\ReadOnly\Setting\IReadOnlyWebNavigatorSetting.cs" />
+    <Compile Include="IF\ReadOnly\Setting\Service\Smile\IReadOnlySmileUserAccount.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoCategoryGroup.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoFinderFilteringParameter.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoRanking.cs" />

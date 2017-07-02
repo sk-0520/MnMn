@@ -19,12 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    public class ThemeSettingModel: SettingModelBase
+    public class ThemeSettingModel: SettingModelBase, IReadOnlyThemeSetting
     {
-        #region property
+        #region IReadOnlyThemeSetting
 
         public bool IsRandom { get; set; } = Constants.SettingApplicationThemeIsRandom;
 
