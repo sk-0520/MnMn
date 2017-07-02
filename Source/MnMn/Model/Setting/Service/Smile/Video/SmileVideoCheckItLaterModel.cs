@@ -21,10 +21,11 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    public class SmileVideoCheckItLaterModel: SmileVideoVideoItemModel
+    public class SmileVideoCheckItLaterModel: SmileVideoVideoItemModel, IReadOnlySmileVideoCheckItLaterFrom
     {
         #region property
 
@@ -42,6 +43,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 
         [DataMember]
         public SmileVideoCheckItLaterFrom CheckItLaterFrom { get; set; }
+
+        #endregion
+
+        #region IReadOnlySmileVideoCheckItLaterFrom
+
+        [DataMember]
+        public string FromId { get; set; }
+
+        [DataMember]
+        public string FromName { get; set; }
 
         #endregion
     }
