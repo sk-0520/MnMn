@@ -901,7 +901,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             foreach(var bookmark in BookmarkUserMyListPairs.ModelList) {
                 var task = CheckBookmarkMyListAsync(bookmark.MyListId).ContinueWith(t => {
                     if(t.Result != null && t.Result.Any()) {
-                        newVideoItems.AddRange(t.Result);
+                        var videoItems = t.Result;
+                        foreach(var item in videoItems) {
+                            item.VolatileTag = new SmileVideoCheckItLaterFromModel() {
+                                FromId = bookmark.MyListId,
+                                FromName = bookmark.MyListCustomName ?? bookmark.MyListName,
+                            };
+                        }
+                        newVideoItems.AddRange(videoItems);
                     }
                 });
                 tasks.Add(task);

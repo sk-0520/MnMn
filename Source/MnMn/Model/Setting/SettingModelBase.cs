@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// <para>これに頼るときはよっぽどなんか困った時。</para>
         /// </summary>
         [IgnoreDataMember]
-        public object VolatileTag { get; set; }
+        internal object VolatileTag { get; set; }
 
         #endregion
     }
