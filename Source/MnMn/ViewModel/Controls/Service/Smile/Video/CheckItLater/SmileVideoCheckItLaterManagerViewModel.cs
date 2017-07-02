@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -93,6 +94,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 item.CheckTimestamp = DateTime.Now;
                 item.IsChecked = false;
             }
+
+            var checkItLaterFromTag = videoItem.VolatileTag as IReadOnlySmileVideoCheckItLaterFrom;
+            if(checkItLaterFromTag != null) {
+                item.FromId = checkItLaterFromTag.FromId;
+                item.FromName = checkItLaterFromTag.FromName;
+            }
+
             //Setting.CheckItLater.Insert(0, item);
             AppUtility.PlusItem(Setting.CheckItLater, item);
 
