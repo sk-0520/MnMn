@@ -145,7 +145,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#599: ビルド手順の明文化'
 					},
 					{
 						'revision': '',
