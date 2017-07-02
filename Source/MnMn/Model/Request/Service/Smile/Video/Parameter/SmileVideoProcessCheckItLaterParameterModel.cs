@@ -26,15 +26,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
 {
     public class SmileVideoProcessCheckItLaterParameterModel: SmileVideoProcessParameterModelBase
     {
-        public SmileVideoProcessCheckItLaterParameterModel(SmileVideoVideoItemModel videoItem)
-            : this(videoItem, false)
+        public SmileVideoProcessCheckItLaterParameterModel(SmileVideoVideoItemModel videoItem, SmileVideoCheckItLaterFrom checkItLaterFrom)
+            : this(videoItem, checkItLaterFrom, false)
         { }
 
-        public SmileVideoProcessCheckItLaterParameterModel(SmileVideoVideoItemModel videoItem, bool isForce)
+        public SmileVideoProcessCheckItLaterParameterModel(SmileVideoVideoItemModel videoItem, SmileVideoCheckItLaterFrom checkItLaterFrom, bool isForce)
             : base(SmileVideoProcess.CheckItLater)
         {
             VideoItem = videoItem;
             IsForce = isForce;
+            CheckItLaterFrom = checkItLaterFrom;
         }
 
         #region property
@@ -42,6 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
         public SmileVideoVideoItemModel VideoItem { get; }
 
         public bool IsForce { get; }
+
+        public SmileVideoCheckItLaterFrom CheckItLaterFrom { get; }
 
         #endregion
     }

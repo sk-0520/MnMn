@@ -472,7 +472,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var information = finderItem.Information;
             var item = information.ToVideoItemModel();
-            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.ManualOperation, true)));
         }
 
         void AddBookmarkCheckedItem(SmileVideoBookmarkNodeViewModel bookmark)

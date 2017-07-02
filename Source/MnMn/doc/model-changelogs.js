@@ -111,7 +111,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#652: あとで見るのデータ構造に「どこから」を持たせる'
 					},
 					{
 						'revision': '',

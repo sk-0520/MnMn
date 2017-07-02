@@ -383,7 +383,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             foreach(var bookmark in UserBookmarkCollection.ModelList) {
                 var task = CheckBookmarkPostAsync(bookmark.UserId).ContinueWith(t => {
                     if(t.Result != null && t.Result.Any()) {
-                        newVideoItems.AddRange(t.Result);
+                        var videoItems = t.Result;
+                        foreach(var item in videoItems) {
+                            item.VolatileTag = new SmileVideoCheckItLaterFromModel() {
+                                FromId = bookmark.UserId,
+                                FromName = bookmark.UserName,
+                            };
+                        }
+                        newVideoItems.AddRange(videoItems);
                     }
                 });
                 tasks.Add(task);
@@ -404,7 +411,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 var videoItems = postTask.Result;
 
                 foreach(var item in videoItems) {
-                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, Define.Service.Smile.Video.SmileVideoCheckItLaterFrom.UserBookmark)));
                 }
             });
         }

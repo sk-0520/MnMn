@@ -239,6 +239,7 @@
     <Compile Include="Define\Service\IdleTalk\IdleTalkMediationKey.cs" />
     <Compile Include="Define\Service\IdleTalk\Mutter\IdleTalkMutterMediationKey.cs" />
     <Compile Include="Define\Service\QuestionnaireKind.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoCheckItLaterFrom.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoSearchType.cs" />
@@ -327,6 +328,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoCheckItLaterFrom.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyRunningInformationSetting.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyThemeSetting.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyWebNavigatorSetting.cs" />
@@ -519,6 +521,7 @@
     <Compile Include="Model\Setting\NetworkUserAgentSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileIdleTalkMutterSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkSettingModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoCheckItLaterFromModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDmcItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveCategorySettingModel.cs" />
