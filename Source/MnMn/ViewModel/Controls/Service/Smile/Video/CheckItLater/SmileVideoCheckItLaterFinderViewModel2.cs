@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -24,6 +25,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         Dictionary<string, SmileVideoCheckItLaterModel> IdAndUrlLaterMap { get; } = new Dictionary<string, SmileVideoCheckItLaterModel>();
 
+        IReadOnlySmileVideoCheckItLaterFrom CheckItLaterFrom { get; set; }
+        IReadOnlyList<SmileVideoCheckItLaterModel> SettedVideoItems { get; set; }
+
         #endregion
 
         #region command
@@ -37,6 +41,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         #region function
 
+        public void SetVideoItems(IReadOnlySmileVideoCheckItLaterFrom checkItLaterFrom, IEnumerable<SmileVideoCheckItLaterModel> videoItems)
+        {
+            CheckItLaterFrom = checkItLaterFrom;
+            SettedVideoItems = videoItems.ToEvaluatedSequence();
+        }
 
         void RemoveCheckedVideos()
         {

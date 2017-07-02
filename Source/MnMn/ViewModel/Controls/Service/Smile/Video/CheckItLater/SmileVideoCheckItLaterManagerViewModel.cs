@@ -28,6 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -35,8 +36,18 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.CheckItLater
 {
-    public class SmileVideoCheckItLaterManagerViewModel: SmileVideoCustomManagerViewModelBase
+    public class SmileVideoCheckItLaterManagerViewModel : SmileVideoCustomManagerViewModelBase
     {
+        #region variable
+
+        bool _isSelectedAllItemsFinder;
+        bool _isSelectedManualOperationFinder;
+        bool _isSelectedMylistBookmarkFinderItems;
+        bool _isSelectedUserBookmarkFinderItems;
+        bool _isSelectedWordBookmarkFinderItems;
+
+        #endregion
+
         public SmileVideoCheckItLaterManagerViewModel(Mediation mediation)
             : base(mediation)
         {
@@ -50,11 +61,67 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         public SmileVideoCheckItLaterFinderViewModel CheckItLaterFinder { get; }
 
+        IReadOnlyList<SmileVideoCheckItLaterModel> CheckItLaterItem { get; set; }
+
         public SmileVideoCheckItLaterFinderViewModel2 AllItemsFinder { get; }
         public SmileVideoCheckItLaterFinderViewModel2 ManualOperationFinder { get; }
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> MylistBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> UserBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> WordBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
+
+        public bool IsSelectedAllItemsFinder
+        {
+            get { return this._isSelectedAllItemsFinder; }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedAllItemsFinder, value)) {
+                    if(IsSelectedAllItemsFinder) {
+                        AllItemsFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+
+        public bool IsSelectedManualOperationFinder
+        {
+            get { return this._isSelectedManualOperationFinder; }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedManualOperationFinder, value)) {
+                    if(IsSelectedManualOperationFinder) {
+                        ManualOperationFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+        public bool IsSelectedMylistBookmarkFinderItems
+        {
+            get { return this._isSelectedMylistBookmarkFinderItems; }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedMylistBookmarkFinderItems, value)) {
+                }
+            }
+        }
+        public bool IsSelectedUserBookmarkFinderItems
+        {
+            get { return this._isSelectedUserBookmarkFinderItems; }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedUserBookmarkFinderItems, value)) {
+                }
+            }
+        }
+        public bool IsSelectedWordBookmarkFinderItems
+        {
+            get { return this._isSelectedWordBookmarkFinderItems; }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedWordBookmarkFinderItems, value)) {
+                }
+            }
+        }
+        */
 
         public bool HasItem
         {
@@ -121,6 +188,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         void BuildFinders()
         {
+            CheckItLaterItem = Setting.CheckItLater
+                .Where(i => !i.IsChecked)
+                .ToEvaluatedSequence()
+            ;
+
+            AllItemsFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { }, CheckItLaterItem);
 
         }
 
