@@ -39,13 +39,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
     public class SmileVideoCheckItLaterManagerViewModel : SmileVideoCustomManagerViewModelBase
     {
         #region variable
-
+        /*
         bool _isSelectedAllItemsFinder;
         bool _isSelectedManualOperationFinder;
         bool _isSelectedMylistBookmarkFinderItems;
         bool _isSelectedUserBookmarkFinderItems;
         bool _isSelectedWordBookmarkFinderItems;
-
+        */
         #endregion
 
         public SmileVideoCheckItLaterManagerViewModel(Mediation mediation)
@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> UserBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> WordBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
 
+        /*
         public bool IsSelectedAllItemsFinder
         {
             get { return this._isSelectedAllItemsFinder; }

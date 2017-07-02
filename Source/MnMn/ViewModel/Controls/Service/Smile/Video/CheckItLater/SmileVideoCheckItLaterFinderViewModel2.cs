@@ -17,6 +17,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 {
     public class SmileVideoCheckItLaterFinderViewModel2 : SmileVideoFeedFinderViewModelBase
     {
+        #region variable
+
+        bool _isSelected;
+
+        #endregion
+
         public SmileVideoCheckItLaterFinderViewModel2(Mediation mediation)
             : base(mediation, 0)
         { }
@@ -27,6 +33,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         IReadOnlySmileVideoCheckItLaterFrom CheckItLaterFrom { get; set; }
         IReadOnlyList<SmileVideoCheckItLaterModel> SettedVideoItems { get; set; }
+
+        public bool IsSelected
+        {
+            get { return this._isSelected; }
+            set
+            {
+                if(SetVariableValue(ref this._isSelected, value)) {
+                    if(IsSelected) {
+                        LoadDefaultCacheAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+        }
 
         #endregion
 

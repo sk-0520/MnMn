@@ -23,6 +23,13 @@
           </Setter>
         </Style>
         <Style x:Key="InnerTab" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
+          <!--<Setter Property="Style">
+            <Setter.Value>
+              <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+              </Style>
+            </Setter.Value>
+          </Setter>-->
           <Setter Property="ItemTemplate">
             <Setter.Value>
               <DataTemplate>
@@ -35,19 +42,19 @@
       <TabItem Header="既存" DataContext="{Binding CheckItLaterFinder}" >
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
       </TabItem>
-      <TabItem Header="全て" IsSelected="{Binding DataContext.IsSelectedAllItemsFinder, ElementName=root}" DataContext="{Binding AllItemsFinder}" >
+      <TabItem Header="全て" IsSelected="{Binding IsSelected}" DataContext="{Binding AllItemsFinder}" >
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
       </TabItem>
-      <TabItem Header="手動" IsSelected="{Binding DataContext.IsSelectedManualOperationFinde, ElementName=rootr}" DataContext="{Binding ManualOperationFinder}" >
+      <TabItem Header="手動" IsSelected="{Binding IsSelected}" DataContext="{Binding ManualOperationFinder}" >
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
       </TabItem>
-      <TabItem Header="マイリスト差分" IsSelected="{Binding DataContext.IsSelectedMylistBookmarkFinderItems, ElementName=root}" DataContext="{Binding MylistBookmarkFinderItems}">
+      <TabItem Header="マイリスト差分" DataContext="{Binding MylistBookmarkFinderItems}">
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
-      <TabItem Header="ユーザー投稿差分" IsSelected="{Binding DataContext.IsSelectedUserBookmarkFinderItems, ElementName=root}" DataContext="{Binding UserBookmarkFinderItems}">
+      <TabItem Header="ユーザー投稿差分" DataContext="{Binding UserBookmarkFinderItems}">
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
-      <TabItem Header="タグ差分" IsSelected="{Binding DataContext.IsSelectedWordBookmarkFinderItems}" DataContext="{Binding WordBookmarkFinderItems}">
+      <TabItem Header="タグ差分" DataContext="{Binding WordBookmarkFinderItems}">
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
 
