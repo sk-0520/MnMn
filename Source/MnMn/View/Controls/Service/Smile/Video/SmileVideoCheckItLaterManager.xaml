@@ -12,10 +12,41 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <Grid>
-    <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding CheckItLaterFinder}">
-      <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
-        <Button Command="{Binding RemoveCheckedVideosCommand}">チェック項目を削除</Button>
-      </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
-    </app_view_controls_service_smile_video:SmileVideoFinderControl>
+    <TabControl>
+      <TabControl.Resources>
+        <Style TargetType="app_view_controls_service_smile_video:SmileVideoFinderControl">
+          <Setter Property="FooterContent">
+            <Setter.Value>
+              <Button Command="{Binding RemoveCheckedVideosCommand}">チェック項目を削除</Button>
+            </Setter.Value>
+          </Setter>
+        </Style>
+        <Style x:Key="InnerTab" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
+          <Setter Property="ItemTemplate">
+            <Setter.Value>
+              <DataTemplate>
+                <app_view_controls_service_smile_video:SmileVideoFinderControl />
+              </DataTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </TabControl.Resources>
+      <TabItem Header="全て" DataContext="{Binding CheckItLaterFinder}" >
+        <app_view_controls_service_smile_video:SmileVideoFinderControl />
+      </TabItem>
+      <TabItem Header="手動" DataContext="{Binding CheckItLaterFinder}" >
+        <app_view_controls_service_smile_video:SmileVideoFinderControl />
+      </TabItem>
+      <TabItem Header="マイリスト差分" DataContext="{Binding MylistBookmarkFinderItems}">
+        <TabControl Style="{StaticResource InnerTab}" />
+      </TabItem>
+      <TabItem Header="ユーザー投稿差分" DataContext="{Binding UserBookmarkFinderItems}">
+        <TabControl Style="{StaticResource InnerTab}" />
+      </TabItem>
+      <TabItem Header="タグ差分" DataContext="{Binding WordBookmarkFinderItems}">
+        <TabControl Style="{StaticResource InnerTab}" />
+      </TabItem>
+
+    </TabControl>
   </Grid>
 </UserControl>

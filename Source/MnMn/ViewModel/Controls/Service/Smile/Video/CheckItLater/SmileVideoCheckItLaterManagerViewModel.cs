@@ -52,9 +52,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         public SmileVideoCheckItLaterFinderViewModel2 AllItemsFinder { get; }
         public SmileVideoCheckItLaterFinderViewModel2 ManualOperationFinder { get; }
-        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> MylistBookmarkFinder { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
-        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> UserBookmarkFinder { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
-        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> WordBookmarkFinder { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> MylistBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> UserBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> WordBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
 
         public bool HasItem
         {
