@@ -239,6 +239,7 @@
     <Compile Include="Define\Service\IdleTalk\IdleTalkMediationKey.cs" />
     <Compile Include="Define\Service\IdleTalk\Mutter\IdleTalkMutterMediationKey.cs" />
     <Compile Include="Define\Service\QuestionnaireKind.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoCheckItLaterFrom.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoSearchType.cs" />

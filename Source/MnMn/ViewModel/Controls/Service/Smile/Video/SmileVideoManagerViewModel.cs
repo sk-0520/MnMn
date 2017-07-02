@@ -145,12 +145,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 var myListItems = mylistTask.Result;
                 foreach(var item in myListItems) {
-                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.MylistBookmark)));
                 }
 
                 var tagBookmarkItems = tagBookmarkTask.Result;
                 foreach(var item in tagBookmarkItems) {
-                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.WordBookmark)));
                 }
             });
         }
