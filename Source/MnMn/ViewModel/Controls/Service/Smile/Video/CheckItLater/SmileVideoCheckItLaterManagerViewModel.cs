@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -40,11 +41,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             : base(mediation)
         {
             CheckItLaterFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
+
+            AllItemsFinder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
+            ManualOperationFinder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
         }
 
         #region property
 
         public SmileVideoCheckItLaterFinderViewModel CheckItLaterFinder { get; }
+
+        public SmileVideoCheckItLaterFinderViewModel2 AllItemsFinder { get; }
+        public SmileVideoCheckItLaterFinderViewModel2 ManualOperationFinder { get; }
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> MylistBookmarkFinder { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> UserBookmarkFinder { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> WordBookmarkFinder { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
 
         public bool HasItem
         {
@@ -109,6 +119,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             return item;
         }
 
+        void BuildFinders()
+        {
+
+        }
+
         #endregion
 
         #region CheckItLaterManagerViewModel
@@ -120,6 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         protected override void ShowViewCore()
         {
+            BuildFinders();
             CheckItLaterFinder.LoadDefaultCacheAsync().ContinueWith(_ => {
                 CallOnPropertyChangeDisplayItem();
             }).ConfigureAwait(false);
