@@ -63,27 +63,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             SettedVideoItems = videoItems.ToEvaluatedSequence();
         }
 
-        [Obsolete]
-        void RemoveCheckedVideos()
-        {
-            var items = GetCheckedItems()
-                .Select(i => i.Information)
-                .ToEvaluatedSequence();
-            ;
-
-            if(items.Any()) {
-                foreach(var item in items) {
-                    var model = Setting.CheckItLater.FirstOrDefault(i => i.VideoId == item.VideoId || i?.WatchUrl.OriginalString == item?.WatchUrl.OriginalString);
-                    //var model = Setting.CheckItLater.FirstOrDefault(i => i.VideoId == item.VideoId);
-                    if(model != null) {
-                        model.CheckTimestamp = DateTime.Now;
-                        model.IsChecked = true;
-                    }
-                }
-                FinderItems.Refresh();
-            }
-        }
-
         #endregion
 
         #region SmileVideoFeedFinderViewModelBase

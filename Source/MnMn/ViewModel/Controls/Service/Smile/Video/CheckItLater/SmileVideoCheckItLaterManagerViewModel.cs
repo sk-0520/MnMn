@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             {
                 return CreateCommand(
                     o => {
-
+                        RemoveCheckedVideos();
                     }
                 );
             }
@@ -200,6 +200,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             return item;
         }
 
+        void RemoveCheckedVideos()
+        {
+            var items = AllItemsFinder.GetCheckedItems()
+                .Select(i => i.Information)
+                .ToEvaluatedSequence();
+            ;
+
+            if(items.Any()) {
+                foreach(var item in items) {
+                    var model = Setting.CheckItLater.FirstOrDefault(i => i.VideoId == item.VideoId || i?.WatchUrl.OriginalString == item?.WatchUrl.OriginalString);
+                    //var model = Setting.CheckItLater.FirstOrDefault(i => i.VideoId == item.VideoId);
+                    if(model != null) {
+                        model.CheckTimestamp = DateTime.Now;
+                        model.IsChecked = true;
+                    }
+                }
+                AllItemsFinder.FinderItems.Refresh();
+            }
+            BuildFinders(false);
+        }
+
         IEnumerable<SmileVideoCheckItLaterFinderViewModel> BuildGroupFinders(SmileVideoCheckItLaterFrom checkItLaterFrom, IEnumerable<SmileVideoCheckItLaterModel> items)
         {
             //TODO: ローカライズ
@@ -222,14 +243,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             }
         }
 
-        void BuildFinders()
+        void BuildFinders(bool refreshAllItemsFinder)
         {
             CheckItLaterItem = Setting.CheckItLater
                 .Where(i => !i.IsChecked)
                 .ToEvaluatedSequence()
             ;
 
-            AllItemsFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = Properties.Resources.String_Service_Smile_SmileVideo_CheckItLater_AllItems }, CheckItLaterItem);
+            // 削除時は全アイテムを再設定する必要なし
+            if(refreshAllItemsFinder) {
+                AllItemsFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = Properties.Resources.String_Service_Smile_SmileVideo_CheckItLater_AllItems }, CheckItLaterItem);
+            }
 
             var manualOperationItems = CheckItLaterItem
                 .Where(i => i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.ManualOperation || i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.Unknown)
@@ -263,7 +287,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         protected override void ShowViewCore()
         {
-            BuildFinders();
+            BuildFinders(true);
         }
 
         protected override void HideViewCore()
