@@ -16,13 +16,7 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
-    <!--<Style TargetType="app_view_controls_service_smile_video:SmileVideoFinderControl">
-      <Setter Property="FooterContent">
-        <Setter.Value>
-          <Button Command="{Binding RemoveCheckedVideosCommand}">チェック項目を削除</Button>
-        </Setter.Value>
-      </Setter>
-    </Style>-->
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <DataTemplate x:Key="TabItemHeader">
       <Grid>
@@ -42,6 +36,14 @@
 
     <Style x:Key="LoadStateInnerTabHeader" TargetType="TabItem" BasedOn="{StaticResource LoadStateTabHeader}">
       <Setter Property="MaxWidth" Value="{Binding Source={x:Static app:Constants.ServiceSmileVideoCheckItLaterInnerTabItemMaxWidth}}" />
+      <Setter Property="ToolTip">
+        <Setter.Value>
+          <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding FromName}" />
+            <TextBlock Text="{Binding FromId}" Visibility="{Binding HasFromId, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="{StaticResource FontSmallSize}" />
+          </StackPanel>
+        </Setter.Value>
+      </Setter>
     </Style>
 
     <Style x:Key="InnerTab" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">

@@ -51,6 +51,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public string FromName => CheckItLaterFrom?.FromName;
         public string FromId => CheckItLaterFrom?.FromId;
 
+        public bool HasFromId => !string.IsNullOrWhiteSpace(FromId);
+
         #endregion
 
         #region command
