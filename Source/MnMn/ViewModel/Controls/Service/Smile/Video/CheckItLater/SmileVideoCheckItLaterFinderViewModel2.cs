@@ -47,6 +47,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             }
         }
 
+        public string FromName => CheckItLaterFrom?.FromName;
+        public string FromId => CheckItLaterFrom?.FromId;
+
         #endregion
 
         #region command

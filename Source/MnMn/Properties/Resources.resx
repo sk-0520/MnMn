@@ -554,4 +554,13 @@ MnMn 終了時に専用設定ファイルが開かれます。</value>
   <data name="String_App_Define_PlayerState_Stop" xml:space="preserve">
     <value>停止</value>
   </data>
+  <data name="String_Service_Smile_SmileVideo_CheckItLater_AllItems" xml:space="preserve">
+    <value>全て</value>
+  </data>
+  <data name="String_Service_Smile_SmileVideo_CheckItLater_Group_AllItems" xml:space="preserve">
+    <value>全て</value>
+  </data>
+  <data name="String_Service_Smile_SmileVideo_CheckItLater_ManualOperation" xml:space="preserve">
+    <value>手動</value>
+  </data>
 </root>

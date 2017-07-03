@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         {
             //TODO: ローカライズ
             var allFinder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
-            allFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = "ALL" }, items);
+            allFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = Properties.Resources.String_Service_Smile_SmileVideo_CheckItLater_Group_AllItems }, items);
             yield return allFinder;
 
             var groups = items
@@ -219,12 +219,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 .ToEvaluatedSequence()
             ;
 
-            AllItemsFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { }, CheckItLaterItem);
+            AllItemsFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = Properties.Resources.String_Service_Smile_SmileVideo_CheckItLater_AllItems }, CheckItLaterItem);
 
             var manualOperationItems = CheckItLaterItem
                 .Where(i => i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.ManualOperation || i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.Unknown)
             ;
-            ManualOperationFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { }, manualOperationItems);
+            ManualOperationFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = Properties.Resources.String_Service_Smile_SmileVideo_CheckItLater_ManualOperation }, manualOperationItems);
 
             var groups = CheckItLaterItem
                 .Where(i => i.CheckItLaterFrom != SmileVideoCheckItLaterFrom.Unknown)
