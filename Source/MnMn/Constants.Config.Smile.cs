@@ -140,6 +140,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static int ServiceSmileVideoCheckItLaterCount => appConfig.Get("service-smile-smilevideo-check_it_later-count", int.Parse);
         /// <summary>
+        /// あとで見るの内部タブ最大横幅。
+        /// </summary>
+        public static double ServiceSmileVideoCheckItLaterInnerTabItemMaxWidth => appConfig.Get("service-smile-smilevideo-check_it_later-inner-tab_item-max-width", double.Parse);
+        /// <summary>
         /// アカウント履歴削除待ち時間。
         /// <para>複数アイテム削除時間の削除間隔。</para>
         /// </summary>

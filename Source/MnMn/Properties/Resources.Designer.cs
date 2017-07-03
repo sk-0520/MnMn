@@ -1343,6 +1343,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   全て に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_CheckItLater_AllItems {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_CheckItLater_AllItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   全て に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_CheckItLater_Group_AllItems {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_CheckItLater_Group_AllItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   手動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_CheckItLater_ManualOperation {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_CheckItLater_ManualOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   重複コメントフィルタ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap {
