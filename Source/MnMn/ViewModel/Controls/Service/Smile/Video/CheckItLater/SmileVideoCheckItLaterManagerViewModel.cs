@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -138,6 +139,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         #endregion
 
         #region command
+
+        public ICommand RemoveCheckedVideosCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function

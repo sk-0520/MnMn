@@ -53,12 +53,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         #endregion
 
         #region command
-
-        public ICommand RemoveCheckedVideosCommand
-        {
-            get { return CreateCommand(o => RemoveCheckedVideos()); }
-        }
-
         #endregion
 
         #region function
@@ -69,6 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             SettedVideoItems = videoItems.ToEvaluatedSequence();
         }
 
+        [Obsolete]
         void RemoveCheckedVideos()
         {
             var items = GetCheckedItems()
