@@ -30,17 +30,19 @@
       </StackPanel>
     </DataTemplate>
 
+    <Style x:Key="LoadStateTabHeader" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+      <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
+    </Style>
+
+    <Style x:Key="LoadStateInnerTabHeader" TargetType="TabItem" BasedOn="{StaticResource LoadStateTabHeader}">
+      <Setter Property="MaxWidth" Value="100" />
+    </Style>
+
     <Style x:Key="InnerTab" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
       <Setter Property="ItemsSource" Value="{Binding}" />
       <Setter Property="TabStripPlacement" Value="Left" />
-      <Setter Property="ItemContainerStyle">
-        <Setter.Value>
-          <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-            <Setter Property="IsSelected" Value="{Binding IsSelected}" />
-            <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
-          </Style>
-        </Setter.Value>
-      </Setter>
+      <Setter Property="ItemContainerStyle" Value="{StaticResource LoadStateInnerTabHeader}" />
       <Setter Property="ContentTemplate">
         <Setter.Value>
           <DataTemplate>
@@ -53,14 +55,14 @@
   </UserControl.Resources>
   <Grid>
     <TabControl>
-      <TabItem IsSelected="{Binding IsSelected}" DataContext="{Binding AllItemsFinder}" HeaderTemplate="{StaticResource TabItemHeader}">
+      <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateTabHeader}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl>
           <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
             <Button Command="{Binding DataContext.RemoveCheckedVideosCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoCheckItLaterManager}}">チェック項目を削除</Button>
           </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
         </app_view_controls_service_smile_video:SmileVideoFinderControl>
       </TabItem>
-      <TabItem IsSelected="{Binding IsSelected}" DataContext="{Binding ManualOperationFinder}" HeaderTemplate="{StaticResource TabItemHeader}">
+      <TabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateTabHeader}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
       </TabItem>
       <TabItem Header="マイリスト差分" DataContext="{Binding MylistBookmarkFinderItems}">

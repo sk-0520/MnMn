@@ -276,6 +276,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             }
         }
 
+        void ClaerFinders()
+        {
+            var parentFinders = new [] {
+                MylistBookmarkFinderItems,
+                UserBookmarkFinderItems,
+                WordBookmarkFinderItems,
+            };
+            var finders = new List<SmileVideoCheckItLaterFinderViewModel>() {
+                AllItemsFinder,
+                ManualOperationFinder
+            };
+            finders.AddRange(parentFinders.SelectMany(i => i));
+            foreach(var finder in finders) {
+                finder.ClearItems();
+            }
+            foreach(var parent in parentFinders) {
+                parent.Clear();
+            }
+        }
+
         #endregion
 
         #region CheckItLaterManagerViewModel
@@ -287,7 +307,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         protected override void ShowViewCore()
         {
+            // 既に読み込み済みであってもきれいにする
+            var hasItem = AllItemsFinder.FinderItemsViewer.Any();
+            if(hasItem) {
+                ClaerFinders();
+            }
+
+            // ずらーっとデータ構築
             BuildFinders(true);
+
+            if(hasItem) {
+                // 読み込み済みは選択状態がワケわからんことになってるので初期化
+                AllItemsFinder.IsSelected = false;
+                AllItemsFinder.IsSelected = true;
+            }
         }
 
         protected override void HideViewCore()
