@@ -40,16 +40,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 {
     public class SmileVideoCheckItLaterManagerViewModel : SmileVideoCustomManagerViewModelBase
     {
-        #region variable
-        /*
-        bool _isSelectedAllItemsFinder;
-        bool _isSelectedManualOperationFinder;
-        bool _isSelectedMylistBookmarkFinderItems;
-        bool _isSelectedUserBookmarkFinderItems;
-        bool _isSelectedWordBookmarkFinderItems;
-        */
-        #endregion
-
         public SmileVideoCheckItLaterManagerViewModel(Mediation mediation)
             : base(mediation)
         {
@@ -66,61 +56,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel> MylistBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel> UserBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel> WordBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
-
-        /*
-        public bool IsSelectedAllItemsFinder
-        {
-            get { return this._isSelectedAllItemsFinder; }
-            set
-            {
-                if(SetVariableValue(ref this._isSelectedAllItemsFinder, value)) {
-                    if(IsSelectedAllItemsFinder) {
-                        AllItemsFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
-                    }
-                }
-            }
-        }
-
-        public bool IsSelectedManualOperationFinder
-        {
-            get { return this._isSelectedManualOperationFinder; }
-            set
-            {
-                if(SetVariableValue(ref this._isSelectedManualOperationFinder, value)) {
-                    if(IsSelectedManualOperationFinder) {
-                        ManualOperationFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
-                    }
-                }
-            }
-        }
-        public bool IsSelectedMylistBookmarkFinderItems
-        {
-            get { return this._isSelectedMylistBookmarkFinderItems; }
-            set
-            {
-                if(SetVariableValue(ref this._isSelectedMylistBookmarkFinderItems, value)) {
-                }
-            }
-        }
-        public bool IsSelectedUserBookmarkFinderItems
-        {
-            get { return this._isSelectedUserBookmarkFinderItems; }
-            set
-            {
-                if(SetVariableValue(ref this._isSelectedUserBookmarkFinderItems, value)) {
-                }
-            }
-        }
-        public bool IsSelectedWordBookmarkFinderItems
-        {
-            get { return this._isSelectedWordBookmarkFinderItems; }
-            set
-            {
-                if(SetVariableValue(ref this._isSelectedWordBookmarkFinderItems, value)) {
-                }
-            }
-        }
-        */
 
         public bool HasItem
         {
