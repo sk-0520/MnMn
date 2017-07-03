@@ -124,12 +124,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         public bool HasItem
         {
-            get { return ItemCount > 0; }
+            get { return 0 < ItemCount; }
         }
 
         public int ItemCount
         {
-            get { return Setting.CheckItLater.Count(i => !i.IsChecked); }
+            get { return Setting.CheckItLater.ToEvaluatedSequence().Count(i => !i.IsChecked); }
         }
 
         #endregion
