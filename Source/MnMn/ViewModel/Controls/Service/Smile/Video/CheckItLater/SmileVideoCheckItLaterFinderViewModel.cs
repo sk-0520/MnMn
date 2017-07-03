@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             set
             {
                 if(SetVariableValue(ref this._isSelected, value)) {
-                    if(IsSelected && FinderLoadState == Define.SourceLoadState.None) {
+                    if(IsSelected && FinderLoadState == Define.SourceLoadState.None && SettedVideoItems.Any()) {
                         LoadDefaultCacheAsync().ConfigureAwait(false);
                     }
                 }

@@ -155,6 +155,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             }
             ClaerFinders(false);
             BuildFinders(false);
+            CallOnPropertyChangeDisplayItem();
         }
 
         IEnumerable<SmileVideoCheckItLaterFinderViewModel> BuildGroupFinders(SmileVideoCheckItLaterFrom checkItLaterFrom, IEnumerable<SmileVideoCheckItLaterModel> items)
@@ -210,12 +211,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             foreach(var group in groups) {
                 finderMap[group.GroupKey].InitializeRange(group.Items);
             }
-            var propertyNames = new[] {
-                nameof(MylistBookmarkFinderItems),
-                nameof(UserBookmarkFinderItems),
-                nameof(WordBookmarkFinderItems),
-            };
-            CallOnPropertyChange(propertyNames);
         }
 
         void ClaerFinders(bool clearAllItemsFinder)

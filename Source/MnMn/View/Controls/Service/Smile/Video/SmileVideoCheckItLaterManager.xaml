@@ -74,7 +74,7 @@
 
   </UserControl.Resources>
   <Grid>
-    <TabControl Style="{StaticResource FinderTab}">
+    <TabControl IsEnabled="True" Style="{StaticResource FinderTab}">
       <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateTabHeader}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl>
           <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
