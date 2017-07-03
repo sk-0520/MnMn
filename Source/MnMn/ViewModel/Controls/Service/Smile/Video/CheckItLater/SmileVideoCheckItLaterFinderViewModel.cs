@@ -62,6 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         {
             CheckItLaterFrom = checkItLaterFrom;
             SettedVideoItems = videoItems.ToEvaluatedSequence();
+            FinderLoadState = Define.SourceLoadState.None;
         }
 
         #endregion
