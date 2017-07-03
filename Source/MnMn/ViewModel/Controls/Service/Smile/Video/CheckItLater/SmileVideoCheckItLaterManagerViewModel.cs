@@ -218,6 +218,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 }
                 AllItemsFinder.FinderItems.Refresh();
             }
+            ClaerFinders(false);
             BuildFinders(false);
         }
 
@@ -276,7 +277,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             }
         }
 
-        void ClaerFinders()
+        void ClaerFinders(bool clearAllItemsFinder)
         {
             var parentFinders = new [] {
                 MylistBookmarkFinderItems,
@@ -284,9 +285,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 WordBookmarkFinderItems,
             };
             var finders = new List<SmileVideoCheckItLaterFinderViewModel>() {
-                AllItemsFinder,
                 ManualOperationFinder
             };
+            if(clearAllItemsFinder) {
+                finders.Add(AllItemsFinder);
+            }
             finders.AddRange(parentFinders.SelectMany(i => i));
             foreach(var finder in finders) {
                 finder.ClearItems();
@@ -310,7 +313,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             // 既に読み込み済みであってもきれいにする
             var hasItem = AllItemsFinder.FinderItemsViewer.Any();
             if(hasItem) {
-                ClaerFinders();
+                ClaerFinders(true);
             }
 
             // ずらーっとデータ構築
