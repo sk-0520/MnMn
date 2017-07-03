@@ -53,9 +53,6 @@
   </UserControl.Resources>
   <Grid>
     <TabControl>
-      <TabItem Header="既存" DataContext="{Binding CheckItLaterFinder}" >
-        <app_view_controls_service_smile_video:SmileVideoFinderControl />
-      </TabItem>
       <TabItem IsSelected="{Binding IsSelected}" DataContext="{Binding AllItemsFinder}" HeaderTemplate="{StaticResource TabItemHeader}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl>
           <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>

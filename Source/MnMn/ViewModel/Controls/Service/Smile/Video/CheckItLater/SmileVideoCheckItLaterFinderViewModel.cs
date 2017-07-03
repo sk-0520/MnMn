@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -14,8 +15,14 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.CheckItLater
 {
-    public class SmileVideoCheckItLaterFinderViewModel: SmileVideoFeedFinderViewModelBase
+    public class SmileVideoCheckItLaterFinderViewModel : SmileVideoFeedFinderViewModelBase
     {
+        #region variable
+
+        bool _isSelected;
+
+        #endregion
+
         public SmileVideoCheckItLaterFinderViewModel(Mediation mediation)
             : base(mediation, 0)
         { }
@@ -24,20 +31,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         Dictionary<string, SmileVideoCheckItLaterModel> IdAndUrlLaterMap { get; } = new Dictionary<string, SmileVideoCheckItLaterModel>();
 
+        IReadOnlySmileVideoCheckItLaterFrom CheckItLaterFrom { get; set; }
+        IReadOnlyList<SmileVideoCheckItLaterModel> SettedVideoItems { get; set; }
+
+        public bool IsSelected
+        {
+            get { return this._isSelected; }
+            set
+            {
+                if(SetVariableValue(ref this._isSelected, value)) {
+                    if(IsSelected) {
+                        LoadDefaultCacheAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+
+        public string FromName => CheckItLaterFrom?.FromName;
+        public string FromId => CheckItLaterFrom?.FromId;
+
         #endregion
 
         #region command
-
-        public ICommand RemoveCheckedVideosCommand
-        {
-            get { return CreateCommand(o => RemoveCheckedVideos()); }
-        }
-
         #endregion
 
         #region function
 
+        public void SetVideoItems(IReadOnlySmileVideoCheckItLaterFrom checkItLaterFrom, IEnumerable<SmileVideoCheckItLaterModel> videoItems)
+        {
+            CheckItLaterFrom = checkItLaterFrom;
+            SettedVideoItems = videoItems.ToEvaluatedSequence();
+        }
 
+        [Obsolete]
         void RemoveCheckedVideos()
         {
             var items = GetCheckedItems()
@@ -97,7 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             IdAndUrlLaterMap.Clear();
 
             var result = new FeedSmileVideoModel();
-            foreach(var model in Setting.CheckItLater.Where(c => !c.IsChecked)) {
+            foreach(var model in SettedVideoItems) {
                 if(IdAndUrlLaterMap.ContainsKey(model.VideoId)) {
                     continue;
                 }

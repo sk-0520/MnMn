@@ -53,23 +53,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public SmileVideoCheckItLaterManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            CheckItLaterFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
-
-            AllItemsFinder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
-            ManualOperationFinder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
+            AllItemsFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
+            ManualOperationFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
         }
 
         #region property
 
-        public SmileVideoCheckItLaterFinderViewModel CheckItLaterFinder { get; }
-
         IReadOnlyList<SmileVideoCheckItLaterModel> CheckItLaterItem { get; set; }
 
-        public SmileVideoCheckItLaterFinderViewModel2 AllItemsFinder { get; }
-        public SmileVideoCheckItLaterFinderViewModel2 ManualOperationFinder { get; }
-        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> MylistBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
-        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> UserBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
-        public CollectionModel<SmileVideoCheckItLaterFinderViewModel2> WordBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel2>();
+        public SmileVideoCheckItLaterFinderViewModel AllItemsFinder { get; }
+        public SmileVideoCheckItLaterFinderViewModel ManualOperationFinder { get; }
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel> MylistBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel> UserBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel> WordBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
 
         /*
         public bool IsSelectedAllItemsFinder
@@ -204,10 +200,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             return item;
         }
 
-        IEnumerable<SmileVideoCheckItLaterFinderViewModel2> BuildGroupFinders(SmileVideoCheckItLaterFrom checkItLaterFrom, IEnumerable<SmileVideoCheckItLaterModel> items)
+        IEnumerable<SmileVideoCheckItLaterFinderViewModel> BuildGroupFinders(SmileVideoCheckItLaterFrom checkItLaterFrom, IEnumerable<SmileVideoCheckItLaterModel> items)
         {
             //TODO: ローカライズ
-            var allFinder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
+            var allFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
             allFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = Properties.Resources.String_Service_Smile_SmileVideo_CheckItLater_Group_AllItems }, items);
             yield return allFinder;
 
@@ -220,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 .OrderBy(g => g.Key)
             ;
             foreach(var group in groups) {
-                var finder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
+                var finder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
                 finder.SetVideoItems(group.First(), group);
                 yield return finder;
             }
@@ -246,7 +242,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 .GroupBy(i => i.CheckItLaterFrom)
                 .Select(g => new { GroupKey = g.Key, Items = BuildGroupFinders(g.Key, g) })
             ;
-            var finderMap = new Dictionary<SmileVideoCheckItLaterFrom, CollectionModel<SmileVideoCheckItLaterFinderViewModel2>>() {
+            var finderMap = new Dictionary<SmileVideoCheckItLaterFrom, CollectionModel<SmileVideoCheckItLaterFinderViewModel>>() {
                 [SmileVideoCheckItLaterFrom.MylistBookmark] = MylistBookmarkFinderItems,
                 [SmileVideoCheckItLaterFrom.UserBookmark] = UserBookmarkFinderItems,
                 [SmileVideoCheckItLaterFrom.WordBookmark] = WordBookmarkFinderItems,
@@ -268,9 +264,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         protected override void ShowViewCore()
         {
             BuildFinders();
-            CheckItLaterFinder.LoadDefaultCacheAsync().ContinueWith(_ => {
-                CallOnPropertyChangeDisplayItem();
-            }).ConfigureAwait(false);
         }
 
         protected override void HideViewCore()
