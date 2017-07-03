@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         Dictionary<string, SmileVideoCheckItLaterModel> IdAndUrlLaterMap { get; } = new Dictionary<string, SmileVideoCheckItLaterModel>();
 
         IReadOnlySmileVideoCheckItLaterFrom CheckItLaterFrom { get; set; }
-        IReadOnlyList<SmileVideoCheckItLaterModel> SettedVideoItems { get; set; }
+        public IReadOnlyList<SmileVideoCheckItLaterModel> SettedVideoItems { get; private set; }
 
         public bool IsSelected
         {
@@ -65,6 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             CheckItLaterFrom = checkItLaterFrom;
             SettedVideoItems = videoItems.ToEvaluatedSequence();
             FinderLoadState = Define.SourceLoadState.None;
+
+            CallOnPropertyChange(nameof(SettedVideoItems));
         }
 
         internal void ClearItems()
