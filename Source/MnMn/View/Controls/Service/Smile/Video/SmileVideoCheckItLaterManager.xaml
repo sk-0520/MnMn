@@ -24,6 +24,7 @@
           </Setter>
         </Style>
         <Style x:Key="InnerTab" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
+          <Setter Property="ItemsSource" Value="{Binding}" />
           <Setter Property="ItemContainerStyle">
             <Setter.Value>
               <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
@@ -41,7 +42,7 @@
           <Setter Property="ContentTemplate">
             <Setter.Value>
               <DataTemplate>
-                <app_view_controls_service_smile_video:SmileVideoFinderControl />
+                <app_view_controls_service_smile_video:SmileVideoFinderControl  />
               </DataTemplate>
             </Setter.Value>
           </Setter>

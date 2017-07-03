@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
@@ -189,6 +190,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             return item;
         }
 
+        IEnumerable<SmileVideoCheckItLaterFinderViewModel2> BuildGroupFinders(SmileVideoCheckItLaterFrom checkItLaterFrom, IEnumerable<SmileVideoCheckItLaterModel> items)
+        {
+            //TODO: ローカライズ
+            var allFinder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
+            allFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = "ALL" }, items);
+            yield return allFinder;
+
+            var groups = items
+                .IfElse(
+                    checkItLaterFrom != SmileVideoCheckItLaterFrom.WordBookmark,
+                    seq => seq.GroupBy(i => i.FromId),
+                    seq => seq.GroupBy(i => i.FromName)
+                )
+                .OrderBy(g => g.Key)
+            ;
+            foreach(var group in groups) {
+                var finder = new SmileVideoCheckItLaterFinderViewModel2(Mediation);
+                finder.SetVideoItems(group.First(), group);
+                yield return finder;
+            }
+        }
+
         void BuildFinders()
         {
             CheckItLaterItem = Setting.CheckItLater
@@ -197,7 +220,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             ;
 
             AllItemsFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { }, CheckItLaterItem);
-            ManualOperationFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { }, CheckItLaterItem.Where(i => i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.ManualOperation || i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.Unknown));
+
+            var manualOperationItems = CheckItLaterItem
+                .Where(i => i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.ManualOperation || i.CheckItLaterFrom == SmileVideoCheckItLaterFrom.Unknown)
+            ;
+            ManualOperationFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { }, manualOperationItems);
+
+            var groups = CheckItLaterItem
+                .Where(i => i.CheckItLaterFrom != SmileVideoCheckItLaterFrom.Unknown)
+                .Where(i => i.CheckItLaterFrom != SmileVideoCheckItLaterFrom.ManualOperation)
+                .GroupBy(i => i.CheckItLaterFrom)
+                .Select(g => new { GroupKey = g.Key, Items = BuildGroupFinders(g.Key, g) })
+            ;
+            var finderMap = new Dictionary<SmileVideoCheckItLaterFrom, CollectionModel<SmileVideoCheckItLaterFinderViewModel2>>() {
+                [SmileVideoCheckItLaterFrom.MylistBookmark] = MylistBookmarkFinderItems,
+                [SmileVideoCheckItLaterFrom.UserBookmark] = UserBookmarkFinderItems,
+                [SmileVideoCheckItLaterFrom.WordBookmark] = WordBookmarkFinderItems,
+            };
+            foreach(var group in groups) {
+                finderMap[group.GroupKey].InitializeRange(group.Items);
+            }
         }
 
         #endregion
