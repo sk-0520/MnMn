@@ -368,6 +368,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string ApplicationThemeDefinePath { get; } = Path.Combine(DefineDirectoryPath, "theme.xml");
         public static string ApplicationWebNavigatorBridgePath { get; } = Path.Combine(DefineDirectoryPath, "web-navigator.xml");
+        public static string ApplicationAcceptVersionPath { get; } = Path.Combine(DefineDirectoryPath, "accept-version.xml");
 
         /// <summary>
         /// etc/define/service

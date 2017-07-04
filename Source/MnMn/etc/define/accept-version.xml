@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<accept-version>
+	<versions>
+		<element key="0.60.0">
+			<extends>
+				<extend key="1" value="1" />
+				<extend key="3" value="2" />
+				<extend key="2" value="3" />
+			</extends>
+		</element>
+		<element key="0.50.0">
+			<extends>
+				<extend key="1" value="A" />
+				<extend key="2" value="B" />
+				<extend key="3" value="C" />
+			</extends>
+		</element>
+	</versions>
+</accept-version>

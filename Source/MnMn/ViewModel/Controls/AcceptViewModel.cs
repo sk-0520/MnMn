@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -142,9 +145,70 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region function
 
-        void InitializeCustomSection()
+        /// <summary>
+        /// 使用許諾表示理由。
+        /// </summary>
+        void InitializeTopDocumentForceShow()
         {
-            TopDocument.Blocks.Add(new Paragraph(new Run("add test")));
+            // 初回起動時は前回との違いなんぞ何もない
+            if(Setting.RunningInformation.LastExecuteVersion == null) {
+                return;
+            }
+
+            IReadOnlyAcceptVersion version = SerializeUtility.LoadXmlSerializeFromFile<AcceptVersionModel>(Constants.ApplicationAcceptVersionPath);
+
+            var lastVersion = new Version(
+                Setting.RunningInformation.LastExecuteVersion.Major,
+                Setting.RunningInformation.LastExecuteVersion.Minor,
+                Setting.RunningInformation.LastExecuteVersion.Build
+            );
+
+            var versionItems = version.Items
+                .Select(e => new {
+                    Version = new Version(e.Key),
+                    Texts = e.Extends
+                        .Select(p => new {
+                            Sort = p.Key,
+                            Text = p.Value
+                        })
+                        .OrderBy(i => i.Sort)
+                        .Select(i => i.Text)
+                })
+                .Where(i => lastVersion <= i.Version) // 知ってるバージョンは除外する
+                .OrderByDescending(i => i.Version)
+            ;
+
+            var sections = new List<Section>();
+            foreach(var versionItem in versionItems) {
+                var versionText = new Run(versionItem.Version.ToString());
+                var versionParent = new Paragraph(versionText);
+
+                var textsParent = new List();
+                foreach(var text in versionItem.Texts) {
+                    var textLine = new Run(text);
+                    var textParent = new Paragraph(textLine);
+                    var listItem = new ListItem(textParent);
+                    textsParent.ListItems.Add(listItem);
+                }
+
+                var section = new Section();
+                section.Blocks.Add(versionParent);
+                section.Blocks.Add(textsParent);
+
+                sections.Add(section);
+            }
+
+            if(sections.Any()) {
+                var acceptVersionParent = new Section();
+                acceptVersionParent.Blocks.AddRange(sections);
+
+                TopDocument.Blocks.Add(acceptVersionParent);
+            }
+        }
+
+        void InitializeTopDocument()
+        {
+            InitializeTopDocumentForceShow();
         }
 
         void InitializedOriginLicense()
@@ -164,7 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public void Initialize()
         {
-            InitializeCustomSection();
+            InitializeTopDocument();
             InitializedOriginLicense();
             InitializedCultureLicense();
         }
