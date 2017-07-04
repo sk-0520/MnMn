@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <param name="model">実行情報データ。</param>
         /// <param name="logger">ロガー。</param>
         /// <returns>許諾されている場合は真。偽の場合は非許諾状態か前回バージョン等々の都合で許諾されていない。</returns>
-        public static bool CheckAccept(RunningInformationSettingModel model, ILogger logger)
+        public static bool CheckAccept(RunningInformationSettingModel model, IReadOnlyAcceptVersion acceptVersion, ILogger logger)
         {
 #if FORCE_ACCEPT
             var a = true; if(a) return false;
@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 return false;
             }
 
-            if(model.LastExecuteVersion < Constants.AcceptVersion) {
+            if(model.LastExecuteVersion < acceptVersion.ForceAcceptVersion) {
                 // 前回バージョンから強制定期に使用許諾が必要
                 logger.Debug("last version < accept version");
                 return false;
@@ -500,8 +500,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             // セーフモードの場合許諾ウィンドウは表示しない
             if(!VariableConstants.IsSafeModeExecute) {
-                if(!CheckAccept(setting.RunningInformation, logger)) {
-                    var acceptViewModel = new AcceptViewModel(Mediation);
+                var acceptVersion = SerializeUtility.LoadXmlSerializeFromFile<AcceptVersionModel>(Constants.ApplicationAcceptVersionPath);
+                if(!CheckAccept(setting.RunningInformation, acceptVersion, logger)) {
+                    var acceptViewModel = new AcceptViewModel(Mediation, acceptVersion);
                     var acceptWindow = new AcceptWindow() {
                         DataContext = acceptViewModel,
                     };

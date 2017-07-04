@@ -133,11 +133,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ApplicationVersion { get; } = ApplicationVersionNumber.ToString() + "-" + ApplicationVersionRevision;
 
-        /// <summary>
-        /// 前回バージョンがこれ未満なら使用許諾を表示
-        /// </summary>
-        public static Version AcceptVersion { get; } = new Version(0, 56, 1, 0);
-
         public static DateTime LightweightUpdateNone { get; } = DateTime.MinValue;
 
         public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";

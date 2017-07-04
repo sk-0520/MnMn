@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
     {
         #region property
 
+        Version ForceAcceptVersion { get;  }
         IReadOnlyList<IReadOnlyDefinedElement> Items { get; }
 
         #endregion

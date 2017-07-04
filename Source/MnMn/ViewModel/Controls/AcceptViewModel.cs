@@ -26,9 +26,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
     public class AcceptViewModel : ViewModelBase, ISetView
     {
-        public AcceptViewModel(Mediation mediation)
+        public AcceptViewModel(Mediation mediation, IReadOnlyAcceptVersion acceptVersion)
         {
             Mediation = mediation;
+            AcceptVersion = acceptVersion;
 
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
         }
@@ -36,6 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #region property
 
         Mediation Mediation { get; }
+        IReadOnlyAcceptVersion AcceptVersion { get; }
         AppSettingModel Setting { get; }
 
         AcceptWindow View { get; set; }
@@ -155,15 +157,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 return;
             }
 
-            IReadOnlyAcceptVersion version = SerializeUtility.LoadXmlSerializeFromFile<AcceptVersionModel>(Constants.ApplicationAcceptVersionPath);
-
             var lastVersion = new Version(
                 Setting.RunningInformation.LastExecuteVersion.Major,
                 Setting.RunningInformation.LastExecuteVersion.Minor,
                 Setting.RunningInformation.LastExecuteVersion.Build
             );
 
-            var versionItems = version.Items
+            var versionItems = AcceptVersion.Items
                 .Select(e => new {
                     Version = new Version(e.Key),
                     Texts = e.Extends

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <accept-version>
+	<!-- 前回バージョンがこのバージョン未満なら使用許諾を表示 -->
+	<force-accept>0.56.1.0</force-accept>
 	<versions>
 		<!--
 		前回起動が key に指定してるバージョン(Version.Revisionは無視)以下であれば
