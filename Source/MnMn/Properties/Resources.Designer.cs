@@ -217,6 +217,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   ${VER}からの変更点 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Accept_Version_VersionHead_Format {
+            get {
+                return ResourceManager.GetString("String_App_Accept_Version_VersionHead_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   すべて選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Browser_Common_AllSelect {

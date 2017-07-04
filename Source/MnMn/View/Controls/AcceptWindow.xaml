@@ -122,6 +122,11 @@
               開発中のため設定ファイルのデータ構造、UIが割と頻繁に変わります。
             </Paragraph>
 
+            <Section x:Name="customSection" />
+
+            <Paragraph Margin="0,40" Cursor="Arrow">
+              <CheckBox FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=FlowDocument}}" IsChecked="{Binding UserConfirmation}">本文書内容を理解した</CheckBox>
+            </Paragraph>
           </FlowDocument>
         </FlowDocumentScrollViewer>
       </TabItem>
@@ -160,11 +165,11 @@
         </StatusBarItem.Style>
         <ResizeGrip />
       </StatusBarItem>-->
-      
+
       <StatusBarItem DockPanel.Dock="Right" Margin="0,0,20,0" >
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" Margin="{StaticResource HorizonMargin}" />
       </StatusBarItem>
-      
+
       <TextBlock>Version:</TextBlock>
       <TextBlock TextAlignment="Center" HorizontalAlignment="Stretch" Text="{x:Static app:Constants.ApplicationVersion}" />
     </StatusBar>
