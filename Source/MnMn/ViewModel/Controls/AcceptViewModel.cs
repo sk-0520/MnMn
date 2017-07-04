@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
@@ -35,6 +36,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         AppSettingModel Setting { get; }
 
         AcceptWindow View { get; set; }
+
+        FlowDocument TopDocument { get; set; }
 
         WebNavigator BrowserCultureLicense { get; set; }
         WebNavigator BrowserOriginalLicense { get; set; }
@@ -139,6 +142,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region function
 
+        void InitializeCustomSection()
+        {
+            TopDocument.Blocks.Add(new Paragraph(new Run("add test")));
+        }
+
         void InitializedOriginLicense()
         {
             var path = System.IO.Path.Combine(Constants.ApplicationDocDirectoryPath, "License", "MnMn-GPLv3.html");
@@ -156,6 +164,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public void Initialize()
         {
+            InitializeCustomSection();
             InitializedOriginLicense();
             InitializedCultureLicense();
         }
@@ -169,6 +178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             View = (AcceptWindow)view;
 
+            TopDocument = View.topDocument;
             BrowserCultureLicense = View.docCultureLicense;
             BrowserOriginalLicense = View.docOriginalLicense;
 
