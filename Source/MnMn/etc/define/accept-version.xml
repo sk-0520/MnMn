@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <accept-version>
 	<versions>
+		<!--
+		前回起動が key に指定してるバージョン(Version.Revisionは無視)以下であれば
+		extends の内容を extendd.key 昇順で表示する。
+		大元になるバージョンの key は降順で表示される。
+		-->
 		<element key="0.60.0">
 			<extends>
 				<extend key="1" value="1" />
