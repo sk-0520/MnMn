@@ -180,7 +180,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
             var sections = new List<Section>();
             foreach(var versionItem in versionItems) {
-                var versionText = new Run(versionItem.Version.ToString());
+                var localizedVersionText = AppUtility.ReplaceString(
+                    Properties.Resources.String_App_Accept_Version_VersionHead_Format,
+                    new StringsModel() {
+                        ["VER"] = versionItem.Version.ToString(3),
+                    }
+                );
+                var versionText = new Run(localizedVersionText) {
+                    FontWeight = FontWeights.Bold,
+                };
                 var versionParent = new Paragraph(versionText);
 
                 var textsParent = new List();

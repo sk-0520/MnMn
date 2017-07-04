@@ -563,4 +563,7 @@ MnMn 終了時に専用設定ファイルが開かれます。</value>
   <data name="String_Service_Smile_SmileVideo_CheckItLater_ManualOperation" xml:space="preserve">
     <value>手動</value>
   </data>
+  <data name="String_App_Accept_Version_VersionHead_Format" xml:space="preserve">
+    <value>${VER}からの変更点</value>
+  </data>
 </root>
