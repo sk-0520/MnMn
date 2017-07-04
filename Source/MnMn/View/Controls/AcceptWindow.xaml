@@ -60,7 +60,7 @@
       </TabControl.LayoutTransform>
       <TabItem Header="使用許諾分" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
         <FlowDocumentScrollViewer>
-          <FlowDocument x:Name="topDocument" FontSize="14">
+          <FlowDocument FontSize="14">
             <Paragraph FontWeight="Bold" FontSize="18">
               ソフトウェア使用許諾
             </Paragraph>
@@ -122,6 +122,11 @@
               開発中のため設定ファイルのデータ構造、UIが割と頻繁に変わります。
             </Paragraph>
 
+            <Section x:Name="customSection" />
+
+            <Paragraph Margin="0,40" Cursor="Arrow">
+              <CheckBox FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=FlowDocument}}" IsChecked="{Binding UserConfirmation}">本文書内容を理解した</CheckBox>
+            </Paragraph>
           </FlowDocument>
         </FlowDocumentScrollViewer>
       </TabItem>

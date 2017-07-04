@@ -26,6 +26,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
     public class AcceptViewModel : ViewModelBase, ISetView
     {
+        #region variable
+
+        bool _userConfirmation;
+
+        #endregion
+
         public AcceptViewModel(Mediation mediation, IReadOnlyAcceptVersion acceptVersion)
         {
             Mediation = mediation;
@@ -42,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         AcceptWindow View { get; set; }
 
-        FlowDocument TopDocument { get; set; }
+        Section CustomSection { get; set; }
 
         WebNavigator BrowserCultureLicense { get; set; }
         WebNavigator BrowserOriginalLicense { get; set; }
@@ -59,6 +65,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         }
 
         public Uri DevelopmentUri => new Uri(Constants.AppUriDevelopment);
+
+        public bool UserConfirmation
+        {
+            get { return this._userConfirmation; }
+            set { SetVariableValue(ref this._userConfirmation, value); }
+        }
 
         #endregion
 
@@ -105,10 +117,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get
             {
-                return CreateCommand(o => {
-                    Setting.RunningInformation.Accept = true;
-                    View.DialogResult = true;
-                });
+                return CreateCommand(
+                    o => {
+                        Setting.RunningInformation.Accept = true;
+                        View.DialogResult = true;
+                    },
+                    o => UserConfirmation
+                );
             }
         }
 
@@ -210,7 +225,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 var acceptVersionParent = new Section();
                 acceptVersionParent.Blocks.AddRange(sections);
 
-                TopDocument.Blocks.Add(acceptVersionParent);
+                CustomSection.Blocks.Add(acceptVersionParent);
             }
         }
 
@@ -250,7 +265,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             View = (AcceptWindow)view;
 
-            TopDocument = View.topDocument;
+            CustomSection = View.customSection;
             BrowserCultureLicense = View.docCultureLicense;
             BrowserOriginalLicense = View.docOriginalLicense;
 

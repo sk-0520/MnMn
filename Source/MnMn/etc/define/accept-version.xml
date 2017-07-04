@@ -1,25 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <accept-version>
 	<!-- 前回バージョンがこのバージョン未満なら使用許諾を表示 -->
-	<force-accept>0.56.1.0</force-accept>
+	<force-accept>0.71.1</force-accept>
 	<versions>
 		<!--
 		前回起動が key に指定してるバージョン(Version.Revisionは無視)以下であれば
 		extends の内容を extendd.key 昇順で表示する。
 		大元になるバージョンの key は降順で表示される。
 		-->
-		<element key="0.60.0">
+		<element key="0.71.0">
 			<extends>
-				<extend key="1" value="1" />
-				<extend key="3" value="2" />
-				<extend key="2" value="3" />
-			</extends>
-		</element>
-		<element key="0.50.0">
-			<extends>
-				<extend key="1" value="A" />
-				<extend key="2" value="B" />
-				<extend key="3" value="C" />
+				<extend key="1" value="使用許諾内で「本文書内容を理解した」をチェックしないと使用できないように変更。" />
 			</extends>
 		</element>
 	</versions>
