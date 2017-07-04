@@ -688,7 +688,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         }
                     }
                 }
-                CommandManager.InvalidateRequerySuggested();
+                Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
+                    CommandManager.InvalidateRequerySuggested();
+                }), DispatcherPriority.ApplicationIdle);
             }
         }
 

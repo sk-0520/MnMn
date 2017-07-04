@@ -83,6 +83,11 @@ p.uri {
 	color: #0aa;
 }
 
+*.changelog *.reopen:before {
+	content: "[再開課題]";
+	color: #a0a;
+}
+
 *.changelog *.comment {
 	font-size: 90%;
 }
