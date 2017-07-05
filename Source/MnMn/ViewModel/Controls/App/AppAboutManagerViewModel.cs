@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -400,7 +401,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         using(var streamWriter = new StreamWriter(zipStream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
                             var info = new AppInformationCollection(Mediation);
                             info.WriteInformation(streamWriter);
-                            //streamWriter.Write(info.ToString());
                         }
                     }
 
@@ -408,6 +408,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     using(var zipStream = logEntry.Open()) {
                         LoggingManager.WriteLog(zipStream);
                     }
+
+                    var appConfigFilePath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+                    var appConfigEntry = exportStream.CreateEntry(Path.GetFileName(appConfigFilePath));
+                    using(var zipStream = appConfigEntry.Open()) {
+                        using(var stream = new FileStream(appConfigFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                            stream.CopyTo(zipStream);
+                        }
+                    }
+
+                    var appConfig = ConfigurationManager.OpenExeConfiguration(Constants.AssemblyPath);
+                    var appUserConfigFileName = appConfig.AppSettings.File;
+                    if(!string.IsNullOrWhiteSpace(appUserConfigFileName)) {
+                        var appUserConfigFilePath = Path.Combine(Constants.AssemblyRootDirectoryPath, appUserConfigFileName);
+                        if(File.Exists(appUserConfigFilePath)) {
+                            var userAppConfigEntry = exportStream.CreateEntry(appUserConfigFileName);
+                            using(var zipStream = userAppConfigEntry.Open()) {
+                                using(var stream = new FileStream(appUserConfigFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                                    stream.CopyTo(zipStream);
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
         }

@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
+        #region function
+
+        public InformationGroup GetAppConfig()
+        {
+            var group = new InformationGroup("app.config");
+
+            foreach(string key in ConfigurationManager.AppSettings) {
+                var value = ConfigurationManager.AppSettings.Get(key);
+                group.Items.Add(key, value);
+            }
+
+            return group;
+        }
+
+        #endregion
+
         #region InformationCollection
 
         public override FileVersionInfo GetVersionInfo
@@ -62,6 +79,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             return result;
+        }
+
+        public override IEnumerable<InformationGroup> Get()
+        {
+            return new[] {
+                GetApplication(),
+                // MnMn 独自処理
+                GetAppConfig(),
+                GetCPU(),
+                GetMemory(),
+                GetEnvironment(),
+                GetScreen(),
+            };
         }
 
         #endregion

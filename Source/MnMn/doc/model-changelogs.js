@@ -168,6 +168,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#657: 環境情報に app.config の内容が必要'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
