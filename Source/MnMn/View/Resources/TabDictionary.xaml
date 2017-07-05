@@ -30,6 +30,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
               <RepeatButton
                 Name="PART_HeadMoveLeft"
@@ -76,9 +77,20 @@
                   </Canvas>
                 </Viewbox>
               </RepeatButton>
+
+              <Menu Grid.Column="3">
+                <MenuItem Header="#630" ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType=TabControl}}">
+                  <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=TabItem}}" />
+                    </DataTemplate>
+                  </MenuItem.ItemTemplate>
+                </MenuItem>
+              </Menu>
+
               <RepeatButton
                 Name="PART_TailMoveRight"
-                Grid.Column="3"
+                Grid.Column="4"
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                 Command="ScrollBar.LineRightCommand"
                 Style="{StaticResource ScrollButton}"
