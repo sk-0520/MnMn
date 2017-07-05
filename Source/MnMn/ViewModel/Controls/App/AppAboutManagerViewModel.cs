@@ -400,7 +400,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         using(var streamWriter = new StreamWriter(zipStream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
                             var info = new AppInformationCollection(Mediation);
                             info.WriteInformation(streamWriter);
-                            //streamWriter.Write(info.ToString());
                         }
                     }
 
@@ -408,6 +407,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     using(var zipStream = logEntry.Open()) {
                         LoggingManager.WriteLog(zipStream);
                     }
+
+                    var appConfigFilePath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+                    var appConfigEntry = exportStream.CreateEntry(Path.GetFileName(appConfigFilePath));
+                    using(var zipStream = appConfigEntry.Open()) {
+                        using(var stream = new FileStream(appConfigFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                            stream.CopyTo(zipStream);
+                        }
+                    }
+
                 }
             }
         }
