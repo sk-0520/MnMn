@@ -18,6 +18,7 @@
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -27,6 +28,7 @@
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
+      <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_view_converter_service_smile:SmileUserHasBookmarkConverter x:Key="SmileUserHasBookmarkConverter" />
       <Style x:Key="ReadonlyText" TargetType="TextBox">
         <Setter Property="IsReadOnly" Value="True" />
@@ -42,7 +44,7 @@
     </Grid.ColumnDefinitions>
 
     <TabControl Grid.Column="0" Style="{StaticResource FinderTab}">
-      <TabItem Header="ブックマーク">
+      <TabItem Header="ブックマーク" app_view_attachment:MenuTabItem.Header="{Binding Header, RelativeSource={RelativeSource Self}}">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -75,7 +77,7 @@
           </ListBox>
         </Grid>
       </TabItem>
-      <TabItem Header="履歴">
+      <TabItem Header="履歴" app_view_attachment:MenuTabItem.Header="{Binding Header, RelativeSource={RelativeSource Self}}">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -101,6 +103,11 @@
       ItemsSource="{Binding UserItems}"
       Style="{StaticResource FinderTab}"
     >
+      <app_view_controls:FocusedTabControl.ItemContainerStyle>
+        <Style TargetType="TabItem" BasedOn="{StaticResource FindTabItem}">
+          <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding UserName, Mode=OneTime}" />
+        </Style>
+      </app_view_controls:FocusedTabControl.ItemContainerStyle>
       <app_view_controls:FocusedTabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
