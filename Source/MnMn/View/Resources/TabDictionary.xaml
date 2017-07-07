@@ -81,12 +81,25 @@
                 </Viewbox>
               </RepeatButton>
 
-              <xctk:DropDownButton Grid.Column="3" Opened="DropDownButton_Opened">
+              <xctk:DropDownButton
+                Grid.Column="3"
+                Opened="DropDownButton_Opened"
+                Focusable="False"
+                Padding="{StaticResource BitMargin}"
+                MinWidth="0"
+                MinHeight="0"
+              >
                 <xctk:DropDownButton.Content>
                   #630
                 </xctk:DropDownButton.Content>
                 <xctk:DropDownButton.DropDownContent>
-                  <ItemsControl x:Name="tabMenuItems" />
+                  <ItemsControl x:Name="tabMenuItems">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <MenuItem Header="{Binding Header}" />
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
                 </xctk:DropDownButton.DropDownContent>
               </xctk:DropDownButton>
 

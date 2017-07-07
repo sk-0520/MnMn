@@ -19,6 +19,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         TabItem TabItem { get; set; }
 
+        public object Header
+        {
+            get
+            {
+                if(TabItem == null) {
+                    return null;
+                }
+
+                var textHeader = TabItem.Header as string;
+                if(textHeader != null) {
+                    return textHeader;
+                }
+
+                return TabItem.Header;
+            }
+        }
+
         #endregion
     }
 }
