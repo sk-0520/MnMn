@@ -31,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 {
@@ -161,11 +162,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void DropDownButton_Opened(object sender, RoutedEventArgs e)
         {
-            var senderElement = (UIElement)sender;
+            var senderElement = (FrameworkElement)sender;
             var senderTabControl = GetTabControl(senderElement);
             var tabItems = GetTabItems(senderTabControl);
+
+            var tabMenuItems = (ItemsControl)senderElement.FindName("tabMenuItems");
+            var prevTabMenuItems = tabMenuItems.ItemsSource as IEnumerable<MenuTabItemViewModel>;
+            if(prevTabMenuItems != null) {
+                foreach(var item in prevTabMenuItems) {
+                    item.Dispose();
+                }
+            }
+
+            var menuItems = tabItems
+                .Select(t => new MenuTabItemViewModel(t))
+                .ToList()
+            ;
+            tabMenuItems.ItemsSource = menuItems;
         }
     }
 }

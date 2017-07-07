@@ -623,6 +623,7 @@
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorFileDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorNavigatingItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorPageConditionViewModel.cs" />
+    <Compile Include="ViewModel\MenuTabItemViewModel.cs" />
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
     <Compile Include="View\Attachment\HtmlDescriptionBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
@@ -669,6 +670,7 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoLaboratoryManager.xaml.cs">
       <DependentUpon>SmileVideoLaboratoryManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\MenuTabItem.cs" />
     <Compile Include="View\Controls\TokenizedTextBox.cs" />
     <Compile Include="View\Converter\Base64ImageSourceConverter.cs" />
     <Compile Include="View\Converter\DoubleToParameterPercentConverter.cs" />
