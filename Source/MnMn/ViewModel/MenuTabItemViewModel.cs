@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -42,6 +43,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
 
                 return TabItem.Header;
+            }
+        }
+
+        public object Icon
+        {
+            get
+            {
+                if(TabItem == null) {
+                    return null;
+                }
+
+                var menuTabItemIcon = MenuTabItem.GetIcon(TabItem);
+                if(menuTabItemIcon != null) {
+                    var element = menuTabItemIcon as FrameworkElement;
+                    if(element != null) {
+                        element.ApplyTemplate();
+
+                    }
+                    return menuTabItemIcon;
+                }
+
+                return null;
             }
         }
 

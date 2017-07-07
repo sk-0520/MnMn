@@ -96,7 +96,7 @@
                   <ItemsControl x:Name="tabMenuItems">
                     <ItemsControl.ItemTemplate>
                       <DataTemplate>
-                        <MenuItem Header="{Binding Header}" />
+                        <MenuItem Header="{Binding Header}" Icon="{Binding Icon}" />
                       </DataTemplate>
                     </ItemsControl.ItemTemplate>
                   </ItemsControl>
