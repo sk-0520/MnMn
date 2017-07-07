@@ -160,5 +160,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
                 }
             }
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

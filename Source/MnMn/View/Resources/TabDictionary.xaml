@@ -79,12 +79,15 @@
               </RepeatButton>
 
               <Menu Grid.Column="3">
-                <MenuItem Header="#630" ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType=TabControl}}">
-                  <MenuItem.ItemTemplate>
+                <MenuItem Header="#630" ItemsSource="{Binding Children, ElementName=HeaderPanel}">
+                  <!--<MenuItem.ItemTemplate>
                     <DataTemplate>
                       <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=TabItem}}" />
                     </DataTemplate>
-                  </MenuItem.ItemTemplate>
+                  </MenuItem.ItemTemplate>-->
+                  <!--
+                  ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType=TabControl}}"
+                  -->
                 </MenuItem>
               </Menu>
 
