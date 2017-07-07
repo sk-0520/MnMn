@@ -12,6 +12,7 @@
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,6 +23,8 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <cttn_sl_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
+
+    <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
 
     <DataTemplate x:Key="TabItemHeader">
       <Grid>

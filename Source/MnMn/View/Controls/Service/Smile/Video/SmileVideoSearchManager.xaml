@@ -29,6 +29,7 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
+      <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
 
       <ControlTemplate x:Key="TagsItemsTemplate" TargetType="ItemsControl">
         <ItemsControl ItemsSource="{TemplateBinding ItemsSource}">
@@ -541,7 +542,7 @@
         </app_view_controls:FocusedTabControl.Style>
         <app_view_controls:FocusedTabControl.ItemContainerStyle>
           <Style TargetType="TabItem" BasedOn="{StaticResource FindTabItem}">
-            <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding Query}" />
+            <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding Query, Converter={StaticResource EscapeAccessKeyConverter}}" />
           </Style>
         </app_view_controls:FocusedTabControl.ItemContainerStyle>
         <app_view_controls:FocusedTabControl.ItemTemplate>
