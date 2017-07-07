@@ -67,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             FinderLoadState = Define.SourceLoadState.None;
 
             CallOnPropertyChange(nameof(SettedVideoItems));
+            CallOnPropertyChange(nameof(FromName));
+            CallOnPropertyChange(nameof(FromId));
         }
 
         internal void ClearItems()

@@ -30,8 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
                 var menuTabItem = TabItem as MenuTabItem;
                 if(menuTabItem!= null) {
-                    if(menuTabItem.MenuItemHeader != null) {
-                        return menuTabItem.MenuItemHeader;
+                    if(menuTabItem.MenuItemIcon != null) {
+                        return menuTabItem.MenuItemIcon;
                     }
                 }
 

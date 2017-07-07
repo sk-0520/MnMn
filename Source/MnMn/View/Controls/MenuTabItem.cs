@@ -36,5 +36,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region MenuItemIconProperty
+
+        public static readonly DependencyProperty MenuItemIconProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(MenuItemIconProperty)),
+            typeof(object),
+            typeof(MenuTabItem),
+            new FrameworkPropertyMetadata(default(object), new PropertyChangedCallback(OnMenuItemIconChanged))
+        );
+
+        private static void OnMenuItemIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as MenuTabItem;
+            if(control != null) {
+                control.MenuItemIcon = e.NewValue;
+            }
+        }
+
+        public object MenuItemIcon
+        {
+            get { return GetValue(MenuItemIconProperty); }
+            set { SetValue(MenuItemIconProperty, value); }
+        }
+
+        #endregion
     }
 }
