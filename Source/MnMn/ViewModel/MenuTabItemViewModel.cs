@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
@@ -27,10 +28,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                     return null;
                 }
 
+                var menuTabItem = TabItem as MenuTabItem;
+                if(menuTabItem!= null) {
+                    if(menuTabItem.MenuItemHeader != null) {
+                        return menuTabItem.MenuItemHeader;
+                    }
+                }
+
                 var textHeader = TabItem.Header as string;
                 if(textHeader != null) {
                     return textHeader;
                 }
+
 
                 return TabItem.Header;
             }

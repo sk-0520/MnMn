@@ -33,14 +33,30 @@
       </Grid>
     </DataTemplate>
 
-    <Style x:Key="LoadStateTabHeader" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+    <Style x:Key="SelectableTabItemBase" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
       <Setter Property="IsSelected" Value="{Binding IsSelected}" />
-      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
-      <Setter Property="IsEnabled" Value="{Binding SettedVideoItems, Converter={StaticResource IsNotEmptyCollectionConverter}}" />
     </Style>
 
-    <Style x:Key="LoadStateInnerTabHeader" TargetType="TabItem" BasedOn="{StaticResource LoadStateTabHeader}">
+    <Style x:Key="LoadStateTabItemBase" TargetType="TabItem" BasedOn="{StaticResource SelectableTabItemBase}">
+      <Setter Property="IsEnabled" Value="{Binding SettedVideoItems, Converter={StaticResource IsNotEmptyCollectionConverter}}" />
+      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
+    </Style>
+
+    <Style x:Key="LoadStateParentTabItem" TargetType="{x:Type app_view_controls:MenuTabItem}" BasedOn="{StaticResource LoadStateTabItemBase}">
+      <Setter Property="MenuItemHeader" Value="{Binding FromName, Mode=OneWay}" />
+    </Style>
+
+    <Style x:Key="ParentTabItem" TargetType="{x:Type app_view_controls:MenuTabItem}" BasedOn="{StaticResource SelectableTabItemBase}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding Count}" Value="0">
+          <Setter Property="IsEnabled" Value="False"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LoadStateInnerTabHeader" TargetType="TabItem" BasedOn="{StaticResource SelectableTabItemBase}">
       <Setter Property="MaxWidth" Value="{Binding Source={x:Static app:Constants.ServiceSmileVideoCheckItLaterInnerTabItemMaxWidth}}" />
+      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
       <Setter Property="ToolTip">
         <Setter.Value>
           <StackPanel>
@@ -64,36 +80,28 @@
       </Setter>
     </Style>
 
-    <Style x:Key="ParentTabItem" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-      <Style.Triggers>
-        <DataTrigger Binding="{Binding Count}" Value="0">
-          <Setter Property="IsEnabled" Value="False"/>
-        </DataTrigger>
-      </Style.Triggers>
-    </Style>
-
   </UserControl.Resources>
   <Grid>
     <TabControl IsEnabled="True" Style="{StaticResource FinderTab}">
-      <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateTabHeader}">
+      <app_view_controls:MenuTabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl>
           <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
             <Button Command="{Binding DataContext.RemoveCheckedVideosCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoCheckItLaterManager}}">チェック項目を削除</Button>
           </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
         </app_view_controls_service_smile_video:SmileVideoFinderControl>
-      </TabItem>
-      <TabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateTabHeader}">
+      </app_view_controls:MenuTabItem>
+      <app_view_controls:MenuTabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
-      </TabItem>
-      <TabItem Header="マイリスト差分" DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      </app_view_controls:MenuTabItem>
+      <app_view_controls:MenuTabItem Header="マイリスト差分" DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
         <TabControl Style="{StaticResource InnerTab}" />
-      </TabItem>
-      <TabItem Header="ユーザー投稿差分" DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      </app_view_controls:MenuTabItem>
+      <app_view_controls:MenuTabItem Header="ユーザー投稿差分" DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
         <TabControl Style="{StaticResource InnerTab}" />
-      </TabItem>
-      <TabItem Header="タグ差分" DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      </app_view_controls:MenuTabItem>
+      <app_view_controls:MenuTabItem Header="タグ差分" DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
         <TabControl Style="{StaticResource InnerTab}" />
-      </TabItem>
+      </app_view_controls:MenuTabItem>
 
     </TabControl>
   </Grid>
