@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Interactivity;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.View.Attachment;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
@@ -28,11 +30,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                     return null;
                 }
 
-                var menuTabItem = TabItem as MenuTabItem;
-                if(menuTabItem!= null) {
-                    if(menuTabItem.MenuItemIcon != null) {
-                        return menuTabItem.MenuItemIcon;
-                    }
+                var menuTabItemHeader = MenuTabItem.GetHeader(TabItem);
+                if(menuTabItemHeader != null) {
+                    return menuTabItemHeader;
                 }
 
                 var textHeader = TabItem.Header as string;
