@@ -163,7 +163,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            var senderElement = (UIElement)sender;
+            var senderTabControl = GetTabControl(senderElement);
+            var tabItems = GetTabItems(senderTabControl);
         }
     }
 }
