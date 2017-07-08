@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region property
 
-        TabItem TabItem { get; set; }
+        public TabItem TabItem { get; private set; }
 
         public object Header
         {
@@ -67,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 return null;
             }
         }
+
+        public bool IsEnabled { get { return TabItem.IsEnabled; } }
 
         #endregion
     }

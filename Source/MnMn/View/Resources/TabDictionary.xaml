@@ -82,6 +82,7 @@
               </RepeatButton>
 
               <xctk:DropDownButton
+                x:Name="PART_TabMenuButton"
                 Grid.Column="3"
                 Opened="DropDownButton_Opened"
                 Focusable="False"
@@ -96,7 +97,12 @@
                   <ItemsControl x:Name="tabMenuItems">
                     <ItemsControl.ItemTemplate>
                       <DataTemplate>
-                        <MenuItem Header="{Binding Header}" Icon="{Binding Icon}" />
+                        <MenuItem
+                          Click="TabMenuItem_Click"
+                          Header="{Binding Header}"
+                          Icon="{Binding Icon}"
+                          IsEnabled="{Binding IsEnabled}"
+                        />
                       </DataTemplate>
                     </ItemsControl.ItemTemplate>
                   </ItemsControl>

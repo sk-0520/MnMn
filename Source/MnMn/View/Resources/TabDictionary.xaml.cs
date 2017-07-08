@@ -89,6 +89,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
         //{
         //    tabControl.SelectedIndex = index;
         //}
+        static IList<MenuTabItemViewModel> CreateMenuTabItems(IEnumerable<TabItem> tabItems)
+        {
+            var menuItems = tabItems
+                .Where(t => t.IsVisible)
+                .Select(t => new MenuTabItemViewModel(t))
+                .ToList()
+            ;
+
+            return menuItems;
+        }
 
         #endregion
 
@@ -176,11 +186,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
                 }
             }
 
-            var menuItems = tabItems
-                .Select(t => new MenuTabItemViewModel(t))
-                .ToList()
+            tabMenuItems.ItemsSource = CreateMenuTabItems(tabItems);
+        }
+
+        private void TabMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var senderElement = (MenuItem)sender;
+            var menuTabItem = (MenuTabItemViewModel)(senderElement.DataContext);
+            var senderTabControl = GetTabControl(menuTabItem.TabItem);
+            var tabItems = GetTabItems(senderTabControl);
+
+            var tabMenuButton = UIUtility.FindChildren<Xceed.Wpf.Toolkit.DropDownButton>(senderTabControl)
+                .FirstOrDefault(i => i.Name == "PART_TabMenuButton")
             ;
-            tabMenuItems.ItemsSource = menuItems;
+            tabMenuButton.IsOpen = false;
+
+            menuTabItem.TabItem.IsSelected = true;
         }
     }
 }
