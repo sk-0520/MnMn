@@ -94,6 +94,21 @@
         <sys:String x:Key="MylisyTabHeader">マイリスト</sys:String>
         <sys:String x:Key="UserTabHeader">ユーザー投稿</sys:String>
         <sys:String x:Key="WordTabHeader">タグ</sys:String>
+        <Viewbox x:Key="MylistImage" Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallAccentIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox x:Key="UserImage" Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_User}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox x:Key="WordImage" Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
       </TabControl.Resources>
       <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl>
@@ -108,6 +123,7 @@
       <TabItem DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource MylisyTabHeader}" >
         <TabItem.Header>
           <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="MylistImage" />
             <TextBlock Text="{StaticResource MylisyTabHeader}" />
           </StackPanel>
         </TabItem.Header>
@@ -116,6 +132,7 @@
       <TabItem DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource UserTabHeader}" >
         <TabItem.Header>
           <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="UserImage" />
             <TextBlock Text="{StaticResource UserTabHeader}" />
           </StackPanel>
         </TabItem.Header>
@@ -124,6 +141,7 @@
       <TabItem DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource WordTabHeader}" >
         <TabItem.Header>
           <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="WordImage" />
             <TextBlock Text="{StaticResource WordTabHeader}" />
           </StackPanel>
         </TabItem.Header>
