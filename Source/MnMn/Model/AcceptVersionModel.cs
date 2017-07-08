@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         [XmlIgnore]
         public Version ForceAcceptVersion {
-            get => new Version(_ForceAccept);
+            get { return new Version(_ForceAccept); }
             set { _ForceAccept = value.ToString(); }
         }
 
