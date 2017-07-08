@@ -79,6 +79,20 @@
 			</p>
 		</div>
 
+		<h2>ビルド方法</h2>
+		<p>
+			Visual Studio を使用する場合は上記の NuGet リポジトリを追加した状態でビルド可能です。
+		</p>
+		<p>
+			MsBuild を使用する場合、Nugetパッケージをあらかじめ取得した状態(<code>nuget restore</code>)で<em class="file">&lt;MnMn&gt;\build\build.bat</em>を実行すればビルドできます。<br />
+			MSBuild 自体は <em class="file">%ProgramFiles(x86)%\MSBuild\14.0\Bin\msbuild</em> を対象にしています。
+		</p>
+		<div class="ref">
+			<p>
+				リリース手順は <span class="page">others-development-release</span> を参照してください。
+			</p>
+		</div>
+
 	</section>
 	<nav id="main-menu">
 		<noscript>

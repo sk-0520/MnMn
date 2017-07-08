@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             var videoInformation = await GetVideoInformationAsync(videoId, communicator);
             if(videoInformation != null) {
                 var item = videoInformation.ToVideoItemModel();
-                communicator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
+                communicator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, Define.Service.Smile.Video.SmileVideoCheckItLaterFrom.ManualOperation, true)));
             }
         }
 

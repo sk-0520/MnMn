@@ -211,7 +211,15 @@ var menuList = [
 		localize: true,
 		level: 2,
 		title: {
-			'ja-jp': 'ソースコードについて'
+			'ja-jp': 'ソースコード'
+		}
+	},
+	{
+		name: 'others-development-release',
+		localize: true,
+		level: 2,
+		title: {
+			'ja-jp': 'リリース'
 		}
 	},
 	{

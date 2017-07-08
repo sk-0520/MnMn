@@ -4,15 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -22,9 +26,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
     public class AcceptViewModel : ViewModelBase, ISetView
     {
-        public AcceptViewModel(Mediation mediation)
+        #region variable
+
+        bool _userConfirmation;
+
+        #endregion
+
+        public AcceptViewModel(Mediation mediation, IReadOnlyAcceptVersion acceptVersion)
         {
             Mediation = mediation;
+            AcceptVersion = acceptVersion;
 
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
         }
@@ -32,9 +43,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #region property
 
         Mediation Mediation { get; }
+        IReadOnlyAcceptVersion AcceptVersion { get; }
         AppSettingModel Setting { get; }
 
         AcceptWindow View { get; set; }
+
+        Section CustomSection { get; set; }
 
         WebNavigator BrowserCultureLicense { get; set; }
         WebNavigator BrowserOriginalLicense { get; set; }
@@ -51,6 +65,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         }
 
         public Uri DevelopmentUri => new Uri(Constants.AppUriDevelopment);
+
+        public bool UserConfirmation
+        {
+            get { return this._userConfirmation; }
+            set { SetVariableValue(ref this._userConfirmation, value); }
+        }
 
         #endregion
 
@@ -97,10 +117,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get
             {
-                return CreateCommand(o => {
-                    Setting.RunningInformation.Accept = true;
-                    View.DialogResult = true;
-                });
+                return CreateCommand(
+                    o => {
+                        Setting.RunningInformation.Accept = true;
+                        View.DialogResult = true;
+                    },
+                    o => UserConfirmation
+                );
             }
         }
 
@@ -139,6 +162,78 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region function
 
+        /// <summary>
+        /// 使用許諾表示理由。
+        /// </summary>
+        void InitializeTopDocumentForceShow()
+        {
+            // 初回起動時は前回との違いなんぞ何もない
+            if(Setting.RunningInformation.LastExecuteVersion == null) {
+                return;
+            }
+
+            var lastVersion = new Version(
+                Setting.RunningInformation.LastExecuteVersion.Major,
+                Setting.RunningInformation.LastExecuteVersion.Minor,
+                Setting.RunningInformation.LastExecuteVersion.Build
+            );
+
+            var versionItems = AcceptVersion.Items
+                .Select(e => new {
+                    Version = new Version(e.Key),
+                    Texts = e.Extends
+                        .Select(p => new {
+                            Sort = p.Key,
+                            Text = p.Value
+                        })
+                        .OrderBy(i => i.Sort)
+                        .Select(i => i.Text)
+                })
+                .Where(i => lastVersion <= i.Version) // 知ってるバージョンは除外する
+                .OrderByDescending(i => i.Version)
+            ;
+
+            var sections = new List<Section>();
+            foreach(var versionItem in versionItems) {
+                var localizedVersionText = AppUtility.ReplaceString(
+                    Properties.Resources.String_App_Accept_Version_VersionHead_Format,
+                    new StringsModel() {
+                        ["VER"] = versionItem.Version.ToString(3),
+                    }
+                );
+                var versionText = new Run(localizedVersionText) {
+                    FontWeight = FontWeights.Bold,
+                };
+                var versionParent = new Paragraph(versionText);
+
+                var textsParent = new List();
+                foreach(var text in versionItem.Texts) {
+                    var textLine = new Run(text);
+                    var textParent = new Paragraph(textLine);
+                    var listItem = new ListItem(textParent);
+                    textsParent.ListItems.Add(listItem);
+                }
+
+                var section = new Section();
+                section.Blocks.Add(versionParent);
+                section.Blocks.Add(textsParent);
+
+                sections.Add(section);
+            }
+
+            if(sections.Any()) {
+                var acceptVersionParent = new Section();
+                acceptVersionParent.Blocks.AddRange(sections);
+
+                CustomSection.Blocks.Add(acceptVersionParent);
+            }
+        }
+
+        void InitializeTopDocument()
+        {
+            InitializeTopDocumentForceShow();
+        }
+
         void InitializedOriginLicense()
         {
             var path = System.IO.Path.Combine(Constants.ApplicationDocDirectoryPath, "License", "MnMn-GPLv3.html");
@@ -156,6 +251,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public void Initialize()
         {
+            InitializeTopDocument();
             InitializedOriginLicense();
             InitializedCultureLicense();
         }
@@ -169,6 +265,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             View = (AcceptWindow)view;
 
+            CustomSection = View.customSection;
             BrowserCultureLicense = View.docCultureLicense;
             BrowserOriginalLicense = View.docOriginalLicense;
 

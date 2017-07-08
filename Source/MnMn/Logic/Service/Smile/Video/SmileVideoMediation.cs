@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 switch(smileProcessRequest.Parameter.Process) {
                     case SmileVideoProcess.CheckItLater: {
                             var param = (SmileVideoProcessCheckItLaterParameterModel)smileProcessRequest.Parameter;
-                            var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem, param.IsForce);
+                            var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem, param.CheckItLaterFrom, param.IsForce);
                             return new ResponseModel(request, result);
                         }
 
@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                                         break;
 
                                     case WebNavigatorContextMenuKey.smileVideoAddCheckItlater:
-                                        Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(videoInformation.ToVideoItemModel(), true)));
+                                        Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(videoInformation.ToVideoItemModel(), SmileVideoCheckItLaterFrom.ManualOperation, true)));
                                         break;
 
                                     case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark:

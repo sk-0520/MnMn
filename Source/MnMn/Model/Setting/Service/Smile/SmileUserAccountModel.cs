@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 {
@@ -31,9 +32,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
     /// アカウント情報を保持。
     /// </summary>
     [DataContract]
-    public class SmileUserAccountModel: PasswordSettingModel
+    public class SmileUserAccountModel: PasswordSettingModel, IReadOnlySmileUserAccount
     {
-        #region property
+        #region IReadOnlySmileUserAccount
 
         /// <summary>
         /// アカウント名。

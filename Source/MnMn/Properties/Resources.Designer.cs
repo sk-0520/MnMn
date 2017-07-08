@@ -217,6 +217,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   ${VER}からの変更点 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Accept_Version_VersionHead_Format {
+            get {
+                return ResourceManager.GetString("String_App_Accept_Version_VersionHead_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   すべて選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Browser_Common_AllSelect {
@@ -1339,6 +1348,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_Service_Smile_SmileVideo_Bookmark_Unorganized {
             get {
                 return ResourceManager.GetString("String_Service_Smile_SmileVideo_Bookmark_Unorganized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   全て に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_CheckItLater_AllItems {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_CheckItLater_AllItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   全て に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_CheckItLater_Group_AllItems {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_CheckItLater_Group_AllItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   手動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_CheckItLater_ManualOperation {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_CheckItLater_ManualOperation", resourceCulture);
             }
         }
         

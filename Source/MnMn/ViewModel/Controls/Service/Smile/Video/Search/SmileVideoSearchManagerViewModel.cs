@@ -716,6 +716,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     .ToEvaluatedSequence()
                 ;
 
+                foreach(var item in exceptVideoItems) {
+                    item.VolatileTag = new SmileVideoCheckItLaterFromModel() {
+                        FromId = null,
+                        FromName = bookmark.Query,
+                    };
+                }
+
                 return (IReadOnlyList<SmileVideoVideoItemModel>)exceptVideoItems;
             });
         }

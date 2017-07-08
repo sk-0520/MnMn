@@ -31,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 {
@@ -88,6 +89,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
         //{
         //    tabControl.SelectedIndex = index;
         //}
+        static IList<MenuTabItemViewModel> CreateMenuTabItems(IEnumerable<TabItem> tabItems)
+        {
+            var menuItems = tabItems
+                .Where(t => t.IsVisible)
+                .Select(t => new MenuTabItemViewModel(t))
+                .ToList()
+            ;
+
+            return menuItems;
+        }
+
+        static Xceed.Wpf.Toolkit.DropDownButton GetMenuTabItemContainer(TabControl parent)
+        {
+            var tabMenuButton = UIUtility.FindChildren<Xceed.Wpf.Toolkit.DropDownButton>(parent)
+                .FirstOrDefault(i => i.Name == "PART_TabMenuButton")
+            ;
+            return tabMenuButton;
+        }
 
         #endregion
 
@@ -159,6 +178,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
                     closeButton.Command.TryExecute(tabItem.DataContext);
                 }
             }
+        }
+
+        private void DropDownButton_Opened(object sender, RoutedEventArgs e)
+        {
+            var senderElement = (FrameworkElement)sender;
+            var senderTabControl = GetTabControl(senderElement);
+            var tabItems = GetTabItems(senderTabControl);
+
+            if(tabItems == null || !tabItems.Any()) {
+                var tabMenuButton = GetMenuTabItemContainer(senderTabControl);
+                tabMenuButton.IsOpen = false;
+                e.Handled = true;
+                return;
+            }
+
+            var tabMenuItems = (ItemsControl)senderElement.FindName("tabMenuItems");
+            var prevTabMenuItems = tabMenuItems.ItemsSource as IEnumerable<MenuTabItemViewModel>;
+            if(prevTabMenuItems != null) {
+                foreach(var item in prevTabMenuItems) {
+                    item.Dispose();
+                }
+            }
+
+            tabMenuItems.ItemsSource = CreateMenuTabItems(tabItems);
+        }
+
+        private void TabMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var senderElement = (MenuItem)sender;
+            var menuTabItem = (MenuTabItemViewModel)(senderElement.DataContext);
+            var senderTabControl = GetTabControl(menuTabItem.TabItem);
+            var tabItems = GetTabItems(senderTabControl);
+
+            var tabMenuButton = GetMenuTabItemContainer(senderTabControl);
+            tabMenuButton.IsOpen = false;
+
+            menuTabItem.TabItem.IsSelected = true;
         }
     }
 }

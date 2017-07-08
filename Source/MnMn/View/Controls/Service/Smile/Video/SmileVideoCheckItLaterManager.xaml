@@ -2,20 +2,152 @@
   呼び出し元から DataContext を設定して使用。
 -->
 <UserControl
+  x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoCheckItLaterManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+
+  xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="300"
 >
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <cttn_sl_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
+
+    <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
+
+    <DataTemplate x:Key="TabItemHeader">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <app_view_controls:SourceLoadStateNavigator Grid.Column="0" Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding DataContext.FinderLoadState, RelativeSource={RelativeSource AncestorType=TabItem}}" />
+        <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" Text="{Binding DataContext.FromName, RelativeSource={RelativeSource AncestorType=TabItem}}" />
+      </Grid>
+    </DataTemplate>
+
+    <Style x:Key="SelectableTabItemBase" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+      <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+    </Style>
+
+    <Style x:Key="LoadStateTabItemBase" TargetType="TabItem" BasedOn="{StaticResource SelectableTabItemBase}">
+      <Setter Property="IsEnabled" Value="{Binding SettedVideoItems, Converter={StaticResource IsNotEmptyCollectionConverter}}" />
+      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
+    </Style>
+
+    <Style x:Key="LoadStateParentTabItem" TargetType="TabItem" BasedOn="{StaticResource LoadStateTabItemBase}">
+      <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding FromName, Mode=OneWay}" />
+    </Style>
+
+    <Style x:Key="ParentTabItem" TargetType="TabItem" BasedOn="{StaticResource SelectableTabItemBase}">
+      <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding FromName, Mode=OneWay}" />
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding Count}" Value="0">
+          <Setter Property="IsEnabled" Value="False"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LoadStateInnerTabHeader" TargetType="TabItem" BasedOn="{StaticResource SelectableTabItemBase}">
+      <Setter Property="MaxWidth" Value="{Binding Source={x:Static app:Constants.ServiceSmileVideoCheckItLaterInnerTabItemMaxWidth}}" />
+      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
+      <Setter Property="ToolTip">
+        <Setter.Value>
+          <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding FromName}" />
+            <TextBlock Text="{Binding FromId}" Visibility="{Binding HasFromId, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="{StaticResource FontSmallSize}" />
+          </StackPanel>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="InnerTab" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
+      <Setter Property="ItemsSource" Value="{Binding}" />
+      <Setter Property="TabStripPlacement" Value="Left" />
+      <Setter Property="ItemContainerStyle" Value="{StaticResource LoadStateInnerTabHeader}" />
+      <Setter Property="ContentTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <app_view_controls_service_smile_video:SmileVideoFinderControl  />
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+  </UserControl.Resources>
   <Grid>
-    <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding CheckItLaterFinder}">
-      <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
-        <Button Command="{Binding RemoveCheckedVideosCommand}">チェック項目を削除</Button>
-      </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
-    </app_view_controls_service_smile_video:SmileVideoFinderControl>
+    <TabControl IsEnabled="True" Style="{StaticResource FinderTab}">
+      <TabControl.Resources>
+        <sys:String x:Key="MylisyTabHeader">マイリスト</sys:String>
+        <sys:String x:Key="UserTabHeader">ユーザー投稿</sys:String>
+        <sys:String x:Key="WordTabHeader">タグ</sys:String>
+        <Viewbox x:Key="MylistImage" x:Shared="False"  Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallAccentIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox x:Key="UserImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_User}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox x:Key="WordImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+      </TabControl.Resources>
+      <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateParentTabItem}">
+        <app_view_controls_service_smile_video:SmileVideoFinderControl>
+          <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+            <Button Command="{Binding DataContext.RemoveCheckedVideosCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoCheckItLaterManager}}">チェック項目を削除</Button>
+          </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+        </app_view_controls_service_smile_video:SmileVideoFinderControl>
+      </TabItem>
+      <TabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateParentTabItem}">
+        <app_view_controls_service_smile_video:SmileVideoFinderControl />
+      </TabItem>
+      <TabItem DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource MylisyTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource MylistImage}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="MylistImage" />
+            <TextBlock Text="{StaticResource MylisyTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
+        <TabControl Style="{StaticResource InnerTab}" />
+      </TabItem>
+      <TabItem DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource UserTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource UserImage}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="UserImage" />
+            <TextBlock Text="{StaticResource UserTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
+        <TabControl Style="{StaticResource InnerTab}" />
+      </TabItem>
+      <TabItem DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource WordTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource WordImage}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="WordImage" />
+            <TextBlock Text="{StaticResource WordTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
+        <TabControl Style="{StaticResource InnerTab}" />
+      </TabItem>
+
+    </TabControl>
   </Grid>
 </UserControl>

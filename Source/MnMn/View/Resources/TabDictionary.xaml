@@ -3,9 +3,14 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 >
   <Style x:Key="FindTabItem" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
     <EventSetter Event="MouseDown" Handler="FindTabItem_MouseDown" />
@@ -18,6 +23,9 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="TabControl">
+          <ControlTemplate.Resources>
+            <cttn_sl_view_converter:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
+          </ControlTemplate.Resources>
           <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
@@ -28,6 +36,7 @@
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
@@ -76,9 +85,53 @@
                   </Canvas>
                 </Viewbox>
               </RepeatButton>
+
+              <xctk:DropDownButton
+                x:Name="PART_TabMenuButton"
+                Grid.Column="3"
+                Opened="DropDownButton_Opened"
+                Focusable="False"
+                Padding="{StaticResource BitMargin}"
+                MinWidth="0"
+                MinHeight="0"
+                ToolTip="タブ一覧"
+              >
+                <!--<xctk:DropDownButton.Style>
+                  <Style TargetType="xctk:DropDownButton" BasedOn="{StaticResource {x:Type xctk:DropDownButton}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding Items.Count, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="0">
+                        <Setter Property="IsEnabled" Value="False" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </xctk:DropDownButton.Style>-->
+                <xctk:DropDownButton.Content>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Tab}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </xctk:DropDownButton.Content>
+                <xctk:DropDownButton.DropDownContent>
+                  <ItemsControl x:Name="tabMenuItems">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <MenuItem
+                          Click="TabMenuItem_Click"
+                          Header="{Binding Header}"
+                          Icon="{Binding Icon}"
+                          IsEnabled="{Binding IsEnabled}"
+                          FontWeight="{Binding IsSelected,Converter={StaticResource BooleanToFontWeightConverter}}"
+                        />
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </xctk:DropDownButton.DropDownContent>
+              </xctk:DropDownButton>
+
               <RepeatButton
                 Name="PART_TailMoveRight"
-                Grid.Column="3"
+                Grid.Column="4"
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                 Command="ScrollBar.LineRightCommand"
                 Style="{StaticResource ScrollButton}"

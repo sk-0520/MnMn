@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<h2>前提条件</h2>
+		<p>
+			通常のビルドが出来たとしてもリリース用のビルドが出来るわけではありません。
+		</p>
+		<p>
+			ビルドには MSYS が必要になります。<br />
+			もっと言うと <a href="https://git-for-windows.github.io/">Windows 用の git</a> をインストールした際に同梱されている msys になります。
+		</p>
+		<ul>
+			<li>git が使用可能である必要があります。</li>
+			<li>ソースコード単品ではなくソースコード自体のリポジトリ内で作業する必要があります。</li>
+			<li>全ての変更がコミット済みである必要があります。</li>
+		</ul>
+
+		<h2>リリースビルド</h2>
+		<p>
+			<em class="file">&lt;MnMn&gt;\build.bat</em> を実行すると、
+			<em class="dir">&lt;MnMn&gt;\Output\Release\</em> に ZIP アーカイブが出力されます。<br />
+			アーカイブ名は <span class="word">app</span> のバージョンになります。
+		</p>
+
+		<h3>実施される内容</h3>
+		<ul>
+			<li>各バージョン情報の &lt;YEAR&gt; を実施年に置き換え。</li>
+			<li><span class="word">app</span>のバージョン情報に現在リポジトリのリビジョンを埋め込み。</li>
+			<li>成果物から不要ファイルの除外。</li>
+			<li>成果物のアーカイブ。</li>
+		</ul>
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>
