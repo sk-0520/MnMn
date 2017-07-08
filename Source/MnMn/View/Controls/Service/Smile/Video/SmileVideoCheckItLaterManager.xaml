@@ -7,6 +7,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
@@ -88,6 +90,11 @@
   </UserControl.Resources>
   <Grid>
     <TabControl IsEnabled="True" Style="{StaticResource FinderTab}">
+      <TabControl.Resources>
+        <sys:String x:Key="MylisyTabHeader">マイリスト</sys:String>
+        <sys:String x:Key="UserTabHeader">ユーザー投稿</sys:String>
+        <sys:String x:Key="WordTabHeader">タグ</sys:String>
+      </TabControl.Resources>
       <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl>
           <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
@@ -98,13 +105,28 @@
       <TabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
       </TabItem>
-      <TabItem Header="マイリスト差分" DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      <TabItem DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource MylisyTabHeader}" >
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <TextBlock Text="{StaticResource MylisyTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
-      <TabItem Header="ユーザー投稿差分" DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      <TabItem DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource UserTabHeader}" >
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <TextBlock Text="{StaticResource UserTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
-      <TabItem Header="タグ差分" DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      <TabItem DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource WordTabHeader}" >
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <TextBlock Text="{StaticResource WordTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
 
