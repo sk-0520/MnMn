@@ -881,6 +881,7 @@
               Margin="0"
               Padding="0"
               IsHitTestVisible="{Binding IsChecked, RelativeSource={RelativeSource Self}, Converter={StaticResource LogicalNotConverter}}"
+              Focusable="{TemplateBinding Focusable}"
             >
               <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>

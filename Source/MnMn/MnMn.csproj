@@ -623,8 +623,10 @@
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorFileDownloadItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorNavigatingItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorPageConditionViewModel.cs" />
+    <Compile Include="ViewModel\MenuTabItemViewModel.cs" />
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
     <Compile Include="View\Attachment\HtmlDescriptionBehavior.cs" />
+    <Compile Include="View\Attachment\MenuTabItemBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
     <Compile Include="View\Controls\App\AppDownloadManager.xaml.cs">
       <DependentUpon>AppDownloadManager.xaml</DependentUpon>

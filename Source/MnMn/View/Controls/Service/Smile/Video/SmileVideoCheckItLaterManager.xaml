@@ -12,6 +12,8 @@
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -21,6 +23,8 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <cttn_sl_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
+
+    <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
 
     <DataTemplate x:Key="TabItemHeader">
       <Grid>
@@ -33,14 +37,31 @@
       </Grid>
     </DataTemplate>
 
-    <Style x:Key="LoadStateTabHeader" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+    <Style x:Key="SelectableTabItemBase" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
       <Setter Property="IsSelected" Value="{Binding IsSelected}" />
-      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
-      <Setter Property="IsEnabled" Value="{Binding SettedVideoItems, Converter={StaticResource IsNotEmptyCollectionConverter}}" />
     </Style>
 
-    <Style x:Key="LoadStateInnerTabHeader" TargetType="TabItem" BasedOn="{StaticResource LoadStateTabHeader}">
+    <Style x:Key="LoadStateTabItemBase" TargetType="TabItem" BasedOn="{StaticResource SelectableTabItemBase}">
+      <Setter Property="IsEnabled" Value="{Binding SettedVideoItems, Converter={StaticResource IsNotEmptyCollectionConverter}}" />
+      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
+    </Style>
+
+    <Style x:Key="LoadStateParentTabItem" TargetType="TabItem" BasedOn="{StaticResource LoadStateTabItemBase}">
+      <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding FromName, Mode=OneWay}" />
+    </Style>
+
+    <Style x:Key="ParentTabItem" TargetType="TabItem" BasedOn="{StaticResource SelectableTabItemBase}">
+      <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding FromName, Mode=OneWay}" />
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding Count}" Value="0">
+          <Setter Property="IsEnabled" Value="False"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LoadStateInnerTabHeader" TargetType="TabItem" BasedOn="{StaticResource SelectableTabItemBase}">
       <Setter Property="MaxWidth" Value="{Binding Source={x:Static app:Constants.ServiceSmileVideoCheckItLaterInnerTabItemMaxWidth}}" />
+      <Setter Property="HeaderTemplate" Value="{StaticResource TabItemHeader}" />
       <Setter Property="ToolTip">
         <Setter.Value>
           <StackPanel>
@@ -64,25 +85,17 @@
       </Setter>
     </Style>
 
-    <Style x:Key="ParentTabItem" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-      <Style.Triggers>
-        <DataTrigger Binding="{Binding Count}" Value="0">
-          <Setter Property="IsEnabled" Value="False"/>
-        </DataTrigger>
-      </Style.Triggers>
-    </Style>
-
   </UserControl.Resources>
   <Grid>
     <TabControl IsEnabled="True" Style="{StaticResource FinderTab}">
-      <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateTabHeader}">
+      <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl>
           <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
             <Button Command="{Binding DataContext.RemoveCheckedVideosCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoCheckItLaterManager}}">チェック項目を削除</Button>
           </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
         </app_view_controls_service_smile_video:SmileVideoFinderControl>
       </TabItem>
-      <TabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateTabHeader}">
+      <TabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
       </TabItem>
       <TabItem Header="マイリスト差分" DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
