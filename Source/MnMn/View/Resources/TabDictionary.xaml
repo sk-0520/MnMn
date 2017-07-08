@@ -7,6 +7,8 @@
 
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 >
@@ -21,6 +23,9 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="TabControl">
+          <ControlTemplate.Resources>
+            <cttn_sl_view_converter:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
+          </ControlTemplate.Resources>
           <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
@@ -116,7 +121,7 @@
                           Header="{Binding Header}"
                           Icon="{Binding Icon}"
                           IsEnabled="{Binding IsEnabled}"
-                          IsChecked="{Binding IsSelected, Mode=OneWay}"
+                          FontWeight="{Binding IsSelected,Converter={StaticResource BooleanToFontWeightConverter}}"
                         />
                       </DataTemplate>
                     </ItemsControl.ItemTemplate>
