@@ -1291,6 +1291,13 @@
             <sys:String x:Key="SettingTabHeader">設定</sys:String>
           </TabControl.Resources>
           <TabItem IsSelected="{Binding ShowCommentTab}" app_view_attachment:MenuTabItem.Header="{StaticResource CommentTabHeader}">
+            <app_view_attachment:MenuTabItem.Icon>
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Comment}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+            </app_view_attachment:MenuTabItem.Icon>
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1802,6 +1809,14 @@
             </Grid>
           </TabItem>
           <TabItem app_view_attachment:MenuTabItem.Header="{StaticResource FilterTabHeader}">
+            <app_view_attachment:MenuTabItem.Icon>
+              <!-- 妥協 -->
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Filter}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+            </app_view_attachment:MenuTabItem.Icon>
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1874,6 +1889,13 @@
             </Grid>
           </TabItem>
           <TabItem IsSelected="{Binding ShowPlayListTab}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}"  app_view_attachment:MenuTabItem.Header="{StaticResource PlayListTabHeader}">
+            <app_view_attachment:MenuTabItem.Icon>
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+            </app_view_attachment:MenuTabItem.Icon>
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -2110,6 +2132,13 @@
 
           </TabItem>
           <TabItem app_view_attachment:MenuTabItem.Header="{StaticResource SettingTabHeader}">
+            <app_view_attachment:MenuTabItem.Icon>
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Setting}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+            </app_view_attachment:MenuTabItem.Icon>
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
