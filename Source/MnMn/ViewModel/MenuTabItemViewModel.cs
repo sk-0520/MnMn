@@ -70,6 +70,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public bool IsEnabled { get { return TabItem.IsEnabled; } }
 
+        public bool IsSelected { get { return TabItem.IsSelected; } }
+
+        #endregion
+
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            TabItem = null;
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 }

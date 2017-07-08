@@ -100,6 +100,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             return menuItems;
         }
 
+        static Xceed.Wpf.Toolkit.DropDownButton GetMenuTabItemContainer(TabControl parent)
+        {
+            var tabMenuButton = UIUtility.FindChildren<Xceed.Wpf.Toolkit.DropDownButton>(parent)
+                .FirstOrDefault(i => i.Name == "PART_TabMenuButton")
+            ;
+            return tabMenuButton;
+        }
+
         #endregion
 
         private void DockPanel_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -178,6 +186,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             var senderTabControl = GetTabControl(senderElement);
             var tabItems = GetTabItems(senderTabControl);
 
+            if(tabItems == null || !tabItems.Any()) {
+                var tabMenuButton = GetMenuTabItemContainer(senderTabControl);
+                tabMenuButton.IsOpen = false;
+                e.Handled = true;
+                return;
+            }
+
             var tabMenuItems = (ItemsControl)senderElement.FindName("tabMenuItems");
             var prevTabMenuItems = tabMenuItems.ItemsSource as IEnumerable<MenuTabItemViewModel>;
             if(prevTabMenuItems != null) {
@@ -196,9 +211,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             var senderTabControl = GetTabControl(menuTabItem.TabItem);
             var tabItems = GetTabItems(senderTabControl);
 
-            var tabMenuButton = UIUtility.FindChildren<Xceed.Wpf.Toolkit.DropDownButton>(senderTabControl)
-                .FirstOrDefault(i => i.Name == "PART_TabMenuButton")
-            ;
+            var tabMenuButton = GetMenuTabItemContainer(senderTabControl);
             tabMenuButton.IsOpen = false;
 
             menuTabItem.TabItem.IsSelected = true;

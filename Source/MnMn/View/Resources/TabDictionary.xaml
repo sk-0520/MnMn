@@ -89,9 +89,23 @@
                 Padding="{StaticResource BitMargin}"
                 MinWidth="0"
                 MinHeight="0"
+                ToolTip="タブ一覧"
               >
+                <!--<xctk:DropDownButton.Style>
+                  <Style TargetType="xctk:DropDownButton" BasedOn="{StaticResource {x:Type xctk:DropDownButton}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding Items.Count, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="0">
+                        <Setter Property="IsEnabled" Value="False" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </xctk:DropDownButton.Style>-->
                 <xctk:DropDownButton.Content>
-                  #630
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Tab}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
                 </xctk:DropDownButton.Content>
                 <xctk:DropDownButton.DropDownContent>
                   <ItemsControl x:Name="tabMenuItems">
@@ -102,6 +116,7 @@
                           Header="{Binding Header}"
                           Icon="{Binding Icon}"
                           IsEnabled="{Binding IsEnabled}"
+                          IsChecked="{Binding IsSelected, Mode=OneWay}"
                         />
                       </DataTemplate>
                     </ItemsControl.ItemTemplate>
