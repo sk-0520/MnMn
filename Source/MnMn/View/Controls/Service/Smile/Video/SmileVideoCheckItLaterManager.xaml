@@ -7,6 +7,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
@@ -88,6 +90,26 @@
   </UserControl.Resources>
   <Grid>
     <TabControl IsEnabled="True" Style="{StaticResource FinderTab}">
+      <TabControl.Resources>
+        <sys:String x:Key="MylisyTabHeader">マイリスト</sys:String>
+        <sys:String x:Key="UserTabHeader">ユーザー投稿</sys:String>
+        <sys:String x:Key="WordTabHeader">タグ</sys:String>
+        <Viewbox x:Key="MylistImage" x:Shared="False"  Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallAccentIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox x:Key="UserImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_User}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox x:Key="WordImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+      </TabControl.Resources>
       <TabItem DataContext="{Binding AllItemsFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl>
           <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
@@ -98,13 +120,31 @@
       <TabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
       </TabItem>
-      <TabItem Header="マイリスト差分" DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      <TabItem DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource MylisyTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource MylistImage}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="MylistImage" />
+            <TextBlock Text="{StaticResource MylisyTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
-      <TabItem Header="ユーザー投稿差分" DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      <TabItem DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource UserTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource UserImage}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="UserImage" />
+            <TextBlock Text="{StaticResource UserTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
-      <TabItem Header="タグ差分" DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" >
+      <TabItem DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource WordTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource WordImage}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="WordImage" />
+            <TextBlock Text="{StaticResource WordTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
 

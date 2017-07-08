@@ -57,10 +57,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 var menuTabItemIcon = MenuTabItem.GetIcon(TabItem);
                 if(menuTabItemIcon != null) {
                     var element = menuTabItemIcon as FrameworkElement;
-                    if(element != null) {
-                        element.ApplyTemplate();
-
-                    }
+                    //if(element != null) {
+                    //    element.ApplyTemplate();
+                    //}
                     return menuTabItemIcon;
                 }
 
