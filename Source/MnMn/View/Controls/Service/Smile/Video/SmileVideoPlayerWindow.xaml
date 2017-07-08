@@ -1284,7 +1284,13 @@
         />
 
         <TabControl Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource FinderTab}">
-          <TabItem IsSelected="{Binding ShowCommentTab}">
+          <TabControl.Resources>
+            <sys:String x:Key="CommentTabHeader">コメント</sys:String>
+            <sys:String x:Key="FilterTabHeader">フィルタ</sys:String>
+            <sys:String x:Key="PlayListTabHeader">プレイリスト</sys:String>
+            <sys:String x:Key="SettingTabHeader">設定</sys:String>
+          </TabControl.Resources>
+          <TabItem IsSelected="{Binding ShowCommentTab}" app_view_attachment:MenuTabItem.Header="{StaticResource CommentTabHeader}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1292,7 +1298,7 @@
                     <Path Data="{StaticResource Image_Comment}" Style="{StaticResource MinimumDefaultIconPath}" />
                   </Canvas>
                 </Viewbox>
-                <TextBlock>コメント</TextBlock>
+                <TextBlock Text="{StaticResource CommentTabHeader}" />
               </StackPanel>
             </TabItem.Header>
             <Grid>
@@ -1795,7 +1801,7 @@
 
             </Grid>
           </TabItem>
-          <TabItem>
+          <TabItem app_view_attachment:MenuTabItem.Header="{StaticResource FilterTabHeader}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1828,7 +1834,7 @@
                     </Control.Style>
                   </Control>
                 </Viewbox>
-                <TextBlock>フィルタ</TextBlock>
+                <TextBlock Text="{StaticResource FilterTabHeader}" />
               </StackPanel>
             </TabItem.Header>
             <Grid>
@@ -1867,7 +1873,7 @@
               </TabControl>
             </Grid>
           </TabItem>
-          <TabItem IsSelected="{Binding ShowPlayListTab}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <TabItem IsSelected="{Binding ShowPlayListTab}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}"  app_view_attachment:MenuTabItem.Header="{StaticResource PlayListTabHeader}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -1875,7 +1881,7 @@
                     <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource MinimumDefaultIconPath}" />
                   </Canvas>
                 </Viewbox>
-                <TextBlock>プレイリスト</TextBlock>
+                <TextBlock Text="{StaticResource PlayListTabHeader}" />
               </StackPanel>
             </TabItem.Header>
 
@@ -2103,7 +2109,7 @@
             </Grid>
 
           </TabItem>
-          <TabItem>
+          <TabItem app_view_attachment:MenuTabItem.Header="{StaticResource SettingTabHeader}">
             <TabItem.Header>
               <StackPanel Style="{StaticResource ItemPanel}">
                 <Viewbox Style="{StaticResource MinimumItemBox}">
@@ -2111,7 +2117,7 @@
                     <Path Data="{StaticResource Image_Setting}" Style="{StaticResource MinimumDefaultIconPath}" />
                   </Canvas>
                 </Viewbox>
-                <TextBlock>設定</TextBlock>
+                <TextBlock Text="{StaticResource SettingTabHeader}" />
               </StackPanel>
             </TabItem.Header>
             <Grid Margin="{StaticResource IndependentMargin}">
