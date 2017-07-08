@@ -94,17 +94,17 @@
         <sys:String x:Key="MylisyTabHeader">マイリスト</sys:String>
         <sys:String x:Key="UserTabHeader">ユーザー投稿</sys:String>
         <sys:String x:Key="WordTabHeader">タグ</sys:String>
-        <Viewbox x:Key="MylistImage" Style="{StaticResource SmallItemBox}">
+        <Viewbox x:Key="MylistImage" x:Shared="False"  Style="{StaticResource SmallItemBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallAccentIconPath}" />
           </Canvas>
         </Viewbox>
-        <Viewbox x:Key="UserImage" Style="{StaticResource SmallItemBox}">
+        <Viewbox x:Key="UserImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_User}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
-        <Viewbox x:Key="WordImage" Style="{StaticResource SmallItemBox}">
+        <Viewbox x:Key="WordImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
@@ -120,7 +120,7 @@
       <TabItem DataContext="{Binding ManualOperationFinder}" Style="{StaticResource LoadStateParentTabItem}">
         <app_view_controls_service_smile_video:SmileVideoFinderControl />
       </TabItem>
-      <TabItem DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource MylisyTabHeader}" >
+      <TabItem DataContext="{Binding MylistBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource MylisyTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource MylistImage}">
         <TabItem.Header>
           <StackPanel Style="{StaticResource TabHeader}">
             <StaticResource ResourceKey="MylistImage" />
@@ -129,7 +129,7 @@
         </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
-      <TabItem DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource UserTabHeader}" >
+      <TabItem DataContext="{Binding UserBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource UserTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource UserImage}">
         <TabItem.Header>
           <StackPanel Style="{StaticResource TabHeader}">
             <StaticResource ResourceKey="UserImage" />
@@ -138,7 +138,7 @@
         </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
       </TabItem>
-      <TabItem DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource WordTabHeader}" >
+      <TabItem DataContext="{Binding WordBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource WordTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource WordImage}">
         <TabItem.Header>
           <StackPanel Style="{StaticResource TabHeader}">
             <StaticResource ResourceKey="WordImage" />
