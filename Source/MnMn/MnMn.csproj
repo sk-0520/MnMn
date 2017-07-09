@@ -319,6 +319,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyExpressionElement.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpressionItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpressions.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyKeywordTextItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMapping.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingContent.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemBracket.cs" />
@@ -635,6 +636,9 @@
       <DependentUpon>AppGeneralBrowserManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\FocusedTabControl.cs" />
+    <Compile Include="View\Controls\KeywordTextBox.xaml.cs">
+      <DependentUpon>KeywordTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\ProxySetting.xaml.cs">
       <DependentUpon>ProxySetting.xaml</DependentUpon>
     </Compile>
@@ -1202,6 +1206,10 @@
       <SubType>Designer</SubType>
     </None>
     <Page Include="View\Controls\App\AppDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\KeywordTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
