@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -28,9 +29,11 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
@@ -44,14 +47,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// Flashを変換した後のファイル拡張子。
         /// </summary>
         public const string flashConvertedExtension = "flv";
-
-        public const string launcherParameterVideoId = "video-id";
-        public const string launcherParameterVideoTitle = "video-title";
-        public const string launcherParameterVideoPage = "video-page";
-
-        public const string customCopyFormatVideoId = "video-id";
-        public const string customCopyFormatVideoTitle = "video-title";
-        public const string customCopyFormatVideoPage = "video-page";
 
         #endregion
 
@@ -70,6 +65,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static bool IsLauncherParameterElement(IReadOnlyDefinedElement element)
         {
             return IsKeywordElement(element, "parameter");
+        }
+
+        public static IDictionary<string, string> GetElementPropertyValue(SmileVideoInformationViewModel information, IEnumerable<IReadOnlyDefinedElement> elements)
+        {
+            var type = information.GetType();
+
+            var result = elements
+                .Select(i => new { Element = i, Property = type.GetProperty(i.Extends["property"]) })
+                .Select(i => new { Element = i.Element, Property = i.Property, Value = i.Property.GetValue(information) })
+                .ToDictionary(
+                    i => i.Element.Key,
+                    i => (string)i.Value
+                )
+            ;
+
+            return result;
         }
 
         /// <summary>
@@ -139,15 +150,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <param name="information"></param>
         /// <param name="baseParameter"></param>
         /// <returns></returns>
-        public static string MakeLauncherParameter(SmileVideoInformationViewModel information, string baseParameter)
+        public static string MakeLauncherParameter(SmileVideoInformationViewModel information, IReadOnlySmileVideoKeyword keyword, string baseParameter)
         {
-            var map = new Dictionary<string, string>() {
-                { launcherParameterVideoId, information.VideoId },
-                { launcherParameterVideoTitle, information.Title },
-                { launcherParameterVideoPage, information.WatchUrl.OriginalString },
-            };
+            var map = GetElementPropertyValue(information, keyword.Items.Where(i => IsLauncherParameterElement(i)));
             var result = AppUtility.ReplaceString(baseParameter, map);
-
             return result;
         }
 
@@ -169,15 +175,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return $"[{video}]-[{audio}]";
         }
 
-        public static string GetCustomFormatedText(SmileVideoInformationViewModel information, string customCopyFormat)
+        public static string GetCustomFormatedText(SmileVideoInformationViewModel information, IReadOnlySmileVideoKeyword keyword, string customCopyFormat)
         {
-            var map = new Dictionary<string, string>() {
-                { customCopyFormatVideoId, information.VideoId },
-                { customCopyFormatVideoTitle, information.Title },
-                { customCopyFormatVideoPage, information.WatchUrl.OriginalString },
-            };
+            var map = GetElementPropertyValue(information, keyword.Items.Where(i => IsLauncherParameterElement(i)));
             var result = AppUtility.ReplaceString(customCopyFormat, map);
-
             return result;
         }
 
