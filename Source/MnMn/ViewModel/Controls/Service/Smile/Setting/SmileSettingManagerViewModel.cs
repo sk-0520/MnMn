@@ -29,6 +29,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -109,6 +110,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Common, value, nameof(Setting.Video.Common.CustomCopyFormat)); }
         }
 
+        public IEnumerable<IReadOnlyKeywordTextItem> CommonCustomCopyList2
+        {
+            get
+            {
+                var list = new[] {
+                    SmileVideoInformationUtility.customCopyFormatVideoId,
+                    SmileVideoInformationUtility.customCopyFormatVideoTitle,
+                    SmileVideoInformationUtility.customCopyFormatVideoPage,
+                }.Select(i => new KeywordTextItemViewModel() {
+                    Keyword = $"keyword: {i}",
+                    Value = i,
+                    Tooltip = $"tooltip: {i}",
+                }).ToEvaluatedSequence()
+                ;
+
+                return list;
+            }
+        }
         public string CommonCustomCopyList
         {
             get

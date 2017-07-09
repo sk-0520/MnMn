@@ -18,6 +18,7 @@
   xmlns:app_define_ui_player="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.UI.Player"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -104,10 +105,13 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Row="0" Grid.Column="0">カスタムコピー書式</Label>
+              <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Margin="{StaticResource VerticalContrlMargin}">カスタムコピー書式</Label>
+              <!--
               <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
+              -->
+              <app_view_controls:KeywordTextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" KeywordItems="{Binding CommonCustomCopyList2}" />
 
-              <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CommonCustomCopyList}" />
+              <!--<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CommonCustomCopyList}" />-->
 
             </Grid>
           </StackPanel>
