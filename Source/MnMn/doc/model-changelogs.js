@@ -115,7 +115,11 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#662: プレイリストの次動画自動遷移をショートカットキーで対応可能にする',
+						'comments': [
+							'F9 キー',
+							'Windows Media Player で該当するキーが分からんかった'
+						]
 					},
 					{
 						'revision': '',

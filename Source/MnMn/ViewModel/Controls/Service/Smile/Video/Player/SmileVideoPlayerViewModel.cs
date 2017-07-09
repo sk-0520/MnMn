@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             PlayListItems.AddRange(videoInformations);
-            CanPlayNextVieo.Value = true;
+            CanPlayNextVideo.Value = true;
 
             // 再生(DL)可能か
             var firstVideo = PlayListItems.GetFirstItem();
@@ -771,7 +771,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(PlayListItems.All(i => !SmileVideoInformationUtility.IsEquals(information, i))) {
                 PlayListItems.Add(information);
-                CanPlayNextVieo.Value = true;
+                CanPlayNextVideo.Value = true;
             }
         }
 
@@ -1530,7 +1530,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any()) {
+            if(CanPlayNextVideo.Value && PlayListItems.Skip(1).Any()) {
                 // 次のプレイリストへ遷移
                 Mediation.Logger.Debug("next playlist item");
                 LoadNextPlayListItemAsync();
@@ -1657,7 +1657,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 // プレイリストに存在しない動画は追加する
                 PlayListItems.Add(videoInformation);
                 //#371
-                CanPlayNextVieo.Value = false;
+                CanPlayNextVideo.Value = false;
             } else {
                 // プレイリストに存在するのであればカレントを設定
                 PlayListItems.ChangeCurrentItem(videoInformation);
