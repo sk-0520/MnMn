@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#660: ユーザータブ一覧メニュー表示の項目表示が出来てない'
 					},
 					{
 						'revision': '',

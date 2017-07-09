@@ -462,6 +462,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         }
 
+        public override string ToString()
+        {
+            return UserName;
+        }
+
         #endregion
 
         #region ISmileDescription
