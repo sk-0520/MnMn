@@ -1162,4 +1162,9 @@
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
   </Style>
 
+  <Style x:Key="KeywordTextLabel" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="Margin" Value="{StaticResource VerticalContrlMargin}" />
+  </Style>
+
 </ResourceDictionary>

@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
@@ -541,7 +542,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return;
             }
 
-            var text = SmileVideoInformationUtility.GetCustomFormatedText(information, Setting.Common.CustomCopyFormat);
+            var keyword = Mediation.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
+
+            var text = SmileVideoInformationUtility.GetCustomFormatedText(information, keyword, Setting.Common.CustomCopyFormat);
             CopyInformationText(text);
         }
 
