@@ -6,7 +6,26 @@
 		</words>
 		<extends>
 			<extend key="tooltip" value="" />
-
+			<extend key="custom-copy" value="True" />
+			<extend key="parameter"   value="True" />
+		</extends>
+	</element>
+	<element key="video-title">
+		<words>
+			<word key="ja-jp" value="video-title" />
+		</words>
+		<extends>
+			<extend key="tooltip" value="" />
+			<extend key="custom-copy" value="True" />
+			<extend key="parameter"   value="True" />
+		</extends>
+	</element>
+	<element key="video-page">
+		<words>
+			<word key="ja-jp" value="video-page" />
+		</words>
+		<extends>
+			<extend key="tooltip" value="" />
 			<extend key="custom-copy" value="True" />
 			<extend key="parameter"   value="True" />
 		</extends>

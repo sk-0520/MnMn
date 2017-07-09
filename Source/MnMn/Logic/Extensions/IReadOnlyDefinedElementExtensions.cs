@@ -31,6 +31,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
             return result;
         }
 
+        public static string GetStringInExtends(this IReadOnlyDefinedElement element, string extendKey)
+        {
+            return GetValueInExtends(element, extendKey, s => s);
+        }
+
         public static bool GetBooleanInExtends(this IReadOnlyDefinedElement element, string extendKey)
         {
             return GetValueInExtends(element, extendKey, s => bool.Parse(s));
