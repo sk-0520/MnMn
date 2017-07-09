@@ -109,7 +109,7 @@
               <!--
               <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
               -->
-              <app_view_controls:KeywordTextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" KeywordItems="{Binding CommonCustomCopyList}" />
+              <app_view_controls:KeywordTextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" KeywordItemsSource="{Binding CommonCustomCopyList}" />
 
               <!--<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CommonCustomCopyList}" />-->
 
@@ -141,7 +141,7 @@
                 <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}" Style="{StaticResource VerticalButton}" Content="開く" />
 
                 <Label Grid.Row="1" Grid.Column="0" Content="パラメータ" Style="{StaticResource KeywordTextLabel}" />
-                <app_view_controls:KeywordTextBox Grid.Row="1" Grid.Column="1" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" KeywordItems="{Binding LauncherParameterList}" />
+                <app_view_controls:KeywordTextBox Grid.Row="1" Grid.Column="1" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" KeywordItemsSource="{Binding LauncherParameterList}" />
                 <!--<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
 
                 <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameterList}" />-->

@@ -24,6 +24,7 @@
       <TextBox
         x:Name="inputValue"
         Grid.Column="0"
+        LostFocus="inputValue_LostFocus"
         IsReadOnly="{Binding IsReadOnly, ElementName=root}"
         Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, ElementName=root}"
         Style="{StaticResource VerticalTextBox}"
@@ -31,9 +32,9 @@
       <ContentControl Grid.Column="1" />
     </Grid>
 
-    <Grid Grid.Row="1">
+    <Grid Grid.Row="1" Margin="{StaticResource BottomMargin}">
       <!-- IReadOnlyKeywordTextItem をくっつけはっつけ -->
-      <ItemsControl ItemsSource="{Binding KeywordItems, ElementName=root}">
+      <ItemsControl ItemsSource="{Binding KeywordItemsSource, ElementName=root}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
             <WrapPanel Orientation="Horizontal" />
@@ -43,7 +44,7 @@
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <Separator x:Name="separator" Style="{StaticResource SmallIndent}" />
-              <Button Content="{Binding Keyword}" Style="{StaticResource Hyperlink}"/>
+              <Button Click="Button_Click" Content="{Binding Keyword}" Style="{StaticResource Hyperlink}"/>
             </StackPanel>
             <DataTemplate.Triggers>
               <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">

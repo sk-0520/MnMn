@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
@@ -28,16 +29,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             InitializeComponent();
         }
 
-        #region KeywordItemsProperty
+        #region KeywordItemsSourceProperty
 
-        public static readonly DependencyProperty KeywordItemsProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(KeywordItemsProperty)),
+        public static readonly DependencyProperty KeywordItemsSourceProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(KeywordItemsSourceProperty)),
             typeof(IEnumerable),
             typeof(KeywordTextBox),
-            new FrameworkPropertyMetadata(default(IEnumerable), new PropertyChangedCallback(OnKeywordItemsChanged))
+            new FrameworkPropertyMetadata(default(IEnumerable), new PropertyChangedCallback(OnKeywordItemsSourceChanged))
         );
 
-        private static void OnKeywordItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnKeywordItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as KeywordTextBox;
             if(control != null) {
@@ -72,10 +73,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
-        public IEnumerable KeywordItems
+        public IEnumerable KeywordItemsSource
         {
-            get { return GetValue(KeywordItemsProperty) as IEnumerable; }
-            set { SetValue(KeywordItemsProperty, value); }
+            get { return GetValue(KeywordItemsSourceProperty) as IEnumerable; }
+            set { SetValue(KeywordItemsSourceProperty, value); }
         }
 
         #endregion
@@ -130,5 +131,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region function
+
+        void SetKeyword(string value)
+        {
+            var text = this.inputValue.Text;
+            var selectionStart = this.inputValue.SelectionStart;
+            var selectionLength = this.inputValue.SelectionLength;
+            if(selectionStart != -1) {
+                var head = text.Substring(0, selectionStart);
+                var tail = text.Substring(selectionStart + selectionLength, text.Length - (selectionStart + selectionLength));
+                this.inputValue.Text = head + value + tail;
+                this.inputValue.SelectionStart = head.Length;
+                this.inputValue.SelectionLength = value.Length;
+            }
+        }
+
+        #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var senderElement = (FrameworkElement)sender;
+            var keywordTextItem = (IReadOnlyKeywordTextItem)senderElement.DataContext;
+            SetKeyword(keywordTextItem.Value);
+        }
+
+        private void inputValue_LostFocus(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }
