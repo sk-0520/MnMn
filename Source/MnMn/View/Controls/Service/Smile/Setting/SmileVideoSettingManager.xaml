@@ -105,7 +105,7 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Margin="{StaticResource VerticalContrlMargin}">カスタムコピー書式</Label>
+              <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource KeywordTextLabel}" >カスタムコピー書式</Label>
               <!--
               <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
               -->
@@ -129,7 +129,6 @@
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
@@ -141,12 +140,13 @@
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LauncherPath, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
                 <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}" Style="{StaticResource VerticalButton}" Content="開く" />
 
-                <Label Grid.Row="1" Grid.Column="0" Content="パラメータ"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
+                <Label Grid.Row="1" Grid.Column="0" Content="パラメータ" Style="{StaticResource KeywordTextLabel}" />
+                <app_view_controls:KeywordTextBox Grid.Row="1" Grid.Column="1" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" KeywordItems="{Binding LauncherParameterList}" />
+                <!--<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
 
-                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameterList}" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameterList}" />-->
 
-                <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap">
+                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap">
                   <Run>外部プログラムは理屈としてパラメタ―必須のため</Run>
                   <Run FontWeight="Bold">プログラム</Run>
                   <Run>と</Run>

@@ -57,14 +57,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         #region function
 
+        static bool IsKeywordElement(IReadOnlyDefinedElement element, string extendKey)
+        {
+            return element.GetBooleanInExtends(extendKey);
+        }
+
         public static bool IsCustomCopyElement(IReadOnlyDefinedElement element)
         {
-            string value; // はよ MSBuild 変えたい
-            if(element.Extends.TryGetValue("custom-copy", out value)) {
-                return RawValueUtility.ConvertBoolean(value);
-            }
+            return IsKeywordElement(element, "custom-copy");
+        }
 
-            return false;
+        public static bool IsLauncherParameterElement(IReadOnlyDefinedElement element)
+        {
+            return IsKeywordElement(element, "parameter");
         }
 
         /// <summary>

@@ -155,16 +155,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Execute, value); }
         }
 
-        public string LauncherParameterList
+        public IEnumerable<IReadOnlyKeywordTextItem> LauncherParameterList
         {
             get
             {
-                var list = new[] {
-                    SmileVideoInformationUtility.launcherParameterVideoId,
-                    SmileVideoInformationUtility.launcherParameterVideoTitle,
-                    SmileVideoInformationUtility.launcherParameterVideoPage,
-                };
-                return string.Join(", ", list.Select(s => "${" + s + "}"));
+                var keyword = Mediation.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
+                var result = keyword.Items
+                    .Where(i => SmileVideoInformationUtility.IsLauncherParameterElement(i))
+                    .Select(i => new KeywordTextItemDefinedViewModel(i))
+                .ToEvaluatedSequence();
+
+                return result;
             }
         }
 
