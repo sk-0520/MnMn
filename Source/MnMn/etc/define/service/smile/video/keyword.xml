@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<keyword>
+	<element key="video-id">
+		<words>
+			<word key="ja-jp" value="video-id" />
+		</words>
+		<extends>
+			<extend key="tooltip" value="" />
+
+			<extend key="custom-copy" value="True" />
+			<extend key="parameter"   value="True" />
+		</extends>
+	</element>
+</keyword>

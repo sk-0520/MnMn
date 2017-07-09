@@ -27,6 +27,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -55,6 +56,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         #endregion
 
         #region function
+
+        public static bool IsCustomCopyElement(IReadOnlyDefinedElement element)
+        {
+            string value; // はよ MSBuild 変えたい
+            if(element.Extends.TryGetValue("custom-copy", out value)) {
+                return RawValueUtility.ConvertBoolean(value);
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// 動画IDに対応するキャッシュディレクトリパスを取得する。

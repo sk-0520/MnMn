@@ -109,7 +109,7 @@
               <!--
               <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
               -->
-              <app_view_controls:KeywordTextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" KeywordItems="{Binding CommonCustomCopyList2}" />
+              <app_view_controls:KeywordTextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" KeywordItems="{Binding CommonCustomCopyList}" />
 
               <!--<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CommonCustomCopyList}" />-->
 

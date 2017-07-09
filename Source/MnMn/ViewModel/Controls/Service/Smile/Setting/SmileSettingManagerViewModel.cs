@@ -28,13 +28,16 @@ using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -110,35 +113,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Common, value, nameof(Setting.Video.Common.CustomCopyFormat)); }
         }
 
-        public IEnumerable<IReadOnlyKeywordTextItem> CommonCustomCopyList2
+        public IEnumerable<IReadOnlyKeywordTextItem> CommonCustomCopyList
         {
             get
             {
-                var list = new[] {
-                    SmileVideoInformationUtility.customCopyFormatVideoId,
-                    SmileVideoInformationUtility.customCopyFormatVideoTitle,
-                    SmileVideoInformationUtility.customCopyFormatVideoPage,
-                }.Select(i => new KeywordTextItemViewModel() {
-                    Keyword = $"keyword: {i}",
-                    Value = i,
-                    Tooltip = $"tooltip: {i}",
-                }).ToEvaluatedSequence()
-                ;
+                var keyword = Mediation.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
+                var result = keyword.Items
+                    .Where(i => SmileVideoInformationUtility.IsCustomCopyElement(i))
+                    .Select(i => new KeywordTextItemDefinedViewModel(i))
+                .ToEvaluatedSequence();
 
-                return list;
-            }
-        }
-        public string CommonCustomCopyList
-        {
-            get
-            {
-                var list = new[] {
-                    SmileVideoInformationUtility.customCopyFormatVideoId,
-                    SmileVideoInformationUtility.customCopyFormatVideoTitle,
-                    SmileVideoInformationUtility.customCopyFormatVideoPage,
-                };
-
-                return string.Join(", ", list.Select(s => "${" + s + "}"));
+                return result;
             }
         }
 

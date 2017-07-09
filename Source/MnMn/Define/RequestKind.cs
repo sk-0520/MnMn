@@ -64,6 +64,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         ///// </summary>
         //HideView,
         /// <summary>
+        /// 標準以外の定義データ。
+        /// </summary>
+        OtherDefine,
+        /// <summary>
         /// 独自設定。
         /// </summary>
         CustomSetting,
