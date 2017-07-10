@@ -414,6 +414,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveInformationUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
+    <Compile Include="Logic\Utility\UriUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\View\PointingGesture.cs" />
     <Compile Include="Logic\View\WebNavigatorPointingGesture.cs" />
@@ -517,6 +518,8 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthBySignatureModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSrcIdToMultiplexerModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Channel\SmileChannelItemSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Channel\SmileChannelSettingModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchThumbnailStyleModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchModel.cs" />
@@ -586,6 +589,8 @@
     <Compile Include="ViewModel\Controls\KeywordTextItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\NetworkProxySettingViewModel.cs" />
     <Compile Include="ViewModel\Controls\PagerFinderProvider.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelInformationViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryItemFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryGroupFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryManagerViewModel.cs" />
@@ -672,6 +677,9 @@
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Live\SmileLivePlayerWindow.xaml.cs">
       <DependentUpon>SmileLivePlayerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\SmileChannelManager.xaml.cs">
+      <DependentUpon>SmileChannelManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\SmileWebSiteManager.xaml.cs">
       <DependentUpon>SmileWebSiteManager.xaml</DependentUpon>
@@ -1232,6 +1240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\Live\SmileLiveManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\SmileChannelManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
