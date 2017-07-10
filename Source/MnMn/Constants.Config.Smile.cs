@@ -67,6 +67,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static TimeSpan ServiceSmileMarketImageCacheTime = appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
 
         /// <summary>
+        /// チャンネルRSS(動画)の読み込み待ち時間
+        /// </summary>
+        public static TimeSpan ServiceSmileChannelVideoFeedWaitTime = appConfig.Get("service-smile-channel-video-feed-wait-time", TimeSpan.Parse);
+
+        /// <summary>
         /// マイリストのタイトルから除外する文字列。
         /// <para>先頭。</para>
         /// </summary>

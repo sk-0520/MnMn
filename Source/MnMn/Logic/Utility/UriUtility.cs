@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
     {
         #region function
 
-        static UriResultModel GetUriModel(IGetUri getUri,string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        static IReadOnlyUriResult GetUriModel(IGetUri getUri,string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             return getUri.GetUri(key, replaceMap, serviceType);
         }

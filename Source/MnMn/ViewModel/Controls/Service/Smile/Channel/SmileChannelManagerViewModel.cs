@@ -59,9 +59,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         public Task LoadAsync(string channelId, bool isLoginUser, bool addHistory)
         {
-            var existUser = ChannelItems.FirstOrDefault(i => i.ChannelId == channelId);
-            if(existUser != null) {
-                SelectedChannel = existUser;
+            var existChannel = ChannelItems.FirstOrDefault(i => i.ChannelId == channelId);
+            if(existChannel != null) {
+                SelectedChannel = existChannel;
                 return Task.CompletedTask;
             } else {
                 var channel = new SmileChannelInformationViewModel(Mediation, channelId);

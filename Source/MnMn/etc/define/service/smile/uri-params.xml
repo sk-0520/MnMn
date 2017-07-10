@@ -19,6 +19,11 @@
 		<item key="@word" value="${word}" />
 	</param>
 
+	<param key="smile-channel-video-feed">
+		<item key="rss" value="2.0" />
+		<item key="page" value="${page}" />
+	</param>
+
 	<param key="smile-contents-search">
 		<item key="service" value="${service}" />
 
