@@ -207,5 +207,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         {
             OpenUserIdCore((string)parameter, communicator);
         }
+
+        /// <summary>
+        /// <see cref="ISmileDescription.OpenChannelIdLinkCommand"/>
+        /// </summary>
+        /// <param name="communicator"></param>
+        /// <param name="channelId"></param>
+        static void OpenChannelIdCore(string channelId, ICommunication communicator)
+        {
+            var parameter = new SmileOpenChannelIdParameterModel() {
+                ChannelId = channelId,
+            };
+
+            communicator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Smile, parameter, ShowViewState.Foreground));
+        }
+
+        /// <summary>
+        /// <see cref="ISmileDescription.OpenChannelIdLinkCommand"/>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="userId"></param>
+        public static void OpenChannelId(string parameter, ICommunication communicator)
+        {
+            OpenChannelIdCore((string)parameter, communicator);
+        }
+
     }
 }

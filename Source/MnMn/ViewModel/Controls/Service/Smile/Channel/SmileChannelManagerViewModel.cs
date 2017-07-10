@@ -10,6 +10,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -56,6 +57,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         #endregion
 
         #region function
+
+        public Task LoadFromParameterAsync(SmileOpenChannelIdParameterModel parameter)
+        {
+            return LoadAsync(parameter.ChannelId, parameter.IsLoginUser, parameter.AddHistory);
+        }
 
         public Task LoadAsync(string channelId, bool isLoginUser, bool addHistory)
         {

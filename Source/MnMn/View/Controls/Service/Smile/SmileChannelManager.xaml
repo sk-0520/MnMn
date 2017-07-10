@@ -19,7 +19,6 @@
     </Grid.ColumnDefinitions>
 
     <TabControl Grid.Column="0">
-      <TabItem Header="official" />
       <TabItem Header="bookmark" />
       <TabItem Header="history" />
     </TabControl>

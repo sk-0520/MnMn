@@ -456,6 +456,7 @@
     <Compile Include="Model\Request\OtherDefineRequestModelBase.cs" />
     <Compile Include="Model\Request\Parameter\AppLoggingParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\WebNavigatorProcessParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Parameter\SmileOpenChannelIdParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessUnorganizedBookmarkParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoRankingCategoryNameParameterModel.cs" />

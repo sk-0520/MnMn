@@ -66,6 +66,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static TimeSpan ServiceSmileMarketImageCacheTime = appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
 
+
+        public static int ServiceSmileChannelVideoFeedItemCount = appConfig.Get("service-smile-channel-video-feed-item-count", int.Parse);
         /// <summary>
         /// チャンネルRSS(動画)の読み込み待ち時間
         /// </summary>

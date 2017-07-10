@@ -21,7 +21,7 @@
 
 	<param key="smile-channel-video-feed">
 		<item key="rss" value="2.0" />
-		<item key="page" value="${page}" />
+		<item key="page" value="${page}" force="true" />
 	</param>
 
 	<param key="smile-contents-search">

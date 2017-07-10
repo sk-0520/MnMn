@@ -2012,6 +2012,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 );
             }
         }
+        public ICommand OpenChannelIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenChannelId((string)o, Mediation)); } }
+
 
         #endregion
 

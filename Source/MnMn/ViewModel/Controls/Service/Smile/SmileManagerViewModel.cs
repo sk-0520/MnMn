@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
             WebSiteManager = new SmileWebSiteManagerViewModel(Mediation);
 
-            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, LiveManager, UsersManager, WebSiteManager, SettingManager));
+            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, LiveManager, UsersManager, ChannelManager, WebSiteManager, SettingManager));
         }
 
         #region property
