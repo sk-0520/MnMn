@@ -213,10 +213,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="communicator"></param>
         /// <param name="channelId"></param>
-        static void OpenChannelIdCore(string channelId, ICommunication communicator)
+        static void OpenChannelIdCore(string channelId, ICommunication communicator, IGetExpression getExpression)
         {
             var parameter = new SmileOpenChannelIdParameterModel() {
-                ChannelId = channelId,
+                ChannelId = SmileIdUtility.ConvertChannelId(channelId, getExpression),
             };
 
             communicator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Smile, parameter, ShowViewState.Foreground));
@@ -227,9 +227,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="userId"></param>
-        public static void OpenChannelId(string parameter, ICommunication communicator)
+        public static void OpenChannelId(string parameter, ICommunication communicator, IGetExpression getExpression)
         {
-            OpenChannelIdCore((string)parameter, communicator);
+            OpenChannelIdCore((string)parameter, communicator, getExpression);
         }
 
     }

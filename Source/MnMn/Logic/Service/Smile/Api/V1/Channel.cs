@@ -8,6 +8,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Channel.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -27,24 +28,57 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
         public Task<FeedSmileChannelModel> LoadVideoFeedAsyn(string channelId, int pageNumber)
         {
-            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileMediationKey.channelVideoFeed, ServiceType.Smile)) {
-                page.ReplaceUriParameters["channel-id"] = channelId;
-                page.ReplaceUriParameters["page"] = pageNumber == 0 ? string.Empty : pageNumber.ToString();
+            var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileMediationKey.channelVideoFeed, ServiceType.Smile);
+            page.ReplaceUriParameters["channel-id"] = channelId;
+            page.ReplaceUriParameters["page"] = pageNumber == 0 ? string.Empty : pageNumber.ToString();
 
-                return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
-                    page.Dispose();
-                    var response = t.Result;
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
+                page.Dispose();
+                var response = t.Result;
 
-                    if(!response.IsSuccess) {
-                        return null;
-                    } else {
-                        using(var stream = StreamUtility.ToUtf8Stream(response.Result)) {
-                            return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileChannelModel>(stream);
-                        }
+                if(!response.IsSuccess) {
+                    return null;
+                } else {
+                    using(var stream = StreamUtility.ToUtf8Stream(response.Result)) {
+                        return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileChannelModel>(stream);
                     }
-                });
-            }
+                }
+            });
         }
-            #endregion
+
+        SmileChannelInformationModel LoadInformationCore(string channelId, string htmlSource)
+        {
+            var result = new SmileChannelInformationModel();
+
+            var htmlDocument = HtmlUtility.CreateHtmlDocument(htmlSource);
+
+            var headlineElement = htmlDocument.DocumentNode.SelectSingleNode("//h1");
+            var headlineLineElemet = headlineElement.SelectSingleNode(".//a");
+
+            result.ChannelId = channelId;
+            result.ChannelCode = headlineLineElemet.Attributes["href"].Value.Split(new[] { ',' }, 2).Last(); // TODO: 正規表現で分離させた方が安全
+            result.ChannelName = headlineLineElemet.InnerText;
+
+            return result;
         }
+
+        public Task<SmileChannelInformationModel> LoadInformation(string channelId)
+        {
+            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileMediationKey.channelPage, ServiceType.Smile);
+            page.ReplaceUriParameters["channel-id"] = channelId;
+
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
+                page.Dispose();
+                var response = t.Result;
+
+                if(!response.IsSuccess) {
+                    return null;
+                } else {
+                    return LoadInformationCore(channelId, response.Result);
+                }
+            });
+        }
+
+        #endregion
+    }
 }

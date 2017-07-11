@@ -62,7 +62,7 @@
         <app_view_controls_service_smile:SmileUsersManager />
       </TabItem>
       <TabItem Header="#81" DataContext="{Binding ChannelManager}" Style="{StaticResource SectionTabItem}">
-        <app_view_controls_service_smile:SmileChannelManager />
+        <app_view_controls_service_smile:SmileChannelManager x:Name="channel" />
       </TabItem>
       <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />

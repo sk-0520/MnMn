@@ -505,6 +505,7 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileTwitterInfoModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\SmileMarketVideoItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\SmileSuggestionCompleteCandidateModel.cs" />
+    <Compile Include="Model\Service\Smile\SmileChannelInformationModel.cs" />
     <Compile Include="Model\Service\Smile\SmileUserDefinedModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcClientInformationModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthInfoModel.cs" />

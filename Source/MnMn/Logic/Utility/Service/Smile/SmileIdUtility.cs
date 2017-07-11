@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
     /// <summary>
     /// 各種IDに関する処理。
     /// <para><see cref="ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility.ConvertValue"/>から呼び出される想定で直接使用すべきではない。</para>
+    /// <para><see cref="ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility.ConvertValue"/>廃止しよう！</para>
     /// </summary>
     internal static class SmileIdUtility
     {
@@ -135,6 +136,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         public static bool NeedCorrectionVideoId(string videoId)
         {
             return !string.IsNullOrEmpty(videoId) && char.IsDigit(videoId[0]);
+        }
+
+        public static string ConvertChannelId(string rawChannelId, IGetExpression getExpression)
+        {
+            var normalization = getExpression.GetExpression("get-expression-channel-id", "normalization-id", ServiceType.Smile);
+            if(normalization.Regex.IsMatch(rawChannelId)) {
+                return rawChannelId;
+            }
+
+            var numberOnly = getExpression.GetExpression("get-expression-channel-id", "number-only", ServiceType.Smile);
+            if(numberOnly.Regex.IsMatch(rawChannelId)) {
+                // TODO: 即値
+                return "ch" + rawChannelId;
+            }
+
+            // もしかしたらIDとして有効かもしんない
+            return rawChannelId;
         }
 
     }

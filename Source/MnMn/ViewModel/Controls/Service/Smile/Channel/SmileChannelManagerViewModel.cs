@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -16,7 +20,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 {
-    public class SmileChannelManagerViewModel: ManagerViewModelBase
+    public class SmileChannelManagerViewModel : ManagerViewModelBase
     {
         #region variable
 
@@ -34,6 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         #region property
 
         SmileSettingModel Setting { get; }
+        TabControl ChannelTab { get; set; }
 
         public SmileChannelInformationViewModel SelectedChannel
         {
@@ -73,6 +78,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 var channel = new SmileChannelInformationViewModel(Mediation, channelId);
                 ChannelItems.Add(channel);
                 SelectedChannel = channel;
+                channel.SetView(ChannelTab);
+
                 return channel.LoadDefaultAsync();
             }
         }
@@ -97,10 +104,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         }
 
         public override void InitializeView(MainWindow view)
-        { }
+        {
+            ChannelTab = view.smile.channel.channelTab;
+        }
 
         public override void UninitializeView(MainWindow view)
-        { }
+        {
+            ChannelTab = null;
+        }
 
         protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
         {

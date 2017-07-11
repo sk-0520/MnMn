@@ -336,7 +336,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     o => {
                         if(SelectedFinderItem.Information.IsChannelVideo) {
                             var channelId = SelectedFinderItem.Information.ChannelId;
-                            SmileDescriptionUtility.OpenChannelId(channelId, Mediation);
+                            SmileDescriptionUtility.OpenChannelId(channelId, Mediation, Mediation);
                         } else {
                             var userId = SelectedFinderItem.Information.UserId;
                             SmileDescriptionUtility.OpenUserId(userId, Mediation);

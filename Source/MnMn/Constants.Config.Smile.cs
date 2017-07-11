@@ -65,7 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static TimeSpan ServiceSmileMyListCacheTime = appConfig.Get("service-smile-mylist-cache-time", TimeSpan.Parse);
 
         public static TimeSpan ServiceSmileMarketImageCacheTime = appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
-
+        public static TimeSpan ServiceSmileChannelDataCacheTime = appConfig.Get("service-smile-channel-data-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileChannelImageCacheTime = appConfig.Get("service-smile-channel-image-cache-time", TimeSpan.Parse);
 
         public static int ServiceSmileChannelVideoFeedItemCount = appConfig.Get("service-smile-channel-video-feed-item-count", int.Parse);
         /// <summary>
