@@ -26,11 +26,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
         #region function
 
-        public Task<FeedSmileChannelModel> LoadVideoFeedAsyn(string channelId, int pageNumber)
+        public Task<FeedSmileChannelModel> LoadVideoFeedAsync(string channelId, int pageNumber)
         {
             var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileMediationKey.channelVideoFeed, ServiceType.Smile);
             page.ReplaceUriParameters["channel-id"] = channelId;
-            page.ReplaceUriParameters["page"] = pageNumber == 0 ? string.Empty : pageNumber.ToString();
+            page.ReplaceUriParameters["page"] = pageNumber == 1 ? string.Empty : pageNumber.ToString();
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
                 page.Dispose();

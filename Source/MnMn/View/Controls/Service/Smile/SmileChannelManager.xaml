@@ -7,6 +7,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -36,9 +37,14 @@
         <DataTemplate>
           <TabControl>
             <TabItem Header="channel">
-              <app_view_controls:WebNavigator x:Name="webChannel" HomeSource="{Binding UriString, Mode=OneWay}" />
+              <app_view_controls:WebNavigator
+                x:Name="webChannel"
+                HomeSource="{Binding UriString, Mode=OneWay}"
+                IsEnabledUserChangeSource="False"
+              />
             </TabItem>
-            <TabItem Header="video">
+            <TabItem Header="video" IsSelected="{Binding ShowVideoTabItem}">
+              <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding VideoFinder}" />
             </TabItem>
           </TabControl>
         </DataTemplate>

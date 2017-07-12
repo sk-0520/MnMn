@@ -59,20 +59,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileMyListReloadWaitTime => appConfig.Get("service-smile-mylist-reload-wait-time", TimeSpan.Parse);
 
-        public static TimeSpan ServiceSmileUserDataCacheTime = appConfig.Get("service-smile-user-data-cache-time", TimeSpan.Parse);
-        public static TimeSpan ServiceSmileUserImageCacheTime = appConfig.Get("service-smile-user-image-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileUserDataCacheTime => appConfig.Get("service-smile-user-data-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileUserImageCacheTime => appConfig.Get("service-smile-user-image-cache-time", TimeSpan.Parse);
 
-        public static TimeSpan ServiceSmileMyListCacheTime = appConfig.Get("service-smile-mylist-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileMyListCacheTime => appConfig.Get("service-smile-mylist-cache-time", TimeSpan.Parse);
 
-        public static TimeSpan ServiceSmileMarketImageCacheTime = appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
-        public static TimeSpan ServiceSmileChannelDataCacheTime = appConfig.Get("service-smile-channel-data-cache-time", TimeSpan.Parse);
-        public static TimeSpan ServiceSmileChannelImageCacheTime = appConfig.Get("service-smile-channel-image-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileMarketImageCacheTime => appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileChannelDataCacheTime => appConfig.Get("service-smile-channel-data-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileChannelImageCacheTime => appConfig.Get("service-smile-channel-image-cache-time", TimeSpan.Parse);
 
-        public static int ServiceSmileChannelVideoFeedItemCount = appConfig.Get("service-smile-channel-video-feed-item-count", int.Parse);
+        public static int ServiceSmileChannelVideoFeedItemCount => appConfig.Get("service-smile-channel-video-feed-item-count", int.Parse);
         /// <summary>
         /// チャンネルRSS(動画)の読み込み待ち時間
         /// </summary>
-        public static TimeSpan ServiceSmileChannelVideoFeedWaitTime = appConfig.Get("service-smile-channel-video-feed-wait-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileChannelVideoFeedWaitTime => appConfig.Get("service-smile-channel-video-feed-wait-time", TimeSpan.Parse);
 
         /// <summary>
         /// マイリストのタイトルから除外する文字列。

@@ -404,6 +404,7 @@
     <Compile Include="Logic\Utility\FinderUtility.cs" />
     <Compile Include="Logic\Utility\HtmlUtility.cs" />
     <Compile Include="Logic\Utility\NetworkUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\SmileChannelUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMarketUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmilePediaUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoVideoItemUtility.cs" />
@@ -597,6 +598,7 @@
     <Compile Include="ViewModel\Controls\PagerFinderProvider.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelVideoFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryItemFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryGroupFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryManagerViewModel.cs" />
@@ -1439,7 +1441,6 @@
     <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoChannelModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoItemModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoGuidModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoErrorModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoFeedDetailModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoThumbModel.cs" />

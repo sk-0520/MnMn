@@ -30,6 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         SourceLoadState _channelLoadState;
 
+        bool _showVideoTabItem;
+
         #endregion
 
         public SmileChannelInformationViewModel(Mediation mediation, string channelId)
@@ -50,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             }
 
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(ChannelId, "png")));
+
+            VideoFinder = new SmileChannelVideoFinderViewModel(Mediation, ChannelId);
         }
 
         #region property
@@ -85,7 +89,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             set { SetVariableValue(ref this._channelLoadState, value); }
         }
 
+        public bool ShowVideoTabItem
+        {
+            get { return this._showVideoTabItem; }
+            set
+            {
+                if(SetVariableValue(ref this._showVideoTabItem, value)) {
+                    if(ShowVideoTabItem) {
+                        VideoFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+                        CallOnPropertyChange(nameof(VideoFinder));
+                    }
+                }
+            }
+        }
+
         SmileChannelInformationModel Information { get; set; }
+        public SmileChannelVideoFinderViewModel VideoFinder { get;  }
 
         #endregion
 
