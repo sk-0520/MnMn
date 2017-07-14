@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public FewViewModel<bool> UsingDmc { get; } = new FewViewModel<bool>();
         protected RawSmileVideoDmcObjectModel DmcObject { get; private set; }
         protected Uri DmcApiUri { get; private set; }
-        protected RawSmileVideoDmcSrcIdToMultiplexerModel DmcMultiplexer { get { return DmcObject?.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
+        protected RawSmileVideoDmcContentSrcIdModel DmcMultiplexer { get { return DmcObject?.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
         public string DmcVideoSrc { get { return DmcMultiplexer?.VideoSrcIds.First(); } }
         public string DmcAudioSrc { get { return DmcMultiplexer?.AudioSrcIds.First(); } }
         protected string DmcFileExtension { get { return DmcObject.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension; } }
@@ -413,10 +413,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 with.Priority = session["priority"].Value<string>();
 
                 var mux = new RawSmileVideoDmcSrcIdToMultiplexerModel();
-                mux.VideoSrcIds.InitializeRange(session["videos"].Values<string>());
-                mux.AudioSrcIds.InitializeRange(session["audios"].Values<string>());
+                mux.SrcId.VideoSrcIds.InitializeRange(session["videos"].Values<string>());
+                mux.SrcId.AudioSrcIds.InitializeRange(session["audios"].Values<string>());
                 var idSet = new RawSmileVideoDmcContentSrcIdSetModel();
-                idSet.SrcIdToMultiplexers.Add(mux);
+                idSet.SrcIdToMultiplexers.Add(mux.SrcId);
                 with.ContentSrcIdSets.Add(idSet);
 
                 with.OperationAuth.BySignature.Token = session["token"].Value<string>();
@@ -438,6 +438,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject2()
+        {
+            var model = new RawSmileVideoDmcObjectModel();
+            {
+                var with = model.Data.Session;
+                var session = Information.DmcInfo2.SessionApi;
+
+                //var uri = session["api_urls"].First().Value<string>();
+                var uri = session.Urls.First().Url;
+
+                with.RecipeId = session.RecipeId;
+                with.ContentId = session.ContentId;
+                with.Protocol.Name = session.Protocols.First();
+                with.Priority = session.Priority;
+
+                var mux = new RawSmileVideoDmcSrcIdToMultiplexerModel();
+                mux.SrcId.VideoSrcIds.InitializeRange(session.Videos);
+                mux.SrcId.AudioSrcIds.InitializeRange(session.Audios);
+                var idSet = new RawSmileVideoDmcContentSrcIdSetModel();
+                idSet.SrcIdToMultiplexers.Add(mux.SrcId);
+                with.ContentSrcIdSets.Add(idSet);
+
+                with.OperationAuth.BySignature.Token = session.Token;
+                with.OperationAuth.BySignature.Signature = session.Signature;
+                with.KeepMethod.HeartBeat.LifeTime = session.HeartbeatLifetime;
+                //IDictionary<string, JToken> authTypes = (JObject)session["auth_types"];
+                string authType;
+                if(session.AuthTypes.TryGetValue(with.Protocol.Name, out authType)) {
+                    with.ContentAuth.AuthType = authType;
+                } else {
+                    with.ContentAuth.AuthType = authType;
+                }
+                //with.ContentAuth.ServiceId = session["service_id"].Value<string>();
+                with.ContentAuth.ServiceUserId = session.ServiceUserId;
+                with.ContentAuth.ContentKeyTimeout = session.ContentKeyTimeout;
+                with.ClientInformation.PlayerId = session.PlayerId;
+
+                return Tuple.Create(uri, model);
+            }
+        }
+
         /// <summary>
         /// DMC形式でダウンロードする。
         /// </summary>
@@ -451,26 +492,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoLoadState = LoadState.Preparation;
 
             var dmc = new Dmc(Mediation);
-            //var tuple = GetDmcObject();
-            //DmcApiUri = new Uri(tuple.Item1);
-            //var model = tuple.Item2;
+            var tuple = GetDmcObject2();
+            DmcApiUri = new Uri(tuple.Item1);
+            var model = tuple.Item2;
             var dmcInfo2 = Information.DmcInfo2;
 
-            var dmcModel = new RawSmileVideoDmcObjectModel();
-            //dmcModel.Data.Session.Id = dmcInfo2.SessionApi.PlayerId;
-            using(var stream = StreamUtility.ToUtf8Stream(dmcInfo2.SessionApi.Token)) {
-                dmcModel.Data.Session = SerializeUtility.LoadJsonDataFromStream<RawSmileVideoDmcSessionModel>(stream);
-            }
-
-
             // 動画ソースを選りすぐる
-            var sendMux = dmcModel.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
+            var sendMux = model.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
             var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(dmcInfo2.SessionApi.Videos, Setting.Download.VideoWeight);
             sendMux.VideoSrcIds.InitializeRange(sendVideoWeights.ToEvaluatedSequence());
             var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(dmcInfo2.SessionApi.Audios, Setting.Download.AudioWeight);
             sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
 
-            var result = await dmc.LoadAsync(DmcApiUri, dmcModel);
+            var result = await dmc.LoadAsync(DmcApiUri, model);
 
             SerializeUtility.SaveXmlSerializeToFile(Information.DmcFile.FullName, result);
             if(!SmileVideoDmcObjectUtility.IsSuccessResponse(result)) {

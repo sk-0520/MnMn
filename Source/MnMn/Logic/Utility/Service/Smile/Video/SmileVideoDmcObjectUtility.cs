@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         [Obsolete]
         public static string GetVideoWeight(RawSmileVideoDmcSrcIdToMultiplexerModel mux, int threshold)
         {
-            var items = GetSortedVideoWeights(mux.VideoSrcIds);
+            var items = GetSortedVideoWeights(mux.SrcId.VideoSrcIds);
             var index = GetWeightIndex(items, threshold);
 
             return items[index];
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static IEnumerable<string> GetVideoWeights(RawSmileVideoDmcSrcIdToMultiplexerModel mux, int threshold)
         {
-            return GetWeights(GetSortedVideoWeights, mux.VideoSrcIds, threshold);
+            return GetWeights(GetSortedVideoWeights, mux.SrcId.VideoSrcIds, threshold);
         }
         public static IEnumerable<string> GetVideoWeights(IEnumerable<string> values, int threshold)
         {
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static IEnumerable<string> GetAudioWeights(RawSmileVideoDmcSrcIdToMultiplexerModel mux, int threshold)
         {
-            return GetWeights(GetSortedAudioWeights, mux.AudioSrcIds, threshold);
+            return GetWeights(GetSortedAudioWeights, mux.SrcId.AudioSrcIds, threshold);
         }
         public static IEnumerable<string> GetAudioWeights(IEnumerable<string> values, int threshold)
         {

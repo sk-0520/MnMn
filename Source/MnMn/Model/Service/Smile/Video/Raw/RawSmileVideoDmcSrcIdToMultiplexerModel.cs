@@ -21,17 +21,10 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    [Serializable]
+    [Serializable, DataContract]
     public class RawSmileVideoDmcSrcIdToMultiplexerModel: ModelBase
     {
-        #region property
-
-        [XmlArray("video_src_ids"), XmlArrayItem("string"), DataMember(Name = "video_src_ids")]
-        public CollectionModel<string> VideoSrcIds { get; set; } = new CollectionModel<string>();
-
-        [XmlArray("audio_src_ids"), XmlArrayItem("string"), DataMember(Name = "audio_src_ids")]
-        public CollectionModel<string> AudioSrcIds { get; set; } = new CollectionModel<string>();
-
-        #endregion
+        [XmlElement("src_id_to_mux"), DataMember(Name = "src_id_to_mux")]
+        public RawSmileVideoDmcContentSrcIdModel SrcId { get; set; } = new RawSmileVideoDmcContentSrcIdModel();
     }
 }

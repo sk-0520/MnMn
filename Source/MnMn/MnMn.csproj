@@ -501,6 +501,7 @@
     <Compile Include="Model\Service\Smile\Raw\SmileMarketVideoItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\SmileSuggestionCompleteCandidateModel.cs" />
     <Compile Include="Model\Service\Smile\SmileUserDefinedModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentSrcIdModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataAdModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataApiModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataContextModel.cs" />

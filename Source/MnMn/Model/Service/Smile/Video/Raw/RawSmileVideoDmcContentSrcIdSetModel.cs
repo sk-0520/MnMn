@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         #region property
 
         [XmlArray("content_src_ids"), XmlArrayItem("src_id_to_mux"), DataMember(Name = "content_src_ids")]
-        public CollectionModel<RawSmileVideoDmcSrcIdToMultiplexerModel> SrcIdToMultiplexers { get; set; } = new CollectionModel<RawSmileVideoDmcSrcIdToMultiplexerModel>();
+        public CollectionModel<RawSmileVideoDmcContentSrcIdModel> SrcIdToMultiplexers { get; set; } = new CollectionModel<RawSmileVideoDmcContentSrcIdModel>();
 
 
         #endregion
