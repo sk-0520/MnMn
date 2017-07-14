@@ -42,6 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// <summary>
     /// NOTE: 気持ち後回し
     /// </summary>
+    [Obsolete]
     public class Getflv: SessionApiBase<SmileSessionViewModel>
     {
         public Getflv(Mediation mediation)

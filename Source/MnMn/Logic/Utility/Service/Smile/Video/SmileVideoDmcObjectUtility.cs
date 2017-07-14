@@ -118,10 +118,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             return GetWeights(GetSortedVideoWeights, mux.VideoSrcIds, threshold);
         }
+        public static IEnumerable<string> GetVideoWeights(IEnumerable<string> values, int threshold)
+        {
+            return GetWeights(GetSortedVideoWeights, values, threshold);
+        }
 
         public static IEnumerable<string> GetAudioWeights(RawSmileVideoDmcSrcIdToMultiplexerModel mux, int threshold)
         {
             return GetWeights(GetSortedAudioWeights, mux.AudioSrcIds, threshold);
+        }
+        public static IEnumerable<string> GetAudioWeights(IEnumerable<string> values, int threshold)
+        {
+            return GetWeights(GetSortedAudioWeights, values, threshold);
         }
 
     }

@@ -274,11 +274,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadDataWithSessionEnd()
         { }
 
+        [Obsolete]
         protected virtual void OnLoadGetflvStart()
         { }
+        [Obsolete]
         protected virtual void OnLoadGetflvEnd()
         { }
 
+        protected virtual void OnLoadWatchDataStart()
+        { }
+        protected virtual void OnLoadWatchDataEnd()
+        { }
+
+        [Obsolete]
         async Task LoadGetflvAsync()
         {
             OnLoadGetflvStart();
@@ -286,6 +294,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var result = await Information.LoadGetflvAsync(true, Setting.Download.UsingDmc);
 
             OnLoadGetflvEnd();
+        }
+
+        async Task LoadWatchDataAsync()
+        {
+            OnLoadWatchDataStart();
+
+            var result = await Information.LoadWatchDataAsync(true, Setting.Download.UsingDmc);
+
+            OnLoadWatchDataEnd();
         }
 
         protected virtual void OnLoadVideoStart()
@@ -377,6 +394,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        [Obsolete]
         protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject()
         {
             var info = Information.DmcInfo;
@@ -433,18 +451,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoLoadState = LoadState.Preparation;
 
             var dmc = new Dmc(Mediation);
-            var tuple = GetDmcObject();
-            DmcApiUri = new Uri(tuple.Item1);
-            var model = tuple.Item2;
+            //var tuple = GetDmcObject();
+            //DmcApiUri = new Uri(tuple.Item1);
+            //var model = tuple.Item2;
+            var dmcInfo2 = Information.DmcInfo2;
+
+            var dmcModel = new RawSmileVideoDmcObjectModel();
+            //dmcModel.Data.Session.Id = dmcInfo2.SessionApi.PlayerId;
+            var aaaa = Newtonsoft.Json.JsonConvert.DeserializeObject(dmcInfo2.SessionApi.Token);
+
 
             // 動画ソースを選りすぐる
-            var sendMux = model.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
-            var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(sendMux, Setting.Download.VideoWeight);
+            var sendMux = dmcModel.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
+            var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(dmcInfo2.SessionApi.Videos, Setting.Download.VideoWeight);
             sendMux.VideoSrcIds.InitializeRange(sendVideoWeights.ToEvaluatedSequence());
-            var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(sendMux, Setting.Download.AudioWeight);
+            var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(dmcInfo2.SessionApi.Audios, Setting.Download.AudioWeight);
             sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
 
-            var result = await dmc.LoadAsync(DmcApiUri, model);
+            var result = await dmc.LoadAsync(DmcApiUri, dmcModel);
 
             SerializeUtility.SaveXmlSerializeToFile(Information.DmcFile.FullName, result);
             if(!SmileVideoDmcObjectUtility.IsSuccessResponse(result)) {
@@ -589,9 +613,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadDataWithSessionStart();
 
             var tcs = new CancellationTokenSource();
+#if ENABLED_GETFLV
             await LoadGetflvAsync();
+#endif
+            await LoadWatchDataAsync();
 
-            if(Information.InformationLoadState == LoadState.Failure || Information.HasGetflvError) {
+            if(Information.InformationLoadState == LoadState.Failure || /*Information.HasGetflvError*/ Information.HasWatchDataError ) {
                 InformationLoadState = LoadState.Failure;
                 return;
             }
@@ -818,9 +845,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }, cancelToken);
         }
 
-        #endregion
+#endregion
 
-        #region ViewModelBase
+#region ViewModelBase
 
         protected override void Dispose(bool disposing)
         {
@@ -830,9 +857,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             base.Dispose(disposing);
         }
 
-        #endregion
+#endregion
 
-        #region IDownloadItem
+#region IDownloadItem
 
         Uri IDownloadItem.DownloadUri => DownloadUri;
 
@@ -923,7 +950,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
-        #endregion
+#endregion
 
         private void Downloader_DownloadStart(object sender, DownloadStartEventArgs e)
         {
