@@ -171,6 +171,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 ClientHandler.UseProxy = false;
             }
 
+            // #665
+            ClientHandler.CookieContainer.Add(new Cookie("watch_html5", "0", "/", ".nicovideo.jp"));
+            ClientHandler.CookieContainer.Add(new Cookie("watch_flash", "1", "/", ".nicovideo.jp"));
             var httpUserAgent = new HttpClient(ClientHandler, false);
             httpUserAgent.SetLogicUserAgentText(NetworkSetting);
 
