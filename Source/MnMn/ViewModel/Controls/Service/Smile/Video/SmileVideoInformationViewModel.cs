@@ -1075,7 +1075,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             var watchData = new WatchData(Mediation);
-            var aaaaaTask = watchData.LoadWatchDataAsync(VideoId, WatchUrl, MovieType).ContinueWith(t => {
+            var aaaaaTask = watchData.LoadWatchDataAsync(WatchUrl, MovieType).ContinueWith(t => {
                 var model = t.Result;
                 Debug.WriteLine(model);
             });

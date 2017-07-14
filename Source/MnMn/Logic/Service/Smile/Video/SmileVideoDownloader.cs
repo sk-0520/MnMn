@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
@@ -34,17 +35,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoDownloader: Downloader
     {
-        public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, SmileVideoMovieType movieType)
-            : base(downloadUri, userAgentCreator)
-        {
-            ReferrerUri = referrerUri;
-            MovieType = movieType;
-        }
+        //public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, SmileVideoMovieType movieType)
+        //    : base(downloadUri, userAgentCreator)
+        //{
+        //    ReferrerUri = referrerUri;
+        //    MovieType = movieType;
+        //}
 
-        public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, SmileVideoMovieType movieType, CancellationToken cancelToken)
+        public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, Mediation mediation, SmileVideoMovieType movieType, CancellationToken cancelToken)
             : base(downloadUri, userAgentCreator, cancelToken)
         {
             ReferrerUri = referrerUri;
+            Mediation = mediation;
             MovieType = movieType;
         }
 
@@ -55,6 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public TimeSpan WatchToMovieWaitTime { get; set; } = Constants.ServiceSmileVideoWatchToMovieWaitTime;
 
         public string PageHtml { get; private set; }
+
+        Mediation Mediation { get; set; }
 
         SmileVideoMovieType MovieType { get;  }
 
@@ -68,9 +72,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             try {
                 UserAgent = UserAgentCreator.CreateHttpUserAgent();
-                // DMC形式は不要だと思うけど他との互換性のため残しとく
-                var task = await SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
-                PageHtml = task;
+                //// DMC形式は不要だと思うけど他との互換性のため残しとく
+                //var task = await SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
+                var watchData = new WatchData(Mediation);
+                var watchHtmlSource = await watchData.LoadWatchPageHtmlSourceAsync(ReferrerUri, MovieType, UserAgentCreator);
+                WatchData = watchData.GetWatchData(watchHtmlSource.Result);
+
+                PageHtml = WatchData.HtmlSource;
 
                 //cancel = false;
                 UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;

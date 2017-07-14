@@ -302,7 +302,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             DownloadUri = downloadUri;
 
             DownloadCancel = new CancellationTokenSource();
-            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl, Information.MovieType, DownloadCancel.Token) {
+            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl, Mediation, Information.MovieType, DownloadCancel.Token) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,

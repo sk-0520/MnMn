@@ -60,9 +60,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             };
         }
 
-        public Task<SmileVideoWatchDataModel> LoadWatchDataAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType)
+        public Task<SmileVideoWatchDataModel> LoadWatchDataAsync(Uri watchUri, SmileVideoMovieType movieType)
         {
-            return LoadWatchPageHtmlSourceAsync(videoId, watchUri, movieType, true).ContinueWith(t => {
+            return LoadWatchPageHtmlSourceAsync(watchUri, movieType, true).ContinueWith(t => {
                 var response = t.Result;
                 if(response.IsSuccess) {
                     var htmlSource = response.Result;
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             });
         }
 
-        public async Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, IHttpUserAgentCreator userAgentCreator)
+        public async Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(Uri watchUri, SmileVideoMovieType movieType, IHttpUserAgentCreator userAgentCreator)
         {
             using(var page = new PageLoader(Mediation, userAgentCreator, SmileVideoMediationKey.watchDataPage, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["uri"] = watchUri.OriginalString;
@@ -85,14 +85,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 return response;
             }
         }
-        public Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingSession)
+        public Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(Uri watchUri, SmileVideoMovieType movieType, bool usingSession)
         {
             if(usingSession) {
                 return LoginIfNotLoginAsync().ContinueWith(_ => {
-                    return LoadWatchPageHtmlSourceAsync(videoId, watchUri, movieType, SessionBase);
+                    return LoadWatchPageHtmlSourceAsync(watchUri, movieType, SessionBase);
                 }).Unwrap();
             } else {
-                return LoadWatchPageHtmlSourceAsync(videoId, watchUri, movieType, HttpUserAgentHost);
+                return LoadWatchPageHtmlSourceAsync(watchUri, movieType, HttpUserAgentHost);
             }
         }
     }
