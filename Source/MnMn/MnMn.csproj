@@ -512,6 +512,9 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataDmcQualityModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataDmcQualityVideoModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataDmcQualityVideoResolutionModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataEnvironmentBaseUrlModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataEnvironmentI18nModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataEnvironmentUrlsModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataLeadModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataLiveTopicsItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataLiveTopicsModel.cs" />
