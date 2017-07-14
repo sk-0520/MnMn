@@ -72,14 +72,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             });
         }
 
-        public async Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingSession)
+        public async Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, IHttpUserAgentCreator userAgentCreator)
         {
-            IHttpUserAgentCreator userAgentCreator = HttpUserAgentHost;
-            if(usingSession) {
-                await LoginIfNotLoginAsync();
-                userAgentCreator = SessionBase;
-            }
-
             using(var page = new PageLoader(Mediation, userAgentCreator, SmileVideoMediationKey.watchDataPage, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["uri"] = watchUri.OriginalString;
                 page.ReplaceUriParameters["as3"] = movieType == SmileVideoMovieType.Swf
@@ -89,6 +83,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 return response;
+            }
+        }
+        public Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingSession)
+        {
+            if(usingSession) {
+                return LoginIfNotLoginAsync().ContinueWith(_ => {
+                    return LoadWatchPageHtmlSourceAsync(videoId, watchUri, movieType, SessionBase);
+                }).Unwrap();
+            } else {
+                return LoadWatchPageHtmlSourceAsync(videoId, watchUri, movieType, HttpUserAgentHost);
             }
         }
     }
