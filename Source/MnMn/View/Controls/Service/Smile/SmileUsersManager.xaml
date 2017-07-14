@@ -5,11 +5,11 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.SmileUsersManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  
+
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-  
+
   xmlns:package_stackoverflow_com="clr-namespace:Package.stackoverflow.com;assembly=Package"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
@@ -103,11 +103,11 @@
       ItemsSource="{Binding UserItems}"
       Style="{StaticResource FinderTab}"
     >
-      <app_view_controls:FocusedTabControl.ItemContainerStyle>
+      <!--<app_view_controls:FocusedTabControl.ItemContainerStyle>
         <Style TargetType="TabItem" BasedOn="{StaticResource FindTabItem}">
-          <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding UserName, Mode=OneTime}" />
+          <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding UserName, RelativeSource={RelativeSource AncestorType=TabItem}}" />
         </Style>
-      </app_view_controls:FocusedTabControl.ItemContainerStyle>
+      </app_view_controls:FocusedTabControl.ItemContainerStyle>-->
       <app_view_controls:FocusedTabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
@@ -297,8 +297,8 @@
 
                   <FlowDocumentScrollViewer Grid.Column="2" VerticalAlignment="Stretch" Style="{StaticResource HtmlDescriptionDocument}">
                     <i:Interaction.Behaviors>
-                      <app_view_attachment:HtmlDescriptionBehavior 
-                        HtmlSource="{Binding DescriptionHtmlSource}" 
+                      <app_view_attachment:HtmlDescriptionBehavior
+                        HtmlSource="{Binding DescriptionHtmlSource}"
                         DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
                       />
                     </i:Interaction.Behaviors>

@@ -241,6 +241,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoCheckItLaterFrom.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoOtherDefineKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoSearchType.cs" />
     <Compile Include="Define\UI\Player\TopmostKind.cs" />
     <Compile Include="Define\UpdatedResult.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyExpressionElement.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpressionItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpressions.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyKeywordTextItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMapping.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingContent.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemBracket.cs" />
@@ -329,6 +331,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoCheckItLaterFrom.cs" />
+    <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoKeyword.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyRunningInformationSetting.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyThemeSetting.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyWebNavigatorSetting.cs" />
@@ -370,6 +373,7 @@
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Logic\Extensions\HttpClientHandlerExtensions.cs" />
+    <Compile Include="Logic\Extensions\IReadOnlyDefinedElementExtensions.cs" />
     <Compile Include="Logic\Extensions\LinqExtensions.cs" />
     <Compile Include="Logic\Extensions\Service\Smile\Video\SmileVideoSearchModelExtensions.cs" />
     <Compile Include="Logic\OctetPerTime.cs" />
@@ -448,6 +452,7 @@
     <Compile Include="Model\Order\DownloadOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
     <Compile Include="Model\Request\AppLogingProcessRequestModel.cs" />
+    <Compile Include="Model\Request\OtherDefineRequestModelBase.cs" />
     <Compile Include="Model\Request\Parameter\AppLoggingParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\WebNavigatorProcessParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessBookmarkParameterModel.cs" />
@@ -455,6 +460,7 @@
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoRankingCategoryNameParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoBookmarkResultModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessSearchBookmarkParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoOtherDefineRequestModel.cs" />
     <Compile Include="Model\Request\WebNavigatorProcessRequestModel.cs" />
     <Compile Include="Model\Request\WebNavigatorRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
@@ -545,6 +551,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataViewerModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoKeywordModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoMsgModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoContentsSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoOfficialSearchModel.cs" />
@@ -608,6 +615,7 @@
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\FinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\InformationViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\KeywordTextItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\NetworkProxySettingViewModel.cs" />
     <Compile Include="ViewModel\Controls\PagerFinderProvider.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryItemFinderViewModel.cs" />
@@ -667,6 +675,9 @@
       <DependentUpon>AppGeneralBrowserManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\FocusedTabControl.cs" />
+    <Compile Include="View\Controls\KeywordTextBox.xaml.cs">
+      <DependentUpon>KeywordTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\ProxySetting.xaml.cs">
       <DependentUpon>ProxySetting.xaml</DependentUpon>
     </Compile>
@@ -811,6 +822,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\live\expressions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\video\keyword.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\video\msg.xml">
@@ -1234,6 +1248,10 @@
       <SubType>Designer</SubType>
     </None>
     <Page Include="View\Controls\App\AppDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\KeywordTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

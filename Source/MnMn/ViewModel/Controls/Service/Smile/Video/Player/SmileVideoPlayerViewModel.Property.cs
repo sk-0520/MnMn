@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(PlayListItems, value, nameof(PlayListItems.IsRandom)); }
         }
 
-        public FewViewModel<bool> CanPlayNextVieo { get; } = new FewViewModel<bool>(false);
+        public FewViewModel<bool> CanPlayNextVideo { get; } = new FewViewModel<bool>(false);
 
         public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
 

@@ -757,6 +757,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand SwitchPlayNextVideoCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => CanPlayNextVideo.Value = !CanPlayNextVideo.Value,
+                    o => PlayListItems.CanItemChange
+                );
+            }
+        }
+
         #endregion
     }
 }

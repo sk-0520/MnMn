@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -65,6 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
             Filtering = LoadModelFromFile<SmileVideoFilteringModel>(Constants.SmileVideoFilteringPath);
+            Keyword = LoadModelFromFile<SmileVideoKeywordModel>(Constants.SmileVideoKeywordPath);
 
             GlobalFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering, Setting.FinderFiltering, Filtering);
         }
@@ -79,6 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         SmileVideoSearchModel Search { get; }
         SmileVideoMyListModel AccountMyList { get; }
         internal SmileVideoFilteringModel Filtering { get; }
+        IReadOnlySmileVideoKeyword Keyword { get; }
 
         internal SmileVideoManagerPackModel ManagerPack { get; private set; }
 
@@ -108,6 +111,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     var sysNodes = ManagerPack.BookmarkManager.SystemNodes;
                     var userNodes = ManagerPack.BookmarkManager.UserNodes;
                     return new ResponseModel(request, new SmileVideoBookmarkResultModel(sysNodes, userNodes));
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        ResponseModel Request_OtherDefine(SmileVideoOtherDefineRequestModel request)
+        {
+            switch(request.OtherDefineKind) {
+                case SmileVideoOtherDefineKind.Keyword:
+                    return new ResponseModel(request, Keyword);
 
                 default:
                     throw new NotImplementedException();
@@ -257,6 +271,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                 case RequestKind.CustomSetting:
                     return Request_CustomSetting((SmileVideoCustomSettingRequestModel)request);
+
+                case RequestKind.OtherDefine:
+                    return Request_OtherDefine((SmileVideoOtherDefineRequestModel)request);
 
                 case RequestKind.CacheData:
                     return Request_CacheData((SmileVideoInformationCacheRequestModel)request);

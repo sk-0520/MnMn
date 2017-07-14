@@ -85,6 +85,85 @@
 	},
 	*/
 	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.72.2',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#644: 外部プログラム設定などで使用する置き換え可能文字列を自動入力できるようにする'
+					},
+					{
+						'revision': '',
+						'subject': '#662: プレイリストの次動画自動遷移をショートカットキーで対応可能にする',
+						'comments': [
+							'F9 キー',
+							'Windows Media Player で該当するキーが分からんかった'
+						]
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#660: ユーザータブ一覧メニュー表示の項目表示が出来てない'
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/07/14',
 		'version': '0.72.1',
 		'isRc': false,
