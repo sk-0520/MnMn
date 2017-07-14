@@ -233,6 +233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 視聴ページのHTMLソース。
         /// </summary>
+        [Obsolete]
         public string WatchPageHtmlSource { get; private set; }
         /// <summary>
         /// 動画紹介HTMLソース。
@@ -244,7 +245,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._descriptionHtmlSource, value); }
         }
 
-        public string PageVideoToken { get; private set; }
+        public string PageVideoToken { get { return WatchData.RawData.Api.Context.CsrfToken; } }
         /// <summary>
         /// 元にしている動画生情報。
         /// </summary>
@@ -703,7 +704,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 ThrowHasNotWatchData();
 
-                return WatchData.RawData != null;//|| string.IsNullOrWhiteSpace(Getflv.MovieServerUrl);
+                return WatchData.RawData == null;//|| string.IsNullOrWhiteSpace(Getflv.MovieServerUrl);
             }
         }
 
@@ -810,6 +811,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 ThrowHasNotWatchData();
                 return RawValueUtility.ConvertBoolean(WatchData.RawData.Api.Viewer.IsPremium);
+            }
+        }
+
+        public IReadOnlyList<RawSmileVideoWatchDataTagModel> WatchTagItems
+        {
+            get
+            {
+                return WatchData.RawData.Api.Tags;
             }
         }
 
@@ -1150,8 +1159,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task<IReadOnlyCheck> LoadWatchDataAsync(bool isSave, bool usingDmc)
         {
+            PageHtmlLoadState = LoadState.Loading;
+
             var watchData = new WatchData(Mediation);
             return watchData.LoadWatchDataAsync(WatchUrl, MovieType).ContinueWith(t => {
+                PageHtmlLoadState = LoadState.Loaded;
                 var wd = t.Result;
                 if(wd != null) {
                     WatchData = wd;
@@ -1184,27 +1196,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public virtual Task SetPageHtmlAsync(string html, bool isSave)
         {
-            PageHtmlLoadState = LoadState.Loading;
+            //PageHtmlLoadState = LoadState.Loading;
 
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
             return Task.Run(() => {
-                WatchPageHtmlSource = html;
-                htmlDocument.LoadHtml(html);
-                var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
-                DescriptionHtmlSource = description.InnerHtml;
+                //WatchPageHtmlSource = html;
+                //htmlDocument.LoadHtml(html);
+                //var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
+                //DescriptionHtmlSource = description.InnerHtml;
+                DescriptionHtmlSource = WatchData.RawData.Api.Video.Description;
 
-                var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);
-                var flashvars = json.SelectToken("flashvars");
-                PageVideoToken = flashvars.Value<string>("csrfToken");
+                //var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);
+                //var flashvars = json.SelectToken("flashvars");
+                //PageVideoToken = flashvars.Value<string>("csrfToken");
 
             }).ContinueWith(task => {
                 PageHtmlLoadState = LoadState.Loaded;
             }).ContinueWith(task => {
-                if(isSave) {
-                    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
-                }
+                //if(isSave) {
+                //    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
+                //}
             });
         }
 
@@ -1266,7 +1279,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public virtual Task LoadLocalPageHtmlAsync()
         {
-            PageHtmlLoadState = LoadState.Preparation;
+            //PageHtmlLoadState = LoadState.Preparation;
 
             WatchPageHtmlFile.Refresh();
             if(WatchPageHtmlFile.Exists && Constants.MinimumHtmlFileSize <= WatchPageHtmlFile.Length) {

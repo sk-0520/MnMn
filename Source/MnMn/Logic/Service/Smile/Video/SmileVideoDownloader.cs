@@ -42,12 +42,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         //    MovieType = movieType;
         //}
 
-        public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, Mediation mediation, SmileVideoMovieType movieType, CancellationToken cancelToken)
+        public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, CancellationToken cancelToken)
             : base(downloadUri, userAgentCreator, cancelToken)
         {
             ReferrerUri = referrerUri;
-            Mediation = mediation;
-            MovieType = movieType;
         }
 
 
@@ -56,13 +54,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public Uri ReferrerUri { get; }
         public TimeSpan WatchToMovieWaitTime { get; set; } = Constants.ServiceSmileVideoWatchToMovieWaitTime;
 
+        [Obsolete]
         public string PageHtml { get; private set; }
-
-        Mediation Mediation { get; set; }
-
-        SmileVideoMovieType MovieType { get;  }
-
-        public SmileVideoWatchDataModel WatchData { get; private set; }
 
         #endregion
 
@@ -72,13 +65,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             try {
                 UserAgent = UserAgentCreator.CreateHttpUserAgent();
+                // しょっぱな視聴ページを確認するからいらない
                 //// DMC形式は不要だと思うけど他との互換性のため残しとく
                 //var task = await SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
-                var watchData = new WatchData(Mediation);
-                var watchHtmlSource = await watchData.LoadWatchPageHtmlSourceAsync(ReferrerUri, MovieType, UserAgentCreator);
-                WatchData = watchData.GetWatchData(watchHtmlSource.Result);
 
-                PageHtml = WatchData.HtmlSource;
+                //PageHtml = WatchData.HtmlSource;
 
                 //cancel = false;
                 UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;

@@ -1,9 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawSmileVideoWatchDataEnvironmentBaseUrlModel: ModelBase
+    [Serializable, DataContract]
+    public class RawSmileVideoWatchDataEnvironmentBaseUrlModel : ModelBase
     {
         #region property
 

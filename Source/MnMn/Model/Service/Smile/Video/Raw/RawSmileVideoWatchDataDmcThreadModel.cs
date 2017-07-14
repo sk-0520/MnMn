@@ -8,7 +8,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawSmileVideoWatchDataDmcThreadModel: ModelBase
+    [Serializable, DataContract]
+    public class RawSmileVideoWatchDataDmcThreadModel : ModelBase
     {
         #region property
 

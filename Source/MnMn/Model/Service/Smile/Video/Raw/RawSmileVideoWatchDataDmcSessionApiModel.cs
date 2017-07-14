@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawSmileVideoWatchDataDmcSessionApiModel: ModelBase
+    [Serializable, DataContract]
+    public class RawSmileVideoWatchDataDmcSessionApiModel : ModelBase
     {
         #region property
 
@@ -26,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [DataMember(Name = "protocols")]
         public CollectionModel<string> Protocols { get; set; }
 
-        [DataMember(Name = "protocols")]
+        [DataMember(Name = "auth_types")]
         public Dictionary<string, string> AuthTypes { get; set; }
 
         [DataMember(Name = "service_user_id")]

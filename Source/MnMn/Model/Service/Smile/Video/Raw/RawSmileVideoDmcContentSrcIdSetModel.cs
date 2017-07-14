@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
     {
         #region property
 
-        [XmlArray("content_src_ids"), XmlArrayItem("src_id_to_mux")]
+        [XmlArray("content_src_ids"), XmlArrayItem("src_id_to_mux"), DataMember(Name = "content_src_ids")]
         public CollectionModel<RawSmileVideoDmcSrcIdToMultiplexerModel> SrcIdToMultiplexers { get; set; } = new CollectionModel<RawSmileVideoDmcSrcIdToMultiplexerModel>();
 
 

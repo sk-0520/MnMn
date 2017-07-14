@@ -8,6 +8,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
+    [Serializable, DataContract]
     public class RawSmileVideoWatchDataVideoModel : ModelBase
     {
         #region property
@@ -67,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public string IntroducedNicoliveDJInfo { get; set; }
 
         [DataMember(Name = "dmcInfo")]
-        public RawSmileVideoWatchDataDmcInfoModel DmcInfo { get; set; }
+        public RawSmileVideoWatchDataDmcInfoModel DmcInfo { get; set; } = new RawSmileVideoWatchDataDmcInfoModel();
 
         [DataMember(Name = "backCommentType")]
         public string BackCommentType { get; set; }

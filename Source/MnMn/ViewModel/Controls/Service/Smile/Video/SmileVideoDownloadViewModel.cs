@@ -319,7 +319,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             DownloadUri = downloadUri;
 
             DownloadCancel = new CancellationTokenSource();
-            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl, Mediation, Information.MovieType, DownloadCancel.Token) {
+            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl, DownloadCancel.Token) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
@@ -458,7 +458,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var dmcModel = new RawSmileVideoDmcObjectModel();
             //dmcModel.Data.Session.Id = dmcInfo2.SessionApi.PlayerId;
-            var aaaa = Newtonsoft.Json.JsonConvert.DeserializeObject(dmcInfo2.SessionApi.Token);
+            using(var stream = StreamUtility.ToUtf8Stream(dmcInfo2.SessionApi.Token)) {
+                dmcModel.Data.Session = SerializeUtility.LoadJsonDataFromStream<RawSmileVideoDmcSessionModel>(stream);
+            }
 
 
             // 動画ソースを選りすぐる
@@ -961,7 +963,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DownloadStartPosition = e.RangeHeadPosition;
             }
             var downloader = (SmileVideoDownloader)sender;
-            Information.SetPageHtmlAsync(downloader.PageHtml, true).Wait();
+            //Information.SetPageHtmlAsync(downloader.PageHtml, true).Wait();
 
             if(UsingDmc.Value) {
                 if(downloader.ResponseHeaders.ContentLength.HasValue) {

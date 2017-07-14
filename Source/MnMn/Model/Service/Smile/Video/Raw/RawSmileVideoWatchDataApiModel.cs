@@ -8,7 +8,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class RawSmileVideoWatchDataApiModel : RawModelBase
     {
         #region property
