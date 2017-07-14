@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -20,20 +24,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             : base(mediation, ServiceType.Smile)
         { }
 
-        RawSmileVideoWatchDataApiModel ConvertRawApi(string rawApi)
+        TModel ConvertTModel<TModel>(string json)
+            where TModel: RawModelBase, new()
         {
-            using(var stream = StreamUtility.ToUtf8Stream(rawApi)) {
-                var result = SerializeUtility.LoadJsonDataFromStream<RawSmileVideoWatchDataApiModel>(stream);
-                result.Raw = rawApi;
-                return result;
-            }
-        }
-
-        RawSmileVideoWatchDataEnvironmentModel ConvertRawEnvironment(string rawEnvironment)
-        {
-            using(var stream = StreamUtility.ToUtf8Stream(rawEnvironment)) {
-                var result = SerializeUtility.LoadJsonDataFromStream<RawSmileVideoWatchDataEnvironmentModel>(stream);
-                result.Raw = rawEnvironment;
+            using(var stream = StreamUtility.ToUtf8Stream(json)) {
+                var result = SerializeUtility.LoadJsonDataFromStream<TModel>(stream);
+                result.Raw = json;
                 return result;
             }
         }
@@ -41,10 +37,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         RawSmileVideoWatchDataModel Load(HtmlAgilityPack.HtmlNode watachDataElement)
         {
             var rawApiData = watachDataElement.Attributes["data-api-data"].Value;
-            var apiData = ConvertRawApi(rawApiData);
+            var apiData = ConvertTModel<RawSmileVideoWatchDataApiModel>(rawApiData);
 
             var rawEnvironment = watachDataElement.Attributes["data-environment"].Value;
-            var environment = ConvertRawEnvironment(rawEnvironment);
+            var environment = ConvertTModel<RawSmileVideoWatchDataEnvironmentModel>(rawEnvironment);
 
             return new RawSmileVideoWatchDataModel() {
                 Api = apiData,
@@ -52,31 +48,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             };
         }
 
-        public async Task<SmileVideoWatchDataModel> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingDmc)
+        public SmileVideoWatchDataModel GetWatchData(string htmlSource)
         {
-            await LoginIfNotLoginAsync();
+            var htmlDocument = HtmlUtility.CreateHtmlDocument(htmlSource);
+            var watachDataElement = htmlDocument.GetElementbyId("js-initial-watch-data");
+            var rawModel = Load(watachDataElement);
 
-            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvScraping, ServiceType.SmileVideo)) {
-                var usingUri = movieType == SmileVideoMovieType.Swf
-                    ? new Uri(watchUri.OriginalString + "?as3=1")
-                    : watchUri
-                ;
-                page.ForceUri = usingUri;
-                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+            return new SmileVideoWatchDataModel() {
+                RawData = rawModel,
+                HtmlSource = htmlSource,
+            };
+        }
 
+        public Task<SmileVideoWatchDataModel> LoadWatchDataAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType)
+        {
+            return LoadWatchPageHtmlSourceAsync(videoId, watchUri, movieType, true).ContinueWith(t => {
+                var response = t.Result;
                 if(response.IsSuccess) {
                     var htmlSource = response.Result;
-                    var htmlDocument = HtmlUtility.CreateHtmlDocument(htmlSource);
-                    var watachDataElement = htmlDocument.GetElementbyId("js-initial-watch-data");
-                    var rawModel = Load(watachDataElement);
-
-                    return new SmileVideoWatchDataModel() {
-                        RawData = rawModel,
-                        HtmlSource = htmlSource,
-                    };
+                    return GetWatchData(htmlSource);
                 }
-
                 return null;
+            });
+        }
+
+        public async Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingSession)
+        {
+            IHttpUserAgentCreator userAgentCreator = HttpUserAgentHost;
+            if(usingSession) {
+                await LoginIfNotLoginAsync();
+                userAgentCreator = SessionBase;
+            }
+
+            using(var page = new PageLoader(Mediation, userAgentCreator, SmileVideoMediationKey.watchDataPage, ServiceType.SmileVideo)) {
+                page.ReplaceUriParameters["uri"] = watchUri.OriginalString;
+                page.ReplaceUriParameters["as3"] = movieType == SmileVideoMovieType.Swf
+                    ? "1"
+                    : string.Empty
+                ;
+
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                return response;
             }
         }
     }

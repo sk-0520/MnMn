@@ -1074,8 +1074,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return Task.FromResult(CheckModel.Failure());
             }
 
-            var initWatachData = new WatchData(Mediation);
-            var aaaaaTask = initWatachData.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
+            var watchData = new WatchData(Mediation);
+            var aaaaaTask = watchData.LoadWatchDataAsync(VideoId, WatchUrl, MovieType).ContinueWith(t => {
                 var model = t.Result;
                 Debug.WriteLine(model);
             });
