@@ -1073,6 +1073,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return Task.FromResult(CheckModel.Failure());
             }
 
+            var initWatachData = new WatchData(Mediation);
+            var aaaaaTask = initWatachData.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
+                var model = t.Result;
+                Debug.WriteLine(model);
+            });
+
+
             var getflv = new Getflv(Mediation);
 
             return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
