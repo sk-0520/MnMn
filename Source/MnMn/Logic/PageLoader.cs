@@ -225,7 +225,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         } else {
                             Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, byte: {convertedContent.Length}", convertedContent);
                         }
-                        MappingContent = new StringContent(convertedContent);
+                        MappingContent = new StringContent(convertedContent, Encoding.UTF8);
                         if(!string.IsNullOrWhiteSpace(mappingResult.ContentType)) {
                             MappingContent.Headers.ContentType = new MediaTypeHeaderValue(mappingResult.ContentType);
                         }

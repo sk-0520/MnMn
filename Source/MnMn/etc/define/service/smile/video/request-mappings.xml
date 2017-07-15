@@ -6,7 +6,7 @@
 		<item key="version"   type="simple" value="20090904"  />
 		<item key="version-old"   type="simple" value="20061206"  />
 		<item key="res_from"  type="force-pair" name="res_from" bond=":" value="${res_from}" fail="">
-			<bracket target="value" open="&quot;" close="&quot;" />
+			<bracket target="name" open="&quot;" close="&quot;" />
 			<bracket target="value" open="" close="," />
 		</item>
 		<item key="user-id" type="simple" value="${user-id}" />
@@ -14,7 +14,7 @@
 			<bracket target="value" open="&quot;" close="&quot;" />
 		</item>
 		<item key="userkey" type="force-pair" name="userkey" bond=":" value="${userkey}" fail="" >
-			<bracket target="value" open="&quot;" close="&quot;" />
+			<bracket target="name" open="&quot;" close="&quot;" />
 			<bracket target="value" open="&quot;" close="&quot;" />
 		</item>
 		<item key="force_184" type="force-pair" name="force_184" bond=":" value="${force_184}" fail="">
@@ -22,6 +22,7 @@
 		</item>
 
 		<item key="content" type="force-pair" name="content" bond=":" value="${content}" fail="">
+			<bracket target="name" open="&quot;" close="&quot;" />
 			<bracket target="value" open="&quot;" close="&quot;," />
 		</item>
 

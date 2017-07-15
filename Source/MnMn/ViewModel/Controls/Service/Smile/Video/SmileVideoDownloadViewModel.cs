@@ -567,7 +567,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Information.ThreadId,
                 Session.UserId,
                 getCount,
-                rangeHeadMinutes, rangeTailMinutes, rangeGetCount,
+                rangeHeadMinutes, rangeTailMinutes == 0 ? 1: rangeTailMinutes, rangeGetCount,
                 rangeGetAllCount,
                 Information.Getthreadkey,
                 Information.UserKey,

@@ -71,8 +71,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             ;
             using(var page = new PageLoader(Mediation, Session, key, ServiceType.SmileVideo)) {
                 //page.ParameterType = ParameterType.Mapping;
-                //page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
-                page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
+                //page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
+                page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
                 page.ReplaceRequestParameters["thread-id"] = threadId;
                 page.ReplaceRequestParameters["user-id"] = userId;
                 page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
