@@ -571,7 +571,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 rangeGetAllCount,
                 Information.Getthreadkey,
                 Information.UserKey,
-                RawValueUtility.ConvertBoolean(Information.DmcInfo2?.Thread.ThreadKeyRequired)
+                Information.IsChannelVideo
             );
         }
 
@@ -597,7 +597,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Loading;
 
-            var rawMessagePacket = await LoadMsgCoreAsync(1000, 0, (int)Information.Length.TotalMinutes, 100, 500);
+            var rawMessagePacket = await LoadMsgCoreAsync(1000, 0, (int)Information.Length.TotalMinutes, 100, 1000);
             ImportCommentThread(rawMessagePacket);
 
             // キャッシュ構築

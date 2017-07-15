@@ -784,7 +784,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 //ThrowHasNotGetflv();
                 ThrowHasNotWatchData();
-                return WatchData.RawData.Api.Thread.Ids.Default;
+                return WatchData.RawData.Api.Thread.Ids.Community;
             }
         }
 

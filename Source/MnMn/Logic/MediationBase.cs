@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -406,6 +407,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        protected string KillWhiteSpaceContent(string rawContent)
+        {
+            var reg = new Regex(
+                @"
+                (?<L_WHITE>
+                    \s*
+                )
+                \$
+                \[
+                (?<L_OP>
+                    (\d+)?
+                )
+                :
+                (?<R_OP>
+                    (\d+)?
+                )
+                \]
+                (?<R_WHITE>
+                    \s*
+                )",
+                /*RegexOptions.Compiled |*/ RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture
+            );
+            return reg.Replace(rawContent, m => {
+                var leftOperator = m.Groups["L_OP"].Value;
+                var rightOperator = m.Groups["R_OP"].Value;
+
+                var leftWhite = m.Groups["L_WHITE"].Value;
+                var rightWhite = m.Groups["R_WHITE"].Value;
+
+                var sb = new StringBuilder();
+
+                if(!string.IsNullOrWhiteSpace(leftOperator)) {
+                    var safeCount = int.Parse(leftOperator);
+                    if(safeCount < leftWhite.Length) {
+                        var safeWhite = leftWhite.Substring(leftWhite.Length - safeCount);
+                        sb.Append(safeWhite);
+                    }
+                }
+                if(!string.IsNullOrWhiteSpace(rightOperator)) {
+                    var safeCount = int.Parse(rightOperator);
+                    if(safeCount < rightWhite.Length) {
+                        var safeWhite = rightWhite.Substring(rightWhite.Length - safeCount);
+                        sb.Append(safeWhite);
+                    }
+                }
+
+                return sb.ToString() ;
+            });
+        }
+
         protected IReadOnlyMappingResult GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var result = new MappingResultModel();
@@ -421,13 +472,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 result.ContentType = mapping.ContentType;
             }
 
+            var killedWhiteContent = KillWhiteSpaceContent(mapping.Content.Value);
+
             var mappingParams = mapping.Items
                 .ToDictionary(
                     i => i.Key,
                     i => ToMappingItemString(i, replaceMap)
                 )
             ;
-            var replacedContent = ReplaceString(mapping.Content.Value, mappingParams);
+            var replacedContent = ReplaceString(killedWhiteContent, mappingParams);
             var trimMap = new Dictionary<MappingContentTrim, Func<string, string>>() {
                 { MappingContentTrim.None, s => s },
                 { MappingContentTrim.Block, s => string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c)).Reverse()) },

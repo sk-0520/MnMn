@@ -63,9 +63,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel, string userKey, bool threadKeyRequired)
+        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel, string userKey, bool withThread)
         {
-            var key = threadKeyRequired
+            var key = withThread
                 ? SmileVideoMediationKey.msgWithThread
                 : SmileVideoMediationKey.msg
             ;

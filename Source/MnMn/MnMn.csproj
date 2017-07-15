@@ -834,6 +834,19 @@
     <Content Include="etc\define\service\smile\video\msg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\define\service\smile\video\request-mappings.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>request-mappings.xml</LastGenOutput>
+    </Content>
+    <None Include="etc\define\service\smile\video\request-mappings.video_msg_define.txt">
+      <DependentUpon>request-mappings.tt</DependentUpon>
+    </None>
+    <Content Include="etc\define\service\smile\video\request-mappings.xml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>request-mappings.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\define\web-navigator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>web-navigator.xml</LastGenOutput>
@@ -1714,9 +1727,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\request-mappings.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="etc\define\service\smile\video\request-mappings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="App.Debug.config">
