@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel, string userKey, bool withThread)
+        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string threadCommunityId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel, string userKey, bool withThread)
         {
             var key = withThread
                 ? SmileVideoMediationKey.msgWithThread
@@ -74,6 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 //page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
                 page.ReplaceRequestParameters["thread-id"] = threadId;
+                page.ReplaceRequestParameters["thread-community-id"] = threadCommunityId;
                 page.ReplaceRequestParameters["user-id"] = userId;
                 page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
                 if(rangeHeadMinutes < rangeTailMinutes && 0 < rangeGetCount) {

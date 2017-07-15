@@ -3,6 +3,7 @@
 	<!-- コメント取得 -->
 	<mapping key="video-msg" content-type="text/plain">
 			<item key="thread-id" type="simple" value="${thread-id}"  />
+	<item key="thread-community-id" type="simple" value="${thread-community-id}"  />
 	<item key="version"   type="simple" value="20090904"  />
 	<item key="version-old"   type="simple" value="20061206"  />
 	<item key="res_from"  type="force-pair" name="res_from" bond=":" value="${res_from}" fail="">
@@ -54,6 +55,7 @@
 	</mapping>
 	<mapping key="video-msg-with-thread" content-type="text/plain">
 			<item key="thread-id" type="simple" value="${thread-id}"  />
+	<item key="thread-community-id" type="simple" value="${thread-community-id}"  />
 	<item key="version"   type="simple" value="20090904"  />
 	<item key="version-old"   type="simple" value="20061206"  />
 	<item key="res_from"  type="force-pair" name="res_from" bond=":" value="${res_from}" fail="">
@@ -92,18 +94,23 @@
 			<![CDATA[
 				[
 					{"ping":{"content":"rs:0"}},
+
 					{"ping":{"content":"ps:0"}},
 					{"thread":$[:]               {"thread":"${thread-id}","version":"${version}","language":${language},"user_id":${user-id},$[:]                              "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${userkey}}},
 					{"ping":{"content":"pf:0"}},
+
 					{"ping":{"content":"ps:1"}},
 					{"thread_leaves":$[:]        {"thread":"${thread-id}",$[:]                   "language":${language},"user_id":${user-id},${content} $[:]                                                "scores":${scores},"nicoru":${nicoru},${userkey}}},
 					{"ping":{"content":"pf:1"}},
+
 					{"ping":{"content":"ps:2"}},
-					{"thread":$[:]               {"thread":"${thread-id}","version":"${version}","language":${language},"user_id":${user-id},$[:]            ${force_184} $[:] "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${threadkey}}},
+					{"thread":$[:]               {"thread":"${thread-community-id}","version":"${version}","language":${language},"user_id":${user-id},$[:]            ${force_184} $[:] "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${threadkey}}},
 					{"ping":{"content":"pf:2"}},
+
 					{"ping":{"content":"ps:3"}},
-					{"thread_leaves":$[:]        {"thread":"${thread-id}",$[:]                   "language":${language},"user_id":${user-id},${content} $[:] ${force_184} $[:]                              "scores":${scores},"nicoru":${nicoru},${threadkey}}},
+					{"thread_leaves":$[:]        {"thread":"${thread-community-id}",$[:]                   "language":${language},"user_id":${user-id},${content} $[:] ${force_184} $[:]                              "scores":${scores},"nicoru":${nicoru},${threadkey}}},
 					{"ping":{"content":"pf:3"}},
+
 					{"ping":{"content":"rf:0"}}
 				]
 			]]>

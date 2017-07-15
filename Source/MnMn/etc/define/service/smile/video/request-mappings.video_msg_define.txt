@@ -1,4 +1,6 @@
-﻿	<item key="thread-id" type="simple" value="${thread-id}"  />
+﻿
+	<item key="thread-id" type="simple" value="${thread-id}"  />
+	<item key="thread-community-id" type="simple" value="${thread-community-id}"  />
 	<item key="version"   type="simple" value="20090904"  />
 	<item key="version-old"   type="simple" value="20061206"  />
 	<item key="res_from"  type="force-pair" name="res_from" bond=":" value="${res_from}" fail="">

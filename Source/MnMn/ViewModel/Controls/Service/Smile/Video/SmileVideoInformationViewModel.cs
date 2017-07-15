@@ -788,7 +788,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string ThreadKey
+        public string ThreadCommunityId
         {
             get
             {
@@ -1202,7 +1202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public Task LoadGetthreadkeyAsync()
         {
             var getThreadkey = new Getthreadkey(Mediation);
-            return getThreadkey.LoadAsync(ThreadKey).ContinueWith(t => {
+            return getThreadkey.LoadAsync(ThreadCommunityId).ContinueWith(t => {
                 if(t.IsFaulted) {
                     return CheckModel.Failure(t.Exception.InnerException);
                 } else {
