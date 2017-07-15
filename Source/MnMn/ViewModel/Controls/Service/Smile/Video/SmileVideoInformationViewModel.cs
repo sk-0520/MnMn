@@ -784,6 +784,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 //ThrowHasNotGetflv();
                 ThrowHasNotWatchData();
+                return WatchData.RawData.Api.Thread.Ids.Default;
+            }
+        }
+
+        public string ThreadKey
+        {
+            get
+            {
+                //ThrowHasNotGetflv();
+                ThrowHasNotWatchData();
                 return WatchData.RawData.Api.Thread.Ids.Community;
             }
         }
@@ -1192,7 +1202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public Task LoadGetthreadkeyAsync()
         {
             var getThreadkey = new Getthreadkey(Mediation);
-            return getThreadkey.LoadAsync(ThreadId).ContinueWith(t => {
+            return getThreadkey.LoadAsync(ThreadKey).ContinueWith(t => {
                 if(t.IsFaulted) {
                     return CheckModel.Failure(t.Exception.InnerException);
                 } else {
