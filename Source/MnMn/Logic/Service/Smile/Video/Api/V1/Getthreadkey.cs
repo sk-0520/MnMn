@@ -33,17 +33,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// <summary>
     /// セッションが必要なのか不明。
     /// </summary>
-    public class Getthreadkey: ApiBase
+    public class Getthreadkey: SessionApiBase<SmileSessionViewModel>
     {
-        public Getthreadkey(Mediation mediation)
-            : base(mediation)
-        { }
+        public Getthreadkey(Mediation mediation) 
+            : base(mediation, ServiceType.Smile)
+        {
+        }
 
         #region function
 
         public async Task<RawSmileVideoGetthreadkeyModel> LoadAsync(string threadId)
         {
-            using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthreadkey, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.getthreadkey, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["thread-id"] = threadId;
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 if(!response.IsSuccess) {
