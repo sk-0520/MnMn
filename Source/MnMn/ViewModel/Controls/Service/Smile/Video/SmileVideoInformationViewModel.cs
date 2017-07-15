@@ -858,7 +858,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public virtual string CommentUserId
+        public string UserKey
         {
             get
             {

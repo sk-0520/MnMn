@@ -57,22 +57,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketResultModel>(stream);
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
+        string ReplaceJsonApiUrl(Uri msgServerUri)
         {
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, ServiceType.SmileVideo)) {
+            // watch_dll.js で謎処理
+            return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
+        }
+
+        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel, string userKey, bool threadKeyRequired)
+        {
+            var key = threadKeyRequired
+                ? SmileVideoMediationKey.msgWithThread
+                : SmileVideoMediationKey.msg
+            ;
+            using(var page = new PageLoader(Mediation, Session, key, ServiceType.SmileVideo)) {
                 //page.ParameterType = ParameterType.Mapping;
+                //page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
                 page.ReplaceRequestParameters["user-id"] = userId;
                 page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
                 if(rangeHeadMinutes < rangeTailMinutes && 0 < rangeGetCount) {
-                    page.ReplaceRequestParameters["time-size"] = $"{rangeHeadMinutes}-{rangeTailMinutes}:{rangeGetCount}";
-                    page.ReplaceRequestParameters["all-size"] = $"{Math.Abs(rangeGetAllCount)}";
+                    page.ReplaceRequestParameters["content"] = $"{rangeHeadMinutes}-{rangeTailMinutes}:{rangeGetCount},{Math.Abs(rangeGetAllCount)}";
+                } else {
+                    page.ReplaceRequestParameters["content"] = string.Empty;
                 }
+                page.ReplaceRequestParameters["content"] = $"{rangeHeadMinutes}-{rangeTailMinutes}:{rangeGetCount},{Math.Abs(rangeGetAllCount)}";
+
                 if(threadkeyModel != null) {
                     page.ReplaceRequestParameters["threadkey"] = threadkeyModel.Threadkey;
                     page.ReplaceRequestParameters["force_184"] = threadkeyModel.Force184;
                 }
+                page.ReplaceRequestParameters["userkey"] = userKey;
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);

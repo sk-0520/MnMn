@@ -1,38 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <mappings>
 	<!-- コメント取得 -->
-	<mapping key="video-msg" content-type="text/xml">
+	<mapping key="video-msg" content-type="text/plain">
 		<item key="thread-id" type="simple" value="${thread-id}"  />
 		<item key="version"   type="simple" value="20090904"  />
 		<item key="version-old"   type="simple" value="20061206"  />
-		<item key="res_from"  type="force-pair" name="res_from" bond="=" value="${res_from}" fail="">
+		<item key="res_from"  type="force-pair" name="res_from" bond=":" value="${res_from}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+			<bracket target="value" open="" close="," />
+		</item>
+		<item key="user-id" type="simple" value="${user-id}" />
+		<item key="threadkey" type="force-pair" name="threadkey" bond=":" value="${threadkey}" fail="" >
 			<bracket target="value" open="&quot;" close="&quot;" />
 		</item>
-		<item key="user-id"   type="force-pair" name="user_id" bond="=" value="${user-id}" fail="">
+		<item key="userkey" type="force-pair" name="userkey" bond=":" value="${userkey}" fail="" >
+			<bracket target="value" open="&quot;" close="&quot;" />
 			<bracket target="value" open="&quot;" close="&quot;" />
 		</item>
-		<item key="threadkey" type="force-pair" name="threadkey" bond="=" value="${threadkey}" fail="" >
-			<bracket target="value" open="&quot;" close="&quot;" />
-		</item>
-		<item key="force_184" type="force-pair" name="force_184" bond="=" value="${force_184}" fail="">
-			<bracket target="value" open="&quot;" close="&quot;" />
+		<item key="force_184" type="force-pair" name="force_184" bond=":" value="${force_184}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;," />
 		</item>
 
-		<item key="time-msg" type="force-pair" name="${time-size}" bond="," value="${all-size}" fail="" />
+		<item key="content" type="force-pair" name="content" bond=":" value="${content}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;," />
+		</item>
 
 		<item key="with_global"  type="simple" value="1"  />
 		<item key="language"  type="simple" value="0"  />
-		<item key="nicoru"  type="simple" value="1"  />
+		<item key="nicoru"  type="simple" value="0"  />
 		<item key="scores"  type="simple" value="1"  />
 		<item key="click_revisio"  type="simple" value="-1"  />
 
 		<content trim="content" oneline="true">
 			<![CDATA[
-				<packet>
-					<thread        with_global="${with_global}"     language="${language}" nicoru="${nicoru}" scores="${scores}" thread="${thread-id}" version="${version}"     ${res_from} ${force_184} ${threadkey} />
-					<thread_leaves                                  language="${language}" nicoru="${nicoru}" scores="${scores}" thread="${thread-id}"                                                 ${force_184} ${threadkey} >${time-msg}</thread_leaves>
-					<thread        click_revisio="${click_revisio}"                                           scores="${scores}" thread="${thread-id}" version="${version-old}" ${res_from} ${force_184} ${threadkey} fork="1" />
-				</packet>
+				[
+					{"ping":{"content":"rs:0"}},
+					{"ping":{"content":"ps:0"}},
+					{"thread":        {"thread":"${thread-id}", ${res_from} "version":"${version}", "language":${language}, "user_id":${user-id},                            "with_global":${with_global},  "scores":${scores}, "nicoru":${nicoru},  ${userkey}   } },
+					{"ping":{"content":"pf:0"}},
+					{"ping":{"content":"ps:1"}},
+					{"thread_leaves": {"thread":"${thread-id}",                         "language":${language}, "user_id":${user-id},  ${content}                                               "scores":${scores}, "nicoru":${nicoru},  ${userkey}   } },
+					{"ping":{"content":"pf:1"}},
+					{"ping":{"content":"rf:0"}}
+				]
+			]]>
+		</content>
+	</mapping>
+	<mapping key="video-msg-with-thread" content-type="text/plain">
+		<item key="thread-id" type="simple" value="${thread-id}"  />
+		<item key="version"   type="simple" value="20090904"  />
+		<item key="version-old"   type="simple" value="20061206"  />
+		<item key="res_from"  type="force-pair" name="res_from" bond=":" value="${res_from}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="user-id" type="simple" value="${user-id}" />
+		<item key="threadkey" type="force-pair" name="threadkey" bond=":" value="${threadkey}" fail="" >
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="userkey" type="force-pair" name="userkey" bond=":" value="${userkey}" fail="" >
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="force_184" type="force-pair" name="force_184" bond=":" value="${force_184}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;," />
+		</item>
+
+		<item key="content" type="force-pair" name="content" bond=":" value="${content}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;," />
+		</item>
+
+		<item key="with_global"  type="simple" value="1"  />
+		<item key="language"  type="simple" value="0"  />
+		<item key="nicoru"  type="simple" value="0"  />
+		<item key="scores"  type="simple" value="1"  />
+		<item key="click_revisio"  type="simple" value="-1"  />
+
+		<content trim="content" oneline="true">
+			<![CDATA[
+				[
+					{'thread':        { 'thread':"${thread-id}", 'version':"${version}", 'language':${language}, 'user_id':${user-id},                            'with_global':${with_global},  'scores':${scores}, 'nicoru':${nicoru},  ${userkey}   } },
+					{'thread_leaves': { 'thread':"${thread-id}",                         'language':${language}, 'user_id':${user-id},  ${content}                                               'scores':${scores}, 'nicoru':${nicoru},  ${userkey}   } },
+					{'thread':        { 'thread':"${thread-id}",                         'language':${language}, 'user_id':${user-id},              ${force_184}  'with_global':${with_global},  'scores':${scores}, 'nicoru':${nicoru},  ${threadkey} } },
+					{'thread_leaves': { 'thread':"${thread-id}", 'version':"${version}", 'language':${language}, 'user_id':${user-id},  ${content}  ${force_184}                                 'scores':${scores}, 'nicoru':${nicoru},  ${threadkey} } }
+				]
 			]]>
 		</content>
 	</mapping>
