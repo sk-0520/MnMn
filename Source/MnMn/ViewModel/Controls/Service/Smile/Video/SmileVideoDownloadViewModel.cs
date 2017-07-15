@@ -565,7 +565,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return await msg.LoadAsync(
                 Information.MessageServerUrl,
                 Information.ThreadId,
-                Information.UserId,
+                Session.UserId,
                 getCount,
                 rangeHeadMinutes, rangeTailMinutes, rangeGetCount,
                 rangeGetAllCount,

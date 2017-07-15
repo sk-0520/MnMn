@@ -858,6 +858,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public virtual string CommentUserId
+        {
+            get
+            {
+                ThrowHasNotWatchData();
+                return WatchData.RawData.Api.Context.Userkey;
+            }
+        }
+
         #endregion
 
         #endregion
