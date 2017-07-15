@@ -237,25 +237,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected Func<Task<HttpResponseMessage>> GetExecutor(Define.PageLoaderMethod httpMethod)
+        protected Task<HttpResponseMessage> SendRequestMessage(Define.PageLoaderMethod httpMethod)
         {
             HttpUserAgent.DefaultRequestHeaders.Clear();
             foreach(var pair in Headers) {
                 HttpUserAgent.DefaultRequestHeaders.Add(pair.Key, pair.Value);
             }
 
-            var method = new Dictionary<Define.PageLoaderMethod, Func<Task<HttpResponseMessage>>>() {
-                { Define.PageLoaderMethod.Get, () => {
-                    if(HeaderCheckOnly) {
-                        return HttpUserAgent.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead);
-                    } else {
-                        return HttpUserAgent.GetAsync(Uri);
-                    }
-                } },
-                { Define.PageLoaderMethod.Post, () => ParameterType == ParameterType.Plain ? HttpUserAgent.PostAsync(Uri, PlainContent): HttpUserAgent.PostAsync(Uri, MappingContent) },
+            var request = new HttpRequestMessage() {
+                RequestUri = Uri,
             };
 
-            return method[httpMethod];
+            //var method = new Dictionary<Define.PageLoaderMethod, Func<Task<HttpResponseMessage>>>() {
+            //    { Define.PageLoaderMethod.Get, () => {
+            //        if(HeaderCheckOnly) {
+            //            return HttpUserAgent.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead);
+            //        } else {
+            //            return HttpUserAgent.GetAsync(Uri);
+            //        }
+            //    } },
+            //    { Define.PageLoaderMethod.Post, () => ParameterType == ParameterType.Plain ? HttpUserAgent.PostAsync(Uri, PlainContent): HttpUserAgent.PostAsync(Uri, MappingContent) },
+            //};
+            switch(httpMethod) {
+                case Define.PageLoaderMethod.Get:
+                    request.Method = HttpMethod.Get;
+                    break;
+
+                case Define.PageLoaderMethod.Post:
+                    request.Method = HttpMethod.Post;
+                    switch(ParameterType) {
+                        case ParameterType.Plain:
+                            request.Content = PlainContent;
+                            break;
+                        case ParameterType.Mapping:
+                            request.Content = MappingContent;
+                            break;
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            return HttpUserAgent.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+
+            //return method[httpMethod];
         }
 
         protected IReadOnlyCheck CheckResponseHeaders(HttpResponseMessage response)
@@ -296,9 +322,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 MakeRequestHeader();
                 MakeRequestParameter();
 
-                var executor = GetExecutor(httpMethod);
-
-                using(var response = await executor().ConfigureAwait(false)) {
+                using(var response = await SendRequestMessage(httpMethod).ConfigureAwait(false)) {
                     Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {response.StatusCode}", response.ToString());
                     if(!response.IsSuccessStatusCode) {
                         if(JudgeFailureStatusCode != null) {
