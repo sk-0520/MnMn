@@ -761,7 +761,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 if(!this._isEconomyMode.HasValue) {
                     object outIsEconomyMode;
                     //var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv.MovieServerUrl, typeof(string), ServiceType.SmileVideo);
-                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, WatchData.RawData.Api.Video.SmileInfo.CurrentQualityId, typeof(string), ServiceType.SmileVideo);
+                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, MovieServerUrl.OriginalString, typeof(string), ServiceType.SmileVideo);
                     if(!converted) {
                         throw new Exception();
                     }
