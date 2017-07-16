@@ -431,7 +431,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Player.Stop();
             }
 
-            Mediation.Logger.Debug($"{VideoId}: stoped");
+            Mediation.Logger.Debug($"{VideoId}: stopped");
             PlayerState = PlayerState.Stop;
             VideoPosition = 0;
             if(isClearComment) {

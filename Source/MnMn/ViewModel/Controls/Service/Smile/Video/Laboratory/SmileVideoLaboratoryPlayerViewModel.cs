@@ -20,7 +20,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory
 {
-    public sealed class SmileVideoLaboratoryPlayerViewModel: SmileVideoPlayerViewModel
+    public sealed class SmileVideoLaboratoryPlayerViewModel : SmileVideoPlayerViewModel
     {
         public SmileVideoLaboratoryPlayerViewModel(Mediation mediation)
             : base(mediation)
@@ -119,14 +119,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
         {
             LoadVideoFromCache(VideoFile);
 
-
             if(MsgFile != null && MsgFile.Exists) {
-                // #665 除外
-                //using(var stream = new FileStream(MsgFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                //    var comment = Msg.ConvertFromRawPacketData_Issue665NA(stream);
-                //    LoadComment_Issue665NA_Async(comment);
-                //    OnLoadMsgEnd();
-                //}
+                if(string.Equals(MsgFile.Extension, ".xml", StringComparison.OrdinalIgnoreCase)) {
+                    using(var stream = new FileStream(MsgFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        var comment = Msg.ConvertFromRawPacketData_Issue665NA(stream);
+                        LoadComment_Issue665NA_Async(comment);
+                    }
+                } else {
+                    var comment = Msg.ConvertMsgSettingModel(MsgFile);
+                    LoadCommentAsync(comment);
+                }
+                OnLoadMsgEnd();
             }
 
             return Task.CompletedTask;

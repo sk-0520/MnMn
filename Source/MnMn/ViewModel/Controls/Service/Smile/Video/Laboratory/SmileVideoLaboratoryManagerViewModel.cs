@@ -263,26 +263,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             return Task.CompletedTask;
         }
 
-        bool HasExtension(string path, IEnumerable<string> extensions)
+        bool MatchExtension(string path, IEnumerable<string> extensions)
         {
             var dotExtension = Path.GetExtension(path);
             if(dotExtension.Length <= ".".Length) {
                 return false;
             }
+            var name = Path.GetFileName(path);
 
-            var ext = dotExtension.Substring(1);
-
-            return extensions.Any(s => string.Equals(s, ext, StringComparison.OrdinalIgnoreCase));
+            return extensions.Any(s => name.EndsWith(s, StringComparison.InvariantCultureIgnoreCase));
         }
 
         bool IsEnabledVideoFilePath(string path)
         {
-            return HasExtension(path, Constants.AppSmileVideoLaboratoryPlayVideoExtensions);
+            return MatchExtension(path, Constants.AppSmileVideoLaboratoryPlayVideoExtensions);
         }
 
         bool IsEnabledMsgFilePath(string path)
         {
-            return HasExtension(path, Constants.AppSmileVideoLaboratoryPlayMsgExtensions);
+            return MatchExtension(path, Constants.AppSmileVideoLaboratoryPlayMsgExtensions);
         }
 
         void PlayDragEnterAndOver(UIElement sender, DragEventArgs e)
