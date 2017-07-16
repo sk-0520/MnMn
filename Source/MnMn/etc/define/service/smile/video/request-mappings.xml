@@ -28,6 +28,14 @@
 	<item key="click_revisio"  type="simple" value="-1"  />
 	<item key="fork" type="simple" value="1" />
 
+	<item key="filter-op" type="simple" value="${filter-op}" />
+	<item key="packet-op" type="simple" value="${packet-op}" />
+
+	<item key="filter-community" type="simple" value="${filter-community}" />
+	<item key="packet-community-thread" type="simple" value="${packet-community-thread}" />
+	<item key="packet-community-thread_leaves" type="simple" value="${packet-community-thread_leaves}" />
+
+
 	<!-- NOTE: userkey, threadkey は各タグの終端に配置すること-->
 	<item key="userkey" type="force-pair" name="userkey" bond=":" value="${userkey}" fail="" >
 		<bracket target="name" open="&quot;" close="&quot;" />
@@ -42,27 +50,32 @@
 			<![CDATA[
 				[
 					{"ping":{"content":"rs:0"}},
+
 					{"ping":{"content":"ps:0"}},
-					$[filter:${use-op}:/*]
 					{"thread":$[:]               {"thread":"${thread-id}", "version":"${version}","language":${language},"user_id":${user-id},$[:]                           "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${userkey}}},
-					$[filter:*/]
 					{"ping":{"content":"pf:0"}},
+
 					{"ping":{"content":"ps:1"}},
 					{"thread_leaves":$[:]        {"thread":"${thread-id}",$[:]                    "language":${language},"user_id":${user-id},${content} $[:]                                             "scores":${scores},"nicoru":${nicoru},${userkey}}},
 					{"ping":{"content":"pf:1"}},
-					$[filter:${use-op}:/*]
-					{"ping":{"content":"ps:2"}},
-					{"thread":$[:]               {"thread":"${thread-id}", "version":"${version-old}","language":${language},"user_id":${user-id},$[:]                         "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${res_from}"fork":${fork},${userkey}}},
-					{"ping":{"content":"pf:2"}},
+
+					$[//] 投稿者コメント
+					$[filter:${filter-op}:/*]
+						{"ping":{"content":"ps:${packet-op}"}},
+						{"thread":$[:]               {"thread":"${thread-id}", "version":"${version-old}","language":${language},"user_id":${user-id},$[:]                         "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${res_from}"fork":${fork},${userkey}}},
+						{"ping":{"content":"pf:${packet-op}"}},
 					$[filter:*/]
 
-					{"ping":{"content":"ps:2"}},
-					{"thread":$[:]               {"thread":"${community-thread-id}","version":"${version}","language":${language},"user_id":${user-id},$[:]            ${force_184} $[:] "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${threadkey}}},
-					{"ping":{"content":"pf:2"}},
+					$[//] チャンネル
+					$[filter:${filter-community}:/*]
+						{"ping":{"content":"ps:${packet-community-thread}"}},
+						{"thread":$[:]               {"thread":"${community-thread-id}","version":"${version}","language":${language},"user_id":${user-id},$[:]            ${force_184} $[:] "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${threadkey}}},
+						{"ping":{"content":"pf:${packet-community-thread}"}},
 
-					{"ping":{"content":"ps:3"}},
-					{"thread_leaves":$[:]        {"thread":"${community-thread-id}",$[:]                   "language":${language},"user_id":${user-id},${content} $[:] ${force_184} $[:]                              "scores":${scores},"nicoru":${nicoru},${threadkey}}},
-					{"ping":{"content":"pf:3"}},
+						{"ping":{"content":"ps:${packet-community-thread_leaves}"}},
+						{"thread_leaves":$[:]        {"thread":"${community-thread-id}",$[:]                   "language":${language},"user_id":${user-id},${content} $[:] ${force_184} $[:]                              "scores":${scores},"nicoru":${nicoru},${threadkey}}},
+						{"ping":{"content":"ps:${packet-community-thread_leaves}"}},
+					$[filter:*/]
 
 					{"ping":{"content":"rf:0"}}
 				]

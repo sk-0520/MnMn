@@ -42,6 +42,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Msg: SessionApiBase<SmileSessionViewModel>
     {
+        #region define
+
+        /// <summary>
+        /// なんだかなぁ。
+        /// </summary>
+        enum Packet
+        {
+            Normal,
+            NormalLeaves,
+            OriginalPoster,
+            Community,
+            CommunityLeaves,
+        }
+
+        #endregion
+
         public Msg(Mediation mediation)
             : base(mediation, ServiceType.Smile)
         { }
@@ -64,8 +80,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPostedComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
+        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
         {
+            var packetMap = new Dictionary<Packet, int>() {
+                [Packet.Normal] = 0,
+                [Packet.NormalLeaves] = 1,
+            };
+            var packetCount = packetMap.Max(p => p.Value);
+
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, ServiceType.SmileVideo)) {
                 //page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
@@ -76,9 +98,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ReplaceRequestParameters["userkey"] = userKey;
                 page.ReplaceRequestParameters["community-thread-id"] = communityThreadId;
 
-                if(communityThreadKey != null) {
+                // 頑張ったマッピングのパケット番号調整
+                // 投稿者
+                page.ReplaceRequestParameters["filter-op"] = hasOriginalPosterComment.ToString();
+                if(hasOriginalPosterComment) {
+                    packetCount += 1;
+                    packetMap[Packet.OriginalPoster] = packetCount;
+                    page.ReplaceRequestParameters["packet-op"] = packetCount.ToString();
+                }
+
+                // スレッドキーが必要な人
+                page.ReplaceRequestParameters["filter-community"] = isCommunityThread.ToString();
+                if(isCommunityThread) {
                     page.ReplaceRequestParameters["threadkey"] = communityThreadKey.Threadkey;
                     page.ReplaceRequestParameters["force_184"] = communityThreadKey.Force184;
+
+                    packetCount += 1;
+                    packetMap[Packet.Community] = packetCount;
+                    page.ReplaceRequestParameters["packet-community-thread"] = packetCount.ToString();
+
+                    packetCount += 1;
+                    packetMap[Packet.CommunityLeaves] = packetCount;
+                    page.ReplaceRequestParameters["packet-community-thread_leaves"] = packetCount.ToString();
                 }
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
