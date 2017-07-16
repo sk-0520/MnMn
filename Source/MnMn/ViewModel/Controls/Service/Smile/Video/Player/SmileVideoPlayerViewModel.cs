@@ -1201,13 +1201,62 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ResetCommentInformation();
         }
 
-        protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
+        protected async Task PostComment_Issue665NA_Async(TimeSpan videoPosition)
         {
             // #548
             //if(CommentThread == null) {
             //    var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
             //    ImportCommentThread(rawMessagePacket);
             //}
+            var rawMessagePacket = await LoadMsg_Issue665NA_CoreAsync(0, 0, 0, 0, 0);
+            ImportCommentThread_Issue665NA(rawMessagePacket);
+
+            var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
+            Debug.Assert(CommentThread.Thread == Information.ThreadId);
+
+            var msg = new Msg(Mediation);
+
+            var postKey = await msg.LoadPostKeyAsync(Information.ThreadId, commentCount);
+            if(postKey == null) {
+                SetCommentInformation(Properties.Resources.String_App_Define_Service_Smile_Video_Comment_PostKeyError);
+                return;
+            } else {
+                Mediation.Logger.Information($"postkey = {postKey}");
+            }
+
+            var resultPost = await msg.PostAsync(
+                Information.MessageServerUrl,
+                Information.ThreadId,
+                videoPosition,
+                CommentThread.Ticket,
+                postKey.PostKey,
+                PostCommandItems,
+                PostCommentBody
+            );
+            if(resultPost == null) {
+                SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
+                return;
+            }
+            var status = SmileVideoMsgUtility.ConvertResultStatus(resultPost.ChatResult.Status);
+            if(status != SmileVideoCommentResultStatus.Success) {
+                //TODO: ユーザー側に通知
+                var message = DisplayTextUtility.GetDisplayText(status);
+                SetCommentInformation($"fail: {message}, {status}");
+                return;
+            }
+
+            //投稿コメントを画面上に流す
+            //TODO: 投稿者判定なし
+            var commentViewModel = CreateSingleComment(resultPost.ChatResult, videoPosition);
+
+            AppendComment(commentViewModel, true);
+
+            // コメント再取得
+            await LoadMsgAsync(CacheSpan.NoCache);
+        }
+
+        protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
+        {
             var rawMessagePacket = await LoadMsgCoreAsync(0, new SmileVideoMsgRangeModel(0, 0, 0, 0));
             ImportCommentThread(rawMessagePacket);
 
