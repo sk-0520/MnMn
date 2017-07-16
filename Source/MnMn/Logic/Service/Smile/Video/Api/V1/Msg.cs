@@ -60,9 +60,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacket_Issue665NA_ResultModel>(stream);
         }
 
-        public static SmileVideoMsgSettingModel ConvertMsgSettingModel(FileInfo file)
+        public static SmileVideoMsgPackSettingModel ConvertMsgSettingModel(FileInfo file)
         {
-            return SerializeUtility.LoadJsonDataFromFile<SmileVideoMsgSettingModel>(file.FullName);
+            return SerializeUtility.LoadJsonDataFromFile<SmileVideoMsgPackSettingModel>(file.FullName);
         }
 
         string ReplaceJsonApiUrl(Uri msgServerUri)
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task<SmileVideoMsgSettingModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
+        public async Task<SmileVideoMsgPackSettingModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
         {
             var packetMap = new Dictionary<SmileVideoMsgPacketId, int>() {
                 [SmileVideoMsgPacketId.Normal] = 0,
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 //Debug.WriteLine(rawMessage.Result);
                 var items = Newtonsoft.Json.JsonConvert.DeserializeObject<CollectionModel<RawSmileVideoMsgResultItemModel>>(rawMessage.Result);
 
-                var result = new SmileVideoMsgSettingModel() {
+                var result = new SmileVideoMsgPackSettingModel() {
                     PacketId = packetMap,
                     Items = items,
                 };

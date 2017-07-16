@@ -11,7 +11,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [Serializable, DataContract]
-    public class SmileVideoMsgSettingModel : SettingModelBase
+    public class SmileVideoMsgPackSettingModel : SettingModelBase
     {
         #region property
 

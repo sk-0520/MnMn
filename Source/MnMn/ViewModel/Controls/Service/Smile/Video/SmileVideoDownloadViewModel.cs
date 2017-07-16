@@ -577,7 +577,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             );
         }
 
-        protected async Task<SmileVideoMsgSettingModel> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
+        protected async Task<SmileVideoMsgPackSettingModel> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
         {
             await Information.LoadGetthreadkeyAsync();
 
@@ -632,7 +632,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return rawMessagePacket;
         }
 
-        protected async Task<SmileVideoMsgSettingModel> LoadMsgAsync(CacheSpan msgCacheSpan)
+        protected async Task<SmileVideoMsgPackSettingModel> LoadMsgAsync(CacheSpan msgCacheSpan)
         {
             OnLoadMsgStart();
 
@@ -677,7 +677,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Task.CompletedTask;
         }
 
-        protected virtual Task LoadCommentAsync(SmileVideoMsgSettingModel rawMsgPacket)
+        protected virtual Task LoadCommentAsync(SmileVideoMsgPackSettingModel rawMsgPacket)
         {
             CommentLoadState = LoadState.Loaded;
             return Task.CompletedTask;

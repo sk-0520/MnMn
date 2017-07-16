@@ -11,11 +11,13 @@ using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -24,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using Microsoft.Win32;
@@ -435,6 +438,53 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                 return;
             }
 
+            var msgPack = new SmileVideoMsgPackSettingModel() {
+                PacketId = new Dictionary<SmileVideoMsgPacketId, int>() {
+                    [SmileVideoMsgPacketId.Normal] = 0,
+                    [SmileVideoMsgPacketId.NormalLeaves] = 1,
+                    [SmileVideoMsgPacketId.OriginalPoster] = 2,
+                }
+            };
+
+            var random = new Random();
+
+            var normalChats = Enumerable
+                .Range(1, commentNormalLength)
+                .Select(i => CreateDummyChat(i, commentNormalLength, commentType, false, random))
+                .Select(i => new RawSmileVideoMsgResultItemModel() { Chat = i })
+            ;
+            var opChats = Enumerable
+                .Range(1, commentOpLength)
+                .Select(i => CreateDummyChat(i, commentOpLength, commentType, true, random))
+                .Select(i => new RawSmileVideoMsgResultItemModel() { Chat = i })
+            ;
+
+            var items = new CollectionModel<RawSmileVideoMsgResultItemModel>();
+
+            items.Add(new RawSmileVideoMsgResultItemModel() { Ping = new RawSmileVideoMsgPingModel() { Content = "rs:0" } });
+
+            // 通常
+            items.Add(new RawSmileVideoMsgResultItemModel() { Ping = new RawSmileVideoMsgPingModel() { Content = $"rs:{msgPack.PacketId[SmileVideoMsgPacketId.Normal]}" } });
+            items.Add(new RawSmileVideoMsgResultItemModel() { Thread = new RawSmileVideoMsgThreadModel() { Thread = $"laboratory", LastRes = normalChats.Count().ToString() } });
+            items.AddRange(normalChats);
+            items.Add(new RawSmileVideoMsgResultItemModel() { Ping = new RawSmileVideoMsgPingModel() { Content = $"rf:{msgPack.PacketId[SmileVideoMsgPacketId.Normal]}" } });
+
+            // 通常のバラバラ
+            items.Add(new RawSmileVideoMsgResultItemModel() { Ping = new RawSmileVideoMsgPingModel() { Content = $"rs:{msgPack.PacketId[SmileVideoMsgPacketId.NormalLeaves]}" } });
+            items.Add(new RawSmileVideoMsgResultItemModel() { Ping = new RawSmileVideoMsgPingModel() { Content = $"rf:{msgPack.PacketId[SmileVideoMsgPacketId.NormalLeaves]}" } });
+
+            // 投稿者
+            items.Add(new RawSmileVideoMsgResultItemModel() { Ping = new RawSmileVideoMsgPingModel() { Content = $"rs:{msgPack.PacketId[SmileVideoMsgPacketId.OriginalPoster]}" } });
+            items.Add(new RawSmileVideoMsgResultItemModel() { Thread = new RawSmileVideoMsgThreadModel() { Thread = $"laboratory", LastRes = opChats.Count().ToString(), Fork = "1" } });
+            items.AddRange(opChats);
+            items.Add(new RawSmileVideoMsgResultItemModel() { Ping = new RawSmileVideoMsgPingModel() { Content = $"rf:{msgPack.PacketId[SmileVideoMsgPacketId.OriginalPoster]}" } });
+
+            items.Add(new RawSmileVideoMsgResultItemModel() { Ping = new RawSmileVideoMsgPingModel() { Content = "rf:0" } });
+
+            msgPack.Items = items;
+
+            var outputFilePath = Path.Combine(outputDirectory.FullName, $"comment{Constants.AppSmileVideoLaboratoryPlayMsgExtensions.First(s => s.EndsWith("json", StringComparison.InvariantCultureIgnoreCase))}");
+            SerializeUtility.SaveJsonDataToFile(outputFilePath, msgPack);
         }
 
         Task<bool> ExportDummyVideoFileAsync(DirectoryInfo outputDirectory, TimeSpan length, VideoCreateType videoTye, decimal videFps, int videoWidth, int videoHeight)

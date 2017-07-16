@@ -1923,7 +1923,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return base.LoadComment_Issue665NA_Async(rawMsgPacket);
         }
 
-        protected override Task LoadCommentAsync(SmileVideoMsgSettingModel rawMsgPacket)
+        protected override Task LoadCommentAsync(SmileVideoMsgPackSettingModel rawMsgPacket)
         {
             var comments = SmileVideoCommentUtility.CreateCommentViewModels(rawMsgPacket, CommentStyleSetting);
             CommentList.InitializeRange(comments);
