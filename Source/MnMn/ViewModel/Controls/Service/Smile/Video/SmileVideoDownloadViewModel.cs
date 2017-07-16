@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected long DownloadStartPosition { get; private set; }
 
-        protected RawSmileVideoMsgThread_Issue665NA_Model CommentThread { get; private set; }
+        protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
 
         public string VideoId
         {

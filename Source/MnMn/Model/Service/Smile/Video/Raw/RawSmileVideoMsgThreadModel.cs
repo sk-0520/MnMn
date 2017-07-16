@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -24,27 +25,28 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawSmileVideoMsgThread_Issue665NA_Model: ModelBase
+    [Serializable, DataContract]
+    public class RawSmileVideoMsgThreadModel: ModelBase
     {
-        [XmlAttribute("server_time")]
+        [XmlAttribute("server_time"), DataMember(Name = "server_time")]
         public string ServerTime { get; set; }
 
-        [XmlAttribute("revision")]
+        [XmlAttribute("revision"), DataMember(Name = "revision")]
         public string Revision { get; set; }
 
-        [XmlAttribute("ticket")]
+        [XmlAttribute("ticket"), DataMember(Name = "ticket")]
         public string Ticket { get; set; }
 
-        [XmlAttribute("last_res")]
+        [XmlAttribute("last_res"), DataMember(Name = "last_res")]
         public string LastRes { get; set; }
 
-        [XmlAttribute("thread")]
+        [XmlAttribute("thread"), DataMember(Name = "thread")]
         public string Thread { get; set; }
 
-        [XmlAttribute("resultcode")]
+        [XmlAttribute("resultcode"), DataMember(Name = "resultcode")]
         public string ResultCode { get; set; }
 
-        [XmlAttribute("fork")]
+        [XmlAttribute("fork"), DataMember(Name = "fork")]
         public string Fork { get; set; }
     }
 }

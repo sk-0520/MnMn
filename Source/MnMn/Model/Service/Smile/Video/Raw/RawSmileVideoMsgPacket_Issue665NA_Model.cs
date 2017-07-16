@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [XmlElement("view_counter")]
         public RawSmileVideoMsgViewCounterModel ViewCounter { get; set; }
         [XmlElement("thread")]
-        public CollectionModel<RawSmileVideoMsgThread_Issue665NA_Model> Thread { get; set; } = new CollectionModel<RawSmileVideoMsgThread_Issue665NA_Model>();
+        public CollectionModel<RawSmileVideoMsgThreadModel> Thread { get; set; } = new CollectionModel<RawSmileVideoMsgThreadModel>();
         [XmlElement("chat")]
         public CollectionModel<RawSmileVideoMsgChatModel> Chat { get; set; } = new CollectionModel<RawSmileVideoMsgChatModel>();
     }

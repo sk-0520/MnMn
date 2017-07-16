@@ -1095,7 +1095,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacket_Issue665NA_Model.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgThread_Issue665NA_Model.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgThreadModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgViewCounterModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRecommendItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRecommendModel.cs" />
