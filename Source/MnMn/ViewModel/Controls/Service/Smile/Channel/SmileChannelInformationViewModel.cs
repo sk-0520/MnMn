@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         SourceLoadState _channelLoadState;
 
+        bool _showWebTabItem;
         bool _showVideoTabItem;
 
         #endregion
@@ -89,6 +90,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             set { SetVariableValue(ref this._channelLoadState, value); }
         }
 
+        public bool ShowWebTabItem
+        {
+            get { return this._showWebTabItem; }
+            set { SetVariableValue(ref this._showWebTabItem, value); }
+        }
         public bool ShowVideoTabItem
         {
             get { return this._showVideoTabItem; }

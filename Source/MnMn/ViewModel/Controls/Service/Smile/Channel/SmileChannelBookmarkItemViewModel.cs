@@ -17,29 +17,26 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Channel;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 {
-    [Serializable, DataContract]
-    public class SmileUserItemModel: SettingModelBase
+    public class SmileChannelBookmarkItemViewModel : SingleModelWrapperViewModelBase<SmileChannelBookmarkItemModel>
     {
+        public SmileChannelBookmarkItemViewModel(SmileChannelBookmarkItemModel model)
+            : base(model)
+        { }
+
         #region property
 
-        [DataMember]
-        public string UserId { get; set; }
+        public string ChannelName { get { return Model.ChannelName; } }
 
-        [DataMember]
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// 更新日時(作成日時)。
-        /// </summary>
-        [DataMember]
-        public DateTime UpdateTimestamp { get; set; }
+        public string ChannelId { get { return Model.ChannelId; } }
 
         #endregion
     }

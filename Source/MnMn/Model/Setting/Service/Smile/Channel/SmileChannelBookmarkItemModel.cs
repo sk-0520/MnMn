@@ -22,24 +22,18 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Channel
 {
     [Serializable, DataContract]
-    public class SmileUserItemModel: SettingModelBase
+    public class SmileChannelBookmarkItemModel : SmileChannelItemModel
     {
         #region property
 
-        [DataMember]
-        public string UserId { get; set; }
-
-        [DataMember]
-        public string UserName { get; set; }
-
         /// <summary>
-        /// 更新日時(作成日時)。
+        /// 投稿動画。
         /// </summary>
         [DataMember]
-        public DateTime UpdateTimestamp { get; set; }
+        public CollectionModel<string> Videos { get; set; } = new CollectionModel<string>();
 
         #endregion
     }

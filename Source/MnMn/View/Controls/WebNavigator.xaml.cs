@@ -526,6 +526,64 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region ToolbarLeftContentProperty
+
+        public static readonly DependencyProperty ToolbarLeftContentProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(ToolbarLeftContentProperty)),
+            typeof(object),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(
+                null,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnToolbarLeftContentPropertyChanged)
+            )
+        );
+
+        public object ToolbarLeftContent
+        {
+            get { return GetValue(ToolbarLeftContentProperty); }
+            set { SetValue(ToolbarLeftContentProperty, value); }
+        }
+
+        static void OnToolbarLeftContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as WebNavigator;
+            if(ctrl != null) {
+                ctrl.ToolbarLeftContent = e.NewValue;
+            }
+        }
+
+        #endregion
+
+        #region ToolbarRightContentProperty
+
+        public static readonly DependencyProperty ToolbarRightContentProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(ToolbarRightContentProperty)),
+            typeof(object),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(
+                null,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnToolbarRightContentPropertyChanged)
+            )
+        );
+
+        public object ToolbarRightContent
+        {
+            get { return GetValue(ToolbarRightContentProperty); }
+            set { SetValue(ToolbarRightContentProperty, value); }
+        }
+
+        static void OnToolbarRightContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as WebNavigator;
+            if(ctrl != null) {
+                ctrl.ToolbarRightContent = e.NewValue;
+            }
+        }
+
+        #endregion
+
         public bool IsMinimumRunning
         {
             get

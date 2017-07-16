@@ -519,6 +519,8 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgLeafModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgResultItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Channel\SmileChannelBookmarkItemModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Channel\SmileChannelItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoMsgPackSettingModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataAdModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataApiModel.cs" />
@@ -646,6 +648,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelVideoFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelBookmarkItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryItemFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryGroupFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryManagerViewModel.cs" />
@@ -754,6 +757,7 @@
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\SmileChannelHasBookmarkConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\SmileUserHasBookmarkConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\ThumbnailPredominantColorConverter.cs" />
     <Compile Include="View\Converter\TextToColorConverter.cs" />

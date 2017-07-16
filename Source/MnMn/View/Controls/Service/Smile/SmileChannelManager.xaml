@@ -36,13 +36,23 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <TabControl>
+          <TabControl IsSelected="{Binding ShowWebTabItem}">
             <TabItem Header="channel">
               <app_view_controls:WebNavigator
                 x:Name="webChannel"
                 IsEnabledUserChangeSource="False"
                 NewWindowCommand="{Binding DataContext.NewWindowCommand, ElementName=root}"
-              />
+              >
+                <app_view_controls:WebNavigator.ToolbarLeftContent>
+                  <Button>
+                    <Button.Style>
+                      <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                        <Setter Property="Content" Value="ブックマーク" />
+                      </Style>
+                    </Button.Style>
+                  </Button>
+                </app_view_controls:WebNavigator.ToolbarLeftContent>
+              </app_view_controls:WebNavigator>
             </TabItem>
             <TabItem IsSelected="{Binding ShowVideoTabItem}">
               <TabItem.Header>
