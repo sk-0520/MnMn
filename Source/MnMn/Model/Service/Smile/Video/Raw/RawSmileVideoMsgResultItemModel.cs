@@ -29,6 +29,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [DataMember(Name = "chat")]
         public RawSmileVideoMsgChatModel Chat { get; set; }
 
+        [DataMember(Name = "chat_result")]
+        public RawSmileVideoMsgChatResultModel ChatResult { get; set; }
+
         #endregion
     }
 }

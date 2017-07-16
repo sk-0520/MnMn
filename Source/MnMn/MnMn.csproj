@@ -329,6 +329,8 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemCustom.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyMappingItemReplace.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyMappingItemReplacePair.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoCheckItLaterFrom.cs" />
@@ -444,6 +446,8 @@
     <Compile Include="Model\ExpressionElementModel.cs" />
     <Compile Include="Model\ExpressionItemModel.cs" />
     <Compile Include="Model\ExpressionsModel.cs" />
+    <Compile Include="Model\MappingItemReplacePairModel.cs" />
+    <Compile Include="Model\MappingItemReplaceModel.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />
@@ -843,9 +847,9 @@
     </Content>
     <Content Include="etc\define\service\smile\video\request-mappings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>request-mappings.xml</LastGenOutput>
       <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
 &lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
+      <LastGenOutput>request-mappings.xml</LastGenOutput>
     </Content>
     <Content Include="etc\define\service\smile\video\request-mappings.xml">
       <AutoGen>True</AutoGen>
@@ -1239,6 +1243,9 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Content Include="Resources\File\JavaScript\GeckoFx\AcceptLink.js" />
+    <None Include="etc\define\service\smile\video\request-mappings_video-msg-post_escapetxt.txt">
+      <DependentUpon>request-mappings.tt</DependentUpon>
+    </None>
     <Resource Include="Resources\MnMn-Update_App.png" />
     <Resource Include="Resources\MnMn-Update_Lightweight.png" />
     <Resource Include="Resources\MnMn-Header.png" />

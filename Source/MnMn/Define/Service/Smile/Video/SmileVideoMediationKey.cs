@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 
         public const string msg_Issue665NA = "video-msg_Issue665NA";
         public const string msg = "video-msg";
+        public const string msgPost_Issue665NA = "video-msg-post_Issue665NA";
         public const string msgPost = "video-msg-post";
         public const string msgPostKey = "video-msg-post-key";
 

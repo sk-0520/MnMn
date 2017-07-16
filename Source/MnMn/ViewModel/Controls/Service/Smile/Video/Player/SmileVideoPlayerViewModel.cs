@@ -1209,7 +1209,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //    ImportCommentThread(rawMessagePacket);
             //}
             var rawMessagePacket = await LoadMsg_Issue665NA_CoreAsync(0, 0, 0, 0, 0);
-            ImportCommentThread_Issue665NA(rawMessagePacket);
+            var CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
 
             var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
             Debug.Assert(CommentThread.Thread == Information.ThreadId);
@@ -1224,7 +1224,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Information($"postkey = {postKey}");
             }
 
-            var resultPost = await msg.PostAsync(
+            var resultPost = await msg.Post_Issue665NA_Async(
                 Information.MessageServerUrl,
                 Information.ThreadId,
                 videoPosition,
@@ -1234,7 +1234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PostCommentBody
             );
             if(resultPost == null) {
-                SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
+                SetCommentInformation($"fail: {nameof(msg.Post_Issue665NA_Async)}");
                 return;
             }
             var status = SmileVideoMsgUtility.ConvertResultStatus(resultPost.ChatResult.Status);
@@ -1252,20 +1252,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             AppendComment(commentViewModel, true);
 
             // コメント再取得
-            await LoadMsgAsync(CacheSpan.NoCache);
+            await LoadMsg_Issue665NA_Async(CacheSpan.NoCache);
         }
 
         protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
         {
+            // #548 対策
             var rawMessagePacket = await LoadMsgCoreAsync(0, new SmileVideoMsgRangeModel(0, 0, 0, 0));
-            ImportCommentThread(rawMessagePacket);
+            var packetIdKey = Information.IsChannelVideo
+                ? SmileVideoMsgPacketId.Community
+                : SmileVideoMsgPacketId.Normal
+            ;
+            int packetId;
+            if(!rawMessagePacket.PacketId.TryGetValue(packetIdKey, out packetId)) {
+                // TODO: ユーザ表示なし
+                SetCommentInformation($"packet id not fond: {nameof(packetIdKey)} = {packetIdKey}");
+                return;
+            }
+            var tagetItem = rawMessagePacket.Items
+                .SkipWhile(i => i.Ping != null && i.Ping.Content != $"ps:{packetId}")
+                .FirstOrDefault(i => i.Thread != null)
+            ;
+            if(tagetItem == null) {
+                // TODO: ユーザ表示なし
+                SetCommentInformation($"not found `ps:{packetId}` thread");
+                return;
+            }
 
-            var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
-            Debug.Assert(CommentThread.Thread == Information.ThreadId);
+            var commentCount = RawValueUtility.ConvertInteger(tagetItem.Thread.LastRes ?? "0");
 
             var msg = new Msg(Mediation);
 
-            var postKey = await msg.LoadPostKeyAsync(Information.ThreadId, commentCount);
+            var postKey = await msg.LoadPostKeyAsync(tagetItem.Thread.Thread, commentCount);
             if(postKey == null) {
                 SetCommentInformation(Properties.Resources.String_App_Define_Service_Smile_Video_Comment_PostKeyError);
                 return;
@@ -1277,7 +1295,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Information.MessageServerUrl,
                 Information.ThreadId,
                 videoPosition,
-                CommentThread.Ticket,
+                tagetItem.Thread.Ticket,
                 postKey.PostKey,
                 PostCommandItems,
                 PostCommentBody

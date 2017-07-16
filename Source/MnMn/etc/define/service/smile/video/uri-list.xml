@@ -18,6 +18,7 @@
 
 	<item key="video-msg_Issue665NA" uri="${msg-uri}" param="none" request-type="mapping" />
 	<item key="video-msg" uri="${msg-uri}" param="none" request-type="mapping" />
+	<item key="video-msg-post_Issue665NA" uri="${msg-uri}" param="none" request-type="mapping" />
 	<item key="video-msg-post" uri="${msg-uri}" param="none" request-type="mapping" />
 	<item key="video-msg-post-key" uri="http://flapi.nicovideo.jp/api/getpostkey/" param="query" />
 
