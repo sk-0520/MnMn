@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected long DownloadStartPosition { get; private set; }
 
-        protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
+        //protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
 
         public string VideoId
         {
@@ -550,16 +550,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadMsgEnd()
         { }
 
-        protected void ImportCommentThread_Issue665NA(RawSmileVideoMsgPacket_Issue665NA_Model rawMessagePacket)
-        {
-            CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
-        }
+        //protected void ImportCommentThread_Issue665NA(RawSmileVideoMsgPacket_Issue665NA_Model rawMessagePacket)
+        //{
+        //    CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+        //}
 
-        protected void ImportCommentThread(SmileVideoMsgSettingModel rawMessagePacket)
-        {
-            // なんぞいな
-            //CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
-        }
+        //protected void ImportCommentThread(SmileVideoMsgSettingModel rawMessagePacket)
+        //{
+        //    // なんぞいな
+        //    //CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+        //}
 
         protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsg_Issue665NA_CoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
         {
@@ -618,8 +618,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Loading;
             var rawMessagePacket = await LoadMsg_Issue665NA_CoreAsync(1000, 0, (int)Information.Length.TotalMinutes, 100, 1000);
-            // #665 除外
-            ImportCommentThread_Issue665NA(rawMessagePacket);
 
             // キャッシュ構築
             if(rawMessagePacket.Chat.Any()) {
