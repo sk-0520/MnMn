@@ -558,6 +558,7 @@
     <Compile Include="Model\Service\Smile\Video\SmileVideoKeywordModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoMsgModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoContentsSearchModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoMsgRangeModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoOfficialSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoWatchDataModel.cs" />
     <Compile Include="Model\Setting\NetworkProxySettingModel.cs" />
@@ -840,9 +841,6 @@
       <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
 &lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
     </Content>
-    <None Include="etc\define\service\smile\video\request-mappings.video_msg_define.txt">
-      <DependentUpon>request-mappings.tt</DependentUpon>
-    </None>
     <Content Include="etc\define\service\smile\video\request-mappings.xml">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

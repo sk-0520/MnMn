@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -63,32 +64,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string threadCommunityId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel, string userKey, bool withThread, bool withOriginalPostedComment)
+        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPostedComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
         {
-            var key = withThread
-                ? SmileVideoMediationKey.msgWithThread
-                : SmileVideoMediationKey.msg
-            ;
-            using(var page = new PageLoader(Mediation, Session, key, ServiceType.SmileVideo)) {
-                //page.ParameterType = ParameterType.Mapping;
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, ServiceType.SmileVideo)) {
                 //page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
                 page.ReplaceRequestParameters["thread-id"] = threadId;
-                page.ReplaceRequestParameters["thread-community-id"] = threadCommunityId;
-                page.ReplaceRequestParameters["user-id"] = userId;
                 page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
-                if(rangeHeadMinutes < rangeTailMinutes && 0 < rangeGetCount) {
-                    page.ReplaceRequestParameters["content"] = $"{rangeHeadMinutes}-{rangeTailMinutes}:{rangeGetCount},{Math.Abs(rangeGetAllCount)}";
-                } else {
-                    page.ReplaceRequestParameters["content"] = string.Empty;
-                }
-                page.ReplaceRequestParameters["content"] = $"{rangeHeadMinutes}-{rangeTailMinutes}:{rangeGetCount},{Math.Abs(rangeGetAllCount)}";
-
-                if(threadkeyModel != null) {
-                    page.ReplaceRequestParameters["threadkey"] = threadkeyModel.Threadkey;
-                    page.ReplaceRequestParameters["force_184"] = threadkeyModel.Force184;
-                }
+                page.ReplaceRequestParameters["content"] = range.ToString();
+                page.ReplaceRequestParameters["user-id"] = userId;
                 page.ReplaceRequestParameters["userkey"] = userKey;
+                page.ReplaceRequestParameters["community-thread-id"] = communityThreadId;
+
+                if(communityThreadKey != null) {
+                    page.ReplaceRequestParameters["threadkey"] = communityThreadKey.Threadkey;
+                    page.ReplaceRequestParameters["force_184"] = communityThreadKey.Force184;
+                }
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);

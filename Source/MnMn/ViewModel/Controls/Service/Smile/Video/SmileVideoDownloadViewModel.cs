@@ -47,6 +47,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -557,7 +558,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
         }
 
-        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgCoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
+        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
         {
             await Information.LoadGetthreadkeyAsync();
 
@@ -565,15 +566,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return await msg.LoadAsync(
                 Information.MessageServerUrl,
                 Information.ThreadId,
-                Information.ThreadCommunityId,
-                Session.UserId,
                 getCount,
-                rangeHeadMinutes, rangeTailMinutes + 1, rangeGetCount,
-                rangeGetAllCount,
-                Information.Getthreadkey,
+                range,
+                Session.UserId,
                 Information.UserKey,
+                Information.HasOriginalPostedComment,
                 Information.IsChannelVideo,
-                Information.HasOriginalPostedComment
+                Information.CommunityThreadId,
+                Information.Getthreadkey
             );
         }
 
@@ -598,8 +598,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             CommentLoadState = LoadState.Loading;
-
-            var rawMessagePacket = await LoadMsgCoreAsync(1000, 0, (int)Information.Length.TotalMinutes, 100, 1000);
+            var rawMessagePacket = await LoadMsgCoreAsync(1000, new SmileVideoMsgRangeModel(0, (int)Information.Length.TotalMinutes, 100, 1000));
             ImportCommentThread(rawMessagePacket);
 
             // キャッシュ構築

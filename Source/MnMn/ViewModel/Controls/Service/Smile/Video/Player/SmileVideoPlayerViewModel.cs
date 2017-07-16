@@ -1173,7 +1173,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //    var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
             //    ImportCommentThread(rawMessagePacket);
             //}
-            var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
+            var rawMessagePacket = await LoadMsgCoreAsync(0, new SmileVideoMsgRangeModel(0, 0, 0, 0));
             ImportCommentThread(rawMessagePacket);
 
             var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
