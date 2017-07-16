@@ -1269,8 +1269,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 SetCommentInformation($"packet id not fond: {nameof(packetIdKey)} = {packetIdKey}");
                 return;
             }
+
             var tagetItem = rawMessagePacket.Items
-                .SkipWhile(i => i.Ping != null && i.Ping.Content != $"ps:{packetId}")
+                .Where(i => i.Leaf == null || i.GlobalNumRes == null)
+                .SkipWhile(i => i.Ping == null || (i.Ping != null && i.Ping.Content != $"ps:{packetId}"))
                 .FirstOrDefault(i => i.Thread != null)
             ;
             if(tagetItem == null) {
@@ -1293,7 +1295,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var resultPost = await msg.PostAsync(
                 Information.MessageServerUrl,
-                Information.ThreadId,
+                tagetItem.Thread.Thread,
                 videoPosition,
                 tagetItem.Thread.Ticket,
                 postKey.PostKey,
