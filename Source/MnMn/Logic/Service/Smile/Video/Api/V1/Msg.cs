@@ -23,6 +23,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -32,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -40,36 +42,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// <summary>
     ///
     /// </summary>
-    public class Msg: SessionApiBase<SmileSessionViewModel>
+    public class Msg : SessionApiBase<SmileSessionViewModel>
     {
-        #region define
-
-        /// <summary>
-        /// なんだかなぁ。
-        /// </summary>
-        enum Packet
-        {
-            Normal,
-            NormalLeaves,
-            OriginalPoster,
-            Community,
-            CommunityLeaves,
-        }
-
-        #endregion
-
         public Msg(Mediation mediation)
             : base(mediation, ServiceType.Smile)
         { }
 
         #region function
 
-        public static RawSmileVideoMsgPacket_Issue665NA_Model ConvertFromRawPacketData(Stream stream)
+        public static RawSmileVideoMsgPacket_Issue665NA_Model ConvertFromRawPacketData_Issue665NA(Stream stream)
         {
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacket_Issue665NA_Model>(stream);
         }
 
-        public static RawSmileVideoMsgPacket_Issue665NA_ResultModel ConvertFromRawPacketResultData(Stream stream)
+        public static RawSmileVideoMsgPacket_Issue665NA_ResultModel ConvertFromRawPacketResultData_Issue665NA(Stream stream)
         {
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacket_Issue665NA_ResultModel>(stream);
         }
@@ -80,11 +66,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
         }
 
-        public async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
+        public async Task<SmileVideoMsgSettingModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
         {
-            var packetMap = new Dictionary<Packet, int>() {
-                [Packet.Normal] = 0,
-                [Packet.NormalLeaves] = 1,
+            var packetMap = new Dictionary<SmileVideoMsgPacketId, int>() {
+                [SmileVideoMsgPacketId.Normal] = 0,
+                [SmileVideoMsgPacketId.NormalLeaves] = 1,
             };
             var packetCount = packetMap.Max(p => p.Value);
 
@@ -103,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ReplaceRequestParameters["filter-op"] = hasOriginalPosterComment.ToString();
                 if(hasOriginalPosterComment) {
                     packetCount += 1;
-                    packetMap[Packet.OriginalPoster] = packetCount;
+                    packetMap[SmileVideoMsgPacketId.OriginalPoster] = packetCount;
                     page.ReplaceRequestParameters["packet-op"] = packetCount.ToString();
                 }
 
@@ -114,20 +100,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                     page.ReplaceRequestParameters["force_184"] = communityThreadKey.Force184;
 
                     packetCount += 1;
-                    packetMap[Packet.Community] = packetCount;
+                    packetMap[SmileVideoMsgPacketId.Community] = packetCount;
                     page.ReplaceRequestParameters["packet-community-thread"] = packetCount.ToString();
 
                     packetCount += 1;
-                    packetMap[Packet.CommunityLeaves] = packetCount;
+                    packetMap[SmileVideoMsgPacketId.CommunityLeaves] = packetCount;
                     page.ReplaceRequestParameters["packet-community-thread_leaves"] = packetCount.ToString();
                 }
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);
-                using(var stream = StreamUtility.ToUtf8Stream(rawMessage.Result)) {
-                    var result = ConvertFromRawPacketData(stream);
-                    return result;
-                }
+                var items = Newtonsoft.Json.JsonConvert.DeserializeObject<CollectionModel<RawSmileVideoMsgResultItemModel>>(rawMessage.Result);
+
+                var result = new SmileVideoMsgSettingModel() {
+                    PacketId = packetMap,
+                    Items = items,
+                };
+
+                return result;
             }
         }
 
@@ -166,7 +156,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 if(response.IsSuccess) {
                     Mediation.Logger.Trace(response.Result);
                     using(var stream = StreamUtility.ToUtf8Stream(response.Result)) {
-                        var result = ConvertFromRawPacketResultData(stream);
+                        var result = ConvertFromRawPacketResultData_Issue665NA(stream);
                         return result;
                     }
                 }

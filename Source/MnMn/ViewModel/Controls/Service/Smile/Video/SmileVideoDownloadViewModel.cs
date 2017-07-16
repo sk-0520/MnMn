@@ -553,12 +553,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadMsgEnd()
         { }
 
-        protected void ImportCommentThread(RawSmileVideoMsgPacket_Issue665NA_Model rawMessagePacket)
+        protected void ImportCommentThread_Issue665NA(RawSmileVideoMsgPacket_Issue665NA_Model rawMessagePacket)
         {
-            CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+            // #665 除外
+            //CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
         }
 
-        protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
+        protected void ImportCommentThread(SmileVideoMsgSettingModel rawMessagePacket)
+        {
+            // なんぞいな
+            //CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+        }
+
+        protected async Task<SmileVideoMsgSettingModel> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
         {
             await Information.LoadGetthreadkeyAsync();
 
@@ -577,7 +584,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             );
         }
 
-        protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsgAsync(CacheSpan msgCacheSpan)
+        protected async Task<SmileVideoMsgSettingModel> LoadMsgAsync(CacheSpan msgCacheSpan)
         {
             OnLoadMsgStart();
 
@@ -585,26 +592,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             //TODO; キャッシュチェック時のファイル処理関係は共通化可能
             var cacheFilePath = Information.MsgFile.FullName;
-            if(File.Exists(cacheFilePath)) {
-                var fileInfo = new FileInfo(cacheFilePath);
-                if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
-                    CommentLoadState = LoadState.Loading;
-                    using(var stream = new FileStream(cacheFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        var result = Msg.ConvertFromRawPacketData(stream);
-                        OnLoadMsgEnd();
-                        return result;
-                    }
-                }
-            }
+            // #665 除外
+            //if(File.Exists(cacheFilePath)) {
+            //    var fileInfo = new FileInfo(cacheFilePath);
+            //    if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
+            //        CommentLoadState = LoadState.Loading;
+            //        using(var stream = new FileStream(cacheFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+            //            var result = Msg.ConvertFromRawPacketData_Issue665NA(stream);
+            //            OnLoadMsgEnd();
+            //            return result;
+            //        }
+            //    }
+            //}
 
             CommentLoadState = LoadState.Loading;
             var rawMessagePacket = await LoadMsgCoreAsync(1000, new SmileVideoMsgRangeModel(0, (int)Information.Length.TotalMinutes, 100, 1000));
-            ImportCommentThread(rawMessagePacket);
+            // #665 除外
+            //ImportCommentThread(rawMessagePacket);
 
             // キャッシュ構築
-            if(rawMessagePacket.Chat.Any()) {
+            if(rawMessagePacket.Items.Any(i => i.Chat != null)) {
                 try {
-                    SerializeUtility.SaveXmlSerializeToFile(cacheFilePath, rawMessagePacket);
+                    // #665
+                    //SerializeUtility.SaveXmlSerializeToFile(cacheFilePath, rawMessagePacket);
+                    SerializeUtility.SaveJsonDataToFile(cacheFilePath, rawMessagePacket);
                 } catch(FileNotFoundException) {
                     // BUGS: いかんのう
                 }
@@ -614,7 +625,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return rawMessagePacket;
         }
 
-        protected virtual Task LoadCommentAsync(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket)
+        protected virtual Task LoadComment_Issue665NA_Async(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket)
+        {
+            CommentLoadState = LoadState.Loaded;
+            return Task.CompletedTask;
+        }
+
+        protected virtual Task LoadCommentAsync(SmileVideoMsgSettingModel rawMsgPacket)
         {
             CommentLoadState = LoadState.Loaded;
             return Task.CompletedTask;

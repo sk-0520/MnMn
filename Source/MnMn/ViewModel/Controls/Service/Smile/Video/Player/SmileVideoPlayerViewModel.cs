@@ -1780,7 +1780,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-        protected override Task LoadCommentAsync(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket)
+        protected override Task LoadComment_Issue665NA_Async(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket)
+        {
+            var comments = SmileVideoCommentUtility.CreateCommentViewModels_Issue665NA(rawMsgPacket, CommentStyleSetting);
+            CommentList.InitializeRange(comments);
+            CommentListCount = CommentList.Count;
+
+            var chartItems = SmileVideoCommentUtility.CreateCommentChartItems(CommentList, TotalTime);
+            CommentChartList.InitializeRange(chartItems);
+            ShowCommentChart = CommentChartList.Any(c => 0 < c.Y);
+
+            NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsOriginalPoster));
+            var userSequence = SmileVideoCommentUtility.CreateFilteringUserItems(NormalCommentList);
+            FilteringUserList.InitializeRange(userSequence);
+            OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
+            OriginalPosterCommentListCount = OriginalPosterCommentList.Count;
+
+            ChangedCommentFillBackground();
+            ApprovalComment();
+
+            if(FilteringCommentType != SmileVideoFilteringCommentType.All) {
+                RefreshFilteringComment();
+            }
+
+            return base.LoadComment_Issue665NA_Async(rawMsgPacket);
+        }
+
+        protected override Task LoadCommentAsync(SmileVideoMsgSettingModel rawMsgPacket)
         {
             var comments = SmileVideoCommentUtility.CreateCommentViewModels(rawMsgPacket, CommentStyleSetting);
             CommentList.InitializeRange(comments);

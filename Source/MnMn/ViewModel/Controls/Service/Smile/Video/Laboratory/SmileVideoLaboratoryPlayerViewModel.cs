@@ -121,11 +121,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 
 
             if(MsgFile != null && MsgFile.Exists) {
-                using(var stream = new FileStream(MsgFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                    var comment = Msg.ConvertFromRawPacketData(stream);
-                    LoadCommentAsync(comment);
-                    OnLoadMsgEnd();
-                }
+                // #665 除外
+                //using(var stream = new FileStream(MsgFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                //    var comment = Msg.ConvertFromRawPacketData_Issue665NA(stream);
+                //    LoadComment_Issue665NA_Async(comment);
+                //    OnLoadMsgEnd();
+                //}
             }
 
             return Task.CompletedTask;

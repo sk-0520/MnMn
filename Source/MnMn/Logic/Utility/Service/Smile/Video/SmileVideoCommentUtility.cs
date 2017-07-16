@@ -350,9 +350,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <param name="rawMsgPacket"></param>
         /// <param name="setting"></param>
         /// <returns>生成されたコメント群。いい感じに並び替えられてる。</returns>
-        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket, SmileVideoCommentStyleSettingModel styleSetting)
+        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels_Issue665NA(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket, SmileVideoCommentStyleSettingModel styleSetting)
         {
             var comments = rawMsgPacket.Chat
+                .Where(c => !string.IsNullOrEmpty(c.Content))
+                .GroupBy(c => new { c.No, c.Fork })
+                .Select(c => new SmileVideoCommentViewModel(c.First(), styleSetting))
+                .OrderBy(c => c.ElapsedTime)
+            ;
+
+            return comments;
+        }
+
+        /// <summary>
+        /// 生メッセージからコメントViewModelを生成する。
+        /// </summary>
+        /// <param name="rawMsgPacket"></param>
+        /// <param name="setting"></param>
+        /// <returns>生成されたコメント群。いい感じに並び替えられてる。</returns>
+        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels(SmileVideoMsgSettingModel rawMsgPacket, SmileVideoCommentStyleSettingModel styleSetting)
+        {
+            var comments = rawMsgPacket.Items
+                .Where(i => i.Chat != null)
+                .Select(i => i.Chat)
                 .Where(c => !string.IsNullOrEmpty(c.Content))
                 .GroupBy(c => new { c.No, c.Fork })
                 .Select(c => new SmileVideoCommentViewModel(c.First(), styleSetting))

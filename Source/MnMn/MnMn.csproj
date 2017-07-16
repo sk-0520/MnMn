@@ -241,6 +241,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoCheckItLaterFrom.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptModel.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentScriptType.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoMsgPacketId.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoOtherDefineKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoSearchType.cs" />
     <Compile Include="Define\UI\Player\TopmostKind.cs" />
@@ -504,7 +505,9 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentSrcIdModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgGlobalNumResModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgLeafModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgResultItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoMsgSettingModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataAdModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataApiModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataContextModel.cs" />
