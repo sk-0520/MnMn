@@ -105,13 +105,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             });
         }
 
-        public override void LoadLocalPageHtmlAsync()
+        public override void LoadLocalPageHtml()
         {
             var html = "test";
-            SetPageHtmlAsync(html, false);
+            SetPageHtml(html, false);
         }
 
-        protected override void SetPageHtmlAsync(string html, bool isSave)
+        protected override void SetPageHtml(string html, bool isSave)
         {
             PageHtmlLoadState = LoadState.Loaded;
         }

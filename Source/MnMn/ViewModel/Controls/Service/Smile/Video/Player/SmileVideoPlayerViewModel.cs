@@ -704,24 +704,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            //var htmlDocument = new HtmlDocument() {
-            //    OptionAutoCloseOnEnd = true,
-            //};
-            //htmlDocument.LoadHtml(Information.WatchPageHtmlSource);
-            //var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(Information.WatchPageHtmlSource);
-            //var videoDetail = json?.SelectToken("videoDetail");
-            //var tagList = videoDetail?.SelectToken("tagList");
             if(Information.WatchTagItems.Any()) {
                 var map = TagItems.ToDictionary(tk => tk.TagName, tv => tv);
                 foreach(var tagItem in Information.WatchTagItems) {
-                    //var tagName = tagItem.Value<string>("tag");
-                    //var hasDic = tagItem.Value<string>("dic");
-                    //if(RawValueUtility.ConvertBoolean(hasDic)) {
-                    //    SmileVideoTagViewModel tag;
-                    //    if(map.TryGetValue(tagName, out tag)) {
-                    //        tag.ExistPedia = true;
-                    //    }
-                    //}
                     SmileVideoTagViewModel tag;
                     if(map.TryGetValue(tagItem.Name, out tag)) {
                         tag.ExistPedia = RawValueUtility.ConvertBoolean(tagItem.IsDictionaryExists);

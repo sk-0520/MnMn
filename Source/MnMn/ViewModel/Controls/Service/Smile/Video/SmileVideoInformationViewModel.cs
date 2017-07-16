@@ -1157,7 +1157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
             WatchDataFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("watch-data", "json")));
             MsgFile_Issue665NA = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
-            MsgFile  = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "json")));
+            MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "json")));
             DmcFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "dmc", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
@@ -1232,7 +1232,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 if(rawVideoGetflvModel != null) {
                     Getflv_Issue665NA = rawVideoGetflvModel;
-                    SetPageHtml_Issue665NA_Async(rawVideoGetflvModel.HtmlSource, isSave);
+                    SetPageHtml_Issue665NA(rawVideoGetflvModel.HtmlSource, isSave);
 
                     this._dmcInfo = null;
                     if(isSave) {
@@ -1255,7 +1255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var wd = t.Result;
                 if(wd != null) {
                     WatchData = wd;
-                    SetPageHtmlAsync(WatchData.HtmlSource, isSave);
+                    SetPageHtml(WatchData.HtmlSource, isSave);
                     if(isSave) {
                         SerializeUtility.SaveJsonDataToFile(WatchDataFile.FullName, WatchData.RawData);
                         using(var writer = WatchPageHtmlFile.CreateText()) {
@@ -1286,62 +1286,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
-        protected virtual void SetPageHtml_Issue665NA_Async(string html, bool isSave)
+        void SetPageHtml_Issue665NA(string html, bool isSave)
         {
             PageHtmlLoadState = LoadState.Loading;
 
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
-            //return Task.Run(() => {
-                WatchPageHtmlSource_Issue665NA = html;
-                htmlDocument.LoadHtml(html);
-                var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
-                DescriptionHtmlSource = description.InnerHtml;
+            WatchPageHtmlSource_Issue665NA = html;
+            htmlDocument.LoadHtml(html);
+            var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
+            DescriptionHtmlSource = description.InnerHtml;
 
-                var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(html);
-                var flashvars = json.SelectToken("flashvars");
-                PageVideoToken_Issue665NA = flashvars.Value<string>("csrfToken");
+            var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(html);
+            var flashvars = json.SelectToken("flashvars");
+            PageVideoToken_Issue665NA = flashvars.Value<string>("csrfToken");
 
-            //}).ContinueWith(task => {
-                PageHtmlLoadState = LoadState.Loaded;
-            //}).ContinueWith(task => {
-                if(isSave) {
-                    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource_Issue665NA);
-                }
-            //});
+            PageHtmlLoadState = LoadState.Loaded;
+            if(isSave) {
+                File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource_Issue665NA);
+            }
         }
 
-        protected virtual void SetPageHtmlAsync(string html, bool isSave)
+        protected virtual void SetPageHtml(string html, bool isSave)
         {
             if(IsCompatibleIssue665NA) {
-                SetPageHtml_Issue665NA_Async(html, isSave);
+                SetPageHtml_Issue665NA(html, isSave);
                 return;
             }
-
-            //PageHtmlLoadState = LoadState.Loading;
 
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
-            //return Task.Run(() => {
-                //WatchPageHtmlSource = html;
-                //htmlDocument.LoadHtml(html);
-                //var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
-                //DescriptionHtmlSource = description.InnerHtml;
-                DescriptionHtmlSource = WatchData.RawData.Api.Video.Description;
 
-                //var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);
-                //var flashvars = json.SelectToken("flashvars");
-                //PageVideoToken = flashvars.Value<string>("csrfToken");
+            DescriptionHtmlSource = WatchData.RawData.Api.Video.Description;
 
-            //}).ContinueWith(task => {
-                PageHtmlLoadState = LoadState.Loaded;
-            //}).ContinueWith(task => {
-                //if(isSave) {
-                //    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
-                //}
-            //});
+            PageHtmlLoadState = LoadState.Loaded;
         }
 
         public Task<IEnumerable<SmileVideoInformationViewModel>> LoadRelationVideosAsync(CacheSpan cacheSpan)
@@ -1400,7 +1380,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         /// <summary>
         /// </summary>
-        public virtual void LoadLocalPageHtmlAsync()
+        public virtual void LoadLocalPageHtml()
         {
             //PageHtmlLoadState = LoadState.Preparation;
 
@@ -1408,7 +1388,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(WatchPageHtmlFile.Exists && Constants.MinimumHtmlFileSize <= WatchPageHtmlFile.Length) {
                 using(var stream = WatchPageHtmlFile.OpenText()) {
                     var html = stream.ReadToEnd();
-                    SetPageHtmlAsync(html, false);
+                    SetPageHtml(html, false);
                 }
             }
         }
