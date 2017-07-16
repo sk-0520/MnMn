@@ -43,7 +43,13 @@
                 IsEnabledUserChangeSource="False"
               />
             </TabItem>
-            <TabItem Header="video" IsSelected="{Binding ShowVideoTabItem}">
+            <TabItem IsSelected="{Binding ShowVideoTabItem}">
+              <TabItem.Header>
+                <StackPanel Style="{StaticResource TabHeader}">
+                  <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding VideoFinder.FinderLoadState}" />
+                  <TextBlock>video</TextBlock>
+                </StackPanel>
+              </TabItem.Header>
               <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding VideoFinder}" />
             </TabItem>
           </TabControl>

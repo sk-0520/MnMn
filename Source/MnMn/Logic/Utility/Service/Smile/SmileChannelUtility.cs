@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
             var pageNumber = 1;
             while(true) {
-                if(1<pageNumber) {
-
+                if(1 < pageNumber) {
+                    await Task.Delay(Constants.ServiceSmileChannelVideoFeedWaitTime);
                 }
                 var feed = await channel.LoadVideoFeedAsync(channelId, pageNumber);
                 if(feed.Channel.Items.Any()) {
@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                         // 1 ページにおける上限未満ならそこで終わり
                         break;
                     }
+                    pageNumber += 1;
                 } else {
                     // そもそもない
                     break;
