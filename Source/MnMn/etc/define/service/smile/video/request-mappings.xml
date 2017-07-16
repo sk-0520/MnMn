@@ -121,7 +121,7 @@
 	</mapping>
 
 	<!-- コメント投稿 -->
-	<mapping key="video-msg-post" content-type="text/xml">
+	<mapping key="video-msg-post_Issue665NA" content-type="text/xml">
 		<item key="thread" type="simple" value="${thread-id}"  />
 		<item key="vpos" type="simple" value="${vpos}"  />
 		<item key="commands" type="simple" value="${commands}"  />

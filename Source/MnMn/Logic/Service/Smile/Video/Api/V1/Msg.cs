@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost_Issue665NA, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
 
                 page.ReplaceRequestParameters["thread-id"] = threadId;

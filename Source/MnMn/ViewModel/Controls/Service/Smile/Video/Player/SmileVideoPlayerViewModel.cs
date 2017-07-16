@@ -1257,6 +1257,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
         {
+            // #548 対策
             var rawMessagePacket = await LoadMsgCoreAsync(0, new SmileVideoMsgRangeModel(0, 0, 0, 0));
             var packetIdKey = Information.IsChannelVideo
                 ? SmileVideoMsgPacketId.Community
@@ -1264,6 +1265,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ;
             int packetId;
             if(!rawMessagePacket.PacketId.TryGetValue(packetIdKey, out packetId)) {
+                // TODO: ユーザ表示なし
                 Mediation.Logger.Error($"packet id not fond: {nameof(packetIdKey)} = {packetIdKey}");
                 return;
             }
@@ -1272,6 +1274,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 .FirstOrDefault(i => i.Thread != null)
             ;
             if(tagetItem == null) {
+                // TODO: ユーザ表示なし
                 Mediation.Logger.Error($"not found `ps:{packetId}` thread");
                 return;
             }

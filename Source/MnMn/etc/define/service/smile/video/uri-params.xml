@@ -40,20 +40,6 @@
 		<item key="video" value="${video-id}" />
 	</param>
 
-	<!--<param key="video-msg">
-		<item key="thread"  value="${thread-id}"  />
-		<item key="version"     value="20090904"  />
-		<item key="version-old" value="20061206"  />
-		<item key="res_from"  value="${res_from}" />
-
-		<item key="scores"  type="simple" value="1"  />
-		--><!--<item key="time-size"  type="simple" value="1"  />--><!--
-
-		<item key="threadkey" value="${threadkey}" force="true" />
-		<item key="force_184" value="${force_184}"  force="true"/>
-		<item key="user_id"   value="${user-id}"  force="true"/>
-	</param>-->
-
 	<param key="video-tag-feed">
 		<item key="rss" value="2.0" />
 		<item key="page" value="${page}" force="true" />
