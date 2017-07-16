@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string threadCommunityId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel, string userKey, bool withThread)
+        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string threadCommunityId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel, string userKey, bool withThread, bool withOriginalPostedComment)
         {
             var key = withThread
                 ? SmileVideoMediationKey.msgWithThread
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                     page.ReplaceRequestParameters["force_184"] = threadkeyModel.Force184;
                 }
                 page.ReplaceRequestParameters["userkey"] = userKey;
-                
+
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);
                 using(var stream = StreamUtility.ToUtf8Stream(rawMessage.Result)) {

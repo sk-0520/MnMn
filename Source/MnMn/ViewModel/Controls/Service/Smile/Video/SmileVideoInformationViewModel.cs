@@ -877,6 +877,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public bool HasOriginalPostedComment
+        {
+            get
+            {
+                ThrowHasNotWatchData();
+
+                return RawValueUtility.ConvertBoolean(WatchData.RawData.Api.Thread.HasOwnerThread);
+            }
+        }
         #endregion
 
         #endregion

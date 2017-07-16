@@ -23,6 +23,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
         /// </summary>
         bool Oneline { get; set; }
 
+        /// <summary>
+        /// コメントを有効にするか。
+        /// <para>書式: $[//] 一行コメント</para>
+        /// <para>書式: $[/*] $[*/] 複数行コメント</para>
+        /// </summary>
+        bool IsEnabledComment { get; set; }
+        /// <summary>
+        /// インラインでのトリムを行うか。
+        /// <para>書式: $[n1:n2]</para>
+        /// <para>n1: 左側の残すホワイトスペース。未設定ですべて。</para>
+        /// <para>n2: 右側の残すホワイトスペース。未設定ですべて。</para>
+        /// </summary>
+        bool IsEnabledInlineTrime { get; set; }
+
         string Value { get; }
 
         XmlNode[] CDataValue { get; }

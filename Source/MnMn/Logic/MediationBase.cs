@@ -407,11 +407,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected string KillWhiteSpaceContent(string rawContent)
+        protected string TrimInlineContent(string rawContent)
         {
             var reg = new Regex(
                 @"
-                (?<L_WHITE>
+                (?<L_TRIM>
                     \s*
                 )
                 \$
@@ -424,7 +424,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     (\d+)?
                 )
                 \]
-                (?<R_WHITE>
+                (?<R_TRIM>
                     \s*
                 )",
                 /*RegexOptions.Compiled |*/ RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture
@@ -433,28 +433,62 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 var leftOperator = m.Groups["L_OP"].Value;
                 var rightOperator = m.Groups["R_OP"].Value;
 
-                var leftWhite = m.Groups["L_WHITE"].Value;
-                var rightWhite = m.Groups["R_WHITE"].Value;
+                var leftTrim = m.Groups["L_TRIM"].Value;
+                var rightTrim = m.Groups["R_TRIM"].Value;
 
                 var sb = new StringBuilder();
 
                 if(!string.IsNullOrWhiteSpace(leftOperator)) {
                     var safeCount = int.Parse(leftOperator);
-                    if(safeCount < leftWhite.Length) {
-                        var safeWhite = leftWhite.Substring(leftWhite.Length - safeCount);
+                    if(safeCount < leftTrim.Length) {
+                        var safeWhite = leftTrim.Substring(leftTrim.Length - safeCount);
                         sb.Append(safeWhite);
                     }
                 }
                 if(!string.IsNullOrWhiteSpace(rightOperator)) {
                     var safeCount = int.Parse(rightOperator);
-                    if(safeCount < rightWhite.Length) {
-                        var safeWhite = rightWhite.Substring(rightWhite.Length - safeCount);
+                    if(safeCount < rightTrim.Length) {
+                        var safeWhite = rightTrim.Substring(0, safeCount);
                         sb.Append(safeWhite);
                     }
                 }
 
                 return sb.ToString() ;
             });
+        }
+
+        protected string FiltereCommentContent(string rawContent)
+        {
+            var reg = new Regex(
+                @"
+                (?<SINGLE>
+                    \$\[//\].*$
+                )
+                |
+                (?<MULTI>
+                    \$\[/\*\]
+                    [\s\S]+?
+                    \$\[\*/\]
+                )
+                ",
+                 /*RegexOptions.Compiled |*/ RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture
+           );
+            return reg.Replace(rawContent, string.Empty);
+        }
+
+        protected string PreprocessMappingContent(IReadOnlyMappingContent content)
+        {
+            var trimedContentValue = content.Value;
+            if(content.IsEnabledInlineTrime) {
+                trimedContentValue = TrimInlineContent(trimedContentValue);
+            }
+
+            var filteredCommentContentValue = trimedContentValue;
+            if(content.IsEnabledComment) {
+                filteredCommentContentValue = FiltereCommentContent(filteredCommentContentValue);
+            }
+
+            return filteredCommentContentValue;
         }
 
         protected IReadOnlyMappingResult GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
@@ -472,7 +506,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 result.ContentType = mapping.ContentType;
             }
 
-            var killedWhiteContent = KillWhiteSpaceContent(mapping.Content.Value);
+            var preprocessedContentValue = PreprocessMappingContent(mapping.Content);
 
             var mappingParams = mapping.Items
                 .ToDictionary(
@@ -480,7 +514,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     i => ToMappingItemString(i, replaceMap)
                 )
             ;
-            var replacedContent = ReplaceString(killedWhiteContent, mappingParams);
+            var replacedContent = ReplaceString(preprocessedContentValue, mappingParams);
             var trimMap = new Dictionary<MappingContentTrim, Func<string, string>>() {
                 { MappingContentTrim.None, s => s },
                 { MappingContentTrim.Block, s => string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c)).Reverse()) },

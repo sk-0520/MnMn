@@ -572,7 +572,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 rangeGetAllCount,
                 Information.Getthreadkey,
                 Information.UserKey,
-                Information.IsChannelVideo
+                Information.IsChannelVideo,
+                Information.HasOriginalPostedComment
             );
         }
 
