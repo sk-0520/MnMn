@@ -187,7 +187,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         RawSmileVideoFeedDetailModel FeedDetail { get; set; }
 
-        [Obsolete]
         RawSmileVideoGetflvModel Getflv { get; set; }
         SmileVideoWatchDataModel WatchData { get; set; }
 
@@ -1166,7 +1165,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <param name="isSave"></param>
         /// <param name="usingDmc">ダウンロードにDMC形式を使用するか</param>
         /// <returns></returns>
-        [Obsolete]
         public Task<IReadOnlyCheck> LoadGetflvAsync(bool isSave, bool usingDmc)
         {
             if(InformationLoadState == LoadState.Failure) {

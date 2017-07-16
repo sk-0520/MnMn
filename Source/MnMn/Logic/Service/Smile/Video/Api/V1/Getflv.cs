@@ -42,7 +42,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// <summary>
     /// NOTE: 気持ち後回し
     /// </summary>
-    [Obsolete]
     public class Getflv: SessionApiBase<SmileSessionViewModel>
     {
         public Getflv(Mediation mediation)
@@ -74,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ForceUri = usingUri;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
-                var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(response.Result);
+                var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(response.Result);
 
                 var flashvars = json.SelectToken("flashvars");
                 var flvInfo = flashvars.SelectToken("flvInfo");

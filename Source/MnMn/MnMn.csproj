@@ -1055,7 +1055,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoRecommendationsUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoSearchUtility.cs" />
-    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoWatchAPIUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoWatchAPI_Issue665NA_Utility.cs" />
     <Compile Include="Logic\Utility\SourceLoadStateUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Logic\Wrapper\Ffmpeg.cs" />
