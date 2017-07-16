@@ -398,7 +398,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         [Obsolete]
         protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject()
         {
-            var info = Information.DmcInfo;
+            var info = Information.DmcInfo_Issue665NA;
 
             var model = new RawSmileVideoDmcObjectModel();
             {
