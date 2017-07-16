@@ -60,10 +60,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacket_Issue665NA_ResultModel>(stream);
         }
 
+        public static SmileVideoMsgSettingModel ConvertMsgSettingModel(FileInfo file)
+        {
+            return SerializeUtility.LoadJsonDataFromFile<SmileVideoMsgSettingModel>(file.FullName);
+        }
+
         string ReplaceJsonApiUrl(Uri msgServerUri)
         {
             // watch_dll.js で謎処理
             return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
+        }
+
+        public async Task<RawSmileVideoMsgPacket_Issue665NA_Model> Load_Issue665NA_Async(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
+        {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg_Issue665NA, ServiceType.SmileVideo)) {
+                //page.ParameterType = ParameterType.Mapping;
+                page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
+                page.ReplaceRequestParameters["thread-id"] = threadId;
+                page.ReplaceRequestParameters["user-id"] = userId;
+                page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
+                if(rangeHeadMinutes < rangeTailMinutes && 0 < rangeGetCount) {
+                    page.ReplaceRequestParameters["time-size"] = $"{rangeHeadMinutes}-{rangeTailMinutes}:{rangeGetCount}";
+                    page.ReplaceRequestParameters["all-size"] = $"{Math.Abs(rangeGetAllCount)}";
+                }
+                if(threadkeyModel != null) {
+                    page.ReplaceRequestParameters["threadkey"] = threadkeyModel.Threadkey;
+                    page.ReplaceRequestParameters["force_184"] = threadkeyModel.Force184;
+                }
+
+                var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
+                //Debug.WriteLine(rawMessage.Result);
+                using(var stream = StreamUtility.ToUtf8Stream(rawMessage.Result)) {
+                    var result = ConvertFromRawPacketData_Issue665NA(stream);
+                    return result;
+                }
+            }
         }
 
         public async Task<SmileVideoMsgSettingModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
@@ -136,6 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 return null;
             }
         }
+
         public async Task<RawSmileVideoMsgPacket_Issue665NA_ResultModel> PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
         {
             await LoginIfNotLoginAsync();

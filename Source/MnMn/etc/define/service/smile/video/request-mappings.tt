@@ -6,6 +6,43 @@
 <#@ output extension=".xml" #>
 <?xml version="1.0" encoding="utf-8" ?>
 <mappings>
+
+	<mapping key="video-msg_Issue665NA" content-type="text/xml">
+		<item key="thread-id" type="simple" value="${thread-id}"  />
+		<item key="version"   type="simple" value="20090904"  />
+		<item key="version-old"   type="simple" value="20061206"  />
+		<item key="res_from"  type="force-pair" name="res_from" bond="=" value="${res_from}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="user-id"   type="force-pair" name="user_id" bond="=" value="${user-id}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="threadkey" type="force-pair" name="threadkey" bond="=" value="${threadkey}" fail="" >
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="force_184" type="force-pair" name="force_184" bond="=" value="${force_184}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+
+		<item key="time-msg" type="force-pair" name="${time-size}" bond="," value="${all-size}" fail="" />
+
+		<item key="with_global"  type="simple" value="1"  />
+		<item key="language"  type="simple" value="0"  />
+		<item key="nicoru"  type="simple" value="1"  />
+		<item key="scores"  type="simple" value="1"  />
+		<item key="click_revisio"  type="simple" value="-1"  />
+
+		<content trim="content" oneline="true">
+			<![CDATA[
+				<packet>
+					<thread        with_global="${with_global}"     language="${language}" nicoru="${nicoru}" scores="${scores}" thread="${thread-id}" version="${version}"     ${res_from} ${force_184} ${threadkey} />
+					<thread_leaves                                  language="${language}" nicoru="${nicoru}" scores="${scores}" thread="${thread-id}"                                                 ${force_184} ${threadkey} >${time-msg}</thread_leaves>
+					<thread        click_revisio="${click_revisio}"                                           scores="${scores}" thread="${thread-id}" version="${version-old}" ${res_from} ${force_184} ${threadkey} fork="1" />
+				</packet>
+			]]>
+		</content>
+	</mapping>
+
 	<!-- コメント取得 -->
 	<mapping key="video-msg" content-type="text/plain">
 	<item key="thread-id" type="simple" value="${thread-id}"  />

@@ -275,10 +275,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadDataWithSessionEnd()
         { }
 
-        [Obsolete]
         protected virtual void OnLoadGetflvStart()
         { }
-        [Obsolete]
         protected virtual void OnLoadGetflvEnd()
         { }
 
@@ -287,7 +285,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadWatchDataEnd()
         { }
 
-        [Obsolete]
         async Task LoadGetflvAsync()
         {
             OnLoadGetflvStart();
@@ -398,7 +395,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         [Obsolete]
         protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject()
         {
-            var info = Information.DmcInfo;
+            var info = Information.DmcInfo_Issue665NA;
 
             var model = new RawSmileVideoDmcObjectModel();
             {
@@ -555,14 +552,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected void ImportCommentThread_Issue665NA(RawSmileVideoMsgPacket_Issue665NA_Model rawMessagePacket)
         {
-            // #665 除外
-            //CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+            CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
         }
 
         protected void ImportCommentThread(SmileVideoMsgSettingModel rawMessagePacket)
         {
             // なんぞいな
             //CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+        }
+
+        protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsg_Issue665NA_CoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
+        {
+            await Information.LoadGetthreadkeyAsync();
+
+            var msg = new Msg(Mediation);
+            return await msg.Load_Issue665NA_Async(
+                Information.MessageServerUrl,
+                Information.ThreadId,
+                Information.UserId,
+                getCount,
+                rangeHeadMinutes, rangeTailMinutes, rangeGetCount,
+                rangeGetAllCount,
+                Information.Getthreadkey
+            );
         }
 
         protected async Task<SmileVideoMsgSettingModel> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
@@ -584,6 +596,44 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             );
         }
 
+        protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsg_Issue665NA_Async(CacheSpan msgCacheSpan)
+        {
+            OnLoadMsgStart();
+
+            CommentLoadState = LoadState.Preparation;
+
+            //TODO; キャッシュチェック時のファイル処理関係は共通化可能
+            var cacheFilePath = Information.MsgFile_Issue665NA.FullName;
+            if(File.Exists(cacheFilePath)) {
+                var fileInfo = new FileInfo(cacheFilePath);
+                if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
+                    CommentLoadState = LoadState.Loading;
+                    using(var stream = new FileStream(cacheFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        var result = Msg.ConvertFromRawPacketData_Issue665NA(stream);
+                        OnLoadMsgEnd();
+                        return result;
+                    }
+                }
+            }
+
+            CommentLoadState = LoadState.Loading;
+            var rawMessagePacket = await LoadMsg_Issue665NA_CoreAsync(1000, 0, (int)Information.Length.TotalMinutes, 100, 1000);
+            // #665 除外
+            ImportCommentThread_Issue665NA(rawMessagePacket);
+
+            // キャッシュ構築
+            if(rawMessagePacket.Chat.Any()) {
+                try {
+                    SerializeUtility.SaveXmlSerializeToFile(cacheFilePath, rawMessagePacket);
+                } catch(FileNotFoundException) {
+                    // BUGS: いかんのう
+                }
+            }
+
+            OnLoadMsgEnd();
+            return rawMessagePacket;
+        }
+
         protected async Task<SmileVideoMsgSettingModel> LoadMsgAsync(CacheSpan msgCacheSpan)
         {
             OnLoadMsgStart();
@@ -593,17 +643,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             //TODO; キャッシュチェック時のファイル処理関係は共通化可能
             var cacheFilePath = Information.MsgFile.FullName;
             // #665 除外
-            //if(File.Exists(cacheFilePath)) {
-            //    var fileInfo = new FileInfo(cacheFilePath);
-            //    if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
-            //        CommentLoadState = LoadState.Loading;
-            //        using(var stream = new FileStream(cacheFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-            //            var result = Msg.ConvertFromRawPacketData_Issue665NA(stream);
-            //            OnLoadMsgEnd();
-            //            return result;
-            //        }
-            //    }
-            //}
+            if(File.Exists(cacheFilePath)) {
+                var fileInfo = new FileInfo(cacheFilePath);
+                if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
+                    CommentLoadState = LoadState.Loading;
+                    var result = Msg.ConvertMsgSettingModel(fileInfo);
+                    OnLoadMsgEnd();
+                    return result;
+                }
+            }
 
             CommentLoadState = LoadState.Loading;
             var rawMessagePacket = await LoadMsgCoreAsync(1000, new SmileVideoMsgRangeModel(0, (int)Information.Length.TotalMinutes, 100, 1000));
@@ -669,17 +717,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadDataWithSessionStart();
 
             var tcs = new CancellationTokenSource();
-#if ENABLED_GETFLV
-            await LoadGetflvAsync();
-#endif
-            await LoadWatchDataAsync();
 
-            if(Information.InformationLoadState == LoadState.Failure || /*Information.HasGetflvError*/ Information.HasWatchDataError ) {
-                InformationLoadState = LoadState.Failure;
-                return;
+            if(Information.IsCompatibleIssue665NA) {
+                await LoadGetflvAsync();
+                if(Information.InformationLoadState == LoadState.Failure || Information.HasGetflvError) {
+                    InformationLoadState = LoadState.Failure;
+                    return;
+                }
+            } else {
+                await LoadWatchDataAsync();
+                if(Information.InformationLoadState == LoadState.Failure || Information.HasWatchDataError) {
+                    InformationLoadState = LoadState.Failure;
+                    return;
+                }
             }
 
-            var commentTask = LoadMsgAsync(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext());
+            var commentTask = Information.IsCompatibleIssue665NA
+                ? LoadMsg_Issue665NA_Async(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadComment_Issue665NA_Async(task.Result), TaskScheduler.FromCurrentSynchronizationContext())
+                : LoadMsgAsync(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext())
+            ;
 
             // キャッシュとかエコノミー確認であれこれ分岐
             Debug.Assert(Information != null);
@@ -901,9 +957,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }, cancelToken);
         }
 
-#endregion
+        #endregion
 
-#region ViewModelBase
+        #region ViewModelBase
 
         protected override void Dispose(bool disposing)
         {
@@ -913,9 +969,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             base.Dispose(disposing);
         }
 
-#endregion
+        #endregion
 
-#region IDownloadItem
+        #region IDownloadItem
 
         Uri IDownloadItem.DownloadUri => DownloadUri;
 
@@ -1006,7 +1062,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
-#endregion
+        #endregion
 
         private void Downloader_DownloadStart(object sender, DownloadStartEventArgs e)
         {

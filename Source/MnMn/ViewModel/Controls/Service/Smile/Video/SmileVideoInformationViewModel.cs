@@ -187,8 +187,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         RawSmileVideoFeedDetailModel FeedDetail { get; set; }
 
-        [Obsolete]
-        RawSmileVideoGetflvModel Getflv { get; set; }
+        RawSmileVideoGetflv_Issue665NA_Model Getflv_Issue665NA { get; set; }
         SmileVideoWatchDataModel WatchData { get; set; }
 
         public RawSmileVideoGetthreadkeyModel Getthreadkey { get; private set; }
@@ -220,6 +219,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public FileInfo WatchDataFile { get; private set; }
         /// <summary>
         /// コメントファイル。
+        /// <para>Flash版。</para>
+        /// </summary>
+        public FileInfo MsgFile_Issue665NA { get; private set; }
+        /// <summary>
+        /// コメントファイル。
         /// </summary>
         public FileInfo MsgFile { get; private set; }
 
@@ -233,8 +237,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 視聴ページのHTMLソース。
         /// </summary>
-        [Obsolete]
-        public string WatchPageHtmlSource { get; private set; }
+        public string WatchPageHtmlSource_Issue665NA { get; private set; }
         /// <summary>
         /// 動画紹介HTMLソース。
         /// </summary>
@@ -246,6 +249,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         public string PageVideoToken { get { return WatchData.RawData.Api.Context.CsrfToken; } }
+        public string PageVideoToken_Issue665NA { get; set; }
+
         /// <summary>
         /// 元にしている動画生情報。
         /// </summary>
@@ -473,6 +478,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         public virtual SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
+        public bool IsCompatibleIssue665NA => MovieType == SmileVideoMovieType.Swf;
+
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
         public long SizeLow { get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
         public virtual int ViewCounter
@@ -687,14 +694,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region Getflv
 
-        [Obsolete]
         public bool HasGetflvError
         {
             get
             {
-                ThrowHasNotGetflv();
+                ThrowHasNotGetflv_Issue665NA();
 
-                return !string.IsNullOrWhiteSpace(Getflv.Error) || string.IsNullOrWhiteSpace(Getflv.MovieServerUrl);
+                return !string.IsNullOrWhiteSpace(Getflv_Issue665NA.Error) || string.IsNullOrWhiteSpace(Getflv_Issue665NA.MovieServerUrl);
             }
         }
 
@@ -713,8 +719,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
-                return RawValueUtility.ConvertBoolean(Getflv.Done);
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return RawValueUtility.ConvertBoolean(Getflv_Issue665NA.Done);
+                }
+
+                ThrowHasNotGetflv_Issue665NA();
+                return RawValueUtility.ConvertBoolean(Getflv_Issue665NA.Done);
+            }
+        }
+
+        bool IsEconomyMode_Issue665NA
+        {
+            get
+            {
+                ThrowHasNotGetflv_Issue665NA();
+
+                if(!this._isEconomyMode.HasValue) {
+                    object outIsEconomyMode;
+                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv_Issue665NA.MovieServerUrl, typeof(string), ServiceType.SmileVideo);
+                    if(!converted) {
+                        throw new Exception();
+                    }
+                    this._isEconomyMode = (bool)outIsEconomyMode;
+                }
+
+                return this._isEconomyMode.Value;
             }
         }
 
@@ -722,7 +752,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
+                if(IsCompatibleIssue665NA) {
+                    return IsEconomyMode_Issue665NA;
+                }
+
                 ThrowHasNotWatchData();
 
                 if(!this._isEconomyMode.HasValue) {
@@ -752,7 +785,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return new Uri(Getflv_Issue665NA.MovieServerUrl);
+                }
+
                 ThrowHasNotWatchData();
                 return new Uri(WatchData.RawData.Api.Video.SmileInfo.Url);
             }
@@ -762,7 +799,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return new Uri(Getflv_Issue665NA.MessageServerUrl);
+                }
+
                 ThrowHasNotWatchData();
                 return new Uri(WatchData.RawData.Api.Thread.ServerUrl);
             }
@@ -772,7 +813,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return new Uri(Getflv_Issue665NA.MessageServerSubUrl);
+                }
+
                 ThrowHasNotWatchData();
                 return new Uri(WatchData.RawData.Api.Thread.SubServerUrl);
             }
@@ -782,7 +827,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return Getflv_Issue665NA.ThreadId;
+                }
+
                 ThrowHasNotWatchData();
                 return WatchData.RawData.Api.Thread.Ids.Default;
             }
@@ -792,7 +841,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
+
                 ThrowHasNotWatchData();
                 return WatchData.RawData.Api.Thread.Ids.Community;
             }
@@ -802,7 +851,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return Getflv_Issue665NA.OptionalThreadId;
+                }
+
                 ThrowHasNotWatchData();
                 var dmcInfo = WatchData.RawData.Api.Video.DmcInfo;
                 if(dmcInfo != null) {
@@ -816,8 +869,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
-                //return Getflv.IsPremium == "1";
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return Getflv_Issue665NA.IsPremium == "1";
+                }
 
                 ThrowHasNotWatchData();
                 return RawValueUtility.ConvertBoolean(WatchData.RawData.Api.Viewer.IsPremium);
@@ -838,21 +893,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                //ThrowHasNotGetflv();
-                //return RawValueUtility.ConvertBoolean(Getflv.IsDmc);
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return RawValueUtility.ConvertBoolean(Getflv_Issue665NA.IsDmc);
+                }
+
                 ThrowHasNotWatchData();
                 return WatchData.RawData.Api.Video.DmcInfo != null;
             }
         }
-
-        [Obsolete]
-        public JObject DmcInfo
+        [Obsolete("SWF形式への互換性を残す目的でGetflv経由のDMCはもう保守しない")]
+        public JObject DmcInfo_Issue665NA
         {
             get
             {
-                ThrowHasNotGetflv();
+                ThrowHasNotGetflv_Issue665NA();
                 if(this._dmcInfo == null) {
-                    this._dmcInfo = JObject.Parse(Getflv.DmcInfo);
+                    this._dmcInfo = JObject.Parse(Getflv_Issue665NA.DmcInfo);
                 }
 
                 return this._dmcInfo;
@@ -892,10 +949,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        [Obsolete]
-        public bool HasGetflv => Getflv != null;
+        public bool HasGetflv => Getflv_Issue665NA != null;
 
-        public bool HasWatchData => WatchData != null;
+        public bool HasWatchData => WatchData != null && WatchData.RawData != null;
 
         #region IndividualVideoSetting
 
@@ -1100,7 +1156,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
             GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
             WatchDataFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("watch-data", "json")));
-            MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            MsgFile_Issue665NA = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            MsgFile  = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "json")));
             DmcFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "dmc", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
@@ -1114,11 +1171,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        [Obsolete]
-        void ThrowHasNotGetflv()
+        void ThrowHasNotGetflv_Issue665NA()
         {
             if(!HasGetflv) {
-                throw new InvalidOperationException(nameof(Getflv));
+                throw new InvalidOperationException(nameof(Getflv_Issue665NA));
             }
         }
 
@@ -1160,20 +1216,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <param name="isSave"></param>
         /// <param name="usingDmc">ダウンロードにDMC形式を使用するか</param>
         /// <returns></returns>
-        [Obsolete]
         public Task<IReadOnlyCheck> LoadGetflvAsync(bool isSave, bool usingDmc)
         {
             if(InformationLoadState == LoadState.Failure) {
                 return Task.FromResult(CheckModel.Failure());
             }
 
-            var getflv = new Getflv(Mediation);
+            PageHtmlLoadState = LoadState.Loading;
+
+            var getflv = new Getflv_Issue665NA(Mediation);
 
             return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
+                PageHtmlLoadState = LoadState.Loaded;
                 var rawVideoGetflvModel = t.Result;
 
                 if(rawVideoGetflvModel != null) {
-                    Getflv = rawVideoGetflvModel;
+                    Getflv_Issue665NA = rawVideoGetflvModel;
+                    SetPageHtml_Issue665NA_Async(rawVideoGetflvModel.HtmlSource, isSave).Wait();
+
                     this._dmcInfo = null;
                     if(isSave) {
                         SerializeUtility.SaveXmlSerializeToFile(GetflvFile.FullName, rawVideoGetflvModel);
@@ -1211,7 +1271,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public Task LoadGetthreadkeyAsync()
         {
             var getThreadkey = new Getthreadkey(Mediation);
-            return getThreadkey.LoadAsync(CommunityThreadId).ContinueWith(t => {
+            var targetThreadId = IsCompatibleIssue665NA
+                ? ThreadId
+                : CommunityThreadId
+            ;
+            return getThreadkey.LoadAsync(targetThreadId).ContinueWith(t => {
                 if(t.IsFaulted) {
                     return CheckModel.Failure(t.Exception.InnerException);
                 } else {
@@ -1221,9 +1285,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
+        public virtual Task SetPageHtml_Issue665NA_Async(string html, bool isSave)
+        {
+            PageHtmlLoadState = LoadState.Loading;
+
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            return Task.Run(() => {
+                WatchPageHtmlSource_Issue665NA = html;
+                htmlDocument.LoadHtml(html);
+                var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
+                DescriptionHtmlSource = description.InnerHtml;
+
+                var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(html);
+                var flashvars = json.SelectToken("flashvars");
+                PageVideoToken_Issue665NA = flashvars.Value<string>("csrfToken");
+
+            }).ContinueWith(task => {
+                PageHtmlLoadState = LoadState.Loaded;
+            }).ContinueWith(task => {
+                if(isSave) {
+                    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource_Issue665NA);
+                }
+            });
+        }
 
         public virtual Task SetPageHtmlAsync(string html, bool isSave)
         {
+            if(IsCompatibleIssue665NA) {
+                return SetPageHtml_Issue665NA_Async(html, isSave);
+            }
+
             //PageHtmlLoadState = LoadState.Loading;
 
             var htmlDocument = new HtmlDocument() {

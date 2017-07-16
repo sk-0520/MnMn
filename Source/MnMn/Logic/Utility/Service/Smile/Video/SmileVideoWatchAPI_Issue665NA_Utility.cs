@@ -24,8 +24,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
-    [Obsolete]
-    public static class SmileVideoWatchAPIUtility
+    public static class SmileVideoWatchAPI_Issue665NA_Utility
     {
         public static JObject ConvertJsonFromWatchPage(string watchPageHtml)
         {
