@@ -197,7 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
+        public async Task<RawSmileVideoMsgResultItemModel> PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
         {
             await LoginIfNotLoginAsync();
 
@@ -215,14 +215,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 if(response.IsSuccess) {
-                    Mediation.Logger.Trace(response.Result);
-                    using(var stream = StreamUtility.ToUtf8Stream(response.Result)) {
-                        var result = ConvertFromRawPacketResultData_Issue665NA(stream);
-                        //return null;
-                    }
+                    var items = Newtonsoft.Json.JsonConvert.DeserializeObject<CollectionModel<RawSmileVideoMsgResultItemModel>>(response.Result);
+                    return items.FirstOrDefault(i => i.ChatResult != null);
                 }
 
-                //return null;
+                return null;
             }
         }
 

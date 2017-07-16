@@ -1252,7 +1252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             AppendComment(commentViewModel, true);
 
             // コメント再取得
-            await LoadMsgAsync(CacheSpan.NoCache);
+            await LoadMsg_Issue665NA_Async(CacheSpan.NoCache);
         }
 
         protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
@@ -1266,7 +1266,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             int packetId;
             if(!rawMessagePacket.PacketId.TryGetValue(packetIdKey, out packetId)) {
                 // TODO: ユーザ表示なし
-                Mediation.Logger.Error($"packet id not fond: {nameof(packetIdKey)} = {packetIdKey}");
+                SetCommentInformation($"packet id not fond: {nameof(packetIdKey)} = {packetIdKey}");
                 return;
             }
             var tagetItem = rawMessagePacket.Items
@@ -1275,7 +1275,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ;
             if(tagetItem == null) {
                 // TODO: ユーザ表示なし
-                Mediation.Logger.Error($"not found `ps:{packetId}` thread");
+                SetCommentInformation($"not found `ps:{packetId}` thread");
                 return;
             }
 
@@ -1291,8 +1291,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Information($"postkey = {postKey}");
             }
 
-            //var resultPost = 
-            await msg.PostAsync(
+            var resultPost = await msg.PostAsync(
                 Information.MessageServerUrl,
                 Information.ThreadId,
                 videoPosition,
@@ -1301,26 +1300,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PostCommandItems,
                 PostCommentBody
             );
-            //if(resultPost == null) {
-            //    SetCommentInformation($"fail: {nameof(msg.Post_Issue665NA_Async)}");
-            //    return;
-            //}
-            //var status = SmileVideoMsgUtility.ConvertResultStatus(resultPost.ChatResult.Status);
-            //if(status != SmileVideoCommentResultStatus.Success) {
-            //    //TODO: ユーザー側に通知
-            //    var message = DisplayTextUtility.GetDisplayText(status);
-            //    SetCommentInformation($"fail: {message}, {status}");
-            //    return;
-            //}
+            if(resultPost == null) {
+                SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
+                return;
+            }
+            var status = SmileVideoMsgUtility.ConvertResultStatus(resultPost.ChatResult.Status);
+            if(status != SmileVideoCommentResultStatus.Success) {
+                //TODO: ユーザー側に通知
+                var message = DisplayTextUtility.GetDisplayText(status);
+                SetCommentInformation($"fail: {message}, {status}");
+                return;
+            }
 
-            ////投稿コメントを画面上に流す
-            ////TODO: 投稿者判定なし
-            //var commentViewModel = CreateSingleComment(resultPost.ChatResult, videoPosition);
+            //投稿コメントを画面上に流す
+            //TODO: 投稿者判定なし
+            var commentViewModel = CreateSingleComment(resultPost.ChatResult, videoPosition);
 
-            //AppendComment(commentViewModel, true);
+            AppendComment(commentViewModel, true);
 
-            //// コメント再取得
-            //await LoadMsgAsync(CacheSpan.NoCache);
+            // コメント再取得
+            await LoadMsgAsync(CacheSpan.NoCache);
         }
 
         void SetCommentInformation(string text)
