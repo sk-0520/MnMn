@@ -52,6 +52,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             var htmlDocument = HtmlUtility.CreateHtmlDocument(htmlSource);
             var watachDataElement = htmlDocument.GetElementbyId("js-initial-watch-data");
+            if(watachDataElement == null) {
+                Mediation.Logger.Trace("not found: id = 'js-initial-watch-data'");
+                return null;
+            }
             var rawModel = Load(watachDataElement);
 
             return new SmileVideoWatchDataModel() {

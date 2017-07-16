@@ -99,6 +99,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //int _referenceCount;
         string _descriptionHtmlSource;
 
+        bool _force_Issue665NA = false;
+
         #endregion
 
         protected SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
@@ -478,7 +480,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         public virtual SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
-        public bool IsCompatibleIssue665NA => MovieType == SmileVideoMovieType.Swf;
+        public bool IsCompatibleIssue665NA => this._force_Issue665NA || MovieType == SmileVideoMovieType.Swf;
 
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
         public long SizeLow { get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
@@ -1181,7 +1183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ThrowHasNotWatchData()
         {
             if(!HasWatchData) {
-                throw new InvalidOperationException(nameof(WatchData));
+                throw new InvalidOperationException(nameof(SmileVideoWatchDataModel));
             }
         }
 
@@ -1484,6 +1486,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 早めに死んでほしい処理。
+        /// </summary>
+        internal void Force_Issue665NA()
+        {
+            Mediation.Logger.Warning($"!!force!! [{VideoId}] #665");
+            this._force_Issue665NA = true;
         }
 
         #endregion
