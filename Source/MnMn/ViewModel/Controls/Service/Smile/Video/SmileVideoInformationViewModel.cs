@@ -220,6 +220,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public FileInfo WatchDataFile { get; private set; }
         /// <summary>
         /// コメントファイル。
+        /// <para>Flash版。</para>
+        /// </summary>
+        public FileInfo MsgFile_Issue665NA { get; private set; }
+        /// <summary>
+        /// コメントファイル。
         /// </summary>
         public FileInfo MsgFile { get; private set; }
 
@@ -1100,7 +1105,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
             GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
             WatchDataFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("watch-data", "json")));
-            MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            MsgFile_Issue665NA = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            MsgFile  = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "json")));
             DmcFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "dmc", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
