@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -24,29 +25,30 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
+    [Serializable, DataContract]
     public class RawSmileVideoMsgChatModel: ModelBase
     {
-        [XmlAttribute("thread")]
+        [XmlAttribute("thread"), DataMember(Name = "thread")]
         public string Thread { get; set; }
-        [XmlAttribute("anonymity")]
+        [XmlAttribute("anonymity"), DataMember(Name = "anonymity")]
         public string Anonymity { get; set; }
-        [XmlAttribute("mail")]
+        [XmlAttribute("mail"), DataMember(Name = "mail")]
         public string Mail { get; set; }
-        [XmlAttribute("date")]
+        [XmlAttribute("date"), DataMember(Name = "date")]
         public string Date { get; set; }
-        [XmlAttribute("vpos")]
+        [XmlAttribute("vpos"), DataMember(Name = "vpos")]
         public string VPos { get; set; }
-        [XmlAttribute("no")]
+        [XmlAttribute("no"), DataMember(Name = "no")]
         public string No { get; set; }
-        [XmlAttribute("user_id")]
+        [XmlAttribute("user_id"), DataMember(Name = "user_id")]
         public string UserId { get; set; }
-        [XmlAttribute("premium")]
+        [XmlAttribute("premium"), DataMember(Name = "premium")]
         public string Premium { get; set; }
-        [XmlAttribute("score")]
+        [XmlAttribute("score"), DataMember(Name = "score")]
         public string Score { get; set; }
-        [XmlAttribute("fork")]
+        [XmlAttribute("fork"), DataMember(Name = "fork")]
         public string Fork { get; set; }
-        [XmlText]
+        [XmlText, DataMember(Name = "content")]
         public string Content { get; set; }
     }
 }
