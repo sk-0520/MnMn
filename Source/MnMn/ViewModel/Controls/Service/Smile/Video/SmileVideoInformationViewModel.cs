@@ -1091,7 +1091,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ClearCache()
         {
             try {
-                var checkResult = GarbageCollection(GarbageCollectionLevel.Large | GarbageCollectionLevel.Temporary, CacheSpan.NoCache, true);
+                var checkResult = GarbageCollection(GarbageCollectionLevel.Large | GarbageCollectionLevel.Small | GarbageCollectionLevel.Temporary, CacheSpan.NoCache, true);
                 if(checkResult.IsSuccess) {
                     Mediation.Logger.Information($"cache clear: [{VideoId}] {RawValueUtility.ConvertHumanLikeByte(checkResult.Result)}");
                 } else {
@@ -1608,6 +1608,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     GetflvFile.Delete();
                 }
 
+                WatchDataFile.Refresh();
+                if(WatchDataFile.Exists) {
+                    size += WatchDataFile.Length;
+                    WatchDataFile.Delete();
+                }
+
                 return size;
             } catch(Exception ex) {
                 Mediation.Logger.Warning($"{ex.Message}", ex);
@@ -1616,6 +1622,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return 0;
         }
 
+        long GarbageCollectionSmall(CacheSpan cacheSpan, bool force)
+        {
+            if(!force && cacheSpan.IsNoExpiration) {
+                return 0;
+            }
+
+            try {
+                long size = 0;
+
+                var msgCheck = GarbageCollectionFromFile(MsgFile, cacheSpan, force);
+                var msgCheck_Issue665NA = GarbageCollectionFromFile(MsgFile_Issue665NA, cacheSpan, force);
+
+                if(msgCheck.IsSuccess) {
+                    size += msgCheck.Result;
+                }
+                if(msgCheck_Issue665NA.IsSuccess) {
+                    size += msgCheck_Issue665NA.Result;
+                }
+
+                return size;
+            } catch(Exception ex) {
+                Mediation.Logger.Warning($"{ex.Message}", ex);
+            }
+
+            return 0;
+        }
 
         public IReadOnlyCheckResult<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
@@ -1632,6 +1664,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             long largeSize = 0;
             if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Large)) {
                 largeSize += GarbageCollectionLarge(cacheSpan, force);
+            }
+
+            if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Small)) {
+                largeSize += GarbageCollectionSmall(cacheSpan, force);
             }
 
             if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Temporary)) {
