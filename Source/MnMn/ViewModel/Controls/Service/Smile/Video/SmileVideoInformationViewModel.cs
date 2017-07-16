@@ -1232,7 +1232,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 if(rawVideoGetflvModel != null) {
                     Getflv_Issue665NA = rawVideoGetflvModel;
-                    SetPageHtml_Issue665NA_Async(rawVideoGetflvModel.HtmlSource, isSave).Wait();
+                    SetPageHtml_Issue665NA_Async(rawVideoGetflvModel.HtmlSource, isSave);
 
                     this._dmcInfo = null;
                     if(isSave) {
@@ -1255,6 +1255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var wd = t.Result;
                 if(wd != null) {
                     WatchData = wd;
+                    SetPageHtmlAsync(WatchData.HtmlSource, isSave);
                     if(isSave) {
                         SerializeUtility.SaveJsonDataToFile(WatchDataFile.FullName, WatchData.RawData);
                         using(var writer = WatchPageHtmlFile.CreateText()) {
@@ -1285,14 +1286,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
-        public virtual Task SetPageHtml_Issue665NA_Async(string html, bool isSave)
+        protected virtual void SetPageHtml_Issue665NA_Async(string html, bool isSave)
         {
             PageHtmlLoadState = LoadState.Loading;
 
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
-            return Task.Run(() => {
+            //return Task.Run(() => {
                 WatchPageHtmlSource_Issue665NA = html;
                 htmlDocument.LoadHtml(html);
                 var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
@@ -1302,19 +1303,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var flashvars = json.SelectToken("flashvars");
                 PageVideoToken_Issue665NA = flashvars.Value<string>("csrfToken");
 
-            }).ContinueWith(task => {
+            //}).ContinueWith(task => {
                 PageHtmlLoadState = LoadState.Loaded;
-            }).ContinueWith(task => {
+            //}).ContinueWith(task => {
                 if(isSave) {
                     File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource_Issue665NA);
                 }
-            });
+            //});
         }
 
-        public virtual Task SetPageHtmlAsync(string html, bool isSave)
+        protected virtual void SetPageHtmlAsync(string html, bool isSave)
         {
             if(IsCompatibleIssue665NA) {
-                return SetPageHtml_Issue665NA_Async(html, isSave);
+                SetPageHtml_Issue665NA_Async(html, isSave);
+                return;
             }
 
             //PageHtmlLoadState = LoadState.Loading;
@@ -1322,7 +1324,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
-            return Task.Run(() => {
+            //return Task.Run(() => {
                 //WatchPageHtmlSource = html;
                 //htmlDocument.LoadHtml(html);
                 //var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
@@ -1333,13 +1335,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 //var flashvars = json.SelectToken("flashvars");
                 //PageVideoToken = flashvars.Value<string>("csrfToken");
 
-            }).ContinueWith(task => {
+            //}).ContinueWith(task => {
                 PageHtmlLoadState = LoadState.Loaded;
-            }).ContinueWith(task => {
+            //}).ContinueWith(task => {
                 //if(isSave) {
                 //    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
                 //}
-            });
+            //});
         }
 
         public Task<IEnumerable<SmileVideoInformationViewModel>> LoadRelationVideosAsync(CacheSpan cacheSpan)
@@ -1398,7 +1400,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         /// <summary>
         /// </summary>
-        public virtual Task LoadLocalPageHtmlAsync()
+        public virtual void LoadLocalPageHtmlAsync()
         {
             //PageHtmlLoadState = LoadState.Preparation;
 
@@ -1406,14 +1408,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(WatchPageHtmlFile.Exists && Constants.MinimumHtmlFileSize <= WatchPageHtmlFile.Length) {
                 using(var stream = WatchPageHtmlFile.OpenText()) {
                     var html = stream.ReadToEnd();
-                    return SetPageHtmlAsync(html, false);
+                    SetPageHtmlAsync(html, false);
                 }
-            } else {
-                var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
-                return SmileVideoInformationUtility.LoadWatchPageHtmlSource(session, WatchUrl).ContinueWith(t => {
-                    var htmlSource = t.Result;
-                    SetPageHtmlAsync(htmlSource, true).Wait();
-                }, TaskContinuationOptions.AttachedToParent);
             }
         }
 
