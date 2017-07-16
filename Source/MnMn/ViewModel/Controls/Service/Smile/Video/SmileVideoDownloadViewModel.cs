@@ -718,6 +718,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var tcs = new CancellationTokenSource();
 
+            RETRY_Issue665NA:
             if(Information.IsCompatibleIssue665NA) {
                 await LoadGetflvAsync();
                 if(Information.InformationLoadState == LoadState.Failure || Information.HasGetflvError) {
@@ -726,9 +727,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             } else {
                 await LoadWatchDataAsync();
-                if(Information.InformationLoadState == LoadState.Failure || Information.HasWatchDataError) {
-                    InformationLoadState = LoadState.Failure;
-                    return;
+                try {
+                    if(Information.InformationLoadState == LoadState.Failure || Information.HasWatchDataError) {
+                        InformationLoadState = LoadState.Failure;
+                        return;
+                    }
+                } catch(InvalidOperationException ex) {
+                    if(ex.Message == nameof(SmileVideoWatchDataModel)) {
+                        // #665 対応がどうにもダメな場合はなけなしの力で#665非対応処理を強制実施
+                        Information.Force_Issue665NA();
+                        goto RETRY_Issue665NA;
+                    }
                 }
             }
 
