@@ -5,14 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
@@ -43,7 +46,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         public SmileChannelInformationViewModel SelectedChannel
         {
             get { return this._selectedChannel; }
-            set { SetVariableValue(ref this._selectedChannel, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedChannel, value)) {
+                    if(SelectedChannel != null) {
+                        RefreshWebPage();
+                    }
+                }
+            }
         }
 
         public GridLength GroupWidth
@@ -58,6 +68,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         }
 
         public CollectionModel<SmileChannelInformationViewModel> ChannelItems { get; } = new CollectionModel<SmileChannelInformationViewModel>();
+
+        #endregion
+
+        #region command
+
+        public ICommand NewWindowCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var data = (WebNavigatorEventDataBase)o;
+                    WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                });
+            }
+        }
 
         #endregion
 
@@ -82,6 +107,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
                 return channel.LoadDefaultAsync();
             }
+        }
+
+        void RefreshWebPage()
+        {
+            var tabItem = ChannelTab.ItemContainerGenerator.ContainerFromItem(SelectedChannel) as TabItem;
+            var web = UIUtility.FindChildren<WebNavigator>(ChannelTab).FirstOrDefault();
+            if(web != null) {
+                web.HomeSource = SelectedChannel.Uri;
+                web.Navigate(web.HomeSource);
+                web.CrearHistory();
+            }
+
         }
 
         #endregion

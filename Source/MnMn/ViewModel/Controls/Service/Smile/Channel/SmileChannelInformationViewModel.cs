@@ -118,10 +118,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             }).ContinueWith(t => {
                 var tabItem = TabControl.ItemContainerGenerator.ContainerFromItem(this) as TabItem;
                 var web = UIUtility.FindChildren<WebNavigator>(TabControl).FirstOrDefault();
-                if(web != null) {
-                    if(web.IsEmptyContent) {
-                        web.Navigate(web.HomeSource);
-                    }
+                if(web != null && web.HomeSource != Uri) {
+                    web.HomeSource = Uri;
+                    web.Navigate(web.HomeSource);
+                    web.CrearHistory();
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(t => {
                 ChannelLoadState = SourceLoadState.Completed;

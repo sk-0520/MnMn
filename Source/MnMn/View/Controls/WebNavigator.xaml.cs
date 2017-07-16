@@ -873,6 +873,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             var uri = new Uri("about:blank");
             Navigate(uri);
+            CrearHistory();
+            IsEmptyContent = true;
+        }
+
+        public void CrearHistory()
+        {
             DoAction(
                 b => { },
                 b => Dispatcher.Invoke(() => {
@@ -881,7 +887,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     }
                 })
             );
-            IsEmptyContent = true;
         }
 
         /// <summary>

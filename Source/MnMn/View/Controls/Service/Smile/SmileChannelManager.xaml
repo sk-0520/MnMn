@@ -2,6 +2,7 @@
   呼び出し元から DataContext を設定して使用。
 -->
 <UserControl
+  x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.SmileChannelManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -39,8 +40,8 @@
             <TabItem Header="channel">
               <app_view_controls:WebNavigator
                 x:Name="webChannel"
-                HomeSource="{Binding UriString, Mode=OneWay}"
                 IsEnabledUserChangeSource="False"
+                NewWindowCommand="{Binding DataContext.NewWindowCommand, ElementName=root}"
               />
             </TabItem>
             <TabItem IsSelected="{Binding ShowVideoTabItem}">
