@@ -23,6 +23,7 @@
 	<item key="nicoru"  type="simple" value="0"  />
 	<item key="scores"  type="simple" value="1"  />
 	<item key="click_revisio"  type="simple" value="-1"  />
+	<item key="fork" type="simple" value="1" />
 
 	<!-- NOTE: userkey, threadkey は各タグの終端に配置すること-->
 	<item key="userkey" type="force-pair" name="userkey" bond=":" value="${userkey}" fail="" >

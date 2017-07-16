@@ -20,6 +20,9 @@
 					{"ping":{"content":"ps:1"}},
 					{"thread_leaves":$[:]        {"thread":"${thread-id}",$[:]                    "language":${language},"user_id":${user-id},${content} $[:]                                             "scores":${scores},"nicoru":${nicoru},${userkey}}},
 					{"ping":{"content":"pf:1"}},
+					{"ping":{"content":"ps:2"}},
+					{"thread":$[:]               {"thread":"${thread-id}", "version":"${version-old}","language":${language},"user_id":${user-id},$[:]                         "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${res_from}"fork":${fork},${userkey}}},
+					{"ping":{"content":"pf:2"}},
 					{"ping":{"content":"rf:0"}}
 				]
 			]]>
