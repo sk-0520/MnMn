@@ -26,7 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Attribute;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
     [Serializable, XmlRoot("getflv")]
-    public class RawSmileVideoGetflvModel: RawModelBase
+    public class RawSmileVideoGetflv_Issue665NA_Model: RawModelBase
     {
         #region property
 
@@ -122,6 +122,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public string IsDmc { get; set; }
 
         public string DmcInfo { get; set; }
+
+        /// <summary>
+        /// 新処理(#665)でページ読み込みを初回に行うIFに合わせたうえでいい感じに処理統合で木つようにする
+        /// </summary>
+        [XmlIgnore]
+        internal string HtmlSource { get; set; }
 
         #endregion
     }

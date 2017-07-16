@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
         string Failure { get; set; }
 
         IReadOnlyList<IReadOnlyMappingItemBracket> Brackets { get; }
+        IReadOnlyList<IReadOnlyMappingItemReplace> Replace { get; }
         IReadOnlyList<IReadOnlyMappingItemCustom> Customs { get; }
 
         /// <summary>

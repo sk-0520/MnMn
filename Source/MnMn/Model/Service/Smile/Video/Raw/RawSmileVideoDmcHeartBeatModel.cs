@@ -15,20 +15,21 @@ You should have received a copy of the GNU General Public License
 along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    [Serializable]
+    [Serializable, DataContract]
     public class RawSmileVideoDmcHeartBeatModel: ModelBase
     {
         #region property
 
-        [XmlElement("lifetime")]
+        [XmlElement("lifetime"), DataMember(Name = "lifetime")]
         public string LifeTime { get; set; }
 
-        [XmlElement("onetime_token")]
+        [XmlElement("onetime_token"), DataMember(Name = "onetime_token")]
         public string OnetimeToken { get; set; }
 
         #endregion

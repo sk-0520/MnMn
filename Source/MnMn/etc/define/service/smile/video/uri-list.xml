@@ -11,10 +11,14 @@
 	<!--video-getflv-scrapingとvideo-msgの統一されてなさよ-->
 	<item key="video-getflv-scraping" uri="" param="none" />
 
+	<item key="video-watch-data-page" uri="${uri}" param="none" />
+
 	<item key="video-getthreadkey" uri="http://flapi.nicovideo.jp/api/getthreadkey" param="query" />
 	<item key="video-getrelation" uri="http://www.nicovideo.jp/api/getrelation" param="query" />
 
+	<item key="video-msg_Issue665NA" uri="${msg-uri}" param="none" request-type="mapping" />
 	<item key="video-msg" uri="${msg-uri}" param="none" request-type="mapping" />
+	<item key="video-msg-post_Issue665NA" uri="${msg-uri}" param="none" request-type="mapping" />
 	<item key="video-msg-post" uri="${msg-uri}" param="none" request-type="mapping" />
 	<item key="video-msg-post-key" uri="http://flapi.nicovideo.jp/api/getpostkey/" param="query" />
 

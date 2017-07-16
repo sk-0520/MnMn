@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
@@ -25,10 +26,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
     {
         #region property
 
-        [XmlElement("file_extension")]
+        [XmlElement("file_extension"), DataMember(Name = "file_extension")]
         public string FileExtension { get; set; }
 
-        [XmlElement("transfer_preset")]
+        [XmlElement("transfer_preset"), DataMember(Name = "transfer_preset")]
         public string TransferPreset { get; set; }
 
         #endregion

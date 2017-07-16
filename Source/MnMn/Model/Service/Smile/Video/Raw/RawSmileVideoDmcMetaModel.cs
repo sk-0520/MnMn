@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -13,10 +14,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
     {
         #region property
 
-        [XmlAttribute("message")]
+        [XmlAttribute("message"), DataMember(Name = "message")]
         public string Message { get; set; }
 
-        [XmlAttribute("status")]
+        [XmlAttribute("status"), DataMember(Name = "status")]
         public string Status { get; set; }
 
         #endregion
