@@ -1251,8 +1251,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             AppendComment(commentViewModel, true);
 
-            // コメント再取得
-            await LoadMsg_Issue665NA_Async(CacheSpan.NoCache);
+            // 次回読み込み時にコメントを更新できるようにタイムスタンプを過去にしておく
+            MarkCommentCacheTimestamp_Issue665NA();
         }
 
         protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
@@ -1320,8 +1320,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             AppendComment(commentViewModel, true);
 
-            // コメント再取得
-            await LoadMsgAsync(CacheSpan.NoCache);
+            // 次回読み込み時にコメントを更新できるようにタイムスタンプを過去にしておく
+            MarkCommentCacheTimestamp();
         }
 
         void SetCommentInformation(string text)
@@ -1751,6 +1751,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ;
 
             return players;
+        }
+
+        void MarkCommentCacheTimestampCore(FileInfo file)
+        {
+            if(file == null) {
+                return;
+            }
+            file.Refresh();
+            if(!file.Exists) {
+                return;
+            }
+            var backTime = DateTime.Now - Constants.ServiceSmileVideoMsgCacheTime;
+            try {
+                var createDiffTime = file.LastWriteTime - file.CreationTime;
+                file.CreationTime = backTime - createDiffTime;
+                file.LastWriteTime = backTime;
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+            }
+        }
+
+        void MarkCommentCacheTimestamp_Issue665NA()
+        {
+            MarkCommentCacheTimestampCore(Information.MsgFile_Issue665NA);
+        }
+        void MarkCommentCacheTimestamp()
+        {
+            MarkCommentCacheTimestampCore(Information.MsgFile);
         }
 
         #endregion
