@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <mappings>
-	<!-- コメント取得 -->
-	<mapping key="video-msg" content-type="text/xml">
+
+	<mapping key="video-msg_Issue665NA" content-type="text/xml">
 		<item key="thread-id" type="simple" value="${thread-id}"  />
 		<item key="version"   type="simple" value="20090904"  />
 		<item key="version-old"   type="simple" value="20061206"  />
@@ -37,8 +37,179 @@
 		</content>
 	</mapping>
 
+	<!-- コメント取得 -->
+	<mapping key="video-msg" content-type="text/plain">
+	<item key="thread-id" type="simple" value="${thread-id}"  />
+	<item key="community-thread-id" type="simple" value="${community-thread-id}"  />
+	<item key="version"   type="simple" value="20090904"  />
+	<item key="version-old"   type="simple" value="20061206"  />
+	<item key="res_from"  type="force-pair" name="res_from" bond=":" value="${res_from}" fail="">
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="" close="," />
+	</item>
+	<item key="user-id" type="simple" value="${user-id}" />
+
+	<item key="force_184" type="force-pair" name="force_184" bond=":" value="${force_184}" fail="">
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="&quot;" close="&quot;," />
+	</item>
+	<item key="content" type="force-pair" name="content" bond=":" value="${content}" fail="">
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="&quot;" close="&quot;," />
+	</item>
+
+	<item key="with_global"  type="simple" value="1"  />
+	<item key="language"  type="simple" value="0"  />
+	<item key="nicoru"  type="simple" value="0"  />
+	<item key="scores"  type="simple" value="1"  />
+	<item key="click_revisio"  type="simple" value="-1"  />
+	<item key="fork" type="simple" value="1" />
+
+	<item key="filter-op" type="simple" value="${filter-op}" />
+	<item key="packet-op" type="simple" value="${packet-op}" />
+
+	<item key="filter-community" type="simple" value="${filter-community}" />
+	<item key="packet-community-thread" type="simple" value="${packet-community-thread}" />
+	<item key="packet-community-thread_leaves" type="simple" value="${packet-community-thread_leaves}" />
+
+
+	<!-- NOTE: userkey, threadkey は各タグの終端に配置すること-->
+	<item key="userkey" type="force-pair" name="userkey" bond=":" value="${userkey}" fail="" >
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="&quot;" close="&quot;" />
+	</item>
+	<item key="threadkey" type="force-pair" name="threadkey" bond=":" value="${threadkey}" fail="" >
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="&quot;" close="&quot;" />
+	</item>
+
+		<content trim="content" oneline="true" comment="true" inline-trime="true" filter="true">
+			<![CDATA[
+				[
+					{"ping":{"content":"rs:0"}},
+
+					{"ping":{"content":"ps:0"}},
+					{"thread":$[:]               {"thread":"${thread-id}", "version":"${version}","language":${language},"user_id":${user-id},$[:]                           "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${userkey}}},
+					{"ping":{"content":"pf:0"}},
+
+					{"ping":{"content":"ps:1"}},
+					{"thread_leaves":$[:]        {"thread":"${thread-id}",$[:]                    "language":${language},"user_id":${user-id},${content} $[:]                                             "scores":${scores},"nicoru":${nicoru},${userkey}}},
+					{"ping":{"content":"pf:1"}},
+
+					$[//] 投稿者コメント
+					$[filter:${filter-op}:/*]
+						{"ping":{"content":"ps:${packet-op}"}},
+						{"thread":$[:]               {"thread":"${thread-id}", "version":"${version-old}","language":${language},"user_id":${user-id},$[:]                         "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${res_from}"fork":${fork},${userkey}}},
+						{"ping":{"content":"pf:${packet-op}"}},
+					$[filter:*/]
+
+					$[//] チャンネル
+					$[filter:${filter-community}:/*]
+						{"ping":{"content":"ps:${packet-community-thread}"}},
+						{"thread":$[:]               {"thread":"${community-thread-id}","version":"${version}","language":${language},"user_id":${user-id},$[:]            ${force_184} $[:] "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${threadkey}}},
+						{"ping":{"content":"pf:${packet-community-thread}"}},
+
+						{"ping":{"content":"ps:${packet-community-thread_leaves}"}},
+						{"thread_leaves":$[:]        {"thread":"${community-thread-id}",$[:]                   "language":${language},"user_id":${user-id},${content} $[:] ${force_184} $[:]                              "scores":${scores},"nicoru":${nicoru},${threadkey}}},
+						{"ping":{"content":"ps:${packet-community-thread_leaves}"}},
+					$[filter:*/]
+
+					{"ping":{"content":"rf:0"}}
+				]
+			]]>
+		</content>
+	</mapping>
+
+	<mapping key="video-msg-post" content-type="text/plain">
+		<item key="thread" type="simple" value="${thread-id}"  />
+		<item key="vpos" type="simple" value="${vpos}"  />
+		<item key="commands" type="simple" value="${commands}">
+			<!-- コメント投稿 JSON エスケープ -->
+<bracket target="value" open="&quot;" close="&quot;" />
+<replace target="value" regex-options="ExplicitCapture IgnoreCase IgnorePatternWhitespace">
+	<pattern>
+		<![CDATA[
+		(?<BACK_SLASH>\\)
+		|
+		(?<DOUBLE_QT>")
+		|
+		# `"` でくくるからシングルクォートはエスケープしない
+		#(?<SINGLE_QT>')
+		#|
+		(?<CR>\r)
+		|
+		(?<LF>\n)
+		|
+		(?<PP>A=.*)
+		]]>
+	</pattern>
+	<pair src="BACK_SLASH" dst="\\" />
+	<pair src="SINGLE_QT" dst="\'" />
+	<pair src="DOUBLE_QT" dst='\"' />
+	<pair src="CR" dst="\r" />
+	<pair src="LF" dst="\n" />
+</replace>
+
+		</item>
+		<item key="ticket" type="simple" value="${ticket}"  />
+		<item key="user_id" type="simple" value="${user_id}"  />
+		<item key="postkey" type="simple" value="${postkey}"  />
+		<item key="premium" type="simple" value="${premium}"  />
+		<item key="comment" type="simple" value="${comment}">
+			<!-- コメント投稿 JSON エスケープ -->
+<bracket target="value" open="&quot;" close="&quot;" />
+<replace target="value" regex-options="ExplicitCapture IgnoreCase IgnorePatternWhitespace">
+	<pattern>
+		<![CDATA[
+		(?<BACK_SLASH>\\)
+		|
+		(?<DOUBLE_QT>")
+		|
+		# `"` でくくるからシングルクォートはエスケープしない
+		#(?<SINGLE_QT>')
+		#|
+		(?<CR>\r)
+		|
+		(?<LF>\n)
+		|
+		(?<PP>A=.*)
+		]]>
+	</pattern>
+	<pair src="BACK_SLASH" dst="\\" />
+	<pair src="SINGLE_QT" dst="\'" />
+	<pair src="DOUBLE_QT" dst='\"' />
+	<pair src="CR" dst="\r" />
+	<pair src="LF" dst="\n" />
+</replace>
+
+		</item>
+
+		<content trim="content" oneline="true">
+			<![CDATA[
+				[
+					{"ping":{"content":"rs:0"}},
+
+					{"ping":{"content":"ps:0"}},
+					{"chat": {
+						"thread":"${thread}",
+						"vpos":${vpos},
+						"mail":${commands},
+						"ticket":"${ticket}",
+						"user_id":${user_id},
+						"postkey":"${postkey}",
+						"premium":${premium},
+						"content":${comment}
+					}},
+					{"ping":{"content":"pf:0"}},
+
+					{"ping":{"content":"rf:0"}}
+				]
+			]]>
+		</content>
+	</mapping>
+
 	<!-- コメント投稿 -->
-	<mapping key="video-msg-post" content-type="text/xml">
+	<mapping key="video-msg-post_Issue665NA" content-type="text/xml">
 		<item key="thread" type="simple" value="${thread-id}"  />
 		<item key="vpos" type="simple" value="${vpos}"  />
 		<item key="commands" type="simple" value="${commands}"  />

@@ -19,19 +19,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
-    [Serializable, XmlRoot("packet")]
-    public class RawSmileVideoMsgPacketResultModel: ModelBase
+    public static class SmileVideoWatchAPI_Issue665NA_Utility
     {
-        #region property
+        public static JObject ConvertJsonFromWatchPage(string watchPageHtml)
+        {
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(watchPageHtml);
 
-        [XmlElement("chat_result")]
-        public RawSmileVideoMsgChatResultModel ChatResult { get; set; } = new RawSmileVideoMsgChatResultModel();
+            var watchApiDataElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
+            var watchApiDataText = HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
 
-        #endregion
+            var json = JObject.Parse(watchApiDataText);
+            return json;
+        }
     }
 }

@@ -58,6 +58,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -186,7 +187,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         RawSmileVideoFeedDetailModel FeedDetail { get; set; }
 
-        RawSmileVideoGetflvModel Getflv { get; set; }
+        RawSmileVideoGetflv_Issue665NA_Model Getflv_Issue665NA { get; set; }
+        SmileVideoWatchDataModel WatchData { get; set; }
+
         public RawSmileVideoGetthreadkeyModel Getthreadkey { get; private set; }
 
         #endregion
@@ -213,6 +216,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         ///動画実情報ファイル。
         /// </summary>
         public FileInfo GetflvFile { get; private set; }
+        public FileInfo WatchDataFile { get; private set; }
+        /// <summary>
+        /// コメントファイル。
+        /// <para>Flash版。</para>
+        /// </summary>
+        public FileInfo MsgFile_Issue665NA { get; private set; }
         /// <summary>
         /// コメントファイル。
         /// </summary>
@@ -228,7 +237,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 視聴ページのHTMLソース。
         /// </summary>
-        public string WatchPageHtmlSource { get; private set; }
+        public string WatchPageHtmlSource_Issue665NA { get; private set; }
         /// <summary>
         /// 動画紹介HTMLソース。
         /// </summary>
@@ -239,7 +248,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._descriptionHtmlSource, value); }
         }
 
-        public string PageVideoToken { get; private set; }
+        public string PageVideoToken { get { return WatchData.RawData.Api.Context.CsrfToken; } }
+        public string PageVideoToken_Issue665NA { get; set; }
+
         /// <summary>
         /// 元にしている動画生情報。
         /// </summary>
@@ -467,6 +478,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         public virtual SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
+        public bool IsCompatibleIssue665NA => MovieType == SmileVideoMovieType.Swf;
+
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
         public long SizeLow { get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
         public virtual int ViewCounter
@@ -685,18 +698,53 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
+                ThrowHasNotGetflv_Issue665NA();
 
-                return !string.IsNullOrWhiteSpace(Getflv.Error) || string.IsNullOrWhiteSpace(Getflv.MovieServerUrl);
+                return !string.IsNullOrWhiteSpace(Getflv_Issue665NA.Error) || string.IsNullOrWhiteSpace(Getflv_Issue665NA.MovieServerUrl);
             }
         }
 
+        public bool HasWatchDataError
+        {
+            get
+            {
+                ThrowHasNotWatchData();
+
+                return WatchData.RawData == null;//|| string.IsNullOrWhiteSpace(Getflv.MovieServerUrl);
+            }
+        }
+
+        [Obsolete]
         public bool Done
         {
             get
             {
-                ThrowHasNotGetflv();
-                return RawValueUtility.ConvertBoolean(Getflv.Done);
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return RawValueUtility.ConvertBoolean(Getflv_Issue665NA.Done);
+                }
+
+                ThrowHasNotGetflv_Issue665NA();
+                return RawValueUtility.ConvertBoolean(Getflv_Issue665NA.Done);
+            }
+        }
+
+        bool IsEconomyMode_Issue665NA
+        {
+            get
+            {
+                ThrowHasNotGetflv_Issue665NA();
+
+                if(!this._isEconomyMode.HasValue) {
+                    object outIsEconomyMode;
+                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv_Issue665NA.MovieServerUrl, typeof(string), ServiceType.SmileVideo);
+                    if(!converted) {
+                        throw new Exception();
+                    }
+                    this._isEconomyMode = (bool)outIsEconomyMode;
+                }
+
+                return this._isEconomyMode.Value;
             }
         }
 
@@ -704,11 +752,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
+                if(IsCompatibleIssue665NA) {
+                    return IsEconomyMode_Issue665NA;
+                }
+
+                ThrowHasNotWatchData();
 
                 if(!this._isEconomyMode.HasValue) {
                     object outIsEconomyMode;
-                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv.MovieServerUrl, typeof(string), ServiceType.SmileVideo);
+                    //var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv.MovieServerUrl, typeof(string), ServiceType.SmileVideo);
+                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, MovieServerUrl.OriginalString, typeof(string), ServiceType.SmileVideo);
                     if(!converted) {
                         throw new Exception();
                     }
@@ -732,8 +785,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
-                return new Uri(Getflv.MovieServerUrl);
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return new Uri(Getflv_Issue665NA.MovieServerUrl);
+                }
+
+                ThrowHasNotWatchData();
+                return new Uri(WatchData.RawData.Api.Video.SmileInfo.Url);
             }
         }
 
@@ -741,8 +799,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
-                return new Uri(Getflv.MessageServerUrl);
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return new Uri(Getflv_Issue665NA.MessageServerUrl);
+                }
+
+                ThrowHasNotWatchData();
+                return new Uri(WatchData.RawData.Api.Thread.ServerUrl);
             }
         }
 
@@ -750,8 +813,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
-                return new Uri(Getflv.MessageServerSubUrl);
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return new Uri(Getflv_Issue665NA.MessageServerSubUrl);
+                }
+
+                ThrowHasNotWatchData();
+                return new Uri(WatchData.RawData.Api.Thread.SubServerUrl);
             }
         }
 
@@ -759,8 +827,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
-                return Getflv.ThreadId;
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return Getflv_Issue665NA.ThreadId;
+                }
+
+                ThrowHasNotWatchData();
+                return WatchData.RawData.Api.Thread.Ids.Default;
+            }
+        }
+
+        public string CommunityThreadId
+        {
+            get
+            {
+
+                ThrowHasNotWatchData();
+                return WatchData.RawData.Api.Thread.Ids.Community;
             }
         }
 
@@ -768,8 +851,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
-                return Getflv.OptionalThreadId;
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return Getflv_Issue665NA.OptionalThreadId;
+                }
+
+                ThrowHasNotWatchData();
+                var dmcInfo = WatchData.RawData.Api.Video.DmcInfo;
+                if(dmcInfo != null) {
+                    return dmcInfo.Thread.OptionalThreadId;
+                }
+                return string.Empty; ;
             }
         }
 
@@ -777,8 +869,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
-                return Getflv.IsPremium == "1";
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return Getflv_Issue665NA.IsPremium == "1";
+                }
+
+                ThrowHasNotWatchData();
+                return RawValueUtility.ConvertBoolean(WatchData.RawData.Api.Viewer.IsPremium);
+            }
+        }
+
+        public IReadOnlyList<RawSmileVideoWatchDataTagModel> WatchTagItems
+        {
+            get
+            {
+                return WatchData.RawData.Api.Tags;
             }
         }
 
@@ -788,31 +893,65 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                ThrowHasNotGetflv();
-                return RawValueUtility.ConvertBoolean(Getflv.IsDmc);
+                if(IsCompatibleIssue665NA) {
+                    ThrowHasNotGetflv_Issue665NA();
+                    return RawValueUtility.ConvertBoolean(Getflv_Issue665NA.IsDmc);
+                }
+
+                ThrowHasNotWatchData();
+                return WatchData.RawData.Api.Video.DmcInfo != null;
             }
         }
-
-        public JObject DmcInfo
+        [Obsolete("SWF形式への互換性を残す目的でGetflv経由のDMCはもう保守しない")]
+        public JObject DmcInfo_Issue665NA
         {
             get
             {
-                ThrowHasNotGetflv();
+                ThrowHasNotGetflv_Issue665NA();
                 if(this._dmcInfo == null) {
-                    this._dmcInfo = JObject.Parse(Getflv.DmcInfo);
+                    this._dmcInfo = JObject.Parse(Getflv_Issue665NA.DmcInfo);
                 }
 
                 return this._dmcInfo;
             }
         }
 
+        public RawSmileVideoWatchDataDmcInfoModel DmcInfo2
+        {
+            get
+            {
+                ThrowHasNotWatchData();
+                return WatchData.RawData.Api.Video.DmcInfo;
+            }
+        }
+
+        public string UserKey
+        {
+            get
+            {
+                ThrowHasNotWatchData();
+                return WatchData.RawData.Api.Context.Userkey;
+            }
+        }
+
+        public bool HasOriginalPostedComment
+        {
+            get
+            {
+                ThrowHasNotWatchData();
+
+                return RawValueUtility.ConvertBoolean(WatchData.RawData.Api.Thread.HasOwnerThread);
+            }
+        }
         #endregion
 
         #endregion
 
         #endregion
 
-        public bool HasGetflv => Getflv != null;
+        public bool HasGetflv => Getflv_Issue665NA != null;
+
+        public bool HasWatchData => WatchData != null && WatchData.RawData != null;
 
         #region IndividualVideoSetting
 
@@ -952,7 +1091,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ClearCache()
         {
             try {
-                var checkResult = GarbageCollection(GarbageCollectionLevel.Large | GarbageCollectionLevel.Temporary, CacheSpan.NoCache, true);
+                var checkResult = GarbageCollection(GarbageCollectionLevel.Large | GarbageCollectionLevel.Small | GarbageCollectionLevel.Temporary, CacheSpan.NoCache, true);
                 if(checkResult.IsSuccess) {
                     Mediation.Logger.Information($"cache clear: [{VideoId}] {RawValueUtility.ConvertHumanLikeByte(checkResult.Result)}");
                 } else {
@@ -1016,7 +1155,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             WatchPageHtmlFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
             GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
-            MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            WatchDataFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("watch-data", "json")));
+            MsgFile_Issue665NA = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "json")));
             DmcFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "dmc", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
@@ -1030,10 +1171,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        void ThrowHasNotGetflv()
+        void ThrowHasNotGetflv_Issue665NA()
         {
             if(!HasGetflv) {
-                throw new InvalidOperationException(nameof(Getflv));
+                throw new InvalidOperationException(nameof(Getflv_Issue665NA));
+            }
+        }
+
+        void ThrowHasNotWatchData()
+        {
+            if(!HasWatchData) {
+                throw new InvalidOperationException(nameof(WatchData));
             }
         }
 
@@ -1074,13 +1222,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return Task.FromResult(CheckModel.Failure());
             }
 
-            var getflv = new Getflv(Mediation);
+            PageHtmlLoadState = LoadState.Loading;
+
+            var getflv = new Getflv_Issue665NA(Mediation);
 
             return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
+                PageHtmlLoadState = LoadState.Loaded;
                 var rawVideoGetflvModel = t.Result;
 
                 if(rawVideoGetflvModel != null) {
-                    Getflv = rawVideoGetflvModel;
+                    Getflv_Issue665NA = rawVideoGetflvModel;
+                    SetPageHtml_Issue665NA(rawVideoGetflvModel.HtmlSource, isSave);
+
                     this._dmcInfo = null;
                     if(isSave) {
                         SerializeUtility.SaveXmlSerializeToFile(GetflvFile.FullName, rawVideoGetflvModel);
@@ -1092,10 +1245,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
+        public Task<IReadOnlyCheck> LoadWatchDataAsync(bool isSave, bool usingDmc)
+        {
+            PageHtmlLoadState = LoadState.Loading;
+
+            var watchData = new WatchData(Mediation);
+            return watchData.LoadWatchDataAsync(WatchUrl, MovieType).ContinueWith(t => {
+                PageHtmlLoadState = LoadState.Loaded;
+                var wd = t.Result;
+                if(wd != null) {
+                    WatchData = wd;
+                    SetPageHtml(WatchData.HtmlSource, isSave);
+                    if(isSave) {
+                        SerializeUtility.SaveJsonDataToFile(WatchDataFile.FullName, WatchData.RawData);
+                        using(var writer = WatchPageHtmlFile.CreateText()) {
+                            writer.Write(WatchData.HtmlSource);
+                        }
+                    }
+                    return CheckModel.Success();
+                } else {
+                    return CheckModel.Failure();
+                }
+            });
+        }
+
         public Task LoadGetthreadkeyAsync()
         {
             var getThreadkey = new Getthreadkey(Mediation);
-            return getThreadkey.LoadAsync(ThreadId).ContinueWith(t => {
+            var targetThreadId = IsCompatibleIssue665NA
+                ? ThreadId
+                : CommunityThreadId
+            ;
+            return getThreadkey.LoadAsync(targetThreadId).ContinueWith(t => {
                 if(t.IsFaulted) {
                     return CheckModel.Failure(t.Exception.InnerException);
                 } else {
@@ -1105,31 +1286,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
-
-        public virtual Task SetPageHtmlAsync(string html, bool isSave)
+        void SetPageHtml_Issue665NA(string html, bool isSave)
         {
             PageHtmlLoadState = LoadState.Loading;
 
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
-            return Task.Run(() => {
-                WatchPageHtmlSource = html;
-                htmlDocument.LoadHtml(html);
-                var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
-                DescriptionHtmlSource = description.InnerHtml;
+            WatchPageHtmlSource_Issue665NA = html;
+            htmlDocument.LoadHtml(html);
+            var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
+            DescriptionHtmlSource = description.InnerHtml;
 
-                var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);
-                var flashvars = json.SelectToken("flashvars");
-                PageVideoToken = flashvars.Value<string>("csrfToken");
+            var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(html);
+            var flashvars = json.SelectToken("flashvars");
+            PageVideoToken_Issue665NA = flashvars.Value<string>("csrfToken");
 
-            }).ContinueWith(task => {
-                PageHtmlLoadState = LoadState.Loaded;
-            }).ContinueWith(task => {
-                if(isSave) {
-                    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
-                }
-            });
+            PageHtmlLoadState = LoadState.Loaded;
+            if(isSave) {
+                File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource_Issue665NA);
+            }
+        }
+
+        protected virtual void SetPageHtml(string html, bool isSave)
+        {
+            if(IsCompatibleIssue665NA) {
+                SetPageHtml_Issue665NA(html, isSave);
+                return;
+            }
+
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+
+            DescriptionHtmlSource = WatchData.RawData.Api.Video.Description;
+
+            PageHtmlLoadState = LoadState.Loaded;
         }
 
         public Task<IEnumerable<SmileVideoInformationViewModel>> LoadRelationVideosAsync(CacheSpan cacheSpan)
@@ -1188,22 +1380,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         /// <summary>
         /// </summary>
-        public virtual Task LoadLocalPageHtmlAsync()
+        public virtual void LoadLocalPageHtml()
         {
-            PageHtmlLoadState = LoadState.Preparation;
+            //PageHtmlLoadState = LoadState.Preparation;
 
             WatchPageHtmlFile.Refresh();
             if(WatchPageHtmlFile.Exists && Constants.MinimumHtmlFileSize <= WatchPageHtmlFile.Length) {
                 using(var stream = WatchPageHtmlFile.OpenText()) {
                     var html = stream.ReadToEnd();
-                    return SetPageHtmlAsync(html, false);
+                    SetPageHtml(html, false);
                 }
-            } else {
-                var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
-                return SmileVideoInformationUtility.LoadWatchPageHtmlSource(session, WatchUrl).ContinueWith(t => {
-                    var htmlSource = t.Result;
-                    SetPageHtmlAsync(htmlSource, true).Wait();
-                }, TaskContinuationOptions.AttachedToParent);
             }
         }
 
@@ -1422,6 +1608,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     GetflvFile.Delete();
                 }
 
+                WatchDataFile.Refresh();
+                if(WatchDataFile.Exists) {
+                    size += WatchDataFile.Length;
+                    WatchDataFile.Delete();
+                }
+
                 return size;
             } catch(Exception ex) {
                 Mediation.Logger.Warning($"{ex.Message}", ex);
@@ -1430,6 +1622,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return 0;
         }
 
+        long GarbageCollectionSmall(CacheSpan cacheSpan, bool force)
+        {
+            if(!force && cacheSpan.IsNoExpiration) {
+                return 0;
+            }
+
+            try {
+                long size = 0;
+
+                var msgCheck = GarbageCollectionFromFile(MsgFile, cacheSpan, force);
+                var msgCheck_Issue665NA = GarbageCollectionFromFile(MsgFile_Issue665NA, cacheSpan, force);
+
+                if(msgCheck.IsSuccess) {
+                    size += msgCheck.Result;
+                }
+                if(msgCheck_Issue665NA.IsSuccess) {
+                    size += msgCheck_Issue665NA.Result;
+                }
+
+                return size;
+            } catch(Exception ex) {
+                Mediation.Logger.Warning($"{ex.Message}", ex);
+            }
+
+            return 0;
+        }
 
         public IReadOnlyCheckResult<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
@@ -1446,6 +1664,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             long largeSize = 0;
             if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Large)) {
                 largeSize += GarbageCollectionLarge(cacheSpan, force);
+            }
+
+            if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Small)) {
+                largeSize += GarbageCollectionSmall(cacheSpan, force);
             }
 
             if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Temporary)) {

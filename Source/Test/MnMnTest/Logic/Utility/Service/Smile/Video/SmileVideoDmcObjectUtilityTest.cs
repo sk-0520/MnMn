@@ -24,7 +24,7 @@ namespace MnMnTest.Logic.Utility.Service.Smile.Video
                 "archive_h264_600kbps_360p",  // 0<25
             };
             var mux = new RawSmileVideoDmcSrcIdToMultiplexerModel();
-            mux.VideoSrcIds.InitializeRange(items);
+            mux.SrcId.VideoSrcIds.InitializeRange(items);
             var tests = new[] {
                 new { num = 100, result = "archive_h264_2000kbps_720p" },
                 new { num = 70, result = "archive_h264_1000kbps_540p" },
@@ -48,7 +48,7 @@ namespace MnMnTest.Logic.Utility.Service.Smile.Video
                 "archive_h264_600kbps_360p",
             };
             var mux = new RawSmileVideoDmcSrcIdToMultiplexerModel();
-            mux.VideoSrcIds.InitializeRange(items);
+            mux.SrcId.VideoSrcIds.InitializeRange(items);
             var tests = new[] {
                 new { num = 100, result = "archive_h264_1000kbps_540p" },
                 new { num = 70, result = "archive_h264_1000kbps_540p" },
@@ -82,7 +82,7 @@ namespace MnMnTest.Logic.Utility.Service.Smile.Video
                 "archive_h264_10kbps_0p",
             };
             var mux = new RawSmileVideoDmcSrcIdToMultiplexerModel();
-            mux.VideoSrcIds.InitializeRange(items);
+            mux.SrcId.VideoSrcIds.InitializeRange(items);
             var tests = new[] {
                 new { num = 100, result = "archive_h264_10kbps_0p" },
                 new { num = 90, result = "archive_h264_10kbps_0p" },

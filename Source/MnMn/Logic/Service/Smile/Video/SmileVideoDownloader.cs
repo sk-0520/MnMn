@@ -25,18 +25,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoDownloader: Downloader
     {
-        public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri)
-            : base(downloadUri, userAgentCreator)
-        {
-            ReferrerUri = referrerUri;
-        }
+        //public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, SmileVideoMovieType movieType)
+        //    : base(downloadUri, userAgentCreator)
+        //{
+        //    ReferrerUri = referrerUri;
+        //    MovieType = movieType;
+        //}
+
         public SmileVideoDownloader(Uri downloadUri, IHttpUserAgentCreator userAgentCreator, Uri referrerUri, CancellationToken cancelToken)
             : base(downloadUri, userAgentCreator, cancelToken)
         {
@@ -49,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public Uri ReferrerUri { get; }
         public TimeSpan WatchToMovieWaitTime { get; set; } = Constants.ServiceSmileVideoWatchToMovieWaitTime;
 
+        [Obsolete]
         public string PageHtml { get; private set; }
 
         #endregion
@@ -59,9 +65,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             try {
                 UserAgent = UserAgentCreator.CreateHttpUserAgent();
-                // DMC形式は不要だと思うけど他との互換性のため残しとく
-                var task = await SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
-                PageHtml = task;
+                // しょっぱな視聴ページを確認するからいらない
+                //// DMC形式は不要だと思うけど他との互換性のため残しとく
+                //var task = await SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
+
+                //PageHtml = WatchData.HtmlSource;
 
                 //cancel = false;
                 UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;

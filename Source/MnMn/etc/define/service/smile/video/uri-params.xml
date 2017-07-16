@@ -20,6 +20,10 @@
 		<item key="thread" value="${thread-id}" />
 	</param>
 
+	<param key="video-watch-data-page">
+		<item key="as3" value="${as3}" />
+	</param>
+
 	<param key="video-newarrival">
 		<item key="rss" value="2.0" />
 		<item key="lang" value="${lang}" />

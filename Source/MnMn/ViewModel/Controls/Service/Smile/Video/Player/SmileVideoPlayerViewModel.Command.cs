@@ -399,7 +399,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o => PostCommentAsync(PlayTime).ConfigureAwait(false),
+                    o => {
+                        if(Information.IsCompatibleIssue665NA) {
+                            PostComment_Issue665NA_Async(PlayTime).ConfigureAwait(false);
+                            return;
+                        }
+
+                        PostCommentAsync(PlayTime).ConfigureAwait(false);
+                    },
                     o => !string.IsNullOrWhiteSpace(PostCommentBody)
                 );
             }

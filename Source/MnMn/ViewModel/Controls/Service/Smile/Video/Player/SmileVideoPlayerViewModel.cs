@@ -431,7 +431,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Player.Stop();
             }
 
-            Mediation.Logger.Debug($"{VideoId}: stoped");
+            Mediation.Logger.Debug($"{VideoId}: stopped");
             PlayerState = PlayerState.Stop;
             VideoPosition = 0;
             if(isClearComment) {
@@ -662,8 +662,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-
-        protected virtual void CheckTagPedia()
+        void CheckTagPedia_Issue665NA()
         {
             Debug.Assert(Information.PageHtmlLoadState == LoadState.Loaded);
 
@@ -672,8 +671,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
-            htmlDocument.LoadHtml(Information.WatchPageHtmlSource);
-            var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(Information.WatchPageHtmlSource);
+            htmlDocument.LoadHtml(Information.WatchPageHtmlSource_Issue665NA);
+            var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(Information.WatchPageHtmlSource_Issue665NA);
             var videoDetail = json?.SelectToken("videoDetail");
             var tagList = videoDetail?.SelectToken("tagList");
             if(tagList != null) {
@@ -686,6 +685,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         if(map.TryGetValue(tagName, out tag)) {
                             tag.ExistPedia = true;
                         }
+                    }
+                }
+                Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
+                    CommandManager.InvalidateRequerySuggested();
+                }), DispatcherPriority.ApplicationIdle);
+            }
+        }
+
+        protected virtual void CheckTagPedia()
+        {
+            Debug.Assert(Information.PageHtmlLoadState == LoadState.Loaded);
+
+            IsCheckedTagPedia = true;
+
+            if(Information.IsCompatibleIssue665NA) {
+                CheckTagPedia_Issue665NA();
+                return;
+            }
+
+            if(Information.WatchTagItems.Any()) {
+                var map = TagItems.ToDictionary(tk => tk.TagName, tv => tv);
+                foreach(var tagItem in Information.WatchTagItems) {
+                    SmileVideoTagViewModel tag;
+                    if(map.TryGetValue(tagItem.Name, out tag)) {
+                        tag.ExistPedia = RawValueUtility.ConvertBoolean(tagItem.IsDictionaryExists);
                     }
                 }
                 Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
@@ -1162,15 +1186,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ResetCommentInformation();
         }
 
-        protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
+        protected async Task PostComment_Issue665NA_Async(TimeSpan videoPosition)
         {
             // #548
             //if(CommentThread == null) {
             //    var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
             //    ImportCommentThread(rawMessagePacket);
             //}
-            var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
-            ImportCommentThread(rawMessagePacket);
+            var rawMessagePacket = await LoadMsg_Issue665NA_CoreAsync(0, 0, 0, 0, 0);
+            var CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
 
             var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
             Debug.Assert(CommentThread.Thread == Information.ThreadId);
@@ -1185,11 +1209,80 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Information($"postkey = {postKey}");
             }
 
-            var resultPost = await msg.PostAsync(
+            var resultPost = await msg.Post_Issue665NA_Async(
                 Information.MessageServerUrl,
                 Information.ThreadId,
                 videoPosition,
                 CommentThread.Ticket,
+                postKey.PostKey,
+                PostCommandItems,
+                PostCommentBody
+            );
+            if(resultPost == null) {
+                SetCommentInformation($"fail: {nameof(msg.Post_Issue665NA_Async)}");
+                return;
+            }
+            var status = SmileVideoMsgUtility.ConvertResultStatus(resultPost.ChatResult.Status);
+            if(status != SmileVideoCommentResultStatus.Success) {
+                //TODO: ユーザー側に通知
+                var message = DisplayTextUtility.GetDisplayText(status);
+                SetCommentInformation($"fail: {message}, {status}");
+                return;
+            }
+
+            //投稿コメントを画面上に流す
+            //TODO: 投稿者判定なし
+            var commentViewModel = CreateSingleComment(resultPost.ChatResult, videoPosition);
+
+            AppendComment(commentViewModel, true);
+
+            // 次回読み込み時にコメントを更新できるようにタイムスタンプを過去にしておく
+            MarkCommentCacheTimestamp_Issue665NA();
+        }
+
+        protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
+        {
+            // #548 対策
+            var rawMessagePacket = await LoadMsgCoreAsync(0, new SmileVideoMsgRangeModel(0, 0, 0, 0));
+            var packetIdKey = Information.IsChannelVideo
+                ? SmileVideoMsgPacketId.Community
+                : SmileVideoMsgPacketId.Normal
+            ;
+            int packetId;
+            if(!rawMessagePacket.PacketId.TryGetValue(packetIdKey, out packetId)) {
+                // TODO: ユーザ表示なし
+                SetCommentInformation($"packet id not fond: {nameof(packetIdKey)} = {packetIdKey}");
+                return;
+            }
+
+            var tagetItem = rawMessagePacket.Items
+                .Where(i => i.Leaf == null || i.GlobalNumRes == null)
+                .SkipWhile(i => i.Ping == null || (i.Ping != null && i.Ping.Content != $"ps:{packetId}"))
+                .FirstOrDefault(i => i.Thread != null)
+            ;
+            if(tagetItem == null) {
+                // TODO: ユーザ表示なし
+                SetCommentInformation($"not found `ps:{packetId}` thread");
+                return;
+            }
+
+            var commentCount = RawValueUtility.ConvertInteger(tagetItem.Thread.LastRes ?? "0");
+
+            var msg = new Msg(Mediation);
+
+            var postKey = await msg.LoadPostKeyAsync(tagetItem.Thread.Thread, commentCount);
+            if(postKey == null) {
+                SetCommentInformation(Properties.Resources.String_App_Define_Service_Smile_Video_Comment_PostKeyError);
+                return;
+            } else {
+                Mediation.Logger.Information($"postkey = {postKey}");
+            }
+
+            var resultPost = await msg.PostAsync(
+                Information.MessageServerUrl,
+                tagetItem.Thread.Thread,
+                videoPosition,
+                tagetItem.Thread.Ticket,
                 postKey.PostKey,
                 PostCommandItems,
                 PostCommentBody
@@ -1212,8 +1305,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             AppendComment(commentViewModel, true);
 
-            // コメント再取得
-            await LoadMsgAsync(CacheSpan.NoCache);
+            // 次回読み込み時にコメントを更新できるようにタイムスタンプを過去にしておく
+            MarkCommentCacheTimestamp();
         }
 
         void SetCommentInformation(string text)
@@ -1645,6 +1738,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return players;
         }
 
+        void MarkCommentCacheTimestampCore(FileInfo file)
+        {
+            if(file == null) {
+                return;
+            }
+            file.Refresh();
+            if(!file.Exists) {
+                return;
+            }
+            var backTime = DateTime.Now - Constants.ServiceSmileVideoMsgCacheTime;
+            try {
+                var createDiffTime = file.LastWriteTime - file.CreationTime;
+                file.CreationTime = backTime - createDiffTime;
+                file.LastWriteTime = backTime;
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+            }
+        }
+
+        void MarkCommentCacheTimestamp_Issue665NA()
+        {
+            MarkCommentCacheTimestampCore(Information.MsgFile_Issue665NA);
+        }
+        void MarkCommentCacheTimestamp()
+        {
+            MarkCommentCacheTimestampCore(Information.MsgFile);
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1776,7 +1897,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-        protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
+        protected override Task LoadComment_Issue665NA_Async(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket)
+        {
+            var comments = SmileVideoCommentUtility.CreateCommentViewModels_Issue665NA(rawMsgPacket, CommentStyleSetting);
+            CommentList.InitializeRange(comments);
+            CommentListCount = CommentList.Count;
+
+            var chartItems = SmileVideoCommentUtility.CreateCommentChartItems(CommentList, TotalTime);
+            CommentChartList.InitializeRange(chartItems);
+            ShowCommentChart = CommentChartList.Any(c => 0 < c.Y);
+
+            NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsOriginalPoster));
+            var userSequence = SmileVideoCommentUtility.CreateFilteringUserItems(NormalCommentList);
+            FilteringUserList.InitializeRange(userSequence);
+            OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
+            OriginalPosterCommentListCount = OriginalPosterCommentList.Count;
+
+            ChangedCommentFillBackground();
+            ApprovalComment();
+
+            if(FilteringCommentType != SmileVideoFilteringCommentType.All) {
+                RefreshFilteringComment();
+            }
+
+            return base.LoadComment_Issue665NA_Async(rawMsgPacket);
+        }
+
+        protected override Task LoadCommentAsync(SmileVideoMsgPackSettingModel rawMsgPacket)
         {
             var comments = SmileVideoCommentUtility.CreateCommentViewModels(rawMsgPacket, CommentStyleSetting);
             CommentList.InitializeRange(comments);
