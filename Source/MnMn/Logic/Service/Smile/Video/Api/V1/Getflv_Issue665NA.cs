@@ -81,6 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
                 var convertedFlvText = HttpUtility.UrlDecode(rawFlvText);
                 var result = ConvertFromRawData(convertedFlvText);
+                result.HtmlSource = response.Result;
 
                 if(usingDmc) {
                     result.IsDmc = flashvars.SelectToken("isDmc")?.ToString();

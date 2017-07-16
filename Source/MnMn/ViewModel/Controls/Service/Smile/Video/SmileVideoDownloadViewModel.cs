@@ -275,10 +275,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadDataWithSessionEnd()
         { }
 
-        [Obsolete]
         protected virtual void OnLoadGetflvStart()
         { }
-        [Obsolete]
         protected virtual void OnLoadGetflvEnd()
         { }
 
@@ -287,7 +285,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadWatchDataEnd()
         { }
 
-        [Obsolete]
         async Task LoadGetflvAsync()
         {
             OnLoadGetflvStart();
@@ -720,17 +717,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadDataWithSessionStart();
 
             var tcs = new CancellationTokenSource();
-#if ENABLED_GETFLV
-            await LoadGetflvAsync();
-#endif
-            await LoadWatchDataAsync();
 
-            if(Information.InformationLoadState == LoadState.Failure || /*Information.HasGetflvError*/ Information.HasWatchDataError) {
-                InformationLoadState = LoadState.Failure;
-                return;
+            if(Information.IsCompatibleIssue665NA) {
+                await LoadGetflvAsync();
+                if(Information.InformationLoadState == LoadState.Failure || Information.HasGetflvError) {
+                    InformationLoadState = LoadState.Failure;
+                    return;
+                }
+            } else {
+                await LoadWatchDataAsync();
+                if(Information.InformationLoadState == LoadState.Failure || Information.HasWatchDataError) {
+                    InformationLoadState = LoadState.Failure;
+                    return;
+                }
             }
 
-            var commentTask = LoadMsgAsync(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext());
+            var commentTask = Information.IsCompatibleIssue665NA
+                ? LoadMsg_Issue665NA_Async(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadComment_Issue665NA_Async(task.Result), TaskScheduler.FromCurrentSynchronizationContext())
+                : LoadMsgAsync(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext())
+            ;
 
             // キャッシュとかエコノミー確認であれこれ分岐
             Debug.Assert(Information != null);

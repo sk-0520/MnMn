@@ -237,8 +237,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 視聴ページのHTMLソース。
         /// </summary>
-        [Obsolete]
-        public string WatchPageHtmlSource { get; private set; }
+        public string WatchPageHtmlSource_Issue665NA { get; private set; }
         /// <summary>
         /// 動画紹介HTMLソース。
         /// </summary>
@@ -250,6 +249,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         public string PageVideoToken { get { return WatchData.RawData.Api.Context.CsrfToken; } }
+        public string PageVideoToken_Issue665NA { get; set; }
+
         /// <summary>
         /// 元にしている動画生情報。
         /// </summary>
@@ -901,7 +902,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return WatchData.RawData.Api.Video.DmcInfo != null;
             }
         }
-
+        [Obsolete("SWF形式への互換性を残す目的でGetflv経由のDMCはもう保守しない")]
         public JObject DmcInfo_Issue665NA
         {
             get
@@ -950,7 +951,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public bool HasGetflv => Getflv_Issue665NA != null;
 
-        public bool HasWatchData => WatchData != null;
+        public bool HasWatchData => WatchData != null && WatchData.RawData != null;
 
         #region IndividualVideoSetting
 
@@ -1221,13 +1222,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return Task.FromResult(CheckModel.Failure());
             }
 
+            PageHtmlLoadState = LoadState.Loading;
+
             var getflv = new Getflv_Issue665NA(Mediation);
 
             return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
+                PageHtmlLoadState = LoadState.Loaded;
                 var rawVideoGetflvModel = t.Result;
 
                 if(rawVideoGetflvModel != null) {
                     Getflv_Issue665NA = rawVideoGetflvModel;
+                    SetPageHtml_Issue665NA_Async(rawVideoGetflvModel.HtmlSource, isSave).Wait();
+
                     this._dmcInfo = null;
                     if(isSave) {
                         SerializeUtility.SaveXmlSerializeToFile(GetflvFile.FullName, rawVideoGetflvModel);
@@ -1265,7 +1271,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public Task LoadGetthreadkeyAsync()
         {
             var getThreadkey = new Getthreadkey(Mediation);
-            return getThreadkey.LoadAsync(CommunityThreadId).ContinueWith(t => {
+            var targetThreadId = IsCompatibleIssue665NA
+                ? ThreadId
+                : CommunityThreadId
+            ;
+            return getThreadkey.LoadAsync(targetThreadId).ContinueWith(t => {
                 if(t.IsFaulted) {
                     return CheckModel.Failure(t.Exception.InnerException);
                 } else {
@@ -1275,9 +1285,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
+        public virtual Task SetPageHtml_Issue665NA_Async(string html, bool isSave)
+        {
+            PageHtmlLoadState = LoadState.Loading;
+
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            return Task.Run(() => {
+                WatchPageHtmlSource_Issue665NA = html;
+                htmlDocument.LoadHtml(html);
+                var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
+                DescriptionHtmlSource = description.InnerHtml;
+
+                var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(html);
+                var flashvars = json.SelectToken("flashvars");
+                PageVideoToken_Issue665NA = flashvars.Value<string>("csrfToken");
+
+            }).ContinueWith(task => {
+                PageHtmlLoadState = LoadState.Loaded;
+            }).ContinueWith(task => {
+                if(isSave) {
+                    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource_Issue665NA);
+                }
+            });
+        }
 
         public virtual Task SetPageHtmlAsync(string html, bool isSave)
         {
+            if(IsCompatibleIssue665NA) {
+                return SetPageHtml_Issue665NA_Async(html, isSave);
+            }
+
             //PageHtmlLoadState = LoadState.Loading;
 
             var htmlDocument = new HtmlDocument() {
