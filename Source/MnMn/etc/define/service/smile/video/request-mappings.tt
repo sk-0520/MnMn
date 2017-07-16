@@ -126,6 +126,62 @@
 		</content>
 	</mapping>
 
+	<mapping key="video-msg-post" content-type="text/plain">
+		<item key="thread" type="simple" value="${thread-id}"  />
+		<item key="vpos" type="simple" value="${vpos}"  />
+		<item key="commands" type="simple" value="${commands}"  />
+		<item key="ticket" type="simple" value="${ticket}"  />
+		<item key="user_id" type="simple" value="${user_id}"  />
+		<item key="postkey" type="simple" value="${postkey}"  />
+		<item key="premium" type="simple" value="${premium}"  />
+		<item key="comment" type="simple" value="${comment}">
+			<replace target="value" regex-options="ExplicitCapture IgnoreCase IgnorePatternWhitespace">
+				<pattern>
+					<![CDATA[
+					(?<BACK_SLASH>\\)
+					|
+					(?<SINGLE_QT>")
+					|
+					(?<DOUBLE_QT>')
+					|
+					(?<CR>\r)
+					|
+					(?<LF>\n)
+					|
+					(?<PP>A=.*)
+					]]>
+				</pattern>
+				<pair src="BACK_SLASH" dst="\\" />
+				<pair src="SINGLE_QT" dst="\'" />
+				<pair src="DOUBLE_QT" dst='\"' />
+				<pair src="CR" dst="\r" />
+				<pair src="LF" dst="\n" />
+			</replace>
+		</item>
+
+		<content trim="content" oneline="true">
+			<![CDATA[
+				[
+					{"ping":{"content":"rs:0"}},
+
+					{"ping":{"content":"ps:0"}},
+					{"chat": {
+						thread="${thread}"
+						vpos="${vpos}"
+						mail="${commands}"
+						ticket="${ticket}"
+						user_id="${user_id}"
+						postkey="${postkey}"
+						premium="${premium}"
+						content=${comment}
+					}}
+					{"ping":{"content":"pf:0"}},
+					{"ping":{"content":"rf:0"}},
+				]
+			]]>
+		</content>
+	</mapping>
+
 	<!-- コメント投稿 -->
 	<mapping key="video-msg-post_Issue665NA" content-type="text/xml">
 		<item key="thread" type="simple" value="${thread-id}"  />

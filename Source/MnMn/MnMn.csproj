@@ -329,6 +329,8 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItem.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemCustom.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemNode.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyMappingItemReplace.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyMappingItemReplacePair.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoCheckItLaterFrom.cs" />
@@ -444,6 +446,8 @@
     <Compile Include="Model\ExpressionElementModel.cs" />
     <Compile Include="Model\ExpressionItemModel.cs" />
     <Compile Include="Model\ExpressionsModel.cs" />
+    <Compile Include="Model\MappingItemReplacePairModel.cs" />
+    <Compile Include="Model\MappingItemReplaceModel.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />

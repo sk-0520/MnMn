@@ -1291,15 +1291,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Information($"postkey = {postKey}");
             }
 
-            //var resultPost = await msg.Post_Issue665NA_Async(
-            //    Information.MessageServerUrl,
-            //    Information.ThreadId,
-            //    videoPosition,
-            //    CommentThread.Ticket,
-            //    postKey.PostKey,
-            //    PostCommandItems,
-            //    PostCommentBody
-            //);
+            //var resultPost = 
+            await msg.PostAsync(
+                Information.MessageServerUrl,
+                Information.ThreadId,
+                videoPosition,
+                tagetItem.Thread.Ticket,
+                postKey.PostKey,
+                PostCommandItems,
+                PostCommentBody
+            );
             //if(resultPost == null) {
             //    SetCommentInformation($"fail: {nameof(msg.Post_Issue665NA_Async)}");
             //    return;

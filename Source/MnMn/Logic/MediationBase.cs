@@ -367,13 +367,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ;
         }
 
-        protected string BuildMapping(string s, string target, IReadOnlyMappingItem item)
+        protected string BuildMapping(string rawValue, string target, IReadOnlyMappingItem item)
         {
+            var replacedValue = rawValue;
+            if(item.Replace.Any()) {
+                var replace = item.Replace.FirstOrDefault(b => b.Target == target);
+                if(replace != null) {
+                    var map = replace.Pairs.ToDictionary(i => i.Source, i => i.Destination);
+                    replacedValue = replace.Regex.Replace(rawValue, m => {
+                        foreach(var pair in map) {
+                            var group = m.Groups[pair.Key];
+                            if(group.Success) {
+                                return pair.Value.Replace("$[SRC]", group.Value);
+                            }
+                        }
+                        return m.Value;
+                    });
+                }
+            }
+
             var bracket = item.Brackets.FirstOrDefault(b => b.Target == target);
             if(bracket == null) {
-                return s;
+                return replacedValue;
             }
-            return $"{bracket.Open}{s}{bracket.Close}";
+
+            return $"{bracket.Open}{replacedValue}{bracket.Close}";
         }
 
         protected string ToMappingItemString(IReadOnlyMappingItem item, IDictionary<string, string> replaceMap)
