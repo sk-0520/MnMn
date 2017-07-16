@@ -404,7 +404,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 
         void ExportDummyMsgFile(DirectoryInfo outputDirectory, TimeSpan length, CommentCreateType commentType, int commentNormalLength, int commentOpLength)
         {
-            var rawMessagePacket = new RawSmileVideoMsgPacketModel();
+            var rawMessagePacket = new RawSmileVideoMsgPacket_Issue665NA_Model();
 
             var random = new Random();
 

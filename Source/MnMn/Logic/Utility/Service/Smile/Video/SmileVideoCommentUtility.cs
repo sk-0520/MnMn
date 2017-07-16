@@ -350,7 +350,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <param name="rawMsgPacket"></param>
         /// <param name="setting"></param>
         /// <returns>生成されたコメント群。いい感じに並び替えられてる。</returns>
-        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels(RawSmileVideoMsgPacketModel rawMsgPacket, SmileVideoCommentStyleSettingModel styleSetting)
+        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket, SmileVideoCommentStyleSettingModel styleSetting)
         {
             var comments = rawMsgPacket.Chat
                 .Where(c => !string.IsNullOrEmpty(c.Content))

@@ -24,7 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawSmileVideoMsgThreadModel: ModelBase
+    public class RawSmileVideoMsgThread_Issue665NA_Model: ModelBase
     {
         [XmlAttribute("server_time")]
         public string ServerTime { get; set; }

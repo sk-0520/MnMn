@@ -25,13 +25,13 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
     [Serializable, XmlRoot("packet")]
-    public class RawSmileVideoMsgPacketResultModel: ModelBase
+    public class RawSmileVideoMsgPacket_Issue665NA_Model: ModelBase
     {
-        #region property
-
-        [XmlElement("chat_result")]
-        public RawSmileVideoMsgChatResultModel ChatResult { get; set; } = new RawSmileVideoMsgChatResultModel();
-
-        #endregion
+        [XmlElement("view_counter")]
+        public RawSmileVideoMsgViewCounterModel ViewCounter { get; set; }
+        [XmlElement("thread")]
+        public CollectionModel<RawSmileVideoMsgThread_Issue665NA_Model> Thread { get; set; } = new CollectionModel<RawSmileVideoMsgThread_Issue665NA_Model>();
+        [XmlElement("chat")]
+        public CollectionModel<RawSmileVideoMsgChatModel> Chat { get; set; } = new CollectionModel<RawSmileVideoMsgChatModel>();
     }
 }

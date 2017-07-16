@@ -993,7 +993,7 @@
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoInformationCacheRequestModel.cs" />
     <Compile Include="Model\Request\CacheDataRequestModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatResultModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketResultModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacket_Issue665NA_ResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoPostKeyModel.cs" />
     <Compile Include="Model\Setting\RunningInformationSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileMyListBookmarkItemModel.cs" />
@@ -1094,8 +1094,8 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoAccountHistoryModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgThreadModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacket_Issue665NA_Model.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgThread_Issue665NA_Model.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgViewCounterModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRecommendItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRecommendModel.cs" />

@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected long DownloadStartPosition { get; private set; }
 
-        protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
+        protected RawSmileVideoMsgThread_Issue665NA_Model CommentThread { get; private set; }
 
         public string VideoId
         {
@@ -553,12 +553,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadMsgEnd()
         { }
 
-        protected void ImportCommentThread(RawSmileVideoMsgPacketModel rawMessagePacket)
+        protected void ImportCommentThread(RawSmileVideoMsgPacket_Issue665NA_Model rawMessagePacket)
         {
             CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
         }
 
-        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
+        protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
         {
             await Information.LoadGetthreadkeyAsync();
 
@@ -577,7 +577,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             );
         }
 
-        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgAsync(CacheSpan msgCacheSpan)
+        protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsgAsync(CacheSpan msgCacheSpan)
         {
             OnLoadMsgStart();
 
@@ -614,7 +614,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return rawMessagePacket;
         }
 
-        protected virtual Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
+        protected virtual Task LoadCommentAsync(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket)
         {
             CommentLoadState = LoadState.Loaded;
             return Task.CompletedTask;

@@ -64,14 +64,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        public static RawSmileVideoMsgPacketModel ConvertFromRawPacketData(Stream stream)
+        public static RawSmileVideoMsgPacket_Issue665NA_Model ConvertFromRawPacketData(Stream stream)
         {
-            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketModel>(stream);
+            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacket_Issue665NA_Model>(stream);
         }
 
-        public static RawSmileVideoMsgPacketResultModel ConvertFromRawPacketResultData(Stream stream)
+        public static RawSmileVideoMsgPacket_Issue665NA_ResultModel ConvertFromRawPacketResultData(Stream stream)
         {
-            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketResultModel>(stream);
+            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacket_Issue665NA_ResultModel>(stream);
         }
 
         string ReplaceJsonApiUrl(Uri msgServerUri)
@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
+        public async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
         {
             var packetMap = new Dictionary<Packet, int>() {
                 [Packet.Normal] = 0,
@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 return null;
             }
         }
-        public async Task<RawSmileVideoMsgPacketResultModel> PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
+        public async Task<RawSmileVideoMsgPacket_Issue665NA_ResultModel> PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
         {
             await LoginIfNotLoginAsync();
 
