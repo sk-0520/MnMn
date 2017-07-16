@@ -457,7 +457,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             });
         }
 
-        protected string FiltereCommentContent(string rawContent)
+        protected string KillCommentContent(string rawContent)
         {
             var reg = new Regex(
                 @"
@@ -472,7 +472,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 )
                 ",
                  /*RegexOptions.Compiled |*/ RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture
-           );
+            );
             return reg.Replace(rawContent, string.Empty);
         }
 
@@ -483,12 +483,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 trimedContentValue = TrimInlineContent(trimedContentValue);
             }
 
-            var filteredCommentContentValue = trimedContentValue;
+            var killCommentContentValue = trimedContentValue;
             if(content.IsEnabledComment) {
-                filteredCommentContentValue = FiltereCommentContent(filteredCommentContentValue);
+                killCommentContentValue = KillCommentContent(killCommentContentValue);
             }
 
-            return filteredCommentContentValue;
+            return killCommentContentValue;
+        }
+
+        protected string FilterMappingContent(string mappedContentValue)
+        {
+            var reg = new Regex(
+                @"
+                \$\[filter:(?<COND>.+):/\*\]
+                (?<VALUE>[\s\S]+?)
+                \$\[filter:\*/\]
+                ",
+                 /*RegexOptions.Compiled |*/ RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture
+            );
+            return reg.Replace(mappedContentValue, m => {
+                var rawCondition = m.Groups["COND"].Value;
+                var value = m.Groups["VALUE"].Value;
+
+                if(RawValueUtility.ConvertBoolean(rawCondition)) {
+                    return value;
+                }
+
+                return string.Empty;
+            });
         }
 
         protected IReadOnlyMappingResult GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
@@ -515,6 +537,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 )
             ;
             var replacedContent = ReplaceString(preprocessedContentValue, mappingParams);
+
+            if(mapping.Content.IsEnabledFilter) {
+                replacedContent = FilterMappingContent(replacedContent);
+            }
+
             var trimMap = new Dictionary<MappingContentTrim, Func<string, string>>() {
                 { MappingContentTrim.None, s => s },
                 { MappingContentTrim.Block, s => string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c)).Reverse()) },

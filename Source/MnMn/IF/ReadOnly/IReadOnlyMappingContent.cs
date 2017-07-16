@@ -37,6 +37,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
         /// </summary>
         bool IsEnabledInlineTrime { get; set; }
 
+        /// <summary>
+        /// 条件フィルタを有効にするか。
+        /// <para>書式: $[filter:真偽値:/*] $[filter:真偽値:*/] 複数行フィルタ</para>
+        /// <para>一行のみはかったるいんでいらない</para>
+        /// </summary>
+        bool IsEnabledFilter { get; set; }
+
         string Value { get; }
 
         XmlNode[] CDataValue { get; }

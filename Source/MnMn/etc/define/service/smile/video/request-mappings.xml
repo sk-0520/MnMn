@@ -39,20 +39,24 @@
 	</item>
 
 
-		<content trim="content" oneline="true" comment="true" inline-trime="true">
+		<content trim="content" oneline="true" comment="true" inline-trime="true" filter="true">
 			<![CDATA[
 				[
-				$[//]	{"ping":{"content":"rs:0"}},
+					{"ping":{"content":"rs:0"}},
 					{"ping":{"content":"ps:0"}},
+					$[filter:${use-op}:/*]
 					{"thread":$[:]               {"thread":"${thread-id}", "version":"${version}","language":${language},"user_id":${user-id},$[:]                           "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${userkey}}},
+					$[filter:*/]
 					{"ping":{"content":"pf:0"}},
 					{"ping":{"content":"ps:1"}},
 					{"thread_leaves":$[:]        {"thread":"${thread-id}",$[:]                    "language":${language},"user_id":${user-id},${content} $[:]                                             "scores":${scores},"nicoru":${nicoru},${userkey}}},
 					{"ping":{"content":"pf:1"}},
-				$[/*]	{"ping":{"content":"ps:2"}},
+					$[filter:${use-op}:/*]
+					{"ping":{"content":"ps:2"}},
 					{"thread":$[:]               {"thread":"${thread-id}", "version":"${version-old}","language":${language},"user_id":${user-id},$[:]                         "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${res_from}"fork":${fork},${userkey}}},
 					{"ping":{"content":"pf:2"}},
-				$[*/]	{"ping":{"content":"rf:0"}}
+					$[filter:*/]
+					{"ping":{"content":"rf:0"}}
 				]
 			]]>
 		</content>

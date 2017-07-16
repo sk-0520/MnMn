@@ -53,6 +53,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("inline-trime")]
         public bool IsEnabledInlineTrime { get; set; }
 
+        [XmlAttribute("filter")]
+        public bool IsEnabledFilter { get; set; }
+
 
         [XmlIgnore]
         public string Value { get; set; }
