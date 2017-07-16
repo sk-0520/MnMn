@@ -11,6 +11,7 @@
 
   xmlns:app_view_converter_service_smile="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_controls_service_smile="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
@@ -39,8 +40,55 @@
     </Grid.ColumnDefinitions>
 
     <TabControl Grid.Column="0">
-      <TabItem Header="bookmark" />
-      <TabItem Header="history" />
+      <TabItem Header="ブックマーク" app_view_attachment:MenuTabItem.Header="{Binding Header, RelativeSource={RelativeSource Self}}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <ToolBar Grid.Row="0">
+            <Button Command="{Binding MoveUpBookmarkSelectedItemCommand}">
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+            </Button>
+            <Button Command="{Binding MoveDownBookmarkSelectedItemCommand}">
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+            </Button>
+          </ToolBar>
+
+          <ListBox Grid.Row="1" ItemsSource="{Binding ChannelBookmarkItems}" SelectedItem="{Binding SelectedChannelBookmark}">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding ChannelName}" />
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </Grid>
+      </TabItem>
+      <TabItem Header="履歴" app_view_attachment:MenuTabItem.Header="{Binding Header, RelativeSource={RelativeSource Self}}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <ListBox Grid.Row="0" ItemsSource="{Binding ChannelHistoryItems}" SelectedItem="{Binding SelectedChannelHistory}">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding ChannelName}" />
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </Grid>
+
+      </TabItem>
     </TabControl>
 
     <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
@@ -48,7 +96,7 @@
     <TabControl x:Name="channelTab" Grid.Column="2" ItemsSource="{Binding ChannelItems}" SelectedItem="{Binding SelectedChannel}">
       <TabControl.ItemTemplate>
         <DataTemplate>
-          <TextBlock Text="{Binding Title, Mode=OneWay}" />
+          <TextBlock Text="{Binding ChannelName, Mode=OneWay}" />
         </DataTemplate>
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
@@ -61,7 +109,7 @@
                 NewWindowCommand="{Binding DataContext.NewWindowCommand, ElementName=root}"
               >
                 <app_view_controls:WebNavigator.ToolbarLeftContent>
-                  <Button>
+                  <Button CommandParameter="{Binding}">
                     <Button.Style>
                       <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                         <Style.Triggers>
@@ -70,11 +118,11 @@
                               <MultiBinding Converter="{StaticResource SmileChannelHasBookmarkConverter}">
                                 <MultiBinding.Bindings>
                                   <Binding Path="." />
-                                  <Binding Path="DataContext.ChannelBookmarkItems" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                  <Binding Path="DataContext.ChannelBookmarkItems" RelativeSource="{RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}" />
                                 </MultiBinding.Bindings>
                               </MultiBinding>
                             </DataTrigger.Binding>
-                            <Setter Property="Command" Value="{Binding DataContext.RemoveBookmarkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <Setter Property="Command" Value="{Binding DataContext.RemoveBookmarkCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}}" />
                             <Setter Property="Content" Value="ブックマークから削除" />
                           </DataTrigger>
                           <DataTrigger Value="False">
@@ -82,11 +130,11 @@
                               <MultiBinding Converter="{StaticResource SmileChannelHasBookmarkConverter}">
                                 <MultiBinding.Bindings>
                                   <Binding Path="." />
-                                  <Binding Path="DataContext.UserBookmarkItems" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                  <Binding Path="DataContext.ChannelBookmarkItems" RelativeSource="{RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}" />
                                 </MultiBinding.Bindings>
                               </MultiBinding>
                             </DataTrigger.Binding>
-                            <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}}" />
                             <Setter Property="Content" Value="ブックマークに追加" />
                           </DataTrigger>
                         </Style.Triggers>

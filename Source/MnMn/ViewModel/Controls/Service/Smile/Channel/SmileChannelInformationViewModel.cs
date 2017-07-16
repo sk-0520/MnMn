@@ -65,6 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         public string ChannelId { get; }
 
+        public string ChannelName => Information?.ChannelName;
+
         public Uri Uri
         {
             get
@@ -112,6 +114,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         SmileChannelInformationModel Information { get; set; }
         public SmileChannelVideoFinderViewModel VideoFinder { get;  }
 
+        /// <summary>
+        /// <para>NOTE: 完全に暫定処理</para>
+        /// </summary>
+        public bool HasPostVideo => true;
+
+
+
         #endregion
 
         #region function
@@ -144,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         #region InformationViewModelBase
 
-        public override string Title => Information?.ChannelName;
+        public override string Title => ChannelName;
 
         protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
@@ -191,6 +200,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
             var propertyNames = new[] {
                 nameof(Title),
+                nameof(ChannelName),
                 nameof(Uri),
                 nameof(UriString),
             };

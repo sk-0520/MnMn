@@ -645,6 +645,7 @@
     <Compile Include="ViewModel\Controls\KeywordTextItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\NetworkProxySettingViewModel.cs" />
     <Compile Include="ViewModel\Controls\PagerFinderProvider.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelHistoryItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Channel\SmileChannelVideoFinderViewModel.cs" />

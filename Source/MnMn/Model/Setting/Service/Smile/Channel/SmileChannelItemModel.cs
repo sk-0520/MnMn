@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Channel
 {
+    [Serializable, DataContract]
     public class SmileChannelItemModel: SettingModelBase
     {
         #region property

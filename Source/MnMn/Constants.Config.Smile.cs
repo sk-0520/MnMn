@@ -74,6 +74,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileChannelVideoFeedWaitTime => appConfig.Get("service-smile-channel-video-feed-wait-time", TimeSpan.Parse);
 
+        public static TimeSpan ServiceSmileChannelCheckItLaterCheckTime => appConfig.Get("service-smile-channel-check_it_later-check-time", TimeSpan.Parse);
+
         /// <summary>
         /// マイリストのタイトルから除外する文字列。
         /// <para>先頭。</para>
@@ -124,6 +126,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ユーザー履歴数。
         /// </summary>
         public static int ServiceSmileUserHistoryCount => appConfig.Get("service-smile-user-history-count", int.Parse);
+        /// <summary>
+        /// チャンネル履歴数。
+        /// </summary>
+        public static int ServiceSmileChannelHistoryCount => appConfig.Get("service-smile-channel-history-count", int.Parse);
         /// <summary>
         /// マイリスト履歴数。
         /// </summary>
