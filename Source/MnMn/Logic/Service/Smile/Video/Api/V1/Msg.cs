@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task<RawSmileVideoMsgPacket_Issue665NA_ResultModel> PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
+        public async Task<RawSmileVideoMsgPacket_Issue665NA_ResultModel> Post_Issue665NA_Async(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
         {
             await LoginIfNotLoginAsync();
 

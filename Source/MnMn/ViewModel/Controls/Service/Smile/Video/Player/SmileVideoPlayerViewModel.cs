@@ -1224,7 +1224,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Information($"postkey = {postKey}");
             }
 
-            var resultPost = await msg.PostAsync(
+            var resultPost = await msg.Post_Issue665NA_Async(
                 Information.MessageServerUrl,
                 Information.ThreadId,
                 videoPosition,
@@ -1234,7 +1234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PostCommentBody
             );
             if(resultPost == null) {
-                SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
+                SetCommentInformation($"fail: {nameof(msg.Post_Issue665NA_Async)}");
                 return;
             }
             var status = SmileVideoMsgUtility.ConvertResultStatus(resultPost.ChatResult.Status);
@@ -1273,7 +1273,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Information($"postkey = {postKey}");
             }
 
-            var resultPost = await msg.PostAsync(
+            var resultPost = await msg.Post_Issue665NA_Async(
                 Information.MessageServerUrl,
                 Information.ThreadId,
                 videoPosition,
@@ -1283,7 +1283,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PostCommentBody
             );
             if(resultPost == null) {
-                SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
+                SetCommentInformation($"fail: {nameof(msg.Post_Issue665NA_Async)}");
                 return;
             }
             var status = SmileVideoMsgUtility.ConvertResultStatus(resultPost.ChatResult.Status);
