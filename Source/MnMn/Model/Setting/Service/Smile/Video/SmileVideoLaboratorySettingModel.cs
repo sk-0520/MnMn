@@ -35,6 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public CommentCreateType DummyCommentCreateType { get; set; } = CommentCreateType.Sequence;
         [DataMember]
+        public bool DummyCommentIsJson_Issue665AP { get; set; } = true;
+        [DataMember]
         public int DummyCommentNormalCount { get; set; } = 100;
         [DataMember]
         public int DummyCommentOriginalPostCount { get; set; } = 10;

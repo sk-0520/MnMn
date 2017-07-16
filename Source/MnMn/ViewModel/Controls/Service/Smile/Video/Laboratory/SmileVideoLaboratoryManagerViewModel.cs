@@ -84,6 +84,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             get { return Setting.Laboratory.DummyCommentCreateType; }
             set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyCommentCreateType)); }
         }
+        public bool DummyCommentIsJson_Issue665AP
+        {
+            get { return Setting.Laboratory.DummyCommentIsJson_Issue665AP; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyCommentIsJson_Issue665AP)); }
+        }
         public int DummyCommentNormalCount
         {
             get { return Setting.Laboratory.DummyCommentNormalCount; }
@@ -401,7 +406,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             return result;
         }
 
-        void ExportDummyMsgFile(DirectoryInfo outputDirectory, TimeSpan length, CommentCreateType commentType, int commentNormalLength, int commentOpLength)
+        void ExportDummyMsgFile_Issue665NA(DirectoryInfo outputDirectory, TimeSpan length, CommentCreateType commentType, int commentNormalLength, int commentOpLength)
         {
             var rawMessagePacket = new RawSmileVideoMsgPacket_Issue665NA_Model();
 
@@ -419,8 +424,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             rawMessagePacket.Chat.AddRange(normalChats);
             rawMessagePacket.Chat.AddRange(opChats);
 
-            var outputFilePath = Path.Combine(outputDirectory.FullName, $"comment{Constants.AppSmileVideoLaboratoryPlayMsgExtensions.First()}");
+            var outputFilePath = Path.Combine(outputDirectory.FullName, $"comment{Constants.AppSmileVideoLaboratoryPlayMsgExtensions.First(s => s.EndsWith("xml", StringComparison.InvariantCultureIgnoreCase))}");
             SerializeUtility.SaveXmlSerializeToFile(outputFilePath, rawMessagePacket);
+        }
+
+        void ExportDummyMsgFile(DirectoryInfo outputDirectory, TimeSpan length, CommentCreateType commentType, bool isJson, int commentNormalLength, int commentOpLength)
+        {
+            if(!isJson) {
+                ExportDummyMsgFile_Issue665NA(outputDirectory, length, commentType, commentNormalLength, commentOpLength);
+                return;
+            }
+
         }
 
         Task<bool> ExportDummyVideoFileAsync(DirectoryInfo outputDirectory, TimeSpan length, VideoCreateType videoTye, decimal videFps, int videoWidth, int videoHeight)
@@ -511,11 +525,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             }
 
             var commentType = DummyCommentCreateType;
+            var commentIsJson = DummyCommentIsJson_Issue665AP;
             var commentNormalCount = DummyCommentNormalCount;
             var commentOriginalPost = DummyCommentOriginalPostCount;
 
             if(commentOutput && 0 < commentNormalCount && 0 < commentOriginalPost) {
-                ExportDummyMsgFile(outputDirectory, length, commentType, commentNormalCount, commentOriginalPost);
+                ExportDummyMsgFile(outputDirectory, length, commentType, commentIsJson, commentNormalCount, commentOriginalPost);
             }
 
             var videoTye = DummyVideoCreateType;
