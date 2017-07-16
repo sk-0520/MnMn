@@ -705,7 +705,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoLoadState = LoadState.Loaded;
 
             //// TODO: HTMLがあること前提
-            //Information.LoadLocalPageHtmlAsync();
+            if(Information.PageHtmlLoadState != LoadState.Loaded && string.IsNullOrEmpty(Information.DescriptionHtmlSource)) {
+                Information.LoadLocalPageHtmlAsync();
+            }
 
             OnLoadVideoEnd();
         }
