@@ -178,6 +178,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
             ResetCommandProperty(menuItem);
         }
 
+        private void SearchMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            menuItem.SubmenuOpened -= SearchMenuItem_SubmenuOpened;
+
+            ResetCommandProperty(menuItem);
+        }
+
         //ContextMenuOpening="PART_List_ContextMenuOpening"
         //private void PART_List_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         //{

@@ -23,6 +23,6 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
 {
-    public class FeedSmileVideoChannelModel: Rss2ChannelModelBase<FeedSmileVideoItemModel, FeedSmileVideoGuidModel>
+    public class FeedSmileVideoChannelModel: Rss2ChannelModelBase<FeedSmileVideoItemModel, Rss2GuidModel>
     { }
 }

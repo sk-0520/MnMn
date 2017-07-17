@@ -761,6 +761,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SmileDescriptionUtility.OpenUserId(userId, Mediation);
         }
 
+        void OpenChannelId(string channelId)
+        {
+            SmileDescriptionUtility.OpenChannelId(channelId, Mediation, Mediation);
+        }
+
         Task OpenVideoLinkAsync(string videoId)
         {
             var cancel = new CancellationTokenSource();
@@ -2159,6 +2164,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 );
             }
         }
+        public ICommand OpenChannelIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenChannelId((string)o, Mediation, Mediation)); } }
+
 
         #endregion
 

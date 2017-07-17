@@ -43,6 +43,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 
         public const string contentsSearch = "smile-contents-search";
 
+        public const string channelPage = "smile-channel-page";
+        public const string channelThumbnail = "smile-channel-thumbnail";
+        public const string channelVideoFeed = "smile-channel-video-feed";
+
         public const string mylistDefault = "smile-video-mylist-account-default";
         public const string mylistDefaultVideoAdd = "smile-video-mylist-account-default-add";
         public const string mylistDefaultVideoDelete = "smile-video-mylist-account-default-delete";

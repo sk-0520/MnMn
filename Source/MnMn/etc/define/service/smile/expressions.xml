@@ -95,4 +95,27 @@
 			</data>
 		</item>
 	</element>
+	<element key="get-expression-channel-id">
+		<item id="normalization-id" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase">
+			<data>
+				<![CDATA[
+					(?<CHANNEL_ID>
+						(ch)
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+		<item id="number-only" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase">
+			<data>
+				<![CDATA[
+					^
+					(?<CHANNEL_ID>
+						\d+
+					)
+					$
+				]]>
+			</data>
+		</item>
+	</element>
 </expressions>

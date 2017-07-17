@@ -569,6 +569,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public ICommand MenuCopyMyListIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyMyListId(o, Mediation.Logger)); } }
 
         public ICommand OpenUserIdLinkCommand { get { return CreateCommand(o => OpenUserLink((string)o)); } }
+        public ICommand OpenChannelIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenChannelId((string)o, Mediation, Mediation)); } }
 
         #endregion
 

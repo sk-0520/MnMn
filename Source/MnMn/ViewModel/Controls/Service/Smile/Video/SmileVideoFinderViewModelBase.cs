@@ -334,10 +334,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        var userId = SelectedFinderItem.Information.UserId;
-                        SmileDescriptionUtility.OpenUserId(userId, Mediation);
+                        if(SelectedFinderItem.Information.IsChannelVideo) {
+                            var channelId = SelectedFinderItem.Information.ChannelId;
+                            SmileDescriptionUtility.OpenChannelId(channelId, Mediation, Mediation);
+                        } else {
+                            var userId = SelectedFinderItem.Information.UserId;
+                            SmileDescriptionUtility.OpenUserId(userId, Mediation);
+                        }
                     },
-                    o => SelectedFinderItem != null && !SelectedFinderItem.Information.IsChannelVideo
+                    o => SelectedFinderItem != null //&& !SelectedFinderItem.Information.IsChannelVideo
                 );
             }
         }

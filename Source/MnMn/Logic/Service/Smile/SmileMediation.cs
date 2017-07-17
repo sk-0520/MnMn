@@ -479,6 +479,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 if(user != null) {
                     ManagerPack.UsersManager.LoadFromParameterAsync(user).ConfigureAwait(false);
                     return ManagerPack.UsersManager;
+                } else {
+                    var channel = request.ShowRequestParameter as SmileOpenChannelIdParameterModel;
+                    ManagerPack.ChannelManager.LoadFromParameterAsync(channel).ConfigureAwait(false);
+                    return ManagerPack.ChannelManager;
                 }
             }
 
