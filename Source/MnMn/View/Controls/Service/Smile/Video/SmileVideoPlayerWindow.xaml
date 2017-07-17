@@ -742,6 +742,18 @@
         </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
       </Grid>
+      <Grid>
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Html5}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding Information.IsCompatibleIssue665NA, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Abnormal}" Style="{StaticResource SmallAccentIconPath}" />
+          </Canvas>
+        </Viewbox>
+      </Grid>
       <ContentControl Padding="0" Margin="0" Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}">
         <ContentControl.Style>
           <Style TargetType="ContentControl">

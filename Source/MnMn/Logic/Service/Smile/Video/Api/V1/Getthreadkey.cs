@@ -35,12 +35,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Getthreadkey: SessionApiBase<SmileSessionViewModel>
     {
-        public Getthreadkey(Mediation mediation) 
+        public Getthreadkey(Mediation mediation)
             : base(mediation, ServiceType.Smile)
         {
         }
 
         #region function
+
+        public async Task<RawSmileVideoGetthreadkeyModel> Load_Issue665NA_Async(string threadId)
+        {
+            using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthreadkey, ServiceType.SmileVideo)) {
+                page.ReplaceUriParameters["thread-id"] = threadId;
+                var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
+                if(!response.IsSuccess) {
+                    return null;
+                }
+
+                var rawText = response.Result;
+                var result = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetthreadkeyModel>(rawText);
+                result.Raw = rawText;
+                return result;
+            }
+        }
 
         public async Task<RawSmileVideoGetthreadkeyModel> LoadAsync(string threadId)
         {
