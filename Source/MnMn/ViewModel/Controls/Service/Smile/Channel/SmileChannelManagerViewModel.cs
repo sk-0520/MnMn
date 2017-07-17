@@ -204,10 +204,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         void RefreshWebPage()
         {
-            if(SelectedChannel.ShowVideo) {
-                return;
-            }
-
             ////ChannelTab.Dispatcher.Invoke(() => {
             //    var tabItem = ChannelTab.ItemContainerGenerator.ContainerFromItem(SelectedChannel) as TabItem;
             //    var web = UIUtility.FindChildren<WebNavigator>(ChannelTab).FirstOrDefault();
