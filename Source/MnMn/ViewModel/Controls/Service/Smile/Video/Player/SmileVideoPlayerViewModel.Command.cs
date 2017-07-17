@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         if(IsChannelVideo) {
-                            Mediation.Logger.Debug("チャンネルを開く処理は未実装");
+                            OpenChannelId(ChannelId);
                         } else {
                             OpenUserId(UserId);
                         }
