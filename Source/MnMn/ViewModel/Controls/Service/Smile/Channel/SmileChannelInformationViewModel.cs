@@ -62,6 +62,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         Mediation Mediation { get; }
 
         TabControl TabControl { get; set; }
+        TabItem ChannelTabItem { get; set; }
+        WebNavigator WebNavigator { get; set; }
 
         public string ChannelId { get; }
 
@@ -95,7 +97,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         public bool ShowWebTabItem
         {
             get { return this._showWebTabItem; }
-            set { SetVariableValue(ref this._showWebTabItem, value); }
+            set
+            {
+                if(SetVariableValue(ref this._showWebTabItem, value)) {
+                    if(ShowWebTabItem) {
+                        RefreshWebPage();
+                    }
+                }
+            }
         }
         public bool ShowVideoTabItem
         {
@@ -112,7 +121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         }
 
         SmileChannelInformationModel Information { get; set; }
-        public SmileChannelVideoFinderViewModel VideoFinder { get;  }
+        public SmileChannelVideoFinderViewModel VideoFinder { get; }
 
         /// <summary>
         /// <para>NOTE: 完全に暫定処理</para>
@@ -131,13 +140,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             return LoadInformationDefaultAsync(userDataCacheSpan).ContinueWith(t => {
                 ChannelLoadState = SourceLoadState.InformationLoading;
             }).ContinueWith(t => {
-                var tabItem = TabControl.ItemContainerGenerator.ContainerFromItem(this) as TabItem;
-                var web = UIUtility.FindChildren<WebNavigator>(TabControl).FirstOrDefault();
-                if(web != null && web.HomeSource != Uri) {
-                    web.HomeSource = Uri;
-                    web.Navigate(web.HomeSource);
-                    web.CrearHistory();
-                }
+                RefreshWebPage();
             }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(t => {
                 ChannelLoadState = SourceLoadState.Completed;
                 CallOnPropertyChangeDisplayItem();
@@ -147,6 +150,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         public Task LoadDefaultAsync()
         {
             return LoadAsync(Constants.ServiceSmileChannelDataCacheSpan, Constants.ServiceSmileChannelImageCacheSpan);
+        }
+
+        public void RefreshWebPage()
+        {
+            if(TabControl == null) {
+                return;
+            }
+            if(ChannelTabItem == null) {
+                ChannelTabItem = TabControl.ItemContainerGenerator.ContainerFromItem(this) as TabItem;
+            }
+
+            var tabControl = UIUtility.GetVisualClosest<TabControl>(TabControl) as TabControl;
+            if(tabControl != null) {
+                var innerTabControl = UIUtility.FindChildren<TabControl>(tabControl).FirstOrDefault();
+            }
+
+            if(WebNavigator == null) {
+                WebNavigator = UIUtility.FindChildren<WebNavigator>(TabControl).FirstOrDefault();
+            }
+            if(WebNavigator != null && WebNavigator.HomeSource != Uri) {
+                WebNavigator.HomeSource = Uri;
+                WebNavigator.Navigate(WebNavigator.HomeSource);
+                WebNavigator.CrearHistory();
+            }
         }
 
         #endregion
@@ -210,6 +237,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         protected override void Dispose(bool disposing)
         {
+            WebNavigator = null;
+            ChannelTabItem = null;
             TabControl = null;
             base.Dispose(disposing);
         }

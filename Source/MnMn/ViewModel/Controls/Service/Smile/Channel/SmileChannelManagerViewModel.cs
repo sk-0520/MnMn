@@ -72,10 +72,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             get { return this._selectedChannel; }
             set
             {
-                if(SetVariableValue(ref this._selectedChannel, value)) {
-                    if(SelectedChannel != null) {
-                        RefreshWebPage();
+                if(value != this._selectedChannel && this._selectedChannel != null) {
+                    this._selectedChannel.ShowVideoTabItem = false;
+                    this._selectedChannel.ShowWebTabItem = false;
+                    if(value != null) {
+                        value.ShowVideoTabItem = false;
+                        value.ShowWebTabItem = false;
                     }
+                }
+                if(SetVariableValue(ref this._selectedChannel, value)) {
+                    //if(SelectedChannel != null) {
+                    //    SelectedChannel.ShowWebTabItem = true;
+                    //    RefreshWebPage();
+                    //}
                 }
             }
         }
@@ -211,13 +220,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         void RefreshWebPage()
         {
-            var tabItem = ChannelTab.ItemContainerGenerator.ContainerFromItem(SelectedChannel) as TabItem;
-            var web = UIUtility.FindChildren<WebNavigator>(ChannelTab).FirstOrDefault();
-            if(web != null) {
-                web.HomeSource = SelectedChannel.Uri;
-                web.Navigate(web.HomeSource);
-                web.CrearHistory();
+            if(SelectedChannel.ShowVideoTabItem) {
+                return;
             }
+
+            ////ChannelTab.Dispatcher.Invoke(() => {
+            //    var tabItem = ChannelTab.ItemContainerGenerator.ContainerFromItem(SelectedChannel) as TabItem;
+            //    var web = UIUtility.FindChildren<WebNavigator>(ChannelTab).FirstOrDefault();
+            //    if(web != null && web.HomeSource != SelectedChannel.Uri) {
+            //        web.HomeSource = SelectedChannel.Uri;
+            //        web.Navigate(web.HomeSource);
+            //        web.CrearHistory();
+            //    }
+            ////}, DispatcherPriority.ApplicationIdle);
+            SelectedChannel.RefreshWebPage();
         }
 
         void CloseTab(SmileChannelInformationViewModel finder)
@@ -433,10 +449,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         public override void InitializeView(MainWindow view)
         {
             ChannelTab = view.smile.channel.channelTab;
+            ChannelTab.SelectionChanged += ChannelTab_SelectionChanged;
         }
 
         public override void UninitializeView(MainWindow view)
         {
+            ChannelTab.SelectionChanged -= ChannelTab_SelectionChanged;
             ChannelTab = null;
         }
 
@@ -462,5 +480,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 CheckItLaterCheckTimer.Start();
             }
         }
+
+        private void ChannelTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RefreshWebPage();
+        }
+
     }
 }

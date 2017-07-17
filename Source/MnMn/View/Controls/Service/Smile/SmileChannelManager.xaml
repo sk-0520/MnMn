@@ -101,7 +101,7 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <TabControl IsSelected="{Binding ShowWebTabItem}">
+          <TabControl x:Name="innerTab" IsSelected="{Binding ShowWebTabItem}">
             <TabItem Header="channel">
               <app_view_controls:WebNavigator
                 x:Name="webChannel"
