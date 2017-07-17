@@ -1495,6 +1495,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Mediation.Logger.Warning($"!!force!! [{VideoId}] #665");
             this._force_Issue665NA = true;
+            CallOnPropertyChange(nameof(IsCompatibleIssue665NA));
         }
 
         #endregion
