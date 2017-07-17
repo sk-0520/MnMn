@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public SmileVideoCheckItLaterFinderViewModel ManualOperationFinder { get; }
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel> MylistBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel> UserBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
+        public CollectionModel<SmileVideoCheckItLaterFinderViewModel> ChannelBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
         public CollectionModel<SmileVideoCheckItLaterFinderViewModel> WordBookmarkFinderItems { get; } = new CollectionModel<SmileVideoCheckItLaterFinderViewModel>();
 
         public bool HasItem
@@ -206,6 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             var finderMap = new Dictionary<SmileVideoCheckItLaterFrom, CollectionModel<SmileVideoCheckItLaterFinderViewModel>>() {
                 [SmileVideoCheckItLaterFrom.MylistBookmark] = MylistBookmarkFinderItems,
                 [SmileVideoCheckItLaterFrom.UserBookmark] = UserBookmarkFinderItems,
+                [SmileVideoCheckItLaterFrom.ChannelBookmark] = ChannelBookmarkFinderItems,
                 [SmileVideoCheckItLaterFrom.WordBookmark] = WordBookmarkFinderItems,
             };
             foreach(var group in groups) {
@@ -218,6 +220,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             var parentFinders = new [] {
                 MylistBookmarkFinderItems,
                 UserBookmarkFinderItems,
+                ChannelBookmarkFinderItems,
                 WordBookmarkFinderItems,
             };
             var finders = new List<SmileVideoCheckItLaterFinderViewModel>() {

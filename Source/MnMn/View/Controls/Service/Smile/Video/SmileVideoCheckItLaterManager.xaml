@@ -93,6 +93,7 @@
       <TabControl.Resources>
         <sys:String x:Key="MylisyTabHeader">マイリスト</sys:String>
         <sys:String x:Key="UserTabHeader">ユーザー投稿</sys:String>
+        <sys:String x:Key="ChannelTabHeader">チャンネル動画</sys:String>
         <sys:String x:Key="WordTabHeader">タグ</sys:String>
         <Viewbox x:Key="MylistImage" x:Shared="False"  Style="{StaticResource SmallItemBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -102,6 +103,11 @@
         <Viewbox x:Key="UserImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_User}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox x:Key="ChannelImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Smile_Channel}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
         <Viewbox x:Key="WordImage" x:Shared="False" Style="{StaticResource SmallItemBox}">
@@ -134,6 +140,15 @@
           <StackPanel Style="{StaticResource TabHeader}">
             <StaticResource ResourceKey="UserImage" />
             <TextBlock Text="{StaticResource UserTabHeader}" />
+          </StackPanel>
+        </TabItem.Header>
+        <TabControl Style="{StaticResource InnerTab}" />
+      </TabItem>
+      <TabItem DataContext="{Binding ChannelBookmarkFinderItems}" Style="{StaticResource ParentTabItem}" app_view_attachment:MenuTabItem.Header="{StaticResource ChannelTabHeader}" app_view_attachment:MenuTabItem.Icon="{StaticResource ChannelImage}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <StaticResource ResourceKey="ChannelImage" />
+            <TextBlock Text="{StaticResource ChannelTabHeader}" />
           </StackPanel>
         </TabItem.Header>
         <TabControl Style="{StaticResource InnerTab}" />
