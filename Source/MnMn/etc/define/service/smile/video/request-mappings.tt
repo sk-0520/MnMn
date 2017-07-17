@@ -1,0 +1,476 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".xml" #>
+<?xml version="1.0" encoding="utf-8" ?>
+<mappings>
+
+	<mapping key="video-msg_Issue665NA" content-type="text/xml">
+		<item key="thread-id" type="simple" value="${thread-id}"  />
+		<item key="version"   type="simple" value="20090904"  />
+		<item key="version-old"   type="simple" value="20061206"  />
+		<item key="res_from"  type="force-pair" name="res_from" bond="=" value="${res_from}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="user-id"   type="force-pair" name="user_id" bond="=" value="${user-id}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="threadkey" type="force-pair" name="threadkey" bond="=" value="${threadkey}" fail="" >
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="force_184" type="force-pair" name="force_184" bond="=" value="${force_184}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+
+		<item key="time-msg" type="force-pair" name="${time-size}" bond="," value="${all-size}" fail="" />
+
+		<item key="with_global"  type="simple" value="1"  />
+		<item key="language"  type="simple" value="0"  />
+		<item key="nicoru"  type="simple" value="1"  />
+		<item key="scores"  type="simple" value="1"  />
+		<item key="click_revisio"  type="simple" value="-1"  />
+
+		<content trim="content" oneline="true">
+			<![CDATA[
+				<packet>
+					<thread        with_global="${with_global}"     language="${language}" nicoru="${nicoru}" scores="${scores}" thread="${thread-id}" version="${version}"     ${res_from} ${force_184} ${threadkey} />
+					<thread_leaves                                  language="${language}" nicoru="${nicoru}" scores="${scores}" thread="${thread-id}"                                                 ${force_184} ${threadkey} >${time-msg}</thread_leaves>
+					<thread        click_revisio="${click_revisio}"                                           scores="${scores}" thread="${thread-id}" version="${version-old}" ${res_from} ${force_184} ${threadkey} fork="1" />
+				</packet>
+			]]>
+		</content>
+	</mapping>
+
+	<!-- コメント取得 -->
+	<mapping key="video-msg" content-type="text/plain">
+	<item key="thread-id" type="simple" value="${thread-id}"  />
+	<item key="community-thread-id" type="simple" value="${community-thread-id}"  />
+	<item key="version"   type="simple" value="20090904"  />
+	<item key="version-old"   type="simple" value="20061206"  />
+	<item key="res_from"  type="force-pair" name="res_from" bond=":" value="${res_from}" fail="">
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="" close="," />
+	</item>
+	<item key="user-id" type="simple" value="${user-id}" />
+
+	<item key="force_184" type="force-pair" name="force_184" bond=":" value="${force_184}" fail="">
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="&quot;" close="&quot;," />
+	</item>
+	<item key="content" type="force-pair" name="content" bond=":" value="${content}" fail="">
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="&quot;" close="&quot;," />
+	</item>
+
+	<item key="with_global"  type="simple" value="1"  />
+	<item key="language"  type="simple" value="0"  />
+	<item key="nicoru"  type="simple" value="0"  />
+	<item key="scores"  type="simple" value="1"  />
+	<item key="click_revisio"  type="simple" value="-1"  />
+	<item key="fork" type="simple" value="1" />
+
+	<item key="filter-op" type="simple" value="${filter-op}" />
+	<item key="packet-op" type="simple" value="${packet-op}" />
+
+	<item key="filter-community" type="simple" value="${filter-community}" />
+	<item key="packet-community-thread" type="simple" value="${packet-community-thread}" />
+	<item key="packet-community-thread_leaves" type="simple" value="${packet-community-thread_leaves}" />
+
+
+	<!-- NOTE: userkey, threadkey は各タグの終端に配置すること-->
+	<item key="userkey" type="force-pair" name="userkey" bond=":" value="${userkey}" fail="" >
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="&quot;" close="&quot;" />
+	</item>
+	<item key="threadkey" type="force-pair" name="threadkey" bond=":" value="${threadkey}" fail="" >
+		<bracket target="name" open="&quot;" close="&quot;" />
+		<bracket target="value" open="&quot;" close="&quot;" />
+	</item>
+
+		<content trim="content" oneline="true" comment="true" inline-trime="true" filter="true">
+			<![CDATA[
+				[
+					{"ping":{"content":"rs:0"}},
+
+					{"ping":{"content":"ps:0"}},
+					{"thread":$[:]               {"thread":"${thread-id}", "version":"${version}","language":${language},"user_id":${user-id},$[:]                           "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${userkey}}},
+					{"ping":{"content":"pf:0"}},
+
+					{"ping":{"content":"ps:1"}},
+					{"thread_leaves":$[:]        {"thread":"${thread-id}",$[:]                    "language":${language},"user_id":${user-id},${content} $[:]                                             "scores":${scores},"nicoru":${nicoru},${userkey}}},
+					{"ping":{"content":"pf:1"}},
+
+					$[//] 投稿者コメント
+					$[filter:${filter-op}:/*]
+						{"ping":{"content":"ps:${packet-op}"}},
+						{"thread":$[:]               {"thread":"${thread-id}", "version":"${version-old}","language":${language},"user_id":${user-id},$[:]                         "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${res_from}"fork":${fork},${userkey}}},
+						{"ping":{"content":"pf:${packet-op}"}},
+					$[filter:*/]
+
+					$[//] チャンネル
+					$[filter:${filter-community}:/*]
+						{"ping":{"content":"ps:${packet-community-thread}"}},
+						{"thread":$[:]               {"thread":"${community-thread-id}","version":"${version}","language":${language},"user_id":${user-id},$[:]            ${force_184} $[:] "with_global":${with_global},"scores":${scores},"nicoru":${nicoru},${threadkey}}},
+						{"ping":{"content":"pf:${packet-community-thread}"}},
+
+						{"ping":{"content":"ps:${packet-community-thread_leaves}"}},
+						{"thread_leaves":$[:]        {"thread":"${community-thread-id}",$[:]                   "language":${language},"user_id":${user-id},${content} $[:] ${force_184} $[:]                              "scores":${scores},"nicoru":${nicoru},${threadkey}}},
+						{"ping":{"content":"ps:${packet-community-thread_leaves}"}},
+					$[filter:*/]
+
+					{"ping":{"content":"rf:0"}}
+				]
+			]]>
+		</content>
+	</mapping>
+
+	<mapping key="video-msg-post" content-type="text/plain">
+		<item key="thread" type="simple" value="${thread-id}"  />
+		<item key="vpos" type="simple" value="${vpos}"  />
+		<item key="commands" type="simple" value="${commands}">
+			<#@ include file="request-mappings_video-msg-post_escapetxt.txt" #>
+		</item>
+		<item key="ticket" type="simple" value="${ticket}"  />
+		<item key="user_id" type="simple" value="${user_id}"  />
+		<item key="postkey" type="simple" value="${postkey}"  />
+		<item key="premium" type="simple" value="${premium}"  />
+		<item key="comment" type="simple" value="${comment}">
+			<#@ include file="request-mappings_video-msg-post_escapetxt.txt" #>
+		</item>
+
+		<content trim="content" oneline="true">
+			<![CDATA[
+				[
+					{"ping":{"content":"rs:0"}},
+
+					{"ping":{"content":"ps:0"}},
+					{"chat": {
+						"thread":"${thread}",
+						"vpos":${vpos},
+						"mail":${commands},
+						"ticket":"${ticket}",
+						"user_id":${user_id},
+						"postkey":"${postkey}",
+						"premium":${premium},
+						"content":${comment}
+					}},
+					{"ping":{"content":"pf:0"}},
+
+					{"ping":{"content":"rf:0"}}
+				]
+			]]>
+		</content>
+	</mapping>
+
+	<!-- コメント投稿 -->
+	<mapping key="video-msg-post_Issue665NA" content-type="text/xml">
+		<item key="thread" type="simple" value="${thread-id}"  />
+		<item key="vpos" type="simple" value="${vpos}"  />
+		<item key="commands" type="simple" value="${commands}"  />
+		<item key="ticket" type="simple" value="${ticket}"  />
+		<item key="user_id" type="simple" value="${user_id}"  />
+		<item key="postkey" type="simple" value="${postkey}"  />
+		<item key="premium" type="simple" value="${premium}"  />
+		<item key="comment" type="simple" value="${comment}"  />
+		<content trim="content" oneline="false">
+			<![CDATA[
+				<chat
+					thread="${thread}"
+					vpos="${vpos}"
+					mail="${commands}"
+					ticket="${ticket}"
+					user_id="${user_id}"
+					postkey="${postkey}"
+					premium="${premium}"
+				>${comment}</chat>
+			]]>
+		</content>
+	</mapping>
+
+	<!-- 検索API -->
+	<mapping key="video-snapshot">
+		<item key="query" type="simple" value="${query}">
+			<bracket target="value" open="&quot;" close="&quot;" />
+			<custom target="value" rep-from="&quot;" rep-to="\&quot;" />
+		</item>
+		<item key="search" type="simple" value="${search}" />
+		<item key="from" type="simple" value="${from}" />
+		<item key="size" type="simple" value="${size}" />
+		<item key="sort_by" type="simple" value="${sort_by}">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="order" type="simple" value="${order}">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="issuer" type="simple" value="${issuer}">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+
+		<content trim="none" oneline="false">
+			<![CDATA[
+				{
+					"query": ${query},
+					"service": [ "video" ],
+					"search": [ ${search} ],
+					"join": [
+						"cmsid",
+						"title",
+						"description",
+						"start_time",
+						"thumbnail_url",
+						"view_counter",
+						"comment_counter",
+						"mylist_counter",
+						"length_seconds"
+					],
+					"from": ${from},
+					"size": ${size},
+					"sort_by": ${sort_by},
+					"order": ${order},
+					"issuer": ${issuer}
+				}
+			]]>
+		</content>
+	</mapping>
+
+	<!-- 関連タグ: #503 廃止 -->
+	<mapping key="video-tag-relation">
+		<item key="query" type="simple" value="${query}">
+			<bracket target="value" open="&quot;" close="&quot;" />
+			<custom target="value" rep-from="&quot;" rep-to="\&quot;" />
+		</item>
+		<item key="from" type="simple" value="0" />
+		<item key="size" type="simple" value="10" />
+		<item key="issuer" type="simple" value="pc" />
+		<item key="reason" type="simple" value="user" />
+
+		<content trim="none" oneline="false">
+			<![CDATA[
+				{
+					"query": ${query},
+					"service": [ "tag_video" ],
+					"from": ${from},
+					"size": ${size},
+					"issuer":"${issuer}",
+					"reason":"${reason}"
+				}
+			]]>
+		</content>
+	</mapping>
+
+	<mapping key="video-dmc">
+		<item key="recipe-id" value="${recipe-id}" />
+		<item key="content-id" value="${content-id}" />
+		<item key="protocol-name" value="${protocol-name}" />
+		<item key="videos" value="${videos}" />
+		<item key="audios" value="${audios}" />
+		<item key="heartbeat-lifetime" value="${heartbeat-lifetime}" />
+		<item key="token-minus-signature" value="${token-minus-signature}" />
+		<item key="token-only-signature" value="${token-only-signature}" />
+		<item key="auth-type" value="${auth-type}" />
+		<item key="user-id" value="${user-id}" />
+		<item key="content-key-timeout" value="${content-key-timeout}" />
+		<item key="player-id" value="${player-id}" />
+		<item key="priority" value="${priority}" />
+
+		<item key="created-time" value="${created-time}" />
+		<item key="modified-time" value="${modified-time}" />
+		<item key="content-route" value="${content-route}" />
+
+		<item key="service-id" value="nicovideo" />
+		<item key="timing-constraint" value="unlimited" />
+		<item key="max-content-count" value="10" />
+		<item key="protocol-method" value="GET" />
+		<item key="file-extension" value="${file-extension}" />
+
+		<content trim="none" oneline="false">
+			<![CDATA[
+
+	<session>
+		<recipe_id>${recipe-id}</recipe_id>
+		<content_id>${content-id}</content_id>
+		<content_type>movie</content_type>
+		<protocol>
+			<name>${protocol-name}</name>
+			<parameters>
+				<http_parameters>
+					<method>${protocol-method}</method>
+					<parameters>
+						<http_output_download_parameters>
+							<file_extension>${file-extension}</file_extension>
+						</http_output_download_parameters>
+					</parameters>
+				</http_parameters>
+			</parameters>
+		</protocol>
+		<priority>${priority}</priority>
+		<content_src_id_sets>
+			<content_src_id_set>
+				<content_src_ids>
+					<src_id_to_mux>
+						<video_src_ids>
+							${videos}
+						</video_src_ids>
+						<audio_src_ids>
+							${audios}
+						</audio_src_ids>
+					</src_id_to_mux>
+				</content_src_ids>
+			</content_src_id_set>
+		</content_src_id_sets>
+		<keep_method>
+			<heartbeat>
+				<lifetime>${heartbeat-lifetime}</lifetime>
+			</heartbeat>
+		</keep_method>
+		<timing_constraint>${timing-constraint}</timing_constraint>
+		<session_operation_auth>
+			<session_operation_auth_by_signature>
+				<token>${token-minus-signature}</token>
+				<signature>${token-only-signature}</signature>
+			</session_operation_auth_by_signature>
+		</session_operation_auth>
+		<content_auth>
+			<auth_type>${auth-type}</auth_type>
+			<service_id>${service-id}</service_id>
+			<service_user_id>${user-id}</service_user_id>
+			<max_content_count>${max-content-count}</max_content_count>
+			<content_key_timeout>${content-key-timeout}</content_key_timeout>
+		</content_auth>
+		<client_info>
+			<player_id>${player-id}</player_id>
+		</client_info>
+	</session>
+
+
+			]]>
+		</content>
+
+	</mapping>
+
+	<mapping key="video-dmc-reload">
+		<item key="recipe-id" value="${recipe-id}" />
+		<item key="content-id" value="${content-id}" />
+		<item key="protocol-name" value="${protocol-name}" />
+		<item key="videos" value="${videos}" />
+		<item key="audios" value="${audios}" />
+		<item key="heartbeat-lifetime" value="${heartbeat-lifetime}" />
+		<item key="token-minus-signature" value="${token-minus-signature}" />
+		<item key="token-only-signature" value="${token-only-signature}" />
+		<item key="auth-type" value="${auth-type}" />
+		<item key="user-id" value="${user-id}" />
+		<item key="content-key-timeout" value="${content-key-timeout}" />
+		<item key="player-id" value="${player-id}" />
+		<item key="priority" value="${priority}" />
+
+		<item key="service-id" value="nicovideo" />
+		<item key="timing-constraint" value="unlimited" />
+		<item key="max-content-count" value="10" />
+		<item key="protocol-method" value="GET" />
+		<item key="file-extension" value="${file-extension}" />
+
+		<item key="id" value="${id}" />
+		<item key="created-time" value="${created-time}" />
+		<item key="modified-time" value="${modified-time}" />
+		<item key="content-route" value="${content-route}" />
+		<item key="op-expire-time" value="${op-expire-time}" />
+		<item key="op-created-time" value="${op-created-time}" />
+		<item key="content-uri" value="${content-uri}" />
+		<item key="auto-info-method" value="${auto-info-method}" />
+		<item key="auto-info-name" value="${auto-info-name}" />
+		<item key="auto-info-value" value="${auto-info-value}" />
+
+		<item key="play-seek-time" value="0" />
+		<item key="play-speed" value="1.0" />
+
+		<content trim="none" oneline="false">
+			<![CDATA[
+
+<session>
+	<id>${id}</id>
+	<recipe_id>${recipe-id}</recipe_id>
+	<content_id>${content-id}</content_id>
+	<content_src_id_sets>
+		<content_src_id_set>
+			<content_src_ids>
+				<src_id_to_mux>
+					<video_src_ids>
+						${videos}
+					</video_src_ids>
+					<audio_src_ids>
+						${audios}
+					</audio_src_ids>
+				</src_id_to_mux>
+			</content_src_ids>
+		</content_src_id_set>
+	</content_src_id_sets>
+	<content_type>movie</content_type>
+	<timing_constraint>${timing-constraint}</timing_constraint>
+	<keep_method>
+		<heartbeat>
+			<lifetime>${heartbeat-lifetime}</lifetime>
+			<onetime_token/>
+		</heartbeat>
+	</keep_method>
+	<protocol>
+		<name>http</name>
+		<parameters>
+			<http_parameters>
+				<method>${protocol-method}</method>
+				<parameters>
+					<http_output_download_parameters>
+						<file_extension>${file-extension}</file_extension>
+						<transfer_preset/>
+					</http_output_download_parameters>
+				</parameters>
+			</http_parameters>
+		</parameters>
+	</protocol>
+	<play_seek_time>${play-seek-time}</play_seek_time>
+	<play_speed>${play-speed}</play_speed>
+	<content_uri>${content-uri}</content_uri>
+	<session_operation_auth>
+		<session_operation_auth_by_signature>
+			<created_time>${op-created-time}</created_time>
+			<expire_time>${op-expire-time}</expire_time>
+			<token>${token-minus-signature}</token>
+			<signature>${token-only-signature}</signature>
+		</session_operation_auth_by_signature>
+	</session_operation_auth>
+	<content_auth>
+		<auth_type>${auth-type}</auth_type>
+		<max_content_count>${max-content-count}</max_content_count>
+		<content_key_timeout>${content-key-timeout}</content_key_timeout>
+		<service_id>${service-id}</service_id>
+		<service_user_id>${user-id}</service_user_id>
+		<content_auth_info>
+			<method>${auto-info-method}</method>
+			<name>${auto-info-name}</name>
+			<value>${auto-info-value}</value>
+		</content_auth_info>
+	</content_auth>
+	<runtime_info>
+		<node_id/>
+		<execution_history/>
+	</runtime_info>
+	<client_info>
+		<player_id>${player-id}</player_id>
+		<remote_ip/>
+		<tracking_info/>
+	</client_info>
+	<created_time>${created-time}</created_time>
+	<modified_time>${modified-time}</modified_time>
+	<priority>${priority}</priority>
+	<content_route>${content-route}</content_route>
+	<version/>
+</session>
+
+			]]>
+		</content>
+
+	</mapping>
+
+
+</mappings>

@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User
 {
+    [Serializable, DataContract]
     public class SmileUserBookmarkItemModel: SmileUserItemModel
     {
         #region property

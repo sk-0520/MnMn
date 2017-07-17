@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
                                 Int32Rect.Empty,
                                 BitmapSizeOptions.FromEmptyOptions()
                             );
-                            FreezableUtility.SafeFreeze(image); 
+                            FreezableUtility.SafeFreeze(image);
 
                             SetThumbnaiImage(image);
                         }
@@ -105,16 +105,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             });
         }
 
-        public override Task LoadLocalPageHtmlAsync()
+        public override void LoadLocalPageHtml()
         {
             var html = "test";
-            return SetPageHtmlAsync(html, false);
+            SetPageHtml(html, false);
         }
 
-        public override Task SetPageHtmlAsync(string html, bool isSave)
+        protected override void SetPageHtml(string html, bool isSave)
         {
             PageHtmlLoadState = LoadState.Loaded;
-            return Task.CompletedTask;
         }
 
 

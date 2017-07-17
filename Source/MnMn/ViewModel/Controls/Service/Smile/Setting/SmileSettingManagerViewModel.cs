@@ -28,12 +28,16 @@ using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -109,17 +113,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Common, value, nameof(Setting.Video.Common.CustomCopyFormat)); }
         }
 
-        public string CommonCustomCopyList
+        public IEnumerable<IReadOnlyKeywordTextItem> CommonCustomCopyList
         {
             get
             {
-                var list = new[] {
-                    SmileVideoInformationUtility.customCopyFormatVideoId,
-                    SmileVideoInformationUtility.customCopyFormatVideoTitle,
-                    SmileVideoInformationUtility.customCopyFormatVideoPage,
-                };
+                var keyword = Mediation.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
+                var result = keyword.Items
+                    .Where(i => SmileVideoInformationUtility.IsCustomCopyElement(i))
+                    .Select(i => new KeywordTextItemDefinedViewModel(i))
+                .ToEvaluatedSequence();
 
-                return string.Join(", ", list.Select(s => "${" + s + "}"));
+                return result;
             }
         }
 
@@ -151,16 +155,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Execute, value); }
         }
 
-        public string LauncherParameterList
+        public IEnumerable<IReadOnlyKeywordTextItem> LauncherParameterList
         {
             get
             {
-                var list = new[] {
-                    SmileVideoInformationUtility.launcherParameterVideoId,
-                    SmileVideoInformationUtility.launcherParameterVideoTitle,
-                    SmileVideoInformationUtility.launcherParameterVideoPage,
-                };
-                return string.Join(", ", list.Select(s => "${" + s + "}"));
+                var keyword = Mediation.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
+                var result = keyword.Items
+                    .Where(i => SmileVideoInformationUtility.IsLauncherParameterElement(i))
+                    .Select(i => new KeywordTextItemDefinedViewModel(i))
+                .ToEvaluatedSequence();
+
+                return result;
             }
         }
 

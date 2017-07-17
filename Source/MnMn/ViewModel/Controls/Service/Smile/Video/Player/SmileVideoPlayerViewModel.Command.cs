@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         if(IsChannelVideo) {
-                            Mediation.Logger.Debug("チャンネルを開く処理は未実装");
+                            OpenChannelId(ChannelId);
                         } else {
                             OpenUserId(UserId);
                         }
@@ -399,7 +399,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o => PostCommentAsync(PlayTime).ConfigureAwait(false),
+                    o => {
+                        if(Information.IsCompatibleIssue665NA) {
+                            PostComment_Issue665NA_Async(PlayTime).ConfigureAwait(false);
+                            return;
+                        }
+
+                        PostCommentAsync(PlayTime).ConfigureAwait(false);
+                    },
                     o => !string.IsNullOrWhiteSpace(PostCommentBody)
                 );
             }
@@ -753,6 +760,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         }
                     },
                     o => SelectedPlayListItem != null && SelectedPlayListItem != Information
+                );
+            }
+        }
+
+        public ICommand SwitchPlayNextVideoCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => CanPlayNextVideo.Value = !CanPlayNextVideo.Value,
+                    o => PlayListItems.CanItemChange
                 );
             }
         }

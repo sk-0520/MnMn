@@ -59,12 +59,22 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileMyListReloadWaitTime => appConfig.Get("service-smile-mylist-reload-wait-time", TimeSpan.Parse);
 
-        public static TimeSpan ServiceSmileUserDataCacheTime = appConfig.Get("service-smile-user-data-cache-time", TimeSpan.Parse);
-        public static TimeSpan ServiceSmileUserImageCacheTime = appConfig.Get("service-smile-user-image-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileUserDataCacheTime => appConfig.Get("service-smile-user-data-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileUserImageCacheTime => appConfig.Get("service-smile-user-image-cache-time", TimeSpan.Parse);
 
-        public static TimeSpan ServiceSmileMyListCacheTime = appConfig.Get("service-smile-mylist-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileMyListCacheTime => appConfig.Get("service-smile-mylist-cache-time", TimeSpan.Parse);
 
-        public static TimeSpan ServiceSmileMarketImageCacheTime = appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileMarketImageCacheTime => appConfig.Get("service-smile-market-image-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileChannelDataCacheTime => appConfig.Get("service-smile-channel-data-cache-time", TimeSpan.Parse);
+        public static TimeSpan ServiceSmileChannelImageCacheTime => appConfig.Get("service-smile-channel-image-cache-time", TimeSpan.Parse);
+
+        public static int ServiceSmileChannelVideoFeedItemCount => appConfig.Get("service-smile-channel-video-feed-item-count", int.Parse);
+        /// <summary>
+        /// チャンネルRSS(動画)の読み込み待ち時間
+        /// </summary>
+        public static TimeSpan ServiceSmileChannelVideoFeedWaitTime => appConfig.Get("service-smile-channel-video-feed-wait-time", TimeSpan.Parse);
+
+        public static TimeSpan ServiceSmileChannelCheckItLaterCheckTime => appConfig.Get("service-smile-channel-check_it_later-check-time", TimeSpan.Parse);
 
         /// <summary>
         /// マイリストのタイトルから除外する文字列。
@@ -116,6 +126,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ユーザー履歴数。
         /// </summary>
         public static int ServiceSmileUserHistoryCount => appConfig.Get("service-smile-user-history-count", int.Parse);
+        /// <summary>
+        /// チャンネル履歴数。
+        /// </summary>
+        public static int ServiceSmileChannelHistoryCount => appConfig.Get("service-smile-channel-history-count", int.Parse);
         /// <summary>
         /// マイリスト履歴数。
         /// </summary>
@@ -284,6 +298,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static double SettingServiceSmileMyListItemsAreaStar => appConfig.Get("setting-service-smile-mylist-items-area-star", double.Parse);
         public static bool SettingServiceSmileMyListUsingBookmarkTagFilter => appConfig.Get("setting-service-smile-mylist-using-bookmark-tag-filter", bool.Parse);
 
+        public static double SettingServiceSmileChannelGroupAreaStar => appConfig.Get("setting-service-smile-channel-group-area-star", double.Parse);
+        public static double SettingServiceSmileChannelItemsAreaStar => appConfig.Get("setting-service-smile-channel-items-area-star", double.Parse);
 
         #region video
 

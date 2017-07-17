@@ -42,9 +42,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// <summary>
     /// NOTE: 気持ち後回し
     /// </summary>
-    public class Getflv: SessionApiBase<SmileSessionViewModel>
+    public class Getflv_Issue665NA: SessionApiBase<SmileSessionViewModel>
     {
-        public Getflv(Mediation mediation)
+        public Getflv_Issue665NA(Mediation mediation)
             : base(mediation, ServiceType.Smile)
         { }
 
@@ -53,15 +53,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        static RawSmileVideoGetflvModel ConvertFromRawData(string rawWwwFormData)
+        static RawSmileVideoGetflv_Issue665NA_Model ConvertFromRawData(string rawWwwFormData)
         {
-            var result = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(rawWwwFormData);
+            var result = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflv_Issue665NA_Model>(rawWwwFormData);
             result.Raw = rawWwwFormData;
 
             return result;
         }
 
-        async Task<RawSmileVideoGetflvModel> LoadScrapingAsync(Uri uri, SmileVideoMovieType movieType, bool usingDmc)
+        async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadScrapingAsync(Uri uri, SmileVideoMovieType movieType, bool usingDmc)
         {
             //var re = await GetNormalAsync(uri);
             // WEBから取得してみる
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ForceUri = usingUri;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
-                var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(response.Result);
+                var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(response.Result);
 
                 var flashvars = json.SelectToken("flashvars");
                 var flvInfo = flashvars.SelectToken("flvInfo");
@@ -81,6 +81,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
                 var convertedFlvText = HttpUtility.UrlDecode(rawFlvText);
                 var result = ConvertFromRawData(convertedFlvText);
+
+                result.HtmlSource = response.Result;
 
                 if(usingDmc) {
                     result.IsDmc = flashvars.SelectToken("isDmc")?.ToString();
@@ -96,7 +98,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        async Task<RawSmileVideoGetflvModel> LoadNormalAsync(Uri uri, SmileVideoMovieType movieType)
+        async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadNormalAsync(Uri uri, SmileVideoMovieType movieType)
         {
             using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, ServiceType.SmileVideo)) {
                 var usingUri = movieType == SmileVideoMovieType.Swf
@@ -122,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task<RawSmileVideoGetflvModel> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingDmc)
+        public async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingDmc)
         {
             await LoginIfNotLoginAsync();
 

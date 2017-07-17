@@ -17,12 +17,24 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Channel
 {
-    public class FeedSmileVideoGuidModel: Rss2GuidModel
-    { }
+    [Serializable, DataContract]
+    public class SmileChannelBookmarkItemModel : SmileChannelItemModel
+    {
+        #region property
+
+        /// <summary>
+        /// 投稿動画。
+        /// </summary>
+        [DataMember]
+        public CollectionModel<string> Videos { get; set; } = new CollectionModel<string>();
+
+        #endregion
+    }
 }

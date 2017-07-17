@@ -1,5 +1,188 @@
 ﻿var archive_changelogs = [
 	{
+		'date': '2017/06/20',
+		'version': '0.69.1',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#641 により緊急リリース',
+						'comments': [
+							'試験してないから頼むべ',
+							'追々 #642 で調査する'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '検索ワードのピン止めを廃止しました',
+						'comments': [
+							'ブックマークになりました',
+							'ピン止めデータは一応残ってるけど短い命です(SearchPinItems)',
+							'ロジックがピン止めよりややこしくなりました'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '264e081c0e94a1339d03fd1d6bd75a7eb7f0de05',
+						'subject': '#605: ファインダーコンテキストメニューから視聴ページURIをクリップボードにコピーする'
+					},
+					{
+						'revision': 'cc24dad23535f0676a754f55a6e369de683d1e36',
+						'subject': '#606: ファインダーからプレイリストへ追加',
+						'comments': [
+							'酷使するプレイヤー人追加する処理のみ実装',
+							'他のプレイヤーに追加するのはちょっとなんというか、手間だったのでコメントアウト(SmileVideoFinderControl.xaml:464)した',
+							'やりたきゃ自分でやってくれ、そいでそのソースくれ'
+						]
+					},
+					{
+						'revision': 'd60a6b31b0283afe672a44682493bd8c46b534db',
+						'subject': '#615: ユーザータブ内の各タブをマウススクロール可能にする'
+					},
+					{
+						'revision': '06373c07c96d5b9c9e2ee5c784a7d48990c0c309',
+						'subject': '#614: フィルタタブ内のタブをマウススクロール可能にする'
+					},
+					{
+						'revision': '5481f20591ae7a8f8f6ac992003fba983a28bcdc',
+						'subject': '#612: コメントリストの自動スクロールを一時的に抑制する'
+					},
+					{
+						'revision': '4ecddc25a7657d669cbdda61fde9df78b2166f90',
+						'subject': '#620: 検索ワードをブックマークする'
+					},
+					{
+						'revision': 'a6902c7756e52d199fe8c128850c9dc3b96f85bb',
+						'subject': '#621: ブックマークした検索ワードの差分更新チェックを行う',
+						'comments': [
+							'ピン止めみたいに検索結果のタブのコンテキストメニューから「ブックマーク」を選択して設定',
+							'ブックマークした各項目は検索タブ内の左上にあるブックマークアイコン付きのトグルボタン方ら表示・非表示を切り替え',
+							'タグ検索ワードのブックマークが差分更新対象となる',
+							"検索自体は、あー、これ、<MnMn>\\etc\\define\\service\\smile\\video\\uri-list.xml: //item[@key='video-tag-feed']",
+							'内部状態半端なくやべぇ'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': 'e650885067c37c1c5cf4ecd7f84bc2b9355843a0',
+						'subject': '#641: DMC形式のDLが出来ない',
+						'comments': [
+							'んもう！'
+						]
+					},
+					{
+						'revision': '2d6464bfe1b0836af874b4381b601398bdcaa18f',
+						'subject': '#608: コメントの色定義が甘い',
+						'comments': [
+							'色定義を外部化',
+							"<MnMn>\\etc\\define\\service\\smile\\video\\msg.xml"
+						]
+					},
+					{
+						'revision': '448253747f149b220e881c93ee96f6f992f7412d',
+						'subject': '#610: UI 拡縮機能はタイトルバーからステータスバーに移動させる',
+						'comments': [
+							'ついでにプレイヤーのステータスバーの高さを少し低くして情報欄表示ボタンのスタイル変更'
+						]
+					},
+					{
+						'revision': 'b6ac91526f3e326c5e736d464413876c48194a03',
+						'subject': '#600: ブックマークに同一アイテムを設定できないようにする',
+						'comments': [
+							'既存の重複データ起動時に破棄され、該当処理は #611 で数世代保守する予定',
+							'2-3 世代で保守終わらせたいなぁ'
+						]
+					},
+					{
+						'revision': '8b8adc5dccc7efd01ce6d3084503b81031492ebd',
+						'subject': '#601: プレイリストに同一アイテムを設定できないようにする'
+					},
+					{
+						'revision': '0a80aae66f6ccab75362db3ad69107f76312766a',
+						'subject': '#616: 視聴履歴を内部的に1000件くらい持っててもいいんじゃないですかね',
+						'comments': [
+							'視聴履歴としては内部的に 5000 件保持するようにした',
+							'履歴表示としては今までと同じで 500 件にした',
+							'これ内部的にはいくら保持してもいいんだけど表示側を考えると制限せざるを得ないのですよ',
+							'その理由はかなり昔(2016年夏セミ全滅期くらい)に 1000 件から 500 件に変えた時と同じで件数多いとサムネイルやらタグやらで待ち時間がぱねぇ',
+							'なので今回は上辺の表示と内部の保持数を分離した(デバッグしてないからミスってて逆だったらめんご)',
+							'ここをページャ形式で分割するとしても、既存処理使っても実装がだるい ;-)'
+						]
+					},
+					{
+						'revision': '38d3d130987e96c409a735b3b235c1001a3a2037',
+						'subject': '#214: ブックマークなどの追加処理に対する方向を固定する',
+						'comments': [
+							'新しいものが上、古いものが上になるように共通処理実装',
+							'ただしプレイリストのブックマークは最後部に追加するのでここだけ処理イメージが違う',
+							'本件とはあんまり関係ないけど履歴系も処理共通化'
+						]
+					},
+					{
+						'revision': '80432fae679fba0192848e364873eb11d15f46cc',
+						'subject': '#626: #419 のキーバインドがヘルプに記載されてない',
+						'comments': [
+							'F7 で音声ミュート切り替えの件'
+						]
+					},
+					{
+						'revision': 'e3891fd256356428e84a2e2f59cc30c429328fe8',
+						'subject': '#628: 無効ファイルの設定されたラボプレイヤーでキャッシュを開こうとすると死ぬ'
+					},
+					{
+						'revision': '2ef8b173e42b3da794d3d8f1123b9e37032d026a',
+						'subject': '#609: プレイヤー管轄の再生状態をローカライズする'
+					},
+					{
+						'revision': '3d6810ac12dd6e2b9b5be22f65164c61351ef2c9',
+						'subject': '#619: 検索ワードのピン止め機能を廃止する'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '584c7829c7a36400da55c6f5521f6e3474a1b3dc',
+						'subject': '#617: コメントサイズの外部化',
+						'comments': [
+							'てっきり外部化してると思ったけど完全に定数埋め込みで恥の多い実装を送って来ました',
+							'通常コメントサイズに対して以下キーを掛けて最終サイズを決定する',
+							'`service-smile-smilevideo-player-comment-big`',
+							'`service-smile-smilevideo-player-comment-small`'
+						]
+					},
+					{
+						'revision': '7d3dc5033b93217ef80dc753ac158fd438bc8b0f',
+						'subject': '#631: App.config に入っていない定数を追い出す',
+						'comments': [
+							'`service-smile-user-data-cache-time`: ニコニコユーザー情報キャッシュ時間',
+							'`service-smile-user-image-cache-time`: ニコニコユーザー画像キャッシュ時間',
+							'`service-smile-mylist-cache-time`: ニコニコマイリストキャッシュ時間',
+							'`service-smile-market-image-cache-time`: ニコニコ市場サムネイルキャッシュ時間',
+							'`service-smile-smilevideo-thumb-cache-time`: ニコニコ動画情報キャッシュ時間',
+							'`service-smile-smilevideo-msg-cache-time`: ニコニコ動画コメントキャッシュ時間',
+							'`service-smile-smilevideo-relation-cache-time`: ニコニコ動画関連動画情報キャッシュ時間',
+							'`service-smile-smilevideo-check_it_later-cache-time`: ニコニコ動画あとで見る の保持有効期間',
+							'`service-smile-live-information-cache-time`: ニコニコ生放送動画情報キャッシュ時間'
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/06/10',
 		'version': '0.68.0',
 		'isRc': false,

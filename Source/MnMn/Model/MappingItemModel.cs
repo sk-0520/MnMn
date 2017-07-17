@@ -57,6 +57,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlElement("bracket")]
         public CollectionModel<MappingItemBracketModel> Brackets { get; set; } = new CollectionModel<MappingItemBracketModel>();
         IReadOnlyList<IReadOnlyMappingItemBracket> IReadOnlyMappingItem.Brackets => Brackets;
+        [XmlElement("replace")]
+        public CollectionModel<MappingItemReplaceModel> Replace { get; set; } = new CollectionModel<MappingItemReplaceModel>();
+        IReadOnlyList<IReadOnlyMappingItemReplace> IReadOnlyMappingItem.Replace => Replace;
         [XmlElement("custom")]
         public CollectionModel<MappingItemCustomModel> Customs { get; set; } = new CollectionModel<MappingItemCustomModel>();
         IReadOnlyList<IReadOnlyMappingItemCustom> IReadOnlyMappingItem.Customs => Customs;

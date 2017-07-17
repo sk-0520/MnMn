@@ -177,6 +177,7 @@
 
       <KeyBinding x:Key="NextVideoKey" Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
       <KeyBinding x:Key="PrevVideoKey" Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />
+      <KeyBinding x:Key="SwitchPlayNextVideo" Key="F9" Command="{Binding SwitchPlayNextVideoCommand}" />
 
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
@@ -197,6 +198,7 @@
     <!--<KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />-->
     <StaticResource ResourceKey="NextVideoKey" />
     <StaticResource ResourceKey="PrevVideoKey" />
+    <StaticResource ResourceKey="SwitchPlayNextVideo" />
 
     <KeyBinding Key="Right" Command="{Binding ChangeSeekVideoPositionCommand}">
       <KeyBinding.CommandParameter>
@@ -477,7 +479,7 @@
                 <MenuItem.Style>
                   <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                     <Style.Triggers>
-                      <DataTrigger Binding="{Binding CanPlayNextVieo.Value}" Value="True">
+                      <DataTrigger Binding="{Binding CanPlayNextVideo.Value}" Value="True">
                         <Setter Property="FontWeight" Value="Bold" />
                         <Setter Property="Icon">
                           <Setter.Value>
@@ -512,7 +514,7 @@
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource {x:Type MenuItem}}" />
-              <MenuItem Header="次動画へ自動遷移" IsCheckable="True" IsChecked="{Binding CanPlayNextVieo.Value}" Style="{StaticResource {x:Type MenuItem}}" />
+              <MenuItem Header="次動画へ自動遷移" IsCheckable="True" IsChecked="{Binding CanPlayNextVideo.Value}" InputGestureText="{Binding Source={StaticResource SwitchPlayNextVideo}, Converter={StaticResource KeyBindingToGestureTextConverter}}" Style="{StaticResource {x:Type MenuItem}}" />
               <Separator Style="{StaticResource {x:Type Separator}}" />
               <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
             </CompositeCollection>
@@ -532,7 +534,7 @@
         <Button.Style>
           <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding CanPlayNextVieo.Value}" Value="True">
+              <DataTrigger Binding="{Binding CanPlayNextVideo.Value}" Value="True">
                 <Setter Property="ContentTemplate">
                   <Setter.Value>
                     <DataTemplate>
@@ -739,6 +741,18 @@
           </Canvas>
         </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
+      </Grid>
+      <Grid>
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Html5}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+        <Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding Information.IsCompatibleIssue665NA, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Abnormal}" Style="{StaticResource SmallAccentIconPath}" />
+          </Canvas>
+        </Viewbox>
       </Grid>
       <ContentControl Padding="0" Margin="0" Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}">
         <ContentControl.Style>
@@ -1861,7 +1875,11 @@
                 <CheckBox IsChecked="{Binding IsEnabledOriginalPosterFilering}" Style="{StaticResource VerticalCheckBox}">投稿者コメントもフィルタ対象にする</CheckBox>
               </StackPanel>
               <TabControl Grid.Row="1" Style="{StaticResource FinderTab}">
-                <TabItem Header="この動画">
+                <TabControl.Resources>
+                  <sys:String x:Key="ThisVideoTabHeader">この動画</sys:String>
+                  <sys:String x:Key="AllVideoTabHeader">全ての動画</sys:String>
+                </TabControl.Resources>
+                <TabItem Header="{StaticResource ThisVideoTabHeader}" app_view_attachment:MenuTabItem.Header="{StaticResource ThisVideoTabHeader}">
                   <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering x:Name="localFilter">
                     <i:Interaction.Triggers>
                       <i:EventTrigger EventName="FilteringChanged">
@@ -1870,10 +1888,10 @@
                     </i:Interaction.Triggers>
                   </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
                 </TabItem>
-                <TabItem VerticalContentAlignment="Stretch">
+                <TabItem VerticalContentAlignment="Stretch"  app_view_attachment:MenuTabItem.Header="{StaticResource AllVideoTabHeader}">
                   <TabItem.Header>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                      <TextBlock>全ての動画</TextBlock>
+                      <TextBlock Text="{StaticResource AllVideoTabHeader}" />
                       <CheckBox Margin="{StaticResource LeftMargin}" IsChecked="{Binding IsEnabledGlobalCommentFilering}">この動画で有効にする</CheckBox>
                     </StackPanel>
                   </TabItem.Header>
@@ -1940,7 +1958,7 @@
                   <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource VerticalButton}">
                       <Style.Triggers>
-                        <DataTrigger Binding="{Binding CanPlayNextVieo.Value}" Value="True">
+                        <DataTrigger Binding="{Binding CanPlayNextVideo.Value}" Value="True">
                           <Setter Property="ContentTemplate">
                             <Setter.Value>
                               <DataTemplate>
@@ -1976,7 +1994,7 @@
                 </Button>
 
                 <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="ランダム再生" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource VerticalCheckBox}" />
-                <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="次動画へ自動遷移" IsChecked="{Binding CanPlayNextVieo.Value}" Style="{StaticResource VerticalCheckBox}" />
+                <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="次動画へ自動遷移" IsChecked="{Binding CanPlayNextVideo.Value}" Style="{StaticResource VerticalCheckBox}" />
 
               </Grid>
 

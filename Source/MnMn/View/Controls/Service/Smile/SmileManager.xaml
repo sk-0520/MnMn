@@ -52,14 +52,17 @@
       <TabItem Header="マイリスト" DataContext="{Binding VideoManager.MyListManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoMyListManager />
       </TabItem>
-      <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" Style="{StaticResource SectionTabItem}">
-        <app_view_controls_service_smile_video:SmileVideoHistoryManager />
+      <TabItem Header="ユーザー" DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_service_smile:SmileUsersManager />
+      </TabItem>
+      <TabItem Header="チャンネル" DataContext="{Binding ChannelManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_service_smile:SmileChannelManager x:Name="channel" />
       </TabItem>
       <TabItem Header="生放送" DataContext="{Binding LiveManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_live:SmileLiveManager />
       </TabItem>
-      <TabItem Header="ユーザー" DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
-        <app_view_controls_service_smile:SmileUsersManager />
+      <TabItem Header="公式サイト" DataContext="{Binding WebSiteManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_service_smile:SmileWebSiteManager x:Name="webSite" />
       </TabItem>
       <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />
@@ -73,8 +76,8 @@
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />
       </TabItem>
-      <TabItem Header="公式サイト" DataContext="{Binding WebSiteManager}" Style="{StaticResource SectionTabItem}">
-        <app_view_controls_service_smile:SmileWebSiteManager x:Name="webSite" />
+      <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_service_smile_video:SmileVideoHistoryManager />
       </TabItem>
       <TabItem Header="ラボ" DataContext="{Binding VideoManager.LaboratoryManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoLaboratoryManager />

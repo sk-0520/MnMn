@@ -23,6 +23,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -30,7 +31,9 @@ using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -39,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// <summary>
     ///
     /// </summary>
-    public class Msg: SessionApiBase<SmileSessionViewModel>
+    public class Msg : SessionApiBase<SmileSessionViewModel>
     {
         public Msg(Mediation mediation)
             : base(mediation, ServiceType.Smile)
@@ -47,19 +50,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        public static RawSmileVideoMsgPacketModel ConvertFromRawPacketData(Stream stream)
+        public static RawSmileVideoMsgPacket_Issue665NA_Model ConvertFromRawPacketData_Issue665NA(Stream stream)
         {
-            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketModel>(stream);
+            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacket_Issue665NA_Model>(stream);
         }
 
-        public static RawSmileVideoMsgPacketResultModel ConvertFromRawPacketResultData(Stream stream)
+        public static RawSmileVideoMsgPacket_Issue665NA_ResultModel ConvertFromRawPacketResultData_Issue665NA(Stream stream)
         {
-            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketResultModel>(stream);
+            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacket_Issue665NA_ResultModel>(stream);
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
+        public static SmileVideoMsgPackSettingModel ConvertMsgSettingModel(FileInfo file)
         {
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, ServiceType.SmileVideo)) {
+            return SerializeUtility.LoadJsonDataFromFile<SmileVideoMsgPackSettingModel>(file.FullName);
+        }
+
+        string ReplaceJsonApiUrl(Uri msgServerUri)
+        {
+            // watch_dll.js で謎処理
+            return msgServerUri.OriginalString.Replace("/api/", "/api.json/");
+        }
+
+        public async Task<RawSmileVideoMsgPacket_Issue665NA_Model> Load_Issue665NA_Async(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
+        {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg_Issue665NA, ServiceType.SmileVideo)) {
                 //page.ParameterType = ParameterType.Mapping;
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
@@ -77,9 +91,64 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);
                 using(var stream = StreamUtility.ToUtf8Stream(rawMessage.Result)) {
-                    var result = ConvertFromRawPacketData(stream);
+                    var result = ConvertFromRawPacketData_Issue665NA(stream);
                     return result;
                 }
+            }
+        }
+
+        public async Task<SmileVideoMsgPackSettingModel> LoadAsync(Uri msgServer, string threadId, int getCount, SmileVideoMsgRangeModel range, string userId, string userKey, bool hasOriginalPosterComment, bool isCommunityThread, string communityThreadId, RawSmileVideoGetthreadkeyModel communityThreadKey)
+        {
+            var packetMap = new Dictionary<SmileVideoMsgPacketId, int>() {
+                [SmileVideoMsgPacketId.Normal] = 0,
+                [SmileVideoMsgPacketId.NormalLeaves] = 1,
+            };
+            var packetCount = packetMap.Max(p => p.Value);
+
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, ServiceType.SmileVideo)) {
+                //page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
+                page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
+                page.ReplaceRequestParameters["thread-id"] = threadId;
+                page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
+                page.ReplaceRequestParameters["content"] = range.ToString();
+                page.ReplaceRequestParameters["user-id"] = userId;
+                page.ReplaceRequestParameters["userkey"] = userKey;
+                page.ReplaceRequestParameters["community-thread-id"] = communityThreadId;
+
+                // 頑張ったマッピングのパケット番号調整
+                // 投稿者
+                page.ReplaceRequestParameters["filter-op"] = hasOriginalPosterComment.ToString();
+                if(hasOriginalPosterComment) {
+                    packetCount += 1;
+                    packetMap[SmileVideoMsgPacketId.OriginalPoster] = packetCount;
+                    page.ReplaceRequestParameters["packet-op"] = packetCount.ToString();
+                }
+
+                // スレッドキーが必要な人
+                page.ReplaceRequestParameters["filter-community"] = isCommunityThread.ToString();
+                if(isCommunityThread) {
+                    page.ReplaceRequestParameters["threadkey"] = communityThreadKey.Threadkey;
+                    page.ReplaceRequestParameters["force_184"] = communityThreadKey.Force184;
+
+                    packetCount += 1;
+                    packetMap[SmileVideoMsgPacketId.Community] = packetCount;
+                    page.ReplaceRequestParameters["packet-community-thread"] = packetCount.ToString();
+
+                    packetCount += 1;
+                    packetMap[SmileVideoMsgPacketId.CommunityLeaves] = packetCount;
+                    page.ReplaceRequestParameters["packet-community-thread_leaves"] = packetCount.ToString();
+                }
+
+                var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
+                //Debug.WriteLine(rawMessage.Result);
+                var items = Newtonsoft.Json.JsonConvert.DeserializeObject<CollectionModel<RawSmileVideoMsgResultItemModel>>(rawMessage.Result);
+
+                var result = new SmileVideoMsgPackSettingModel() {
+                    PacketId = packetMap,
+                    Items = items,
+                };
+
+                return result;
             }
         }
 
@@ -98,11 +167,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 return null;
             }
         }
-        public async Task<RawSmileVideoMsgPacketResultModel> PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
+
+        public async Task<RawSmileVideoMsgPacket_Issue665NA_ResultModel> Post_Issue665NA_Async(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost_Issue665NA, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
 
                 page.ReplaceRequestParameters["thread-id"] = threadId;
@@ -118,9 +188,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 if(response.IsSuccess) {
                     Mediation.Logger.Trace(response.Result);
                     using(var stream = StreamUtility.ToUtf8Stream(response.Result)) {
-                        var result = ConvertFromRawPacketResultData(stream);
+                        var result = ConvertFromRawPacketResultData_Issue665NA(stream);
                         return result;
                     }
+                }
+
+                return null;
+            }
+        }
+
+        public async Task<RawSmileVideoMsgResultItemModel> PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
+        {
+            await LoginIfNotLoginAsync();
+
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, ServiceType.SmileVideo)) {
+                page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
+
+                page.ReplaceRequestParameters["thread-id"] = threadId;
+                page.ReplaceRequestParameters["ticket"] = ticket;
+                page.ReplaceRequestParameters["postkey"] = postkey;
+                page.ReplaceRequestParameters["vpos"] = SmileVideoMsgUtility.ConvertRawElapsedTime(vpos);
+                page.ReplaceRequestParameters["premium"] = SmileVideoMsgUtility.ConvertRawIsPremium(Session.IsPremium);
+                page.ReplaceRequestParameters["user_id"] = Session.UserId;
+                page.ReplaceRequestParameters["commands"] = string.Join(" ", commands);
+                page.ReplaceRequestParameters["comment"] = comment;
+
+                var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
+                if(response.IsSuccess) {
+                    var items = Newtonsoft.Json.JsonConvert.DeserializeObject<CollectionModel<RawSmileVideoMsgResultItemModel>>(response.Result);
+                    return items.FirstOrDefault(i => i.ChatResult != null);
                 }
 
                 return null;

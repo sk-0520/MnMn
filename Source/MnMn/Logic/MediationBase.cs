@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -366,13 +367,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ;
         }
 
-        protected string BuildMapping(string s, string target, IReadOnlyMappingItem item)
+        protected string BuildMapping(string rawValue, string target, IReadOnlyMappingItem item)
         {
+            var replacedValue = rawValue;
+            if(item.Replace.Any()) {
+                var replace = item.Replace.FirstOrDefault(b => b.Target == target);
+                if(replace != null) {
+                    var map = replace.Pairs.ToDictionary(i => i.Source, i => i.Destination);
+                    replacedValue = replace.Regex.Replace(rawValue, m => {
+                        foreach(var pair in map) {
+                            var group = m.Groups[pair.Key];
+                            if(group.Success) {
+                                return pair.Value.Replace("$[SRC]", group.Value);
+                            }
+                        }
+                        return m.Value;
+                    });
+                }
+            }
+
             var bracket = item.Brackets.FirstOrDefault(b => b.Target == target);
             if(bracket == null) {
-                return s;
+                return replacedValue;
             }
-            return $"{bracket.Open}{s}{bracket.Close}";
+
+            return $"{bracket.Open}{replacedValue}{bracket.Close}";
         }
 
         protected string ToMappingItemString(IReadOnlyMappingItem item, IDictionary<string, string> replaceMap)
@@ -406,6 +425,112 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        protected string TrimInlineContent(string rawContent)
+        {
+            var reg = new Regex(
+                @"
+                (?<L_TRIM>
+                    \s*
+                )
+                \$
+                \[
+                (?<L_OP>
+                    (\d+)?
+                )
+                :
+                (?<R_OP>
+                    (\d+)?
+                )
+                \]
+                (?<R_TRIM>
+                    \s*
+                )",
+                /*RegexOptions.Compiled |*/ RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture
+            );
+            return reg.Replace(rawContent, m => {
+                var leftOperator = m.Groups["L_OP"].Value;
+                var rightOperator = m.Groups["R_OP"].Value;
+
+                var leftTrim = m.Groups["L_TRIM"].Value;
+                var rightTrim = m.Groups["R_TRIM"].Value;
+
+                var sb = new StringBuilder();
+
+                if(!string.IsNullOrWhiteSpace(leftOperator)) {
+                    var safeCount = int.Parse(leftOperator);
+                    if(safeCount < leftTrim.Length) {
+                        var safeWhite = leftTrim.Substring(leftTrim.Length - safeCount);
+                        sb.Append(safeWhite);
+                    }
+                }
+                if(!string.IsNullOrWhiteSpace(rightOperator)) {
+                    var safeCount = int.Parse(rightOperator);
+                    if(safeCount < rightTrim.Length) {
+                        var safeWhite = rightTrim.Substring(0, safeCount);
+                        sb.Append(safeWhite);
+                    }
+                }
+
+                return sb.ToString() ;
+            });
+        }
+
+        protected string KillCommentContent(string rawContent)
+        {
+            var reg = new Regex(
+                @"
+                (?<SINGLE>
+                    \$\[//\].*$
+                )
+                |
+                (?<MULTI>
+                    \$\[/\*\]
+                    [\s\S]+?
+                    \$\[\*/\]
+                )
+                ",
+                 /*RegexOptions.Compiled |*/ RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture
+            );
+            return reg.Replace(rawContent, string.Empty);
+        }
+
+        protected string PreprocessMappingContent(IReadOnlyMappingContent content)
+        {
+            var trimedContentValue = content.Value;
+            if(content.IsEnabledInlineTrime) {
+                trimedContentValue = TrimInlineContent(trimedContentValue);
+            }
+
+            var killCommentContentValue = trimedContentValue;
+            if(content.IsEnabledComment) {
+                killCommentContentValue = KillCommentContent(killCommentContentValue);
+            }
+
+            return killCommentContentValue;
+        }
+
+        protected string FilterMappingContent(string mappedContentValue)
+        {
+            var reg = new Regex(
+                @"
+                \$\[filter:(?<COND>.+):/\*\]
+                (?<VALUE>[\s\S]+?)
+                \$\[filter:\*/\]
+                ",
+                 /*RegexOptions.Compiled |*/ RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture
+            );
+            return reg.Replace(mappedContentValue, m => {
+                var rawCondition = m.Groups["COND"].Value;
+                var value = m.Groups["VALUE"].Value;
+
+                if(RawValueUtility.ConvertBoolean(rawCondition)) {
+                    return value;
+                }
+
+                return string.Empty;
+            });
+        }
+
         protected IReadOnlyMappingResult GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var result = new MappingResultModel();
@@ -421,13 +546,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 result.ContentType = mapping.ContentType;
             }
 
+            var preprocessedContentValue = PreprocessMappingContent(mapping.Content);
+
             var mappingParams = mapping.Items
                 .ToDictionary(
                     i => i.Key,
                     i => ToMappingItemString(i, replaceMap)
                 )
             ;
-            var replacedContent = ReplaceString(mapping.Content.Value, mappingParams);
+            var replacedContent = ReplaceString(preprocessedContentValue, mappingParams);
+
+            if(mapping.Content.IsEnabledFilter) {
+                replacedContent = FilterMappingContent(replacedContent);
+            }
+
             var trimMap = new Dictionary<MappingContentTrim, Func<string, string>>() {
                 { MappingContentTrim.None, s => s },
                 { MappingContentTrim.Block, s => string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c)).Reverse()) },

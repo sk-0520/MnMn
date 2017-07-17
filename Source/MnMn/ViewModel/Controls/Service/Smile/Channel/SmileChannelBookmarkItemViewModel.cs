@@ -19,18 +19,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Channel;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 {
-    [Serializable, XmlRoot("packet")]
-    public class RawSmileVideoMsgPacketResultModel: ModelBase
+    public class SmileChannelBookmarkItemViewModel : SingleModelWrapperViewModelBase<SmileChannelBookmarkItemModel>
     {
+        public SmileChannelBookmarkItemViewModel(SmileChannelBookmarkItemModel model)
+            : base(model)
+        { }
+
         #region property
 
-        [XmlElement("chat_result")]
-        public RawSmileVideoMsgChatResultModel ChatResult { get; set; } = new RawSmileVideoMsgChatResultModel();
+        public string ChannelName { get { return Model.ChannelName; } }
+
+        public string ChannelId { get { return Model.ChannelId; } }
 
         #endregion
     }

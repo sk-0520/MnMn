@@ -462,6 +462,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         }
 
+        public override string ToString()
+        {
+            return UserName;
+        }
+
         #endregion
 
         #region ISmileDescription
@@ -511,6 +516,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public ICommand MenuCopyMyListIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyMyListId(o, Mediation.Logger)); } }
 
         public ICommand OpenUserIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenUserId((string)o, Mediation)); } }
+        public ICommand OpenChannelIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenChannelId((string)o, Mediation, Mediation)); } }
 
         #endregion
     }

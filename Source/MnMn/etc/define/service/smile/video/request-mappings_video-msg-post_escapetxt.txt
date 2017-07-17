@@ -1,0 +1,25 @@
+﻿<!-- コメント投稿 JSON エスケープ -->
+<bracket target="value" open="&quot;" close="&quot;" />
+<replace target="value" regex-options="ExplicitCapture IgnoreCase IgnorePatternWhitespace">
+	<pattern>
+		<![CDATA[
+		(?<BACK_SLASH>\\)
+		|
+		(?<DOUBLE_QT>")
+		|
+		# `"` でくくるからシングルクォートはエスケープしない
+		#(?<SINGLE_QT>')
+		#|
+		(?<CR>\r)
+		|
+		(?<LF>\n)
+		|
+		(?<PP>A=.*)
+		]]>
+	</pattern>
+	<pair src="BACK_SLASH" dst="\\" />
+	<pair src="SINGLE_QT" dst="\'" />
+	<pair src="DOUBLE_QT" dst='\"' />
+	<pair src="CR" dst="\r" />
+	<pair src="LF" dst="\n" />
+</replace>

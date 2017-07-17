@@ -1,6 +1,6 @@
 ﻿var changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning' 'open',
+						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning' 'open' 'reopen',
 						'comments': [
 							''
 							['alt', 'image-path']
@@ -85,6 +85,112 @@
 	},
 	*/
 	{
+		'date': '2017/07/17',
+		'version': '0.73.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'class': 'warning',
+						'subject': '大工事でいろんなとこに手を入れたからデバッグよろしく！'
+					},
+					{
+						'revision': '',
+						'subject': '本バージョンで #665 正式対応が完了したはずなので HTML5 版を正とします',
+						'comments': [
+							'Flash 版 -> HTML5 版の違いによりいくつか内部的にも変わっている部分があります',
+							'視聴ページの情報から必要情報を取得するためここが取れない場合死にます(多分これは前からなので別にいいと思う)',
+							'コメントのデータ形式が XML -> Json になってるので前バージョンでキャッシュされたコメントは使えません',
+							'動画形式が SWF の場合は Flash 版として処理します(とはいっても ffmpeg なんちゃって変換)',
+							'この SWF 互換(ソース的には *_Issue665NA)が綱渡りみたいな実装になってるのでこれ以上なんかあるとゲロ吐き散らします',
+							'あんまし言いたかないけどテストが足りないので色々問題ありそうなので見つけたら早めに教えてね'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': 'e752c014ab0fc9be7589cbc67864e4743ee611a1',
+						'subject': '#644: 外部プログラム設定などで使用する置き換え可能文字列を自動入力できるようにする'
+					},
+					{
+						'revision': '5c898073bcb5cd78600221a5842ab1cbcf9c660e',
+						'subject': '#662: プレイリストの次動画自動遷移をショートカットキーで対応可能にする',
+						'comments': [
+							'F9 キー',
+							'Windows Media Player で該当するキーが分からんかった'
+						]
+					},
+					{
+						'revision': '58feae681e6f26bc10eeeda196fd5ddddc34585a',
+						'subject': '#81: チャンネルページをユーザーページみたいに表示する',
+						'comments': [
+							'WPF の TabControl 難くね？',
+							'内蔵ブラウザが色々おかしな挙動するけど気にするなし'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': 'cf11d7e8de006e651f20d0d6773e5d420ff366a2',
+						'subject': '#660: ユーザータブ一覧メニュー表示の項目表示が出来てない'
+					},
+					{
+						'revision': '6719745f4ba81fce97d07fad08976e9a7f326d87',
+						'subject': '#665: 2017-07-13 サービス実装変更',
+						'comments': [
+							'いやはや短い時間で結構頑張ったね',
+							'さしてまともに見れない SWF 互換を残したからこれが問題でなんかこう死ぬ可能性あるね',
+							'あとコメント投稿周りも変わってるから怖いけど興味ないんだなこれが',
+							'細かい修正が必要なら追って別課題で対応する'
+						]
+					},
+					{
+						'revision': '0493bb2d3406c22813ac1c085a75950e525efb8d',
+						'subject': '#668: ニコニコのタブ順序調整',
+						'comments': [
+							'独断と偏見で並び順変えた'
+						]
+					},
+					{
+						'revision': '8e4fb2d5eb0642aabe4fb9564a1abc831605246d',
+						'subject': '#664: タグ取得のRSSでページ指定って 1 基底じゃないのでしょうかですか',
+						'comments': [
+							'うむ。ミスってた',
+							'運用上今まででも問題はないけど気分的になんだか変な感じだった'
+						]
+					},
+					{
+						'revision': '554d6a66675c4a7710561fcb26655f8454eff22c',
+						'subject': '#663: フィルタ内タブのタブ一覧メニューで表示要素の瞬間移動'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': 'cf60dc26c6916d3806c446d11caccd44f286cc98',
+						'subject': '#667: 開発のメールアドレス変える',
+						'comments': [
+							'gmail のエイリアスで +mnmn を付けた',
+							'これでラベルが強制できるのだ',
+							'もうエイリアスついてないメール無視することにする、探すのがしんどい'
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/07/14',
 		'version': '0.72.1',
 		'isRc': false,
@@ -107,7 +213,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'a9b99fda0c175a7cd7ef371cf3d7e34ab88ea9ad',
 						'class': 'open',
 						'subject': '#665: 2017-07-13 サービス実装変更',
 						'comments': [

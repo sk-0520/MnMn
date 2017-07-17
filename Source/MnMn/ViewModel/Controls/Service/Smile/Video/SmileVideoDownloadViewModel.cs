@@ -47,6 +47,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -114,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public FewViewModel<bool> UsingDmc { get; } = new FewViewModel<bool>();
         protected RawSmileVideoDmcObjectModel DmcObject { get; private set; }
         protected Uri DmcApiUri { get; private set; }
-        protected RawSmileVideoDmcSrcIdToMultiplexerModel DmcMultiplexer { get { return DmcObject?.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
+        protected RawSmileVideoDmcContentSrcIdModel DmcMultiplexer { get { return DmcObject?.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
         public string DmcVideoSrc { get { return DmcMultiplexer?.VideoSrcIds.First(); } }
         public string DmcAudioSrc { get { return DmcMultiplexer?.AudioSrcIds.First(); } }
         protected string DmcFileExtension { get { return DmcObject.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension; } }
@@ -134,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected long DownloadStartPosition { get; private set; }
 
-        protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
+        //protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
 
         public string VideoId
         {
@@ -279,6 +280,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadGetflvEnd()
         { }
 
+        protected virtual void OnLoadWatchDataStart()
+        { }
+        protected virtual void OnLoadWatchDataEnd()
+        { }
+
         async Task LoadGetflvAsync()
         {
             OnLoadGetflvStart();
@@ -286,6 +292,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var result = await Information.LoadGetflvAsync(true, Setting.Download.UsingDmc);
 
             OnLoadGetflvEnd();
+        }
+
+        async Task LoadWatchDataAsync()
+        {
+            OnLoadWatchDataStart();
+
+            var result = await Information.LoadWatchDataAsync(true, Setting.Download.UsingDmc);
+
+            OnLoadWatchDataEnd();
         }
 
         protected virtual void OnLoadVideoStart()
@@ -377,9 +392,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        [Obsolete]
         protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject()
         {
-            var info = Information.DmcInfo;
+            var info = Information.DmcInfo_Issue665NA;
 
             var model = new RawSmileVideoDmcObjectModel();
             {
@@ -395,10 +411,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 with.Priority = session["priority"].Value<string>();
 
                 var mux = new RawSmileVideoDmcSrcIdToMultiplexerModel();
-                mux.VideoSrcIds.InitializeRange(session["videos"].Values<string>());
-                mux.AudioSrcIds.InitializeRange(session["audios"].Values<string>());
+                mux.SrcId.VideoSrcIds.InitializeRange(session["videos"].Values<string>());
+                mux.SrcId.AudioSrcIds.InitializeRange(session["audios"].Values<string>());
                 var idSet = new RawSmileVideoDmcContentSrcIdSetModel();
-                idSet.SrcIdToMultiplexers.Add(mux);
+                idSet.SrcIdToMultiplexers.Add(mux.SrcId);
                 with.ContentSrcIdSets.Add(idSet);
 
                 with.OperationAuth.BySignature.Token = session["token"].Value<string>();
@@ -420,6 +436,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject2()
+        {
+            var model = new RawSmileVideoDmcObjectModel();
+            {
+                var with = model.Data.Session;
+                var session = Information.DmcInfo2.SessionApi;
+
+                //var uri = session["api_urls"].First().Value<string>();
+                var uri = session.Urls.First().Url;
+
+                with.RecipeId = session.RecipeId;
+                with.ContentId = session.ContentId;
+                with.Protocol.Name = session.Protocols.First();
+                with.Priority = session.Priority;
+
+                var mux = new RawSmileVideoDmcSrcIdToMultiplexerModel();
+                mux.SrcId.VideoSrcIds.InitializeRange(session.Videos);
+                mux.SrcId.AudioSrcIds.InitializeRange(session.Audios);
+                var idSet = new RawSmileVideoDmcContentSrcIdSetModel();
+                idSet.SrcIdToMultiplexers.Add(mux.SrcId);
+                with.ContentSrcIdSets.Add(idSet);
+
+                with.OperationAuth.BySignature.Token = session.Token;
+                with.OperationAuth.BySignature.Signature = session.Signature;
+                with.KeepMethod.HeartBeat.LifeTime = session.HeartbeatLifetime;
+                //IDictionary<string, JToken> authTypes = (JObject)session["auth_types"];
+                string authType;
+                if(session.AuthTypes.TryGetValue(with.Protocol.Name, out authType)) {
+                    with.ContentAuth.AuthType = authType;
+                } else {
+                    with.ContentAuth.AuthType = authType;
+                }
+                //with.ContentAuth.ServiceId = session["service_id"].Value<string>();
+                with.ContentAuth.ServiceUserId = session.ServiceUserId;
+                with.ContentAuth.ContentKeyTimeout = session.ContentKeyTimeout;
+                with.ClientInformation.PlayerId = session.PlayerId;
+
+                return Tuple.Create(uri, model);
+            }
+        }
+
         /// <summary>
         /// DMC形式でダウンロードする。
         /// </summary>
@@ -433,15 +490,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoLoadState = LoadState.Preparation;
 
             var dmc = new Dmc(Mediation);
-            var tuple = GetDmcObject();
+            var tuple = GetDmcObject2();
             DmcApiUri = new Uri(tuple.Item1);
             var model = tuple.Item2;
+            var dmcInfo2 = Information.DmcInfo2;
 
             // 動画ソースを選りすぐる
             var sendMux = model.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
-            var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(sendMux, Setting.Download.VideoWeight);
+            var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(dmcInfo2.SessionApi.Videos, Setting.Download.VideoWeight);
             sendMux.VideoSrcIds.InitializeRange(sendVideoWeights.ToEvaluatedSequence());
-            var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(sendMux, Setting.Download.AudioWeight);
+            var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(dmcInfo2.SessionApi.Audios, Setting.Download.AudioWeight);
             sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
 
             var result = await dmc.LoadAsync(DmcApiUri, model);
@@ -492,17 +550,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadMsgEnd()
         { }
 
-        protected void ImportCommentThread(RawSmileVideoMsgPacketModel rawMessagePacket)
-        {
-            CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
-        }
+        //protected void ImportCommentThread_Issue665NA(RawSmileVideoMsgPacket_Issue665NA_Model rawMessagePacket)
+        //{
+        //    CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+        //}
 
-        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgCoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
+        //protected void ImportCommentThread(SmileVideoMsgSettingModel rawMessagePacket)
+        //{
+        //    // なんぞいな
+        //    //CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+        //}
+
+        protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsg_Issue665NA_CoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
         {
             await Information.LoadGetthreadkeyAsync();
 
             var msg = new Msg(Mediation);
-            return await msg.LoadAsync(
+            return await msg.Load_Issue665NA_Async(
                 Information.MessageServerUrl,
                 Information.ThreadId,
                 Information.UserId,
@@ -513,20 +577,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             );
         }
 
-        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgAsync(CacheSpan msgCacheSpan)
+        protected async Task<SmileVideoMsgPackSettingModel> LoadMsgCoreAsync(int getCount, SmileVideoMsgRangeModel range)
+        {
+            await Information.LoadGetthreadkeyAsync();
+
+            var msg = new Msg(Mediation);
+            return await msg.LoadAsync(
+                Information.MessageServerUrl,
+                Information.ThreadId,
+                getCount,
+                range,
+                Session.UserId,
+                Information.UserKey,
+                Information.HasOriginalPostedComment,
+                Information.IsChannelVideo,
+                Information.CommunityThreadId,
+                Information.Getthreadkey
+            );
+        }
+
+        protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsg_Issue665NA_Async(CacheSpan msgCacheSpan)
         {
             OnLoadMsgStart();
 
             CommentLoadState = LoadState.Preparation;
 
             //TODO; キャッシュチェック時のファイル処理関係は共通化可能
-            var cacheFilePath = Information.MsgFile.FullName;
+            var cacheFilePath = Information.MsgFile_Issue665NA.FullName;
             if(File.Exists(cacheFilePath)) {
                 var fileInfo = new FileInfo(cacheFilePath);
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
                     CommentLoadState = LoadState.Loading;
                     using(var stream = new FileStream(cacheFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        var result = Msg.ConvertFromRawPacketData(stream);
+                        var result = Msg.ConvertFromRawPacketData_Issue665NA(stream);
                         OnLoadMsgEnd();
                         return result;
                     }
@@ -534,9 +617,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             CommentLoadState = LoadState.Loading;
-
-            var rawMessagePacket = await LoadMsgCoreAsync(1000, 1, (int)Information.Length.TotalMinutes, 100, 500);
-            ImportCommentThread(rawMessagePacket);
+            var rawMessagePacket = await LoadMsg_Issue665NA_CoreAsync(1000, 0, (int)Information.Length.TotalMinutes, 100, 1000);
 
             // キャッシュ構築
             if(rawMessagePacket.Chat.Any()) {
@@ -551,7 +632,52 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return rawMessagePacket;
         }
 
-        protected virtual Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
+        protected async Task<SmileVideoMsgPackSettingModel> LoadMsgAsync(CacheSpan msgCacheSpan)
+        {
+            OnLoadMsgStart();
+
+            CommentLoadState = LoadState.Preparation;
+
+            //TODO; キャッシュチェック時のファイル処理関係は共通化可能
+            var cacheFilePath = Information.MsgFile.FullName;
+            // #665 除外
+            if(File.Exists(cacheFilePath)) {
+                var fileInfo = new FileInfo(cacheFilePath);
+                if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
+                    CommentLoadState = LoadState.Loading;
+                    var result = Msg.ConvertMsgSettingModel(fileInfo);
+                    OnLoadMsgEnd();
+                    return result;
+                }
+            }
+
+            CommentLoadState = LoadState.Loading;
+            var rawMessagePacket = await LoadMsgCoreAsync(1000, new SmileVideoMsgRangeModel(0, (int)Information.Length.TotalMinutes, 100, 1000));
+            // #665 除外
+            //ImportCommentThread(rawMessagePacket);
+
+            // キャッシュ構築
+            if(rawMessagePacket.Items.Any(i => i.Chat != null)) {
+                try {
+                    // #665
+                    //SerializeUtility.SaveXmlSerializeToFile(cacheFilePath, rawMessagePacket);
+                    SerializeUtility.SaveJsonDataToFile(cacheFilePath, rawMessagePacket);
+                } catch(FileNotFoundException) {
+                    // BUGS: いかんのう
+                }
+            }
+
+            OnLoadMsgEnd();
+            return rawMessagePacket;
+        }
+
+        protected virtual Task LoadComment_Issue665NA_Async(RawSmileVideoMsgPacket_Issue665NA_Model rawMsgPacket)
+        {
+            CommentLoadState = LoadState.Loaded;
+            return Task.CompletedTask;
+        }
+
+        protected virtual Task LoadCommentAsync(SmileVideoMsgPackSettingModel rawMsgPacket)
         {
             CommentLoadState = LoadState.Loaded;
             return Task.CompletedTask;
@@ -578,8 +704,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             DownloadState = DownloadState.Completed;
             VideoLoadState = LoadState.Loaded;
 
-            // TODO: HTMLがあること前提
-            Information.LoadLocalPageHtmlAsync().Wait();
+            //// TODO: HTMLがあること前提
+            if(Information.PageHtmlLoadState != LoadState.Loaded && string.IsNullOrEmpty(Information.DescriptionHtmlSource)) {
+                Information.LoadLocalPageHtml();
+            }
 
             OnLoadVideoEnd();
         }
@@ -589,14 +717,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadDataWithSessionStart();
 
             var tcs = new CancellationTokenSource();
-            await LoadGetflvAsync();
 
-            if(Information.InformationLoadState == LoadState.Failure || Information.HasGetflvError) {
-                InformationLoadState = LoadState.Failure;
-                return;
+            RETRY_Issue665NA:
+            if(Information.IsCompatibleIssue665NA) {
+                await LoadGetflvAsync();
+                if(Information.InformationLoadState == LoadState.Failure || Information.HasGetflvError) {
+                    InformationLoadState = LoadState.Failure;
+                    return;
+                }
+            } else {
+                await LoadWatchDataAsync();
+                try {
+                    if(Information.InformationLoadState == LoadState.Failure || Information.HasWatchDataError) {
+                        InformationLoadState = LoadState.Failure;
+                        return;
+                    }
+                } catch(InvalidOperationException ex) {
+                    if(ex.Message == nameof(SmileVideoWatchDataModel)) {
+                        // #665 対応がどうにもダメな場合はなけなしの力で#665非対応処理を強制実施
+                        Information.Force_Issue665NA();
+                        goto RETRY_Issue665NA;
+                    }
+                }
             }
 
-            var commentTask = LoadMsgAsync(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext());
+            var commentTask = Information.IsCompatibleIssue665NA
+                ? LoadMsg_Issue665NA_Async(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadComment_Issue665NA_Async(task.Result), TaskScheduler.FromCurrentSynchronizationContext())
+                : LoadMsgAsync(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext())
+            ;
 
             // キャッシュとかエコノミー確認であれこれ分岐
             Debug.Assert(Information != null);
@@ -934,7 +1082,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DownloadStartPosition = e.RangeHeadPosition;
             }
             var downloader = (SmileVideoDownloader)sender;
-            Information.SetPageHtmlAsync(downloader.PageHtml, true).Wait();
+            //Information.SetPageHtmlAsync(downloader.PageHtml, true).Wait();
 
             if(UsingDmc.Value) {
                 if(downloader.ResponseHeaders.ContentLength.HasValue) {
