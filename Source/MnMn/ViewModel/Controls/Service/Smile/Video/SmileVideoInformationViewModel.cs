@@ -1274,18 +1274,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public Task LoadGetthreadkeyAsync()
         {
             var getThreadkey = new Getthreadkey(Mediation);
-            var targetThreadId = IsCompatibleIssue665NA
-                ? ThreadId
-                : CommunityThreadId
-            ;
-            return getThreadkey.LoadAsync(targetThreadId).ContinueWith(t => {
-                if(t.IsFaulted) {
-                    return CheckModel.Failure(t.Exception.InnerException);
-                } else {
-                    Getthreadkey = t.Result;
-                    return CheckModel.Success();
-                }
-            });
+            if(IsCompatibleIssue665NA) {
+                return getThreadkey.Load_Issue665NA_Async(ThreadId).ContinueWith(t => {
+                    if(t.IsFaulted) {
+                        return CheckModel.Failure(t.Exception.InnerException);
+                    } else {
+                        Getthreadkey = t.Result;
+                        return CheckModel.Success();
+                    }
+                });
+            } else {
+                return getThreadkey.LoadAsync(CommunityThreadId).ContinueWith(t => {
+                    if(t.IsFaulted) {
+                        return CheckModel.Failure(t.Exception.InnerException);
+                    } else {
+                        Getthreadkey = t.Result;
+                        return CheckModel.Success();
+                    }
+                });
+            }
         }
 
         void SetPageHtml_Issue665NA(string html, bool isSave)
