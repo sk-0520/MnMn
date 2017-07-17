@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         /// <summary>
         /// <para>NOTE: 完全に暫定処理</para>
         /// </summary>
-        public bool HasPostVideo => true;
+        public bool HasPostVideo => Information?.HasPostVideo ?? true;
 
 
 
@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
             var channel = new Logic.Service.Smile.Api.V1.Channel(Mediation);
-            return channel.LoadInformation(ChannelId).ContinueWith(t => {
+            return channel.LoadInformationAsync(ChannelId).ContinueWith(t => {
                 Information = t.Result;
                 return Information != null;
             });

@@ -16,5 +16,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         MylistBookmark,
         UserBookmark,
         WordBookmark,
+        ChannelBookmark,
     }
 }

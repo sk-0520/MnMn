@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Channel.Raw.Feed;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
@@ -36,6 +37,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                     break;
                 }
             }
+
+            return result;
+        }
+
+        public static FeedSmileVideoItemModel ConvertVideoFeedItemFrtomChannelFeedItem(FeedSmileChannelItemModel item)
+        {
+            var result = new FeedSmileVideoItemModel() {
+                Category = item.Category,
+                Guid = item.Guid,
+                Description = item.Description,
+                Link = item.Link,
+                PubDate = item.PubDate,
+                Title = item.Title,
+            };
 
             return result;
         }

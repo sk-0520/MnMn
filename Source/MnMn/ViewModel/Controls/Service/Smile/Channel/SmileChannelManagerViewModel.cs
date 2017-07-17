@@ -19,11 +19,17 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Channel;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 {
@@ -48,6 +54,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
             ChannelHistoryCollection = new MVMPairCreateDelegationCollection<SmileChannelItemModel, SmileChannelHistoryItemViewModel>(Setting.Channel.History, default(object), CreateHistoryItem);
             ChannelHistoryItems = CollectionViewSource.GetDefaultView(ChannelHistoryCollection.ViewModelList);
+
+            CheckItLaterCheckTimer.Tick += CheckItLaterCheckTimer_Tick;
         }
 
         #region property
@@ -310,6 +318,93 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             //SelectedChannel = selectedChannel;
         }
 
+        async Task<IEnumerable<SmileVideoVideoItemModel>> CheckBookmarkPostAsync(string channelId)
+        {
+            var nowBookmark = Setting.Channel.Bookmark.FirstOrDefault(u => u.ChannelId == channelId);
+            if(nowBookmark == null) {
+                return Enumerable.Empty<SmileVideoVideoItemModel>();
+            }
+
+            var channel = new Logic.Service.Smile.Api.V1.Channel(Mediation);
+            var info = await channel.LoadInformationAsync(channelId);
+            if(!info.HasPostVideo) {
+                return Enumerable.Empty<SmileVideoVideoItemModel>();
+            }
+
+            var channelFeeds = await SmileChannelUtility.LoadAllVideoFeedAsync(Mediation, channelId);
+            if(!channelFeeds.Any(i => i.Channel.Items.Any())) {
+                return Enumerable.Empty<SmileVideoVideoItemModel>();
+            }
+
+            var channelItems = channelFeeds
+                .SelectMany(c => c.Channel.Items)
+                .Select(i => SmileChannelUtility.ConvertVideoFeedItemFrtomChannelFeedItem(i))
+            ;
+
+            var newViewModels = channelItems
+                .Select(item => {
+                    var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
+                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                })
+                .ToEvaluatedSequence()
+            ;
+
+            var exceptVideoViewModel = newViewModels
+                .Select(i => i.VideoId)
+                .Except(nowBookmark.Videos)
+                .Select(v => newViewModels.First(i => i.VideoId == v))
+                .Select(i => i.ToVideoItemModel())
+                .ToEvaluatedSequence()
+            ;
+
+            if(exceptVideoViewModel.Any()) {
+                nowBookmark.Videos.InitializeRange(newViewModels.Select(i => i.VideoId));
+                nowBookmark.UpdateTimestamp = DateTime.Now;
+            }
+
+            return (IEnumerable<SmileVideoVideoItemModel>)exceptVideoViewModel;
+        }
+
+        public Task<IList<SmileVideoVideoItemModel>> CheckChannelVideoAsync()
+        {
+            var newVideoItems = new List<SmileVideoVideoItemModel>();
+            var tasks = new List<Task>();
+            foreach(var bookmark in ChannelBookmarkCollection.ModelList) {
+                var task = CheckBookmarkPostAsync(bookmark.ChannelId).ContinueWith(t => {
+                    if(t.Result != null && t.Result.Any()) {
+                        var videoItems = t.Result;
+                        foreach(var item in videoItems) {
+                            item.VolatileTag = new SmileVideoCheckItLaterFromModel() {
+                                FromId = bookmark.ChannelId,
+                                FromName = bookmark.ChannelName,
+                            };
+                        }
+                        newVideoItems.AddRange(videoItems);
+                    }
+                });
+                tasks.Add(task);
+            }
+
+            return Task.WhenAll(tasks).ContinueWith(t => {
+                return (IList<SmileVideoVideoItemModel>)newVideoItems;
+            });
+        }
+
+        Task CheckUpdateAsync()
+        {
+            var postTask = CheckChannelVideoAsync();
+
+            return Task.WhenAll(postTask).ContinueWith(t => {
+                var addItemList = new List<SmileVideoVideoItemModel>();
+
+                var videoItems = postTask.Result;
+
+                foreach(var item in videoItems) {
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, Define.Service.Smile.Video.SmileVideoCheckItLaterFrom.ChannelBookmark)));
+                }
+            });
+        }
+
         #endregion
 
         #region SmileChannelManagerViewModel
@@ -321,12 +416,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         public override Task InitializeAsync()
         {
-            return Task.CompletedTask;
+            return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync())).ContinueWith(_ => {
+                // 裏で走らせとく
+                CheckUpdateAsync().ContinueWith(t => {
+                    CheckItLaterCheckTimer.Stop();
+                    CheckItLaterCheckTimer.Start();
+                });
+            });
         }
 
         public override Task UninitializeAsync()
         {
-            return Task.CompletedTask;
+            return Task.WhenAll(ManagerChildren.Select(m => m.UninitializeAsync()));
         }
 
         public override void InitializeView(MainWindow view)
@@ -351,5 +452,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         { }
 
         #endregion
+
+        async void CheckItLaterCheckTimer_Tick(object sender, EventArgs e)
+        {
+            CheckItLaterCheckTimer.Stop();
+            try {
+                await CheckUpdateAsync();
+            } finally {
+                CheckItLaterCheckTimer.Start();
+            }
+        }
     }
 }

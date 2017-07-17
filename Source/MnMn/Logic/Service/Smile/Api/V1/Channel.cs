@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             return result;
         }
 
-        public Task<SmileChannelInformationModel> LoadInformation(string channelId)
+        public Task<SmileChannelInformationModel> LoadInformationAsync(string channelId)
         {
             var page = new PageLoader(Mediation, HttpUserAgentHost, SmileMediationKey.channelPage, ServiceType.Smile);
             page.ReplaceUriParameters["channel-id"] = channelId;

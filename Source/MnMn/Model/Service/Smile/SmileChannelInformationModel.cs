@@ -22,6 +22,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
         [DataMember]
         public string ChannelName { get; set; }
 
+        /// <summary>
+        /// TODO: 暫定処理。
+        /// </summary>
+        [IgnoreDataMember]
+        public bool HasPostVideo { get; } = true;
+
         #endregion
     }
 }

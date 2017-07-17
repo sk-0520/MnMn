@@ -51,14 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 videoFeed.Channel.Link = channelFeed.Channel.Link;
 
                 foreach(var item in channelFeeds.SelectMany(c => c.Channel.Items)) {
-                    var videoItem = new FeedSmileVideoItemModel() {
-                        Category = item.Category,
-                        Guid = item.Guid,
-                        Description = item.Description,
-                        Link = item.Link,
-                        PubDate = item.PubDate,
-                        Title = item.Title,
-                    };
+                    var videoItem = SmileChannelUtility.ConvertVideoFeedItemFrtomChannelFeedItem(item);
                     videoFeed.Channel.Items.Add(videoItem);
                 }
 
