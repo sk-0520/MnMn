@@ -70,23 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         public SmileChannelInformationViewModel SelectedChannel
         {
             get { return this._selectedChannel; }
-            set
-            {
-                if(value != this._selectedChannel && this._selectedChannel != null) {
-                    this._selectedChannel.ShowVideoTabItem = false;
-                    this._selectedChannel.ShowWebTabItem = false;
-                    if(value != null) {
-                        value.ShowVideoTabItem = false;
-                        value.ShowWebTabItem = false;
-                    }
-                }
-                if(SetVariableValue(ref this._selectedChannel, value)) {
-                    //if(SelectedChannel != null) {
-                    //    SelectedChannel.ShowWebTabItem = true;
-                    //    RefreshWebPage();
-                    //}
-                }
-            }
+            set { SetVariableValue(ref this._selectedChannel, value);  }
         }
 
         public GridLength GroupWidth
@@ -220,7 +204,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         void RefreshWebPage()
         {
-            if(SelectedChannel.ShowVideoTabItem) {
+            if(SelectedChannel.ShowVideo) {
                 return;
             }
 

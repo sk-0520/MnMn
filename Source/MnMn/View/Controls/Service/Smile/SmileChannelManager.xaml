@@ -25,6 +25,7 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
       <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
+      <app_view_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
       <app_view_converter_service_smile:SmileChannelHasBookmarkConverter x:Key="SmileChannelHasBookmarkConverter" />
       <Style x:Key="ReadonlyText" TargetType="TextBox">
         <Setter Property="IsReadOnly" Value="True" />
@@ -101,60 +102,73 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <TabControl x:Name="innerTab" IsSelected="{Binding ShowWebTabItem}">
-            <TabItem Header="channel">
-              <app_view_controls:WebNavigator
+          <!-- タブにしたかったけど色々あって諦めた -->
+          <Grid x:Name="container">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*" />
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <app_view_controls:WebNavigator
                 x:Name="webChannel"
                 IsEnabledUserChangeSource="False"
                 NewWindowCommand="{Binding DataContext.NewWindowCommand, ElementName=root}"
               >
-                <app_view_controls:WebNavigator.ToolbarLeftContent>
-                  <Button CommandParameter="{Binding}">
-                    <Button.Style>
-                      <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                        <Style.Triggers>
-                          <DataTrigger Value="True">
-                            <DataTrigger.Binding>
-                              <MultiBinding Converter="{StaticResource SmileChannelHasBookmarkConverter}">
-                                <MultiBinding.Bindings>
-                                  <Binding Path="." />
-                                  <Binding Path="DataContext.ChannelBookmarkItems" RelativeSource="{RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}" />
-                                </MultiBinding.Bindings>
-                              </MultiBinding>
-                            </DataTrigger.Binding>
-                            <Setter Property="Command" Value="{Binding DataContext.RemoveBookmarkCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}}" />
-                            <Setter Property="Content" Value="ブックマークから削除" />
-                          </DataTrigger>
-                          <DataTrigger Value="False">
-                            <DataTrigger.Binding>
-                              <MultiBinding Converter="{StaticResource SmileChannelHasBookmarkConverter}">
-                                <MultiBinding.Bindings>
-                                  <Binding Path="." />
-                                  <Binding Path="DataContext.ChannelBookmarkItems" RelativeSource="{RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}" />
-                                </MultiBinding.Bindings>
-                              </MultiBinding>
-                            </DataTrigger.Binding>
-                            <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}}" />
-                            <Setter Property="Content" Value="ブックマークに追加" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="Content" Value="ブックマーク" />
-                      </Style>
-                    </Button.Style>
-                  </Button>
-                </app_view_controls:WebNavigator.ToolbarLeftContent>
-              </app_view_controls:WebNavigator>
-            </TabItem>
-            <TabItem IsSelected="{Binding ShowVideoTabItem}">
-              <TabItem.Header>
-                <StackPanel Style="{StaticResource TabHeader}">
+              <app_view_controls:WebNavigator.ToolbarLeftContent>
+                <Button CommandParameter="{Binding}">
+                  <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                      <Style.Triggers>
+                        <DataTrigger Value="True">
+                          <DataTrigger.Binding>
+                            <MultiBinding Converter="{StaticResource SmileChannelHasBookmarkConverter}">
+                              <MultiBinding.Bindings>
+                                <Binding Path="." />
+                                <Binding Path="DataContext.ChannelBookmarkItems" RelativeSource="{RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}" />
+                              </MultiBinding.Bindings>
+                            </MultiBinding>
+                          </DataTrigger.Binding>
+                          <Setter Property="Command" Value="{Binding DataContext.RemoveBookmarkCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}}" />
+                          <Setter Property="Content" Value="ブックマークから削除" />
+                        </DataTrigger>
+                        <DataTrigger Value="False">
+                          <DataTrigger.Binding>
+                            <MultiBinding Converter="{StaticResource SmileChannelHasBookmarkConverter}">
+                              <MultiBinding.Bindings>
+                                <Binding Path="." />
+                                <Binding Path="DataContext.ChannelBookmarkItems" RelativeSource="{RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}" />
+                              </MultiBinding.Bindings>
+                            </MultiBinding>
+                          </DataTrigger.Binding>
+                          <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile:SmileChannelManager}}" />
+                          <Setter Property="Content" Value="ブックマークに追加" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                      <Setter Property="Content" Value="ブックマーク" />
+                    </Style>
+                  </Button.Style>
+                </Button>
+              </app_view_controls:WebNavigator.ToolbarLeftContent>
+            </app_view_controls:WebNavigator>
+
+            <Expander Grid.Row="1" ExpandDirection="Up" IsExpanded="{Binding ShowVideo}">
+              <Expander.Style>
+                <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
+                  <Style.Triggers>
+                    <Trigger Property="IsExpanded" Value="True">
+                      <Setter Property="Height" Value="{Binding ActualHeight, ElementName=container, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=0.5}" />
+                    </Trigger>
+                  </Style.Triggers>
+                </Style>
+              </Expander.Style>
+              <Expander.Header>
+                <StackPanel Orientation="Horizontal">
                   <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding VideoFinder.FinderLoadState}" />
                   <TextBlock>video</TextBlock>
                 </StackPanel>
-              </TabItem.Header>
+              </Expander.Header>
               <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding VideoFinder}" />
-            </TabItem>
-          </TabControl>
+            </Expander>
+          </Grid>
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>

@@ -30,8 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         SourceLoadState _channelLoadState;
 
-        bool _showWebTabItem;
-        bool _showVideoTabItem;
+        bool _showVideo;
 
         #endregion
 
@@ -94,25 +93,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             set { SetVariableValue(ref this._channelLoadState, value); }
         }
 
-        public bool ShowWebTabItem
+        public bool ShowVideo
         {
-            get { return this._showWebTabItem; }
+            get { return this._showVideo; }
             set
             {
-                if(SetVariableValue(ref this._showWebTabItem, value)) {
-                    if(ShowWebTabItem) {
-                        RefreshWebPage();
-                    }
-                }
-            }
-        }
-        public bool ShowVideoTabItem
-        {
-            get { return this._showVideoTabItem; }
-            set
-            {
-                if(SetVariableValue(ref this._showVideoTabItem, value)) {
-                    if(ShowVideoTabItem) {
+                if(SetVariableValue(ref this._showVideo, value)) {
+                    if(ShowVideo) {
                         VideoFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
                         CallOnPropertyChange(nameof(VideoFinder));
                     }
@@ -161,14 +148,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 ChannelTabItem = TabControl.ItemContainerGenerator.ContainerFromItem(this) as TabItem;
             }
 
-            var tabControl = UIUtility.GetVisualClosest<TabControl>(TabControl) as TabControl;
-            if(tabControl != null) {
-                var innerTabControl = UIUtility.FindChildren<TabControl>(tabControl).FirstOrDefault();
-            }
-
             if(WebNavigator == null) {
                 WebNavigator = UIUtility.FindChildren<WebNavigator>(TabControl).FirstOrDefault();
             }
+
             if(WebNavigator != null && WebNavigator.HomeSource != Uri) {
                 WebNavigator.HomeSource = Uri;
                 WebNavigator.Navigate(WebNavigator.HomeSource);
