@@ -226,6 +226,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             base.Dispose(disposing);
         }
 
+        public override string ToString()
+        {
+            return ChannelName;
+        }
+
         #endregion
 
         #region ISetView

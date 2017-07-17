@@ -40,7 +40,7 @@
       <ColumnDefinition Width="{Binding ItemsWidth, Mode=TwoWay}" />
     </Grid.ColumnDefinitions>
 
-    <TabControl Grid.Column="0">
+    <app_view_controls:FocusedTabControl Style="{StaticResource FinderTab}" Grid.Column="0">
       <TabItem Header="ブックマーク" app_view_attachment:MenuTabItem.Header="{Binding Header, RelativeSource={RelativeSource Self}}">
         <Grid>
           <Grid.RowDefinitions>
@@ -90,17 +90,31 @@
         </Grid>
 
       </TabItem>
-    </TabControl>
+    </app_view_controls:FocusedTabControl>
 
     <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 
-    <TabControl x:Name="channelTab" Grid.Column="2" ItemsSource="{Binding ChannelItems}" SelectedItem="{Binding SelectedChannel}">
-      <TabControl.ItemTemplate>
+    <app_view_controls:FocusedTabControl
+      x:Name="channelTab"
+      Grid.Column="2"
+      Style="{StaticResource FinderTab}"
+      ItemsSource="{Binding ChannelItems}"
+      SelectedItem="{Binding SelectedChannel}"
+    >
+      <!--<app_view_controls:FocusedTabControl.ItemContainerStyle>
+        <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+          <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding ChannelName, RelativeSource={RelativeSource AncestorType=TabItem}}" />
+        </Style>
+      </app_view_controls:FocusedTabControl.ItemContainerStyle>-->
+      <app_view_controls:FocusedTabControl.ItemTemplate>
         <DataTemplate>
-          <TextBlock Text="{Binding ChannelName, Mode=OneWay}" />
+          <StackPanel Style="{StaticResource TabHeader}">
+            <TextBlock Text="{Binding ChannelName, Mode=OneWay}" />
+            <Button Style="{StaticResource TabCloseButton}" />
+          </StackPanel>
         </DataTemplate>
-      </TabControl.ItemTemplate>
-      <TabControl.ContentTemplate>
+      </app_view_controls:FocusedTabControl.ItemTemplate>
+      <app_view_controls:FocusedTabControl.ContentTemplate>
         <DataTemplate>
           <!-- タブにしたかったけど色々あって諦めた -->
           <Grid x:Name="container">
@@ -170,8 +184,8 @@
             </Expander>
           </Grid>
         </DataTemplate>
-      </TabControl.ContentTemplate>
-    </TabControl>
+      </app_view_controls:FocusedTabControl.ContentTemplate>
+    </app_view_controls:FocusedTabControl>
 
   </Grid>
 </UserControl>

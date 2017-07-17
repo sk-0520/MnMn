@@ -61,7 +61,7 @@
       <TabItem Header="ユーザー" DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileUsersManager />
       </TabItem>
-      <TabItem Header="#81" DataContext="{Binding ChannelManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem Header="チャンネル" DataContext="{Binding ChannelManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileChannelManager x:Name="channel" />
       </TabItem>
       <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}" Style="{StaticResource SectionTabItem}">

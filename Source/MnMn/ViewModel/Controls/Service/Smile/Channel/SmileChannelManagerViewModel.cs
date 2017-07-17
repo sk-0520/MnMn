@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             //        web.CrearHistory();
             //    }
             ////}, DispatcherPriority.ApplicationIdle);
-            SelectedChannel.RefreshWebPage();
+            SelectedChannel?.RefreshWebPage();
         }
 
         void CloseTab(SmileChannelInformationViewModel finder)
