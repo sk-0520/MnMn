@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public string MovieType { get; set; }
 
         [DataMember(Name = "badges")]
-        public string Badges { get; set; }
+        public CollectionModel<RawSmileVideoWatchDataVideoBadgeModel> Badges { get; set; }
 
         [DataMember(Name = "introducedNicoliveDJInfo")]
         public string IntroducedNicoliveDJInfo { get; set; }

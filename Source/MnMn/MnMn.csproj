@@ -519,6 +519,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgLeafModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgResultItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPingModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoWatchDataVideoBadgeModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Channel\SmileChannelBookmarkItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Channel\SmileChannelItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoMsgPackSettingModel.cs" />
