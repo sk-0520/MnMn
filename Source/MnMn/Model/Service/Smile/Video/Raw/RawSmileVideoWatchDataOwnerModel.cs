@@ -18,9 +18,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [DataMember(Name = "iconURL")]
         public string IconURL { get; set; }
         [DataMember(Name = "nicoliveInfo")]
-        public string NicoliveInfo { get; set; }
+        public object NicoliveInfo { get; set; }
         [DataMember(Name = "channelInfo")]
-        public string ChannelInfo { get; set; }
+        public object ChannelInfo { get; set; }
         [DataMember(Name = "isUserVideoPublic")]
         public string IsUserVideoPublic { get; set; }
         [DataMember(Name = "isUserMyVideoPublic")]

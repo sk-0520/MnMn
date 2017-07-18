@@ -9,16 +9,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
     {
         #region property
 
-        //[DataMember(Name = "tagRelatedMarquee")]
-        //public object tagRelatedMarquee { get; set; }
-        //[DataMember(Name = "tagRelatedBanner")]
-        //public object tagRelatedBanner { get; set; }
-        //[DataMember(Name = "nicosdkApplicationBanner")]
-        //public object nicosdkApplicationBanner { get; set; }
-        //[DataMember(Name = "videoEndBannerIn")]
-        //public object videoEndBannerIn { get; set; }
-        //[DataMember(Name = "videoEndOverlay")]
-        //public object videoEndOverlay { get; set; }
+        [DataMember(Name = "tagRelatedMarquee")]
+        public object TagRelatedMarquee { get; set; }
+        [DataMember(Name = "tagRelatedBanner")]
+        public object TagRelatedBanner { get; set; }
+        [DataMember(Name = "nicosdkApplicationBanner")]
+        public object NicosdkApplicationBanner { get; set; }
+        [DataMember(Name = "videoEndBannerIn")]
+        public object VideoEndBannerIn { get; set; }
+        [DataMember(Name = "videoEndOverlay")]
+        public object VideoEndOverlay { get; set; }
 
         #endregion
     }

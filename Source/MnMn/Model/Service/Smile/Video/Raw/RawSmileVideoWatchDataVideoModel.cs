@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public CollectionModel<RawSmileVideoWatchDataVideoBadgeModel> Badges { get; set; }
 
         [DataMember(Name = "introducedNicoliveDJInfo")]
-        public string IntroducedNicoliveDJInfo { get; set; }
+        public object IntroducedNicoliveDJInfo { get; set; }
 
         [DataMember(Name = "dmcInfo")]
         public RawSmileVideoWatchDataDmcInfoModel DmcInfo { get; set; } = new RawSmileVideoWatchDataDmcInfoModel();

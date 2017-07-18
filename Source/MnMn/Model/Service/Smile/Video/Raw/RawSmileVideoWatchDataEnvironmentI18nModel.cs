@@ -10,13 +10,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         #region proeprty
 
         [DataMember(Name = "language")]
-        public string language { get; set; }
+        public string Language { get; set; }
         [DataMember(Name = "locale")]
-        public string locale { get; set; }
+        public string Locale { get; set; }
         [DataMember(Name = "area")]
-        public string area { get; set; }
-        //[DataMember(Name = "footer")]
-        //public object footer { get; set; }
+        public string Area { get; set; }
+        [DataMember(Name = "footer")]
+        public object Footer { get; set; }
 
         #endregion
     }
