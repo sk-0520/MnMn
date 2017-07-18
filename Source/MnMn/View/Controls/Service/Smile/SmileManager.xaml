@@ -81,9 +81,6 @@
               </Style>
             </mamc:Badged.Style>
             <TextBlock FontSize="{StaticResource FontLargeSize}" Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>
-            <!--<Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-              <Label Style="{StaticResource HighlightLabel}" Visibility="{Binding HasItem, Converter={StaticResource BooleanToVisibilityConverter}}" Content="{Binding ItemCount}" />
-            </Grid>-->
           </mamc:Badged>
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />
