@@ -87,9 +87,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
             Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
 
-            SetDllDirectory(string.Empty);
+            //SetDllDirectory(string.Empty);
             process.Start();
-            SetDllDirectory(Constants.WebNavigatorGeckoFxLibraryDirectoryPath);
+            //SetDllDirectory(Constants.WebNavigatorGeckoFxLibraryDirectoryPath);
 
             Task.Run(() => {
                 var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
