@@ -149,7 +149,11 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'reopen',
+						'subject': '#667: 開発のメールアドレス変える',
+						'comments': [
+							'エスケープしてなかった'
+						]
 					},
 					{
 						'revision': '',
