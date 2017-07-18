@@ -132,7 +132,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#661: もっさい件数表示を今風にする'
 					},
 					{
 						'revision': '',
