@@ -69,10 +69,22 @@
       </TabItem>
       <TabItem DataContext="{Binding VideoManager.CheckItLaterManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
-          <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <TextBlock Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>
-            <Label Style="{StaticResource HighlightLabel}" Visibility="{Binding HasItem, Converter={StaticResource BooleanToVisibilityConverter}}" Content="{Binding ItemCount}" />
-          </Grid>
+          <mamc:Badged BadgePlacementMode="TopRight">
+            <mamc:Badged.Style>
+              <Style TargetType="mamc:Badged">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding ItemCount}" Value="0">
+                    <Setter Property="Badge" Value="{x:Null}" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Badge" Value="{Binding ItemCount}" />
+              </Style>
+            </mamc:Badged.Style>
+            <TextBlock FontSize="{StaticResource FontLargeSize}" Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>
+            <!--<Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+              <Label Style="{StaticResource HighlightLabel}" Visibility="{Binding HasItem, Converter={StaticResource BooleanToVisibilityConverter}}" Content="{Binding ItemCount}" />
+            </Grid>-->
+          </mamc:Badged>
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />
       </TabItem>
