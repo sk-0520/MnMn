@@ -145,7 +145,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '0.69.1 の更新履歴がなんだかダブってた'
 					},
 					{
 						'revision': '',
