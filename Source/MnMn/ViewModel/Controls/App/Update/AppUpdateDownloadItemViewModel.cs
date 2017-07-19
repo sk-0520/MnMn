@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
@@ -72,11 +74,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
             SetStartInfoEnvironment(startInfo);
 
+            startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName);
+
             startInfo.UseShellExecute = false;
 
             Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
 
-            process.Start();
+            // 光り輝く #552!
+            process.StartWithDllReset();
 
             Task.Run(() => {
                 var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {

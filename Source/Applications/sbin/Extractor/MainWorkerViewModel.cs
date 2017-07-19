@@ -61,8 +61,6 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
         TextWriter Writer { get; set; }
         string LogFilePath { get; set; }
 
-        bool IsRenamed { get; set; }
-
         public CollectionModel<LogItemViewModel> LogItems { get; } = new CollectionModel<LogItemViewModel>();
 
         public bool CanInput
@@ -269,6 +267,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             if(process != null) {
                 process.Exited += (object sender, EventArgs e) => {
                     killStopwatch.Stop();
+                    ProcessId = 0;
                 };
                 KillProcess(process, true);
 
@@ -314,14 +313,11 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             var myDir = Path.GetDirectoryName(myPath);
 
             var renamePath = Path.ChangeExtension(myPath, "expand-old");
-            if(!IsRenamed) {
-                if(File.Exists(renamePath)) {
-                    File.Delete(renamePath);
-                }
-                AddInformationLog($"Rename: {myPath} => {renamePath}");
-                File.Move(myPath, renamePath);
-                IsRenamed = true;
+            if(File.Exists(renamePath)) {
+                File.Delete(renamePath);
             }
+            AddInformationLog($"Rename: {myPath} => {renamePath}");
+            File.Move(myPath, renamePath);
 
             // 置き換え開始
             using(var archive = new ZipArchive(new FileStream(ArchiveFilePath, FileMode.Open, FileAccess.Read, FileShare.None), ZipArchiveMode.Read)) {
@@ -534,6 +530,13 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     }
                 } else {
                     AddErrorLog(t.Exception.ToString());
+                    var myPath = Assembly.GetEntryAssembly().Location;
+                    var myDir = Path.GetDirectoryName(myPath);
+
+                    var renamedPath = Path.ChangeExtension(myPath, "expand-old");
+                    if(!File.Exists(myPath)) {
+                        File.Move(renamedPath, myPath);
+                    }
                 }
 
                 CanInput = true;
