@@ -62,7 +62,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         TabControl TabControl { get; set; }
         TabItem ChannelTabItem { get; set; }
-        WebNavigator WebNavigator { get; set; }
 
         public string ChannelId { get; }
 
@@ -150,14 +149,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 ChannelTabItem = TabControl.ItemContainerGenerator.ContainerFromItem(this) as TabItem;
             }
 
-            //if(WebNavigator == null) {
-                WebNavigator = UIUtility.FindChildren<WebNavigator>(TabControl).FirstOrDefault();
-            //}
+            var webNavigator = UIUtility.FindChildren<WebNavigator>(TabControl).FirstOrDefault();
 
-            if(WebNavigator != null && WebNavigator.HomeSource != Uri) {
-                WebNavigator.HomeSource = Uri;
-                WebNavigator.Navigate(WebNavigator.HomeSource);
-                WebNavigator.CrearHistory();
+            if(webNavigator != null && webNavigator.HomeSource != Uri) {
+                webNavigator.HomeSource = Uri;
+                webNavigator.Navigate(webNavigator.HomeSource);
+                webNavigator.CrearHistory();
             }
         }
 
@@ -222,7 +219,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         protected override void Dispose(bool disposing)
         {
-            WebNavigator = null;
             ChannelTabItem = null;
             TabControl = null;
             base.Dispose(disposing);
