@@ -378,6 +378,7 @@
     <Compile Include="Logic\Extensions\HttpClientHandlerExtensions.cs" />
     <Compile Include="Logic\Extensions\IReadOnlyDefinedElementExtensions.cs" />
     <Compile Include="Logic\Extensions\LinqExtensions.cs" />
+    <Compile Include="Logic\Extensions\ProcessExtensions.cs" />
     <Compile Include="Logic\Extensions\Service\Smile\Video\SmileVideoSearchModelExtensions.cs" />
     <Compile Include="Logic\OctetPerTime.cs" />
     <Compile Include="Logic\DelegateDragAndDrop.cs" />

@@ -27,13 +27,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 {
     public class AppUpdateDownloadItemViewModel : DownloadItemViewModel
     {
-        #region define
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern bool SetDllDirectory(string lpPathName);
-
-        #endregion
-
         public AppUpdateDownloadItemViewModel(Mediation mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
             : base(mediation, uri, downloadFile, userAgentCreator)
         { }
@@ -55,8 +48,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             var newPathValue = string.Join(";", pathItems);
             Mediation.Logger.Information("update path", newPathValue);
             startInfo.Environment["PATH"] = newPathValue;
-
-            startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName);
         }
 
         void ExceuteUpdate()
@@ -83,13 +74,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
             SetStartInfoEnvironment(startInfo);
 
+            startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName);
+
             startInfo.UseShellExecute = false;
 
             Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
 
-            //SetDllDirectory(string.Empty);
-            process.Start();
-            //SetDllDirectory(Constants.WebNavigatorGeckoFxLibraryDirectoryPath);
+            // 光り輝く #552!
+            process.StartWithDllReset();
 
             Task.Run(() => {
                 var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
