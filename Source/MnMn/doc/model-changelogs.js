@@ -128,11 +128,18 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#670: チャンエルブックマークの検証・調整があまあま',
+						'comments': [
+							'もうワケわからん',
+							'設計せずに TabControl と WindowsFormsHost 合わせるとダメだね'
+						]
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#673: 元々頭おかしい内蔵ブラウザがチャンネルタブを閉じた際に頭狂う',
+						'comments': [
+							'#670 と同時'
+						]
 					},
 					{
 						'revision': '',
