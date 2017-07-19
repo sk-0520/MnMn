@@ -85,41 +85,20 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.73.1',
-		'isRc': true,
+		'date': '2017/07/19',
+		'version': '0.74.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'class': 'warning',
+						'subject': '本バージョンでアップデート処理の不具合対応版を配布します',
+						'comments': [
+							'実際に使用されるのは次回バージョン以降になるので本バージョンアップデートに失敗する場合は下部の「旧アップデートを使用する」をチェックして運用回避してください'
+						]
 					}
 				]
 			},
@@ -127,33 +106,33 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'ae7a793922ec74e0c12d08a7cceb9469d1587755',
 						'subject': '#672: チャンネルの動画ファインダーのエクスパンダ―が開発中ヘッダの文言のまま'
 					},
 					{
-						'revision': '',
+						'revision': 'd1612485c2865b378ad05ff95373b0947619b1f7',
 						'subject': '#671: チャンネルのファインダーが読み込み済みでも特定操作で再読み込みを実施してしまう'
 					},
 					{
-						'revision': '',
-						'subject': '#676: HTML5 版で取得するデータの Jsonで謎い部分をとりあえず string から object にしとく',
+						'revision': '89875327c79738e3ae5c044669fb0c4e6947a1d9',
+						'subject': '#676: HTML5 版で取得するデータの Json で謎い部分をとりあえず string から object にしとく',
 						'comments': [
-							'その項目が何かしらの (Jsonとしての)object だったら object でとるようにした',
+							'その項目が何かしらの (Jsonとしての)Object だったら (C#の)object でとるようにした',
 							'データ保全っていうよりパース失敗対応',
 							'パッと見たとこだけしか対応してないから発見次第対応していきたい',
 							'見れない動画とか教えてもらえるとたいていこれ関係だろうから教えてくれるとありがたい'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '24e49057830abc7a3829c4f31b66ad04137c82e0',
 						'subject': '#669: チャンネルのファインダーではフィルタを無効にすべし'
 					},
 					{
-						'revision': '',
+						'revision': 'bcfbe52774cf473f1fb51c33e49c73f5dd9d93d5',
 						'subject': '#661: もっさい件数表示を今風にする'
 					},
 					{
-						'revision': '',
+						'revision': '32b168519603d5ea40d8d0fc2c47da7759feeb46',
 						'subject': '#552: (新)アップデート処理がファイルハンドル掴んでて成功しない',
 						'comments': [
 							'まさかの DLL (セルフ)ハイジャック',
@@ -166,20 +145,16 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'e5a158044f8f9ce38d58fa76c33d3c0ac0a63556',
 						'subject': '0.69.1 の更新履歴がなんだかダブってた'
 					},
 					{
-						'revision': '',
+						'revision': 'b0db5d3f1fc259125691507d009fa7a68bb3553f',
 						'class': 'reopen',
 						'subject': '#667: 開発のメールアドレス変える',
 						'comments': [
 							'エスケープしてなかった'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
