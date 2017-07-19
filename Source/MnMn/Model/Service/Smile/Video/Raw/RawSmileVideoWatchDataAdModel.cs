@@ -9,8 +9,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
     {
         #region property
 
-        //[DataMember(Name = "vastMetaData")]
-        //public object VastMetaData { get; set; }
+        [DataMember(Name = "vastMetaData")]
+        public object VastMetaData { get; set; }
 
         #endregion
     }

@@ -100,8 +100,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             {
                 if(SetVariableValue(ref this._showVideo, value)) {
                     if(ShowVideo) {
-                        VideoFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
-                        CallOnPropertyChange(nameof(VideoFinder));
+                        if(VideoFinder.FinderLoadState == SourceLoadState.None) {
+                            VideoFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+                            CallOnPropertyChange(nameof(VideoFinder));
+                        }
                     }
                 }
             }

@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public string IconUrl { get; set; }
         [DataMember(Name = "small_icon_url")]
         public string SmallIconUrl { get; set; }
-        //[DataMember(Name = "link")]
-        //public object Link { get; set; }
+        [DataMember(Name = "link")]
+        public object Link { get; set; }
         [DataMember(Name = "sequence")]
         public string Sequence { get; set; }
 

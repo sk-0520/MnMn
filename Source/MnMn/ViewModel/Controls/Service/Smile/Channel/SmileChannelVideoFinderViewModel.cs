@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.None;
 
+        public override bool IsUsingFinderFilter => false;
+
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             return SmileChannelUtility.LoadAllVideoFeedAsync(Mediation, ChannelId).ContinueWith(t => {

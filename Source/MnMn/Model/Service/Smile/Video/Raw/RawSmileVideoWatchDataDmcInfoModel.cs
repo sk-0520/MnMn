@@ -31,14 +31,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [DataMember(Name = "hiroba")]
         public RawSmileVideoWatchDataDmcHirobaModel Hiroba { get; set; }
 
-        //[DataMember(Name = "error")]
-        //public object error { get; set; }
+        [DataMember(Name = "error")]
+        public object error { get; set; }
 
         [DataMember(Name = "session_api")]
         public RawSmileVideoWatchDataDmcSessionApiModel SessionApi {get;set;}
 
-        //[DataMember(Name = "storyboard_session_api")]
-        //public object storyboard_session_api { get; set; }
+        [DataMember(Name = "storyboard_session_api")]
+        public object storyboard_session_api { get; set; }
 
         [DataMember(Name = "quality")]
         public RawSmileVideoWatchDataDmcQualityModel Quality { get; set; }

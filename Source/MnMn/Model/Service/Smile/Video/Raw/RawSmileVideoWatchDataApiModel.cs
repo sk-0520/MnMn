@@ -34,10 +34,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [DataMember(Name = "viewer")]
         public RawSmileVideoWatchDataViewerModel Viewer { get; set; }
 
-        //[DataMember(Name = "community")]
-        //public object community { get; set; }
-        //[DataMember(Name = "channel")]
-        //public object channel { get; set; }
+        [DataMember(Name = "community")]
+        public object Community { get; set; }
+        [DataMember(Name = "channel")]
+        public object Channel { get; set; }
 
         [DataMember(Name = "ad")]
         public RawSmileVideoWatchDataAdModel Ad { get; set; }
@@ -45,8 +45,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [DataMember(Name = "lead")]
         public RawSmileVideoWatchDataLeadModel Lead { get; set; }
 
-        //[DataMember(Name = "maintenance")]
-        //public object maintenance { get; set; }
+        [DataMember(Name = "maintenance")]
+        public object Maintenance { get; set; }
 
         [DataMember(Name = "context")]
         public RawSmileVideoWatchDataContextModel Context { get; set; }
