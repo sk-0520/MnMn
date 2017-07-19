@@ -287,6 +287,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             var viewModel = ChannelBookmarkCollection.ViewModelList.FirstOrDefault(i => i.ChannelId == information.ChannelId);
             if(viewModel != null) {
                 ChannelBookmarkCollection.Remove(viewModel);
+                ChannelBookmarkItems.Refresh();
                 RefreshChannel();
             }
         }
@@ -309,9 +310,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         void RefreshChannel()
         {
-            //var selectedChannel = SelectedChannel;
-            //SelectedChannel = null;
-            //SelectedChannel = selectedChannel;
+            var selectedChannel = SelectedChannel;
+            SelectedChannel = null;
+            SelectedChannel = selectedChannel;
+            RefreshWebPage();
         }
 
         async Task<IEnumerable<SmileVideoVideoItemModel>> CheckBookmarkPostAsync(string channelId)

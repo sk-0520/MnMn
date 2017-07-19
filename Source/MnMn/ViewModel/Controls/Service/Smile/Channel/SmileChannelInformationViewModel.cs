@@ -150,9 +150,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 ChannelTabItem = TabControl.ItemContainerGenerator.ContainerFromItem(this) as TabItem;
             }
 
-            if(WebNavigator == null) {
+            //if(WebNavigator == null) {
                 WebNavigator = UIUtility.FindChildren<WebNavigator>(TabControl).FirstOrDefault();
-            }
+            //}
 
             if(WebNavigator != null && WebNavigator.HomeSource != Uri) {
                 WebNavigator.HomeSource = Uri;
