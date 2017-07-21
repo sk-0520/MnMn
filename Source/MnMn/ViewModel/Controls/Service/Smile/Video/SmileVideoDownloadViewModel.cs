@@ -118,6 +118,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //protected RawSmileVideoDmcContentSrcIdModel DmcMultiplexer { get { return DmcObject?.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
         //public string DmcVideoSrc { get { return DmcMultiplexer?.VideoSrcIds.First(); } }
         //public string DmcAudioSrc { get { return DmcMultiplexer?.AudioSrcIds.First(); } }
+        public string DmcVideoSrc { get { return DmcLoader?.VideoSource; } }
+        public string DmcAudioSrc { get { return DmcLoader?.AudioSource; } }
         //protected string DmcFileExtension { get { return DmcObject.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension; } }
         //Task DmcPollingTask { get; set; }
         //AutoResetEvent DmcPollingWait { get; set; }

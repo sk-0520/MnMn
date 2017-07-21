@@ -161,9 +161,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 StopPolling();
             }
 
-            return Dmc.CloseAsync(ApiUri, UsingData).ContinueWith(t => {
-                IsStopped = true;
-            });
+            IsStopped = true;
+            return Dmc.CloseAsync(ApiUri, UsingData);
         }
 
         #endregion
