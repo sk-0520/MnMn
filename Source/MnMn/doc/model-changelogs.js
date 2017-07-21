@@ -85,24 +85,21 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.74.1',
-		'isRc': true,
+		'date': '2017/07/22',
+		'version': '0.75.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': 'このバージョンアップで 0.74.0 で配布した修正版アップデート機能が正式に走る！',
+						'comments': [
+							'試験も結構したしβ版も試したしいけるさ',
+							'大丈夫さ',
+							'いってくれ'
+						]
 					}
 				]
 			},
@@ -110,16 +107,8 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '2ad9d085c2dbf120b02c120e9bbaaba2ba6345b7',
 						'subject': '#674: ファインダーのコピー機能でユーザーとチャンネルの区別は不要'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -127,38 +116,34 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
-						'subject': '#670: チャンエルブックマークの検証・調整があまあま',
+						'revision': '73715d72f69f577e49c99286d4a03a16322aa2a9',
+						'subject': '#670: チャンネルブックマークの検証・調整があまあま',
 						'comments': [
 							'もうワケわからん',
 							'設計せずに TabControl と WindowsFormsHost 合わせるとダメだね'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '73715d72f69f577e49c99286d4a03a16322aa2a9',
 						'subject': '#673: 元々頭おかしい内蔵ブラウザがチャンネルタブを閉じた際に頭狂う',
 						'comments': [
 							'#670 と同時'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '85fec1cb66b195924b1a3a76964041dd9f407de5',
 						'subject': '#683: 酷使するプレーヤー → メインプレイヤー に改名する'
 					},
 					{
-						'revision': '',
+						'revision': '6dc9704b1b14b927677a1dae46d6a0d6863c26cd',
 						'subject': '#684: チャンネルIDコピー時の操作でID番号に "ch" を付与すべき'
 					},
 					{
-						'revision': '',
+						'revision': 'b5cf843feb412538e8fafb4351240aa765a403ad',
 						'subject': '#682: 秒間ダウンロード表示部がガックガクに動くの鬱陶しい',
 						'comments': [
 							'6:##0.00 これで気持ち抑えられたかな！'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -166,30 +151,27 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '0e14f717ae7bf436899069fb08c0f1623c7e1c29',
 						'subject': '#504: DMC形式の処理を独立',
 						'comments': [
-							'＼(^_^)／ばんざーい'
+							'＼(^_^)／ばんざーい',
+							'DMC 周りの不安定さが解消できたと信じてる'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '1f789113e6b03d28437b2ffedbfbd0c371988023',
 						'class': 'nuget',
 						'subject': '#681: HtmlAgilityPack 1.5.0 -> 1.5.1'
 					},
 					{
-						'revision': '',
+						'revision': '4ecf8d3bb6a85a9b310fc86f34195d885206954e',
 						'class': 'nuget',
 						'subject': '#680: Geckofx 45.0.31 -> 45.0.32'
 					},
 					{
-						'revision': '',
+						'revision': '9b229dbdab6c15f9037c6e47d72d8009e92351d8',
 						'class': 'nuget',
 						'subject': '#679: Extended WPF Toolkit 3.0.0 -> 3.1.0'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
