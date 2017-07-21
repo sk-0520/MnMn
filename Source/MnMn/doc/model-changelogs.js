@@ -178,6 +178,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#684: チャンネルIDコピー時の操作でID番号に "ch" を付与すべき'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

@@ -317,7 +317,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                         if(SelectedFinderItem.Information.IsChannelVideo) {
                             var text = isId
-                                ? SelectedFinderItem.Information.ChannelId
+                                ? SmileIdUtility.ConvertChannelId(SelectedFinderItem.Information.ChannelId, Mediation)
                                 : SelectedFinderItem.Information.ChannelName
                             ;
                             CopyInformationText(text);
