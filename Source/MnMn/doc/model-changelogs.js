@@ -163,7 +163,8 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': '#681: HtmlAgilityPack 1.5.0 -> 1.5.1'
 					},
 					{
 						'revision': '',
