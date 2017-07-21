@@ -1264,6 +1264,10 @@
     <None Include="etc\define\service\smile\video\request-mappings_video-msg-post_escapetxt.txt">
       <DependentUpon>request-mappings.tt</DependentUpon>
     </None>
+    <Page Include="View\Resources\TypeDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Resource Include="Resources\MnMn-Update_App.png" />
     <Resource Include="Resources\MnMn-Update_Lightweight.png" />
     <Resource Include="Resources\MnMn-Header.png" />

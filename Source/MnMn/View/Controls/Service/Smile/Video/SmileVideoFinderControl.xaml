@@ -497,10 +497,16 @@
                   <MenuItem Header="カスタム" Command="{Binding CopyCustomInformationCommand}" Style="{StaticResource {x:Type MenuItem}}" />
                   <MenuItem Header="動画ID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.VideoId}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="タイトル" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.Title}"  Style="{StaticResource {x:Type MenuItem}}"/>
+
+                  <!--
                   <MenuItem Header="ユーザーID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserId}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="ユーザー名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="チャンネルID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="チャンネル名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  -->
+                  <MenuItem Header="投稿者ID" Command="{Binding CopyInformationPosterTextCommand}" CommandParameter="{StaticResource Type_Boolean-True}" Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="投稿者名" Command="{Binding CopyInformationPosterTextCommand}" CommandParameter="{StaticResource Type_Boolean-False}" Style="{StaticResource {x:Type MenuItem}}"/>
+
                   <MenuItem Header="視聴ページ" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.WatchUrlString}"  Style="{StaticResource {x:Type MenuItem}}"/>
 
                   <Separator Style="{StaticResource TagSeparator}" />
