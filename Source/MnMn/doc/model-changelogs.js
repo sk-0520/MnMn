@@ -173,6 +173,11 @@
 					},
 					{
 						'revision': '',
+						'class': 'nuget',
+						'subject': '#679: Extended WPF Toolkit 3.0.0 -> 3.1.0'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

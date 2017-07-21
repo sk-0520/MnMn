@@ -4,7 +4,7 @@
 	<Component Kind="Library" Name="HtmlAgilityPack" Uri="https://htmlagilitypack.codeplex.com/" License="Ms-PL" />
 	<Component Kind="Library" Name="HTMLConverter" Uri="msdn.microsoft.com/en-us/library/aa972129.aspx" License="" />
 	<Component Kind="Library" Name="Json.NET" Uri="http://www.newtonsoft.com/json" License="MIT" />
-	<Component Kind="Library" Name="Extended WPF Toolkit™ Community Edition" Uri="http://wpftoolkit.codeplex.com/" License="Ms-PL" />
+	<Component Kind="Library" Name="Extended WPF Toolkit™ Community Edition" Uri="https://github.com/xceedsoftware/wpftoolkit" License="Ms-PL" />
 	<Component Kind="Library" Name="OxyPlot.Wpf" Uri="http://www.oxyplot.org/" License="MIT" />
 	<Component Kind="Library" Name="GeckoFX" Uri="https://bitbucket.org/geckofx/" License="MPL" />
 	<Component Kind="Library" Name="mahapps.metro" Uri="http://mahapps.com/" License="MIT" />
