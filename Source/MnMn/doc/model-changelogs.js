@@ -85,6 +85,99 @@
 	},
 	*/
 	{
+		'date': '2017/07/22',
+		'version': '0.75.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': 'このバージョンアップで 0.74.0 で配布した修正版アップデート機能が正式に走る！',
+						'comments': [
+							'試験も結構したしβ版も試したしいけるさ',
+							'大丈夫さ',
+							'いってくれ'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '2ad9d085c2dbf120b02c120e9bbaaba2ba6345b7',
+						'subject': '#674: ファインダーのコピー機能でユーザーとチャンネルの区別は不要'
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '73715d72f69f577e49c99286d4a03a16322aa2a9',
+						'subject': '#670: チャンネルブックマークの検証・調整があまあま',
+						'comments': [
+							'もうワケわからん',
+							'設計せずに TabControl と WindowsFormsHost 合わせるとダメだね'
+						]
+					},
+					{
+						'revision': '73715d72f69f577e49c99286d4a03a16322aa2a9',
+						'subject': '#673: 元々頭おかしい内蔵ブラウザがチャンネルタブを閉じた際に頭狂う',
+						'comments': [
+							'#670 と同時'
+						]
+					},
+					{
+						'revision': '85fec1cb66b195924b1a3a76964041dd9f407de5',
+						'subject': '#683: 酷使するプレーヤー → メインプレイヤー に改名する'
+					},
+					{
+						'revision': '6dc9704b1b14b927677a1dae46d6a0d6863c26cd',
+						'subject': '#684: チャンネルIDコピー時の操作でID番号に "ch" を付与すべき'
+					},
+					{
+						'revision': 'b5cf843feb412538e8fafb4351240aa765a403ad',
+						'subject': '#682: 秒間ダウンロード表示部がガックガクに動くの鬱陶しい',
+						'comments': [
+							'6:##0.00 これで気持ち抑えられたかな！'
+						]
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '0e14f717ae7bf436899069fb08c0f1623c7e1c29',
+						'subject': '#504: DMC形式の処理を独立',
+						'comments': [
+							'＼(^_^)／ばんざーい',
+							'DMC 周りの不安定さが解消できたと信じてる'
+						]
+					},
+					{
+						'revision': '1f789113e6b03d28437b2ffedbfbd0c371988023',
+						'class': 'nuget',
+						'subject': '#681: HtmlAgilityPack 1.5.0 -> 1.5.1'
+					},
+					{
+						'revision': '4ecf8d3bb6a85a9b310fc86f34195d885206954e',
+						'class': 'nuget',
+						'subject': '#680: Geckofx 45.0.31 -> 45.0.32'
+					},
+					{
+						'revision': '9b229dbdab6c15f9037c6e47d72d8009e92351d8',
+						'class': 'nuget',
+						'subject': '#679: Extended WPF Toolkit 3.0.0 -> 3.1.0'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/07/19',
 		'version': '0.74.0',
 		'isRc': false,
@@ -297,88 +390,6 @@
 							'暫定対処過ぎてふぇぇ',
 							'ふぇぇ'
 						]
-					}
-				]
-			}
-		]
-	},
-	{
-		'date': '2017/07/08',
-		'version': '0.72.0',
-		'isRc': false,
-		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': '0.71.0 で対応した新アップデート処理が動く。動いて'
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': 'd79a1672090cef3da455f428b77d5464b6648bf5',
-						'subject': '#652: あとで見るのデータ構造に「どこから」を持たせる'
-					},
-					{
-						'revision': 'cf18d04efb6a6015dc1c29056f54b0c109c39704',
-						'subject': '#653: あとで見るがどこから設定されたのか視覚表示する',
-						'comments': [
-							'既存のあとで見るデータは表面上「手動」扱い',
-							'内部的には Unknown 扱い'
-						]
-					},
-					{
-						'revision': 'cc030de859afb3c32b0d29db0f6a53a96dd19102',
-						'subject': '#643: 使用許諾になぜ表示しているかの旨を表示する',
-						'comments': [
-							'誰も読んでない気がする',
-							'元々小難しいこと書いてないけど GPL だから使用者の責任下でって意味を強調して最下部に「本文書内容を理解した」を追加した',
-							'ちょい面倒だけどチェックしないと使えないようにしておいた',
-							'君が責任を負いたくないように私も責任を負いたくない擦り合い社会'
-						]
-					},
-					{
-						'revision': '833f7ae6a837d16bcd0f4b8ac6751a2c858f3595',
-						'subject': '#630: スクロール可能タブに一覧メニューを表示する'
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '12d21472e64fbdcf945e4fde58c1b61e1e50eced',
-						'class': 'reopen',
-						'subject': '#655: タグから大百科開くボタンの活性タイミングが何かしらのイベント後で気持ち悪い',
-						'comments': [
-							'こんなしょうもない問題で再オープンという失態'
-						]
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '86a4551f7855aefa2c73e3df2be3c0e7f7fd6d60',
-						'subject': '#599: ビルド手順の明文化'
-					},
-					{
-						'revision': 'fd211a9b8f6cd3f5e3a889683569ebd1e7f95e0d',
-						'class': 'nuget',
-						'subject': '#656: HtmlAgilityPack 1.4.9.5 -> 1.5.0'
-					},
-					{
-						'revision': 'ce1e7c0df66d450731a8435b3dbbff50230444bc',
-						'subject': '#657: 環境情報に app.config の内容が必要'
-					},
-					{
-						'revision': '1071da88db3be0ef7df685290e21a8e648d17d58',
-						'subject': '#658: あとで見るの各タブにアイコン付与して冗長的な文言破棄'
 					}
 				]
 			}

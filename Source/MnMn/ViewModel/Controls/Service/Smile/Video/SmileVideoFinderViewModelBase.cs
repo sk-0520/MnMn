@@ -307,6 +307,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand CopyInformationPosterTextCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var isId = (bool)o;
+
+                        if(SelectedFinderItem.Information.IsChannelVideo) {
+                            var text = isId
+                                ? SmileIdUtility.ConvertChannelId(SelectedFinderItem.Information.ChannelId, Mediation)
+                                : SelectedFinderItem.Information.ChannelName
+                            ;
+                            CopyInformationText(text);
+                        } else {
+                            var text = isId
+                                ? SelectedFinderItem.Information.UserId
+                                : SelectedFinderItem.Information.UserName
+                            ;
+                            CopyInformationText(text);
+                        }
+                    },
+                    o => SelectedFinderItem != null
+                );
+            }
+        }
+
         public ICommand SearchInformationTextCommand
         {
             get

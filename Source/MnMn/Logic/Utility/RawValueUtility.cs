@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         delegate bool ConvertTryPaese<T>(string s, out T result);
 
         static readonly DateTime unixTimeBase = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+        static readonly string[] terms = new[] { "byte", "KB", "MB", "GB" };
 
         #endregion
 
@@ -215,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return unixSec + ms;
         }
 
-        public static string ConvertHumanLikeByte(long byteSize, string[] terms)
+        public static string ConvertHumanLikeByte(long byteSize, string sizeFormat, string[] terms)
         {
             double size = byteSize;
             int order = 0;
@@ -223,12 +224,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 size = size / 1024;
             }
 
-            return $"{size:0.00} {terms[order]}";
+            return string.Format(sizeFormat, size, terms[order]);
+        }
+
+        public static string ConvertHumanLikeByte(long byteSize, string[] terms)
+        {
+            return ConvertHumanLikeByte(byteSize, "{0:0.00} {1}", terms);
+        }
+
+        public static string ConvertHumanLikeByte(long byteSize, string sizeFormat)
+        {
+            return ConvertHumanLikeByte(byteSize, sizeFormat, terms);
         }
 
         public static string ConvertHumanLikeByte(long byteSize)
         {
-            var terms = new[] { "byte", "KB", "MB", "GB" };
             return ConvertHumanLikeByte(byteSize, terms);
         }
 
