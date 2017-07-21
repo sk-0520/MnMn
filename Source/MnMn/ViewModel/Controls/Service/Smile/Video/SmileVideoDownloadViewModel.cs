@@ -113,15 +113,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoInformationViewModel Information { get; set; }
 
         public FewViewModel<bool> UsingDmc { get; } = new FewViewModel<bool>();
-        protected RawSmileVideoDmcObjectModel DmcObject { get; private set; }
-        protected Uri DmcApiUri { get; private set; }
-        protected RawSmileVideoDmcContentSrcIdModel DmcMultiplexer { get { return DmcObject?.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
-        public string DmcVideoSrc { get { return DmcMultiplexer?.VideoSrcIds.First(); } }
-        public string DmcAudioSrc { get { return DmcMultiplexer?.AudioSrcIds.First(); } }
-        protected string DmcFileExtension { get { return DmcObject.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension; } }
-        Task DmcPollingTask { get; set; }
-        AutoResetEvent DmcPollingWait { get; set; }
-        CancellationTokenSource DmcPollingCancel { get; set; }
+        //protected RawSmileVideoDmcObjectModel DmcObject { get; private set; }
+        //protected Uri DmcApiUri { get; private set; }
+        //protected RawSmileVideoDmcContentSrcIdModel DmcMultiplexer { get { return DmcObject?.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
+        //public string DmcVideoSrc { get { return DmcMultiplexer?.VideoSrcIds.First(); } }
+        //public string DmcAudioSrc { get { return DmcMultiplexer?.AudioSrcIds.First(); } }
+        public string DmcVideoSrc { get { return DmcLoader?.VideoSource; } }
+        public string DmcAudioSrc { get { return DmcLoader?.AudioSource; } }
+        //protected string DmcFileExtension { get { return DmcObject.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension; } }
+        //Task DmcPollingTask { get; set; }
+        //AutoResetEvent DmcPollingWait { get; set; }
+        //CancellationTokenSource DmcPollingCancel { get; set; }
+        protected SmileVideoDmcLoader DmcLoader { get; set; }
+
 
         public Uri DownloadUri
         {
@@ -338,17 +342,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         await downloader.StartAsync();
                         if(downloader.Completed) {
                             if(UsingDmc.Value) {
-                                var mux = DmcMultiplexer;
-                                var role = SmileVideoInformationUtility.GetDmcRoleKey(mux.VideoSrcIds.First(), mux.AudioSrcIds.First());
+                                //var mux = DmcMultiplexer;
+                                var role = SmileVideoInformationUtility.GetDmcRoleKey(DmcLoader.VideoSource, DmcLoader.AudioSource);
                                 VideoStream.Flush();
                                 VideoFile.Refresh();
                                 // 理屈で言えばここは絶対に存在する
-                                Information.SetDmcLoaded(mux.VideoSrcIds.First(), mux.AudioSrcIds.First(), VideoFile.Length == Information.DmcItems[role].Length);
+                                Information.SetDmcLoaded(DmcLoader.VideoSource, DmcLoader.AudioSource, VideoFile.Length == Information.DmcItems[role].Length);
                                 if(Information.DmcItems[role].IsLoaded) {
                                     VideoLoadState = LoadState.Loaded;
                                     DownloadState = DownloadState.Completed;
                                 } else {
-                                    Mediation.Logger.Debug($"{VideoId}: LoadState.Failure, {mux.VideoSrcIds.First()}, {mux.AudioSrcIds.First()}, {VideoFile.Length == Information.DmcItems[role].Length}, {role}");
+                                    Mediation.Logger.Debug($"{VideoId}: LoadState.Failure, {DmcLoader.VideoSource}, {DmcLoader.AudioSource}, {VideoFile.Length == Information.DmcItems[role].Length}, {role}");
                                     VideoLoadState = LoadState.Failure;
                                     DownloadState = DownloadState.Failure;
                                 }
@@ -489,9 +493,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             VideoLoadState = LoadState.Preparation;
 
-            var dmc = new Dmc(Mediation);
+            //var dmc = new Dmc(Mediation);
             var tuple = GetDmcObject2();
-            DmcApiUri = new Uri(tuple.Item1);
+            //DmcApiUri = new Uri(tuple.Item1);
             var model = tuple.Item2;
             var dmcInfo2 = Information.DmcInfo2;
 
@@ -502,22 +506,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(dmcInfo2.SessionApi.Audios, Setting.Download.AudioWeight);
             sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
 
-            var result = await dmc.LoadAsync(DmcApiUri, model);
+            DmcLoader = new SmileVideoDmcLoader(VideoId, new Uri(tuple.Item1), Mediation);
+            var downloadUri = await DmcLoader.StartAsync(model, Information.DmcFile);
 
-            SerializeUtility.SaveXmlSerializeToFile(Information.DmcFile.FullName, result);
-            if(!SmileVideoDmcObjectUtility.IsSuccessResponse(result)) {
-                Mediation.Logger.Warning($"{VideoId}: {result.Meta.Status}, {result.Meta.Message}");
+            //var result = await dmc.LoadAsync(DmcApiUri, model);
+
+            //SerializeUtility.SaveXmlSerializeToFile(Information.DmcFile.FullName, result);
+            //if(!SmileVideoDmcObjectUtility.IsSuccessResponse(result)) {
+            //    Mediation.Logger.Warning($"{VideoId}: {result.Meta.Status}, {result.Meta.Message}");
+            //    return false;
+            //}
+            if(downloadUri == null) {
                 return false;
             }
 
-            DmcObject = result;
+            //DmcObject = result;
 
-            var downloadUri = new Uri(result.Data.Session.ContentUri);
+            //var downloadUri = new Uri(result.Data.Session.ContentUri);
 
-            var mux = DmcMultiplexer;
-            var ext = DmcFileExtension;
-            var video = mux.VideoSrcIds.First();
-            var audio = mux.AudioSrcIds.First();
+            //var mux = DmcMultiplexer;
+            //var ext = DmcFileExtension;
+            //var video = mux.VideoSrcIds.First();
+            //var audio = mux.AudioSrcIds.First();
+            var ext = DmcLoader.FileExtension;
+            var video = DmcLoader.VideoSource;
+            var audio = DmcLoader.AudioSource;
             var downloadPath = Information.GetDmcVideoFileName(video, audio, ext);
             var downloadFile = new FileInfo(downloadPath);
             downloadFile.Refresh();
@@ -534,7 +547,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 if(dmcItem.IsLoaded && downloadFile.Exists) {
                     if(dmcItem.Length == downloadFile.Length) {
                         LoadVideoFromCache(downloadFile);
-                        var task = dmc.CloseAsync(DmcApiUri, DmcObject);
+                        //var task = dmc.CloseAsync(DmcApiUri, DmcObject);
+                        var task = DmcLoader.StopAsync();
                         return true;
                     }
                 }
@@ -835,11 +849,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThumbnailLoadState = LoadState.None;
             CommentLoadState = LoadState.None;
             UsingDmc.Value = false;
-            DmcObject = null;
-            DmcApiUri = null;
-            DmcPollingTask = null;
-            DmcPollingWait = null;
-            DmcPollingCancel = null;
+            //DmcObject = null;
+            //DmcApiUri = null;
+            //DmcPollingTask = null;
+            //DmcPollingWait = null;
+            //DmcPollingCancel = null;
+            if(DmcLoader != null) {
+                DmcLoader.Dispose();
+            }
+            DmcLoader = null;
             DownloadUri = null;
             DownloadCancel = null;
         }
@@ -906,65 +924,66 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected Task StopDmcDownloadAsync()
         {
             Debug.Assert(UsingDmc.Value);
-            if(DmcApiUri != null && Information != null && Information.IsDownloading) {
-                if(DmcPollingWait != null) {
-                    if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
-                        DmcPollingWait.Set();
-                        DmcPollingWait.Dispose();
-                    }
-                }
+            if(/*DmcApiUri != null && Information != null && */Information.IsDownloading) {
+                //if(DmcPollingWait != null) {
+                //    if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
+                //        DmcPollingWait.Set();
+                //        DmcPollingWait.Dispose();
+                //    }
+                //}
 
-                if(DmcPollingCancel != null) {
-                    Mediation.Logger.Debug($"{nameof(DmcPollingCancel)}: cancel!");
-                    DmcPollingCancel.Cancel();
-                }
+                //if(DmcPollingCancel != null) {
+                //    Mediation.Logger.Debug($"{nameof(DmcPollingCancel)}: cancel!");
+                //    DmcPollingCancel.Cancel();
+                //}
 
-                var dmc = new Dmc(Mediation);
-                return dmc.CloseAsync(DmcApiUri, DmcObject).ContinueWith(t => {
-                    var dmcApiUri = DmcApiUri;
-                    DmcApiUri = null;
-                    Mediation.Logger.Trace($"cancel set null: {DmcApiUri}");
-                });
+                //var dmc = new Dmc(Mediation);
+                //return dmc.CloseAsync(DmcApiUri, DmcObject).ContinueWith(t => {
+                //    var dmcApiUri = DmcApiUri;
+                //    DmcApiUri = null;
+                //    Mediation.Logger.Trace($"cancel set null: {DmcApiUri}");
+                //});
+                return DmcLoader.StopAsync();
             }
 
             return Task.CompletedTask;
         }
 
-        Task PollingDmcDownloadAsync(string videoId, AutoResetEvent resetEvent, CancellationToken cancelToken)
-        {
-            return Task.Run(async () => {
-                var pollingCount = 1;
-                while(true) {
-                    Mediation.Logger.Information($"{videoId}: polling wait... {pollingCount++}");
-                    var isReset = resetEvent.WaitOne(Constants.ServiceSmileVideoDownloadDmcPollingWaitTime);
-                    if(isReset) {
-                        // 強制中止
-                        Mediation.Logger.Information($"{videoId}: polling stop event is set!");
-                        return;
-                    }
-                    if(cancelToken.IsCancellationRequested) {
-                        Mediation.Logger.Information($"{videoId}: polling cancel!");
-                        return;
-                    }
+        //Task PollingDmcDownloadAsync(string videoId, AutoResetEvent resetEvent, CancellationToken cancelToken)
+        //{
+        //    return Task.Run(async () => {
+        //        var pollingCount = 1;
+        //        while(true) {
+        //            Mediation.Logger.Information($"{videoId}: polling wait... {pollingCount++}");
+        //            var isReset = resetEvent.WaitOne(Constants.ServiceSmileVideoDownloadDmcPollingWaitTime);
+        //            if(isReset) {
+        //                // 強制中止
+        //                Mediation.Logger.Information($"{videoId}: polling stop event is set!");
+        //                return;
+        //            }
+        //            if(cancelToken.IsCancellationRequested) {
+        //                Mediation.Logger.Information($"{videoId}: polling cancel!");
+        //                return;
+        //            }
 
-                    if(DmcObject == null) {
-                        Mediation.Logger.Debug($"{videoId}: {nameof(DmcObject)} is null!!");
-                        return;
-                    }
-                    DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTime(DateTime.Now);
+        //            if(DmcObject == null) {
+        //                Mediation.Logger.Debug($"{videoId}: {nameof(DmcObject)} is null!!");
+        //                return;
+        //            }
+        //            DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTime(DateTime.Now);
 
-                    var dmc = new Dmc(Mediation);
-                    var model = await dmc.ReloadAsync(DmcApiUri, DmcObject);
+        //            var dmc = new Dmc(Mediation);
+        //            var model = await dmc.ReloadAsync(DmcApiUri, DmcObject);
 
-                    if(cancelToken.IsCancellationRequested) {
-                        Mediation.Logger.Information($"{videoId}: polling cancel reload");
-                        return;
-                    }
+        //            if(cancelToken.IsCancellationRequested) {
+        //                Mediation.Logger.Information($"{videoId}: polling cancel reload");
+        //                return;
+        //            }
 
-                    DmcObject = model;
-                }
-            }, cancelToken);
-        }
+        //            DmcObject = model;
+        //        }
+        //    }, cancelToken);
+        //}
 
         #endregion
 
@@ -1094,9 +1113,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                     Mediation.Logger.Information($"file:{VideoFile.Length}, response:{downloader.ResponseHeaders.ContentLength.Value}, total:{VideoTotalSize}");
 
-                    var mux = DmcMultiplexer;
-                    var video = mux.VideoSrcIds.First();
-                    var audio = mux.AudioSrcIds.First();
+                    //var mux = DmcMultiplexer;
+                    //var video = mux.VideoSrcIds.First();
+                    //var audio = mux.AudioSrcIds.First();
+                    var video = DmcLoader.VideoSource;
+                    var audio = DmcLoader.AudioSource;
                     var role = SmileVideoInformationUtility.GetDmcRoleKey(video, audio);
                     if(e.DownloadStartType == DownloadStartType.Begin) {
                         var dmcItem = new SmileVideoDmcItemModel() {
@@ -1119,9 +1140,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     }
                 }
 
-                DmcPollingWait = new AutoResetEvent(false);
-                DmcPollingCancel = new CancellationTokenSource();
-                DmcPollingTask = PollingDmcDownloadAsync(VideoId, DmcPollingWait, DmcPollingCancel.Token);
+                //DmcPollingWait = new AutoResetEvent(false);
+                //DmcPollingCancel = new CancellationTokenSource();
+                //DmcPollingTask = PollingDmcDownloadAsync(VideoId, DmcPollingWait, DmcPollingCancel.Token);
+                DmcLoader.StartPolling();
             }
 
             OnDownloadStart(sender, e);

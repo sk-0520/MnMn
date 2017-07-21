@@ -131,6 +131,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             return GetWeights(GetSortedAudioWeights, values, threshold);
         }
-
     }
 }
