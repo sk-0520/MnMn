@@ -301,7 +301,7 @@
             <ContextMenu.Resources>
               <CollectionViewSource x:Key="TagList" Source="{Binding SelectedFinderItem.Information.TagList}" />
             </ContextMenu.Resources>
-            <MenuItem Header="再生中プレイヤーで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
+            <MenuItem Header="メインプレイヤーで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
               <MenuItem.Style>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Style.Triggers>
@@ -454,7 +454,7 @@
 
             <Separator />
 
-            <MenuItem Header="酷使するプレイヤーのプレイリストに追加" Command="{Binding AddPlayListCommand}">
+            <MenuItem Header="メインプレイヤーのプレイリストに追加" Command="{Binding AddPlayListCommand}">
               <MenuItem.Icon>
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
                   <Path Data="{StaticResource Image_Playlist-Add}" Style="{StaticResource SmallDefaultIconPath}" />

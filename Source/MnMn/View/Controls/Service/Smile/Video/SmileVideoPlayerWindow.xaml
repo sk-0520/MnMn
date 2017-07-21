@@ -630,7 +630,7 @@
                 </Control>
               </Canvas>
             </Viewbox>
-            <TextBlock>酷使するプレイヤー</TextBlock>
+            <TextBlock>メインプレイヤー</TextBlock>
           </StackPanel>
         </xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
