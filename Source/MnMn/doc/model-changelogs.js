@@ -144,6 +144,10 @@
 					{
 						'revision': '',
 						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
 					}
 				]
 			},
@@ -152,7 +156,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#504: DMC形式の処理を独立',
+						'comments': [
+							'＼(^_^)／ばんざーい'
+						]
 					},
 					{
 						'revision': '',
