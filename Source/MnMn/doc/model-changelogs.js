@@ -147,6 +147,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#684: チャンネルIDコピー時の操作でID番号に "ch" を付与すべき'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
@@ -175,10 +179,6 @@
 						'revision': '',
 						'class': 'nuget',
 						'subject': '#679: Extended WPF Toolkit 3.0.0 -> 3.1.0'
-					},
-					{
-						'revision': '',
-						'subject': '#684: チャンネルIDコピー時の操作でID番号に "ch" を付与すべき'
 					},
 					{
 						'revision': '',
