@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
@@ -37,10 +38,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         RawSmileVideoWatchDataModel Load(HtmlAgilityPack.HtmlNode watachDataElement)
         {
             var rawApiData = watachDataElement.Attributes["data-api-data"].Value;
-            var apiData = ConvertTModel<RawSmileVideoWatchDataApiModel>(rawApiData);
+            var decodeApiData = HttpUtility.HtmlDecode(rawApiData);
+            var apiData = ConvertTModel<RawSmileVideoWatchDataApiModel>(decodeApiData);
 
             var rawEnvironment = watachDataElement.Attributes["data-environment"].Value;
-            var environment = ConvertTModel<RawSmileVideoWatchDataEnvironmentModel>(rawEnvironment);
+            var decodeEnvironment = HttpUtility.HtmlDecode(rawEnvironment);
+            var environment = ConvertTModel<RawSmileVideoWatchDataEnvironmentModel>(decodeEnvironment);
 
             return new RawSmileVideoWatchDataModel() {
                 Api = apiData,
