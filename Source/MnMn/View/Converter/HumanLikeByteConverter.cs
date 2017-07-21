@@ -28,12 +28,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
     [ValueConversion(typeof(long), typeof(string))]
     public class HumanLikeByteConverter: IValueConverter
     {
+        #region property
+
+        public string SizeFormat { get; set; }
+
+        #endregion
+
         #region IValueConverter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var size = System.Convert.ToInt64(value);
-            return RawValueUtility.ConvertHumanLikeByte(size);
+
+            if(string.IsNullOrWhiteSpace(SizeFormat)) {
+                return RawValueUtility.ConvertHumanLikeByte(size);
+            }
+
+            return RawValueUtility.ConvertHumanLikeByte(size, SizeFormat);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

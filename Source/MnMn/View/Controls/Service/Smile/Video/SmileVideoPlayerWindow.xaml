@@ -77,7 +77,7 @@
 
       <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
-      <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
+      <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter-000_00" SizeFormat="{}{0,6:##0.00} {1}" />
       <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:KeyBindingToGestureTextConverter x:Key="KeyBindingToGestureTextConverter" />
@@ -832,7 +832,7 @@
             <Style TargetType="TextBlock">
               <Style.Triggers>
                 <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
-                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
+                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter-000_00}, StringFormat=秒間DL: {0}}" />
                   <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
               </Style.Triggers>
