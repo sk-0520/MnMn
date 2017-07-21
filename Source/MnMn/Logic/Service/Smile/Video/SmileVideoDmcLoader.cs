@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -46,10 +47,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         int PollingCount { get; set; }
 
-        DispatcherTimer PollingTimer { get; set; }
+        Timer PollingTimer { get; set; }
 
         public bool NowPolling { get; private set; }
-        public bool IsClosed { get; private set; }
+        public bool IsStopped { get; private set; }
 
         #endregion
 
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 throw new InvalidOperationException(nameof(UsingData));
             }
 
-            //Mediation.Logger.Information($"{VideoId}: polling wait... {PollingCount++}");
+            Mediation.Logger.Information($"{VideoId}: polling {PollingCount++}");
 
             UsingData.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTime(DateTime.Now);
 
@@ -126,29 +127,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 throw new InvalidOperationException(nameof(UsingData));
             }
 
+            Mediation.Logger.Information($"{VideoId}: start polling");
+
             NowPolling = true;
 
-            PollingTimer = new DispatcherTimer();
-            PollingTimer.Tick += PollingTimer_Tick;
+            PollingTimer = new Timer();
+            PollingTimer.Elapsed += PollingTimer_Tick;
 
             // UsingData から取得すべき
-            PollingTimer.Interval = Constants.ServiceSmileVideoDownloadDmcPollingWaitTime;
+            PollingTimer.Interval = Constants.ServiceSmileVideoDownloadDmcPollingWaitTime.TotalMilliseconds;
 
             PollingTimer.Start();
         }
 
         public void StopPolling()
         {
+            Mediation.Logger.Information($"{VideoId}: stop polling");
+
             NowPolling = false;
             if(PollingTimer != null) {
                 PollingTimer.Stop();
-                PollingTimer.Tick -= PollingTimer_Tick;
+                PollingTimer.Elapsed -= PollingTimer_Tick;
             }
         }
 
-        public Task CloseAsync()
+        public Task StopAsync()
         {
-            if(IsClosed) {
+            if(IsStopped) {
                 return Task.CompletedTask;
             }
 
@@ -157,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
 
             return Dmc.CloseAsync(ApiUri, UsingData).ContinueWith(t => {
-                IsClosed = true;
+                IsStopped = true;
             });
         }
 
@@ -170,7 +175,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             if(!IsDisposed) {
                 UsingData = null;
                 if(PollingTimer!= null) {
-                    PollingTimer.Tick -= PollingTimer_Tick;
+                    PollingTimer.Elapsed -= PollingTimer_Tick;
                     PollingTimer = null;
                 }
             }
