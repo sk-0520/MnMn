@@ -1792,7 +1792,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return PosterInformation.LoadThumbnaiImageDefaultAsync(imageSpan);
             }).Unwrap().ContinueWith(_ => {
                 if(PosterInformation.ThumbnailLoadState == LoadState.Loaded) {
-
+                    CallOnPropertyChange(nameof(PosterThumbnailImage));
                 }
             });
         }
@@ -2008,6 +2008,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(ChannelName),
                 nameof(IsChannelVideo),
                 nameof(IsEnabledGlobalCommentFilering),
+                nameof(PosterInformation),
+                nameof(PosterThumbnailImage),
             };
             CallOnPropertyChange(propertyNames);
 
@@ -2042,6 +2044,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentScriptDefault = null;
             MarketLoadState = LoadState.None;
             ForceNavigatorbarOperation = false;
+            PosterInformation = null;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;

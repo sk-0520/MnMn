@@ -1234,6 +1234,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._posterInformation, value); }
         }
 
+        public ImageSource PosterThumbnailImage => PosterInformation?.ThumbnailImage;
+
         #endregion
     }
 }

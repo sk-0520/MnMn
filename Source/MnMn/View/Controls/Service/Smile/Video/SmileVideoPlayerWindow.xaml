@@ -2301,6 +2301,8 @@
                 </Button>
               </Grid>
 
+              <Image Style="{StaticResource ThumbnailImage}" Source="{Binding PosterThumbnailImage}" />
+
             </StackPanel>
 
             <Grid Grid.Row="1"  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
