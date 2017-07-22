@@ -616,6 +616,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             WebNavigatorCore.Uninitialize();
 
+            Mediation.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Shutdown));
+
             AppManager.UninitializeView(View);
 
             if(VariableConstants.IsSafeModeExecute) {

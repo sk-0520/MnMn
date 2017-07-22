@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -28,6 +29,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model
     /// 結果を格納。
     /// <para>成功と状態、その他もろもろ。</para>
     /// </summary>
+    [Serializable, DataContract]
     public class CheckModel: ModelBase, IReadOnlyCheck
     {
         public CheckModel(bool isSuccess, object detail, string message)
@@ -43,14 +45,17 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model
         /// 成功状態。
         /// <para>必須項目。</para>
         /// </summary>
+        [DataMember]
         public bool IsSuccess { get; private set; }
         /// <summary>
         /// 詳細。
         /// </summary>
+        [DataMember]
         public object Detail { get; private set; }
         /// <summary>
         /// メッセージ。
         /// </summary>
+        [DataMember]
         public string Message { get; private set; }
 
         #endregion

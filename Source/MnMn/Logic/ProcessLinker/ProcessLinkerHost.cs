@@ -7,8 +7,10 @@ using System.ServiceModel.Description;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ProcessLink;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLinker;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
@@ -37,9 +39,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         void StartService()
         {
+            Mediation.Logger.Trace("[process-link] start");
+
             var serviceUri = Constants.AppServiceUri;
             Service = new ServiceHost(this, serviceUri);
-
 
             Binding mexBinding;
             Binding processLinkBinding;
@@ -61,12 +64,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             Service.AddServiceEndpoint(ServiceMetadataBehavior.MexContractName, mexBinding, "mex");
             Service.AddServiceEndpoint(typeof(IProcessLink), processLinkBinding, Constants.AppServiceProcessLinkEndpoint);
+
+            Mediation.Logger.Trace($"[process-link] address: {Service.BaseAddresses.Count}", string.Join(Environment.NewLine, Service.BaseAddresses));
+            Mediation.Logger.Trace($"[process-link] behavior: {Service.Description.Behaviors.Count}", string.Join(Environment.NewLine, Service.Description.Behaviors));
+            Mediation.Logger.Trace($"[process-link] endpoint: {Service.Description.Endpoints.Count}", string.Join(Environment.NewLine, Service.Description.Endpoints.Select(i => i.ListenUri)));
+
+            Mediation.Logger.Trace("[process-link] open");
             Service.Open();
         }
 
         void StopService()
         {
+            Mediation.Logger.Trace("[process-link] closing");
+
             Service.Close();
+
+            Mediation.Logger.Trace("[process-link] closed");
         }
 
         bool ChangeState(ProcessLinkState changeState)
@@ -161,6 +174,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ClientName = clientName,
                 ClientId = clientName, // TODO: 急ぎはしないけどまぁあれよね
             };
+        }
+
+        public ProcessLinkResultModel Execute(ServiceType serviceType, string key, string value)
+        {
+            return new ProcessLinkResultModel(true, "e");
         }
 
         #endregion
