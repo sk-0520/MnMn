@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
+using ContentTypeTextNet.MnMn.MnMn.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -431,7 +432,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             Environment.SetEnvironmentVariable("MNMN_DESKTOP", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
         }
 
-        void SendProccessLinkIfEnabledCommandLine()
+        void SendProccessLinkIfEnabledCommandLine(bool useWCF)
         {
             var isEnabledCommandLine = VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
             if(!isEnabledCommandLine) {
@@ -451,8 +452,18 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var key = VariableConstants.OptionValueProcessLinkKey;
             var value = VariableConstants.OptionValueProcessLinkValue;
 
-            var client = new ProcessLinkClient(Mediation);
-            client.Execute(serviceType, key, value);
+            if(useWCF) {
+                var client = new ProcessLinkClient(Mediation);
+                client.Execute(serviceType, key, value);
+            } else {
+                var parameter = new ProcessLinkExecuteParameterModel() {
+                    ServiceType = serviceType,
+                    Key = key,
+                    Value = value,
+                };
+
+                Mediation.Order(new AppProcessLinkParameterOrderModel(parameter));
+            }
         }
 
         #endregion
@@ -498,7 +509,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 logger.Warning($"{Constants.ApplicationUsingName} is opened"); ;
                 Mutex = null;
 
-                SendProccessLinkIfEnabledCommandLine();
+                SendProccessLinkIfEnabledCommandLine(true);
 
                 Shutdown();
                 return;
@@ -671,7 +682,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             // ホストを有効にする
             Mediation.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Listening));
-            SendProccessLinkIfEnabledCommandLine();
 
             // スプラッシュスクリーンさよなら～
             var hSplashWnd = HandleUtility.GetWindowHandle(SplashWindow);
@@ -684,6 +694,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             splashWindowAnimation.Completed += (splashSender, splashEvent) => {
                 SplashWindow.Close();
                 SplashWindow = null;
+
+                SendProccessLinkIfEnabledCommandLine(false);
             };
             SplashWindow.BeginAnimation(UIElement.OpacityProperty, splashWindowAnimation);
         }

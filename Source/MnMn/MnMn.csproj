@@ -465,6 +465,7 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\Order\AppProcessLink\AppProcessLinkOrderModelBase.cs" />
+    <Compile Include="Model\Order\AppProcessLink\AppProcessLinkParameterOrderModel.cs" />
     <Compile Include="Model\Order\AppProcessLink\AppProcessLinkStateChangeOrderModel.cs" />
     <Compile Include="Model\Order\AppSystemBreakOrderModel.cs" />
     <Compile Include="Model\Order\DownloadOrderModel.cs" />

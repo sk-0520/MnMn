@@ -167,6 +167,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(stateOrder != null) {
                 return ChangeState(stateOrder.ChangeState);
             }
+            var parameterOrder = order as AppProcessLinkParameterOrderModel;
+            if(parameterOrder != null) {
+                ExecuteCore(parameterOrder.Parameter);
+                return true;
+            }
 
             return false;
         }
