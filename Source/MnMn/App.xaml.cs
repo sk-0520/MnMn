@@ -103,6 +103,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         AppManagerViewModel AppManager { get; set; }
 
+        bool IsEnabledCommandLine => VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
+
         #endregion
 
         #region function
@@ -434,8 +436,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void SendProccessLinkIfEnabledCommandLine(bool useWCF)
         {
-            var isEnabledCommandLine = VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
-            if(!isEnabledCommandLine) {
+            if(!IsEnabledCommandLine) {
                 Mediation.Logger.Trace("process link skip");
                 return;
             }
@@ -515,8 +516,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             logger.Information($"mutex check: {Constants.ApplicationUsingName}");
-            if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
-                logger.Warning($"{Constants.ApplicationUsingName} is opened"); ;
+
+            var waitTime = IsEnabledCommandLine
+                ? Constants.MutexProcessLinkWaitTime
+                : Constants.MutexWaitTime
+            ;
+
+            if(!Mutex.WaitOne(waitTime, false)) {
+                logger.Warning($"{Constants.ApplicationUsingName} is opened");
                 Mutex = null;
 
                 SendProccessLinkIfEnabledCommandLine(true);
