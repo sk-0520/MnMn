@@ -1997,8 +1997,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             LoadRelationVideoAsync();
 
-            LoadPosterAsync();
-
             var propertyNames = new[] {
                 nameof(VideoId),
                 nameof(Title),
@@ -2017,6 +2015,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();
+        }
+
+        protected override void OnLoadDataWithoutSessionEnd()
+        {
+            LoadPosterAsync().ConfigureAwait(false);
         }
 
         protected override void InitializeStatus()
