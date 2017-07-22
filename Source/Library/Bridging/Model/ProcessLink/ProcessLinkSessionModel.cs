@@ -9,9 +9,9 @@ using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLinker
 {
     [Serializable]
-    public class LinkSessionModel : ModelBase, IReadOnlyLinkSession
+    public class ProcessLinkSessionModel : ModelBase, IReadOnlyProcessLinkSession
     {
-        #region IReadOnlyLinkSession
+        #region IReadOnlyProcessLinkSession
 
         public string ClientName { get; set; }
 

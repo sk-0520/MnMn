@@ -70,15 +70,15 @@
     <Compile Include="IF\Compatibility\IResponseCompatibility.cs" />
     <Compile Include="IF\Compatibility\IUriCompatibility.cs" />
     <Compile Include="IF\CodeExecutor\ICodeExecutor.cs" />
-    <Compile Include="IF\ProcessLinker\IProcessLinker.cs" />
+    <Compile Include="IF\ProcessLink\IProcessLink.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyCheck.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyCodeInitialize.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyCompileParameter.cs" />
-    <Compile Include="IF\ReadOnly\IReadOnlyLinkSession.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyProcessLinkSession.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CodeExecutor\CodeInitializeModel.cs" />
     <Compile Include="Model\CodeExecutor\CompileParameterModel.cs" />
-    <Compile Include="Model\ProcessLinker\LinkSessionModel.cs" />
+    <Compile Include="Model\ProcessLink\ProcessLinkSessionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

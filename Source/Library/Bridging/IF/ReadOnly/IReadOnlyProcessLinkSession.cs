@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly
 {
-    public interface IReadOnlyLinkSession
+    public interface IReadOnlyProcessLinkSession
     {
         #region property
 

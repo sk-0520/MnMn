@@ -50,6 +50,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
@@ -101,11 +102,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
             IdleTalk = new IdleTalkMediation(this);
+
+            ProcessLinkerHost = new ProcessLinkerHost(this);
         }
 
         #region property
 
         AppSettingModel Setting { get; }
+
+        ProcessLinkerHost ProcessLinkerHost { get; }
 
         IReadOnlyWebNavigatorBridge WebNavigatorBridge { get; }
         IReadOnlyList<WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingItems { get; }
@@ -542,6 +547,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
+        bool OrderCore_ProcessLink(AppProcessLinkOrderModelBase order)
+        {
+            return ProcessLinkerHost.ReceiveOrder(order);
+        }
+
         bool OrderCore(OrderModel order)
         {
             switch(order.OrderKind) {
@@ -559,6 +569,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case OrderKind.SystemBreak:
                     return OrderCore_SystemBreak((AppSystemBreakOrderModel)order);
+
+                case OrderKind.ProcessLink:
+                    return OrderCore_ProcessLink((AppProcessLinkOrderModelBase)order);
 
                 default:
                     throw new NotImplementedException();

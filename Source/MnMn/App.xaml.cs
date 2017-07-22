@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -638,6 +639,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             MainWindow.Loaded -= MainWindow_Loaded;
+
+            // ホストを有効にする
+            Mediation.Order(new AppProcessLinkStateOrderModel(true));
 
             // スプラッシュスクリーンさよなら～
             var hSplashWnd = HandleUtility.GetWindowHandle(SplashWindow);

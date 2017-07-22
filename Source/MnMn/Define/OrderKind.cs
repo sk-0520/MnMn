@@ -51,5 +51,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// スリープとかロック回り。
         /// </summary>
         SystemBreak,
+        /// <summary>
+        /// プロセス間通信用処理。
+        /// </summary>
+        ProcessLink,
     }
 }

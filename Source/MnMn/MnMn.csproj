@@ -382,6 +382,8 @@
     <Compile Include="Logic\Extensions\RecyclableMemoryStreamManagerExtensions.cs" />
     <Compile Include="Logic\GlobalManager.cs" />
     <Compile Include="Logic\InformationLoader.cs" />
+    <Compile Include="Logic\ProcessLinker\ProcessLinkerClient.cs" />
+    <Compile Include="Logic\ProcessLinker\ProcessLinkerHost.cs" />
     <Compile Include="Logic\Service\IdleTalk\IdleTalkMediation.cs" />
     <Compile Include="Logic\Service\IdleTalk\Mutter\IdleTalkMutterMediation.cs" />
     <Compile Include="Logic\Service\InformationCacherBase.cs" />
@@ -452,6 +454,8 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
+    <Compile Include="Model\Order\AppProcessLink\AppProcessLinkOrderModelBase.cs" />
+    <Compile Include="Model\Order\AppProcessLink\AppProcessLinkStateOrderModel.cs" />
     <Compile Include="Model\Order\AppSystemBreakOrderModel.cs" />
     <Compile Include="Model\Order\DownloadOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
