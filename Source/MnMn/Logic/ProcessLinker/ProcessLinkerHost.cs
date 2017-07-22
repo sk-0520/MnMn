@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ProcessLink;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLinker;
@@ -11,7 +14,8 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class ProcessLinkerHost : IProcessLink
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    public class ProcessLinkerHost : DisposeFinalizeBase, IProcessLink
     {
         public ProcessLinkerHost(Mediation mediation)
         {
@@ -24,18 +28,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         ProcessLinkState State { get; set; }
 
+        ServiceHost Service { get; set; }
+
         #endregion
 
         #region function
 
-        void StartHost()
+        void StartService()
         {
+            var serviceUri = Constants.AppServiceUri;
+            Service = new ServiceHost(this, serviceUri);
 
+            Binding binding;
+            switch(serviceUri.Scheme) {
+                case "net.pipe":
+                    binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            Service.AddServiceEndpoint(typeof(IProcessLink), binding, Constants.AppServiceProcessLinkEndpoint);
+            Service.Open();
         }
 
-        void StopHost()
+        void StopService()
         {
-
+            Service.Close();
         }
 
         bool ChangeState(ProcessLinkState changeState)
@@ -53,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                             case ProcessLinkState.Listening:
                             case ProcessLinkState.Pause:
-                                StopHost();
+                                StopService();
                                 break;
 
                             default:
@@ -66,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ProcessLinkState.Listening: {
                         switch(State) {
                             case ProcessLinkState.Shutdown:
-                                StartHost();
+                                StartService();
                                 break;
 
                             case ProcessLinkState.Listening:
@@ -130,6 +150,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ClientName = clientName,
                 ClientId = clientName, // TODO: 急ぎはしないけどまぁあれよね
             };
+        }
+
+        #endregion
+
+        #region DisposeFinalizeBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(Service != null) {
+                    ((IDisposable)Service).Dispose();
+                    Service = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

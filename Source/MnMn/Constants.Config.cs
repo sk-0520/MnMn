@@ -57,6 +57,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static Uri AppUriGeneralBrowserHome => new Uri(appConfig.Get("app-uri-general-browser"));
         public static Uri AppUriLightweightUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-lightweight-update")));
 
+        public static Uri AppServiceUri => new Uri(ReplaceAppConfig(appConfig.Get("app-service-uri")));
+        public static string AppServiceProcessLinkEndpoint => appConfig.Get("app-service-process-link-endpoint");
+
         public static TimeSpan AppSplashCloseTime => appConfig.Get("app-splash-close-time", TimeSpan.Parse);
         public static bool AppUnhandledExceptionHandled => appConfig.Get("app-un_handled-exception-handled", bool.Parse);
         public static bool AppSendCrashReport => appConfig.Get("app-send-crash-report", bool.Parse);
