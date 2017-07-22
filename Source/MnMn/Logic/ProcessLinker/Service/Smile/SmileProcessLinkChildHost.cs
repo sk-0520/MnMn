@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Video;
 
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile
 
         #region function
 
-        ProcessLinkResultModel ExecuteCore(ServiceType serviceType, string key, string value)
+        ProcessLinkResultModel ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             throw new NotImplementedException();
         }
@@ -38,20 +39,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile
 
         #region ProcessLinkChildHostBase
 
-        public override ProcessLinkResultModel Execute(ServiceType serviceType, string key, string value)
+        public override ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter)
         {
-            switch(serviceType) {
+            switch(parameter.ServiceType) {
                 case ServiceType.Smile:
-                    return ExecuteCore(serviceType, key, value);
+                    return ExecuteCore(parameter);
 
                 case ServiceType.SmileVideo:
-                    return Video.Execute(serviceType, key, value);
+                    return Video.Execute(parameter);
 
                 case ServiceType.SmileLive:
-                    return Live.Execute(serviceType, key, value);
+                    return Live.Execute(parameter);
 
                 default:
-                    throw new ArgumentException($"{nameof(serviceType)}: {serviceType}, {nameof(key)}: {key}, {nameof(value)}: {value}");
+                    throw new ArgumentException(GetExceptionString(parameter));
             }
         }
 

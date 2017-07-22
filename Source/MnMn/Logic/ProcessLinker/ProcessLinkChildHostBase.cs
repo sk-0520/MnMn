@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker
 {
@@ -22,9 +23,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker
 
         #endregion
 
+        #region function
+
+        protected static string GetExceptionString(IReadOnlyProcessLinkExecuteParameter parameter)
+        {
+            return $"{nameof(parameter.ServiceType)}: {parameter.ServiceType}, {nameof(parameter.Key)}: {parameter.Key}, {nameof(parameter.Value)}: {parameter.Value}";
+        }
+
+        #endregion
+
         #region IProcessLinkChildHost
 
-        public abstract ProcessLinkResultModel Execute(ServiceType serviceType, string key, string value);
+        public abstract ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter);
 
         #endregion
     }

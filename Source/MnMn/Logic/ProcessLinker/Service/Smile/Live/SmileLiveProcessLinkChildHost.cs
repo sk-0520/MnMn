@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live
 {
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live
 
         #region function
 
-        ProcessLinkResultModel ExecuteCore(ServiceType serviceType, string key, string value)
+        ProcessLinkResultModel ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             throw new NotImplementedException();
         }
@@ -25,13 +26,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live
 
         #region ProcessLinkChildHostBase
 
-        public override ProcessLinkResultModel Execute(ServiceType serviceType, string key, string value)
+        public override ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter)
         {
-            if(serviceType != ServiceType.SmileLive) {
-                throw new ArgumentException($"{nameof(serviceType)}: {serviceType}, {nameof(key)}: {key}, {nameof(value)}: {value}");
+            if(parameter.ServiceType != ServiceType.SmileLive) {
+                throw new ArgumentException(GetExceptionString(parameter));
             }
 
-            return ExecuteCore(serviceType, key, value);
+            return ExecuteCore(parameter);
         }
 
         #endregion

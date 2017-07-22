@@ -14,9 +14,11 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLinker;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk;
 using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
+using ContentTypeTextNet.MnMn.MnMn.Model.ProcessLink;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -169,9 +171,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return false;
         }
 
-        ProcessLinkResultModel ExecuteCore(ServiceType serviceType, string key, string value)
+        ProcessLinkResultModel ExecuteCore_App(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             throw new NotImplementedException();
+        }
+
+        ProcessLinkResultModel ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
+        {
+            switch(parameter.ServiceType) {
+                case ServiceType.Application:
+                    return ExecuteCore_App(parameter);
+
+                case ServiceType.Smile:
+                case ServiceType.SmileLive:
+                case ServiceType.SmileVideo:
+                    return Smile.Execute(parameter);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.Execute(parameter);
+
+                default:
+                    throw new ArgumentException($"{nameof(parameter.ServiceType)}: {parameter.ServiceType}, {nameof(parameter.Key)}: {parameter.Key}, {nameof(parameter.Value)}: {parameter.Value}");
+            }
         }
 
         #endregion
@@ -192,22 +214,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public ProcessLinkResultModel Execute(ServiceType serviceType, string key, string value)
         {
-            switch(serviceType) {
-                case ServiceType.Application:
-                    return ExecuteCore(serviceType, key, value);
-
-                case ServiceType.Smile:
-                case ServiceType.SmileLive:
-                case ServiceType.SmileVideo:
-                    return Smile.Execute(serviceType, key, value);
-
-                case ServiceType.IdleTalk:
-                case ServiceType.IdleTalkMutter:
-                    return IdleTalk.Execute(serviceType, key, value);
-
-                default:
-                    throw new ArgumentException($"{nameof(serviceType)}: {serviceType}, {nameof(key)}: {key}, {nameof(value)}: {value}");
-            }
+            var parameter = new ProcessLinkExecuteParameterModel() {
+                ServiceType = serviceType,
+                Key = key,
+                Value = value,
+            };
+            return ExecuteCore(parameter);
         }
 
 

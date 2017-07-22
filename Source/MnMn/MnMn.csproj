@@ -330,6 +330,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyMappingItemReplacePair.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappingResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyMappings.cs" />
+    <Compile Include="IF\ReadOnly\ProcessLink\IReadOnlyProcessLinkExecuteParameter.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoCheckItLaterFrom.cs" />
     <Compile Include="IF\ReadOnly\Service\Smile\Video\IReadOnlySmileVideoKeyword.cs" />
     <Compile Include="IF\ReadOnly\Setting\IReadOnlyRunningInformationSetting.cs" />
@@ -467,6 +468,7 @@
     <Compile Include="Model\Order\AppProcessLink\AppProcessLinkStateChangeOrderModel.cs" />
     <Compile Include="Model\Order\AppSystemBreakOrderModel.cs" />
     <Compile Include="Model\Order\DownloadOrderModel.cs" />
+    <Compile Include="Model\ProcessLink\ProcessLinkExecuteParameterModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
     <Compile Include="Model\Request\AppLogingProcessRequestModel.cs" />
     <Compile Include="Model\Request\OtherDefineRequestModelBase.cs" />

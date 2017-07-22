@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk.Mutter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk
@@ -26,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk
 
         #region function
 
-        ProcessLinkResultModel ExecuteCore(ServiceType serviceType, string key, string value)
+        ProcessLinkResultModel ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             throw new NotImplementedException();
         }
@@ -35,17 +36,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk
 
         #region ProcessLinkChildHostBase
 
-        public override ProcessLinkResultModel Execute(ServiceType serviceType, string key, string value)
+        public override ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter)
         {
-            switch(serviceType) {
+            switch(parameter.ServiceType) {
                 case ServiceType.IdleTalk:
-                    return ExecuteCore(serviceType, key, value);
+                    return ExecuteCore(parameter);
 
                 case ServiceType.IdleTalkMutter:
-                    return Mutter.Execute(serviceType, key, value);
+                    return Mutter.Execute(parameter);
 
                 default:
-                    throw new ArgumentException($"{nameof(serviceType)}: {serviceType}, {nameof(key)}: {key}, {nameof(value)}: {value}");
+                    throw new ArgumentException(GetExceptionString(parameter));
             }
         }
 
