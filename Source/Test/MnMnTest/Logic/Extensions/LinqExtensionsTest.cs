@@ -18,5 +18,19 @@ namespace MnMnTest.Logic.Extensions
             var list = src.ToEvaluatedSequence();
             Assert.IsTrue(list.SequenceEqual(src));
         }
+        [TestMethod]
+        public void ToEvaluatedSequenceEmptyTest()
+        {
+            var src = new int[] { };
+            var list = src.ToEvaluatedSequence();
+            Assert.IsTrue(list.SequenceEqual(src));
+        }
+        [TestMethod]
+        public void ToEvaluatedSequenceLongTest()
+        {
+            var src = Enumerable.Range(0, 350);
+            var list = src.ToEvaluatedSequence();
+            Assert.IsTrue(list.SequenceEqual(src));
+        }
     }
 }

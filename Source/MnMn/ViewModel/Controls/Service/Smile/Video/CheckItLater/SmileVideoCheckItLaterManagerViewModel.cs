@@ -65,7 +65,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         public int ItemCount
         {
-            get { return Setting.CheckItLater.ToEvaluatedSequence().Count(i => !i.IsChecked); }
+            get
+            {
+                lock(Setting.CheckItLater) {
+                    return Setting.CheckItLater.ToEvaluatedSequence().Count(i => !i.IsChecked);
+                }
+            }
         }
 
         #endregion
@@ -96,7 +101,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         /// <returns>追加できなかった場合は null。</returns>
         public SmileVideoCheckItLaterModel AddLater(SmileVideoVideoItemModel videoItem, SmileVideoCheckItLaterFrom checkItLaterFrom, bool isForce)
         {
-            var item = Setting.CheckItLater.FirstOrDefault(c => c.VideoId == videoItem.VideoId);
+            SmileVideoCheckItLaterModel item;
+            lock(Setting.CheckItLater) {
+                item = Setting.CheckItLater.FirstOrDefault(c => c.VideoId == videoItem.VideoId);
+            }
             // 強制でなければ既に存在してチェック済みのものは追加しない
             if(!isForce && item != null && !item.IsChecked) {
                 return null;
@@ -144,12 +152,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             ;
 
             if(items.Any()) {
-                foreach(var item in items) {
-                    var model = Setting.CheckItLater.FirstOrDefault(i => i.VideoId == item.VideoId || i?.WatchUrl.OriginalString == item?.WatchUrl.OriginalString);
-                    //var model = Setting.CheckItLater.FirstOrDefault(i => i.VideoId == item.VideoId);
-                    if(model != null) {
-                        model.CheckTimestamp = DateTime.Now;
-                        model.IsChecked = true;
+                lock(Setting.CheckItLater) {
+                    foreach(var item in items) {
+                        var model = Setting.CheckItLater.FirstOrDefault(i => i.VideoId == item.VideoId || i?.WatchUrl.OriginalString == item?.WatchUrl.OriginalString);
+                        //var model = Setting.CheckItLater.FirstOrDefault(i => i.VideoId == item.VideoId);
+                        if(model != null) {
+                            model.CheckTimestamp = DateTime.Now;
+                            model.IsChecked = true;
+                        }
                     }
                 }
                 AllItemsFinder.FinderItems.Refresh();
