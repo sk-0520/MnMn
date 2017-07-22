@@ -191,13 +191,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
         public Task<SmileUserInformationModel> LoadUserInformationAsync(string userId)
         {
-            var page = new PageLoader(Mediation, Session, SmileMediationKey.userPage, ServiceType.Smile);
-            page.ReplaceUriParameters["user-id"] = userId;
-            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
-                page.Dispose();
-                var response = task.Result;
-                return GetUserInformationFromHtmlSource(response.Result);
-            });
+            return LoginIfNotLoginAsync().ContinueWith(_ => {
+                var page = new PageLoader(Mediation, Session, SmileMediationKey.userPage, ServiceType.Smile);
+                page.ReplaceUriParameters["user-id"] = userId;
+                return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
+                    page.Dispose();
+                    var response = task.Result;
+                    return GetUserInformationFromHtmlSource(response.Result);
+                });
+            }).Unwrap();
         }
 
         RawSmileUserMyListModel GetUserMyListFromHtmlDocument(HtmlDocument htmlDocument)
