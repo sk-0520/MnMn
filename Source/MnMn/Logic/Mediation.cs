@@ -103,14 +103,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
             IdleTalk = new IdleTalkMediation(this);
 
-            ProcessLinkerHost = new ProcessLinkerHost(this);
+            ProcessLinkerHost = new ProcessLinkHost(this);
         }
 
         #region property
 
         AppSettingModel Setting { get; }
 
-        ProcessLinkerHost ProcessLinkerHost { get; }
+        ProcessLinkHost ProcessLinkerHost { get; }
 
         IReadOnlyWebNavigatorBridge WebNavigatorBridge { get; }
         IReadOnlyList<WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingItems { get; }

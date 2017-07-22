@@ -431,6 +431,30 @@ namespace ContentTypeTextNet.MnMn.MnMn
             Environment.SetEnvironmentVariable("MNMN_DESKTOP", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
         }
 
+        void SendProccessLinkIfEnabledCommandLine()
+        {
+            var isEnabledCommandLine = VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
+            if(!isEnabledCommandLine) {
+                Mediation.Logger.Trace("process link skip");
+                return;
+            }
+
+            var rawService = VariableConstants.OptionValueProcessLinkService;
+            ServiceType serviceType;
+            try {
+                serviceType = EnumUtility.Parse<ServiceType>(rawService);
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+                return;
+            }
+
+            var key = VariableConstants.OptionValueProcessLinkKey;
+            var value = VariableConstants.OptionValueProcessLinkValue;
+
+            var client = new ProcessLinkClient(Mediation);
+            client.Execute(serviceType, key, value);
+        }
+
         #endregion
 
         #region Application
@@ -473,6 +497,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
                 logger.Warning($"{Constants.ApplicationUsingName} is opened"); ;
                 Mutex = null;
+
+                SendProccessLinkIfEnabledCommandLine();
+
                 Shutdown();
                 return;
             }
@@ -578,7 +605,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             base.OnExit(e);
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// UIスレッド
@@ -644,6 +671,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             // ホストを有効にする
             Mediation.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Listening));
+            SendProccessLinkIfEnabledCommandLine();
 
             // スプラッシュスクリーンさよなら～
             var hSplashWnd = HandleUtility.GetWindowHandle(SplashWindow);

@@ -384,8 +384,8 @@
     <Compile Include="Logic\Extensions\RecyclableMemoryStreamManagerExtensions.cs" />
     <Compile Include="Logic\GlobalManager.cs" />
     <Compile Include="Logic\InformationLoader.cs" />
-    <Compile Include="Logic\ProcessLinker\ProcessLinkerClient.cs" />
-    <Compile Include="Logic\ProcessLinker\ProcessLinkerHost.cs" />
+    <Compile Include="Logic\ProcessLinker\ProcessLinkClient.cs" />
+    <Compile Include="Logic\ProcessLinker\ProcessLinkHost.cs" />
     <Compile Include="Logic\Service\IdleTalk\IdleTalkMediation.cs" />
     <Compile Include="Logic\Service\IdleTalk\Mutter\IdleTalkMutterMediation.cs" />
     <Compile Include="Logic\Service\InformationCacherBase.cs" />

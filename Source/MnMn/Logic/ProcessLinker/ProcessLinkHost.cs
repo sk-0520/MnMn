@@ -18,9 +18,9 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class ProcessLinkerHost : DisposeFinalizeBase, IProcessLink
+    public class ProcessLinkHost : DisposeFinalizeBase, IProcessLink
     {
-        public ProcessLinkerHost(Mediation mediation)
+        public ProcessLinkHost(Mediation mediation)
         {
             Mediation = mediation;
         }
