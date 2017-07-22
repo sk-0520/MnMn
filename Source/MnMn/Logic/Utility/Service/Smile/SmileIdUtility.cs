@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static bool IsScrapingVideoId(string videoId)
+        public static bool IsScrapingVideoId(string videoId, IGetExpression getExpression)
         {
             return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
         }
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetMyListId(string inputValue)
+        public static string GetMyListId(string inputValue, IGetExpression getExpression)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetUserId(string inputValue)
+        public static string GetUserId(string inputValue, IGetExpression getExpression)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static bool NeedCorrectionVideoId(string videoId)
+        public static bool NeedCorrectionVideoId(string videoId, IGetExpression getExpression)
         {
             return !string.IsNullOrEmpty(videoId) && char.IsDigit(videoId[0]);
         }

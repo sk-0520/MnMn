@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        protected DescriptionBase(IConvertCompatibility convertCompatibility, ServiceType serviceType)
+        protected DescriptionBase(IGetExpression convertCompatibility, ServiceType serviceType)
         {
             ConvertCompatibility = convertCompatibility;
             ServiceType = serviceType;
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        protected IConvertCompatibility ConvertCompatibility { get; }
+        protected IGetExpression ConvertCompatibility { get; }
         protected ServiceType ServiceType { get; }
 
         #endregion

@@ -30,6 +30,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
+using ContentTypeTextNet.MnMn.MnMn.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -132,12 +134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 }
                 args += $" /reboot=\"{Constants.AssemblyPath}\"";
                 if(VariableConstants.CommandLine.Length != 0) {
-                    var arg = Environment.CommandLine
-                        .Replace("\"" + Constants.AssemblyPath + "\"", string.Empty)
-                        .Replace(Constants.AssemblyPath, string.Empty)
-                        .Replace("\"", "\"\"")
-                        .Replace("\\", "\\\\")
-                    ;
+                    var arg = AppUtility.GetEscapedCommandLine();
                     args += $" /reboot-arg=\"{arg}\"";
                 }
                 Process.Start(Constants.CrashReporterApplicationPath, args);
@@ -435,6 +432,50 @@ namespace ContentTypeTextNet.MnMn.MnMn
             Environment.SetEnvironmentVariable("MNMN_DESKTOP", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
         }
 
+        void SendProccessLinkIfEnabledCommandLine(bool useWCF)
+        {
+            var isEnabledCommandLine = VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
+            if(!isEnabledCommandLine) {
+                Mediation.Logger.Trace("process link skip");
+                return;
+            }
+
+            var rawService = VariableConstants.OptionValueProcessLinkService;
+            ServiceType serviceType;
+            try {
+                var enumType = typeof(ServiceType);
+                var enumAttr = EnumUtility.GetMembers<ServiceType>()
+                    .Select(m => new { Member = m, Attributes = enumType.GetField(m.ToString()).GetCustomAttributes(false) })
+                    .Select(i => new { Member = i.Member, Attributes = i.Attributes, XmlEnum = i.Attributes.OfType<System.Xml.Serialization.XmlEnumAttribute>().First() })
+                ;
+                var xmlEnumValue = enumAttr.FirstOrDefault(i => string.Equals(i.XmlEnum.Name, rawService, StringComparison.OrdinalIgnoreCase));
+                if(xmlEnumValue != null) {
+                    serviceType = xmlEnumValue.Member;
+                } else {
+                    serviceType = EnumUtility.Parse<ServiceType>(rawService);
+                }
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+                return;
+            }
+
+            var key = VariableConstants.OptionValueProcessLinkKey;
+            var value = VariableConstants.OptionValueProcessLinkValue;
+
+            if(useWCF) {
+                var client = new ProcessLinkClient(Mediation);
+                client.Execute(serviceType, key, value);
+            } else {
+                var parameter = new ProcessLinkExecuteParameterModel() {
+                    ServiceType = serviceType,
+                    Key = key,
+                    Value = value,
+                };
+
+                Mediation.Order(new AppProcessLinkParameterOrderModel(parameter));
+            }
+        }
+
         #endregion
 
         #region Application
@@ -477,6 +518,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
                 logger.Warning($"{Constants.ApplicationUsingName} is opened"); ;
                 Mutex = null;
+
+                SendProccessLinkIfEnabledCommandLine(true);
+
                 Shutdown();
                 return;
             }
@@ -582,7 +626,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             base.OnExit(e);
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// UIスレッド
@@ -620,6 +664,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             WebNavigatorCore.Uninitialize();
 
+            Mediation.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Shutdown));
+
             AppManager.UninitializeView(View);
 
             if(VariableConstants.IsSafeModeExecute) {
@@ -644,6 +690,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             MainWindow.Loaded -= MainWindow_Loaded;
 
+            // ホストを有効にする
+            Mediation.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Listening));
+
             // スプラッシュスクリーンさよなら～
             var hSplashWnd = HandleUtility.GetWindowHandle(SplashWindow);
             var exStyle = WindowsUtility.GetWindowLong(hSplashWnd, (int)GWL.GWL_EXSTYLE);
@@ -655,6 +704,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             splashWindowAnimation.Completed += (splashSender, splashEvent) => {
                 SplashWindow.Close();
                 SplashWindow = null;
+
+                SendProccessLinkIfEnabledCommandLine(false);
             };
             SplashWindow.BeginAnimation(UIElement.OpacityProperty, splashWindowAnimation);
         }

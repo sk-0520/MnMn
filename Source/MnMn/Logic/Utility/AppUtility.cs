@@ -244,13 +244,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static string GetRawCommandLine()
         {
             if(VariableConstants.CommandLine.Length != 0) {
-                var arg = Environment.CommandLine
-                    .Replace("\"" + Constants.AssemblyPath + "\"", string.Empty)
-                    .Replace(Constants.AssemblyPath, string.Empty)
-                    .Replace("\"", "\"\"")
-                    .Replace("\\", "\\\\")
-                ;
-                return arg;
+                var arg = AppUtility.GetEscapedCommandLine();
             }
 
             return string.Empty;
@@ -370,6 +364,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             targetCollection.Insert(0, addItem);
         }
 
-        #endregion
-    }
+        public static string GetEscapedCommandLine()
+        {
+            var arg = Environment.CommandLine
+                .Replace("\"" + Constants.AssemblyPath + "\"", string.Empty)
+                .Replace(Constants.AssemblyPath, string.Empty)
+                .Replace("\"", "\"\"")
+                .Replace("\\", "\\\\")
+            ;
+
+            return arg;
+        }
+
+    #endregion
+}
 }

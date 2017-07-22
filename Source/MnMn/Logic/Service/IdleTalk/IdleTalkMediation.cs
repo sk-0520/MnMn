@@ -298,22 +298,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
             }
         }
 
-        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            switch(serviceType) {
-                case ServiceType.IdleTalk:
-                    throw new NotImplementedException();
-
-                case ServiceType.IdleTalkMutter:
-                    return MutterMediation.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
-
-                default:
-                    ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
-                    throw new NotImplementedException();
-            }
-        }
-
-
         #endregion
     }
 }

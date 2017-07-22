@@ -8,10 +8,11 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
 {
+    [Obsolete]
     public interface IConvertCompatibility
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="outputValue">出力データ。</param>
         /// <param name="outputType">出力データ型。</param>

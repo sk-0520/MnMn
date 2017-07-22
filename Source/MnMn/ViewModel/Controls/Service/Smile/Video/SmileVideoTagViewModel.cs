@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -101,9 +102,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(!string.IsNullOrWhiteSpace(TagName)) {
                 var inputValue = TagName.Trim();
-                object outputValue;
-                if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetVideoId, inputValue, typeof(string), ServiceType.Smile)) {
-                    return (string)outputValue;
+                var videoId = SmileIdUtility.GetVideoId(inputValue, Mediation);
+                if(!string.IsNullOrWhiteSpace(videoId)) {
+                    return videoId;
                 }
             }
 

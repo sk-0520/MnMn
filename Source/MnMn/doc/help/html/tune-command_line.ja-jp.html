@@ -69,6 +69,58 @@
 			</tbody>
 		</table>
 
+		<h3>コマンドライン/WCF</h3>
+		<p>
+			下記の項目はコマンドラインやWCFで処理可能です。<br />
+			これらは <span class="word">app</span> 稼働中でも実行可能です。
+		</p>
+		<dl>
+			<dt>コマンドライン</dt>
+			<dd><code><dfn>/ps</dfn>=<var>サービス</var> <dfn>/pk</dfn>=<var>キー</var> <dfn>/pv</dfn>=<var>値</var></code></dd>
+
+			<dt>WCF</dt>
+			<dd>URI: <code>net.pipe://cttn-mnmn</code> エンドポイント: <code>process-link</code> メソッド: <code>Execute</code></dd>
+		</dl>
+
+		<table>
+			<thead>
+				<tr>
+					<th>サービス</th>
+					<th>キー</th>
+					<th>値</th>
+					<th>説明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><dfn>smile-video</dfn></td>
+					<td><dfn>show</dfn></td>
+					<td><var>動画ID</var></td>
+					<td>指定動画IDを設定された挙動で表示します。</td>
+				</tr>
+				<tr>
+					<td><dfn>smile-video</dfn></td>
+					<td><dfn>add-bookmark</dfn></td>
+					<td><var>動画ID</var></td>
+					<td>指定動画IDを未整理のブックマークに追加します。</td>
+				</tr>
+				<tr>
+					<td><dfn>smile-video</dfn></td>
+					<td><dfn>add-later</dfn></td>
+					<td><var>動画ID</var></td>
+					<td>指定動画IDをあとで見るに追加します。</td>
+				</tr>
+				<!--
+				<tr>
+					<td><dfn></dfn></td>
+					<td><dfn></dfn></td>
+					<td><var></var></td>
+					<td></td>
+				</tr>
+				-->
+			</tbody>
+		</table>
+
 	</section>
 	<nav id="main-menu">
 		<noscript>

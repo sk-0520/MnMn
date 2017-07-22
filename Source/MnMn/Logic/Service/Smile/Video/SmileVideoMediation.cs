@@ -289,19 +289,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
         }
 
-        bool ValueConvertCore(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
-        {
-            switch(inputKey) {
-                case SmileVideoMediationKey.inputEconomyMode:
-                    outputValue = SmileVideoGetflvUtility.IsEconomyMode((string)inputValue);
-                    return true;
-
-                default:
-                    outputValue = null;
-                    return false;
-            }
-        }
-
         #endregion
 
         #region MediationBase
@@ -437,22 +424,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             return ConvertStringCore(key, uri, text, serviceType);
-        }
-
-        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            if(serviceType != ServiceType.SmileVideo) {
-                ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
-            }
-
-            switch(serviceType) {
-                case ServiceType.SmileVideo:
-                    return ValueConvertCore(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
-
-                default:
-                    ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
-                    throw new NotImplementedException();
-            }
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)
