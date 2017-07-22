@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk
 
         #region function
 
-        ProcessLinkResultModel ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
+        Task<ProcessLinkResultModel> ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             throw new NotImplementedException();
         }
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk
 
         #region ProcessLinkChildHostBase
 
-        public override ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter)
+        public override Task<ProcessLinkResultModel> Execute(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             switch(parameter.ServiceType) {
                 case ServiceType.IdleTalk:

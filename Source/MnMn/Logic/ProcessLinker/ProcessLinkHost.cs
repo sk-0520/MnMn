@@ -171,12 +171,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return false;
         }
 
-        ProcessLinkResultModel ExecuteCore_App(IReadOnlyProcessLinkExecuteParameter parameter)
+        Task<ProcessLinkResultModel> ExecuteCore_App(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             throw new NotImplementedException();
         }
 
-        ProcessLinkResultModel ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
+        Task<ProcessLinkResultModel> ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             switch(parameter.ServiceType) {
                 case ServiceType.Application:
@@ -219,9 +219,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 Key = key,
                 Value = value,
             };
-            return ExecuteCore(parameter);
-        }
+            try {
+                var task = ExecuteCore(parameter);
+                task.ConfigureAwait(false);
+                task.Wait(TimeSpan.FromSeconds(3));
+                if(task.IsFaulted) {
+                    return new ProcessLinkResultModel(false, task.Exception.ToString());
+                }
+                if(task.IsCompleted) {
+                    var result = task.Result;
+                    return result;
+                }
 
+                return new ProcessLinkResultModel(false, "timeout");
+            } catch(Exception ex) {
+                return new ProcessLinkResultModel(false, ex.Message);
+            }
+        }
 
         #endregion
 

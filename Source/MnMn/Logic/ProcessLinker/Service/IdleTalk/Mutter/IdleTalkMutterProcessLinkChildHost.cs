@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk.Mutt
 
         #region function
 
-        ProcessLinkResultModel ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
+        Task<ProcessLinkResultModel> ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk.Mutt
 
         #region ProcessLinkChildHostBase
 
-        public override ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter)
+        public override Task<ProcessLinkResultModel> Execute(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             if(parameter.ServiceType != ServiceType.IdleTalkMutter) {
                 throw new ArgumentException(GetExceptionString(parameter));

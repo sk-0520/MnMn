@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
     {
         #region function
 
-        ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter);
+        Task<ProcessLinkResultModel> Execute(IReadOnlyProcessLinkExecuteParameter parameter);
 
         #endregion
     }

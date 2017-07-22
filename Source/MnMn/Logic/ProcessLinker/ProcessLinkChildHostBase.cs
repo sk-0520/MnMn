@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker
 
         #region IProcessLinkChildHost
 
-        public abstract ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter);
+        public abstract Task<ProcessLinkResultModel> Execute(IReadOnlyProcessLinkExecuteParameter parameter);
 
         #endregion
     }

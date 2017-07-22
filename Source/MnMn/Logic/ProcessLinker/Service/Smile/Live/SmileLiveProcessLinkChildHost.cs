@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live
 
         #region function
 
-        ProcessLinkResultModel ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
+        Task<ProcessLinkResultModel> ExecuteCore(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             throw new NotImplementedException();
         }
@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live
 
         #region ProcessLinkChildHostBase
 
-        public override ProcessLinkResultModel Execute(IReadOnlyProcessLinkExecuteParameter parameter)
+        public override Task<ProcessLinkResultModel> Execute(IReadOnlyProcessLinkExecuteParameter parameter)
         {
             if(parameter.ServiceType != ServiceType.SmileLive) {
                 throw new ArgumentException(GetExceptionString(parameter));
