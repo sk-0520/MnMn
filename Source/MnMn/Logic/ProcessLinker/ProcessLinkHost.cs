@@ -13,6 +13,9 @@ using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLinker;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -23,6 +26,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public ProcessLinkHost(Mediation mediation)
         {
             Mediation = mediation;
+
+            Smile = new SmileProcessLinkChildHost(Mediation);
+            IdleTalk = new IdleTalkProcessLinkChildHost(Mediation);
         }
 
         #region property
@@ -32,6 +38,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         ProcessLinkState State { get; set; }
 
         ServiceHost Service { get; set; }
+
+        IProcessLinkChildHost Smile { get; }
+        IProcessLinkChildHost IdleTalk { get; }
 
         #endregion
 
@@ -160,6 +169,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return false;
         }
 
+        ProcessLinkResultModel ExecuteCore(ServiceType serviceType, string key, string value)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region IProcessLink
@@ -178,8 +192,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public ProcessLinkResultModel Execute(ServiceType serviceType, string key, string value)
         {
-            return new ProcessLinkResultModel(true, "e");
+            switch(serviceType) {
+                case ServiceType.Application:
+                    return ExecuteCore(serviceType, key, value);
+
+                case ServiceType.Smile:
+                case ServiceType.SmileLive:
+                case ServiceType.SmileVideo:
+                    return Smile.Execute(serviceType, key, value);
+
+                case ServiceType.IdleTalk:
+                case ServiceType.IdleTalkMutter:
+                    return IdleTalk.Execute(serviceType, key, value);
+
+                default:
+                    throw new ArgumentException($"{nameof(serviceType)}: {serviceType}, {nameof(key)}: {key}, {nameof(value)}: {value}");
+            }
         }
+
 
         #endregion
 

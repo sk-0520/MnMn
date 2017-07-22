@@ -306,6 +306,7 @@
     <Compile Include="IF\IDescription.cs" />
     <Compile Include="IF\IDownloadItem.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
+    <Compile Include="IF\IProcessLinkChildHost.cs" />
     <Compile Include="IF\IReadOnlyCheckResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyAcceptVersion.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyDefinedKeyValuePair.cs" />
@@ -384,8 +385,14 @@
     <Compile Include="Logic\Extensions\RecyclableMemoryStreamManagerExtensions.cs" />
     <Compile Include="Logic\GlobalManager.cs" />
     <Compile Include="Logic\InformationLoader.cs" />
+    <Compile Include="Logic\ProcessLinker\ProcessLinkChildHostBase.cs" />
     <Compile Include="Logic\ProcessLinker\ProcessLinkClient.cs" />
     <Compile Include="Logic\ProcessLinker\ProcessLinkHost.cs" />
+    <Compile Include="Logic\ProcessLinker\Service\IdleTalk\IdleTalkProcessLinkChildHost.cs" />
+    <Compile Include="Logic\ProcessLinker\Service\IdleTalk\Mutter\IdleTalkMutterProcessLinkChildHost.cs" />
+    <Compile Include="Logic\ProcessLinker\Service\Smile\Live\SmileLiveProcessLinkChildHost.cs" />
+    <Compile Include="Logic\ProcessLinker\Service\Smile\SmileProcessLinkChildHost.cs" />
+    <Compile Include="Logic\ProcessLinker\Service\Smile\Video\SmileVideoProcessLinkChildHost.cs" />
     <Compile Include="Logic\Service\IdleTalk\IdleTalkMediation.cs" />
     <Compile Include="Logic\Service\IdleTalk\Mutter\IdleTalkMutterMediation.cs" />
     <Compile Include="Logic\Service\InformationCacherBase.cs" />
