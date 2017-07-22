@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink
 {
     /// <summary>
     /// 接続可・不可状態の設定。
     /// </summary>
-    public class AppProcessLinkStateOrderModel: AppProcessLinkOrderModelBase
+    public class AppProcessLinkStateChangeOrderModel: AppProcessLinkOrderModelBase
     {
-        public AppProcessLinkStateOrderModel(bool canConnect)
+        public AppProcessLinkStateChangeOrderModel(ProcessLinkState state)
         {
-            CanConnect = canConnect;
+            ChangeState = state;
         }
 
         #region property
 
-        public bool CanConnect { get; }
+        public ProcessLinkState ChangeState { get; }
 
         #endregion
     }

@@ -229,6 +229,7 @@
     <Compile Include="Define\PointingGestureChangeKind.cs" />
     <Compile Include="Define\PointingGestureDirection.cs" />
     <Compile Include="Define\PointingGestureState.cs" />
+    <Compile Include="Define\ProcessLinkState.cs" />
     <Compile Include="Define\Service\IdleTalk\IdleTalkMediationKey.cs" />
     <Compile Include="Define\Service\IdleTalk\Mutter\IdleTalkMutterMediationKey.cs" />
     <Compile Include="Define\Service\QuestionnaireKind.cs" />
@@ -455,7 +456,7 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\Order\AppProcessLink\AppProcessLinkOrderModelBase.cs" />
-    <Compile Include="Model\Order\AppProcessLink\AppProcessLinkStateOrderModel.cs" />
+    <Compile Include="Model\Order\AppProcessLink\AppProcessLinkStateChangeOrderModel.cs" />
     <Compile Include="Model\Order\AppSystemBreakOrderModel.cs" />
     <Compile Include="Model\Order\DownloadOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />

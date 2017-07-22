@@ -641,7 +641,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Loaded -= MainWindow_Loaded;
 
             // ホストを有効にする
-            Mediation.Order(new AppProcessLinkStateOrderModel(true));
+            Mediation.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Listening));
 
             // スプラッシュスクリーンさよなら～
             var hSplashWnd = HandleUtility.GetWindowHandle(SplashWindow);
