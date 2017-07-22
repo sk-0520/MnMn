@@ -2270,8 +2270,32 @@
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-              <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
+            <StackPanel x:Name="PosterInfoPanel" Grid.Column="0" Background="Transparent">
+              <Image>
+                <Image.Style>
+                  <Style TargetType="Image" BasedOn="{StaticResource ThumbnailImage}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding IsMouseOver, ElementName=PosterInfoPanel}" Value="True">
+                        <Setter Property="Source" Value="{Binding PosterThumbnailImage}" />
+                        <!--<DataTrigger.EnterActions>
+                          <BeginStoryboard>
+                            <Storyboard>
+                              <DoubleAnimation
+                              Storyboard.TargetProperty="Opacity"
+                              From="0"
+                              To="1"
+                              Duration="00:00:05"
+                            />
+                            </Storyboard>
+                          </BeginStoryboard>
+                        </DataTrigger.EnterActions>-->
+                      </DataTrigger>
+
+                    </Style.Triggers>
+                    <Setter Property="Source" Value="{Binding ThumbnailImage}" />
+                  </Style>
+                </Image.Style>
+              </Image>
 
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
@@ -2301,7 +2325,7 @@
                 </Button>
               </Grid>
 
-              <Image Style="{StaticResource ThumbnailImage}" Source="{Binding PosterThumbnailImage}" />
+              <Image x:Name="PosterThumbnailImage" Style="{StaticResource ThumbnailImage}" Source="{Binding PosterThumbnailImage}" />
 
             </StackPanel>
 
