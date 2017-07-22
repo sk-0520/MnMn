@@ -133,6 +133,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         SmileVideoInformationViewModel _selectedPlayListItem;
 
+        InformationViewModelBase _posterInformation;
+
         #endregion
     }
 }
