@@ -179,6 +179,24 @@
       <KeyBinding x:Key="PrevVideoKey" Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />
       <KeyBinding x:Key="SwitchPlayNextVideo" Key="F9" Command="{Binding SwitchPlayNextVideoCommand}" />
 
+      <Storyboard x:Key="ThumbnailFadeIn">
+        <DoubleAnimation
+          Storyboard.TargetProperty="Opacity"
+          To="1"
+          Duration="00:00:00.50"
+          FillBehavior="HoldEnd"
+        />
+      </Storyboard>
+      <Storyboard x:Key="ThumbnailFadeOut">
+        <DoubleAnimation
+          Storyboard.TargetProperty="Opacity"
+          To="0"
+          Duration="00:00:00.75"
+          FillBehavior="HoldEnd"
+        />
+
+      </Storyboard>
+
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
   <mamc:MetroWindow.InputBindings>
@@ -2271,31 +2289,43 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel x:Name="PosterInfoPanel" Grid.Column="0" Background="Transparent">
-              <Image>
-                <Image.Style>
-                  <Style TargetType="Image" BasedOn="{StaticResource ThumbnailImage}">
-                    <Style.Triggers>
-                      <DataTrigger Binding="{Binding IsMouseOver, ElementName=PosterInfoPanel}" Value="True">
-                        <Setter Property="Source" Value="{Binding PosterThumbnailImage}" />
-                        <!--<DataTrigger.EnterActions>
-                          <BeginStoryboard>
-                            <Storyboard>
-                              <DoubleAnimation
-                              Storyboard.TargetProperty="Opacity"
-                              From="0"
-                              To="1"
-                              Duration="00:00:05"
-                            />
-                            </Storyboard>
-                          </BeginStoryboard>
-                        </DataTrigger.EnterActions>-->
-                      </DataTrigger>
+              <Grid>
+                <Image Source="{Binding ThumbnailImage}">
+                  <Image.Style>
+                    <Style TargetType="Image" BasedOn="{StaticResource ThumbnailImage}">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=PosterInfoPanel}" Value="True">
+                          <DataTrigger.EnterActions>
+                            <BeginStoryboard Storyboard="{StaticResource ThumbnailFadeOut}" />
+                          </DataTrigger.EnterActions>
+                          <DataTrigger.ExitActions>
+                            <BeginStoryboard Storyboard="{StaticResource ThumbnailFadeIn}" />
+                          </DataTrigger.ExitActions>
+                        </DataTrigger>
+                      </Style.Triggers>
+                      <Setter Property="Opacity" Value="1" />
+                    </Style>
+                  </Image.Style>
+                </Image>
+                <Image Source="{Binding PosterThumbnailImage}">
+                  <Image.Style>
+                    <Style TargetType="Image" BasedOn="{StaticResource ThumbnailImage}">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=PosterInfoPanel}" Value="True">
+                          <DataTrigger.EnterActions>
+                            <BeginStoryboard Storyboard="{StaticResource ThumbnailFadeIn}" />
+                          </DataTrigger.EnterActions>
+                          <DataTrigger.ExitActions>
+                            <BeginStoryboard Storyboard="{StaticResource ThumbnailFadeOut}" />
+                          </DataTrigger.ExitActions>
+                        </DataTrigger>
+                      </Style.Triggers>
+                      <Setter Property="Opacity" Value="0" />
+                    </Style>
+                  </Image.Style>
+                </Image>
 
-                    </Style.Triggers>
-                    <Setter Property="Source" Value="{Binding ThumbnailImage}" />
-                  </Style>
-                </Image.Style>
-              </Image>
+              </Grid>
 
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
@@ -2325,7 +2355,6 @@
                 </Button>
               </Grid>
 
-              <Image x:Name="PosterThumbnailImage" Style="{StaticResource ThumbnailImage}" Source="{Binding PosterThumbnailImage}" />
 
             </StackPanel>
 
