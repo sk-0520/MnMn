@@ -288,7 +288,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             }
             // 動画IDの補正処理
             foreach(var item in Setting.CheckItLater) {
-                if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId)) {
+                if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId, Mediation)) {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item.VideoId, Constants.ServiceSmileVideoThumbCacheSpan));
                     try {
                         var info = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);

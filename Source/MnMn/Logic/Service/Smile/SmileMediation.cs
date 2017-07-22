@@ -112,39 +112,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             return new ResponseModel(request, Session);
         }
 
-        bool ConvertValueCore(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            switch(inputKey) {
-                case SmileMediationKey.inputIsScrapingVideoId:
-                    outputValue = SmileIdUtility.IsScrapingVideoId((string)inputValue);
-                    return true;
+        //bool ConvertValueCore(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
+        //{
+        //    switch(inputKey) {
+        //        case SmileMediationKey.inputIsScrapingVideoId:
+        //            outputValue = SmileIdUtility.IsScrapingVideoId((string)inputValue);
+        //            return true;
 
-                case SmileMediationKey.inputGetVideoId: {
-                        var s = SmileIdUtility.GetVideoId(inputValue as string, Mediation);
-                        outputValue = s;
-                        return outputValue != null;
-                    }
+        //        case SmileMediationKey.inputGetVideoId: {
+        //                var s = SmileIdUtility.GetVideoId(inputValue as string, Mediation);
+        //                outputValue = s;
+        //                return outputValue != null;
+        //            }
 
-                case SmileMediationKey.inputGetMyListId: {
-                        var s = SmileIdUtility.GetMyListId(inputValue as string);
-                        outputValue = s;
-                        return outputValue != null;
-                    }
+        //        case SmileMediationKey.inputGetMyListId: {
+        //                var s = SmileIdUtility.GetMyListId(inputValue as string);
+        //                outputValue = s;
+        //                return outputValue != null;
+        //            }
 
-                case SmileMediationKey.inputGetUserId: {
-                        var s = SmileIdUtility.GetUserId(inputValue as string);
-                        outputValue = s;
-                        return outputValue != null;
-                    }
+        //        case SmileMediationKey.inputGetUserId: {
+        //                var s = SmileIdUtility.GetUserId(inputValue as string);
+        //                outputValue = s;
+        //                return outputValue != null;
+        //            }
 
 
 
-                default:
-                    outputValue = null;
-                    return false;
+        //        default:
+        //            outputValue = null;
+        //            return false;
 
-            }
-        }
+        //    }
+        //}
 
         #endregion
 
@@ -446,24 +446,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 default:
                     ThrowNotSupportConvertString(key, uri, text, serviceType);
-                    throw new NotImplementedException();
-            }
-        }
-
-        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            switch(serviceType) {
-                case ServiceType.Smile:
-                    return ConvertValueCore(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
-
-                case ServiceType.SmileVideo:
-                    return VideoMediation.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
-
-                case ServiceType.SmileLive:
-                    return LiveMediation.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
-
-                default:
-                    ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
                     throw new NotImplementedException();
             }
         }

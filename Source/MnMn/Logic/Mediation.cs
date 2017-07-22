@@ -935,24 +935,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            switch(serviceType) {
-                case ServiceType.Smile:
-                case ServiceType.SmileVideo:
-                case ServiceType.SmileLive:
-                    return Smile.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
-
-                case ServiceType.IdleTalk:
-                case ServiceType.IdleTalkMutter:
-                    return IdleTalk.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
-
-                default:
-                    ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
-                    throw new NotImplementedException();
-            }
-        }
-
         #endregion
     }
 }

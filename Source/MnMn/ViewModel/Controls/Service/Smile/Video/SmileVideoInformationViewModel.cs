@@ -684,13 +684,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                object resultIsWeb;
-                if(Mediation.ConvertValue(out resultIsWeb, typeof(bool), SmileMediationKey.inputIsScrapingVideoId, VideoId, typeof(string), ServiceType.Smile)) {
-                    var result = (bool)resultIsWeb;
-                    return result;
-                } else {
-                    throw new NotSupportedException(VideoId);
-                }
+                return SmileIdUtility.IsScrapingVideoId(VideoId, Mediation);
             }
         }
 
@@ -738,12 +732,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 ThrowHasNotGetflv_Issue665NA();
 
                 if(!this._isEconomyMode.HasValue) {
-                    object outIsEconomyMode;
-                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv_Issue665NA.MovieServerUrl, typeof(string), ServiceType.SmileVideo);
-                    if(!converted) {
-                        throw new Exception();
-                    }
-                    this._isEconomyMode = (bool)outIsEconomyMode;
+                    this._isEconomyMode = SmileVideoGetflvUtility.IsEconomyMode(Getflv_Issue665NA.MovieServerUrl, Mediation);
                 }
 
                 return this._isEconomyMode.Value;
@@ -761,13 +750,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 ThrowHasNotWatchData();
 
                 if(!this._isEconomyMode.HasValue) {
-                    object outIsEconomyMode;
-                    //var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv.MovieServerUrl, typeof(string), ServiceType.SmileVideo);
-                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, MovieServerUrl.OriginalString, typeof(string), ServiceType.SmileVideo);
-                    if(!converted) {
-                        throw new Exception();
-                    }
-                    this._isEconomyMode = (bool)outIsEconomyMode;
+                    this._isEconomyMode = SmileVideoGetflvUtility.IsEconomyMode(MovieServerUrl.OriginalString, Mediation);
                 }
 
                 return this._isEconomyMode.Value;

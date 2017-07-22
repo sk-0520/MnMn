@@ -636,7 +636,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 if(feed.Channel.Items.Any()) {
                     foreach(var item in feed.Channel.Items) {
                         var rawVideoId = SmileVideoFeedUtility.GetVideoId(item);
-                        if(SmileIdUtility.NeedCorrectionVideoId(rawVideoId)) {
+                        if(SmileIdUtility.NeedCorrectionVideoId(rawVideoId, Mediation)) {
                             // Taskで無理やり操作性まともにしてる
                             var information = await Task.Run(() => {
                                 var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));

@@ -26,17 +26,19 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Data.Description;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 {
     public class SmileDescription: DescriptionBase
     {
-        protected SmileDescription(IConvertCompatibility convertCompatibility, ServiceType serviceType)
+        protected SmileDescription(IGetExpression convertCompatibility, ServiceType serviceType)
             : base(convertCompatibility, serviceType)
         { }
 
-        public SmileDescription(IConvertCompatibility convertCompatibility)
+        public SmileDescription(IGetExpression convertCompatibility)
             : this(convertCompatibility, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Smile)
         { }
 
@@ -46,9 +48,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
                 var target = m.Groups["TARGET"].Value;
-                object outputValue;
-                if(ConvertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, target, typeof(string), ServiceType)) {
-                    var link = (string)outputValue;
+                var mylistId = SmileIdUtility.GetMyListId(target, ConvertCompatibility);
+                if(!string.IsNullOrWhiteSpace(mylistId)) {
+                    var link = (string)mylistId;
 
                     var menuItems = new DescriptionContextMenuBase[] {
                         new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenMyListId, nameof(ISmileDescription.MenuOpenMyListIdLinkCommand), null),
@@ -69,9 +71,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
                 var target = m.Groups["TARGET"].Value;
-                object outputValue;
-                if(ConvertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetUserId, target, typeof(string), ServiceType)) {
-                    var link = (string)outputValue;
+                var userId = SmileIdUtility.GetUserId(target, ConvertCompatibility);
+                if(!string.IsNullOrWhiteSpace(userId)) {
+                    var link = userId;
                     return MakeLinkCore(link, target, nameof(ISmileDescription.OpenUserIdLinkCommand), Enumerable.Empty<DescriptionContextMenuItem>());
                 } else {
                     return m.Groups[0].Value;
@@ -85,9 +87,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
                 var target = m.Groups["TARGET"].Value;
-                object outputValue;
-                if(ConvertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetVideoId, target, typeof(string), ServiceType)) {
-                    var link = (string)outputValue;
+                var videoId = SmileIdUtility.GetVideoId(target, ConvertCompatibility);
+                if(!string.IsNullOrWhiteSpace(videoId)) {
+                    var link = (string)videoId;
 
                     var menuItems = new DescriptionContextMenuBase[] {
                         new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoId, nameof(ISmileDescription.MenuOpenVideoIdLinkCommand), null, Constants.xamlImage_Navigationbar_Play, Constants.xamlStyle_SmallDefaultIconPath),
