@@ -38,8 +38,8 @@
       <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6379.24569, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.112\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6412.27961, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.113\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
