@@ -7,6 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -94,6 +97,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 
         public override ICommand SwitchWorkingPlayerCommand => CreateCommand(o => { }, o => false);
 
+        public override ImageSource PosterThumbnailImage => new BitmapImage(SharedConstants.GetPackUri("/Resources/MnMn-Header.png"));
+
         protected override void AddHistory(SmileVideoInformationViewModel information)
         {
             IgnoreLaboratory();
@@ -149,6 +154,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             return Task.CompletedTask;
         }
 
+        protected override Task LoadPosterAsync()
+        {
+            CallOnPropertyChange(nameof(PosterThumbnailImage));
+            return Task.CompletedTask;
+        }
 
         public override ICommand OpenUserOrChannelIdCommand
         {

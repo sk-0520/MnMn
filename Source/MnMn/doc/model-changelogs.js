@@ -111,7 +111,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#687: プレイヤーに投稿者のサムネイルも表示する'
 					},
 					{
 						'revision': '',

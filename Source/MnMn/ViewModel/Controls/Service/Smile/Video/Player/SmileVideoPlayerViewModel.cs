@@ -98,6 +98,8 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk.Mutter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -1771,6 +1773,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             MarkCommentCacheTimestampCore(Information.MsgFile);
         }
 
+        protected virtual Task LoadPosterAsync()
+        {
+            CacheSpan dataSpan;
+            CacheSpan imageSpan;
+            if(Information.IsChannelVideo) {
+                var channelId = SmileIdUtility.ConvertChannelId(Information.ChannelId, Mediation);
+                PosterInformation = new SmileChannelInformationViewModel(Mediation, channelId);
+                dataSpan = Constants.ServiceSmileChannelDataCacheSpan;
+                imageSpan = Constants.ServiceSmileChannelImageCacheSpan;
+            } else {
+                PosterInformation = new SmileUserInformationViewModel(Mediation, Information.UserId, false);
+                dataSpan = Constants.ServiceSmileUserDataCacheSpan;
+                imageSpan = Constants.ServiceSmileUserImageCacheSpan;
+            }
+
+            return PosterInformation.LoadInformationDefaultAsync(dataSpan).ContinueWith(_ => {
+                return PosterInformation.LoadThumbnaiImageDefaultAsync(imageSpan);
+            }).Unwrap().ContinueWith(_ => {
+                if(PosterInformation.ThumbnailLoadState == LoadState.Loaded) {
+                    CallOnPropertyChange(nameof(PosterThumbnailImage));
+                }
+            });
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1971,6 +1997,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             LoadRelationVideoAsync();
 
+            LoadPosterAsync();
+
             var propertyNames = new[] {
                 nameof(VideoId),
                 nameof(Title),
@@ -1980,6 +2008,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(ChannelName),
                 nameof(IsChannelVideo),
                 nameof(IsEnabledGlobalCommentFilering),
+                nameof(PosterInformation),
+                nameof(PosterThumbnailImage),
             };
             CallOnPropertyChange(propertyNames);
 
@@ -2014,6 +2044,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentScriptDefault = null;
             MarketLoadState = LoadState.None;
             ForceNavigatorbarOperation = false;
+            PosterInformation = null;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
