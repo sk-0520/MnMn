@@ -443,7 +443,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var rawService = VariableConstants.OptionValueProcessLinkService;
             ServiceType serviceType;
             try {
-                serviceType = EnumUtility.Parse<ServiceType>(rawService);
+                var enumType = typeof(ServiceType);
+                var enumAttr = EnumUtility.GetMembers<ServiceType>()
+                    .Select(m => new { Member = m, Attributes = enumType.GetField(m.ToString()).GetCustomAttributes(false) })
+                    .Select(i => new { Member = i.Member, Attributes = i.Attributes, XmlEnum = i.Attributes.OfType<System.Xml.Serialization.XmlEnumAttribute>().First() })
+                ;
+                var xmlEnumValue = enumAttr.FirstOrDefault(i => string.Equals(i.XmlEnum.Name, rawService, StringComparison.OrdinalIgnoreCase));
+                if(xmlEnumValue != null) {
+                    serviceType = xmlEnumValue.Member;
+                } else {
+                    serviceType = EnumUtility.Parse<ServiceType>(rawService);
+                }
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
                 return;
