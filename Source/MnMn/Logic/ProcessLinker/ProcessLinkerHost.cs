@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
+using System.ServiceModel.Description;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -39,17 +40,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var serviceUri = Constants.AppServiceUri;
             Service = new ServiceHost(this, serviceUri);
 
-            Binding binding;
+
+            Binding mexBinding;
+            Binding processLinkBinding;
             switch(serviceUri.Scheme) {
                 case "net.pipe":
-                    binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport);
+                    mexBinding = MetadataExchangeBindings.CreateMexNamedPipeBinding();
+                    processLinkBinding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None);
                     break;
 
                 default:
                     throw new NotImplementedException();
             }
 
-            Service.AddServiceEndpoint(typeof(IProcessLink), binding, Constants.AppServiceProcessLinkEndpoint);
+            var serviceMetadata = Service.Description.Behaviors.Find<ServiceMetadataBehavior>();
+            if(serviceMetadata == null) {
+                serviceMetadata = new ServiceMetadataBehavior();
+                Service.Description.Behaviors.Add(serviceMetadata);
+            }
+
+            Service.AddServiceEndpoint(ServiceMetadataBehavior.MexContractName, mexBinding, "mex");
+            Service.AddServiceEndpoint(typeof(IProcessLink), processLinkBinding, Constants.AppServiceProcessLinkEndpoint);
             Service.Open();
         }
 
@@ -140,9 +151,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IProcessLink
 
-        public IReadOnlyProcessLinkSession Connect(string clientName)
+        public ProcessLinkSessionModel Connect(string clientName)
         {
-            if(State != ProcessLinkState.Shutdown) {
+            if(State != ProcessLinkState.Listening) {
                 return null;
             }
 

@@ -5,6 +5,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLinker;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.ProcessLink
 {
@@ -20,7 +21,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.ProcessLink
         /// <param name="clientName">クライアント名称</param>
         /// <returns>接続可能な場合セッション情報が返る。接続できない場合は null が返る。</returns>
         [OperationContract]
-        IReadOnlyProcessLinkSession Connect(string clientName);
+        ProcessLinkSessionModel Connect(string clientName);
 
         #endregion
     }
