@@ -222,7 +222,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             try {
                 var task = ExecuteCore(parameter);
                 task.ConfigureAwait(false);
-                task.Wait(TimeSpan.FromSeconds(3));
+                task.Wait(Constants.AppServiceProcessLinkWaitTime);
                 if(task.IsFaulted) {
                     return new ProcessLinkResultModel(false, task.Exception.ToString());
                 }
