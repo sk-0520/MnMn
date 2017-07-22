@@ -1773,7 +1773,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             MarkCommentCacheTimestampCore(Information.MsgFile);
         }
 
-        Task LoadPosterAsync()
+        protected virtual Task LoadPosterAsync()
         {
             CacheSpan dataSpan;
             CacheSpan imageSpan;
