@@ -71,6 +71,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ConstantsTest.cs" />
+    <Compile Include="Logic\Extensions\LinqExtensionsTest.cs" />
     <Compile Include="Logic\PlayListManagerTest.cs" />
     <Compile Include="Logic\DescriptionBaseTest.cs" />
     <Compile Include="Logic\Utility\RawValueUtilityTest.cs" />
