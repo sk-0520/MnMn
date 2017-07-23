@@ -485,8 +485,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <param name="targetPosition">動画再生位置。</param>
         void MoveVideoPosition(float targetPosition)
         {
-            Mediation.Logger.Debug(targetPosition.ToString());
-
             float setPosition = targetPosition;
 
             if(targetPosition <= 0) {
@@ -510,9 +508,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             ClearComment();
 
-            Mediation.Logger.Debug(setPosition.ToString());
+            var prevPosition = Player.Position;
             Player.Position = setPosition;
-            Mediation.Logger.Debug(Player.Position.ToString());
+            Mediation.Logger.Debug($"[{VideoId}]: {prevPosition} -> {setPosition} / {Player.Position}");
             PrevPlayedTime = Player.Time;
         }
 
@@ -1336,7 +1334,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.localFilter.Filtering = LocalCommentFilering;
             }
         }
-        
+
         void SwitchFullScreen()
         {
             SetWindowMode(!IsNormalWindow);
