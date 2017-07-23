@@ -206,7 +206,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 try {
                     Mediation.Logger.Information($"lightweight update check: {Constants.AppUriLightweightUpdate}");
 
-                    var stream = await userAgent.GetStreamAsync(Constants.AppUriLightweightUpdate);
+                    var response = await userAgent.GetAsync(Constants.AppUriLightweightUpdate);
+                    Mediation.Logger.Trace("lightweight update response state: " + response.StatusCode);
+                    if(!response.IsSuccessStatusCode) {
+                        LightweightUpdateCheckState = UpdateCheckState.Error;
+                        return;
+                    }
+
+                    var stream = await response.Content.ReadAsStreamAsync();
                     var model = SerializeUtility.LoadXmlSerializeFromStream<LightweightUpdateModel>(stream);
 
                     var isUpdateVersion = Constants.ApplicationVersionNumber <= new Version(model.Version);
@@ -348,6 +355,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
                     UpdateBrowser.LoadHtml(htmlSource);
                 }));
+            } else {
+                return SetUpdateStateViewAsync();
             }
 
             return Task.CompletedTask;
