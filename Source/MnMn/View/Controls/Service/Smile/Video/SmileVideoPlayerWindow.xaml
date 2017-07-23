@@ -109,11 +109,6 @@
         <Setter Property="Separator.Visibility" Value="Collapsed" />
       </Style>
 
-      <!--<Style x:Key="ButtonImage" TargetType="Image" BasedOn="{StaticResource ThumbnailImage}">
-        <Setter Property="Width" Value="16" />
-        <Setter Property="Height" Value="16" />
-      </Style>-->
-
       <Style x:Key="StateControl" TargetType="app_view_controls:LoadStateNavigator">
         <Setter Property="Width" Value="6" />
         <Setter Property="Height" Value="6" />
@@ -212,8 +207,6 @@
     <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding StopCommand}" />
     <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
 
-    <!--<KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />-->
-    <!--<KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />-->
     <StaticResource ResourceKey="NextVideoKey" />
     <StaticResource ResourceKey="PrevVideoKey" />
     <StaticResource ResourceKey="SwitchPlayNextVideo" />
@@ -308,28 +301,7 @@
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Style.Triggers>
 
-        <!--<DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
-          <Setter Property="Topmost" Value="{Binding Topmost}" />
-        </DataTrigger>-->
-        <!--<MultiDataTrigger>
-          <MultiDataTrigger.Conditions>
-            <Condition Binding="{Binding IsNormalWindow}" Value="True" />
-            <Condition Binding="{Binding TopmostKind}" Value="Playing" />
-            <Condition Binding="{Binding PlayerState}" Value="Playing" />
-          </MultiDataTrigger.Conditions>
-          <Setter Property="Topmost" Value="True" />
-          <Setter Property="Background" Value="Red" />
-        </MultiDataTrigger>
-        <MultiDataTrigger>
-          <MultiDataTrigger.Conditions>
-            <Condition Binding="{Binding IsNormalWindow}" Value="True" />
-            <Condition Binding="{Binding TopmostKind}" Value="Always" />
-          </MultiDataTrigger.Conditions>
-          <Setter Property="Topmost" Value="True" />
-          <Setter Property="Background" Value="Yellow" />
-        </MultiDataTrigger>-->
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
-          <!--<Setter Property="Topmost" Value="True" />-->
           <Setter Property="BorderThickness" Value="0" />
           <Setter Property="ResizeMode" Value="NoResize" />
           <Setter Property="IgnoreTaskbarOnMaximize" Value="True" />
@@ -380,7 +352,6 @@
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
-          <!--<Image Source="/Resources/Common/Action/FolderOpen.png" Style="{StaticResource SmallItemImage}" />-->
           <Viewbox Style="{StaticResource SmallItemBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -472,7 +443,6 @@
 
       <Separator Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" />
       <Button Padding="0" Command="{Binding LoadPrevPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -1005,14 +975,6 @@
                     <Setter Property="Grid.Row" Value="0" />
                     <Setter Property="Opacity" Value="0" />
                   </MultiDataTrigger>
-                  <!--<MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                      <Condition Binding="{Binding IsNormalWindow}" Value="False" />
-                      <Condition Binding="{Binding ShowNavigatorFullScreen}" Value="False" />
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Grid.Row" Value="1" />
-                    <Setter Property="Opacity" Value="1" />
-                  </MultiDataTrigger>-->
                   <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
                       <Condition Binding="{Binding IsNormalWindow}" Value="False" />
@@ -1096,15 +1058,6 @@
               StartSeekChangingCommand="{Binding StartSeekChangingCommand}"
               EndSeekChangeCommand="{Binding EndSeekChangeCommand}"
             >
-              <!--<app_view_controls:Navigationbar.Style>
-                <Style TargetType="app_view_controls:Navigationbar">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
-                      <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </app_view_controls:Navigationbar.Style>-->
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton ToolTip="フルスクリーン" IsChecked="{Binding IsNormalWindow, Converter={StaticResource LogicalNotConverter}, Mode=OneWay}" Command="{Binding SwitchFullScreenCommand}">
@@ -1556,13 +1509,6 @@
                                 <Style.Triggers>
                                   <DataTrigger Binding="{Binding Approval}" Value="False">
                                     <Setter Property="Text" Value="{Binding NoApprovalRemark.Value, StringFormat=&lt;{0}としてマークされました&gt;}" />
-                                    <!--<Setter Property="TextDecorations">
-                                        <Setter.Value>
-                                          <TextDecorationCollection>
-                                            <TextDecoration Location="Strikethrough" />
-                                          </TextDecorationCollection>
-                                        </Setter.Value>
-                                      </Setter>-->
                                   </DataTrigger>
                                 </Style.Triggers>
 
@@ -2418,11 +2364,6 @@
                             <MenuItem Header="大百科を標準ブラウザで開く" Command="{Binding DataContext.OpenPediaInSystemBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                               <MenuItem.Icon>
                                 <Image Style="{StaticResource SmallIconImage}" Source="{Binding Source={x:Static app_logic:WebNavigatorCore.DefaultBrowserIcon}}" />
-                                <!--<Viewbox Style="{StaticResource SmallIconBox}">
-                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                    <Path Data="{StaticResource Image_Book}" Style="{StaticResource SmallDefaultIconPath}" />
-                                  </Canvas>
-                                </Viewbox>-->
                               </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="大百科を内蔵ブラウザで開く" Command="{Binding DataContext.OpenPediaInAppBrowserCommand, Source={x:Reference root}}" CommandParameter="{Binding}">

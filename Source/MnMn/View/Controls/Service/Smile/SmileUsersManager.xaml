@@ -103,11 +103,6 @@
       ItemsSource="{Binding UserItems}"
       Style="{StaticResource FinderTab}"
     >
-      <!--<app_view_controls:FocusedTabControl.ItemContainerStyle>
-        <Style TargetType="TabItem" BasedOn="{StaticResource FindTabItem}">
-          <Setter Property="app_view_attachment:MenuTabItem.Header" Value="{Binding UserName, RelativeSource={RelativeSource AncestorType=TabItem}}" />
-        </Style>
-      </app_view_controls:FocusedTabControl.ItemContainerStyle>-->
       <app_view_controls:FocusedTabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">

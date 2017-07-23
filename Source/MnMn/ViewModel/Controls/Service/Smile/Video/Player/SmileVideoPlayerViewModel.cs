@@ -1336,17 +1336,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.localFilter.Filtering = LocalCommentFilering;
             }
         }
-
-        //void AttachmentNavigationbarBaseEvent(Navigationbar navigationbar)
-        //{
-        //    navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
-        //}
-
-        //void DetachmentNavigationbarBaseEvent(Navigationbar navigationbar)
-        //{
-        //    navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
-        //}
-
+        
         void SwitchFullScreen()
         {
             SetWindowMode(!IsNormalWindow);
@@ -2311,64 +2301,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 ClearResidualComments();
             }
         }
-
-        //private void VideoSilder_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        //{
-        //    if(e.LeftButton != MouseButtonState.Pressed) {
-        //        e.Handled = true;
-        //        return;
-        //    }
-
-        //    if(!CanVideoPlay) {
-        //        return;
-        //    }
-
-        //    ResetFocus();
-
-        //    var seekbar = (Slider)sender;
-        //    seekbar.CaptureMouse();
-
-        //    ChangingVideoPosition = true;
-        //    SeekbarMouseDownPosition = e.GetPosition(seekbar);
-        //    seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
-        //    seekbar.MouseMove += Seekbar_MouseMove;
-
-        //    var tempPosition = SeekbarMouseDownPosition.X / seekbar.ActualWidth;
-        //    seekbar.Value = tempPosition;
-        //}
-
-        //private void Seekbar_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    MovingSeekbarThumb = true;
-
-        //    Debug.Assert(ChangingVideoPosition);
-
-        //    var seekbar = (Slider)sender;
-        //    var movingPosition = e.GetPosition(seekbar);
-
-        //    var tempPosition = movingPosition.X / seekbar.ActualWidth;
-        //    seekbar.Value = tempPosition;
-        //}
-
-        //private void VideoSilder_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        //{
-        //    Debug.Assert(CanVideoPlay);
-
-        //    var seekbar = (Slider)sender;
-
-        //    seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
-        //    seekbar.MouseMove -= Seekbar_MouseMove;
-
-        //    var pos = e.GetPosition(seekbar);
-        //    var nextPosition = (float)(pos.X / seekbar.ActualWidth);
-        //    // TODO: 読み込んでない部分は移動不可にする
-        //    MoveVideoPosition(nextPosition);
-
-        //    ChangingVideoPosition = false;
-        //    MovingSeekbarThumb = false;
-
-        //    seekbar.ReleaseMouseCapture();
-        //}
 
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
         {

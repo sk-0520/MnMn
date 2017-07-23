@@ -109,133 +109,7 @@
             />
           </ItemsPanelTemplate>
         </ComboBox.ItemsPanel>
-        <!--<ComboBox.ItemTemplate>
-          <DataTemplate >
-            <Grid Width="{Binding ElementName=listSearch, Path=ActualWidth}">
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-              </Grid.RowDefinitions>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-              </Grid.ColumnDefinitions>
 
-              <Grid Grid.Row="0" Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Viewbox Grid.Column="0" Style="{StaticResource SmallItemBox}">
-                  <Canvas Style="{StaticResource IconCanvas-24x24}" >
-                    <Path>
-                      <Path.Resources>
-                        <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
-                          <Style.Triggers>
-                            <DataTrigger Binding="{Binding SearchType}" Value="Tag">
-                              <Setter Property="Data" Value="{StaticResource Image_Tag}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
-                              <Setter Property="Data" Value="{StaticResource Image_Keyword}" />
-                            </DataTrigger>
-                          </Style.Triggers>
-                        </Style>
-                      </Path.Resources>
-                    </Path>
-                  </Canvas>
-                </Viewbox>
-
-                <Button Grid.Column="1" Content="{Binding Query, Mode=OneTime}" Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
-                  <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource Hyperlink}">
-                      <Setter Property="HorizontalAlignment" Value="Stretch" />
-                    </Style>
-                  </Button.Style>
-                  <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                      <TextBlock FontWeight="Bold" TextDecorations="Underline" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"/>
-                    </ControlTemplate>
-                  </Button.Template>
-                </Button>
-              </Grid>
-
-              <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-                <StackPanel.Resources>
-                  <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Margin" Value="{StaticResource LeftMargin}" />
-                    <Setter Property="Padding" Value="{StaticResource IndependentMargin}" />
-                    <Setter Property="MinWidth" Value="0" />
-                    <Setter Property="MinHeight" Value="0" />
-                  </Style>
-                </StackPanel.Resources>
-                <Button CommandParameter="{Binding}">
-                  <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
-                          <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                          <Setter Property="Content">
-                            <Setter.Value>
-                              <StackPanel Style="{StaticResource ItemPanel}">
-                                <Viewbox Style="{StaticResource SmallItemBox}">
-                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                    <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
-                                  </Canvas>
-                                </Viewbox>
-                                <TextBlock>タグで再検索</TextBlock>
-                              </StackPanel>
-                            </Setter.Value>
-                          </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding SearchType}" Value="Tag">
-                          <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                          <Setter Property="Content">
-                            <Setter.Value>
-                              <StackPanel Style="{StaticResource ItemPanel}">
-                                <Viewbox Style="{StaticResource SmallItemBox}">
-                                  <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                    <Path Data="{StaticResource Image_Keyword}" Style="{StaticResource SmallDefaultIconPath}" />
-                                  </Canvas>
-                                </Viewbox>
-                                <TextBlock>キーワードで再検索</TextBlock>
-                              </StackPanel>
-                            </Setter.Value>
-                          </Setter>
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </Button.Style>
-                </Button>
-
-                <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
-                  <StackPanel Style="{StaticResource ItemPanel}">
-                    <Viewbox Style="{StaticResource SmallItemBox}">
-                      <Canvas Style="{StaticResource IconCanvas-24x24}">
-                        <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
-                      </Canvas>
-                    </Viewbox>
-                    <TextBlock>削除</TextBlock>
-                  </StackPanel>
-                </Button>
-              </StackPanel>
-
-              <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Right">
-                <StackPanel.Resources>
-                  <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-                    <Setter Property="Margin" Value="{StaticResource IndependentMargin}" />
-                  </Style>
-                </StackPanel.Resources>
-                <TextBlock Text="{Binding LastTimestamp, Mode=OneWay, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                  <TextBlock Text="{Binding Count, StringFormat=回数: {0:N0}}" />
-                  <TextBlock Text="{Binding TotalCount, StringFormat=結果: {0:N0}}" />
-                </StackPanel>
-              </StackPanel>
-
-            </Grid>
-          </DataTemplate>
-        </ComboBox.ItemTemplate>-->
         <ComboBox.ItemTemplateSelector>
           <cttn_sl_view_selector:ComboBoxItemTemplateSelector>
             <cttn_sl_view_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
@@ -584,11 +458,6 @@
               />
               <Button Style="{StaticResource TabReloadButton}" />
 
-              <!--<Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" >
-              <Canvas Style="{StaticResource IconCanvas-24x24}">
-                <Path Data="{StaticResource Image_Pin}" Style="{StaticResource SmallDefaultIconPath}" />
-              </Canvas>
-            </Viewbox>-->
               <Button>
                 <Button.Style>
                   <Style TargetType="Button" BasedOn="{StaticResource TabCloseButton}">
