@@ -11,7 +11,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileVideoSearchBookmarkItemModel: SettingModelBase, IReadOnlySmileVideoSearchBookmarkItem
     {
         #region proeprty

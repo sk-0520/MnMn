@@ -8,7 +8,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Channel
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileChannelSettingModel: SettingModelBase
     {
         #region property

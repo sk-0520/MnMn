@@ -95,7 +95,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         bool ChangeState(ProcessLinkState changeState)
         {
+            Mediation.Logger.Information($"[process-link] current: {State}, change: changeState");
+
             if(State == changeState) {
+                Mediation.Logger.Debug($"[process-link] ignore");
                 return false;
             }
 
@@ -225,11 +228,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 Value = value,
             };
             try {
+                Mediation.Logger.Debug($"[process-link] {nameof(parameter.ServiceType)}: {parameter.ServiceType}, {nameof(parameter.Key)}: {parameter.Key}, {nameof(parameter.Value)}: {parameter.Value}");
+
                 var task = ExecuteCore(parameter);
                 task.ConfigureAwait(false);
                 task.Wait(Constants.AppServiceProcessLinkWaitTime);
                 if(task.IsFaulted) {
-                    return new ProcessLinkResultModel(false, task.Exception.ToString());
+                    return new ProcessLinkResultModel(false, task.Exception.InnerException.ToString());
                 }
                 if(task.IsCompleted) {
                     var result = task.Result;

@@ -103,6 +103,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         AppManagerViewModel AppManager { get; set; }
 
+        bool IsEnabledCommandLine => VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
+
+        bool Catched { get; set; }
+
         #endregion
 
         #region function
@@ -114,6 +118,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <param name="callerUiThread">UI スレッドで発生したか。</param>
         void CatchUnhandleException(Exception exception, bool callerUiThread)
         {
+            AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
+
+            if(Catched) {
+                return;
+            }
+            Catched = true;
+
             Debug.WriteLine($"{nameof(callerUiThread)} = {callerUiThread}");
             if(Mediation != null && Mediation.Logger != null) {
                 Mediation.Logger.Fatal(exception);
@@ -434,8 +445,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void SendProccessLinkIfEnabledCommandLine(bool useWCF)
         {
-            var isEnabledCommandLine = VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
-            if(!isEnabledCommandLine) {
+            if(!IsEnabledCommandLine) {
                 Mediation.Logger.Trace("process link skip");
                 return;
             }
@@ -515,8 +525,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             logger.Information($"mutex check: {Constants.ApplicationUsingName}");
-            if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
-                logger.Warning($"{Constants.ApplicationUsingName} is opened"); ;
+
+            var waitTime = IsEnabledCommandLine
+                ? Constants.MutexProcessLinkWaitTime
+                : Constants.MutexWaitTime
+            ;
+
+            if(!Mutex.WaitOne(waitTime, false)) {
+                logger.Warning($"{Constants.ApplicationUsingName} is opened");
                 Mutex = null;
 
                 SendProccessLinkIfEnabledCommandLine(true);
@@ -633,7 +649,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
             CatchUnhandleException(e.Exception, true);
             if(Constants.AppSendCrashReport) {
                 e.Handled = Constants.AppUnhandledExceptionHandled;

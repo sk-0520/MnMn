@@ -36,13 +36,6 @@
       <Setter Property="IsEnabledGesture" Value="False" />
     </Style>
   </mamc:MetroWindow.Resources>
-  <!--<mamc:MetroWindow.RightWindowCommands>
-    <mamc:WindowCommands>
-      <StackPanel Orientation="Horizontal">
-        <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
-      </StackPanel>
-    </mamc:WindowCommands>
-  </mamc:MetroWindow.RightWindowCommands>-->
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="Application" Title="使用許諾" />
     <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
@@ -152,20 +145,6 @@
     </Grid>
 
     <StatusBar Grid.Row="2">
-      <!--<StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
-        <StatusBarItem.Style>
-          <Style TargetType="StatusBarItem">
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding State}" Value="Maximized">
-                <Setter Property="Visibility" Value="Collapsed" />
-              </DataTrigger>
-            </Style.Triggers>
-            <Setter Property="Visibility" Value="Visible" />
-          </Style>
-        </StatusBarItem.Style>
-        <ResizeGrip />
-      </StatusBarItem>-->
-
       <StatusBarItem DockPanel.Dock="Right" Margin="0,0,20,0" >
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" Margin="{StaticResource HorizonMargin}" />
       </StatusBarItem>

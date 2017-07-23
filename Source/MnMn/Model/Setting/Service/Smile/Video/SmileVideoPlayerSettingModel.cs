@@ -26,7 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileVideoPlayerSettingModel: SettingModelBase
     {
         #region property

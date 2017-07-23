@@ -9,6 +9,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
+    [Serializable, DataContract]
     public class NetworkProxySettingModel : PasswordSettingModel, IReadOnlyNetworkProxy
     {
         #region IReadOnlyNetworkProxy

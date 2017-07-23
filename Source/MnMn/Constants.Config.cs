@@ -136,6 +136,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int GarbageCollectionCallEmptyworkingsetCount => appConfig.Get("garbage-collection-call-emptyworkingset-count", int.Parse);
 
         public static TimeSpan MutexWaitTime => appConfig.Get("mutex-wait-time", TimeSpan.Parse);
+        public static TimeSpan MutexProcessLinkWaitTime => appConfig.Get("mutex-process-link-wait-time", TimeSpan.Parse);
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
         public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
         public static int TextStreamWriteBuffer => appConfig.Get("text-stream-write-buffer", int.Parse);

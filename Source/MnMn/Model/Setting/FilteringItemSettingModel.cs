@@ -25,7 +25,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class FilteringItemSettingModel: SettingModelBase, IReadOnlyFilteringItem
     {
         #region IReadOnlyFilteringItem

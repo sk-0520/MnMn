@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
     /// 動画再生設定。
     /// <para>PlayだとPlayerと被って入力補完だるいのでExecuteにした。</para>
     /// </summary>
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileVideoExecuteSettingModel: SettingModelBase
     {
         #region property
