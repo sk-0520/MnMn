@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     /// <summary>
     /// パスワード設定。
     /// </summary>
-    [DataContract]
+    [Serializable, DataContract]
     public class PasswordSettingModel: SettingModelBase, IReadOnlyPassword
     {
         #region IReadOnlyPassword

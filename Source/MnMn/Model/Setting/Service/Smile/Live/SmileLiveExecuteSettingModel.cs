@@ -24,7 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileLiveExecuteSettingModel: SettingModelBase
     {
         #region property

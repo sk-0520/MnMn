@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
     /// <summary>
     /// Twitter連携。
     /// </summary>
+    [Serializable, DataContract]
     public class SmileIdleTalkMutterSettingModel: SettingModelBase
     {
         #region property

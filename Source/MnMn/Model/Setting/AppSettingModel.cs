@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     /// <para>一ファイルにすべて集約させる。</para>
     /// <para>Peみたいに分割するのもいいけどなんかだるい。</para>
     /// </summary>
-    [DataContract]
+    [Serializable, DataContract]
     public class AppSettingModel: SettingModelBase
     {
         #region property

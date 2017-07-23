@@ -17,22 +17,28 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
+    [Serializable, DataContract]
     public class ThemeSettingModel: SettingModelBase, IReadOnlyThemeSetting
     {
         #region IReadOnlyThemeSetting
 
+        [DataMember]
         public bool IsRandom { get; set; } = Constants.SettingApplicationThemeIsRandom;
 
+        [DataMember]
         public string ApplicationTheme { get; set; } = Constants.SettingApplicationThemeApplicationTheme;
 
+        [DataMember]
         public string BaseTheme { get; set; } = Constants.SettingApplicationThemeBaseTheme;
 
+        [DataMember]
         public string Accent { get; set; } = Constants.SettingApplicationThemeAccent;
 
         #endregion
