@@ -1402,9 +1402,9 @@
                 <Grid Grid.Row="0" >
                   <Grid.Resources>
                     <Style TargetType="Border">
-                      <Setter Property="Background" Value="{DynamicResource GrayBrush3}" />
+                      <Setter Property="Background" Value="{DynamicResource GrayBrush9}" />
                       <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
-                      <Setter Property="TextElement.Foreground" Value="{DynamicResource WhiteBrush}" />
+                      <Setter Property="TextElement.Foreground" Value="{DynamicResource GrayBrush1}" />
                       <Setter Property="BorderThickness" Value="1" />
                       <Setter Property="Padding" Value="1" />
                     </Style>
@@ -1428,8 +1428,8 @@
                         <ColumnDefinition Width="Auto" />
                       </Grid.ColumnDefinitions>
 
-                      <CheckBox Grid.Column="0" Content="コメント自動スクロール" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding IsAutoScroll}" />
-                      <CheckBox Grid.Column="2" Content="投稿時間" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding PlayerShowPostTimestamp}" />
+                      <CheckBox Grid.Column="0" Content="コメント自動スクロール" Foreground="{DynamicResource GrayBrush1}" IsChecked="{Binding IsAutoScroll}" />
+                      <CheckBox Grid.Column="2" Content="投稿時間" Foreground="{DynamicResource GrayBrush1}" IsChecked="{Binding PlayerShowPostTimestamp}" />
                     </Grid>
                   </Border>
                 </Grid>
