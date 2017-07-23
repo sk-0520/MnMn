@@ -8,7 +8,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    [Serializable]
+    [Serializable, DataContract]
     public class NetworkUserAgentSettingModel: IReadOnlyUserAgent
     {
         #region IReadOnlyUserAgent

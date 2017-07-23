@@ -29,6 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -115,13 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         bool IsScrapingPattern(string videoId)
         {
-            object resultIsWeb;
-            if(Mediation.ConvertValue(out resultIsWeb, typeof(bool), SmileMediationKey.inputIsScrapingVideoId, videoId, typeof(string), ServiceType.Smile)) {
-                var result = (bool)resultIsWeb;
-                return result;
-            } else {
-                throw new NotSupportedException(videoId);
-            }
+            return SmileIdUtility.IsScrapingVideoId(videoId, Mediation);
         }
 
         public async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingDmc)

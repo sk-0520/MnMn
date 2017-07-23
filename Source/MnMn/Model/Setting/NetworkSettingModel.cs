@@ -9,7 +9,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    [Serializable]
+    [Serializable, DataContract]
     public class NetworkSettingModel : SettingModelBase, IReadOnlyNetworkSetting
     {
         #region IReadOnlyNetworkSetting

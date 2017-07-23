@@ -98,6 +98,8 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk.Mutter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -483,8 +485,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <param name="targetPosition">動画再生位置。</param>
         void MoveVideoPosition(float targetPosition)
         {
-            Mediation.Logger.Debug(targetPosition.ToString());
-
             float setPosition = targetPosition;
 
             if(targetPosition <= 0) {
@@ -508,9 +508,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             ClearComment();
 
-            Mediation.Logger.Debug(setPosition.ToString());
+            var prevPosition = Player.Position;
             Player.Position = setPosition;
-            Mediation.Logger.Debug(Player.Position.ToString());
+            Mediation.Logger.Debug($"[{VideoId}]: {prevPosition} -> {setPosition} / {Player.Position}");
             PrevPlayedTime = Player.Time;
         }
 
@@ -1335,16 +1335,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        //void AttachmentNavigationbarBaseEvent(Navigationbar navigationbar)
-        //{
-        //    navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
-        //}
-
-        //void DetachmentNavigationbarBaseEvent(Navigationbar navigationbar)
-        //{
-        //    navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
-        //}
-
         void SwitchFullScreen()
         {
             SetWindowMode(!IsNormalWindow);
@@ -1771,6 +1761,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             MarkCommentCacheTimestampCore(Information.MsgFile);
         }
 
+        protected virtual Task LoadPosterAsync()
+        {
+            CacheSpan dataSpan;
+            CacheSpan imageSpan;
+            if(Information.IsChannelVideo) {
+                var channelId = SmileIdUtility.ConvertChannelId(Information.ChannelId, Mediation);
+                PosterInformation = new SmileChannelInformationViewModel(Mediation, channelId);
+                dataSpan = Constants.ServiceSmileChannelDataCacheSpan;
+                imageSpan = Constants.ServiceSmileChannelImageCacheSpan;
+            } else {
+                PosterInformation = new SmileUserInformationViewModel(Mediation, Information.UserId, false);
+                dataSpan = Constants.ServiceSmileUserDataCacheSpan;
+                imageSpan = Constants.ServiceSmileUserImageCacheSpan;
+            }
+
+            return PosterInformation.LoadInformationDefaultAsync(dataSpan).ContinueWith(_ => {
+                return PosterInformation.LoadThumbnaiImageDefaultAsync(imageSpan);
+            }).Unwrap().ContinueWith(_ => {
+                if(PosterInformation.ThumbnailLoadState == LoadState.Loaded) {
+                    CallOnPropertyChange(nameof(PosterThumbnailImage));
+                }
+            });
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1980,6 +1994,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(ChannelName),
                 nameof(IsChannelVideo),
                 nameof(IsEnabledGlobalCommentFilering),
+                nameof(PosterInformation),
+                nameof(PosterThumbnailImage),
             };
             CallOnPropertyChange(propertyNames);
 
@@ -1987,6 +2003,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();
+        }
+
+        protected override void OnLoadDataWithoutSessionEnd()
+        {
+            LoadPosterAsync().ConfigureAwait(false);
         }
 
         protected override void InitializeStatus()
@@ -2014,6 +2035,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentScriptDefault = null;
             MarketLoadState = LoadState.None;
             ForceNavigatorbarOperation = false;
+            PosterInformation = null;
 
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
@@ -2277,64 +2299,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 ClearResidualComments();
             }
         }
-
-        //private void VideoSilder_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        //{
-        //    if(e.LeftButton != MouseButtonState.Pressed) {
-        //        e.Handled = true;
-        //        return;
-        //    }
-
-        //    if(!CanVideoPlay) {
-        //        return;
-        //    }
-
-        //    ResetFocus();
-
-        //    var seekbar = (Slider)sender;
-        //    seekbar.CaptureMouse();
-
-        //    ChangingVideoPosition = true;
-        //    SeekbarMouseDownPosition = e.GetPosition(seekbar);
-        //    seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
-        //    seekbar.MouseMove += Seekbar_MouseMove;
-
-        //    var tempPosition = SeekbarMouseDownPosition.X / seekbar.ActualWidth;
-        //    seekbar.Value = tempPosition;
-        //}
-
-        //private void Seekbar_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    MovingSeekbarThumb = true;
-
-        //    Debug.Assert(ChangingVideoPosition);
-
-        //    var seekbar = (Slider)sender;
-        //    var movingPosition = e.GetPosition(seekbar);
-
-        //    var tempPosition = movingPosition.X / seekbar.ActualWidth;
-        //    seekbar.Value = tempPosition;
-        //}
-
-        //private void VideoSilder_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        //{
-        //    Debug.Assert(CanVideoPlay);
-
-        //    var seekbar = (Slider)sender;
-
-        //    seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
-        //    seekbar.MouseMove -= Seekbar_MouseMove;
-
-        //    var pos = e.GetPosition(seekbar);
-        //    var nextPosition = (float)(pos.X / seekbar.ActualWidth);
-        //    // TODO: 読み込んでない部分は移動不可にする
-        //    MoveVideoPosition(nextPosition);
-
-        //    ChangingVideoPosition = false;
-        //    MovingSeekbarThumb = false;
-
-        //    seekbar.ReleaseMouseCapture();
-        //}
 
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
         {

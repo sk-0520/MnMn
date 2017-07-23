@@ -261,15 +261,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return ConvertStringCore(key, uri, text, serviceType);
         }
 
-        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            if(serviceType != ServiceType.SmileLive) {
-                ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
-            }
-
-            return ValueConvertCore(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
-        }
-
         #endregion
 
         void Player_Closed(object sender, EventArgs e)

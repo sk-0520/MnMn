@@ -106,12 +106,7 @@
               </Grid.ColumnDefinitions>
 
               <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource KeywordTextLabel}" >カスタムコピー書式</Label>
-              <!--
-              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
-              -->
               <app_view_controls:KeywordTextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" KeywordItemsSource="{Binding CommonCustomCopyList}" />
-
-              <!--<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CommonCustomCopyList}" />-->
 
             </Grid>
           </StackPanel>
@@ -142,9 +137,6 @@
 
                 <Label Grid.Row="1" Grid.Column="0" Content="パラメータ" Style="{StaticResource KeywordTextLabel}" />
                 <app_view_controls:KeywordTextBox Grid.Row="1" Grid.Column="1" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" KeywordItemsSource="{Binding LauncherParameterList}" />
-                <!--<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
-
-                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameterList}" />-->
 
                 <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap">
                   <Run>外部プログラムは理屈としてパラメタ―必須のため</Run>

@@ -57,6 +57,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static Uri AppUriGeneralBrowserHome => new Uri(appConfig.Get("app-uri-general-browser"));
         public static Uri AppUriLightweightUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-lightweight-update")));
 
+        public static Uri AppServiceUri => new Uri(ReplaceAppConfig(appConfig.Get("app-service-uri")));
+        public static string AppServiceProcessLinkEndpoint => appConfig.Get("app-service-process-link-endpoint");
+        public static TimeSpan AppServiceProcessLinkWaitTime => appConfig.Get("app-service-process-link-wait-time", TimeSpan.Parse);
+
         public static TimeSpan AppSplashCloseTime => appConfig.Get("app-splash-close-time", TimeSpan.Parse);
         public static bool AppUnhandledExceptionHandled => appConfig.Get("app-un_handled-exception-handled", bool.Parse);
         public static bool AppSendCrashReport => appConfig.Get("app-send-crash-report", bool.Parse);
@@ -132,6 +136,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int GarbageCollectionCallEmptyworkingsetCount => appConfig.Get("garbage-collection-call-emptyworkingset-count", int.Parse);
 
         public static TimeSpan MutexWaitTime => appConfig.Get("mutex-wait-time", TimeSpan.Parse);
+        public static TimeSpan MutexProcessLinkWaitTime => appConfig.Get("mutex-process-link-wait-time", TimeSpan.Parse);
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
         public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
         public static int TextStreamWriteBuffer => appConfig.Get("text-stream-write-buffer", int.Parse);

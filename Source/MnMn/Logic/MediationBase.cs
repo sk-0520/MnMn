@@ -51,8 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         ICommunication,
         IUriCompatibility,
         IRequestCompatibility,
-        IResponseCompatibility,
-        IConvertCompatibility
+        IResponseCompatibility
     {
         public MediationBase()
             : this(null, null, null, null, null, null)
@@ -197,11 +196,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ThrowNotSupportConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
-        }
-
-        protected void ThrowNotSupportValueConvert(string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
-        {
-            throw new NotSupportedException($"{nameof(IConvertCompatibility)} => {nameof(inputKey)}: {inputKey}, {nameof(inputValue)}: {inputValue}, {nameof(inputType)}: {inputType}, {nameof(outputType)}: {outputType}, {nameof(serviceType)}: {serviceType}");
         }
 
         #endregion
@@ -689,22 +683,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return mapping;
         }
 
-        /// <summary>
-        /// 明示的な呼び出しが必要。
-        /// </summary>
-        /// <param name="outputValue"></param>
-        /// <param name="outputType"></param>
-        /// <param name="inputKey"></param>
-        /// <param name="inputValue"></param>
-        /// <param name="inputType"></param>
-        /// <param name="serviceType"></param>
-        /// <returns></returns>
-        protected bool ConvertValueCompatibility(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            outputValue = inputValue;
-            return true;
-        }
-
         #endregion
 
         #region ICommunication
@@ -814,16 +792,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         }
 
         public virtual string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        #endregion
-
-        #region IConvertCompatibility
-
-        public virtual bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

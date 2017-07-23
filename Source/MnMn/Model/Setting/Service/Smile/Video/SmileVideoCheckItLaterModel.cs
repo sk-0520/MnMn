@@ -25,6 +25,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
+    [Serializable, DataContract]
     public class SmileVideoCheckItLaterModel: SmileVideoVideoItemModel, IReadOnlySmileVideoCheckItLaterFrom
     {
         #region property

@@ -24,7 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileVideoSearchHistoryModel: SettingModelBase
     {
         #region property

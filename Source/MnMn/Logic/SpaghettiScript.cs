@@ -56,7 +56,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         };
 
         static readonly string[] defaultAppNameSpace = new[] {
-            typeof(IConvertCompatibility),
             typeof(IRequestCompatibility),
             typeof(IResponseCompatibility),
             typeof(IUriCompatibility),

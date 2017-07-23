@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
@@ -28,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
     {
         #region function
 
-        public static bool IsEconomyMode(string rawUri)
+        public static bool IsEconomyMode(string rawUri, IGetExpression getExpression)
         {
             return rawUri.Trim().EndsWith("low", StringComparison.OrdinalIgnoreCase);
         }

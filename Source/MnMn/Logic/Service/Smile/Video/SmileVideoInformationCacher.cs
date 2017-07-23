@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         string GetSafeVideoId(string videoId)
         {
-            if(SmileIdUtility.NeedCorrectionVideoId(videoId)) {
+            if(SmileIdUtility.NeedCorrectionVideoId(videoId, Mediation)) {
                 return LoadFromVideoIdAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(t => {
                     if(t.IsFaulted) {
                         Mediation.Logger.Error($"number videid: convert error {videoId}");

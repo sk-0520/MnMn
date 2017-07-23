@@ -9,7 +9,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileVideoLaboratorySettingModel: SettingModelBase
     {
         #region property

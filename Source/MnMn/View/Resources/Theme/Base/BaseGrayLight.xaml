@@ -9,7 +9,7 @@
 >
 
   <Color x:Key="BlackColor">#FF121212</Color>
-  <Color x:Key="WhiteColor">#FFafafaf</Color>
+  <Color x:Key="WhiteColor">#FFa0a0a0</Color>
 
   <Color x:Key="Gray1">#FF333333</Color>
   <Color x:Key="Gray2">#FF7F7F7F</Color>

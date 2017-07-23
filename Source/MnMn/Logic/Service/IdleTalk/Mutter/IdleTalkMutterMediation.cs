@@ -164,16 +164,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
             return ConvertStringCore(key, uri, text, serviceType);
         }
 
-        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            if(serviceType != ServiceType.IdleTalkMutter) {
-                ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
-            }
-
-            throw new NotImplementedException();
-        }
-
-
         #endregion
     }
 }

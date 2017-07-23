@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileLiveCategorySettingModel: SettingModelBase
     {
         #region property

@@ -41,6 +41,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public static bool HasOptionExecuteMode => CommandLine.HasValue(optionExecuteMode);
         public static bool IsSafeModeExecute => HasOptionExecuteMode && CommandLine.GetValue(optionExecuteMode) == "safe-mode";
 
+        const string optionProcessLinkService = "ps";
+        public static bool HasOptionProcessLinkService => CommandLine.HasValue(optionProcessLinkService);
+        public static string OptionValueProcessLinkService => CommandLine.GetValue(optionProcessLinkService);
+
+        const string optionProcessLinkKey = "pk";
+        public static bool HasOptionProcessLinkKey => CommandLine.HasValue(optionProcessLinkKey);
+        public static string OptionValueProcessLinkKey => CommandLine.GetValue(optionProcessLinkKey);
+
+        const string optionProcessLinkValue = "pv";
+        public static bool HasOptionProcessLinkValue => CommandLine.HasValue(optionProcessLinkValue);
+        public static string OptionValueProcessLinkValue => CommandLine.GetValue(optionProcessLinkValue);
+
         /// <summary>
         /// 本体設定ファイル名。
         /// <para>通常起動とセーフモード起動でファイル名を切り替える。</para>

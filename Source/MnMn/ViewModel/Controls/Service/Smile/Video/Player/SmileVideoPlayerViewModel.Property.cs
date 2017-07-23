@@ -1228,6 +1228,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._selectedPlayListItem, value); }
         }
 
+        public InformationViewModelBase PosterInformation
+        {
+            get { return this._posterInformation; }
+            set { SetVariableValue(ref this._posterInformation, value); }
+        }
+
+        public virtual ImageSource PosterThumbnailImage => PosterInformation?.ThumbnailImage;
+
         #endregion
     }
 }

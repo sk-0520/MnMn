@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileVideoBookmarkSettingModel: SettingModelBase
     {
         #region property

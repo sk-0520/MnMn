@@ -722,10 +722,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         Task SearchUserMyListAsync(string inputSearchMyList)
         {
-            object outputValue;
-            if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, inputSearchMyList, inputSearchMyList.GetType(), ServiceType.Smile)) {
+            var myListId = SmileIdUtility.GetMyListId(inputSearchMyList, Mediation);
+            //object outputValue;
+            if(!string.IsNullOrWhiteSpace(myListId)) {
                 // 完全一致検索
-                var myListId = (string)outputValue;
                 return SearchUserMyListFromIdAsync(myListId);
             } else {
                 // 何かしら検索
@@ -1002,7 +1002,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             // 動画IDの補正処理
             foreach(var bookmark in BookmarkUserMyListPairs.ModelList) {
                 foreach(var item in bookmark.Videos.Select((v,i) => new { VideoId = v, Index = i})) {
-                    if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId)) {
+                    if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId, Mediation)) {
                         var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item.VideoId, Constants.ServiceSmileVideoThumbCacheSpan));
                         try {
                             var info = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);

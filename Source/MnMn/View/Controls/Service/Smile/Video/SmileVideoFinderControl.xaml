@@ -177,13 +177,6 @@
           </StackPanel>
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>
-      <!--<mamc:SplitButton Grid.Column="1" SelectedItem="{Binding SelectedCheckedProcess}" ItemsSource="{Binding CheckedProcessItems}" Command="{Binding CheckedProcessCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Self}}">
-        <mamc:SplitButton.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-          </DataTemplate>
-        </mamc:SplitButton.ItemTemplate>
-      </mamc:SplitButton>-->
 
       <TextBox Grid.Column="2" mamc:TextBoxHelper.ClearTextButton="True" mamc:TextBoxHelper.Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
 
@@ -191,26 +184,7 @@
 
       <Label Grid.Column="4" >並べ替え</Label>
       <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}" Style="{StaticResource OrderAscendingButton}" />
-      <!--<ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
-        <Viewbox Style="{StaticResource SmallIconBox}">
-          <Canvas Style="{StaticResource IconCanvas-24x24}">
-            <Path>
-              <Path.Resources>
-                <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsAscending}" Value="True">
-                      <Setter Property="Data" Value="{StaticResource Image_OrderAscending}" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding IsAscending}" Value="False">
-                      <Setter Property="Data" Value="{StaticResource Image_OrderDescending}" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </Path.Resources>
-            </Path>
-          </Canvas>
-        </Viewbox>
-      </ToggleButton>-->
+
       <ComboBox Grid.Column="6" MinWidth="100" VerticalContentAlignment="Center" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
         <ComboBox.ItemTemplate>
           <DataTemplate>
@@ -290,14 +264,6 @@
             DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}"
             IsOpen="{Binding IsOpenContextMenu}"
           >
-            <!--
-            IsOpen="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext.IsOpenContextMenu}"
-            -->
-            <!--<ContextMenu.LayoutTransform>-->
-              <!--<ScaleTransform ScaleX="{Binding Value, ElementName=scale}" ScaleY="{Binding Value, ElementName=scale}" />-->
-              <!--<ScaleTransform ScaleX="{Binding Value, ElementName=scale}" />-->
-            <!--</ContextMenu.LayoutTransform>-->
-
             <ContextMenu.Resources>
               <CollectionViewSource x:Key="TagList" Source="{Binding SelectedFinderItem.Information.TagList}" />
             </ContextMenu.Resources>
@@ -498,12 +464,6 @@
                   <MenuItem Header="動画ID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.VideoId}"  Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="タイトル" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.Title}"  Style="{StaticResource {x:Type MenuItem}}"/>
 
-                  <!--
-                  <MenuItem Header="ユーザーID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserId}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="ユーザー名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="チャンネルID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="チャンネル名" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  -->
                   <MenuItem Header="投稿者ID" Command="{Binding CopyInformationPosterTextCommand}" CommandParameter="{StaticResource Type_Boolean-True}" Style="{StaticResource {x:Type MenuItem}}"/>
                   <MenuItem Header="投稿者名" Command="{Binding CopyInformationPosterTextCommand}" CommandParameter="{StaticResource Type_Boolean-False}" Style="{StaticResource {x:Type MenuItem}}"/>
 
@@ -539,13 +499,6 @@
                 <CompositeCollection>
                   <MenuItem Header="投稿者を検索" Command="{Binding ShowPosterCommand}" Style="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.Icon>
-                      <!--
-                      <Viewbox Style="{StaticResource SmallIconBox}">
-                        <Canvas Style="{StaticResource IconCanvas-24x24}">
-                          <Path Data="{StaticResource Image_User}" Style="{StaticResource SmallDefaultIconPath}" />
-                        </Canvas>
-                      </Viewbox>
-                      -->
                       <Canvas Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}">
                         <Viewbox Canvas.Left="0" Canvas.Top="0" Style="{StaticResource MinimumIconBox}">
                           <Canvas Style="{StaticResource IconCanvas-24x24}">

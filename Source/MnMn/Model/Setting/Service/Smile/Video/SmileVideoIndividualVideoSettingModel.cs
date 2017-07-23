@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
     /// <summary>
     /// 動画個別設定。
     /// </summary>
-    [DataContract]
+    [Serializable, DataContract]
     public class SmileVideoIndividualVideoSettingModel: SettingModelBase
     {
         /// <summary>
