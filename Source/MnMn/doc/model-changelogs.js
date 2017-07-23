@@ -156,7 +156,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#690: ソース整理'
 					},
 					{
 						'revision': '',
