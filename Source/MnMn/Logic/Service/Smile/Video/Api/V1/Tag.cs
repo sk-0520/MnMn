@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class Tag: SessionApiBase<SmileSessionViewModel>
     {
-        public Tag(Mediation mediation)
+        public Tag(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void login()
         {
-            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
             var cmd = new CommandLine();
             var account = cmd.GetValue("smile-login-name");
             var password = cmd.GetValue("smile-login-pass");
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void getthumbinfo()
         {
-            var gt = new Getthumbinfo(new Mediation(new Model.Setting.AppSettingModel(), new Logger()));
+            var gt = new Getthumbinfo(new Mediator(new Model.Setting.AppSettingModel(), new Logger()));
             var a = await gt.LoadAsync("sm9");
             var b = await gt.LoadAsync("sm9");
         }
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void mylist()
         {
-            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
             var cmd = new CommandLine();
             var account = cmd.GetValue("smile-login-name");
             var password = cmd.GetValue("smile-login-pass");
@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void market()
         {
-            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
             var market = new Market(mediation);
             //var model = await market.LoadVideoRelationAsync("sm9");
             var model = await market.LoadVideoRelationAsync("sm14027065");
@@ -229,7 +229,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void search()
         {
-            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
             var map = new StringsModel() {
                 ["type"] = "TYPE",
                 ["query"] = "クエリ",
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void tweetPost()
         {
-            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
 
             var sv = ServiceType.IdleTalkMutter;
             var key = "mutter-post-page";
@@ -265,7 +265,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void tagRss()
         {
-            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
             var tag = new Tag(mediation);
             var feed = await tag.LoadTagFeedAsync("TEST", "f", "", 0);
         }

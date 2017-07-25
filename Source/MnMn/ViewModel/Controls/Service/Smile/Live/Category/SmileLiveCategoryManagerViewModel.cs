@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #endregion
 
-        public SmileLiveCategoryManagerViewModel(Mediation mediation)
+        public SmileLiveCategoryManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             CategoryModel = Mediation.GetResultFromRequest<SmileLiveCategoryModel>(new RequestModel(RequestKind.CategoryDefine, ServiceType.SmileLive));

@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        public ManagerViewModelBase(Mediation mediation)
+        public ManagerViewModelBase(Mediator mediation)
         {
             Mediation = mediation;
 
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// 通信役。
         /// </summary>
-        protected Mediation Mediation { get; set; }
+        protected Mediator Mediation { get; set; }
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>

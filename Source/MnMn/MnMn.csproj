@@ -1005,7 +1005,7 @@
     <Compile Include="Logic\Downloader.cs" />
     <Compile Include="Logic\Extensions\ICommunicationExtensions.cs" />
     <Compile Include="Logic\Filtering.cs" />
-    <Compile Include="Logic\MediationCustomBase.cs" />
+    <Compile Include="Logic\MediatorCustomBase.cs" />
     <Compile Include="Logic\MultiStrings.cs" />
     <Compile Include="Logic\PlayListManager.cs" />
     <Compile Include="Logic\Service\SessionApiBase.cs" />
@@ -1502,8 +1502,8 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Getflv_Issue665NA.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Getthumbinfo.cs" />
     <Compile Include="Logic\PageLoader.cs" />
-    <Compile Include="Logic\Mediation.cs" />
-    <Compile Include="Logic\MediationBase.cs" />
+    <Compile Include="Logic\Mediator.cs" />
+    <Compile Include="Logic\MediatorBase.cs" />
     <Compile Include="Logic\Service\Smile\SmileMediation.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoMediation.cs" />
     <Compile Include="Logic\HttpUserAgentHost.cs" />

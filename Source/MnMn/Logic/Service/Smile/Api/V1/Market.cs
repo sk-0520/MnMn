@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 {
     public class Market: ApiBase
     {
-        public Market(Mediation mediation)
+        public Market(Mediator mediation)
             : base(mediation)
         { }
 

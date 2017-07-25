@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 {
     public class MyList: SessionApiBase<SmileSessionViewModel>
     {
-        public MyList(Mediation mediation)
+        public MyList(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

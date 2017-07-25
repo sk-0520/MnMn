@@ -45,9 +45,9 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 {
-    public class SmileMediation: MediationCustomBase
+    public class SmileMediation: MediatorCustomBase
     {
-        public SmileMediation(Mediation mediation, SmileSettingModel setting)
+        public SmileMediation(Mediator mediation, SmileSettingModel setting)
             : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestHeadersListPath, Constants.SmileRequestParametersListPath, Constants.SmileRequestMappingsListPath, Constants.SmileExpressionsPath)
         {
             Setting = setting;

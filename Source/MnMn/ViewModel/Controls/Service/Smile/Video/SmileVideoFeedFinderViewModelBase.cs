@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public abstract class SmileVideoFeedFinderViewModelBase: SmileVideoFinderViewModelBase
     {
-        public SmileVideoFeedFinderViewModelBase(Mediation mediation, int baseNumber)
+        public SmileVideoFeedFinderViewModelBase(Mediator mediation, int baseNumber)
             : base(mediation, baseNumber)
         { }
 

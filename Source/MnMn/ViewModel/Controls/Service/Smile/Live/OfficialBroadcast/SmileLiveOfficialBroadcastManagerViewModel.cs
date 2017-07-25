@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Off
 {
     public class SmileLiveOfficialBroadcastManagerViewModel: SmileLiveCustomManagerViewModelBase
     {
-        public SmileLiveOfficialBroadcastManagerViewModel(Mediation mediation)
+        public SmileLiveOfficialBroadcastManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             OfficialFeedFinder = new SmileLiveOfficialBroadcastFeedFinderViewModel(Mediation);

@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class Search : SessionApiBase<SmileSessionViewModel>
     {
-        public Search(Mediation mediation)
+        public Search(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

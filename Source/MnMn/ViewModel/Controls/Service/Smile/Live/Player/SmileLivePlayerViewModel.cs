@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #endregion
 
-        public SmileLivePlayerViewModel(Mediation mediation)
+        public SmileLivePlayerViewModel(Mediator mediation)
         {
             Mediation = mediation;
 
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #region proeprty
 
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
         IReadOnlyNetworkSetting NetworkSetting { get; }
 
         public SmileSessionViewModel Session { get; }

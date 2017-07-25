@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
 {
     public class HotList: ApiBase, ISmileVideoScrapingPageHtmlToFeedApi
     {
-        public HotList(Mediation mediation)
+        public HotList(Mediator mediation)
             : base(mediation)
         { }
 

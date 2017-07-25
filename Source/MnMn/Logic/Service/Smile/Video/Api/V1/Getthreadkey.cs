@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Getthreadkey: SessionApiBase<SmileSessionViewModel>
     {
-        public Getthreadkey(Mediation mediation)
+        public Getthreadkey(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         {
         }

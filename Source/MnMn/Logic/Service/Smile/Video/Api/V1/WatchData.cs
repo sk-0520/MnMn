@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class WatchData : SessionApiBase<SmileSessionViewModel>
     {
-        public WatchData(Mediation mediation)
+        public WatchData(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 {
     public class SmileVideoNewArrivalsManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
-        public SmileVideoNewArrivalsManagerViewModel(Mediation mediation)
+        public SmileVideoNewArrivalsManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.newarrival);

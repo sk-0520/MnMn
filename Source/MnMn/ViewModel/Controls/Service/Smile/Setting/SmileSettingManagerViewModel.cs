@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #endregion
 
-        public SmileSettingManagerViewModel(Mediation mediation)
+        public SmileSettingManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             Setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));

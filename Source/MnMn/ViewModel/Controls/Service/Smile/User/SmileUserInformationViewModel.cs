@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #endregion
 
-        public SmileUserInformationViewModel(Mediation mediation, string userId, bool isMyAccount)
+        public SmileUserInformationViewModel(Mediator mediation, string userId, bool isMyAccount)
         {
             Mediation = mediation;
             NetworkSetting = Mediation.GetNetworkSetting();
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #region property
 
-        Mediation Mediation { get; set; }
+        Mediator Mediation { get; set; }
         SmileUserInformationModel UserInformation { get; set; }
         public SmileVideoFinderViewModelBase SelectedMyListFinder
         {

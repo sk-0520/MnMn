@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     /// </summary>
     public class SmileVideoDmcLoader: DisposeFinalizeBase
     {
-        public SmileVideoDmcLoader(string videoId, Uri uri, Mediation mediation)
+        public SmileVideoDmcLoader(string videoId, Uri uri, Mediator mediation)
         {
             VideoId = videoId;
             ApiUri = uri;
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         public Uri ApiUri { get; }
 
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
 
         Dmc Dmc { get; }
 

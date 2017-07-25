@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 {
     public class GetPlayerStatus: SessionApiBase<SmileSessionViewModel>
     {
-        public GetPlayerStatus(Mediation mediation)
+        public GetPlayerStatus(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// </summary>
     public class PageLoader: DisposeFinalizeBase, IReadOnlyKey
     {
-        public PageLoader(Mediation mediation, IHttpUserAgentCreator userAgentCreator, string key, ServiceType serviceType)
+        public PageLoader(Mediator mediation, IHttpUserAgentCreator userAgentCreator, string key, ServiceType serviceType)
         {
             Mediation = mediation;
             HttpUserAgent = userAgentCreator.CreateHttpUserAgent();
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         bool OwnershipUA { get; set; }
 
-        Mediation Mediation { get; set; }
+        Mediator Mediation { get; set; }
 
         HttpClient HttpUserAgent { get; set; }
 

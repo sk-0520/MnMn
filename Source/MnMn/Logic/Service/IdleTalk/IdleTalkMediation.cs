@@ -18,9 +18,9 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
 {
-    public class IdleTalkMediation: MediationCustomBase
+    public class IdleTalkMediation: MediatorCustomBase
     {
-        public IdleTalkMediation(Mediation mediation)
+        public IdleTalkMediation(Mediator mediation)
             : base(mediation, Constants.IdleTalkUriListPath, Constants.IdleTalkUriParametersListPath, Constants.IdleTalkRequestHeadersListPath, Constants.IdleTalkRequestParametersListPath, Constants.IdleTalkRequestMappingsListPath, Constants.IdleTalkExpressionsPath)
         {
             MutterMediation = new IdleTalkMutterMediation(Mediation);

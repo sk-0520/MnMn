@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public DownloadItemViewModel(Mediation mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
+        public DownloadItemViewModel(Mediator mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
         {
             Mediation = mediation;
 
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region property
 
-        protected Mediation Mediation { get; }
+        protected Mediator Mediation { get; }
 
         Downloader Downloader { get; }
         Stream WriteStream { get; set; }

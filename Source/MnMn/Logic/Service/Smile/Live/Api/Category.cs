@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 {
     public class Category: ApiBase
     {
-        public Category(Mediation mediation)
+        public Category(Mediator mediation)
             : base(mediation)
         { }
 

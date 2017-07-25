@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppFlashPlayerManagerViewModel: ManagerViewModelBase
     {
-        public AppFlashPlayerManagerViewModel(Mediation mediation) : base(mediation)
+        public AppFlashPlayerManagerViewModel(Mediator mediation) : base(mediation)
         { }
 
         #region property

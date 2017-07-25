@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 {
     public class Broadcast: ApiBase
     {
-        public Broadcast(Mediation mediation)
+        public Broadcast(Mediator mediation)
             : base(mediation)
         { }
 

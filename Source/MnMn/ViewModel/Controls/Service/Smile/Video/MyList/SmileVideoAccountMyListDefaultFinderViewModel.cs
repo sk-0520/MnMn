@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
     /// </summary>
     public class SmileVideoAccountMyListDefaultFinderViewModel: SmileVideoAccountMyListFinderViewModel
     {
-        public SmileVideoAccountMyListDefaultFinderViewModel(Mediation mediation)
+        public SmileVideoAccountMyListDefaultFinderViewModel(Mediator mediation)
             : base(mediation, null)
         { }
 

@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         #endregion
 
-        public SmileVideoCheckItLaterFinderViewModel(Mediation mediation)
+        public SmileVideoCheckItLaterFinderViewModel(Mediator mediation)
             : base(mediation, 0)
         { }
 

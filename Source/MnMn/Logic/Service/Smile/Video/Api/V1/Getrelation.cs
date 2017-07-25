@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class Getrelation: ApiBase
     {
-        public Getrelation(Mediation mediation)
+        public Getrelation(Mediator mediation)
             : base(mediation)
         { }
 

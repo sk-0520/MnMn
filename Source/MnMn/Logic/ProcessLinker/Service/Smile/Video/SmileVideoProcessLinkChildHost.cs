@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Video
 {
     public class SmileVideoProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public SmileVideoProcessLinkChildHost(Mediation mediation)
+        public SmileVideoProcessLinkChildHost(Mediator mediation)
             : base(mediation)
         { }
 

@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        public SessionViewModelBase(Mediation mediation)
+        public SessionViewModelBase(Mediator mediation)
         {
             Mediation = mediation;
             NetworkSetting = Mediation.GetNetworkSetting();
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// 内部連携。
         /// </summary>
-        protected Mediation Mediation { get; private set; }
+        protected Mediator Mediation { get; private set; }
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>

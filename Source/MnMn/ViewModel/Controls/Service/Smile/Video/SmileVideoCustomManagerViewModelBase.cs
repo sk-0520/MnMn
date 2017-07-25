@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoCustomManagerViewModelBase(Mediation mediation)
+        public SmileVideoCustomManagerViewModelBase(Mediator mediation)
             : base(mediation)
         {
             var settingResult = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));

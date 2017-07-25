@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market
 
         #endregion
 
-        public SmileMarketVideoRelationItemViewModel(Mediation mediation, SmileMarketVideoItemModel model)
+        public SmileMarketVideoRelationItemViewModel(Mediator mediation, SmileMarketVideoItemModel model)
             : base(model)
         {
             Mediation = mediation;
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market
 
         #region property
 
-        Mediation Mediation { get; set; }
+        Mediator Mediation { get; set; }
 
         public string Title => Model.Title;
 

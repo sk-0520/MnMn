@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
     /// </summary>
     public class SmileLoginUserInformationViewModel: SmileUserInformationViewModel
     {
-        public SmileLoginUserInformationViewModel(Mediation mediation, string userId)
+        public SmileLoginUserInformationViewModel(Mediator mediation, string userId)
             :base(mediation, userId, true)
         { }
 

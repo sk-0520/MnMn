@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 {
     public class User: SessionApiBase<SmileSessionViewModel>
     {
-        public User(Mediation mediation)
+        public User(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

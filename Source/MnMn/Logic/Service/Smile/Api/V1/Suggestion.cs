@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 {
     public class Suggestion : ApiBase
     {
-        public Suggestion(Mediation mediation)
+        public Suggestion(Mediator mediation)
             : base(mediation)
         { }
 

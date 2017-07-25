@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoTagViewModel(Mediation mediation, RawSmileVideoTagItemModel model)
+        public SmileVideoTagViewModel(Mediator mediation, RawSmileVideoTagItemModel model)
             : base(model)
         {
             Mediation = mediation;
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region property
 
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
 
         public string TagName
         {

@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class Getthumbinfo: ApiBase
     {
-        public Getthumbinfo(Mediation mediation)
+        public Getthumbinfo(Mediator mediation)
             : base(mediation)
         { }
 

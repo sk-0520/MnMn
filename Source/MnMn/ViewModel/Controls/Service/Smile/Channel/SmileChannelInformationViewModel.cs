@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         #endregion
 
-        public SmileChannelInformationViewModel(Mediation mediation, string channelId)
+        public SmileChannelInformationViewModel(Mediator mediation, string channelId)
         {
             Mediation = mediation;
 
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         #region property
 
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
 
         TabControl TabControl { get; set; }
         TabItem ChannelTabItem { get; set; }

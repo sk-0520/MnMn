@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppUpdateManagerViewModel(Mediation mediation)
+        public AppUpdateManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             BackgroundUpdateCheckTimer = new DispatcherTimer() {

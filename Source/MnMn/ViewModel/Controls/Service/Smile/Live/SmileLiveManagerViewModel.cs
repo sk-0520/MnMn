@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
     public class SmileLiveManagerViewModel: ManagerViewModelBase
     {
-        public SmileLiveManagerViewModel(Mediation mediation)
+        public SmileLiveManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));

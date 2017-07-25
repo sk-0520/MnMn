@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        public AppManagerViewModel(Mediation mediation, AppLogger appLogger)
+        public AppManagerViewModel(Mediator mediation, AppLogger appLogger)
             : base(mediation)
         {
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));

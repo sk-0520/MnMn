@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         /// </summary>
         /// <param name="uri"></param>
         /// <param name="userAgentCreator"></param>
-        public WebNavigatorFileDownloadItemViewModel(Mediation mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
+        public WebNavigatorFileDownloadItemViewModel(Mediator mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
             : base(mediation, uri, downloadFile, userAgentCreator)
         { }
     }

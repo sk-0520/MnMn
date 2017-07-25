@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 {
     public class SmileVideoNewArrivalsFinderViewModel: SmileVideoFeedFinderViewModelBase
     {
-        public SmileVideoNewArrivalsFinderViewModel(Mediation mediation, string key)
+        public SmileVideoNewArrivalsFinderViewModel(Mediator mediation, string key)
             : base(mediation, 0)
         {
             Key = key;

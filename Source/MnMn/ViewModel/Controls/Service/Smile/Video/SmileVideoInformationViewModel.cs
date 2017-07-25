@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        protected SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
+        protected SmileVideoInformationViewModel(Mediator mediation, int number, SmileVideoInformationFlags informationFlags)
         {
             Mediation = mediation;
             ThumbnailLoadState = LoadState.None;
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Logger = Mediation.Logger;
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoThumbModel thumb, int number)
+        public SmileVideoInformationViewModel(Mediator mediation, RawSmileVideoThumbModel thumb, int number)
             : this(mediation, number, SmileVideoInformationFlags.All)
         {
             Thumb = thumb;
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, RawSmileContentsSearchItemModel search, int number)
+        public SmileVideoInformationViewModel(Mediator mediation, RawSmileContentsSearchItemModel search, int number)
             : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
         {
             ContentsSearch = search;
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoSearchItemModel search, int number)
+        public SmileVideoInformationViewModel(Mediator mediation, RawSmileVideoSearchItemModel search, int number)
             : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
         {
             OfficialSearch = search;
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoItemModel feed, int number, SmileVideoInformationFlags informationFlags)
+        public SmileVideoInformationViewModel(Mediator mediation, FeedSmileVideoItemModel feed, int number, SmileVideoInformationFlags informationFlags)
             : this(mediation, number, informationFlags)
         {
             Feed = feed;
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 橋渡し。
         /// </summary>
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
         /// <summary>
         /// 動画サービス設定。。
         /// </summary>
@@ -1125,7 +1125,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return PathUtility.CreateFileName(VideoId, extension);
         }
 
-        static DirectoryInfo GetCahceDirectory(Mediation mediation, string videoId)
+        static DirectoryInfo GetCahceDirectory(Mediator mediation, string videoId)
         {
             var parentDir = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var cachedDirPath = Path.Combine(parentDir.FullName, videoId);

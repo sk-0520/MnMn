@@ -12,14 +12,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker
 {
     public abstract class ProcessLinkChildHostBase : IProcessLinkChildHost
     {
-        public ProcessLinkChildHostBase(Mediation mediation)
+        public ProcessLinkChildHostBase(Mediator mediation)
         {
             Mediation = mediation;
         }
 
         #region property
 
-        protected Mediation Mediation { get; }
+        protected Mediator Mediation { get; }
 
         #endregion
 

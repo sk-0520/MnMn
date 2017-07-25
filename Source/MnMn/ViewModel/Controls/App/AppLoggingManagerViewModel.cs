@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppLoggingManagerViewModel(Mediation mediation, AppLogger appLogge)
+        public AppLoggingManagerViewModel(Mediator mediation, AppLogger appLogge)
             : base(mediation)
         {
             LogList = new FixedSizeCollectionModel<LogItemModel>(appLogge.StockItems, Constants.LogViewCount);

@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
     /// </summary>
     public class Channel : SessionApiBase<SmileSessionViewModel>
     {
-        public Channel(Mediation mediation)
+        public Channel(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

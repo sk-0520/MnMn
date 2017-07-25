@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppSettingManagerViewModel: ManagerViewModelBase
     {
-        public AppSettingManagerViewModel(Mediation mediation)
+        public AppSettingManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             AppSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Application));

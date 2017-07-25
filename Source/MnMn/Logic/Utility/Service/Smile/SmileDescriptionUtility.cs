@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             OpenMyListIdCore((string)parameter, communicator);
         }
 
-        static async Task AddMyListBookmarkCoreAsync(string myListId, Mediation mediation)
+        static async Task AddMyListBookmarkCoreAsync(string myListId, Mediator mediation)
         {
             var dirInfo = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheDirectoryName);
@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             }
         }
 
-        public static Task AddMyListBookmarkAsync(object parameter, Mediation mediation)
+        public static Task AddMyListBookmarkAsync(object parameter, Mediator mediation)
         {
             var myListId = (string)parameter;
             return AddMyListBookmarkCoreAsync(myListId, mediation);

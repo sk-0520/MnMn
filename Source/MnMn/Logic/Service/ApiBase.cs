@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 {
     public abstract class ApiBase: DisposeFinalizeBase
     {
-        public ApiBase(Mediation mediation)
+        public ApiBase(Mediator mediation)
         {
             Mediation = mediation;
 
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 
         #region property
 
-        protected Mediation Mediation { get; }
+        protected Mediator Mediation { get; }
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>

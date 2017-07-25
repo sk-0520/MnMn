@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 {
     public class SmileVideoAccountHistoryFinderViewModel: SmileVideoHistoryFinderViewModelBase
     {
-        public SmileVideoAccountHistoryFinderViewModel(Mediation mediation)
+        public SmileVideoAccountHistoryFinderViewModel(Mediator mediation)
             : base(mediation, SmileVideoMediationKey.historyPage)
         {
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));

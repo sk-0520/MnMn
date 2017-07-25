@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
     /// </summary>
     public class SmileMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
-        public SmileMyListFinderViewModel(Mediation mediation, RawSmileUserMyListGroupModel group)
+        public SmileMyListFinderViewModel(Mediator mediation, RawSmileUserMyListGroupModel group)
             : base(mediation, false)
         {
             MyListGroup = group;

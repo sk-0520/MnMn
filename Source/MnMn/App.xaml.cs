@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 橋渡し。
         /// </summary>
-        Mediation Mediation { get; set; }
+        Mediator Mediation { get; set; }
 
         /// <summary>
         /// メインウィンドウ。
@@ -550,7 +550,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var setting = settingResult.Result;
             SetLanguage(setting.CultureName);
 
-            Mediation = new Mediation(setting, logger);
+            Mediation = new Mediator(setting, logger);
 
             AppManager = new AppManagerViewModel(Mediation, logger);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

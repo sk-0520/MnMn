@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
             return result;
         }
 
-        public static DirectoryInfo GetCacheDirectory(Mediation mediation, string videoId)
+        public static DirectoryInfo GetCacheDirectory(Mediator mediation, string videoId)
         {
             var parentDir = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileLive));
             var cachedDirPath = Path.Combine(parentDir.FullName, videoId);
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
         }
 
 
-        public static FileInfo GetGetthumbinfoFile(Mediation mediation, string videoId)
+        public static FileInfo GetGetthumbinfoFile(Mediator mediation, string videoId)
         {
             var cacheDir = GetCacheDirectory(mediation, videoId);
             var fileName = PathUtility.CreateFileName(videoId, "player-status", "xml");
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
         }
 
 
-        public static async Task<RawSmileLiveGetPlayerStatusModel> LoadGetPlayerStatusAsync(Mediation mediation, string liveId, CacheSpan thumbCacheSpan)
+        public static async Task<RawSmileLiveGetPlayerStatusModel> LoadGetPlayerStatusAsync(Mediator mediation, string liveId, CacheSpan thumbCacheSpan)
         {
             RawSmileLiveGetPlayerStatusModel rawGetthumbinfo = null;
             var cachedThumbFile = GetGetthumbinfoFile(mediation, liveId);

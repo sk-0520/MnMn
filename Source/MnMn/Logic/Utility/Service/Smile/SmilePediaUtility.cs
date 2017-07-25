@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
     {
         #region function
 
-        public static Uri GetArticleUriFromWord(Mediation mediation, string word)
+        public static Uri GetArticleUriFromWord(Mediator mediation, string word)
         {
             var serviceType = ServiceType.Smile;
             var key = SmileMediationKey.pediaWordArticle;

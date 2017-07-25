@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         #endregion
 
-        public LightweightUpdateDownloadItemViewModel(Mediation mediation, LightweightUpdateModel model)
+        public LightweightUpdateDownloadItemViewModel(Mediator mediation, LightweightUpdateModel model)
         {
             Mediation = mediation;
             Model = model;
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         #region property
 
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
         LightweightUpdateModel Model { get; }
         IReadOnlyNetworkSetting NetworkSetting { get; }
 

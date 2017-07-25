@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return uri;
         }
 
-        public static Uri GetConvertedUri(MediationBase mediation, string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public static Uri GetConvertedUri(MediatorBase mediation, string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             return GetConvertedUri(mediation, mediation, key, replaceMap, serviceType);
         }

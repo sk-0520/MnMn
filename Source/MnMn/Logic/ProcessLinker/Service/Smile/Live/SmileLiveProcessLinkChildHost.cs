@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live
 {
     public class SmileLiveProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public SmileLiveProcessLinkChildHost(Mediation mediation)
+        public SmileLiveProcessLinkChildHost(Mediator mediation)
             : base(mediation)
         { }
 

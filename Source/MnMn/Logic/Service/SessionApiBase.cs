@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 {
     public abstract class SessionApiBase: ApiBase
     {
-        public SessionApiBase(Mediation mediation, ServiceType sessionServiceType)
+        public SessionApiBase(Mediator mediation, ServiceType sessionServiceType)
             : base(mediation)
         {
             SessionServiceType = sessionServiceType;
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
     public class SessionApiBase<TSessionViewModel>: SessionApiBase
         where TSessionViewModel : SessionViewModelBase
     {
-        public SessionApiBase(Mediation mediation, ServiceType sessionServiceType)
+        public SessionApiBase(Mediator mediation, ServiceType sessionServiceType)
            : base(mediation, sessionServiceType)
         {
             Session = (TSessionViewModel)SessionBase;

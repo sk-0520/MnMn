@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public AcceptViewModel(Mediation mediation, IReadOnlyAcceptVersion acceptVersion)
+        public AcceptViewModel(Mediator mediation, IReadOnlyAcceptVersion acceptVersion)
         {
             Mediation = mediation;
             AcceptVersion = acceptVersion;
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region property
 
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
         IReadOnlyAcceptVersion AcceptVersion { get; }
         AppSettingModel Setting { get; }
 

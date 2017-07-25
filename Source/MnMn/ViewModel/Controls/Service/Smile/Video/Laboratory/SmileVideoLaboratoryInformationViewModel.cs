@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 {
     public class SmileVideoLaboratoryInformationViewModel: SmileVideoInformationViewModel
     {
-        public SmileVideoLaboratoryInformationViewModel(Mediation mediation)
+        public SmileVideoLaboratoryInformationViewModel(Mediator mediation)
             :base(mediation, 0, Define.Service.Smile.Video.SmileVideoInformationFlags.None)
         {
 

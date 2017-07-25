@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
 {
     public class ContentsSearch: ApiBase
     {
-        public ContentsSearch(Mediation mediation)
+        public ContentsSearch(Mediator mediation)
             : base(mediation)
         { }
 

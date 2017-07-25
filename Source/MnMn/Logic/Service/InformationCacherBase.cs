@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 
         #endregion
 
-        public InformationCacherBase(Mediation mediation)
+        public InformationCacherBase(Mediator mediation)
             : base(true)
         {
             Mediation = mediation;
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 
         #region property
 
-        protected Mediation Mediation { get; }
+        protected Mediator Mediation { get; }
 
         #endregion
     }

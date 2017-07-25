@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <param name="mediation"></param>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static DirectoryInfo GetCacheDirectory(Mediation mediation, string videoId)
+        public static DirectoryInfo GetCacheDirectory(Mediator mediation, string videoId)
         {
             var parentDir = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var cachedDirPath = Path.Combine(parentDir.FullName, videoId);
@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return new DirectoryInfo(cachedDirPath);
         }
 
-        public static FileInfo GetGetthumbinfoFile(Mediation mediation, string videoId)
+        public static FileInfo GetGetthumbinfoFile(Mediator mediation, string videoId)
         {
             var cacheDir = GetCacheDirectory(mediation, videoId);
             var fileName = PathUtility.CreateFileName(videoId, "thumb", "xml");
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return null;
         }
 
-        public static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        public static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediator mediation, string videoId, CacheSpan thumbCacheSpan)
         {
             RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
             var cachedThumbFile = GetGetthumbinfoFile(mediation, videoId);

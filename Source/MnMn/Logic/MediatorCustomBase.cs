@@ -30,9 +30,9 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public abstract class MediationCustomBase: MediationBase
+    public abstract class MediatorCustomBase: MediatorBase
     {
-        protected MediationCustomBase(Mediation mediation, string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
+        protected MediatorCustomBase(Mediator mediation, string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
             : base(uriListPath, uriParametersPath, requestHeaderPath, requestParametersPath, requestMappingsPath, expressionsPath)
         {
             Mediation = mediation;
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        protected Mediation Mediation { get; private set; }
+        protected Mediator Mediation { get; private set; }
 
         protected virtual string ScriptDirectoryPath { get; }
 

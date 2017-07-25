@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppBrowserManagerViewModel: ManagerViewModelBase
     {
-        public AppBrowserManagerViewModel(Mediation mediation)
+        public AppBrowserManagerViewModel(Mediator mediation)
             : base(mediation)
         { }
 

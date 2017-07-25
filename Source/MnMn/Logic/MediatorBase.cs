@@ -42,7 +42,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public abstract class MediationBase:
+    public abstract class MediatorBase:
         DisposeFinalizeBase,
         IGetUri,
         IGetRequestHeader,
@@ -53,11 +53,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IRequestCompatibility,
         IResponseCompatibility
     {
-        public MediationBase()
+        public MediatorBase()
             : this(null, null, null, null, null, null)
         { }
 
-        protected MediationBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
+        protected MediatorBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
         {
             UriList = LoadDefineModel<UrisModel>(uriListPath);
             UriParameterList = LoadDefineModel<ParametersModel>(uriParametersPath);

@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// <summary>
     /// データ連携等々の橋渡し。
     /// </summary>
-    public class Mediation : MediationBase
+    public class Mediator : MediatorBase
     {
         #region variable
 
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        public Mediation(AppSettingModel mainSettingModel, ILogger logger)
+        public Mediator(AppSettingModel mainSettingModel, ILogger logger)
         {
             this._logger = logger;
             Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));

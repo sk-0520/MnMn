@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public TFinderViewModelBase(Mediation mediation, int baseNumber)
+        public TFinderViewModelBase(Mediator mediation, int baseNumber)
             :base(mediation, baseNumber)
         {
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);

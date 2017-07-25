@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class ProcessLinkHost : DisposeFinalizeBase, IProcessLink
     {
-        public ProcessLinkHost(Mediation mediation)
+        public ProcessLinkHost(Mediator mediation)
         {
             Mediation = mediation;
 
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
 
         ProcessLinkState State { get; set; }
 

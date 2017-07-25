@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
     /// </summary>
     public class SmileSessionViewModel: SessionViewModelBase
     {
-        public SmileSessionViewModel(Mediation mediation, SmileUserAccountModel userAccountModel)
+        public SmileSessionViewModel(Mediator mediation, SmileUserAccountModel userAccountModel)
             : base(mediation)
         {
             UserAccount = userAccountModel;

@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class ProcessLinkClient : DisposeFinalizeBase
     {
-        public ProcessLinkClient(Mediation mediation)
+        public ProcessLinkClient(Mediator mediation)
         {
             Mediation = mediation;
         }
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region property
 
         Uri ServiceUri => Constants.AppServiceUri;
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
 
         #endregion
 

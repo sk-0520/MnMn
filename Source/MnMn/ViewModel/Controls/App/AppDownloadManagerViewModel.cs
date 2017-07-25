@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppDownloadManagerViewModel(Mediation mediation)
+        public AppDownloadManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             DownloadItemPropertyChangedListener = new PropertyChangedWeakEventListener(DownloadItem_PropertyChanged);

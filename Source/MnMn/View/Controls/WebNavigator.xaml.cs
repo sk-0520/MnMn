@@ -616,7 +616,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         IReadOnlyList<IReadOnlyWebNavigatorGestureElement> GestureDefineElements { get; set; }
         IReadOnlyDictionary<string, ICommand> GestureCommands { get; set; }
 
-        Mediation Mediation
+        Mediator Mediation
         {
             get
             {
@@ -1195,7 +1195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             return false;
         }
 
-        IReadOnlyCheckResult<ICommand> GetGestureCommand(Mediation mediation, IEnumerable<PointingGestureItem> items)
+        IReadOnlyCheckResult<ICommand> GetGestureCommand(Mediator mediation, IEnumerable<PointingGestureItem> items)
         {
             if(GestureDefineElements == null) {
                 var parameter = new WebNavigatorParameterModel(null, EventArgs.Empty, WebNavigatorCore.Engine, WebNavigatorParameterKind.Gesture);

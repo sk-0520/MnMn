@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoDownloadViewModel(Mediation mediation)
+        public SmileVideoDownloadViewModel(Mediator mediation)
         {
             Mediation = mediation;
 
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region property
 
-        protected Mediation Mediation { get; }
+        protected Mediator Mediation { get; }
         public SmileSessionViewModel Session { get; }
 
         protected SmileVideoSettingModel Setting { get; }

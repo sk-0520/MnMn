@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 {
     public sealed class SmileVideoLaboratoryPlayerViewModel : SmileVideoPlayerViewModel
     {
-        public SmileVideoLaboratoryPlayerViewModel(Mediation mediation)
+        public SmileVideoLaboratoryPlayerViewModel(Mediator mediation)
             : base(mediation)
         {
             Information = new SmileVideoLaboratoryInformationViewModel(Mediation);

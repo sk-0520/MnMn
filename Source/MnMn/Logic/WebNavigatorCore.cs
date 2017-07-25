@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        static Mediation Mediation { get; set; }
+        static Mediator Mediation { get; set; }
         static IReadOnlyNetworkSetting NetworkSetting { get; set; }
 
         //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// 初期化。
         /// </summary>
-        public static void Initialize(Mediation mediation)
+        public static void Initialize(Mediator mediation)
         {
             if(IsInitialized) {
                 return;

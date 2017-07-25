@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #endregion
 
-        public SmileVideoAccountMyListFinderViewModel(Mediation mediation, RawSmileAccountMyListGroupItemModel groupModel)
+        public SmileVideoAccountMyListFinderViewModel(Mediator mediation, RawSmileAccountMyListGroupItemModel groupModel)
             : base(mediation, true)
         {
             GroupModel = groupModel;

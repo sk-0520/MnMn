@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public class SmileVideoSearchMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
-        public SmileVideoSearchMyListFinderViewModel(Mediation mediation, string myListId, string myListName, int myListItemCount, string query, int totalItemCount, int pageItemCount)
+        public SmileVideoSearchMyListFinderViewModel(Mediator mediation, string myListId, string myListName, int myListItemCount, string query, int totalItemCount, int pageItemCount)
             : base(mediation, false)
         {
             IgnoreAddHistory = false;

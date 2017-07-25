@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppSituationManagerViewModel : ManagerViewModelBase
     {
-        public AppSituationManagerViewModel(Mediation mediation)
+        public AppSituationManagerViewModel(Mediator mediation)
             : base(mediation)
         { }
 

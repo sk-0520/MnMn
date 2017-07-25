@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppHelpManagerViewModel(Mediation mediation)
+        public AppHelpManagerViewModel(Mediator mediation)
             : base(mediation)
         { }
 

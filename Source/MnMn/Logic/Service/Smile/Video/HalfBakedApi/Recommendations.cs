@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
 
         #endregion
 
-        public Recommendations(Mediation mediation)
+        public Recommendations(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

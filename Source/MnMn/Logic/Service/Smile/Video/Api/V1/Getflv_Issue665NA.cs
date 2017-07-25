@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Getflv_Issue665NA: SessionApiBase<SmileSessionViewModel>
     {
-        public Getflv_Issue665NA(Mediation mediation)
+        public Getflv_Issue665NA(Mediator mediation)
             : base(mediation, ServiceType.Smile)
         { }
 

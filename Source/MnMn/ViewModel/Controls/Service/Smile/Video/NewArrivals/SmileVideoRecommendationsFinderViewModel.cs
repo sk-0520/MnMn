@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
     /// </summary>
     public class SmileVideoRecommendationsFinderViewModel: SmileVideoNewArrivalsFinderViewModel
     {
-        public SmileVideoRecommendationsFinderViewModel(Mediation mediation)
+        public SmileVideoRecommendationsFinderViewModel(Mediator mediation)
             : base(mediation, SmileVideoMediationKey.recommendation)
         { }
 

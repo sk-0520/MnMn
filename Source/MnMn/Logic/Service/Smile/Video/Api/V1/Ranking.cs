@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class Ranking: ApiBase
     {
-        public Ranking(Mediation mediation)
+        public Ranking(Mediator mediation)
             : base(mediation)
         { }
 

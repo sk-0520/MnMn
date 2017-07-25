@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class NewArrivals: ApiBase
     {
-        public NewArrivals(Mediation mediation)
+        public NewArrivals(Mediator mediation)
             : base(mediation)
         { }
 

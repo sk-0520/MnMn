@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #endregion
 
-        public SmileVideoMyListManagerViewModel(Mediation mediation)
+        public SmileVideoMyListManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));

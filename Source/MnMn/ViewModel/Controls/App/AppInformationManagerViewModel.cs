@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppInformationManagerViewModel: ManagerViewModelBase
     {
-        public AppInformationManagerViewModel(Mediation mediation, AppLogger appLogger)
+        public AppInformationManagerViewModel(Mediator mediation, AppLogger appLogger)
             : base(mediation)
         {
             var appLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);

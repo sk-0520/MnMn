@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #endregion
 
-        public SmileUsersManagerViewModel(Mediation mediation)
+        public SmileUsersManagerViewModel(Mediator mediation)
             : base(mediation)
         {
             BindingOperations.EnableCollectionSynchronization(UserItems, new object());

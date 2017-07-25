@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #endregion
 
-        SmileLiveInformationViewModel(Mediation mediation)
+        SmileLiveInformationViewModel(Mediator mediation)
         {
             Mediation = mediation;
 
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             Logger = Mediation.Logger;
         }
 
-        public SmileLiveInformationViewModel(Mediation mediation, FeedSmileLiveItemModel feed)
+        public SmileLiveInformationViewModel(Mediator mediation, FeedSmileLiveItemModel feed)
             : this(mediation)
         {
             Feed = feed;
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #region property
 
-        Mediation Mediation { get; }
+        Mediator Mediation { get; }
         SmileLiveSettingModel Setting { get; }
 
         public SmileLiveInformationSource InformationSource { get; protected set; }
