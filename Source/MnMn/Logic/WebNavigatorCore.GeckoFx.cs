@@ -60,9 +60,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static void InitializeGecko()
         {
-            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+            var setting = Mediator.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
-            var settingDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+            var settingDirectory = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
             var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.WebNavigatorGeckoFxProfileDirectoryName);
             var profileDirectory = Directory.CreateDirectory(profileDirectoryPath);
             profileDirectory.Refresh();
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 try {
                     browser.Dispose();
                 } catch(Exception ex) {
-                    Mediation.Logger.Error(ex);
+                    Mediator.Logger.Error(ex);
                 }
             }
             Xpcom.Shutdown();
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ServiceGeckoWebBrowser browser = null;
 
             Application.Current.Dispatcher.Invoke(() => {
-                browser = new ServiceGeckoWebBrowser(Mediation) {
+                browser = new ServiceGeckoWebBrowser(Mediator) {
                     Dock = System.Windows.Forms.DockStyle.Fill,
                 };
                 browser.Disposed += GeckoBrowser_Disposed;
@@ -246,10 +246,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var downloadFilePath = dialog.FileName;
             var downloadFile = new FileInfo(downloadFilePath);
 
-            var download = new WebNavigatorFileDownloadItemViewModel(Mediation, downloadUri, downloadFile, new HttpUserAgentHost(NetworkSetting, Mediation.Logger));
+            var download = new WebNavigatorFileDownloadItemViewModel(Mediator, downloadUri, downloadFile, new HttpUserAgentHost(NetworkSetting, Mediator.Logger));
             download.LoadImageAsync();
 
-            Mediation.Order(new DownloadOrderModel(download, true, ServiceType.Application));
+            Mediator.Order(new DownloadOrderModel(download, true, ServiceType.Application));
             e.Cancel();
         }
 

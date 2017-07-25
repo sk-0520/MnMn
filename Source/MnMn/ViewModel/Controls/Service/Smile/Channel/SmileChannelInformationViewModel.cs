@@ -36,14 +36,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         public SmileChannelInformationViewModel(Mediator mediator, string channelId)
         {
-            Mediation = mediator;
+            Mediator = mediator;
 
-            NetworkSetting = Mediation.GetNetworkSetting();
-            Logger = Mediation.Logger;
+            NetworkSetting = Mediator.GetNetworkSetting();
+            Logger = Mediator.Logger;
 
             ChannelId = channelId;
 
-            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var dirInfo = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileChannelCacheDirectoryName, ChannelId);
             if(Directory.Exists(cachedDirPath)) {
                 CacheDirectory = new DirectoryInfo(cachedDirPath);
@@ -53,12 +53,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(ChannelId, "png")));
 
-            VideoFinder = new SmileChannelVideoFinderViewModel(Mediation, ChannelId);
+            VideoFinder = new SmileChannelVideoFinderViewModel(Mediator, ChannelId);
         }
 
         #region property
 
-        Mediator Mediation { get; }
+        Mediator Mediator { get; }
 
         TabControl TabControl { get; set; }
         TabItem ChannelTabItem { get; set; }
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 var replaceMap = new StringsModel() {
                     ["channel-id"] = ChannelId,
                 };
-                var uri = UriUtility.GetConvertedUri(Mediation, SmileMediationKey.channelPage, replaceMap, ServiceType.Smile);
+                var uri = UriUtility.GetConvertedUri(Mediator, SmileMediationKey.channelPage, replaceMap, ServiceType.Smile);
                 return uri;
             }
         }
@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
-            var channel = new Logic.Service.Smile.Api.V1.Channel(Mediation);
+            var channel = new Logic.Service.Smile.Api.V1.Channel(Mediator);
             return channel.LoadInformationAsync(ChannelId).ContinueWith(t => {
                 Information = t.Result;
                 return Information != null;
@@ -189,13 +189,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             var replaceMap = new StringsModel() {
                 ["channel-id"] = ChannelId,
             };
-            var uri = UriUtility.GetConvertedUri(Mediation, SmileMediationKey.channelThumbnail, replaceMap, ServiceType.Smile);
+            var uri = UriUtility.GetConvertedUri(Mediator, SmileMediationKey.channelThumbnail, replaceMap, ServiceType.Smile);
 
-            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, uri, Mediation.Logger).ContinueWith(task => {
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, uri, Mediator.Logger).ContinueWith(task => {
                 var image = task.Result;
                 if(image != null) {
                     SetThumbnaiImage(image);
-                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediator.Logger);
                     return true;
                 } else {
                     return false;

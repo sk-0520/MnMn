@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var newArrival = new Logic.Service.Smile.Video.Api.V1.NewArrivals(Mediation);
+            var newArrival = new Logic.Service.Smile.Video.Api.V1.NewArrivals(Mediator);
 
             switch(Key) {
                 case SmileVideoMediationKey.newarrival:

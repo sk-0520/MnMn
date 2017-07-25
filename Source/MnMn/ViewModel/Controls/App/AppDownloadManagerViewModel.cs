@@ -58,19 +58,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             var stockedItem = DownloadStateItems.FirstOrDefault(i => i.Item.DownloadUniqueItem == downloadItem.Item.DownloadUniqueItem);
             if(stockedItem != null) {
-                Mediation.Logger.Warning($"stocked: {downloadItem.Item.DownloadUniqueItem}");
+                Mediator.Logger.Warning($"stocked: {downloadItem.Item.DownloadUniqueItem}");
                 switch(stockedItem.Item.DownloadState) {
                     case DownloadState.None:
                     case DownloadState.Completed:
                     case DownloadState.Failure:
                         DownloadStateItems.Remove(stockedItem);
-                        Mediation.Logger.Information($"reset download item");
+                        Mediator.Logger.Information($"reset download item");
                         break;
 
                     case DownloadState.Waiting:
                     case DownloadState.Preparation:
                     case DownloadState.Downloading:
-                        Mediation.Logger.Trace($"ignore download item");
+                        Mediator.Logger.Trace($"ignore download item");
                         return;
 
                     default:
@@ -102,21 +102,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             foreach(var serviceGroup in serviceGroups) {
                 // 同一サービスでダウンロード中(と準備中)のものがあったら無視
                 if(serviceGroup.Any(i => i.Item.DownloadState == DownloadState.Downloading || i.Item.DownloadState == DownloadState.Preparation)) {
-                    Mediation.Logger.Trace($"downloading: {serviceGroup.Key}");
+                    Mediator.Logger.Trace($"downloading: {serviceGroup.Key}");
                     continue;
                 }
 
                 // 待機中アイテムのダウンロード開始(ダウンローダーに積まれた順序)
                 var waitItem = serviceGroup.LastOrDefault(i => i.Item.DownloadState == DownloadState.Waiting);
                 if(waitItem != null) {
-                    Mediation.Logger.Trace($"download target: {serviceGroup.Key}, {waitItem.Item.DownloadTitle}");
+                    Mediator.Logger.Trace($"download target: {serviceGroup.Key}, {waitItem.Item.DownloadTitle}");
                     nextDownloadItems.Add(waitItem);
                     DownloadItemPropertyChangedListener.Remove(waitItem.Item);
                 }
             }
 
             foreach(var nextDownloadItem in nextDownloadItems) {
-                Mediation.Logger.Trace($"download start: {nextDownloadItem.Item.DownloadTitle}");
+                Mediator.Logger.Trace($"download start: {nextDownloadItem.Item.DownloadTitle}");
                 nextDownloadItem.StartAsync();
             }
             foreach(var nextDownloadItem in nextDownloadItems) {

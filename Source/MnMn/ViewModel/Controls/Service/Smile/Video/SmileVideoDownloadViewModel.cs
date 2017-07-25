@@ -92,19 +92,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public SmileVideoDownloadViewModel(Mediator mediator)
         {
-            Mediation = mediator;
+            Mediator = mediator;
 
-            var response = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
+            var response = Mediator.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)response.Result;
 
-            NetworkSetting = Mediation.GetNetworkSetting();
+            NetworkSetting = Mediator.GetNetworkSetting();
 
-            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
         }
 
         #region property
 
-        protected Mediator Mediation { get; }
+        protected Mediator Mediator { get; }
         public SmileSessionViewModel Session { get; }
 
         protected SmileVideoSettingModel Setting { get; }
@@ -316,7 +316,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
             }) {
-                Mediation.Logger.Information($"{VideoId}: download start: uri: {downloadUri}, head: {headPosition}, size: {VideoTotalSize}");
+                Mediator.Logger.Information($"{VideoId}: download start: uri: {downloadUri}, head: {headPosition}, size: {VideoTotalSize}");
 
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
@@ -342,7 +342,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                     VideoLoadState = LoadState.Loaded;
                                     DownloadState = DownloadState.Completed;
                                 } else {
-                                    Mediation.Logger.Debug($"{VideoId}: LoadState.Failure, {DmcLoader.VideoSource}, {DmcLoader.AudioSource}, {VideoFile.Length == Information.DmcItems[role].Length}, {role}");
+                                    Mediator.Logger.Debug($"{VideoId}: LoadState.Failure, {DmcLoader.VideoSource}, {DmcLoader.AudioSource}, {VideoFile.Length == Information.DmcItems[role].Length}, {role}");
                                     VideoLoadState = LoadState.Failure;
                                     DownloadState = DownloadState.Failure;
                                 }
@@ -359,16 +359,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         } else {
                             DownloadState = DownloadState.Failure;
                             VideoLoadState = LoadState.Failure;
-                            Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
+                            Mediator.Logger.Debug($"{VideoId}: LoadState.Failure");
                         }
                         if(!downloader.Canceled) {
                             OnLoadVideoEnd();
                         }
                     } catch(Exception ex) {
-                        Mediation.Logger.Error(ex);
+                        Mediator.Logger.Error(ex);
                         DownloadState = DownloadState.Failure;
                         VideoLoadState = LoadState.Failure;
-                        Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
+                        Mediator.Logger.Debug($"{VideoId}: LoadState.Failure");
                     } finally {
                         downloader.DownloadStart -= Downloader_DownloadStart;
                         downloader.DownloadingError -= Downloader_DownloadingError;
@@ -376,7 +376,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         downloader.Downloaded -= Downloader_Downloaded;
 
                         stopWatch.Stop();
-                        Mediation.Logger.Information($"{VideoId}: download end: {stopWatch.Elapsed}");
+                        Mediator.Logger.Information($"{VideoId}: download end: {stopWatch.Elapsed}");
                         // 保険
                         if(Information.IsDownloading) {
                             Information.IsDownloading = false;
@@ -493,7 +493,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(dmcInfo2.SessionApi.Audios, Setting.Download.AudioWeight);
             sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
 
-            DmcLoader = new SmileVideoDmcLoader(VideoId, new Uri(tuple.Item1), Mediation);
+            DmcLoader = new SmileVideoDmcLoader(VideoId, new Uri(tuple.Item1), Mediator);
             var downloadUri = await DmcLoader.StartAsync(model, Information.DmcFile);
 
             if(downloadUri == null) {
@@ -539,7 +539,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             await Information.LoadGetthreadkeyAsync();
 
-            var msg = new Msg(Mediation);
+            var msg = new Msg(Mediator);
             return await msg.Load_Issue665NA_Async(
                 Information.MessageServerUrl,
                 Information.ThreadId,
@@ -555,7 +555,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             await Information.LoadGetthreadkeyAsync();
 
-            var msg = new Msg(Mediation);
+            var msg = new Msg(Mediator);
             return await msg.LoadAsync(
                 Information.MessageServerUrl,
                 Information.ThreadId,
@@ -787,7 +787,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadGetthumbinfoStart();
 
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
-            Information = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+            Information = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
 
             OnLoadGetthumbinfoEnd();
 
@@ -825,7 +825,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual Task StopPrevProcessAsync()
         {
             if(DownloadCancel != null) {
-                Mediation.Logger.Trace($"{VideoId}: download cancel!");
+                Mediator.Logger.Trace($"{VideoId}: download cancel!");
                 DownloadCancel.Cancel();
                 DownloadCancel.Dispose();
                 DownloadCancel = null;
@@ -940,7 +940,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => {
                         if(Information.CacheDirectory.Exists) {
-                            ShellUtility.OpenDirectory(Information.CacheDirectory, Mediation.Logger);
+                            ShellUtility.OpenDirectory(Information.CacheDirectory, Mediator.Logger);
                         }
                     },
                     o => Information?.CacheDirectory.Exists ?? false
@@ -957,7 +957,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         var forceEconomy = false;
                         Information.OpenVideoDefaultAsync(forceEconomy);
                     },
-                    o => Information != null && SmileVideoInformationUtility.CheckCanPlay(Information, Mediation.Logger) && DownloadState != DownloadState.Preparation
+                    o => Information != null && SmileVideoInformationUtility.CheckCanPlay(Information, Mediator.Logger) && DownloadState != DownloadState.Preparation
                 );
             }
         }
@@ -972,17 +972,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DownloadState = DownloadState.Failure;
                 throw new InvalidOperationException($"{nameof(Information)} is null");
             }
-            if(!SmileVideoInformationUtility.CheckCanPlay(Information, Mediation.Logger)) {
+            if(!SmileVideoInformationUtility.CheckCanPlay(Information, Mediator.Logger)) {
                 // 別んとこで使われてる
                 DownloadState = DownloadState.Failure;
-                Mediation.Logger.Warning($"{Information.VideoId}: can not download");
+                Mediator.Logger.Warning($"{Information.VideoId}: can not download");
                 return Task.CompletedTask;
             }
 
             var forceEconomy = false;
             return LoadAsync(Information, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(t => {
                 if(t.IsFaulted) {
-                    Mediation.Logger.Warning($"{Information.VideoId}: {t.Exception.Message}", t.Exception);
+                    Mediator.Logger.Warning($"{Information.VideoId}: {t.Exception.Message}", t.Exception);
                     DownloadState = DownloadState.Failure;
                 }
             });
@@ -1017,7 +1017,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                     VideoTotalSize = VideoFile.Length + downloader.ResponseHeaders.ContentLength.Value;
 
-                    Mediation.Logger.Information($"file:{VideoFile.Length}, response:{downloader.ResponseHeaders.ContentLength.Value}, total:{VideoTotalSize}");
+                    Mediator.Logger.Information($"file:{VideoFile.Length}, response:{downloader.ResponseHeaders.ContentLength.Value}, total:{VideoTotalSize}");
 
                     var video = DmcLoader.VideoSource;
                     var audio = DmcLoader.AudioSource;
@@ -1085,14 +1085,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             int retry = Constants.ServiceSmileVideoDownloadingErrorRetryCount;
 
             e.Cancel = retry < e.Counter;
-            Mediation.Logger.Error(e.Exception);
+            Mediator.Logger.Error(e.Exception);
 
             if(e.Cancel) {
                 if(VideoLoadState != LoadState.Loaded) {
                     // スレッド間のあれな動作であれになる抑制
                     DownloadState = DownloadState.Failure;
                     VideoLoadState = LoadState.Failure;
-                    Mediation.Logger.Debug($"{VideoId}: LoadState.Failure");
+                    Mediator.Logger.Debug($"{VideoId}: LoadState.Failure");
                 }
                 if(UsingDmc.Value) {
                     StopDmcDownloadAsync();

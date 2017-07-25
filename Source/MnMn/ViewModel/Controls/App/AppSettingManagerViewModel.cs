@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppSettingManagerViewModel(Mediator mediator)
             : base(mediator)
         {
-            AppSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Application));
+            AppSetting = Mediator.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Application));
             ThemeDefine = SerializeUtility.LoadXmlSerializeFromFile<ThemeDefineModel>(Constants.ApplicationThemeDefinePath);
             SelectedApplicationTheme = AppSetting.Theme.ApplicationTheme;
             SelectedAccent = AppSetting.Theme.Accent;
@@ -230,13 +230,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         async Task<FileInfo> DownloadWebNavigatorGeckoFxPluginAsync()
         {
-            var host = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
+            var host = new HttpUserAgentHost(NetworkSetting, Mediator.Logger);
             var client = host.CreateHttpUserAgent();
 
             var archiveDir = VariableConstants.GetWebNavigatorGeckFxPluginDirectory();
 
             FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveWebNavigatorGeckFxPluginSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupWebNavigatorGeckoFxPluginCount, e => {
-                Mediation.Logger.Warning(e);
+                Mediator.Logger.Warning(e);
                 return true;
             });
 
@@ -270,7 +270,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             RebuildingWebNavigatorGeckoFxPlugin.Value = true;
 
-            Mediation.Order(new AppSaveOrderModel(true));
+            Mediator.Order(new AppSaveOrderModel(true));
 
             WebNavigatorCore.Uninitialize();
 
@@ -279,10 +279,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 var pluginDir = ClearPluginDirectory();
                 ExpandPlugin(archiveFile, pluginDir);
             } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
+                Mediator.Logger.Error(ex);
             }
 
-            Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
+            Mediator.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
 
         #endregion

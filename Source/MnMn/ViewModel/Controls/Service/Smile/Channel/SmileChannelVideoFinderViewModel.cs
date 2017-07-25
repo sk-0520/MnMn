@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            return SmileChannelUtility.LoadAllVideoFeedAsync(Mediation, ChannelId).ContinueWith(t => {
+            return SmileChannelUtility.LoadAllVideoFeedAsync(Mediator, ChannelId).ContinueWith(t => {
                 var channelFeeds = t.Result;
 
                 var videoFeed = new FeedSmileVideoModel();

@@ -58,9 +58,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public ManagerViewModelBase(Mediator mediator)
         {
-            Mediation = mediator;
+            Mediator = mediator;
 
-            NetworkSetting = Mediation.GetNetworkSetting();
+            NetworkSetting = Mediator.GetNetworkSetting();
         }
 
         #region property
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// 通信役。
         /// </summary>
-        protected Mediator Mediation { get; set; }
+        protected Mediator Mediator { get; set; }
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>

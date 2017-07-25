@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
             Category = category;
 
             PagerFinderProvider = new PagerFinderProvider<SmileLiveFinderViewModelBase, SmileLiveCategoryItemFinderViewModel, SmileLiveInformationViewModel, SmileLiveFinderItemViewModel>(
-                Mediation,
+                Mediator,
                 this
             );
             PagerFinderProvider.ChangedSelectedPage += PagerFinderProvider_ChangedSelectedPage;
@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
                 nowOrder = LoadingOrder;
             }
 
-            CurrentFinder = new SmileLiveCategoryItemFinderViewModel(Mediation, CategoryModel, nowSort, nowOrder, Category, 0);
+            CurrentFinder = new SmileLiveCategoryItemFinderViewModel(Mediator, CategoryModel, nowSort, nowOrder, Category, 0);
 
             if(isReload) {
                 PropertyChangedListener.Add(CurrentFinder);
@@ -281,7 +281,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
                     if(TotalCount > CategoryModel.MaxCount) {
                         var pageCount = TotalCount / CategoryModel.MaxCount;
                         var preList = Enumerable.Range(1, pageCount - 1)
-                            .Select((n, i) => new SmileLiveCategoryItemFinderViewModel(Mediation, CategoryModel, searchFinder.Sort, searchFinder.Order, searchFinder.Category, i + 1))
+                            .Select((n, i) => new SmileLiveCategoryItemFinderViewModel(Mediator, CategoryModel, searchFinder.Sort, searchFinder.Order, searchFinder.Category, i + 1))
                             .Select((v, i) => new PageViewModel<SmileLiveCategoryItemFinderViewModel>(v, i + 2))
                             .ToEvaluatedSequence()
                         ;

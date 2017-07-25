@@ -64,17 +64,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public FinderViewModelBase(Mediator mediator, int baseNumber)
         {
-            Mediation = mediator;
+            Mediator = mediator;
             BaseNumber = baseNumber;
 
-            NetworkSetting = Mediation.GetNetworkSetting();
+            NetworkSetting = Mediator.GetNetworkSetting();
         }
 
 
         #region property
 
         protected int BaseNumber { get; }
-        protected Mediator Mediation { get; }
+        protected Mediator Mediator { get; }
 
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
 

@@ -58,17 +58,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SmileManagerViewModel(Mediator mediator)
             : base(mediator)
         {
-            Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Session = Mediator.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            VideoManager = new SmileVideoManagerViewModel(Mediation);
-            LiveManager = new SmileLiveManagerViewModel(Mediation);
-            UsersManager = new SmileUsersManagerViewModel(Mediation);
-            ChannelManager = new SmileChannelManagerViewModel(Mediation);
-            SettingManager = new SmileSettingManagerViewModel(Mediation);
+            VideoManager = new SmileVideoManagerViewModel(Mediator);
+            LiveManager = new SmileLiveManagerViewModel(Mediator);
+            UsersManager = new SmileUsersManagerViewModel(Mediator);
+            ChannelManager = new SmileChannelManagerViewModel(Mediator);
+            SettingManager = new SmileSettingManagerViewModel(Mediator);
 
-            WebSiteManager = new SmileWebSiteManagerViewModel(Mediation);
+            WebSiteManager = new SmileWebSiteManagerViewModel(Mediator);
 
-            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, LiveManager, UsersManager, ChannelManager, WebSiteManager, SettingManager));
+            Mediator.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, LiveManager, UsersManager, ChannelManager, WebSiteManager, SettingManager));
         }
 
         #region property
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                     o => {
                         if(!string.IsNullOrWhiteSpace(InputVideoId)) {
                             var inputValue = InputVideoId.Trim();
-                            var videoId = SmileIdUtility.GetVideoId(inputValue, Mediation);
+                            var videoId = SmileIdUtility.GetVideoId(inputValue, Mediator);
                             if(!string.IsNullOrWhiteSpace(videoId)) {
                                 OpenVideoPlayerAsync(videoId).ConfigureAwait(false);
                                 InputVideoId = string.Empty;
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         {
             //var videoInformation = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, Constants.ServiceSmileVideoThumbCacheSpan);
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
-            var videoInformation = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+            var videoInformation = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
 
             await videoInformation.OpenVideoDefaultAsync(false);
             return true;
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         private Task InitializeMarketAsync()
         {
             // 市場専用のマネージャ系がないのでここでキャッシュ破棄する。
-            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var dirInfo = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMarketCacheDirectoryName);
             var marketDir = Directory.CreateDirectory(cachedDirPath);
 
@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                     try {
                         file.Delete();
                     } catch(Exception ex) {
-                        Mediation.Logger.Warning(ex);
+                        Mediator.Logger.Warning(ex);
                     }
                 }
             });
@@ -181,7 +181,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                 if(NetworkUtility.IsNetworkAvailable) {
                     await Session.LoginAsync();
                 } else {
-                    Mediation.Logger.Information("skip smile login");
+                    Mediator.Logger.Information("skip smile login");
                 }
 
                 // TODO: ログインできない場合は設定画面へ

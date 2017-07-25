@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         Task LoadContentsSearchAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            var search = new ContentsSearch(Mediation);
+            var search = new ContentsSearch(Mediator);
 
             var typeElement = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.GetDefaultSearchTypeDefine().Type, Type);
 
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
                 var list = result.Data.Select(item => {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item));
-                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    return Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 });
                 return list;
             }).ContinueWith(task => {
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         Task LoadOfficialSearchAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            var search = new Logic.Service.Smile.Video.Api.V1.Search(Mediation);
+            var search = new Logic.Service.Smile.Video.Api.V1.Search(Mediator);
 
             var typeElement = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.GetDefaultSearchTypeDefine().Type, Type);
 
@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
                 var list = result.List.Select(item => {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item));
-                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    return Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 });
                 return list;
             }).ContinueWith(task => {

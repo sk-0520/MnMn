@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return channelItems
                 .Select((item, index) => {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, InformationFlags));
-                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    return Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 })
             ;
         }

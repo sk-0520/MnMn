@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
     {
         public SmileVideoMyListFinderPageViewModel(Mediator mediator, int pageNumber, string query)
         {
-            Mediation = mediator;
+            Mediator = mediator;
             PageNumber = pageNumber;
             Query = query;
         }
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region proeprty
 
-        public Mediator Mediation { get; }
+        public Mediator Mediator { get; }
 
         public int PageNumber { get; }
         public string Query { get; }

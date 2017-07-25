@@ -148,7 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             if(CanLoad) {
                 if(NowLoading) {
-                    Mediation.Logger.Trace("CANCEL!");
+                    Mediator.Logger.Trace("CANCEL!");
                     CancelLoading.Cancel(true);
                 }
 

@@ -20,12 +20,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
         public InformationCacherBase(Mediator mediator)
             : base(true)
         {
-            Mediation = mediator;
+            Mediator = mediator;
         }
 
         #region property
 
-        protected Mediator Mediation { get; }
+        protected Mediator Mediator { get; }
 
         #endregion
     }

@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public SmileVideoMyListFinderViewModelBase(Mediator mediator, bool isAccountMyList)
             : base(mediator, 0)
         {
-            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             IsAccountMyList = isAccountMyList;
 
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected void InitializeCacheData()
         {
-            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var dirInfo = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheDirectoryName);
             if(Directory.Exists(cachedDirPath)) {
                 CacheDirectory = new DirectoryInfo(cachedDirPath);
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         protected virtual void AddHistory(SmileMyListItemModel model)
         {
             //SmileMyListHistoryCount
-            var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            var setting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
             var existModel = setting.MyList.History.FirstOrDefault(m => m.MyListId == model.MyListId);
             if(existModel != null) {
                 setting.MyList.History.Remove(existModel);
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected virtual Task<FeedSmileVideoModel> LoadFeedCoreAsync()
         {
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediator);
 
             return mylist.LoadGroupAsync(MyListId);
         }

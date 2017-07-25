@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         var data = (WebNavigatorEventDataBase)o;
-                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                     }
                 );
             }
@@ -112,14 +112,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         Task SubmitCoreAsync()
         {
-            var info = new AppInformationCollection(Mediation);
+            var info = new AppInformationCollection(Mediator);
             var cpu = info.GetCPU();
             var memory = info.GetMemory();
 
             var cpuName = $"{cpu.Items["Name"]}, {cpu.Items["Description"]}";
             var totalMemoryByte = (ulong)memory.Items["TotalVisibleMemorySize"] * 1024;
 
-            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            var setting = Mediator.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
 
             var map = new Dictionary<string, string>() {
                 ["version"] = Constants.ApplicationVersionNumberText,
@@ -142,13 +142,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 .Select(i => i.Key + "=" + i.Value)
             ;
             var content = new StringContent(string.Join("&", parameters), encoding, "application/x-www-form-urlencoded");
-            var host = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
+            var host = new HttpUserAgentHost(NetworkSetting, Mediator.Logger);
             var client = host.CreateHttpUserAgent();
             return client.PostAsync(Constants.AppUriQuestionnaire, content).ContinueWith(t => {
-                Mediation.Logger.Trace(t.Result.StatusCode.ToString(), t.Result.ToString());
+                Mediator.Logger.Trace(t.Result.StatusCode.ToString(), t.Result.ToString());
                 return t.Result.Content.ReadAsStringAsync().Result;
             }).ContinueWith(t => {
-                Mediation.Logger.Trace(t.ToString(), t.Result);
+                Mediator.Logger.Trace(t.ToString(), t.Result);
             });
         }
 

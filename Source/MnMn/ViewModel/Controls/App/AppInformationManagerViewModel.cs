@@ -43,16 +43,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppInformationManagerViewModel(Mediator mediator, AppLogger appLogger)
             : base(mediator)
         {
-            var appLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
-            AppAboutManager = new AppAboutManagerViewModel(Mediation, appLoggingManager);
+            var appLoggingManager = new AppLoggingManagerViewModel(Mediator, appLogger);
+            AppAboutManager = new AppAboutManagerViewModel(Mediator, appLoggingManager);
             AppLoggingManager = appLoggingManager;
-            AppSituationManager = new AppSituationManagerViewModel(Mediation);
-            AppIssueManager = new AppIssueManagerViewModel(Mediation);
-            AppForumManager = new AppForumManagerViewModel(Mediation);
-            AppQuestionnaireManager = new AppQuestionnaireManagerViewModel(Mediation);
-            AppHelpManager = new AppHelpManagerViewModel(Mediation);
-            AppSettingManager = new AppSettingManagerViewModel(Mediation);
-            AppFlashPlayerManager = new AppFlashPlayerManagerViewModel(Mediation);
+            AppSituationManager = new AppSituationManagerViewModel(Mediator);
+            AppIssueManager = new AppIssueManagerViewModel(Mediator);
+            AppForumManager = new AppForumManagerViewModel(Mediator);
+            AppQuestionnaireManager = new AppQuestionnaireManagerViewModel(Mediator);
+            AppHelpManager = new AppHelpManagerViewModel(Mediator);
+            AppSettingManager = new AppSettingManagerViewModel(Mediator);
+            AppFlashPlayerManager = new AppFlashPlayerManagerViewModel(Mediator);
         }
 
         #region property

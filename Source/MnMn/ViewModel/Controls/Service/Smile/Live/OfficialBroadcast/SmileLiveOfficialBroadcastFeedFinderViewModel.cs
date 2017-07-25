@@ -17,9 +17,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Off
 
         protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            var broadcast = new Logic.Service.Smile.Live.Api.Broadcast(Mediation);
+            var broadcast = new Logic.Service.Smile.Live.Api.Broadcast(Mediator);
             return broadcast.LoadAsync().ContinueWith(t => {
-                var list = t.Result.Channel.Items.Select(i => new SmileLiveInformationViewModel(Mediation, i));
+                var list = t.Result.Channel.Items.Select(i => new SmileLiveInformationViewModel(Mediator, i));
                 SetItemsAsync(list, informationCacheSpan);
             });
         }

@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public ServiceGeckoWebBrowser(Mediator mediator)
             : base()
         {
-            Mediation = mediator;
+            Mediator = mediator;
         }
 
         #region property
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// </summary>
         public ServiceType ServiceType { get; private set; }
 
-        public Mediator Mediation { get; private set; }
+        public Mediator Mediator { get; private set; }
 
         WebNavigator WebNavigator { get; set; }
 

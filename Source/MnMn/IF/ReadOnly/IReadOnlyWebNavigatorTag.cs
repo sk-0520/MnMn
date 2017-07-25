@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
         #region property
 
         ServiceType ServiceType { get; }
-        Mediator Mediation { get; }
+        Mediator Mediator { get; }
 
         #endregion
     }

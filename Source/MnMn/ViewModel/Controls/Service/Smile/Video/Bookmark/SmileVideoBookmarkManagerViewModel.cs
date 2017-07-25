@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             {
                 if(SetVariableValue(ref this._selectedBookmarkNode, value)) {
                     if(SelectedBookmarkNode != null) {
-                        var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, SelectedBookmarkNode);
+                        var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediator, SelectedBookmarkNode);
                         SelectedBookmarkNodeFinder = finder;
                     }
                 }
@@ -611,27 +611,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             foreach(var video in node.VideoItems) {
                 var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(video.VideoId, Constants.ServiceSmileVideoThumbCacheSpan));
                 try {
-                    var info = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                    var info = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
                     playList.Add(info);
                 } catch(SmileVideoGetthumbinfoFailureException ex) {
-                    Mediation.Logger.Warning(ex);
+                    Mediator.Logger.Warning(ex);
                 }
             }
 
             if(playList.Any()) {
-                var playerViewModel = new SmileVideoPlayerViewModel(Mediation);
+                var playerViewModel = new SmileVideoPlayerViewModel(Mediator);
                 playerViewModel.IsRandomPlay = isRandom;
                 playerViewModel.SelectedBookmark = node;
 
                 try {
                     var task = playerViewModel.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-                    Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, playerViewModel, ShowViewState.Foreground));
+                    Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, playerViewModel, ShowViewState.Foreground));
                 } catch(SmileVideoCanNotPlayItemInPlayListException ex) {
-                    Mediation.Logger.Warning(ex);
+                    Mediator.Logger.Warning(ex);
                     playerViewModel.Dispose();
                 }
             } else {
-                Mediation.Logger.Warning($"{node.Name}: {nameof(playList)}: empty");
+                Mediator.Logger.Warning($"{node.Name}: {nameof(playList)}: empty");
             }
         }
 

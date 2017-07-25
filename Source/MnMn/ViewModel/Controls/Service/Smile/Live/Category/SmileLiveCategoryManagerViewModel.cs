@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public SmileLiveCategoryManagerViewModel(Mediator mediator)
             : base(mediator)
         {
-            CategoryModel = Mediation.GetResultFromRequest<SmileLiveCategoryModel>(new RequestModel(RequestKind.CategoryDefine, ServiceType.SmileLive));
+            CategoryModel = Mediator.GetResultFromRequest<SmileLiveCategoryModel>(new RequestModel(RequestKind.CategoryDefine, ServiceType.SmileLive));
             SelectedSort = SortItems.First();
             SelectedOrder = OrderItems.First();
             var selectedCategory = CategoryModel.CategoryItems.First();
@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                     return viewModel;
                 },
                 () => {
-                    var finder = new SmileLiveCategoryGroupFinderViewModel(Mediation, CategoryModel, sort, order, category);
+                    var finder = new SmileLiveCategoryGroupFinderViewModel(Mediator, CategoryModel, sort, order, category);
                     CategoryGroups.Add(finder);
                     return finder;
                 }

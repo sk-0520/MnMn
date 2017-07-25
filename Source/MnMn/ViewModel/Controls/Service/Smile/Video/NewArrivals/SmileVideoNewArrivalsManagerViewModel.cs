@@ -34,10 +34,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
         public SmileVideoNewArrivalsManagerViewModel(Mediator mediator)
             : base(mediator)
         {
-            NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.newarrival);
-            Recent = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.recent);
-            Hotlist = new SmileVideoHotlistFinderViewModel(Mediation);
-            Recommendations = new SmileVideoRecommendationsFinderViewModel(Mediation);
+            NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediator, SmileVideoMediationKey.newarrival);
+            Recent = new SmileVideoNewArrivalsFinderViewModel(Mediator, SmileVideoMediationKey.recent);
+            Hotlist = new SmileVideoHotlistFinderViewModel(Mediator);
+            Recommendations = new SmileVideoRecommendationsFinderViewModel(Mediator);
 
             ItemsList = new CollectionModel<SmileVideoNewArrivalsFinderViewModel>(new[] {
                 Hotlist,

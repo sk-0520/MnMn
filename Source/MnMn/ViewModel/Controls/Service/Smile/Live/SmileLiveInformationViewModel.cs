@@ -52,12 +52,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         SmileLiveInformationViewModel(Mediator mediator)
         {
-            Mediation = mediator;
+            Mediator = mediator;
 
-            Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
+            Setting = Mediator.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
 
-            NetworkSetting = Mediation.GetNetworkSetting();
-            Logger = Mediation.Logger;
+            NetworkSetting = Mediator.GetNetworkSetting();
+            Logger = Mediator.Logger;
         }
 
         public SmileLiveInformationViewModel(Mediator mediator, FeedSmileLiveItemModel feed)
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #region property
 
-        Mediator Mediation { get; }
+        Mediator Mediator { get; }
         SmileLiveSettingModel Setting { get; }
 
         public SmileLiveInformationSource InformationSource { get; protected set; }
@@ -307,7 +307,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         void Initialize()
         {
-            var cacheBaseDir = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileLive));
+            var cacheBaseDir = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileLive));
             CacheDirectory = Directory.CreateDirectory(Path.Combine(cacheBaseDir.FullName, Id));
 
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(Id, "png")));
@@ -339,13 +339,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public Task OpenVideoPlayerAsync(bool forceEconomy, bool openPlayerInNewWindow)
         {
             if(IsPlaying) {
-                Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, this, ShowViewState.Foreground));
+                Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, this, ShowViewState.Foreground));
                 return Task.CompletedTask;
             } else {
                 IsPlaying = true;
 
-                var vm = new SmileLivePlayerViewModel(Mediation);
-                Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, vm, ShowViewState.Foreground));
+                var vm = new SmileLivePlayerViewModel(Mediator);
+                Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, vm, ShowViewState.Foreground));
 
                 var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
                 return task;
@@ -354,7 +354,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         public Task OpenVideoBrowserAsync(bool forceEconomy)
         {
-            ShellUtility.OpenUriInDefaultBrowser(WatchUrl, Mediation.Logger);
+            ShellUtility.OpenUriInDefaultBrowser(WatchUrl, Mediator.Logger);
 
             return Task.CompletedTask;
         }
@@ -362,7 +362,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public Task OpenVideoLauncherAsync(bool forceEconomy)
         {
             var args = SmileLiveInformationUtility.MakeLauncherParameter(this, Setting.Execute.LauncherParameter);
-            ShellUtility.ExecuteCommand(Setting.Execute.LauncherPath, args, Mediation.Logger);
+            ShellUtility.ExecuteCommand(Setting.Execute.LauncherPath, args, Mediator.Logger);
 
             return Task.CompletedTask;
         }
@@ -401,11 +401,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             }
 
             ThumbnailLoadState = LoadState.Loading;
-            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediator.Logger).ContinueWith(task => {
                 var image = task.Result;
                 if(image != null) {
                     SetThumbnaiImage(image);
-                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediator.Logger);
                     return true;
                 } else {
                     return false;

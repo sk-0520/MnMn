@@ -44,12 +44,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoTagViewModel(Mediator mediator, RawSmileVideoTagItemModel model)
             : base(model)
         {
-            Mediation = mediator;
+            Mediator = mediator;
         }
 
         #region property
 
-        Mediator Mediation { get; }
+        Mediator Mediator { get; }
 
         public string TagName
         {
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                var rankingDefine = Mediation.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+                var rankingDefine = Mediator.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
                 return rankingDefine.Items.Any(i => i.Categories.Any(c => c.Words.Values.Any(s => string.Equals(s, TagName, StringComparison.InvariantCultureIgnoreCase))));
             }
         }
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(!string.IsNullOrWhiteSpace(TagName)) {
                 var inputValue = TagName.Trim();
-                var videoId = SmileIdUtility.GetVideoId(inputValue, Mediation);
+                var videoId = SmileIdUtility.GetVideoId(inputValue, Mediator);
                 if(!string.IsNullOrWhiteSpace(videoId)) {
                     return videoId;
                 }

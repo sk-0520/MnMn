@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
         public SmileChannelManagerViewModel(Mediator mediator)
             : base(mediator)
         {
-            Setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            Setting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
 
             ChannelBookmarkCollection = new MVMPairCreateDelegationCollection<SmileChannelBookmarkItemModel, SmileChannelBookmarkItemViewModel>(Setting.Channel.Bookmark, default(object), CreateBookmarkItem);
             ChannelBookmarkItems = CollectionViewSource.GetDefaultView(ChannelBookmarkCollection.ViewModelList);
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             {
                 return CreateCommand(o => {
                     var data = (WebNavigatorEventDataBase)o;
-                    WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                    WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                 });
             }
         }
@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 SelectedChannel = existChannel;
                 return Task.CompletedTask;
             } else {
-                var channel = new SmileChannelInformationViewModel(Mediation, channelId);
+                var channel = new SmileChannelInformationViewModel(Mediator, channelId);
                 ChannelItems.Add(channel);
                 SelectedChannel = channel;
                 channel.SetView(ChannelTab);
@@ -323,13 +323,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 return Enumerable.Empty<SmileVideoVideoItemModel>();
             }
 
-            var channel = new Logic.Service.Smile.Api.V1.Channel(Mediation);
+            var channel = new Logic.Service.Smile.Api.V1.Channel(Mediator);
             var info = await channel.LoadInformationAsync(channelId);
             if(!info.HasPostVideo) {
                 return Enumerable.Empty<SmileVideoVideoItemModel>();
             }
 
-            var channelFeeds = await SmileChannelUtility.LoadAllVideoFeedAsync(Mediation, channelId);
+            var channelFeeds = await SmileChannelUtility.LoadAllVideoFeedAsync(Mediator, channelId);
             if(!channelFeeds.Any(i => i.Channel.Items.Any())) {
                 return Enumerable.Empty<SmileVideoVideoItemModel>();
             }
@@ -342,7 +342,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             var newViewModels = channelItems
                 .Select(item => {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
-                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    return Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 })
                 .ToEvaluatedSequence()
             ;
@@ -398,7 +398,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 var videoItems = postTask.Result;
 
                 foreach(var item in videoItems) {
-                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, Define.Service.Smile.Video.SmileVideoCheckItLaterFrom.ChannelBookmark)));
+                    Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, Define.Service.Smile.Video.SmileVideoCheckItLaterFrom.ChannelBookmark)));
                 }
             });
         }

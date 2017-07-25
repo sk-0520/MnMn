@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var rec = new Recommendations(Mediation);
+            var rec = new Recommendations(Mediator);
 
             var rawData = await rec.LoadAsync();
             if(!SmileVideoRecommendationsUtility.IsSuccessResponse(rawData)) {

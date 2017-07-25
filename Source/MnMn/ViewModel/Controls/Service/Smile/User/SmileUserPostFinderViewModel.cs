@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var user = new ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi.User(Mediation);
+            var user = new ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi.User(Mediator);
             return user.LoadPostVideoAsync(UserId);
         }
 

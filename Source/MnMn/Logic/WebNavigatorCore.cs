@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        static Mediator Mediation { get; set; }
+        static Mediator Mediator { get; set; }
         static IReadOnlyNetworkSetting NetworkSetting { get; set; }
 
         //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
@@ -99,8 +99,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 return;
             }
 
-            Mediation = mediator;
-            NetworkSetting = Mediation.GetNetworkSetting();
+            Mediator = mediator;
+            NetworkSetting = Mediator.GetNetworkSetting();
 
             switch(Engine) {
                 case WebNavigatorEngine.Default:
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 #endif
 #endif
                     } catch(Exception ex) {
-                        Mediation.Logger.Error(ex);
+                        Mediator.Logger.Error(ex);
                         ForceDefaultEngine = true;
                         goto WebNavigatorEngine_Default;
                     }
@@ -144,15 +144,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             var command = GetDefaultBrowserCommand();
             if(string.IsNullOrWhiteSpace(command)) {
-                Mediation.Logger.Warning($"fail: default browser: registry is null");
+                Mediator.Logger.Warning($"fail: default browser: registry is null");
                 return;
             }
 
             try {
                 DefaultBrowserExecuteData = GetBrowserPureExecuteData(command);
             } catch(Exception ex) {
-                Mediation.Logger.Warning($"fail: default browser: {command}");
-                Mediation.Logger.Warning(ex);
+                Mediator.Logger.Warning($"fail: default browser: {command}");
+                Mediator.Logger.Warning(ex);
             }
 
             if(DefaultBrowserExecuteData.HasValue) {
@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     var path = DefaultBrowserExecuteData.Value.ApplicationPath ?? string.Empty;
                     var usingPath = Environment.ExpandEnvironmentVariables(path);
                     if(File.Exists(usingPath)) {
-                        DefaultBrowserIcon = IconUtility.Load(usingPath, ContentTypeTextNet.Library.SharedLibrary.Define.IconScale.Small, 0, Mediation.Logger);
+                        DefaultBrowserIcon = IconUtility.Load(usingPath, ContentTypeTextNet.Library.SharedLibrary.Define.IconScale.Small, 0, Mediator.Logger);
                     }
                 });
             }
@@ -301,7 +301,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static DirectoryInfo GetDownloadDirectory()
         {
-            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+            var setting = Mediator.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
             var downloadDirPath = setting.WebNavigator.DownloadDirectoryPath;
             if(!string.IsNullOrWhiteSpace(downloadDirPath)) {
                 downloadDirPath = Environment.ExpandEnvironmentVariables(downloadDirPath);
@@ -312,7 +312,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             try {
                 return Directory.CreateDirectory(downloadDirPath);
             } catch(Exception ex) {
-                Mediation.Logger.Warning(ex);
+                Mediator.Logger.Warning(ex);
             }
 
             downloadDirPath = Syroot.Windows.IO.KnownFolders.Downloads.ExpandedPath;
@@ -320,7 +320,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             try {
                 return Directory.CreateDirectory(downloadDirPath);
             } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
+                Mediator.Logger.Error(ex);
             }
             // ここまで頑張って無理ならいっそ清々しい
             var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);

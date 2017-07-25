@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         public SmileVideoAccountHistoryFinderViewModel(Mediator mediator)
             : base(mediator, SmileVideoMediationKey.historyPage)
         {
-            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
         }
 
         #region property
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         // ぶっちゃけAPI使うよりこっちの方が総通信数は少ないから使いたいけどHTML腐り過ぎてて使いたくない相反する思い。
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
+            var history = new Logic.Service.Smile.Video.Api.V1.History(Mediator);
 
             var htmlDocument = await history.LoadPageHtmlDocument();
             if(htmlDocument == null) {
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
                     return Task.CompletedTask;
                 }
 
-                var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
+                var history = new Logic.Service.Smile.Video.Api.V1.History(Mediator);
                 return history.LoadHistoryAsync().ContinueWith(task => {
                     AccountHistoryModel = task.Result;
                 }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         protected async override Task<IReadOnlyCheck> RemoveCheckedItemsAsync()
         {
-            var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
+            var history = new Logic.Service.Smile.Video.Api.V1.History(Mediator);
             if(!GetCheckedItems().Any()) {
                 return CheckModel.Failure();
             }
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             foreach(var removeItem in removeItems) {
                 Thread.Sleep(Constants.ServiceSmileVideoHistoryRemoveWaitTime);
                 var result = await history.RemoveVideoAsync(model, removeItem.VideoId);
-                Mediation.Logger.Trace(result.Status.ToString());
+                Mediator.Logger.Trace(result.Status.ToString());
                 if(!result.IsSuccess) {
                     errors.Add(result);
                 }

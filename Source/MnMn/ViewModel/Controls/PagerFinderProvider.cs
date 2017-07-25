@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public PagerFinderProvider(Mediator mediator, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder, IEnumerable<string> changePropertyNames)
         {
-            Mediation = mediator;
+            Mediator = mediator;
             ParentFinder = parentFinder;
             if(changePropertyNames.Any()) {
                 CustomChangePagePropertyNames.AddRange(changePropertyNames);
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region property
 
-        Mediator Mediation { get; }
+        Mediator Mediator { get; }
 
         PropertyChangedWeakEventListener PropertyChangedListener { get; }
 
@@ -323,7 +323,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Mediation.Logger.Information(e.PropertyName);
+            Mediator.Logger.Information(e.PropertyName);
             if(CustomChangePagePropertyNames.Any(n => n == e.PropertyName)) {
                 CallPageItemOnPropertyChange();
             }

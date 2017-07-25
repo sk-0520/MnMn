@@ -197,7 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                             this.NowOutput.Value = false;
                             if(!t.IsFaulted && t.Result && Directory.Exists(outputDirectoryPath)) {
                                 var dir = new DirectoryInfo(outputDirectoryPath);
-                                ShellUtility.OpenDirectory(dir, Mediation.Logger);
+                                ShellUtility.OpenDirectory(dir, Mediator.Logger);
                             }
                         });
                     },
@@ -264,9 +264,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             var videoFile = new FileInfo(videoFilePath ?? "NUL");
             var commentFile = new FileInfo(commentFilePath ?? "NUL");
 
-            var vm = new SmileVideoLaboratoryPlayerViewModel(Mediation);
+            var vm = new SmileVideoLaboratoryPlayerViewModel(Mediator);
             var task = vm.LoadAsync(videoFile, commentFile);
-            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
+            Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
             return Task.CompletedTask;
         }
@@ -540,7 +540,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                 return ffmpeg.ExecuteAsync(s);
             }, TaskContinuationOptions.NotOnFaulted).Unwrap().ContinueWith(t => {
                 var exitCode = t.Result;
-                Mediation.Logger.Information($"result: {exitCode}");
+                Mediator.Logger.Information($"result: {exitCode}");
                 if(exitCode == 0) {
                     if(File.Exists(temporaryFilePath)) {
                         File.Delete(temporaryFilePath);

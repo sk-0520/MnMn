@@ -67,33 +67,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoManagerViewModel(Mediator mediator)
             : base(mediator)
         {
-            var settingResponse = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
+            var settingResponse = Mediator.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)settingResponse.Result;
 
-            Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Session = Mediator.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             CheckItLaterCheckTimer.Tick += CheckItLaterCheckTimer_Tick;
 
-            var rankingDefine = Mediation.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
-            RankingManager = new SmileVideoRankingManagerViewModel(Mediation, rankingDefine);
+            var rankingDefine = Mediator.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+            RankingManager = new SmileVideoRankingManagerViewModel(Mediator, rankingDefine);
 
-            var searchResponse = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
+            var searchResponse = Mediator.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
             var searchModel = (SmileVideoSearchModel)searchResponse.Result;
-            SearchManager = new SmileVideoSearchManagerViewModel(Mediation, searchModel);
+            SearchManager = new SmileVideoSearchManagerViewModel(Mediator, searchModel);
 
-            NewArrivalsManager = new SmileVideoNewArrivalsManagerViewModel(Mediation);
+            NewArrivalsManager = new SmileVideoNewArrivalsManagerViewModel(Mediator);
 
-            MyListManager = new SmileVideoMyListManagerViewModel(Mediation);
+            MyListManager = new SmileVideoMyListManagerViewModel(Mediator);
 
-            HistoryManager = new SmileVideoHistoryManagerViewModel(Mediation);
+            HistoryManager = new SmileVideoHistoryManagerViewModel(Mediator);
 
-            BookmarkManager = new SmileVideoBookmarkManagerViewModel(Mediation);
+            BookmarkManager = new SmileVideoBookmarkManagerViewModel(Mediator);
 
-            CheckItLaterManager = new SmileVideoCheckItLaterManagerViewModel(Mediation);
+            CheckItLaterManager = new SmileVideoCheckItLaterManagerViewModel(Mediator);
 
-            LaboratoryManager = new SmileVideoLaboratoryManagerViewModel(Mediation);
+            LaboratoryManager = new SmileVideoLaboratoryManagerViewModel(Mediator);
 
-            Mediation.SetManager(
+            Mediator.SetManager(
                 ServiceType.SmileVideo,
                 new SmileVideoManagerPackModel(
                     SearchManager,
@@ -145,12 +145,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 var myListItems = mylistTask.Result;
                 foreach(var item in myListItems) {
-                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.MylistBookmark)));
+                    Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.MylistBookmark)));
                 }
 
                 var tagBookmarkItems = tagBookmarkTask.Result;
                 foreach(var item in tagBookmarkItems) {
-                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.WordBookmark)));
+                    Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.WordBookmark)));
                 }
             });
         }
@@ -196,11 +196,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(videoId);
 
-            var targetFile = SmileVideoInformationUtility.GetGetthumbinfoFile(Mediation, videoId);
+            var targetFile = SmileVideoInformationUtility.GetGetthumbinfoFile(Mediator, videoId);
             try {
                 targetFile.Refresh();
             } catch(IOException ex) {
-                Mediation.Logger.Warning(ex);
+                Mediator.Logger.Warning(ex);
             }
             if(!targetFile.Exists && baseDirectory.Exists) {
                 try {
@@ -208,23 +208,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     var size = RemoveDirectory(baseDirectory);
                     return Task.FromResult(size);
                 } catch(Exception ex) {
-                    Mediation.Logger.Error($"{baseDirectory}: {ex}");
+                    Mediator.Logger.Error($"{baseDirectory}: {ex}");
                 }
                 return GarbageCollectionDummyResult;
             }
 
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, CacheSpan.InfinityCache));
-            var viewModelTask = Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+            var viewModelTask = Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
             return viewModelTask.ContinueWith(t => {
                 if(t.IsFaulted) {
                     var exception = t.Exception.InnerException as SmileVideoGetthumbinfoFailureException;
-                    Mediation.Logger.Information($"load fail: {exception}");
-                    var dir = SmileVideoInformationUtility.GetCacheDirectory(Mediation, videoId);
+                    Mediator.Logger.Information($"load fail: {exception}");
+                    var dir = SmileVideoInformationUtility.GetCacheDirectory(Mediator, videoId);
                     if(dir.Exists) {
                         try {
                             return RemoveDirectory(dir);
                         } catch(Exception ex) {
-                            Mediation.Logger.Error(ex);
+                            Mediator.Logger.Error(ex);
                         }
                     }
                     return GarbageCollectionDummyResult.Result;
@@ -239,7 +239,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Task<long> GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             return Task.Run(async () => {
-                var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+                var baseDirInfo = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
                 var cacheDirInfos = baseDirInfo.GetDirectories("*", SearchOption.TopDirectoryOnly).ToEvaluatedSequence();
                 long totalSize = 0;
                 foreach(var dir in cacheDirInfos) {

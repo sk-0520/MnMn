@@ -408,7 +408,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             {
                 return CreateCommand(o => {
                     var viewModel = (SmileVideoSearchBookmarkItemViewModel)o;
-                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, viewModel.Query, viewModel.SearchType)));
+                    Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, viewModel.Query, viewModel.SearchType)));
                 });
             }
         }
@@ -487,7 +487,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     return viewModel;
                 },
                 () => {
-                    var finder = new SmileVideoSearchGroupFinderViewModel(Mediation, SearchModel, method, sort, type, query);
+                    var finder = new SmileVideoSearchGroupFinderViewModel(Mediator, SearchModel, method, sort, type, query);
                     SearchGroups.Add(finder);
                     return finder;
                 }
@@ -545,12 +545,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             RecommendTagLoadState = LoadState.Preparation;
 
-            var rec = new Recommendations(Mediation);
+            var rec = new Recommendations(Mediator);
 
             RecommendTagLoadState = LoadState.Loading;
             return rec.LoadTagListAsync().ContinueWith(task => {
                 var rawTagList = task.Result;
-                return rawTagList.Tags.Select(t => new SmileVideoTagViewModel(Mediation, t));
+                return rawTagList.Tags.Select(t => new SmileVideoTagViewModel(Mediator, t));
             }).ContinueWith(task => {
                 var list = task.Result;
                 RecommendTagItems.InitializeRange(list);
@@ -562,12 +562,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             TrendTagLoadState = LoadState.Preparation;
 
-            var rec = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
+            var rec = new Logic.Service.Smile.Video.Api.V1.Tag(Mediator);
 
             TrendTagLoadState = LoadState.Loading;
             return rec.LoadTrendTagListAsync().ContinueWith(task => {
                 var rawTagList = task.Result;
-                return rawTagList.Tags.Select(t => new SmileVideoTagViewModel(Mediation, t));
+                return rawTagList.Tags.Select(t => new SmileVideoTagViewModel(Mediator, t));
             }).ContinueWith(task => {
                 var list = task.Result;
                 TrendTagItems.InitializeRange(list);
@@ -596,7 +596,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             ;
 
             if(removeItems.Any()) {
-                Mediation.Logger.Information($"remove history: {removeItems.Count}", string.Join(Environment.NewLine, removeItems.Select(i => i.Query)));
+                Mediator.Logger.Information($"remove history: {removeItems.Count}", string.Join(Environment.NewLine, removeItems.Select(i => i.Query)));
 
                 foreach(var item in removeItems) {
                     SearchHistoryList.Remove(item);
@@ -624,7 +624,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         async Task<IReadOnlyList<string>> GetVideoIdsAsync(string tagName)
         {
-            var tag = new Tag(Mediation);
+            var tag = new Tag(Mediator);
 
             var resultVideoIds = new List<string>(Constants.ServiceSmileVideoTagFeedItemCount * Constants.ServiceSmileVideoTagFeedCount);
             foreach(var i in Enumerable.Range(0, Constants.ServiceSmileVideoTagFeedCount)) {
@@ -636,11 +636,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 if(feed.Channel.Items.Any()) {
                     foreach(var item in feed.Channel.Items) {
                         var rawVideoId = SmileVideoFeedUtility.GetVideoId(item);
-                        if(SmileIdUtility.NeedCorrectionVideoId(rawVideoId, Mediation)) {
+                        if(SmileIdUtility.NeedCorrectionVideoId(rawVideoId, Mediator)) {
                             // Taskで無理やり操作性まともにしてる
                             var information = await Task.Run(() => {
                                 var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
-                                return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                                return Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                             });
                             resultVideoIds.Add(information.VideoId);
                         } else {
@@ -702,7 +702,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 var videoItems = items.Select(
                     i => {
                         var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(i, Constants.ServiceSmileVideoThumbCacheSpan));
-                        var infoTask = Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                        var infoTask = Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
                         return infoTask.Result;
                     })
                     .Select(i => i.ToVideoItemModel())
