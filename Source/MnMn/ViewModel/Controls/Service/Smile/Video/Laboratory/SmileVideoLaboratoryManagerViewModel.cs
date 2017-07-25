@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 {
     public class SmileVideoLaboratoryManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
-        public SmileVideoLaboratoryManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileVideoLaboratoryManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             PlayDragAndDrop = new DelegateDragAndDrop() {
                 DragEnterAction = PlayDragEnterAndOver,

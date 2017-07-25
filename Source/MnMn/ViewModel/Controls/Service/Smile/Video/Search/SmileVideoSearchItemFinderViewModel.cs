@@ -49,8 +49,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchItemFinderViewModel(Mediator mediation, SmileVideoSearchModel searchModel, IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort, SearchType type, string query, int index, int count)
-            : base(mediation, index)
+        public SmileVideoSearchItemFinderViewModel(Mediator mediator, SmileVideoSearchModel searchModel, IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort, SearchType type, string query, int index, int count)
+            : base(mediator, index)
         {
             SearchModel = searchModel;
 

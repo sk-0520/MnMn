@@ -15,15 +15,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 {
     public class Market: ApiBase
     {
-        public Market(Mediator mediation)
-            : base(mediation)
+        public Market(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function
 
         public async Task<RawSmileMarketVideoRelationModel> LoadVideoRelationAsync(string videoId)
         {
-            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileMediationKey.marketVideoRelation, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileMediationKey.marketVideoRelation, ServiceType.Smile)) {
                 page.ReplaceUriParameters["video-id"] = videoId;
                 var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!feedResult.IsSuccess) {

@@ -49,8 +49,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #endregion
 
-        public SmileLiveCategoryManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileLiveCategoryManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             CategoryModel = Mediation.GetResultFromRequest<SmileLiveCategoryModel>(new RequestModel(RequestKind.CategoryDefine, ServiceType.SmileLive));
             SelectedSort = SortItems.First();

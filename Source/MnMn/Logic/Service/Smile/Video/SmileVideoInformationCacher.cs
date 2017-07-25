@@ -49,8 +49,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoInformationCacher(Mediator mediation)
-            : base(mediation)
+        public SmileVideoInformationCacher(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function

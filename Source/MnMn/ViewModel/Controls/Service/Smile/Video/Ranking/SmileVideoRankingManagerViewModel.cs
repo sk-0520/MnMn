@@ -48,8 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #endregion
 
-        public SmileVideoRankingManagerViewModel(Mediator mediation, IReadOnlySmileVideoRanking rankingDefine)
-            : base(mediation)
+        public SmileVideoRankingManagerViewModel(Mediator mediator, IReadOnlySmileVideoRanking rankingDefine)
+            : base(mediator)
         {
             RankingDefine = rankingDefine;
 

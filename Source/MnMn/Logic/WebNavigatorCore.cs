@@ -93,13 +93,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// 初期化。
         /// </summary>
-        public static void Initialize(Mediator mediation)
+        public static void Initialize(Mediator mediator)
         {
             if(IsInitialized) {
                 return;
             }
 
-            Mediation = mediation;
+            Mediation = mediator;
             NetworkSetting = Mediation.GetNetworkSetting();
 
             switch(Engine) {

@@ -34,8 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppIssueManagerViewModel: ManagerViewModelBase
     {
-        public AppIssueManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public AppIssueManagerViewModel(Mediator mediator)
+            : base(mediator)
         { }
 
         #region property

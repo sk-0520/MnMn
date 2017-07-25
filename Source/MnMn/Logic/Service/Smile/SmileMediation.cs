@@ -47,13 +47,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 {
     public class SmileMediation: MediatorCustomBase
     {
-        public SmileMediation(Mediator mediation, SmileSettingModel setting)
-            : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestHeadersListPath, Constants.SmileRequestParametersListPath, Constants.SmileRequestMappingsListPath, Constants.SmileExpressionsPath)
+        public SmileMediation(Mediator mediator, SmileSettingModel setting)
+            : base(mediator, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestHeadersListPath, Constants.SmileRequestParametersListPath, Constants.SmileRequestMappingsListPath, Constants.SmileExpressionsPath)
         {
             Setting = setting;
 
-            VideoMediation = new SmileVideoMediation(Mediation, Setting.Video);
-            LiveMediation = new SmileLiveMediation(Mediation, Setting.Live);
+            VideoMediation = new SmileVideoMediation(Mediator, Setting.Video);
+            LiveMediation = new SmileLiveMediation(Mediator, Setting.Live);
         }
 
         #region property
@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     model = Setting.Account;
                 }
                 if(Session == null) {
-                    Session = new SmileSessionViewModel(Mediation, model);
+                    Session = new SmileSessionViewModel(Mediator, model);
                 } else {
                     Session.ChangeUserAccountAsync(model).Wait();
                 }

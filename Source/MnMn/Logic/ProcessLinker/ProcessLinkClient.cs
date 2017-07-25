@@ -14,15 +14,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class ProcessLinkClient : DisposeFinalizeBase
     {
-        public ProcessLinkClient(Mediator mediation)
+        public ProcessLinkClient(Mediator mediator)
         {
-            Mediation = mediation;
+            Mediator = mediator;
         }
 
         #region property
 
         Uri ServiceUri => Constants.AppServiceUri;
-        Mediator Mediation { get; }
+        Mediator Mediator { get; }
 
         #endregion
 
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     channel.Close();
                 }
             } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
+                Mediator.Logger.Error(ex);
             }
         }
 

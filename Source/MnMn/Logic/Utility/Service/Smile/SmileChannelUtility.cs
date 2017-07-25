@@ -14,9 +14,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         #region function
 
 
-        public async static Task<IEnumerable<FeedSmileChannelModel>> LoadAllVideoFeedAsync(Mediator mediation, string channelId)
+        public async static Task<IEnumerable<FeedSmileChannelModel>> LoadAllVideoFeedAsync(Mediator mediator, string channelId)
         {
-            var channel = new Logic.Service.Smile.Api.V1.Channel(mediation);
+            var channel = new Logic.Service.Smile.Api.V1.Channel(mediator);
             var result = new List<FeedSmileChannelModel>();
 
             var pageNumber = 1;

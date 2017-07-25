@@ -40,8 +40,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 {
     public class SmileVideoCheckItLaterManagerViewModel : SmileVideoCustomManagerViewModelBase
     {
-        public SmileVideoCheckItLaterManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileVideoCheckItLaterManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             AllItemsFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
             ManualOperationFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);

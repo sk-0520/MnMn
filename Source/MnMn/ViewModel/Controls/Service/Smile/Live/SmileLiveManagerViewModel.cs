@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
     public class SmileLiveManagerViewModel: ManagerViewModelBase
     {
-        public SmileLiveManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileLiveManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 

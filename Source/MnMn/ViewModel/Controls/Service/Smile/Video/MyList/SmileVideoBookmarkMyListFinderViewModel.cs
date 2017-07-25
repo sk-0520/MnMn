@@ -30,8 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public class SmileVideoBookmarkMyListFinderViewModel: SmileVideoItemsMyListFinderViewModel
     {
-        public SmileVideoBookmarkMyListFinderViewModel(Mediator mediation, SmileMyListBookmarkItemModel item)
-            : base(mediation, item)
+        public SmileVideoBookmarkMyListFinderViewModel(Mediator mediator, SmileMyListBookmarkItemModel item)
+            : base(mediator, item)
         {
             BookmarkItem = item;
         }

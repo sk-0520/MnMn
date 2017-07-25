@@ -45,8 +45,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 
         #endregion
 
-        public SmileLiveCategoryGroupFinderViewModel(Mediator mediation, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category)
-            : base(mediation, 0)
+        public SmileLiveCategoryGroupFinderViewModel(Mediator mediator, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category)
+            : base(mediator, 0)
         {
             CategoryModel = categoryDefine;
 

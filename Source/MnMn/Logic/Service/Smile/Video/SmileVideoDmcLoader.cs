@@ -20,11 +20,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     /// </summary>
     public class SmileVideoDmcLoader: DisposeFinalizeBase
     {
-        public SmileVideoDmcLoader(string videoId, Uri uri, Mediator mediation)
+        public SmileVideoDmcLoader(string videoId, Uri uri, Mediator mediator)
         {
             VideoId = videoId;
             ApiUri = uri;
-            Mediation = mediation;
+            Mediation = mediator;
             Dmc = new Dmc(Mediation);
         }
 

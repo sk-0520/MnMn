@@ -90,9 +90,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoDownloadViewModel(Mediator mediation)
+        public SmileVideoDownloadViewModel(Mediator mediator)
         {
-            Mediation = mediation;
+            Mediation = mediator;
 
             var response = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)response.Result;

@@ -41,10 +41,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoTagViewModel(Mediator mediation, RawSmileVideoTagItemModel model)
+        public SmileVideoTagViewModel(Mediator mediator, RawSmileVideoTagItemModel model)
             : base(model)
         {
-            Mediation = mediation;
+            Mediation = mediator;
         }
 
         #region property

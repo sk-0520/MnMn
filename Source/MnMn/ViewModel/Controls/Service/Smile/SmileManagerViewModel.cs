@@ -55,8 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         #endregion
 
-        public SmileManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 

@@ -14,11 +14,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile
 {
     public class SmileProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public SmileProcessLinkChildHost(Mediator mediation)
-            : base(mediation)
+        public SmileProcessLinkChildHost(Mediator mediator)
+            : base(mediator)
         {
-            Video = new SmileVideoProcessLinkChildHost(Mediation);
-            Live = new SmileLiveProcessLinkChildHost(Mediation);
+            Video = new SmileVideoProcessLinkChildHost(Mediator);
+            Live = new SmileLiveProcessLinkChildHost(Mediator);
         }
 
         #region property

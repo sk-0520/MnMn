@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Dmc: SessionApiBase<SmileSessionViewModel>
     {
-        public Dmc(Mediator mediation)
-            : base(mediation, ServiceType.Smile)
+        public Dmc(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region function
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         Task<RawSmileVideoDmcObjectModel> LoadCoreAsync(string key, Uri uri, string method, RawSmileVideoDmcObjectModel param)
         {
-            var page = new PageLoader(Mediation, Session, key, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediator, Session, key, ServiceType.SmileVideo);
 
             //page.ReplaceRequestHeaders["Referer"] = "http://res.nimg.jp/swf/player/nicoplayer.swf?ts=ec1c8439e4654d504a8da7c98f4dec24";
 

@@ -14,8 +14,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppForumManagerViewModel: ManagerViewModelBase
     {
-        public AppForumManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public AppForumManagerViewModel(Mediator mediator)
+            : base(mediator)
         { }
 
         #region property

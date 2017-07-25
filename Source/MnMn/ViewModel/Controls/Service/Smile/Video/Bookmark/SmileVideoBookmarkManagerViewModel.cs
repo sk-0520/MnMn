@@ -59,8 +59,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #endregion
 
-        public SmileVideoBookmarkManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileVideoBookmarkManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             Node = new SmileVideoBookmarkSystemNodeViewModel(Setting.Bookmark.Root);
             Node.Name = Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_Unorganized;

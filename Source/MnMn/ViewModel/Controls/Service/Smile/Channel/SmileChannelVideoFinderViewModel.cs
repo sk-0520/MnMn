@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 {
     public class SmileChannelVideoFinderViewModel : SmileVideoFeedFinderViewModelBase
     {
-        public SmileChannelVideoFinderViewModel(Mediator mediation, string channelId)
-            : base(mediation, 0)
+        public SmileChannelVideoFinderViewModel(Mediator mediator, string channelId)
+            : base(mediator, 0)
         {
             ChannelId = channelId;
         }

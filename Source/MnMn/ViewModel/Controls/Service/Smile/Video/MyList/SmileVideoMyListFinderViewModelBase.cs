@@ -43,8 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public abstract class SmileVideoMyListFinderViewModelBase: SmileVideoFeedFinderViewModelBase
     {
-        public SmileVideoMyListFinderViewModelBase(Mediator mediation, bool isAccountMyList)
-            : base(mediation, 0)
+        public SmileVideoMyListFinderViewModelBase(Mediator mediator, bool isAccountMyList)
+            : base(mediator, 0)
         {
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 

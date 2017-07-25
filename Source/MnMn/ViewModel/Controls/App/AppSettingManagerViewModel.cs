@@ -43,8 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppSettingManagerViewModel: ManagerViewModelBase
     {
-        public AppSettingManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public AppSettingManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             AppSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Application));
             ThemeDefine = SerializeUtility.LoadXmlSerializeFromFile<ThemeDefineModel>(Constants.ApplicationThemeDefinePath);

@@ -39,8 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class History: SessionApiBase<SmileSessionViewModel>, ISmileVideoScrapingPageHtmlToFeedApi
     {
-        public History(Mediator mediation)
-            : base(mediation, ServiceType.Smile)
+        public History(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region function
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.historyApi, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.historyApi, ServiceType.SmileVideo)) {
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!response.IsSuccess) {
                     return null;
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
             string targetId;
             if(map.TryGetValue(videoId, out targetId)) {
-                using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.historyRemove, ServiceType.SmileVideo)) {
+                using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.historyRemove, ServiceType.SmileVideo)) {
                     page.ReplaceRequestParameters["video-id"] = targetId;
                     page.ReplaceRequestParameters["token"] = model.Token;
                     var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.historyPage, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.historyPage, ServiceType.SmileVideo)) {
                 var result = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!result.IsSuccess) {
                     return null;

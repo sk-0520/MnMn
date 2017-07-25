@@ -39,8 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public class SmileVideoMatchMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
-        public SmileVideoMatchMyListFinderViewModel(Mediator mediation, FeedSmileVideoModel feedModel, string myListId, bool isAccountMyList)
-            : base(mediation, isAccountMyList)
+        public SmileVideoMatchMyListFinderViewModel(Mediator mediator, FeedSmileVideoModel feedModel, string myListId, bool isAccountMyList)
+            : base(mediator, isAccountMyList)
         {
             IgnoreAddHistory = false;
 

@@ -45,9 +45,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         #endregion
 
-        public LightweightUpdateDownloadItemViewModel(Mediator mediation, LightweightUpdateModel model)
+        public LightweightUpdateDownloadItemViewModel(Mediator mediator, LightweightUpdateModel model)
         {
-            Mediation = mediation;
+            Mediation = mediator;
             Model = model;
 
             var lightweightUpdateDir = VariableConstants.GetLightweightUpdateDirectory();

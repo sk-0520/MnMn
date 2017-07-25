@@ -9,8 +9,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Off
 {
     public class SmileLiveOfficialBroadcastFeedFinderViewModel: SmileLiveFinderViewModelBase
     {
-        public SmileLiveOfficialBroadcastFeedFinderViewModel(Mediator mediation)
-            : base(mediation, 0)
+        public SmileLiveOfficialBroadcastFeedFinderViewModel(Mediator mediator)
+            : base(mediator, 0)
         { }
 
         #region SmileLiveFinderViewModelBase

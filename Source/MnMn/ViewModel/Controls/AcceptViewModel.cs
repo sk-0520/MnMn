@@ -32,9 +32,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public AcceptViewModel(Mediator mediation, IReadOnlyAcceptVersion acceptVersion)
+        public AcceptViewModel(Mediator mediator, IReadOnlyAcceptVersion acceptVersion)
         {
-            Mediation = mediation;
+            Mediation = mediator;
             AcceptVersion = acceptVersion;
 
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));

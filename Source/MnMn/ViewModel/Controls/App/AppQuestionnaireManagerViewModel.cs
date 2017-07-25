@@ -35,8 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppQuestionnaireManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public AppQuestionnaireManagerViewModel(Mediator mediator)
+            : base(mediator)
         { }
 
         #region property

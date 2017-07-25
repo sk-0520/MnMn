@@ -32,17 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public abstract class MediatorCustomBase: MediatorBase
     {
-        protected MediatorCustomBase(Mediator mediation, string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
+        protected MediatorCustomBase(Mediator mediator, string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
             : base(uriListPath, uriParametersPath, requestHeaderPath, requestParametersPath, requestMappingsPath, expressionsPath)
         {
-            Mediation = mediation;
+            Mediator = mediator;
 
             Script = CreateScript();
         }
 
         #region property
 
-        protected Mediator Mediation { get; private set; }
+        protected Mediator Mediator { get; private set; }
 
         protected virtual string ScriptDirectoryPath { get; }
 
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region MediationBase
 
-        public override ILogger Logger { get { return Mediation.Logger; } }
+        public override ILogger Logger { get { return Mediator.Logger; } }
 
         protected override IEnumerable<string> GetKeys()
         {
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var myType = GetType();
             var domainName = myType.Name;
 
-            var script = new SpaghettiScript(domainName, Mediation.Logger);
+            var script = new SpaghettiScript(domainName, Mediator.Logger);
 
             script.ConstructPreparations(new DirectoryInfo(ScriptDirectoryPath), GetKeys());
 

@@ -17,10 +17,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 
         #endregion
 
-        public InformationCacherBase(Mediator mediation)
+        public InformationCacherBase(Mediator mediator)
             : base(true)
         {
-            Mediation = mediation;
+            Mediation = mediator;
         }
 
         #region property

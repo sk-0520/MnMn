@@ -68,9 +68,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public PagerFinderProvider(Mediator mediation, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder, IEnumerable<string> changePropertyNames)
+        public PagerFinderProvider(Mediator mediator, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder, IEnumerable<string> changePropertyNames)
         {
-            Mediation = mediation;
+            Mediation = mediator;
             ParentFinder = parentFinder;
             if(changePropertyNames.Any()) {
                 CustomChangePagePropertyNames.AddRange(changePropertyNames);
@@ -79,8 +79,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             PropertyChangedListener = new PropertyChangedWeakEventListener(PageVm_PropertyChanged);
         }
 
-        public PagerFinderProvider(Mediator mediation, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder)
-            : this(mediation, parentFinder, Enumerable.Empty<string>())
+        public PagerFinderProvider(Mediator mediator, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder)
+            : this(mediator, parentFinder, Enumerable.Empty<string>())
         { }
 
         #region property

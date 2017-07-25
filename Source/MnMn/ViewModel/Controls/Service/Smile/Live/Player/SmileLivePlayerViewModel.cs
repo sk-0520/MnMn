@@ -83,9 +83,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #endregion
 
-        public SmileLivePlayerViewModel(Mediator mediation)
+        public SmileLivePlayerViewModel(Mediator mediator)
         {
-            Mediation = mediation;
+            Mediation = mediator;
 
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));

@@ -74,8 +74,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchManagerViewModel(Mediator mediation, SmileVideoSearchModel searchModel)
-            : base(mediation)
+        public SmileVideoSearchManagerViewModel(Mediator mediator, SmileVideoSearchModel searchModel)
+            : base(mediator)
         {
             SearchModel = searchModel;
 

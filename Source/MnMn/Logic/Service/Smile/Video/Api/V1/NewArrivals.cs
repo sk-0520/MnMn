@@ -32,15 +32,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class NewArrivals: ApiBase
     {
-        public NewArrivals(Mediator mediation)
-            : base(mediation)
+        public NewArrivals(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function
 
         async Task<FeedSmileVideoModel> LoadFeedAsync(string key)
         {
-            using(var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), key, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), key, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["lang"] = AppUtility.GetCultureName();
                 var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!feedResult.IsSuccess) {

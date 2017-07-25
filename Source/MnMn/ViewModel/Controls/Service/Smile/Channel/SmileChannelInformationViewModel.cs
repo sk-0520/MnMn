@@ -34,9 +34,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
 
         #endregion
 
-        public SmileChannelInformationViewModel(Mediator mediation, string channelId)
+        public SmileChannelInformationViewModel(Mediator mediator, string channelId)
         {
-            Mediation = mediation;
+            Mediation = mediator;
 
             NetworkSetting = Mediation.GetNetworkSetting();
             Logger = Mediation.Logger;

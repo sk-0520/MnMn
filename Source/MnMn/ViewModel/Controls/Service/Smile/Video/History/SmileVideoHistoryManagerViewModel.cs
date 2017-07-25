@@ -33,8 +33,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 {
     public class SmileVideoHistoryManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
-        public SmileVideoHistoryManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileVideoHistoryManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             AccountHistory = new SmileVideoAccountHistoryFinderViewModel(Mediation);
             ApplicationHistory = new SmileVideoApplicationHistoryFinderViewModel(Mediation);

@@ -43,8 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #endregion
 
-        public SmileLiveFinderViewModelBase(Mediator mediation, int baseNumber)
-            : base(mediation, baseNumber)
+        public SmileLiveFinderViewModelBase(Mediator mediator, int baseNumber)
+            : base(mediator, baseNumber)
         {
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
 

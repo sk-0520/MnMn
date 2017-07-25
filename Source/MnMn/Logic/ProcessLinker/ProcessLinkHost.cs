@@ -25,17 +25,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class ProcessLinkHost : DisposeFinalizeBase, IProcessLink
     {
-        public ProcessLinkHost(Mediator mediation)
+        public ProcessLinkHost(Mediator mediator)
         {
-            Mediation = mediation;
+            Mediator = mediator;
 
-            Smile = new SmileProcessLinkChildHost(Mediation);
-            IdleTalk = new IdleTalkProcessLinkChildHost(Mediation);
+            Smile = new SmileProcessLinkChildHost(Mediator);
+            IdleTalk = new IdleTalkProcessLinkChildHost(Mediator);
         }
 
         #region property
 
-        Mediator Mediation { get; }
+        Mediator Mediator { get; }
 
         ProcessLinkState State { get; set; }
 
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         void StartService()
         {
-            Mediation.Logger.Trace("[process-link] start");
+            Mediator.Logger.Trace("[process-link] start");
 
             var serviceUri = Constants.AppServiceUri;
             Service = new ServiceHost(this, serviceUri);
@@ -76,29 +76,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Service.AddServiceEndpoint(ServiceMetadataBehavior.MexContractName, mexBinding, "mex");
             Service.AddServiceEndpoint(typeof(IProcessLink), processLinkBinding, Constants.AppServiceProcessLinkEndpoint);
 
-            Mediation.Logger.Trace($"[process-link] address: {Service.BaseAddresses.Count}", string.Join(Environment.NewLine, Service.BaseAddresses));
-            Mediation.Logger.Trace($"[process-link] behavior: {Service.Description.Behaviors.Count}", string.Join(Environment.NewLine, Service.Description.Behaviors));
-            Mediation.Logger.Trace($"[process-link] endpoint: {Service.Description.Endpoints.Count}", string.Join(Environment.NewLine, Service.Description.Endpoints.Select(i => i.ListenUri)));
+            Mediator.Logger.Trace($"[process-link] address: {Service.BaseAddresses.Count}", string.Join(Environment.NewLine, Service.BaseAddresses));
+            Mediator.Logger.Trace($"[process-link] behavior: {Service.Description.Behaviors.Count}", string.Join(Environment.NewLine, Service.Description.Behaviors));
+            Mediator.Logger.Trace($"[process-link] endpoint: {Service.Description.Endpoints.Count}", string.Join(Environment.NewLine, Service.Description.Endpoints.Select(i => i.ListenUri)));
 
-            Mediation.Logger.Trace("[process-link] open");
+            Mediator.Logger.Trace("[process-link] open");
             Service.Open();
         }
 
         void StopService()
         {
-            Mediation.Logger.Trace("[process-link] closing");
+            Mediator.Logger.Trace("[process-link] closing");
 
             Service.Close();
 
-            Mediation.Logger.Trace("[process-link] closed");
+            Mediator.Logger.Trace("[process-link] closed");
         }
 
         bool ChangeState(ProcessLinkState changeState)
         {
-            Mediation.Logger.Information($"[process-link] current: {State}, change: changeState");
+            Mediator.Logger.Information($"[process-link] current: {State}, change: changeState");
 
             if(State == changeState) {
-                Mediation.Logger.Debug($"[process-link] ignore");
+                Mediator.Logger.Debug($"[process-link] ignore");
                 return false;
             }
 
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ProcessLinkState.Shutdown: {
                         switch(State) {
                             case ProcessLinkState.Shutdown:
-                                Mediation.Logger.Trace("skip: now shutdown");
+                                Mediator.Logger.Trace("skip: now shutdown");
                                 return false;
 
                             case ProcessLinkState.Listening:
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 break;
 
                             case ProcessLinkState.Listening:
-                                Mediation.Logger.Trace("skip: now listening");
+                                Mediator.Logger.Trace("skip: now listening");
                                 return false;
 
                             case ProcessLinkState.Pause:
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ProcessLinkState.Pause: {
                         switch(State) {
                             case ProcessLinkState.Shutdown:
-                                Mediation.Logger.Warning("skip: now shutdown");
+                                Mediator.Logger.Warning("skip: now shutdown");
                                 return false;
 
                             case ProcessLinkState.Listening:
@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 return true;
 
                             case ProcessLinkState.Pause:
-                                Mediation.Logger.Trace("skip: now pause");
+                                Mediator.Logger.Trace("skip: now pause");
                                 return false;
 
                             default:
@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 Value = value,
             };
             try {
-                Mediation.Logger.Debug($"[process-link] {nameof(parameter.ServiceType)}: {parameter.ServiceType}, {nameof(parameter.Key)}: {parameter.Key}, {nameof(parameter.Value)}: {parameter.Value}");
+                Mediator.Logger.Debug($"[process-link] {nameof(parameter.ServiceType)}: {parameter.ServiceType}, {nameof(parameter.Key)}: {parameter.Key}, {nameof(parameter.Value)}: {parameter.Value}");
 
                 var task = ExecuteCore(parameter);
                 task.ConfigureAwait(false);

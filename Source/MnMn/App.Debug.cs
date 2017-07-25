@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void login()
         {
-            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
+            var mediator = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
             var cmd = new CommandLine();
             var account = cmd.GetValue("smile-login-name");
             var password = cmd.GetValue("smile-login-pass");
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 Name = account,
                 Password = password,
             };
-            var vm = new SmileSessionViewModel(mediation, model);
+            var vm = new SmileSessionViewModel(mediator, model);
             await vm.LoginAsync();
             var a = await vm.CheckLoginAsync();
             await vm.LogoutAsync();
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void mylist()
         {
-            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
+            var mediator = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
             var cmd = new CommandLine();
             var account = cmd.GetValue("smile-login-name");
             var password = cmd.GetValue("smile-login-pass");
@@ -138,9 +138,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 Name = account,
                 Password = password,
             };
-            var session = new SmileSessionViewModel(mediation, model);
+            var session = new SmileSessionViewModel(mediator, model);
 
-            var mylist = new MyList(mediation);
+            var mylist = new MyList(mediator);
 
             var def = await mylist.LoadAccountDefaultAsync();
             var grp = await mylist.LoadAccountGroupAsync();
@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void livestatus()
         {
-            //var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
+            //var mediator = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
             //var cmd = new CommandLine();
             //var account = cmd.GetValue("smile-login-name");
             //var password = cmd.GetValue("smile-login-pass");
@@ -188,18 +188,18 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //    Name = account,
             //    Password = password,
             //};
-            //var vm = new SmileSessionViewModel(mediation, model);
+            //var vm = new SmileSessionViewModel(mediator, model);
             //await vm.LoginAsync();
 
-            //var getPlayerStatus = new GetPlayerStatus(mediation);
+            //var getPlayerStatus = new GetPlayerStatus(mediator);
             await Task.Delay(0);
             var mmm = GetPlayerStatus.ConvertFromRawData(File.ReadAllText(@"x:\stat.xml"));
         }
 
         async void market()
         {
-            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
-            var market = new Market(mediation);
+            var mediator = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
+            var market = new Market(mediator);
             //var model = await market.LoadVideoRelationAsync("sm9");
             var model = await market.LoadVideoRelationAsync("sm14027065");
             var items = SmileMarketUtility.GetVideoRelationItems(model).ToEvaluatedSequence();
@@ -229,7 +229,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void search()
         {
-            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
+            var mediator = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
             var map = new StringsModel() {
                 ["type"] = "TYPE",
                 ["query"] = "クエリ",
@@ -237,13 +237,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 ["sort"] = "SORT",
                 ["order"] = "ORDER",
             };
-            var uri = mediation.GetUri("video-search", map, Library.Bridging.Define.ServiceType.SmileVideo);
+            var uri = mediator.GetUri("video-search", map, Library.Bridging.Define.ServiceType.SmileVideo);
             Debug.WriteLine(uri);
         }
 
         void tweetPost()
         {
-            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
+            var mediator = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
 
             var sv = ServiceType.IdleTalkMutter;
             var key = "mutter-post-page";
@@ -258,15 +258,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 ["lang"] = "lang",
             };
 
-            var rawUri = mediation.GetUri(key, map, sv);
-            var convertedUri = mediation.ConvertUri(key, rawUri.Uri, sv);
+            var rawUri = mediator.GetUri(key, map, sv);
+            var convertedUri = mediator.ConvertUri(key, rawUri.Uri, sv);
             Debug.WriteLine(convertedUri);
         }
 
         async void tagRss()
         {
-            var mediation = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
-            var tag = new Tag(mediation);
+            var mediator = new Mediator(new Model.Setting.AppSettingModel(), new Logger());
+            var tag = new Tag(mediator);
             var feed = await tag.LoadTagFeedAsync("TEST", "f", "", 0);
         }
     }

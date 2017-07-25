@@ -33,8 +33,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 {
     public class SmileVideoApplicationHistoryFinderViewModel: SmileVideoHistoryFinderViewModelBase
     {
-        public SmileVideoApplicationHistoryFinderViewModel(Mediator mediation)
-            : base(mediation, SmileVideoMediationKey.historyApp)
+        public SmileVideoApplicationHistoryFinderViewModel(Mediator mediator)
+            : base(mediator, SmileVideoMediationKey.historyApp)
         { }
 
         #region property

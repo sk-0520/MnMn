@@ -27,8 +27,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 {
     public class AppUpdateDownloadItemViewModel : DownloadItemViewModel
     {
-        public AppUpdateDownloadItemViewModel(Mediator mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
-            : base(mediation, uri, downloadFile, userAgentCreator)
+        public AppUpdateDownloadItemViewModel(Mediator mediator, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
+            : base(mediator, uri, downloadFile, userAgentCreator)
         { }
 
         #region function

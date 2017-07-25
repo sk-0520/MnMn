@@ -13,10 +13,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk
 {
     public class IdleTalkProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public IdleTalkProcessLinkChildHost(Mediator mediation)
-            : base(mediation)
+        public IdleTalkProcessLinkChildHost(Mediator mediator)
+            : base(mediator)
         {
-            Mutter = new IdleTalkMutterProcessLinkChildHost(Mediation);
+            Mutter = new IdleTalkMutterProcessLinkChildHost(Mediator);
         }
 
         #region property

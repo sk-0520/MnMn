@@ -53,9 +53,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        public SessionViewModelBase(Mediator mediation)
+        public SessionViewModelBase(Mediator mediator)
         {
-            Mediation = mediation;
+            Mediation = mediator;
             NetworkSetting = Mediation.GetNetworkSetting();
         }
 

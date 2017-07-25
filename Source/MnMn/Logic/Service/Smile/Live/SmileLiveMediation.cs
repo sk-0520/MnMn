@@ -42,8 +42,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
     public class SmileLiveMediation: MediatorCustomBase
     {
-        public SmileLiveMediation(Mediator mediation, SmileLiveSettingModel setting)
-            : base(mediation, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileLiveRequestHeadersListPath, Constants.SmileLiveRequestParametersListPath, Constants.SmileLiveRequestMappingsListPath, Constants.SmileLiveExpressionsPath)
+        public SmileLiveMediation(Mediator mediator, SmileLiveSettingModel setting)
+            : base(mediator, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileLiveRequestHeadersListPath, Constants.SmileLiveRequestParametersListPath, Constants.SmileLiveRequestMappingsListPath, Constants.SmileLiveExpressionsPath)
         {
             Setting = setting;
             Category = SerializeUtility.LoadXmlSerializeFromFile<SmileLiveCategoryModel>(Constants.SmileLiveCategoryPath);

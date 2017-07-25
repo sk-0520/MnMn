@@ -31,10 +31,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market
 
         #endregion
 
-        public SmileMarketVideoRelationItemViewModel(Mediator mediation, SmileMarketVideoItemModel model)
+        public SmileMarketVideoRelationItemViewModel(Mediator mediator, SmileMarketVideoItemModel model)
             : base(model)
         {
-            Mediation = mediation;
+            Mediation = mediator;
         }
 
         #region property

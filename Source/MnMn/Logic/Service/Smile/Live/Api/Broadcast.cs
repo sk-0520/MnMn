@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 {
     public class Broadcast: ApiBase
     {
-        public Broadcast(Mediator mediation)
-            : base(mediation)
+        public Broadcast(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 
         public Task<FeedSmileLiveModel> LoadAsync()
         {
-            var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileLiveMediationKey.broadcast, ServiceType.SmileLive);
+            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileLiveMediationKey.broadcast, ServiceType.SmileLive);
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
                 var response = t.Result;

@@ -17,8 +17,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 {
     public class Category: ApiBase
     {
-        public Category(Mediator mediation)
-            : base(mediation)
+        public Category(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 
         public Task<FeedSmileLiveModel> LoadAsync(string category, string sort, string order, int pageNumber)
         {
-            var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileLiveMediationKey.category, ServiceType.SmileLive);
+            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileLiveMediationKey.category, ServiceType.SmileLive);
             page.ReplaceUriParameters["tab"] = category;
             page.ReplaceUriParameters["sort"] = sort;
             page.ReplaceUriParameters["order"] = order;

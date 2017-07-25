@@ -64,8 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoManagerViewModel: ManagerViewModelBase
     {
-        public SmileVideoManagerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileVideoManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             var settingResponse = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)settingResponse.Result;

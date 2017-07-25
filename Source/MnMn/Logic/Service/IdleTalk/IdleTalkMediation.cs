@@ -20,10 +20,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
 {
     public class IdleTalkMediation: MediatorCustomBase
     {
-        public IdleTalkMediation(Mediator mediation)
-            : base(mediation, Constants.IdleTalkUriListPath, Constants.IdleTalkUriParametersListPath, Constants.IdleTalkRequestHeadersListPath, Constants.IdleTalkRequestParametersListPath, Constants.IdleTalkRequestMappingsListPath, Constants.IdleTalkExpressionsPath)
+        public IdleTalkMediation(Mediator mediator)
+            : base(mediator, Constants.IdleTalkUriListPath, Constants.IdleTalkUriParametersListPath, Constants.IdleTalkRequestHeadersListPath, Constants.IdleTalkRequestParametersListPath, Constants.IdleTalkRequestMappingsListPath, Constants.IdleTalkExpressionsPath)
         {
-            MutterMediation = new IdleTalkMutterMediation(Mediation);
+            MutterMediation = new IdleTalkMutterMediation(Mediator);
         }
 
 

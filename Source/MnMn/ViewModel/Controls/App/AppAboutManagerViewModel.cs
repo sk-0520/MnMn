@@ -69,8 +69,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppAboutManagerViewModel(Mediator mediation, AppLoggingManagerViewModel loggingManager)
-            : base(mediation)
+        public AppAboutManagerViewModel(Mediator mediator, AppLoggingManagerViewModel loggingManager)
+            : base(mediator)
         {
             LoggingManager = loggingManager;
         }

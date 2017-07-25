@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class WatchData : SessionApiBase<SmileSessionViewModel>
     {
-        public WatchData(Mediator mediation)
-            : base(mediation, ServiceType.Smile)
+        public WatchData(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         TModel ConvertTModel<TModel>(string json)
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             var htmlDocument = HtmlUtility.CreateHtmlDocument(htmlSource);
             var watachDataElement = htmlDocument.GetElementbyId("js-initial-watch-data");
             if(watachDataElement == null) {
-                Mediation.Logger.Trace("not found: id = 'js-initial-watch-data'");
+                Mediator.Logger.Trace("not found: id = 'js-initial-watch-data'");
                 return null;
             }
             var rawModel = Load(watachDataElement);
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(Uri watchUri, SmileVideoMovieType movieType, IHttpUserAgentCreator userAgentCreator)
         {
-            using(var page = new PageLoader(Mediation, userAgentCreator, SmileVideoMediationKey.watchDataPage, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, userAgentCreator, SmileVideoMediationKey.watchDataPage, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["uri"] = watchUri.OriginalString;
                 page.ReplaceUriParameters["as3"] = movieType == SmileVideoMovieType.Swf
                     ? "1"

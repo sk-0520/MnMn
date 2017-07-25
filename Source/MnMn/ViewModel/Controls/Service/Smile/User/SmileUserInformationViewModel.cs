@@ -65,9 +65,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #endregion
 
-        public SmileUserInformationViewModel(Mediator mediation, string userId, bool isMyAccount)
+        public SmileUserInformationViewModel(Mediator mediator, string userId, bool isMyAccount)
         {
-            Mediation = mediation;
+            Mediation = mediator;
             NetworkSetting = Mediation.GetNetworkSetting();
             Logger = Mediation.Logger;
 

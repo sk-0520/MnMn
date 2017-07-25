@@ -33,10 +33,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
     public class ServiceGeckoWebBrowser: GeckoWebBrowser, IWindowMessage
     {
-        public ServiceGeckoWebBrowser(Mediator mediation)
+        public ServiceGeckoWebBrowser(Mediator mediator)
             : base()
         {
-            Mediation = mediation;
+            Mediation = mediator;
         }
 
         #region property

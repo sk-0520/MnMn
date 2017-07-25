@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk.Mutt
 {
     public class IdleTalkMutterProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public IdleTalkMutterProcessLinkChildHost(Mediator mediation)
-            : base(mediation)
+        public IdleTalkMutterProcessLinkChildHost(Mediator mediator)
+            : base(mediator)
         {
         }
 

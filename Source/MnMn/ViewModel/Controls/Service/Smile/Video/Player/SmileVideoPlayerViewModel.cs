@@ -121,8 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #endregion
 
-        public SmileVideoPlayerViewModel(Mediator mediation)
-            : base(mediation)
+        public SmileVideoPlayerViewModel(Mediator mediator)
+            : base(mediator)
         {
             CommentItems = CollectionViewSource.GetDefaultView(CommentList);
             CommentItems.Filter = FilterCommentItems;
