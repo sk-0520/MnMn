@@ -15,12 +15,12 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLinker;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
-using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk;
-using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.IdleTalk;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Model.ProcessLink;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class ProcessLinkHost : DisposeFinalizeBase, IProcessLink

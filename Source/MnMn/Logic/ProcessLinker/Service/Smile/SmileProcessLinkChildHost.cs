@@ -7,10 +7,10 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
-using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live;
-using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile
 {
     public class SmileProcessLinkChildHost : ProcessLinkChildHostBase
     {

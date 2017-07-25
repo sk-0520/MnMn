@@ -13,7 +13,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile.Video
 {
     public class SmileVideoProcessLinkChildHost : ProcessLinkChildHostBase
     {

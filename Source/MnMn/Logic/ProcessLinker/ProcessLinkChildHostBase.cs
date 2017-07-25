@@ -8,7 +8,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink
 {
     public abstract class ProcessLinkChildHostBase : IProcessLinkChildHost
     {

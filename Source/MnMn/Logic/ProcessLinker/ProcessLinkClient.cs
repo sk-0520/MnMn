@@ -10,7 +10,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ProcessLink;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink
 {
     public class ProcessLinkClient : DisposeFinalizeBase
     {
