@@ -255,7 +255,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(!IsDisposed) {
                 if(Service != null) {
-                    ((IDisposable)Service).Dispose();
+                    if(State != ProcessLinkState.Shutdown) {
+                        ((IDisposable)Service).Dispose();
+                    }
                     Service = null;
                 }
             }

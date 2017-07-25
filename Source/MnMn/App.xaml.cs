@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -706,7 +707,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Loaded -= MainWindow_Loaded;
 
             // ホストを有効にする
-            Mediator.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Listening));
+            try {
+                Mediator.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Listening));
+            } catch(AddressAlreadyInUseException ex) {
+                // デバッグ時だったりβ版なりのリリース版と分けて起動可能な時しか来ないハズ
+                Mediator.Logger.Error(ex);
+            }
 
             // スプラッシュスクリーンさよなら～
             var hSplashWnd = HandleUtility.GetWindowHandle(SplashWindow);
