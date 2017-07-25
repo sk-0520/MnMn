@@ -1672,7 +1672,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var smileSetting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
 
             var serviceType = ServiceType.IdleTalkMutter;
-            var key = IdleTalkMutterMediationKey.postPage;
+            var key = IdleTalkMutterMediatorKey.postPage;
 
             var map = new StringsModel() {
                 ["url"] = smileSetting.IdleTalkMutter.AutoInputWatchPageUri ? Information.WatchUrl.OriginalString : string.Empty,

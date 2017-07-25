@@ -55,11 +55,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public Task<FeedSmileVideoModel> LoadNewVideoAsync()
         {
-            return LoadFeedAsync(SmileVideoMediationKey.newarrival);
+            return LoadFeedAsync(SmileVideoMediatorKey.newarrival);
         }
         public Task<FeedSmileVideoModel> LoadNewCommentAsync()
         {
-            return LoadFeedAsync(SmileVideoMediationKey.recent);
+            return LoadFeedAsync(SmileVideoMediatorKey.recent);
         }
 
         #endregion

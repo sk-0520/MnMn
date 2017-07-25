@@ -45,15 +45,15 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 {
-    public class SmileMediation: MediatorCustomBase
+    public class SmileMediator: MediatorCustomBase
     {
-        public SmileMediation(Mediator mediator, SmileSettingModel setting)
+        public SmileMediator(Mediator mediator, SmileSettingModel setting)
             : base(mediator, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestHeadersListPath, Constants.SmileRequestParametersListPath, Constants.SmileRequestMappingsListPath, Constants.SmileExpressionsPath)
         {
             Setting = setting;
 
-            VideoMediation = new SmileVideoMediation(Mediator, Setting.Video);
-            LiveMediation = new SmileLiveMediation(Mediator, Setting.Live);
+            VideoMediation = new SmileVideoMediator(Mediator, Setting.Video);
+            LiveMediation = new SmileLiveMediator(Mediator, Setting.Live);
         }
 
         #region property
@@ -63,8 +63,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         /// <summary>
         /// ニコニコ動画関係。
         /// </summary>
-        internal SmileVideoMediation VideoMediation { get; private set; }
-        SmileLiveMediation LiveMediation { get; }
+        internal SmileVideoMediator VideoMediation { get; private set; }
+        SmileLiveMediator LiveMediation { get; }
 
         SmileSessionViewModel Session { get; set; }
 
@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(SmileMediationKey));
+            return GetMediationKeys(typeof(SmileMediatorKey));
         }
 
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)

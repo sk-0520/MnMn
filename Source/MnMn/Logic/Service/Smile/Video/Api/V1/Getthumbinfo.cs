@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<RawSmileVideoThumbResponseModel> LoadAsync(string videoId)
         {
-            using(var page = new PageLoader(Mediator, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, HttpUserAgentHost, SmileVideoMediatorKey.getthumbinfo, ServiceType.SmileVideo)) {
                 return await LoadAsyncCore(page, videoId);
             }
         }

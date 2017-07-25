@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 
         public Task<FeedSmileLiveModel> LoadAsync()
         {
-            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileLiveMediationKey.broadcast, ServiceType.SmileLive);
+            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileLiveMediatorKey.broadcast, ServiceType.SmileLive);
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
                 var response = t.Result;

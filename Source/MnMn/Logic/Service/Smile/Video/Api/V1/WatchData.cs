@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<IReadOnlyCheckResult<string>> LoadWatchPageHtmlSourceAsync(Uri watchUri, SmileVideoMovieType movieType, IHttpUserAgentCreator userAgentCreator)
         {
-            using(var page = new PageLoader(Mediator, userAgentCreator, SmileVideoMediationKey.watchDataPage, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, userAgentCreator, SmileVideoMediatorKey.watchDataPage, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["uri"] = watchUri.OriginalString;
                 page.ReplaceUriParameters["as3"] = movieType == SmileVideoMovieType.Swf
                     ? "1"

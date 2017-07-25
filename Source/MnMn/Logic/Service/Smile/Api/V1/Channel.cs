@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
         public Task<FeedSmileChannelModel> LoadVideoFeedAsync(string channelId, int pageNumber)
         {
-            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileMediationKey.channelVideoFeed, ServiceType.Smile);
+            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileMediatorKey.channelVideoFeed, ServiceType.Smile);
             page.ReplaceUriParameters["channel-id"] = channelId;
             page.ReplaceUriParameters["page"] = pageNumber == 1 ? string.Empty : pageNumber.ToString();
 
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
         public Task<SmileChannelInformationModel> LoadInformationAsync(string channelId)
         {
-            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediationKey.channelPage, ServiceType.Smile);
+            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediatorKey.channelPage, ServiceType.Smile);
             page.ReplaceUriParameters["channel-id"] = channelId;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {

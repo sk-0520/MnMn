@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
         public Task<SmileSuggestionCompleteCandidateModel> LoadCompleteAsync(string word)
         {
-            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediationKey.suggestionComplete, ServiceType.Smile);
+            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediatorKey.suggestionComplete, ServiceType.Smile);
             page.ReplaceUriParameters["word"] = word;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {

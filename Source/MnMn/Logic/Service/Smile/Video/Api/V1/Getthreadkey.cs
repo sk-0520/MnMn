@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<RawSmileVideoGetthreadkeyModel> Load_Issue665NA_Async(string threadId)
         {
-            using(var page = new PageLoader(Mediator, HttpUserAgentHost, SmileVideoMediationKey.getthreadkey, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, HttpUserAgentHost, SmileVideoMediatorKey.getthreadkey, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["thread-id"] = threadId;
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 if(!response.IsSuccess) {
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<RawSmileVideoGetthreadkeyModel> LoadAsync(string threadId)
         {
-            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.getthreadkey, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.getthreadkey, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["thread-id"] = threadId;
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 if(!response.IsSuccess) {

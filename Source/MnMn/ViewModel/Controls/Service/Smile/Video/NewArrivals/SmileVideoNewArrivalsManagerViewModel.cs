@@ -34,8 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
         public SmileVideoNewArrivalsManagerViewModel(Mediator mediator)
             : base(mediator)
         {
-            NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediator, SmileVideoMediationKey.newarrival);
-            Recent = new SmileVideoNewArrivalsFinderViewModel(Mediator, SmileVideoMediationKey.recent);
+            NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediator, SmileVideoMediatorKey.newarrival);
+            Recent = new SmileVideoNewArrivalsFinderViewModel(Mediator, SmileVideoMediatorKey.recent);
             Hotlist = new SmileVideoHotlistFinderViewModel(Mediator);
             Recommendations = new SmileVideoRecommendationsFinderViewModel(Mediator);
 

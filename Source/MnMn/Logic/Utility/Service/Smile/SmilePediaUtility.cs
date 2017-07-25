@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         public static Uri GetArticleUriFromWord(Mediator mediator, string word)
         {
             var serviceType = ServiceType.Smile;
-            var key = SmileMediationKey.pediaWordArticle;
+            var key = SmileMediatorKey.pediaWordArticle;
 
             var map = new StringsModel() {
                 ["word"] = word,

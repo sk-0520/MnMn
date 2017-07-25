@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, SessionBase, SmileMediationKey.mylistDefault, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, SessionBase, SmileMediatorKey.mylistDefault, ServiceType.Smile)) {
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
                 var rawJson = response.Result;
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, SessionBase, SmileMediationKey.mylistGroup, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, SessionBase, SmileMediatorKey.mylistGroup, ServiceType.Smile)) {
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
                 var rawJson = response.Result;
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, SessionBase, SmileMediationKey.mylist, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, SessionBase, SmileMediatorKey.mylist, ServiceType.Smile)) {
                 page.ReplaceUriParameters["mylist-id"] = myListId;
 
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, SessionBase, SmileMediationKey.mylistSearch, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, SessionBase, SmileMediatorKey.mylistSearch, ServiceType.Smile)) {
                 page.ReplaceUriParameters["query"] = query;
                 page.ReplaceUriParameters["page"] = pageNumber.ToString();
 
@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistDefaultVideoAdd, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistDefaultVideoAdd, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["video-id"] = videoId;
                 page.ReplaceRequestParameters["token"] = token;
 
@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistVideoAdd, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistVideoAdd, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
                 page.ReplaceRequestParameters["token"] = token;
@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 return SmileJsonResultModel.FailureLoadToken();
             }
 
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistDefaultVideoDelete, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistDefaultVideoDelete, ServiceType.Smile)) {
                 var ms = new MultiStrings(itemIdList);
                 page.ReplaceRequestParameters["item-id-list"] = ms.ToString();
                 page.ReplaceRequestParameters["token"] = token;
@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 return SmileJsonResultModel.FailureLoadToken();
             }
 
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistVideoDelete, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistVideoDelete, ServiceType.Smile)) {
                 var ms = new MultiStrings(itemIdList);
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
                 page.ReplaceRequestParameters["item-id-list"] = ms.ToString();
@@ -250,7 +250,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistGroupToken, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistGroupToken, ServiceType.Smile)) {
                 page.ReplaceUriParameters["mylist-id"] = myListId;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 var htmlSource = response.Result;
@@ -279,7 +279,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
                 //);
 
-                var mylistGroupToken = Mediator.GetExpression(SmileMediationKey.mylistGroupToken, ServiceType.Smile);
+                var mylistGroupToken = Mediator.GetExpression(SmileMediatorKey.mylistGroupToken, ServiceType.Smile);
                 var regToken = mylistGroupToken.Regex;
 
                 var tokenElement2 = htmlDocument.DocumentNode.Descendants()
@@ -317,7 +317,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 return SmileJsonResultModel.FailureLoadToken();
             }
 
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistGroupCreate, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistGroupCreate, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["name"] = myListName;
                 page.ReplaceRequestParameters["token"] = token;
 
@@ -333,7 +333,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             if(token == null) {
                 return SmileJsonResultModel.FailureLoadToken();
             }
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistGroupDelete, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistGroupDelete, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
                 page.ReplaceRequestParameters["token"] = token;
 
@@ -350,7 +350,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 return SmileJsonResultModel.FailureLoadToken();
             }
 
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistGroupUpdate, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistGroupUpdate, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
                 page.ReplaceRequestParameters["token"] = token;
                 page.ReplaceRequestParameters["name"] = myListName;
@@ -374,7 +374,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
             var multiIds = new MultiStrings(myListIds);
 
-            using(var page = new PageLoader(Mediator, Session, SmileMediationKey.mylistGroupSort, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, Session, SmileMediatorKey.mylistGroupSort, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["token"] = token;
                 page.ReplaceRequestParameters["group-id-list"] = multiIds.ToString();
 

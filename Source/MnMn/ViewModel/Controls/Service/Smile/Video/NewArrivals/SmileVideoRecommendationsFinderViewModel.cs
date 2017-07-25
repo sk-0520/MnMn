@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
     public class SmileVideoRecommendationsFinderViewModel: SmileVideoNewArrivalsFinderViewModel
     {
         public SmileVideoRecommendationsFinderViewModel(Mediator mediator)
-            : base(mediator, SmileVideoMediationKey.recommendation)
+            : base(mediator, SmileVideoMediatorKey.recommendation)
         { }
 
         #region function

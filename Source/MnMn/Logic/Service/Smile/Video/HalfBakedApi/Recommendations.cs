@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
         {
             Debug.Assert(Session.LoginState == LoginState.LoggedIn);
 
-            var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.recommendationPage, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.recommendationPage, ServiceType.SmileVideo);
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
                 page.Dispose();
 
@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.recommendationApi, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.recommendationApi, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["user-tags"] = UserTags;
                 page.ReplaceUriParameters["seed"] = Seed;
                 page.ReplaceUriParameters["page"] = pageNumber;

@@ -17,9 +17,9 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 {
-    public class IdleTalkMutterMediation : MediatorCustomBase
+    public class IdleTalkMutterMediator : MediatorCustomBase
     {
-        public IdleTalkMutterMediation(Mediator mediator)
+        public IdleTalkMutterMediator(Mediator mediator)
             : base(mediator, Constants.IdleTalkMutterUriListPath, Constants.IdleTalkMutterUriParametersListPath, Constants.IdleTalkMutterRequestHeadersListPath, Constants.IdleTalkMutterRequestParametersListPath, Constants.IdleTalkMutterRequestMappingsListPath, Constants.IdleTalkMutterExpressionsPath)
         { }
 
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(IdleTalkMutterMediationKey));
+            return GetMediationKeys(typeof(IdleTalkMutterMediatorKey));
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)

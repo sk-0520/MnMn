@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             }
 
             LoginState = LoginState.In;
-            using(var page = new PageLoader(Mediator, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, this, SmileMediatorKey.videoLogin, ServiceType.Smile)) {
                 //page.HeaderCheckOnly = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.Name;
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 return;
             }
 
-            using(var page = new PageLoader(Mediator, this, SmileMediationKey.videoLogout, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, this, SmileMediatorKey.videoLogout, ServiceType.Smile)) {
                 page.HeaderCheckOnly = true;
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 return false;
             }
 
-            using(var page = new PageLoader(Mediator, this, SmileMediationKey.videoCheck, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, this, SmileMediatorKey.videoCheck, ServiceType.Smile)) {
                 page.HeaderCheckOnly = true;
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers

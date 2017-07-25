@@ -40,9 +40,9 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
-    public class SmileLiveMediation: MediatorCustomBase
+    public class SmileLiveMediator: MediatorCustomBase
     {
-        public SmileLiveMediation(Mediator mediator, SmileLiveSettingModel setting)
+        public SmileLiveMediator(Mediator mediator, SmileLiveSettingModel setting)
             : base(mediator, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileLiveRequestHeadersListPath, Constants.SmileLiveRequestParametersListPath, Constants.SmileLiveRequestMappingsListPath, Constants.SmileLiveExpressionsPath)
         {
             Setting = setting;
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(SmileLiveMediationKey));
+            return GetMediationKeys(typeof(SmileLiveMediatorKey));
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)

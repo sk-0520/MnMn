@@ -36,10 +36,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
             Key = key;
 
             var titleMap = new StringsModel() {
-                { SmileVideoMediationKey.newarrival, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title },
-                { SmileVideoMediationKey.recent, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recent_Title },
-                { SmileVideoMediationKey.hotlist, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title },
-                { SmileVideoMediationKey.recommendation, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recommendations_Title },
+                { SmileVideoMediatorKey.newarrival, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title },
+                { SmileVideoMediatorKey.recent, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recent_Title },
+                { SmileVideoMediatorKey.hotlist, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title },
+                { SmileVideoMediatorKey.recommendation, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recommendations_Title },
             };
             Title = titleMap[Key];
         }
@@ -71,10 +71,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
             var newArrival = new Logic.Service.Smile.Video.Api.V1.NewArrivals(Mediator);
 
             switch(Key) {
-                case SmileVideoMediationKey.newarrival:
+                case SmileVideoMediatorKey.newarrival:
                     return newArrival.LoadNewVideoAsync();
 
-                case SmileVideoMediationKey.recent:
+                case SmileVideoMediatorKey.recent:
                     return newArrival.LoadNewCommentAsync();
 
                 default:

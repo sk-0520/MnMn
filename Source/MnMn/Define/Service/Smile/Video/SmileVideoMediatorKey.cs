@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 {
-    internal static class SmileVideoMediationKey
+    internal static class SmileVideoMediatorKey
     {
         public const string getthumbinfo = "video-getthumbinfo";
         public const string ranking = "video-ranking";

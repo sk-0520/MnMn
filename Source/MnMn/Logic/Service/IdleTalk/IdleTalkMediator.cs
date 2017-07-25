@@ -18,18 +18,18 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
 {
-    public class IdleTalkMediation: MediatorCustomBase
+    public class IdleTalkMediator: MediatorCustomBase
     {
-        public IdleTalkMediation(Mediator mediator)
+        public IdleTalkMediator(Mediator mediator)
             : base(mediator, Constants.IdleTalkUriListPath, Constants.IdleTalkUriParametersListPath, Constants.IdleTalkRequestHeadersListPath, Constants.IdleTalkRequestParametersListPath, Constants.IdleTalkRequestMappingsListPath, Constants.IdleTalkExpressionsPath)
         {
-            MutterMediation = new IdleTalkMutterMediation(Mediator);
+            MutterMediation = new IdleTalkMutterMediator(Mediator);
         }
 
 
         #region property
 
-        IdleTalkMutterMediation MutterMediation { get; }
+        IdleTalkMutterMediator MutterMediation { get; }
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(IdleTalkMediationKey));
+            return GetMediationKeys(typeof(IdleTalkMediatorKey));
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)

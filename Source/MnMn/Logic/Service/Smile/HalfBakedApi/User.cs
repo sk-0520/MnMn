@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             //    ",
             //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
             //);
-            var videoLoginUserValue = Mediator.GetExpression(SmileMediationKey.videoLogin, SmileMediationKey.Id.videoLogin_userValue, ServiceType.Smile);
+            var videoLoginUserValue = Mediator.GetExpression(SmileMediatorKey.videoLogin, SmileMediatorKey.Id.videoLogin_userValue, ServiceType.Smile);
 
             var userElement = htmlDocument.DocumentNode.Descendants()
                 .Where(n => n.Name == "script")
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             //    RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase
             //);
 
-            var videoLoginUserR18 = Mediator.GetExpression(SmileMediationKey.videoLogin, SmileMediationKey.Id.videoLogin_userR18, ServiceType.Smile);
+            var videoLoginUserR18 = Mediator.GetExpression(SmileMediatorKey.videoLogin, SmileMediatorKey.Id.videoLogin_userR18, ServiceType.Smile);
             var rawUser = videoLoginUserR18.Regex.Replace(match.Groups["VALUE"].Value, "isOver18: false");
 
             var jsonUser = "{" + rawUser + "}";
@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
         public Task<SmileUserInformationModel> LoadUserInformationAsync(string userId)
         {
             return LoginIfNotLoginAsync().ContinueWith(_ => {
-                var page = new PageLoader(Mediator, Session, SmileMediationKey.userPage, ServiceType.Smile);
+                var page = new PageLoader(Mediator, Session, SmileMediatorKey.userPage, ServiceType.Smile);
                 page.ReplaceUriParameters["user-id"] = userId;
                 return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
                     page.Dispose();
@@ -249,7 +249,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
         public Task<RawSmileUserMyListModel> LoadUserMyListAsync(string userId)
         {
-            var page = new PageLoader(Mediator, Session, SmileMediationKey.userMyListPage, ServiceType.Smile);
+            var page = new PageLoader(Mediator, Session, SmileMediatorKey.userMyListPage, ServiceType.Smile);
             page.ReplaceUriParameters["user-id"] = userId;
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
                 page.Dispose();
@@ -260,7 +260,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
         public Task<FeedSmileVideoModel> LoadPostVideoAsync(string userId)
         {
-            var page = new PageLoader(Mediator, Session, SmileMediationKey.userPostVideo, ServiceType.Smile);
+            var page = new PageLoader(Mediator, Session, SmileMediatorKey.userPostVideo, ServiceType.Smile);
             page.ReplaceUriParameters["user-id"] = userId;
             page.ReplaceUriParameters["lang"] = AppUtility.GetCultureName();
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {

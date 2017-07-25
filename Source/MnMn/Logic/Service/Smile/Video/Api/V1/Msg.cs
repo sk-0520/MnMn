@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<RawSmileVideoMsgPacket_Issue665NA_Model> Load_Issue665NA_Async(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
         {
-            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.msg_Issue665NA, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.msg_Issue665NA, ServiceType.SmileVideo)) {
                 //page.ParameterType = ParameterType.Mapping;
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             };
             var packetCount = packetMap.Max(p => p.Value);
 
-            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.msg, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.msg, ServiceType.SmileVideo)) {
                 //page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
                 page.ReplaceRequestParameters["thread-id"] = threadId;
@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<RawSmileVideoPostKeyModel> LoadPostKeyAsync(string threadId, int commentCount)
         {
-            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.msgPostKey, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.msgPostKey, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["block-no"] = (Math.Floor((commentCount + 1) / 100.0)).ToString();
                 page.ReplaceUriParameters["thread-id"] = threadId;
 
@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.msgPost_Issue665NA, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.msgPost_Issue665NA, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
 
                 page.ReplaceRequestParameters["thread-id"] = threadId;
@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediator, Session, SmileVideoMediationKey.msgPost, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.msgPost, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["msg-uri"] = ReplaceJsonApiUrl(msgServer);
 
                 page.ReplaceRequestParameters["thread-id"] = threadId;

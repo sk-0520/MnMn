@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
 
         public async Task<HtmlDocument> LoadPageHtmlDocument()
         {
-            using(var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileVideoMediationKey.hotlist, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileVideoMediatorKey.hotlist, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["lang"] = AppUtility.GetCultureName();
 
                 var result = await page.GetResponseTextAsync(PageLoaderMethod.Get);

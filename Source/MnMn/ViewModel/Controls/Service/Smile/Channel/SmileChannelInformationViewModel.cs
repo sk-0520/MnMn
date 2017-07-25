@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
                 var replaceMap = new StringsModel() {
                     ["channel-id"] = ChannelId,
                 };
-                var uri = UriUtility.GetConvertedUri(Mediator, SmileMediationKey.channelPage, replaceMap, ServiceType.Smile);
+                var uri = UriUtility.GetConvertedUri(Mediator, SmileMediatorKey.channelPage, replaceMap, ServiceType.Smile);
                 return uri;
             }
         }
@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             var replaceMap = new StringsModel() {
                 ["channel-id"] = ChannelId,
             };
-            var uri = UriUtility.GetConvertedUri(Mediator, SmileMediationKey.channelThumbnail, replaceMap, ServiceType.Smile);
+            var uri = UriUtility.GetConvertedUri(Mediator, SmileMediatorKey.channelThumbnail, replaceMap, ServiceType.Smile);
 
             return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, uri, Mediator.Logger).ContinueWith(task => {
                 var image = task.Result;

@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 
-            using(var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediationKey.contentsSearch, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediatorKey.contentsSearch, ServiceType.Smile)) {
                 page.ReplaceUriParameters["service"] = searchService;
                 page.ReplaceUriParameters["query"] = query;
                 page.ReplaceUriParameters["targets"] = searchType;

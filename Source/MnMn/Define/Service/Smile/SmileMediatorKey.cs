@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    internal static class SmileMediationKey
+    internal static class SmileMediatorKey
     {
         public const string webSite = "smile-web-site";
 

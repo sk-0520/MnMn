@@ -310,7 +310,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Information = information;
             CallOnPropertyChange(nameof(Information));
 
-            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileLiveMediationKey.watchPage, ServiceType.SmileLive);
+            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileLiveMediatorKey.watchPage, ServiceType.SmileLive);
             page.ForceUri = Information.WatchUrl;
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
                 var response = t.Result;

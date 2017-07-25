@@ -53,9 +53,9 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
-    public class SmileVideoMediation: MediatorCustomBase
+    public class SmileVideoMediator: MediatorCustomBase
     {
-        public SmileVideoMediation(Mediator mediator, SmileVideoSettingModel setting)
+        public SmileVideoMediator(Mediator mediator, SmileVideoSettingModel setting)
             : base(mediator, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestHeadersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath, Constants.SmileVideoExpressionsPath)
         {
             Setting = setting;
@@ -297,7 +297,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(SmileVideoMediationKey));
+            return GetMediationKeys(typeof(SmileVideoMediatorKey));
         }
 
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)

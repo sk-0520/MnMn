@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
     public class SmileVideoHotlistFinderViewModel: SmileVideoNewArrivalsFinderViewModel
     {
         public SmileVideoHotlistFinderViewModel(Mediator mediator)
-            : base(mediator, SmileVideoMediationKey.hotlist)
+            : base(mediator, SmileVideoMediatorKey.hotlist)
         { }
 
         #region function

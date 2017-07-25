@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
         {
             var userAgent = Session.CreateHttpUserAgent();
 
-            var page = new PageLoader(Mediator, Session, SmileLiveMediationKey.getPlayerStatus, ServiceType.SmileLive);
+            var page = new PageLoader(Mediator, Session, SmileLiveMediatorKey.getPlayerStatus, ServiceType.SmileLive);
             page.ReplaceUriParameters["live-id"] = liveId;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {

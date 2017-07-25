@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public override void InitializeView(MainWindow view)
         {
             WebSiteNavigator = view.smile.webSite.navigator;
-            var homeUriResult = Mediator.GetUri(SmileMediationKey.webSite, null, ServiceType.Smile);
+            var homeUriResult = Mediator.GetUri(SmileMediatorKey.webSite, null, ServiceType.Smile);
             WebSiteNavigator.HomeSource = new Uri(homeUriResult.Uri);
         }
 
