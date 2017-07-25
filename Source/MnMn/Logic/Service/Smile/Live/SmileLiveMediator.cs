@@ -94,13 +94,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         #endregion
 
-        #region MediationBase
+        #region MediatorBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileLiveName);
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(SmileLiveMediatorKey));
+            return GetMediatorKeys(typeof(SmileLiveMediatorKey));
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)

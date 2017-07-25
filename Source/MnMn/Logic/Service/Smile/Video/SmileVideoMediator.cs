@@ -291,13 +291,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #endregion
 
-        #region MediationBase
+        #region MediatorBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileVideoName);
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(SmileVideoMediatorKey));
+            return GetMediatorKeys(typeof(SmileVideoMediatorKey));
         }
 
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)

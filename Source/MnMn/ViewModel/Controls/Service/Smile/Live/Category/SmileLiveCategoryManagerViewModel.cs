@@ -148,13 +148,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         Task SearchCoreAsync(DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category)
         {
-            //var test = new Logic.Service.Smile.Live.Api.Category(Mediation);
-            //var a = test.LoadAsync(category.Key, sort.Key, order.Key, 1);
-            //a.ContinueWith(t => {
-            //    SerializeUtility.SaveXmlSerializeToFile("z:\\a.xml", t.Result);
-            //});
-            //return Task.CompletedTask;
-
             // 存在する場合は該当タブへ遷移
             var selectViewModel = RestrictUtility.IsNotNull(
                 CategoryGroups.FirstOrDefault(g => g.Category.Key == category.Key),

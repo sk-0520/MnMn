@@ -24,13 +24,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
         { }
 
 
-        #region MediationCustomBase
+        #region MediatorCustomBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceIdleTalkName, Constants.ServiceIdleTalkMutterName);
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(IdleTalkMutterMediatorKey));
+            return GetMediatorKeys(typeof(IdleTalkMutterMediatorKey));
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)

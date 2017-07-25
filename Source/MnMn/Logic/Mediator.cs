@@ -580,7 +580,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        #region MediationBase
+        #region MediatorBase
 
         public override ILogger Logger { get { return this._logger; } }
 

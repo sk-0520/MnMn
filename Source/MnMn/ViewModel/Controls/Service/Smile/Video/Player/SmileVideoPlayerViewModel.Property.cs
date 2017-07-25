@@ -729,7 +729,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 if(this._bookmarkItems == null) {
                     var result = Mediator.GetResultFromRequest<SmileVideoBookmarkResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Bookmark));
-                    //var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.UserNodes;
                     this._bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(result.UserNodes);
                 }
 

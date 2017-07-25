@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 SerializeUtility.SaveXmlSerializeToFile(cacheFile.FullName, group);
                 var finder = new SmileVideoMatchMyListFinderViewModel(mediator, group, myListId, false);
                 await finder.LoadDefaultCacheAsync();
-                mediator.Smile.VideoMediation.ManagerPack.MyListManager.AddBookmarkUserMyList(finder);
+                mediator.Smile.VideoMediator.ManagerPack.MyListManager.AddBookmarkUserMyList(finder);
             }
         }
 

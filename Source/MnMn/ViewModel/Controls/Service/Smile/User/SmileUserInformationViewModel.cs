@@ -503,11 +503,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public ICommand MenuAddPlayListVideoIdLinkCommand { get { return CreateCommand(o => { Mediator.Logger.Trace("not impl"); }); } }
         public ICommand MenuAddCheckItLaterVideoIdCommand
         {
-            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediator, Mediator.Smile.VideoMediation.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
+            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediator, Mediator.Smile.VideoMediator.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
         }
         public ICommand MenuAddUnorganizedBookmarkVideoIdCommand
         {
-            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediator, Mediator.Smile.VideoMediation.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
+            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediator, Mediator.Smile.VideoMediator.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
         }
 
         public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediator)); } }

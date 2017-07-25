@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 #if DEBUG
                         Mediator.Order(new AppCleanMemoryOrderModel(true, true));
 #else
-                        Mediation.Order(new AppCleanMemoryOrderModel(true, false));
+                        Mediator.Order(new AppCleanMemoryOrderModel(true, false));
 #endif
                         ReloadUsingMemoryCommand.TryExecute(null);
                     }
@@ -330,15 +330,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #endregion
 
         #region function
-
-        //void Execute(string command)
-        //{
-        //    try {
-        //        Process.Start(command);
-        //    } catch(Exception ex) {
-        //        Mediation.Logger.Error(ex);
-        //    }
-        //}
 
         void ReloadUsingMemory()
         {

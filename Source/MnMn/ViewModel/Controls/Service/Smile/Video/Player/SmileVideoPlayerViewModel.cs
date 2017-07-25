@@ -901,7 +901,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
 
             var filterList = defineKeys
-                .Join(Mediator.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
+                .Join(Mediator.Smile.VideoMediator.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
                 .Select(e => SmileVideoCommentUtility.ConvertFromDefined(e))
                 .ToEvaluatedSequence()
             ;
@@ -1999,7 +1999,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             };
             CallOnPropertyChange(propertyNames);
 
-            LocalCommentFilering = new SmileVideoFilteringViweModel(Information.Filtering, null, Mediator.Smile.VideoMediation.Filtering);
+            LocalCommentFilering = new SmileVideoFilteringViweModel(Information.Filtering, null, Mediator.Smile.VideoMediator.Filtering);
             SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();
@@ -2162,11 +2162,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
         public ICommand MenuAddCheckItLaterVideoIdCommand
         {
-            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediator, Mediator.Smile.VideoMediation.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
+            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediator, Mediator.Smile.VideoMediator.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
         }
         public ICommand MenuAddUnorganizedBookmarkVideoIdCommand
         {
-            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediator, Mediator.Smile.VideoMediation.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
+            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediator, Mediator.Smile.VideoMediator.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
         }
 
         public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediator)); } }

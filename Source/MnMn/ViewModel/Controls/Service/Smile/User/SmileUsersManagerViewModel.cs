@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             UserHistoryCollection = new MVMPairCreateDelegationCollection<SmileUserItemModel, SmileUserHistoryItemViewModel>(Setting.User.History, default(object), CreateHistoryItem);
             UserHistoryItems = CollectionViewSource.GetDefaultView(UserHistoryCollection.ViewModelList);
 
-            // NOTE: Mediation を経由していない
+            // NOTE: Mediator を経由していない
             UserDefined = SerializeUtility.LoadXmlSerializeFromFile<SmileUserDefinedModel>(Constants.SmileUserInformationPath);
 
             CheckItLaterCheckTimer.Tick += CheckItLaterCheckTimer_Tick;

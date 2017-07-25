@@ -119,7 +119,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         async Task<bool> OpenVideoPlayerAsync(string videoId)
         {
-            //var videoInformation = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, Constants.ServiceSmileVideoThumbCacheSpan);
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
             var videoInformation = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
 

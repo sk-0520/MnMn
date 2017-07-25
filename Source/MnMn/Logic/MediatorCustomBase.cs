@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected abstract IEnumerable<string> GetCustomKeys();
 
-        protected static IEnumerable<string> GetMediationKeys(Type type)
+        protected static IEnumerable<string> GetMediatorKeys(Type type)
         {
             // 突貫工事
             foreach(var field  in type.GetFields()) {
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        #region MediationBase
+        #region MediatorBase
 
         public override ILogger Logger { get { return Mediator.Logger; } }
 
