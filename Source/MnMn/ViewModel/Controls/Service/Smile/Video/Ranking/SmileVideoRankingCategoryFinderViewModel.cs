@@ -57,8 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #endregion
 
-        public SmileVideoRankingCategoryFinderViewModel(Mediation mediation, IReadOnlySmileVideoRanking rankingModel, IReadOnlyDefinedElement period, IReadOnlyDefinedElement target, IReadOnlyDefinedElement category)
-            : base(mediation, 0)
+        public SmileVideoRankingCategoryFinderViewModel(Mediator mediator, IReadOnlySmileVideoRanking rankingModel, IReadOnlyDefinedElement period, IReadOnlyDefinedElement target, IReadOnlyDefinedElement category)
+            : base(mediator, 0)
         {
             PeriodItems = new CollectionModel<DefinedElementModel>(rankingModel.Periods.Items.Select(i => (DefinedElementModel)i.DeepClone()));
             TargetItems = new CollectionModel<DefinedElementModel>(rankingModel.Targets.Items.Select(i => (DefinedElementModel)i.DeepClone()));
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var ranking = new Logic.Service.Smile.Video.Api.V1.Ranking(Mediation);
+            var ranking = new Logic.Service.Smile.Video.Api.V1.Ranking(Mediator);
             return ranking.LoadAsync(SelectedTarget.Key, SelectedPeriod.Key, Category.Key);
         }
 

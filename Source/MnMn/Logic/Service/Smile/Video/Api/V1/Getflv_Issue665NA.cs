@@ -45,8 +45,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Getflv_Issue665NA: SessionApiBase<SmileSessionViewModel>
     {
-        public Getflv_Issue665NA(Mediation mediation)
-            : base(mediation, ServiceType.Smile)
+        public Getflv_Issue665NA(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region property
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             //var re = await GetNormalAsync(uri);
             // WEBから取得してみる
-            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvScraping, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, SessionBase, SmileVideoMediatorKey.getflvScraping, ServiceType.SmileVideo)) {
                 var usingUri = movieType == SmileVideoMovieType.Swf
                     ? new Uri(uri.OriginalString + "?as3=1")
                     : uri
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadNormalAsync(Uri uri, SmileVideoMovieType movieType)
         {
-            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, SessionBase, SmileVideoMediatorKey.getflvNormal, ServiceType.SmileVideo)) {
                 var usingUri = movieType == SmileVideoMovieType.Swf
                     ? new Uri(uri.OriginalString + "?as3=1")
                     : uri
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         bool IsScrapingPattern(string videoId)
         {
-            return SmileIdUtility.IsScrapingVideoId(videoId, Mediation);
+            return SmileIdUtility.IsScrapingVideoId(videoId, Mediator);
         }
 
         public async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingDmc)

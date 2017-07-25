@@ -40,8 +40,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
     /// </summary>
     public class SmileVideoHotlistFinderViewModel: SmileVideoNewArrivalsFinderViewModel
     {
-        public SmileVideoHotlistFinderViewModel(Mediation mediation)
-            : base(mediation, SmileVideoMediationKey.hotlist)
+        public SmileVideoHotlistFinderViewModel(Mediator mediator)
+            : base(mediator, SmileVideoMediatorKey.hotlist)
         { }
 
         #region function
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var hotList = new HotList(Mediation);
+            var hotList = new HotList(Mediator);
 
             var htmlDocument = await hotList.LoadPageHtmlDocument();
             if(htmlDocument == null) {

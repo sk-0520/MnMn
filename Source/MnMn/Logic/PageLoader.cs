@@ -43,9 +43,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// </summary>
     public class PageLoader: DisposeFinalizeBase, IReadOnlyKey
     {
-        public PageLoader(Mediation mediation, IHttpUserAgentCreator userAgentCreator, string key, ServiceType serviceType)
+        public PageLoader(Mediator mediator, IHttpUserAgentCreator userAgentCreator, string key, ServiceType serviceType)
         {
-            Mediation = mediation;
+            Mediator = mediator;
             HttpUserAgent = userAgentCreator.CreateHttpUserAgent();
             Key = key;
             ServiceType = serviceType;
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         bool OwnershipUA { get; set; }
 
-        Mediation Mediation { get; set; }
+        Mediator Mediator { get; set; }
 
         HttpClient HttpUserAgent { get; set; }
 
@@ -150,35 +150,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected void MakeUri()
         {
-            var rawUri = Mediation.GetUri(Key, ReplaceUriParameters, ServiceType);
+            var rawUri = Mediator.GetUri(Key, ReplaceUriParameters, ServiceType);
             ParameterType = rawUri.RequestParameterType;
             SafetyUri = rawUri.SafetyUri;
             SafetyHeader = rawUri.SafetyHeader;
             SafetyParameter = rawUri.SafetyParameter;
             Uri = RestrictUtility.IsNull(
                 ForceUri, () => {
-                    var convertedUri = Mediation.ConvertUri(Key, rawUri.Uri, ServiceType);
+                    var convertedUri = Mediator.ConvertUri(Key, rawUri.Uri, ServiceType);
                     return new Uri(convertedUri);
                 },
                 uri => uri
             );
             if(SafetyUri) {
-                Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Properties.Resources.String_App_Logic_PageLoader_SafetyUri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
+                Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Properties.Resources.String_App_Logic_PageLoader_SafetyUri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
             } else {
-                Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Uri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
+                Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Uri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
             }
         }
 
         protected void MakeRequestHeader()
         {
-            var rawHeader = Mediation.GetRequestHeader(Key, ReplaceRequestHeaders, ServiceType);
-            var convertedHeader = Mediation.ConvertRequestHeader(Key, rawHeader, ServiceType);
+            var rawHeader = Mediator.GetRequestHeader(Key, ReplaceRequestHeaders, ServiceType);
+            var convertedHeader = Mediator.ConvertRequestHeader(Key, rawHeader, ServiceType);
             Headers = (Dictionary<string, string>)convertedHeader;
 
             if(SafetyHeader) {
-                Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={Properties.Resources.String_App_Logic_PageLoader_SafetyHeader}")) : null);
+                Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={Properties.Resources.String_App_Logic_PageLoader_SafetyHeader}")) : null);
             } else {
-                Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
+                Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
             }
         }
 
@@ -186,8 +186,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             switch(ParameterType) {
                 case ParameterType.Plain: {
-                        var rawContent = Mediation.GetRequestParameter(Key, ReplaceRequestParameters, ServiceType);
-                        var singleContent = Mediation.ConvertRequestParameter(Key, rawContent, ServiceType);
+                        var rawContent = Mediator.GetRequestParameter(Key, ReplaceRequestParameters, ServiceType);
+                        var singleContent = Mediator.ConvertRequestParameter(Key, rawContent, ServiceType);
                         var multiContents = singleContent
                             .Where(p => p.Value.Any(c => c == MultiStrings.defaultSeparator))
                             .ToEvaluatedSequence()
@@ -207,9 +207,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             }
                         }
                         if(SafetyParameter) {
-                            Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {convertedContent.Count}", convertedContent.Any() ? string.Join(Environment.NewLine, convertedContent.OrderBy(p => p.Key).Select(p => $"{p.Key}={Properties.Resources.String_App_Logic_PageLoader_SafetyParameter}")) : null);
+                            Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {convertedContent.Count}", convertedContent.Any() ? string.Join(Environment.NewLine, convertedContent.OrderBy(p => p.Key).Select(p => $"{p.Key}={Properties.Resources.String_App_Logic_PageLoader_SafetyParameter}")) : null);
                         } else {
-                            Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {convertedContent.Count}", convertedContent.Any() ? string.Join(Environment.NewLine, convertedContent.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
+                            Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {convertedContent.Count}", convertedContent.Any() ? string.Join(Environment.NewLine, convertedContent.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
                         }
 
                         var content = new FormUrlEncodedContent(convertedContent);
@@ -218,12 +218,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     break;
 
                 case ParameterType.Mapping: {
-                        var mappingResult = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
-                        var convertedContent = Mediation.ConvertRequestMapping(Key, mappingResult.Result, ServiceType);
+                        var mappingResult = Mediator.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
+                        var convertedContent = Mediator.ConvertRequestMapping(Key, mappingResult.Result, ServiceType);
                         if(SafetyParameter) {
-                            Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, byte: {convertedContent.Length}", Properties.Resources.String_App_Logic_PageLoader_SafetyParameter);
+                            Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, byte: {convertedContent.Length}", Properties.Resources.String_App_Logic_PageLoader_SafetyParameter);
                         } else {
-                            Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, byte: {convertedContent.Length}", convertedContent);
+                            Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, byte: {convertedContent.Length}", convertedContent);
                         }
                         MappingContent = new StringContent(convertedContent, Encoding.UTF8);
                         if(!string.IsNullOrWhiteSpace(mappingResult.ContentType)) {
@@ -286,7 +286,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected IReadOnlyCheck CheckResponseHeaders(HttpResponseMessage response)
         {
-            return Mediation.CheckResponseHeader(Key, Uri, response.Headers, ServiceType);
+            return Mediator.CheckResponseHeader(Key, Uri, response.Headers, ServiceType);
         }
 
         protected async Task<string> GetTextAsync(HttpResponseMessage response)
@@ -297,15 +297,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     stream.Position = 0;
                 }
 
-                Mediation.ConvertBinary(Key, Uri, stream, ServiceType);
-                var encoding = Mediation.GetEncoding(Key, Uri, stream, ServiceType);
+                Mediator.ConvertBinary(Key, Uri, stream, ServiceType);
+                var encoding = Mediator.GetEncoding(Key, Uri, stream, ServiceType);
 
                 var binary = stream.GetBuffer();
                 var length = (int)stream.Length;
 
                 var plainText = encoding.GetString(binary, 0, length);
 
-                var convertedText = Mediation.ConvertString(Key, Uri, plainText, ServiceType);
+                var convertedText = Mediator.ConvertString(Key, Uri, plainText, ServiceType);
 
                 return convertedText;
             }
@@ -323,7 +323,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 MakeRequestParameter();
 
                 using(var response = await SendRequestMessage(httpMethod).ConfigureAwait(false)) {
-                    Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {response.StatusCode}", response.ToString());
+                    Mediator.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {response.StatusCode}", response.ToString());
                     if(!response.IsSuccessStatusCode) {
                         if(JudgeFailureStatusCode != null) {
                             var judge = JudgeFailureStatusCode(response);
@@ -397,7 +397,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
                 HttpUserAgent = null;
 
-                Mediation = null;
+                Mediator = null;
             }
 
             base.Dispose(disposing);

@@ -711,7 +711,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 if(this._accountMyListItems == null) {
-                    var response = Mediation.Request(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.MyList));
+                    var response = Mediator.Request(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.MyList));
                     var result = (SmileVideoAccountMyListSettingResultModel)response.Result;
                     this._accountMyListItems = result.AccountMyList;
                 }
@@ -728,8 +728,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 if(this._bookmarkItems == null) {
-                    var result = Mediation.GetResultFromRequest<SmileVideoBookmarkResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Bookmark));
-                    //var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.UserNodes;
+                    var result = Mediator.GetResultFromRequest<SmileVideoBookmarkResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Bookmark));
                     this._bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(result.UserNodes);
                 }
 
@@ -1165,7 +1164,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public DescriptionBase DescriptionProcessor => new SmileDescription(Mediation);
+        public DescriptionBase DescriptionProcessor => new SmileDescription(Mediator);
 
         SmileVideoCommentViewModel CommentScriptDefault { get; set; }
 

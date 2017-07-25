@@ -27,10 +27,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Off
 {
     public class SmileLiveOfficialBroadcastManagerViewModel: SmileLiveCustomManagerViewModelBase
     {
-        public SmileLiveOfficialBroadcastManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public SmileLiveOfficialBroadcastManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
-            OfficialFeedFinder = new SmileLiveOfficialBroadcastFeedFinderViewModel(Mediation);
+            OfficialFeedFinder = new SmileLiveOfficialBroadcastFeedFinderViewModel(Mediator);
         }
 
         #region property

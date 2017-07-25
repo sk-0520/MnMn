@@ -32,17 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public AcceptViewModel(Mediation mediation, IReadOnlyAcceptVersion acceptVersion)
+        public AcceptViewModel(Mediator mediator, IReadOnlyAcceptVersion acceptVersion)
         {
-            Mediation = mediation;
+            Mediator = mediator;
             AcceptVersion = acceptVersion;
 
-            Setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            Setting = Mediator.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
         }
 
         #region property
 
-        Mediation Mediation { get; }
+        Mediator Mediator { get; }
         IReadOnlyAcceptVersion AcceptVersion { get; }
         AppSettingModel Setting { get; }
 
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             {
                 return CreateCommand(o => {
                     var data = (WebNavigatorEventDataBase)o;
-                    WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                    WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                 });
             }
         }
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get
             {
                 return CreateCommand(o => {
-                    ShellUtility.OpenUriInDefaultBrowser(DevelopmentUri, Mediation.Logger);
+                    ShellUtility.OpenUriInDefaultBrowser(DevelopmentUri, Mediator.Logger);
                 });
             }
         }
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get
             {
                 return CreateCommand(o => {
-                    ShellUtility.SetClipboard(DevelopmentUri.OriginalString, Mediation.Logger);
+                    ShellUtility.SetClipboard(DevelopmentUri.OriginalString, Mediator.Logger);
                 });
             }
         }

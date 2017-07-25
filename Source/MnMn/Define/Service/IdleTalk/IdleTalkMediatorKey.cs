@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk
 {
-    internal static class IdleTalkMediationKey
+    internal static class IdleTalkMediatorKey
     { }
 }

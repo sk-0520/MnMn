@@ -103,18 +103,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        protected SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
+        protected SmileVideoInformationViewModel(Mediator mediator, int number, SmileVideoInformationFlags informationFlags)
         {
-            Mediation = mediation;
+            Mediator = mediator;
             ThumbnailLoadState = LoadState.None;
             InformationFlags = informationFlags;
 
-            NetworkSetting = Mediation.GetNetworkSetting();
-            Logger = Mediation.Logger;
+            NetworkSetting = Mediator.GetNetworkSetting();
+            Logger = Mediator.Logger;
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoThumbModel thumb, int number)
-            : this(mediation, number, SmileVideoInformationFlags.All)
+        public SmileVideoInformationViewModel(Mediator mediator, RawSmileVideoThumbModel thumb, int number)
+            : this(mediator, number, SmileVideoInformationFlags.All)
         {
             Thumb = thumb;
 
@@ -124,8 +124,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, RawSmileContentsSearchItemModel search, int number)
-            : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
+        public SmileVideoInformationViewModel(Mediator mediator, RawSmileContentsSearchItemModel search, int number)
+            : this(mediator, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
         {
             ContentsSearch = search;
 
@@ -133,8 +133,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoSearchItemModel search, int number)
-            : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
+        public SmileVideoInformationViewModel(Mediator mediator, RawSmileVideoSearchItemModel search, int number)
+            : this(mediator, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
         {
             OfficialSearch = search;
 
@@ -142,8 +142,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoItemModel feed, int number, SmileVideoInformationFlags informationFlags)
-            : this(mediation, number, informationFlags)
+        public SmileVideoInformationViewModel(Mediator mediator, FeedSmileVideoItemModel feed, int number, SmileVideoInformationFlags informationFlags)
+            : this(mediator, number, informationFlags)
         {
             Feed = feed;
             FeedDetail = SmileVideoFeedUtility.ConvertRawDescription(Feed.Description);
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 橋渡し。
         /// </summary>
-        Mediation Mediation { get; }
+        Mediator Mediator { get; }
         /// <summary>
         /// 動画サービス設定。。
         /// </summary>
@@ -614,7 +614,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 this._tagList = new CollectionModel<SmileVideoTagViewModel>();
                                 var tagItems = Thumb.Tags.FirstOrDefault();
                                 if(tagItems != null) {
-                                    var list = tagItems.Tags.Select(t => new SmileVideoTagViewModel(Mediation, t));
+                                    var list = tagItems.Tags.Select(t => new SmileVideoTagViewModel(Mediator, t));
                                     this._tagList.InitializeRange(list);
                                 }
                             }
@@ -684,7 +684,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                return SmileIdUtility.IsScrapingVideoId(VideoId, Mediation);
+                return SmileIdUtility.IsScrapingVideoId(VideoId, Mediator);
             }
         }
 
@@ -732,7 +732,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 ThrowHasNotGetflv_Issue665NA();
 
                 if(!this._isEconomyMode.HasValue) {
-                    this._isEconomyMode = SmileVideoGetflvUtility.IsEconomyMode(Getflv_Issue665NA.MovieServerUrl, Mediation);
+                    this._isEconomyMode = SmileVideoGetflvUtility.IsEconomyMode(Getflv_Issue665NA.MovieServerUrl, Mediator);
                 }
 
                 return this._isEconomyMode.Value;
@@ -750,7 +750,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 ThrowHasNotWatchData();
 
                 if(!this._isEconomyMode.HasValue) {
-                    this._isEconomyMode = SmileVideoGetflvUtility.IsEconomyMode(MovieServerUrl.OriginalString, Mediation);
+                    this._isEconomyMode = SmileVideoGetflvUtility.IsEconomyMode(MovieServerUrl.OriginalString, Mediator);
                 }
 
                 return this._isEconomyMode.Value;
@@ -1078,13 +1078,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             try {
                 var checkResult = GarbageCollection(GarbageCollectionLevel.Large | GarbageCollectionLevel.Small | GarbageCollectionLevel.Temporary, CacheSpan.NoCache, true);
                 if(checkResult.IsSuccess) {
-                    Mediation.Logger.Information($"cache clear: [{VideoId}] {RawValueUtility.ConvertHumanLikeByte(checkResult.Result)}");
+                    Mediator.Logger.Information($"cache clear: [{VideoId}] {RawValueUtility.ConvertHumanLikeByte(checkResult.Result)}");
                 } else {
-                    Mediation.Logger.Warning($"cache clear: [{VideoId}] fail!");
+                    Mediator.Logger.Warning($"cache clear: [{VideoId}] fail!");
                 }
                 CallOnPropertyChangeDisplayItem();
             } catch(Exception ex) {
-                Mediation.Logger.Warning(ex);
+                Mediator.Logger.Warning(ex);
             }
         }
 
@@ -1125,9 +1125,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return PathUtility.CreateFileName(VideoId, extension);
         }
 
-        static DirectoryInfo GetCahceDirectory(Mediation mediation, string videoId)
+        static DirectoryInfo GetCahceDirectory(Mediator mediator, string videoId)
         {
-            var parentDir = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            var parentDir = mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var cachedDirPath = Path.Combine(parentDir.FullName, videoId);
 
             return Directory.CreateDirectory(cachedDirPath);
@@ -1135,7 +1135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void Initialize()
         {
-            CacheDirectory = GetCahceDirectory(Mediation, VideoId);
+            CacheDirectory = GetCahceDirectory(Mediator, VideoId);
 
             WatchPageHtmlFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
@@ -1145,7 +1145,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "json")));
             DmcFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "dmc", "xml")));
 
-            var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
+            var resSetting = Mediator.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
 
             IndividualVideoSettingFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("setting", "json")));
@@ -1209,7 +1209,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             PageHtmlLoadState = LoadState.Loading;
 
-            var getflv = new Getflv_Issue665NA(Mediation);
+            var getflv = new Getflv_Issue665NA(Mediator);
 
             return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
                 PageHtmlLoadState = LoadState.Loaded;
@@ -1234,7 +1234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             PageHtmlLoadState = LoadState.Loading;
 
-            var watchData = new WatchData(Mediation);
+            var watchData = new WatchData(Mediator);
             return watchData.LoadWatchDataAsync(WatchUrl, MovieType).ContinueWith(t => {
                 PageHtmlLoadState = LoadState.Loaded;
                 var wd = t.Result;
@@ -1256,7 +1256,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task LoadGetthreadkeyAsync()
         {
-            var getThreadkey = new Getthreadkey(Mediation);
+            var getThreadkey = new Getthreadkey(Mediator);
             if(IsCompatibleIssue665NA) {
                 return getThreadkey.Load_Issue665NA_Async(ThreadId).ContinueWith(t => {
                     if(t.IsFaulted) {
@@ -1321,7 +1321,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             RelationVideoLoadState = LoadState.Preparation;
 
             RelationVideoLoadState = LoadState.Loading;
-            var getRelation = new Getrelation(Mediation);
+            var getRelation = new Getrelation(Mediator);
             return getRelation.LoadAsync(VideoId, 1, Constants.ServiceSmileVideoRelationVideoSort, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
                 var relation = task.Result;
 
@@ -1347,7 +1347,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     item.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);
 
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, SmileVideoInformationFlags.All));
-                    var videoInformation = Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    var videoInformation = Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
 
                     result.Add(videoInformation);
                 }
@@ -1358,12 +1358,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task<IEnumerable<SmileMarketVideoRelationItemViewModel>> LoadMarketItemsAsync()
         {
-            var market = new Logic.Service.Smile.Api.V1.Market(Mediation);
+            var market = new Logic.Service.Smile.Api.V1.Market(Mediator);
             return market.LoadVideoRelationAsync(VideoId).ContinueWith(t => {
                 var model = t.Result;
                 var items = SmileMarketUtility.GetVideoRelationItems(model);
                 if(items.Any()) {
-                    return items.Select(i => new SmileMarketVideoRelationItemViewModel(Mediation, i));
+                    return items.Select(i => new SmileMarketVideoRelationItemViewModel(Mediator, i));
                 } else {
                     return Enumerable.Empty<SmileMarketVideoRelationItemViewModel>();
                 }
@@ -1431,14 +1431,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Task OpenVideoPlayerAsync(bool forceEconomy, bool openPlayerInNewWindow)
         {
             if(IsPlaying) {
-                Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, this, ShowViewState.Foreground));
+                Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, this, ShowViewState.Foreground));
                 return Task.CompletedTask;
             } else if(IsDownloading) {
-                Mediation.Logger.Warning($"[{VideoId}] {nameof(IsDownloading)}: {IsDownloading}");
+                Mediator.Logger.Warning($"[{VideoId}] {nameof(IsDownloading)}: {IsDownloading}");
                 return Task.CompletedTask;
             } else {
                 if(!openPlayerInNewWindow) {
-                    var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+                    var players = Mediator.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
                     var workingPlayer = players
                         .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel)) // 任意再生は除外
                         .FirstOrDefault(p => p.IsWorkingPlayer.Value)
@@ -1450,10 +1450,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     }
                 }
 
-                var vm = new SmileVideoPlayerViewModel(Mediation);
+                var vm = new SmileVideoPlayerViewModel(Mediator);
                 var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
 
-                Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
+                Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
                 return task;
             }
@@ -1461,18 +1461,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoBrowserAsync(bool forceEconomy)
         {
-            ShellUtility.OpenUriInDefaultBrowser(WatchUrl, Mediation.Logger);
+            ShellUtility.OpenUriInDefaultBrowser(WatchUrl, Mediator.Logger);
             return Task.CompletedTask;
         }
 
         public Task OpenVideoLauncherAsync(bool forceEconomy)
         {
             try {
-                var keyword = Mediation.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
+                var keyword = Mediator.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
                 var args = SmileVideoInformationUtility.MakeLauncherParameter(this, keyword, Setting.Execute.LauncherParameter);
                 Process.Start(Setting.Execute.LauncherPath, args);
             } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
+                Mediator.Logger.Error(ex);
             }
 
             return Task.CompletedTask;
@@ -1483,7 +1483,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         internal void Force_Issue665NA()
         {
-            Mediation.Logger.Warning($"!!force!! [{VideoId}] #665");
+            Mediator.Logger.Warning($"!!force!! [{VideoId}] #665");
             this._force_Issue665NA = true;
             CallOnPropertyChange(nameof(IsCompatibleIssue665NA));
         }
@@ -1511,7 +1511,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     }
                 }
             } catch(Exception ex) {
-                Mediation.Logger.Warning($"{file}: {ex.Message}", ex);
+                Mediator.Logger.Warning($"{file}: {ex.Message}", ex);
             }
 
             return CheckResultModel.Failure<long>();
@@ -1572,7 +1572,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
                 CallOnPropertyChange(nameof(LoadedDmcVideos));
             } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
+                Mediator.Logger.Error(ex);
             }
 
             var checks = new[] {
@@ -1618,7 +1618,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 return size;
             } catch(Exception ex) {
-                Mediation.Logger.Warning($"{ex.Message}", ex);
+                Mediator.Logger.Warning($"{ex.Message}", ex);
             }
 
             return 0;
@@ -1645,7 +1645,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 return size;
             } catch(Exception ex) {
-                Mediation.Logger.Warning($"{ex.Message}", ex);
+                Mediator.Logger.Warning($"{ex.Message}", ex);
             }
 
             return 0;
@@ -1706,7 +1706,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
-            return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
+            return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediator, VideoId, cacheSpan).ContinueWith(task => {
                 var rawGetthumbinfo = task.Result;
                 if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
                     return false;
@@ -1741,12 +1741,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             ThumbnailLoadState = LoadState.Loading;
-            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediator.Logger).ContinueWith(task => {
                 var image = task.Result;
                 if(image != null) {
                     //this._thumbnailImage = image;
                     SetThumbnaiImage(image);
-                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediator.Logger);
                     return true;
                 } else {
                     return false;

@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppBrowserManagerViewModel: ManagerViewModelBase
     {
-        public AppBrowserManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public AppBrowserManagerViewModel(Mediator mediator)
+            : base(mediator)
         { }
 
 
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         var data = (WebNavigatorEventDataBase)o;
-                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                     }
                 );
             }

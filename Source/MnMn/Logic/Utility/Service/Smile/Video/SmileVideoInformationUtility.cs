@@ -87,20 +87,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// 動画IDに対応するキャッシュディレクトリパスを取得する。
         /// <para>ディレクトリの作成などはサポートしない。</para>
         /// </summary>
-        /// <param name="mediation"></param>
+        /// <param name="mediator"></param>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static DirectoryInfo GetCacheDirectory(Mediation mediation, string videoId)
+        public static DirectoryInfo GetCacheDirectory(Mediator mediator, string videoId)
         {
-            var parentDir = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            var parentDir = mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var cachedDirPath = Path.Combine(parentDir.FullName, videoId);
 
             return new DirectoryInfo(cachedDirPath);
         }
 
-        public static FileInfo GetGetthumbinfoFile(Mediation mediation, string videoId)
+        public static FileInfo GetGetthumbinfoFile(Mediator mediator, string videoId)
         {
-            var cacheDir = GetCacheDirectory(mediation, videoId);
+            var cacheDir = GetCacheDirectory(mediator, videoId);
             var fileName = PathUtility.CreateFileName(videoId, "thumb", "xml");
             return new FileInfo(Path.Combine(cacheDir.FullName, fileName));
         }
@@ -116,10 +116,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return null;
         }
 
-        public static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        public static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediator mediator, string videoId, CacheSpan thumbCacheSpan)
         {
             RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
-            var cachedThumbFile = GetGetthumbinfoFile(mediation, videoId);
+            var cachedThumbFile = GetGetthumbinfoFile(mediator, videoId);
             if(cachedThumbFile.Exists) {
                 if(thumbCacheSpan.IsCacheTime(cachedThumbFile.LastWriteTime) && Constants.MinimumXmlFileSize <= cachedThumbFile.Length) {
                     rawGetthumbinfo = LoadGetthumbinfo(cachedThumbFile);
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
             var isSave = false;
             if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
-                var getthumbinfo = new Getthumbinfo(mediation);
+                var getthumbinfo = new Getthumbinfo(mediator);
                 rawGetthumbinfo = await getthumbinfo.LoadAsync(videoId);
                 isSave = true;
             }
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 try {
                     SerializeUtility.SaveXmlSerializeToFile(cachedThumbFile.FullName, rawGetthumbinfo);
                 } catch(Exception ex) {
-                    mediation.Logger.Warning(ex);
+                    mediator.Logger.Warning(ex);
                 }
             }
 

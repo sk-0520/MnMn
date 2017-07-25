@@ -85,8 +85,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchGroupFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort, SearchType type, string query)
-            : base(mediation, 0)
+        public SmileVideoSearchGroupFinderViewModel(Mediator mediator, SmileVideoSearchModel searchModel, IReadOnlyDefinedElement method, IReadOnlyDefinedElement sort, SearchType type, string query)
+            : base(mediator, 0)
         {
             SearchModel = searchModel;
             Query = query;
@@ -324,12 +324,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         void AddBookmark()
         {
-            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(true, Query, Type)));
+            Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(true, Query, Type)));
         }
 
         void RemoveBookmark()
         {
-            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, Query, Type)));
+            Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessSearchBookmarkParameterModel(false, Query, Type)));
         }
 
         static IReadOnlyDefinedElement GetContextElemetFromChangeElement(IEnumerable<IReadOnlyDefinedElement> items, IReadOnlyDefinedElement element)
@@ -364,7 +364,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 nowSort = LoadingSort;
             }
 
-            SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, SearchModel.GetDefaultSearchTypeDefine().MaximumCount);
+            SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediator, SearchModel, nowMethod, nowSort, Type, Query, 0, SearchModel.GetDefaultSearchTypeDefine().MaximumCount);
             //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
             //PropertyChangedEventManager.AddListener(SearchFinder, PagerPropertyChangedListener, string.Empty);
             PagerPropertyChangedListener.Add(SearchFinder);
@@ -374,13 +374,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             if(isReload) {
                 SearchPropertyChangedListener.Add(SearchFinder);
 
-                var suggestion = new Suggestion(Mediation);
+                var suggestion = new Suggestion(Mediator);
                 suggestion.LoadCompleteAsync(query).ContinueWith(t => {
                     var tags = t.Result;
                     var items = tags.Items
                         .Where(s => s != query)
                         .Select(s => new RawSmileVideoTagItemModel() { Text = s, })
-                        .Select(tag => new SmileVideoTagViewModel(Mediation, tag))
+                        .Select(tag => new SmileVideoTagViewModel(Mediator, tag))
                     ;
                     RelationTagItems.InitializeRange(items);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -564,7 +564,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Mediation.Logger.Information(e.PropertyName);
+            Mediator.Logger.Information(e.PropertyName);
             if(ChangePagePropertyNames.Any(n => n == e.PropertyName)) {
                 CallPageItemOnPropertyChange();
             }
@@ -589,7 +589,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         var pageCount = Math.Min(TotalCount / define.MaximumCount, (define.MaximumIndex + define.MaximumCount) / define.MaximumCount);
                         var correctionPage = TotalCount > (define.MaximumIndex + define.MaximumCount) ? 1 : 0;
                         var preList = Enumerable.Range(1, pageCount - correctionPage)
-                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, searchFinder.Method, searchFinder.Sort, Type, searchFinder.Query, (i + 1) * define.MaximumCount, define.MaximumCount))
+                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediator, SearchModel, searchFinder.Method, searchFinder.Sort, Type, searchFinder.Query, (i + 1) * define.MaximumCount, define.MaximumCount))
                             .Select((v, i) => new PageViewModel<SmileVideoSearchItemFinderViewModel>(v, i + 2))
                             .ToEvaluatedSequence()
                         ;

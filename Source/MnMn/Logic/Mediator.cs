@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// <summary>
     /// データ連携等々の橋渡し。
     /// </summary>
-    public class Mediation : MediationBase
+    public class Mediator : MediatorBase
     {
         #region variable
 
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        public Mediation(AppSettingModel mainSettingModel, ILogger logger)
+        public Mediator(AppSettingModel mainSettingModel, ILogger logger)
         {
             this._logger = logger;
             Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
@@ -100,8 +100,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             WebNavigatorContextMenuMap = WebNavigatorContextMenuItems.ToDictionary(i => i.Key, i => i);
 
             Setting = mainSettingModel;
-            Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
-            IdleTalk = new IdleTalkMediation(this);
+            Smile = new SmileMediator(this, Setting.ServiceSmileSetting);
+            IdleTalk = new IdleTalkMediator(this);
 
             ProcessLinkerHost = new ProcessLinkHost(this);
         }
@@ -120,9 +120,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// ニコニコ関係。
         /// </summary>
-        internal SmileMediation Smile { get; private set; }
+        internal SmileMediator Smile { get; private set; }
 
-        internal IdleTalkMediation IdleTalk { get; }
+        internal IdleTalkMediator IdleTalk { get; }
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
 
@@ -580,7 +580,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        #region MediationBase
+        #region MediatorBase
 
         public override ILogger Logger { get { return this._logger; } }
 

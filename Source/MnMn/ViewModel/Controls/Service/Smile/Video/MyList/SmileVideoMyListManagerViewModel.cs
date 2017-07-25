@@ -86,14 +86,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #endregion
 
-        public SmileVideoMyListManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public SmileVideoMyListManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
-            MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
+            MyList = Mediator.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
-            var smileSetting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            var smileSetting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
             MyListSetting = smileSetting.MyList;
-            BookmarkUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListBookmarkItemModel, SmileVideoBookmarkMyListFinderViewModel>(MyListSetting.Bookmark, default(object), (model, data) => new SmileVideoBookmarkMyListFinderViewModel(Mediation, model));
+            BookmarkUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListBookmarkItemModel, SmileVideoBookmarkMyListFinderViewModel>(MyListSetting.Bookmark, default(object), (model, data) => new SmileVideoBookmarkMyListFinderViewModel(Mediator, model));
 
             SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 if(SetVariableValue(ref this._isSelectedBookmark, value)) {
                     if(IsSelectedBookmark) {
-                        var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+                        var setting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
                         var items = setting.MyList.Bookmark.ToEvaluatedSequence();
                         BookmarkUserMyListPairs.Clear();
                         foreach(var item in items) {
@@ -231,8 +231,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 if(SetVariableValue(ref this._isSelectedHistory, value)) {
                     if(IsSelectedHistory) {
-                        var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
-                        var items = setting.MyList.History.Select(m => new SmileVideoItemsMyListFinderViewModel(Mediation, m));
+                        var setting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+                        var items = setting.MyList.History.Select(m => new SmileVideoItemsMyListFinderViewModel(Mediator, m));
 
                         HistoryUserMyList.InitializeRange(items);
                         HistoryUserMyListItems.Refresh();
@@ -491,7 +491,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 return CreateCommand(
                     o => {
                         var page = o as PageViewModel<SmileVideoMyListFinderPageViewModel>;
-                        var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+                        var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediator);
                         mylist.SearchPage(page.ViewModel.Query, page.ViewModel.PageNumber).ContinueWith(task => {
                             page.ViewModel.Items.InitializeRange(task.Result);
                             SelectedPage = page;
@@ -602,7 +602,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         /// <returns></returns>
         Logic.Service.Smile.Api.V1.MyList GetMyListApi()
         {
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediator);
 
             return mylist;
         }
@@ -617,16 +617,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var list = new List<SmileVideoAccountMyListFinderViewModel>();
 
             // とりあえずマイリスト
-            var defaultMyList = new SmileVideoAccountMyListDefaultFinderViewModel(Mediation);
+            var defaultMyList = new SmileVideoAccountMyListDefaultFinderViewModel(Mediator);
             //var task = defaultMyList.LoadDefaultCacheAsync();
             list.Add(defaultMyList);
 
             // 自身のマイリスト一覧
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediator);
             var accountGroup = await mylist.LoadAccountGroupAsync();
             if(SmileMyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
                 foreach(var group in accountGroup.Groups.OrderByDescending(g => RawValueUtility.ConvertInteger(g.SortOder))) {
-                    var finder = new SmileVideoAccountMyListFinderViewModel(Mediation, group);
+                    var finder = new SmileVideoAccountMyListFinderViewModel(Mediator, group);
                     list.Add(finder);
                 }
             }
@@ -722,7 +722,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         Task SearchUserMyListAsync(string inputSearchMyList)
         {
-            var myListId = SmileIdUtility.GetMyListId(inputSearchMyList, Mediation);
+            var myListId = SmileIdUtility.GetMyListId(inputSearchMyList, Mediator);
             //object outputValue;
             if(!string.IsNullOrWhiteSpace(myListId)) {
                 // 完全一致検索
@@ -737,12 +737,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         async Task SearchUserMyListFromIdAsync(string myListId)
         {
             // TODO: キャッシュ処理重複
-            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var dirInfo = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheDirectoryName);
             var cacheDirectory = RestrictUtility.Is(Directory.Exists(cachedDirPath), () => new DirectoryInfo(cachedDirPath), () => Directory.CreateDirectory(cachedDirPath));
             var cacheFile = new FileInfo(Path.Combine(cacheDirectory.FullName, PathUtility.CreateFileName(myListId, "xml")));
 
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediator);
             FeedSmileVideoModel group = null;
             if(CacheImageUtility.ExistImage(cacheFile.FullName, Constants.ServiceSmileMyListCacheSpan)) {
                 using(var stream = new FileStream(cacheFile.FullName, FileMode.Open, FileAccess.Read)) {
@@ -755,7 +755,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             if(group != null) {
                 SerializeUtility.SaveXmlSerializeToFile(cacheFile.FullName, group);
 
-                var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
+                var finder = new SmileVideoMatchMyListFinderViewModel(Mediator, group, myListId, false);
 
                 ClearSearchUserMyListPage();
                 SearchUserMyList.InitializeRange(new[] { finder });
@@ -774,10 +774,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var pageCount = top.TotalItemCount / top.PageItemCount;
                 var list = Enumerable
                     .Range(1, pageCount)
-                    .Select(i => new SmileVideoMyListFinderPageViewModel(Mediation, i + 1, query))
+                    .Select(i => new SmileVideoMyListFinderPageViewModel(Mediator, i + 1, query))
                     .ToEvaluatedSequence()
                 ;
-                list.Insert(0, new SmileVideoMyListFinderPageViewModel(Mediation, finders, query));
+                list.Insert(0, new SmileVideoMyListFinderPageViewModel(Mediator, finders, query));
                 var pages = list
                     .Select((vm, i) => new PageViewModel<SmileVideoMyListFinderPageViewModel>(vm, i + 1))
                 ;
@@ -832,7 +832,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             CheckUtility.DebugEnforceNotNull(finder);
 
             if(BookmarkUserMyListPairs.Any(i => i.Model.MyListId == finder.MyListId)) {
-                Mediation.Logger.Trace($"mylist dup: {finder.MyListId}");
+                Mediator.Logger.Trace($"mylist dup: {finder.MyListId}");
                 return;
             }
 
@@ -849,10 +849,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         Task<IEnumerable<SmileVideoVideoItemModel>> CheckBookmarkMyListAsync(string myListId)
         {
-            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediator);
             var newMyListTask = myList.LoadGroupAsync(myListId);
 
-            var smileSetting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            var smileSetting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
             var nowMyList = smileSetting.MyList.Bookmark.FirstOrDefault(m => m.MyListId == myListId);
             if(nowMyList == null) {
                 return Task.FromResult(Enumerable.Empty<SmileVideoVideoItemModel>());
@@ -867,7 +867,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var newViewModels = newModels
                     .Select(item => {
                         var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, SmileVideoInformationFlags.None));
-                        return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                        return Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                     })
                     .ToEvaluatedSequence()
                 ;
@@ -995,21 +995,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public override async Task InitializeAsync()
         {
             if(!NetworkUtility.IsNetworkAvailable) {
-                Mediation.Logger.Information("skip milist");
+                Mediator.Logger.Information("skip milist");
                 return;
             }
 
             // 動画IDの補正処理
             foreach(var bookmark in BookmarkUserMyListPairs.ModelList) {
                 foreach(var item in bookmark.Videos.Select((v,i) => new { VideoId = v, Index = i})) {
-                    if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId, Mediation)) {
+                    if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId, Mediator)) {
                         var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item.VideoId, Constants.ServiceSmileVideoThumbCacheSpan));
                         try {
-                            var info = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                            var info = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
                             bookmark.Videos[item.Index] = info.VideoId;
                         } catch(SmileVideoGetthumbinfoFailureException ex) {
                             // やっばいことになったら破棄
-                            Mediation.Logger.Warning(ex);
+                            Mediator.Logger.Warning(ex);
                         }
                     }
                 }

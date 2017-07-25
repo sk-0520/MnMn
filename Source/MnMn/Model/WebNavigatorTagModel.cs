@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         #region IReadOnlyWebNavigatorTag
 
         public ServiceType ServiceType { get;set;}
-        public Mediation Mediation { get; set; }
+        public Mediator Mediator { get; set; }
 
         #endregion
     }

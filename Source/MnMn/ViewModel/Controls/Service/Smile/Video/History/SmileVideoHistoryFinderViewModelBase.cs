@@ -30,13 +30,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 {
     public abstract class SmileVideoHistoryFinderViewModelBase: SmileVideoFeedFinderViewModelBase
     {
-        public SmileVideoHistoryFinderViewModelBase(Mediation mediation, string key)
-            : base(mediation, 0)
+        public SmileVideoHistoryFinderViewModelBase(Mediator mediator, string key)
+            : base(mediator, 0)
         {
             Key = key;
             var titleMap = new StringsModel() {
-                { SmileVideoMediationKey.historyPage, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_History_AccountHistory_Title },
-                { SmileVideoMediationKey.historyApp, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_History_ApplicationHistory_Title },
+                { SmileVideoMediatorKey.historyPage, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_History_AccountHistory_Title },
+                { SmileVideoMediatorKey.historyApp, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_History_ApplicationHistory_Title },
             };
             Title = titleMap[Key];
         }

@@ -30,16 +30,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 {
     public class SmileVideoNewArrivalsFinderViewModel: SmileVideoFeedFinderViewModelBase
     {
-        public SmileVideoNewArrivalsFinderViewModel(Mediation mediation, string key)
-            : base(mediation, 0)
+        public SmileVideoNewArrivalsFinderViewModel(Mediator mediator, string key)
+            : base(mediator, 0)
         {
             Key = key;
 
             var titleMap = new StringsModel() {
-                { SmileVideoMediationKey.newarrival, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title },
-                { SmileVideoMediationKey.recent, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recent_Title },
-                { SmileVideoMediationKey.hotlist, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title },
-                { SmileVideoMediationKey.recommendation, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recommendations_Title },
+                { SmileVideoMediatorKey.newarrival, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title },
+                { SmileVideoMediatorKey.recent, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recent_Title },
+                { SmileVideoMediatorKey.hotlist, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title },
+                { SmileVideoMediatorKey.recommendation, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recommendations_Title },
             };
             Title = titleMap[Key];
         }
@@ -68,13 +68,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var newArrival = new Logic.Service.Smile.Video.Api.V1.NewArrivals(Mediation);
+            var newArrival = new Logic.Service.Smile.Video.Api.V1.NewArrivals(Mediator);
 
             switch(Key) {
-                case SmileVideoMediationKey.newarrival:
+                case SmileVideoMediatorKey.newarrival:
                     return newArrival.LoadNewVideoAsync();
 
-                case SmileVideoMediationKey.recent:
+                case SmileVideoMediatorKey.recent:
                     return newArrival.LoadNewCommentAsync();
 
                 default:

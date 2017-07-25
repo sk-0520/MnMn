@@ -62,19 +62,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public FinderViewModelBase(Mediation mediation, int baseNumber)
+        public FinderViewModelBase(Mediator mediator, int baseNumber)
         {
-            Mediation = mediation;
+            Mediator = mediator;
             BaseNumber = baseNumber;
 
-            NetworkSetting = Mediation.GetNetworkSetting();
+            NetworkSetting = Mediator.GetNetworkSetting();
         }
 
 
         #region property
 
         protected int BaseNumber { get; }
-        protected Mediation Mediation { get; }
+        protected Mediator Mediator { get; }
 
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
 

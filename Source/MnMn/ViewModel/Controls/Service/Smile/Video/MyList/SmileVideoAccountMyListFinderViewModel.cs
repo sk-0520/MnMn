@@ -59,12 +59,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #endregion
 
-        public SmileVideoAccountMyListFinderViewModel(Mediation mediation, RawSmileAccountMyListGroupItemModel groupModel)
-            : base(mediation, true)
+        public SmileVideoAccountMyListFinderViewModel(Mediator mediator, RawSmileAccountMyListGroupItemModel groupModel)
+            : base(mediator, true)
         {
             GroupModel = groupModel;
 
-            MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
+            MyList = Mediator.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
             ResetEditingValue();
         }

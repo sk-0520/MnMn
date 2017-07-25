@@ -18,28 +18,28 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
 {
-    public class IdleTalkMediation: MediationCustomBase
+    public class IdleTalkMediator: MediatorCustomBase
     {
-        public IdleTalkMediation(Mediation mediation)
-            : base(mediation, Constants.IdleTalkUriListPath, Constants.IdleTalkUriParametersListPath, Constants.IdleTalkRequestHeadersListPath, Constants.IdleTalkRequestParametersListPath, Constants.IdleTalkRequestMappingsListPath, Constants.IdleTalkExpressionsPath)
+        public IdleTalkMediator(Mediator mediator)
+            : base(mediator, Constants.IdleTalkUriListPath, Constants.IdleTalkUriParametersListPath, Constants.IdleTalkRequestHeadersListPath, Constants.IdleTalkRequestParametersListPath, Constants.IdleTalkRequestMappingsListPath, Constants.IdleTalkExpressionsPath)
         {
-            MutterMediation = new IdleTalkMutterMediation(Mediation);
+            MutterMediator = new IdleTalkMutterMediator(Mediator);
         }
 
 
         #region property
 
-        IdleTalkMutterMediation MutterMediation { get; }
+        IdleTalkMutterMediator MutterMediator { get; }
 
         #endregion
 
-        #region MediationCustomBase
+        #region MediatorCustomBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceIdleTalkName);
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(IdleTalkMediationKey));
+            return GetMediatorKeys(typeof(IdleTalkMediatorKey));
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     throw new NotImplementedException();
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.RequestShowView(request);
+                    return MutterMediator.RequestShowView(request);
 
                 default:
                     throw new NotImplementedException();
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     throw new NotImplementedException();
 
                 case ServiceType.IdleTalkMutter:
-                    MutterMediation.SetManager(serviceType, managerPack);
+                    MutterMediator.SetManager(serviceType, managerPack);
                     break;
 
                 default:
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     throw new NotImplementedException();
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.Request(request);
+                    return MutterMediator.Request(request);
 
                 default:
                     ThrowNotSupportRequest(request);
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return GetUriCore(key, replaceMap, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.GetUri(key, replaceMap, serviceType);
+                    return MutterMediator.GetUri(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return ConvertUriCore(key, uri, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.ConvertUri(key, uri, serviceType);
+                    return MutterMediator.ConvertUri(key, uri, serviceType);
 
                 default:
                     ThrowNotSupportConvertUri(key, uri, serviceType);
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return GetRequestHeaderCore(key, replaceMap, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.GetRequestHeader(key, replaceMap, serviceType);
+                    return MutterMediator.GetRequestHeader(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return ConvertRequestHeaderCore(key, requestHeaders, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.ConvertRequestHeader(key, requestHeaders, serviceType);
+                    return MutterMediator.ConvertRequestHeader(key, requestHeaders, serviceType);
 
                 default:
                     ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return GetRequestParameterCore(key, replaceMap, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.GetRequestParameter(key, replaceMap, serviceType);
+                    return MutterMediator.GetRequestParameter(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return GetRequestMappingCore(key, replaceMap, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.GetRequestMapping(key, replaceMap, serviceType);
+                    return MutterMediator.GetRequestMapping(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return GetExpressionCore(key, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.GetExpression(key, serviceType);
+                    return MutterMediator.GetExpression(key, serviceType);
 
                 default:
                     ThrowNotSupportGetExpression(key, serviceType);
@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return GetExpressionCore(key, id, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.GetExpression(key, id, serviceType);
+                    return MutterMediator.GetExpression(key, id, serviceType);
 
                 default:
                     ThrowNotSupportGetExpression(key, id, serviceType);
@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return ConvertRequestParameterCore(key, requestParams, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.ConvertRequestParameter(key, requestParams, serviceType);
+                    return MutterMediator.ConvertRequestParameter(key, requestParams, serviceType);
 
                 default:
                     ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return ConvertRequestMappingCore(key, mapping, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.ConvertRequestMapping(key, mapping, serviceType);
+                    return MutterMediator.ConvertRequestMapping(key, mapping, serviceType);
 
                 default:
                     ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return CheckResponseHeaderCore(key, uri, headers, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.CheckResponseHeader(key, uri, headers, serviceType);
+                    return MutterMediator.CheckResponseHeader(key, uri, headers, serviceType);
 
                 default:
                     ThrowNotSupportCheckResponseHeader(key, uri, headers, serviceType);
@@ -259,7 +259,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     break;
 
                 case ServiceType.IdleTalkMutter:
-                    MutterMediation.ConvertBinary(key, uri, stream, serviceType);
+                    MutterMediator.ConvertBinary(key, uri, stream, serviceType);
                     break;
 
                 default:
@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return GetEncodingCore(key, uri, stream, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.GetEncoding(key, uri, stream, serviceType);
+                    return MutterMediator.GetEncoding(key, uri, stream, serviceType);
 
                 default:
                     ThrowNotSupportGetEncoding(key, uri, stream, serviceType);
@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
                     return ConvertStringCore(key, uri, text, serviceType);
 
                 case ServiceType.IdleTalkMutter:
-                    return MutterMediation.ConvertString(key, uri, text, serviceType);
+                    return MutterMediator.ConvertString(key, uri, text, serviceType);
 
                 default:
                     ThrowNotSupportConvertString(key, uri, text, serviceType);

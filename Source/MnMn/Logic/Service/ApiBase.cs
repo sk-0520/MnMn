@@ -32,18 +32,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 {
     public abstract class ApiBase: DisposeFinalizeBase
     {
-        public ApiBase(Mediation mediation)
+        public ApiBase(Mediator mediator)
         {
-            Mediation = mediation;
+            Mediator = mediator;
 
-            NetworkSetting = Mediation.GetNetworkSetting();
+            NetworkSetting = Mediator.GetNetworkSetting();
 
-            HttpUserAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
+            HttpUserAgentHost = new HttpUserAgentHost(NetworkSetting, Mediator.Logger);
         }
 
         #region property
 
-        protected Mediation Mediation { get; }
+        protected Mediator Mediator { get; }
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>

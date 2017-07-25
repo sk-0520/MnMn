@@ -65,8 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppUpdateManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public AppUpdateManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             BackgroundUpdateCheckTimer = new DispatcherTimer() {
                 Interval = Constants.BackgroundUpdateCheckTime,
@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(
                     o => {
-                        Mediation.Order(new AppSaveOrderModel(true));
+                        Mediator.Order(new AppSaveOrderModel(true));
                         UpdateExecuteAsync().ConfigureAwait(false);
                     },
                     o => !RuuningUpdate && (HasUpdate || HasLightweightUpdate)
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         var data = (WebNavigatorEventDataBase)o;
-                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                     }
                 );
             }
@@ -199,15 +199,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             LightweightUpdateCheckState = UpdateCheckState.UnChecked;
             LightweightUpdateModel = null;
 
-            using(var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger))
+            using(var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediator.Logger))
             using(var userAgent = userAgentHost.CreateHttpUserAgent()) {
-                var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+                var setting = Mediator.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
 
                 try {
-                    Mediation.Logger.Information($"lightweight update check: {Constants.AppUriLightweightUpdate}");
+                    Mediator.Logger.Information($"lightweight update check: {Constants.AppUriLightweightUpdate}");
 
                     var response = await userAgent.GetAsync(Constants.AppUriLightweightUpdate);
-                    Mediation.Logger.Trace("lightweight update response state: " + response.StatusCode);
+                    Mediator.Logger.Trace("lightweight update response state: " + response.StatusCode);
                     if(!response.IsSuccessStatusCode) {
                         LightweightUpdateCheckState = UpdateCheckState.Error;
                         return;
@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     }
 
                 } catch(Exception ex) {
-                    Mediation.Logger.Warning(ex);
+                    Mediator.Logger.Warning(ex);
                     LightweightUpdateCheckState = UpdateCheckState.Error;
                 }
             }
@@ -246,12 +246,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             LightweightUpdateModel = null;
 
             try {
-                var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
+                var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediator.Logger);
                 var client = userAgentHost.CreateHttpUserAgent();
-                Mediation.Logger.Trace("update check: " + Constants.AppUriUpdate);
+                Mediator.Logger.Trace("update check: " + Constants.AppUriUpdate);
                 var response = await client.GetAsync(Constants.AppUriUpdate);
 
-                Mediation.Logger.Trace("update response state: " + response.StatusCode);
+                Mediator.Logger.Trace("update response state: " + response.StatusCode);
                 if(!response.IsSuccessStatusCode) {
                     UpdateCheckState = UpdateCheckState.Error;
                     return;
@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
                 UpdateCheckState = UpdateCheckState.CurrentIsOld;
             } catch(Exception ex) {
-                Mediation.Logger.Warning(ex);
+                Mediator.Logger.Warning(ex);
                 UpdateCheckState = UpdateCheckState.Error;
             } finally {
                 // ぶっこんだなぁ
@@ -342,7 +342,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         Task LoadChangelogAsync()
         {
             if(UpdateCheckState == UpdateCheckState.CurrentIsOld) {
-                var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
+                var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediator.Logger);
                 var client = userAgentHost.CreateHttpUserAgent();
                 return client.GetStringAsync(Constants.AppUriChangelogRelease).ContinueWith(t => {
                     var htmlSource = t.Result;
@@ -430,13 +430,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             // #158
             FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
-                Mediation.Logger.Warning(e);
+                Mediator.Logger.Warning(e);
                 return true;
             });
 
             var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
             var process = CreateProcess(map);
-            Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
+            Mediator.Logger.Information("update exec", process.StartInfo.Arguments);
 
             process.Start();
             return Task.Run(() => {
@@ -447,15 +447,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 var handles = new[] { waitEvent, processEvent };
                 var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
 
-                Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
+                Mediator.Logger.Debug("WaitHandle.WaitAny", waitResult);
                 if(0 <= waitResult && waitResult < handles.Length) {
                     if(handles[waitResult] == waitEvent) {
                         // イベントが立てられたので終了
-                        Mediation.Logger.Information("exit", process.StartInfo.Arguments);
+                        Mediator.Logger.Information("exit", process.StartInfo.Arguments);
                         result = UpdatedResult.Exit;
                     } else if(handles[waitResult] == processEvent) {
                         // Updaterがイベント立てる前に死んだ
-                        Mediation.Logger.Information("error-process", process.ExitCode);
+                        Mediator.Logger.Information("error-process", process.ExitCode);
                     }
                 } else {
                     // タイムアウト
@@ -463,7 +463,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         // まだ生きてるなら強制的に殺す
                         process.Kill();
                     }
-                    Mediation.Logger.Information("error-timeout", process.ExitCode);
+                    Mediator.Logger.Information("error-timeout", process.ExitCode);
                 }
 
                 return result;
@@ -483,12 +483,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
                     // #158
                     FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
-                        Mediation.Logger.Warning(e);
+                        Mediator.Logger.Warning(e);
                         return true;
                     });
 
-                    var download = new AppUpdateDownloadItemViewModel(Mediation, ArchiveUri, archiveFile, new HttpUserAgentHost(NetworkSetting, Mediation.Logger));
-                    Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
+                    var download = new AppUpdateDownloadItemViewModel(Mediator, ArchiveUri, archiveFile, new HttpUserAgentHost(NetworkSetting, Mediator.Logger));
+                    Mediator.Order(new DownloadOrderModel(download, false, ServiceType.Application));
 
                     task = download.StartAsync().ContinueWith(t => {
                         return UpdatedResult.None;
@@ -499,8 +499,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             } else if(HasLightweightUpdate) {
                 //task =  EazyUpdateExecuteAsync();
 
-                var download = new LightweightUpdateDownloadItemViewModel(Mediation, LightweightUpdateModel);
-                Mediation.Order(new DownloadOrderModel(download, false, ServiceType.Application));
+                var download = new LightweightUpdateDownloadItemViewModel(Mediator, LightweightUpdateModel);
+                Mediator.Order(new DownloadOrderModel(download, false, ServiceType.Application));
 
                 task = download.StartAsync().ContinueWith(t => {
                     return UpdatedResult.None;
@@ -513,11 +513,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 var result = await task;
                 switch(result) {
                     case UpdatedResult.Exit:
-                        Mediation.Order(new OrderModel(OrderKind.Exit, ServiceType.Application));
+                        Mediator.Order(new OrderModel(OrderKind.Exit, ServiceType.Application));
                         break;
 
                     case UpdatedResult.Reboot:
-                        Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
+                        Mediator.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
                         break;
 
                     case UpdatedResult.None:
@@ -527,7 +527,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         throw new NotImplementedException();
                 }
             } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
+                Mediator.Logger.Error(ex);
             } finally {
                 RuuningUpdate = false;
             }

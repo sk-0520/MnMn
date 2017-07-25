@@ -31,8 +31,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public TFinderViewModelBase(Mediation mediation, int baseNumber)
-            :base(mediation, baseNumber)
+        public TFinderViewModelBase(Mediator mediator, int baseNumber)
+            :base(mediator, baseNumber)
         {
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
         }
@@ -148,7 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             if(CanLoad) {
                 if(NowLoading) {
-                    Mediation.Logger.Trace("CANCEL!");
+                    Mediator.Logger.Trace("CANCEL!");
                     CancelLoading.Cancel(true);
                 }
 

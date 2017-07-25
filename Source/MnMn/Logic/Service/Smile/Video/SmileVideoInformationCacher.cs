@@ -49,22 +49,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoInformationCacher(Mediation mediation)
-            : base(mediation)
+        public SmileVideoInformationCacher(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function
 
         string GetSafeVideoId(string videoId)
         {
-            if(SmileIdUtility.NeedCorrectionVideoId(videoId, Mediation)) {
+            if(SmileIdUtility.NeedCorrectionVideoId(videoId, Mediator)) {
                 return LoadFromVideoIdAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(t => {
                     if(t.IsFaulted) {
-                        Mediation.Logger.Error($"number videid: convert error {videoId}");
+                        Mediator.Logger.Error($"number videid: convert error {videoId}");
                         return videoId;
                     }
                     var information = t.Result;
-                    Mediation.Logger.Debug($"number videid: {videoId} to {information.VideoId}");
+                    Mediator.Logger.Debug($"number videid: {videoId} to {information.VideoId}");
                     information.DecrementReference();
                     return information.VideoId;
                 }).Result;
@@ -96,14 +96,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 return Task.FromResult(result);
             }
 
-            return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, usingVideoId, thumbCacheSpan).ContinueWith(t => {
+            return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediator, usingVideoId, thumbCacheSpan).ContinueWith(t => {
                 var rawGetthumbinfo = t.Result;
 
                 if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
                     throw new SmileVideoGetthumbinfoFailureException(videoId, rawGetthumbinfo);
                 }
 
-                var createdInformation = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
+                var createdInformation = new SmileVideoInformationViewModel(Mediator, rawGetthumbinfo.Thumb, UnOrdered);
                 lock(this.checker) {
                     if(TryGetValue(usingVideoId, out result)) {
                         result.IncrementReference();
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             var usingVideoId = GetSafeVideoId(thumb.VideoId);
 
             // こいつの動画IDは xxnnnn 形式前提だから補正しない(前提が崩れたらちょっとしんどいね！)
-            var result = Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, thumb, UnOrdered));
+            var result = Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediator, thumb, UnOrdered));
             result.IncrementReference();
 
             return result;
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var usingVideoId = GetSafeVideoId(search.ContentId);
 
-            var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
+            var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediator, search, UnOrdered));
             result.MergeSource(search);
             result.IncrementReference();
 
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var usingVideoId = GetSafeVideoId(search.Id);
 
-            var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
+            var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediator, search, UnOrdered));
             result.MergeSource(search);
             result.IncrementReference();
 
@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public SmileVideoInformationViewModel Get(FeedSmileVideoItemModel feed, SmileVideoInformationFlags informationFlags)
         {
             //TODO: 動画ID取得意外と面倒なのね
-            var tempResult = new SmileVideoInformationViewModel(Mediation, feed, UnOrdered, informationFlags);
+            var tempResult = new SmileVideoInformationViewModel(Mediator, feed, UnOrdered, informationFlags);
             var usingVideoId = GetSafeVideoId(tempResult.VideoId);
             var result = GetVideoInformationFromCorrectionId(usingVideoId, tempResult);
             result.MergeSource(feed);

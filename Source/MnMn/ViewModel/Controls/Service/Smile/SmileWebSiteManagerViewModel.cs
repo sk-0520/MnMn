@@ -35,9 +35,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 {
     public class SmileWebSiteManagerViewModel: ManagerViewModelBase
     {
-        public SmileWebSiteManagerViewModel(Mediation mediation) : base(mediation)
+        public SmileWebSiteManagerViewModel(Mediator mediator) : base(mediator)
         {
-            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
         }
 
         #region propert
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                 return CreateCommand(
                     o => {
                         var data = (WebNavigatorEventDataBase)o;
-                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                     }
                 );
             }
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public override void InitializeView(MainWindow view)
         {
             WebSiteNavigator = view.smile.webSite.navigator;
-            var homeUriResult = Mediation.GetUri(SmileMediationKey.webSite, null, ServiceType.Smile);
+            var homeUriResult = Mediator.GetUri(SmileMediatorKey.webSite, null, ServiceType.Smile);
             WebSiteNavigator.HomeSource = new Uri(homeUriResult.Uri);
         }
 

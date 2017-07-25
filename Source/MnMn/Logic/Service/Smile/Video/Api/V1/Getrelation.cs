@@ -33,8 +33,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class Getrelation: ApiBase
     {
-        public Getrelation(Mediation mediation)
-            : base(mediation)
+        public Getrelation(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public Task<RawSmileVideoRelatedVideoModel> LoadAsync(string videoId, int pageNumber, string sort, OrderBy orderBy)
         {
-            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getrelation, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileVideoMediatorKey.getrelation, ServiceType.SmileVideo);
             page.ReplaceUriParameters["video-id"] = videoId;
             page.ReplaceUriParameters["page"] = pageNumber.ToString();
             page.ReplaceUriParameters["sort"] = sort;

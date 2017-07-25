@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 {
     public class GetPlayerStatus: SessionApiBase<SmileSessionViewModel>
     {
-        public GetPlayerStatus(Mediation mediation)
-            : base(mediation, ServiceType.Smile)
+        public GetPlayerStatus(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region function
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
         {
             var userAgent = Session.CreateHttpUserAgent();
 
-            var page = new PageLoader(Mediation, Session, SmileLiveMediationKey.getPlayerStatus, ServiceType.SmileLive);
+            var page = new PageLoader(Mediator, Session, SmileLiveMediatorKey.getPlayerStatus, ServiceType.SmileLive);
             page.ReplaceUriParameters["live-id"] = liveId;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {

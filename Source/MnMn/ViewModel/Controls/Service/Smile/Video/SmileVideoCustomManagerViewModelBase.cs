@@ -39,13 +39,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoCustomManagerViewModelBase(Mediation mediation)
-            : base(mediation)
+        public SmileVideoCustomManagerViewModelBase(Mediator mediator)
+            : base(mediator)
         {
-            var settingResult = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
+            var settingResult = Mediator.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)settingResult.Result;
 
-            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
         }
 
         #region property

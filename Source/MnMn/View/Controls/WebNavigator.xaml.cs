@@ -616,13 +616,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         IReadOnlyList<IReadOnlyWebNavigatorGestureElement> GestureDefineElements { get; set; }
         IReadOnlyDictionary<string, ICommand> GestureCommands { get; set; }
 
-        Mediation Mediation
+        Mediator Mediator
         {
             get
             {
                 return DoFunction(
-                    b => ((IReadOnlyWebNavigatorTag)b.Tag).Mediation,
-                    b => b.Mediation
+                    b => ((IReadOnlyWebNavigatorTag)b.Tag).Mediator,
+                    b => b.Mediator
                 );
             }
         }
@@ -835,7 +835,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return new DelegateCommand(o => {
-                    ShellUtility.OpenUriInDefaultBrowser("https://bitbucket.org/sk_0520/mnmn/issues/551", Mediation.Logger);
+                    ShellUtility.OpenUriInDefaultBrowser("https://bitbucket.org/sk_0520/mnmn/issues/551", Mediator.Logger);
                 });
             }
         }
@@ -845,7 +845,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return new DelegateCommand(o => {
-                    ShellUtility.OpenUriInDefaultBrowser("https://bitbucket.org/sk_0520/mnmn/issues/560", Mediation.Logger);
+                    ShellUtility.OpenUriInDefaultBrowser("https://bitbucket.org/sk_0520/mnmn/issues/560", Mediator.Logger);
                 });
             }
         }
@@ -1153,8 +1153,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                 var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
                 DoAction(
-                    b => { ((IReadOnlyWebNavigatorTag)b.Tag).Mediation.Request(processRequest); },
-                    b => { (b.Mediation).Request(processRequest); }
+                    b => { ((IReadOnlyWebNavigatorTag)b.Tag).Mediator.Request(processRequest); },
+                    b => { (b.Mediator).Request(processRequest); }
                 );
             }
         }
@@ -1195,11 +1195,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             return false;
         }
 
-        IReadOnlyCheckResult<ICommand> GetGestureCommand(Mediation mediation, IEnumerable<PointingGestureItem> items)
+        IReadOnlyCheckResult<ICommand> GetGestureCommand(Mediator mediator, IEnumerable<PointingGestureItem> items)
         {
             if(GestureDefineElements == null) {
                 var parameter = new WebNavigatorParameterModel(null, EventArgs.Empty, WebNavigatorCore.Engine, WebNavigatorParameterKind.Gesture);
-                var result = Mediation.GetResultFromRequest<WebNavigatorGestureResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+                var result = Mediator.GetResultFromRequest<WebNavigatorGestureResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
                 GestureDefineElements = result.GestureItems;
                 GestureCommands = GestureDefineElements.ToDictionary(
                     ik => ik.Key,
@@ -1343,7 +1343,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 NextUri = e.Uri,
             };
 
-            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+            var result = BrowserGeckoFx.Mediator.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
 
             e.Cancel = result.Cancel;
 
@@ -1357,7 +1357,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     ParameterVaule = navigatingResult.Parameter,
                 };
                 var processRequest = new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter);
-                var processResult = BrowserGeckoFx.Mediation.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
+                var processResult = BrowserGeckoFx.Mediator.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
             }
         }
 
@@ -1384,7 +1384,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
                         NextUri = nextUri,
                     };
-                    var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+                    var result = BrowserGeckoFx.Mediator.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
 
                     e.Cancel = result.Cancel;
                     if(e.Cancel) {
@@ -1394,7 +1394,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                             ParameterVaule = navigatingResult.Parameter,
                         };
                         var processRequest = new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter);
-                        var processResult = BrowserGeckoFx.Mediation.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
+                        var processResult = BrowserGeckoFx.Mediator.Request(new WebNavigatorProcessRequestModel(navigatingResult.NavigatingItem.SendService, processParameter));
                         return;
                     }
                 }
@@ -1435,7 +1435,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             var parameter = new WebNavigatorClickParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(parameter, e);
 
-            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+            var result = BrowserGeckoFx.Mediator.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
 
             if(e.Cancelable) {
                 e.Handled = result.Cancel;
@@ -1467,7 +1467,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(ContextMenu.ItemsSource == null) {
                 //var menuItems = CreateContextMenu();
                 var contextMenuDefineParameter = new WebNavigatorParameterModel(null, null, WebNavigatorEngine.GeckoFx, WebNavigatorParameterKind.ContextMenuDefine);
-                var contextMenuDefineResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuDefineResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuDefineParameter));
+                var contextMenuDefineResult = BrowserGeckoFx.Mediator.GetResultFromRequest<WebNavigatorContextMenuDefineResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuDefineParameter));
                 //ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
                 ContextMenu.ItemsSource = contextMenuDefineResult.Items.Select(MakeContextMenuItem).ToEvaluatedSequence();
             }
@@ -1475,7 +1475,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             var contextMenuParameter = new WebNavigatorContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(contextMenuParameter, e);
 
-            var contextMenuResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuParameter));
+            var contextMenuResult = BrowserGeckoFx.Mediator.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuParameter));
             if(e.Cancelable) {
                 e.Handled = contextMenuResult.Cancel;
             }
@@ -1491,7 +1491,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 ;
                 foreach(var menuItem in menuItems) {
                     contextMenuItemParameter.Key = menuItem.Define.Key;
-                    var contextMenuItemResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuItemResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuItemParameter));
+                    var contextMenuItemResult = BrowserGeckoFx.Mediator.GetResultFromRequest<WebNavigatorContextMenuItemResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuItemParameter));
 
                     if(contextMenuItemResult.Cancel) {
                         // 基本的にここでキャンセルは通さないけど一応例外投げておく(必要になったら対応する)
@@ -1559,7 +1559,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             var browser = (ServiceGeckoWebBrowser)sender;
-            browser.Mediation.Logger.Trace(e.Message);
+            browser.Mediator.Logger.Trace(e.Message);
         }
 
         private void BrowserGeckoFx_DomMouseDown(object sender, DomMouseEventArgs e)
@@ -1617,11 +1617,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(e.ChangeKind == PointingGestureChangeKind.Start || e.ChangeKind == PointingGestureChangeKind.Add) {
                 this.popupGesture.IsOpen = true;
                 GestureItems.Add(e.Item);
-                var gestureCommand = GetGestureCommand(Mediation, GestureItems);
+                var gestureCommand = GetGestureCommand(Mediator, GestureItems);
                 this.textGesture.Text = gestureCommand.Message;
             } else {
                 if(e.ChangeKind == PointingGestureChangeKind.Finish) {
-                    var gestureCommand = GetGestureCommand(Mediation, GestureItems);
+                    var gestureCommand = GetGestureCommand(Mediator, GestureItems);
                     if(gestureCommand.IsSuccess) {
                         gestureCommand.Result.TryExecute(null);
                     }

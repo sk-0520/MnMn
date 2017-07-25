@@ -53,10 +53,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        public SessionViewModelBase(Mediation mediation)
+        public SessionViewModelBase(Mediator mediator)
         {
-            Mediation = mediation;
-            NetworkSetting = Mediation.GetNetworkSetting();
+            Mediator = mediator;
+            NetworkSetting = Mediator.GetNetworkSetting();
         }
 
         #region property
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// 内部連携。
         /// </summary>
-        protected Mediation Mediation { get; private set; }
+        protected Mediator Mediator { get; private set; }
         protected IReadOnlyNetworkSetting NetworkSetting { get; }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             if(NetworkUtility.CanSetProxy(this, NetworkSetting.LogicProxy)) {
                 LastProxyChangedTimestamp = NetworkSetting.LogicProxy.ChangedTimestamp;
-                ClientHandler.SetProxy(NetworkSetting.LogicProxy, Mediation.Logger);
+                ClientHandler.SetProxy(NetworkSetting.LogicProxy, Mediator.Logger);
             } else if(!ClientHandler.UseProxy) {
                 ClientHandler.UseProxy = false;
             }

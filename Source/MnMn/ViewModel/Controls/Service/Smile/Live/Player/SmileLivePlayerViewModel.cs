@@ -83,14 +83,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #endregion
 
-        public SmileLivePlayerViewModel(Mediation mediation)
+        public SmileLivePlayerViewModel(Mediator mediator)
         {
-            Mediation = mediation;
+            Mediator = mediator;
 
-            Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
-            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Setting = Mediator.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
+            Session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            NetworkSetting = Mediation.GetNetworkSetting();
+            NetworkSetting = Mediator.GetNetworkSetting();
 
             PropertyChangedListener = new PropertyChangedWeakEventListener(ShowWebPlayer_PropertyChanged);
             PropertyChangedListener.Add(ShowWebPlayer);
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #region proeprty
 
-        Mediation Mediation { get; }
+        Mediator Mediator { get; }
         IReadOnlyNetworkSetting NetworkSetting { get; }
 
         public SmileSessionViewModel Session { get; }
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #endregion
 
-        public DescriptionBase DescriptionProcessor => new SmileDescription(Mediation);
+        public DescriptionBase DescriptionProcessor => new SmileDescription(Mediator);
 
         public string DescriptionHtmlSource
         {
@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
                 return CreateCommand(
                     o => {
                         var data = (WebNavigatorEventDataBase)o;
-                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                     }
                 );
             }
@@ -310,7 +310,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Information = information;
             CallOnPropertyChange(nameof(Information));
 
-            var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileLiveMediationKey.watchPage, ServiceType.SmileLive);
+            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileLiveMediatorKey.watchPage, ServiceType.SmileLive);
             page.ForceUri = Information.WatchUrl;
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
                 var response = t.Result;
@@ -391,7 +391,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
         {
-            Mediation.Logger.Debug($"{Information.Id}: {nameof(NavigatorPlayer.IsEmptyContent)} = {NavigatorPlayer.IsEmptyContent}");
+            Mediator.Logger.Debug($"{Information.Id}: {nameof(NavigatorPlayer.IsEmptyContent)} = {NavigatorPlayer.IsEmptyContent}");
 
             var browser = (GeckoWebBrowser)eventData.Sender;
 
@@ -409,7 +409,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             var playerContainerElement = browser.Document.GetElementById("player-container") as GeckoHtmlElement;
 
             if(flvplayerElement == null && playerContainerElement == null) {
-                Mediation.Logger.Debug($"{Information.Id}: {nameof(flvplayerElement)} is null && {nameof(flvplayerElement)} is null");
+                Mediator.Logger.Debug($"{Information.Id}: {nameof(flvplayerElement)} is null && {nameof(flvplayerElement)} is null");
                 // TODO: 本来不要
                 PlayerLoadState.Value = LoadState.Loaded;
 
@@ -424,7 +424,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
             PlayerLoadState.Value = LoadState.Loaded;
             ShowWebPlayer.Value = true;
-            Mediation.Logger.Trace($"{Information.Id}: {PlayerLoadState.Value}");
+            Mediator.Logger.Trace($"{Information.Id}: {PlayerLoadState.Value}");
         }
 
         string GetDescription(string htmlSource)
@@ -485,14 +485,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         Task OpenVideoLinkAsync(string videoId)
         {
-            Mediation.Logger.Error($"not impl: {videoId}");
+            Mediator.Logger.Error($"not impl: {videoId}");
             return Task.CompletedTask;
         }
 
 
         void OpenUserLink(string userId)
         {
-            SmileDescriptionUtility.OpenUserId(userId, Mediation);
+            SmileDescriptionUtility.OpenUserId(userId, Mediator);
         }
 
         #endregion
@@ -540,36 +540,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         public ICommand OpenUriCommand
         {
-            get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); }
+            get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediator.Logger)); }
         }
         public ICommand MenuOpenUriCommand => OpenUriCommand;
         public ICommand MenuOpenUriInAppBrowserCmmand
         {
-            get { return CreateCommand(o => DescriptionUtility.OpenUriInAppBrowser(o, Mediation)); }
+            get { return CreateCommand(o => DescriptionUtility.OpenUriInAppBrowser(o, Mediator)); }
         }
-        public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
+        public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediator.Logger)); } }
 
         public ICommand OpenVideoIdLinkCommand { get { return CreateCommand(o => OpenVideoLinkAsync((string)o), o => !string.IsNullOrWhiteSpace((string)o)); } }
         public ICommand MenuOpenVideoIdLinkCommand => OpenVideoIdLinkCommand;
-        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false), o => !string.IsNullOrWhiteSpace((string)o)); } }
-        public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
-        public ICommand MenuAddPlayListVideoIdLinkCommand { get { return CreateCommand(o => { Mediation.Logger.Trace("not impl"); }); } }
+        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediator).ConfigureAwait(false), o => !string.IsNullOrWhiteSpace((string)o)); } }
+        public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediator.Logger)); } }
+        public ICommand MenuAddPlayListVideoIdLinkCommand { get { return CreateCommand(o => { Mediator.Logger.Trace("not impl"); }); } }
         public ICommand MenuAddCheckItLaterVideoIdCommand
         {
-            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
+            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediator, Mediator.Smile.VideoMediator.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
         }
         public ICommand MenuAddUnorganizedBookmarkVideoIdCommand
         {
-            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
+            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediator, Mediator.Smile.VideoMediator.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
         }
 
-        public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
+        public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediator)); } }
         public ICommand MenuOpenMyListIdLinkCommand => OpenMyListIdLinkCommand;
-        public ICommand MenuAddMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.AddMyListBookmarkAsync(o, Mediation).ConfigureAwait(false)); } }
-        public ICommand MenuCopyMyListIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyMyListId(o, Mediation.Logger)); } }
+        public ICommand MenuAddMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.AddMyListBookmarkAsync(o, Mediator).ConfigureAwait(false)); } }
+        public ICommand MenuCopyMyListIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyMyListId(o, Mediator.Logger)); } }
 
         public ICommand OpenUserIdLinkCommand { get { return CreateCommand(o => OpenUserLink((string)o)); } }
-        public ICommand OpenChannelIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenChannelId((string)o, Mediation, Mediation)); } }
+        public ICommand OpenChannelIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenChannelId((string)o, Mediator, Mediator)); } }
 
         #endregion
 

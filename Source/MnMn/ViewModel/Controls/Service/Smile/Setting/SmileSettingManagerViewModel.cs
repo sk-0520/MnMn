@@ -55,15 +55,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #endregion
 
-        public SmileSettingManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public SmileSettingManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
-            Setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
-            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Setting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            Session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             PropertyChangedListener = new PropertyChangedWeakEventListener(RankingSelectItem_PropertyChanged);
 
-            var rankingDefine = Mediation.GetResultFromRequest<SmileVideoRankingModel>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+            var rankingDefine = Mediator.GetResultFromRequest<SmileVideoRankingModel>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
             RankingCategoryItems = rankingDefine.Items
                 .Select(i => new SmileVideoRankingGroupViewModel(i))
                 .ToEvaluatedSequence()
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         {
             get
             {
-                var keyword = Mediation.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
+                var keyword = Mediator.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
                 var result = keyword.Items
                     .Where(i => SmileVideoInformationUtility.IsCustomCopyElement(i))
                     .Select(i => new KeywordTextItemDefinedViewModel(i))
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         {
             get
             {
-                var keyword = Mediation.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
+                var keyword = Mediator.GetResultFromRequest<IReadOnlySmileVideoKeyword>(new SmileVideoOtherDefineRequestModel(SmileVideoOtherDefineKind.Keyword));
                 var result = keyword.Items
                     .Where(i => SmileVideoInformationUtility.IsLauncherParameterElement(i))
                     .Select(i => new KeywordTextItemDefinedViewModel(i))
@@ -358,7 +358,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
                 return CreateCommand(o => {
                     var rawUri = (string)o;
                     var uri = new Uri(rawUri);
-                    ShellUtility.OpenUriInDefaultBrowser(uri, Mediation.Logger);
+                    ShellUtility.OpenUriInDefaultBrowser(uri, Mediator.Logger);
                 });
             }
         }
@@ -389,9 +389,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             await Session.LoginAsync();
 
             var tasks = new[] {
-                Mediation.Smile.ManagerPack.UsersManager.InitializeAsync(),
-                Mediation.Smile.ManagerPack.VideoManager.InitializeAsync(),
-                Mediation.Smile.ManagerPack.WebSiteManager.InitializeAsync(),
+                Mediator.Smile.ManagerPack.UsersManager.InitializeAsync(),
+                Mediator.Smile.ManagerPack.VideoManager.InitializeAsync(),
+                Mediator.Smile.ManagerPack.WebSiteManager.InitializeAsync(),
             };
             await Task.WhenAll(tasks);
         }

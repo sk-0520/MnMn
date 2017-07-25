@@ -13,17 +13,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
     {
         #region function
 
-        public static Uri GetArticleUriFromWord(Mediation mediation, string word)
+        public static Uri GetArticleUriFromWord(Mediator mediator, string word)
         {
             var serviceType = ServiceType.Smile;
-            var key = SmileMediationKey.pediaWordArticle;
+            var key = SmileMediatorKey.pediaWordArticle;
 
             var map = new StringsModel() {
                 ["word"] = word,
             };
 
-            var rawUri = mediation.GetUri(key, map, serviceType);
-            var convertedUri = mediation.ConvertUri(key, rawUri.Uri, serviceType);
+            var rawUri = mediator.GetUri(key, map, serviceType);
+            var convertedUri = mediator.ConvertUri(key, rawUri.Uri, serviceType);
 
             return new Uri(convertedUri);
         }

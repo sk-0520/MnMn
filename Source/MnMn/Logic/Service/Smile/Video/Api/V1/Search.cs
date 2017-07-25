@@ -15,8 +15,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class Search : SessionApiBase<SmileSessionViewModel>
     {
-        public Search(Mediation mediation)
-            : base(mediation, ServiceType.Smile)
+        public Search(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region function
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.search, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.search, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["query"] = query;
                 page.ReplaceUriParameters["type"] = searchType;
                 page.ReplaceUriParameters["page"] = fromIndex.ToString();

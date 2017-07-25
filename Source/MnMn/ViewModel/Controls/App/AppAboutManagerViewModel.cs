@@ -69,8 +69,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppAboutManagerViewModel(Mediation mediation, AppLoggingManagerViewModel loggingManager)
-            : base(mediation)
+        public AppAboutManagerViewModel(Mediator mediator, AppLoggingManagerViewModel loggingManager)
+            : base(mediator)
         {
             LoggingManager = loggingManager;
         }
@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         s = mail;
                     }
                     //Execute(s);
-                    ShellUtility.ExecuteCommand(s, Mediation.Logger);
+                    ShellUtility.ExecuteCommand(s, Mediator.Logger);
                 });
             }
         }
@@ -164,10 +164,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64" : "32"));
                     list.Add("OS: " + System.Environment.OSVersion);
                     list.Add("CLR: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
-                    var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+                    var setting = Mediator.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
                     list.Add("Lightweight: " + setting.RunningInformation.LightweightUpdateTimestamp.ToString("u"));
                     var text = Environment.NewLine + separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine;
-                    ShellUtility.SetClipboard(text, Mediation.Logger);
+                    ShellUtility.SetClipboard(text, Mediator.Logger);
                 });
             }
         }
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
-                    var appInfo = new AppInformationCollection(Mediation);
+                    var appInfo = new AppInformationCollection(Mediator);
                     var text
                         = Environment.NewLine
                         + separator
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         + Environment.NewLine
                         + Environment.NewLine
                     ;
-                    ShellUtility.SetClipboard(text, Mediation.Logger);
+                    ShellUtility.SetClipboard(text, Mediator.Logger);
                 });
             }
         }
@@ -211,9 +211,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
 #if DEBUG
-                        Mediation.Order(new AppCleanMemoryOrderModel(true, true));
+                        Mediator.Order(new AppCleanMemoryOrderModel(true, true));
 #else
-                        Mediation.Order(new AppCleanMemoryOrderModel(true, false));
+                        Mediator.Order(new AppCleanMemoryOrderModel(true, false));
 #endif
                         ReloadUsingMemoryCommand.TryExecute(null);
                     }
@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(o => {
                     var dir = new DirectoryInfo(Constants.AssemblyRootDirectoryPath);
-                    ShellUtility.OpenDirectory(dir, Mediation.Logger);
+                    ShellUtility.OpenDirectory(dir, Mediator.Logger);
                 });
             }
         }
@@ -238,7 +238,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
-                    ShellUtility.OpenDirectory(VariableConstants.GetSettingDirectory(), Mediation.Logger);
+                    ShellUtility.OpenDirectory(VariableConstants.GetSettingDirectory(), Mediator.Logger);
                 });
             }
         }
@@ -248,8 +248,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
-                    var dir = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
-                    ShellUtility.OpenDirectory(dir, Mediation.Logger);
+                    var dir = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+                    ShellUtility.OpenDirectory(dir, Mediator.Logger);
                 });
             }
         }
@@ -273,7 +273,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         var isBackup = Convert.ToBoolean(o);
-                        Mediation.Order(new AppSaveOrderModel(isBackup));
+                        Mediator.Order(new AppSaveOrderModel(isBackup));
                         IsOpenDevelopmentMenu = false;
                     }
                 );
@@ -313,13 +313,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     o => {
                         IsOpenDevelopmentMenu = false;
 
-                        var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediation.Logger);
+                        var userAgentHost = new HttpUserAgentHost(NetworkSetting, Mediator.Logger);
                         var host = userAgentHost.CreateHttpUserAgent();
                         host.GetStringAsync(HttpUri).ContinueWith(t => {
                             if(t.IsFaulted) {
-                                Mediation.Logger.Error(t.Exception);
+                                Mediator.Logger.Error(t.Exception);
                             } else {
-                                Mediation.Logger.Debug(HttpUri, t.Result);
+                                Mediator.Logger.Debug(HttpUri, t.Result);
                             }
                         });
                     }
@@ -330,15 +330,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #endregion
 
         #region function
-
-        //void Execute(string command)
-        //{
-        //    try {
-        //        Process.Start(command);
-        //    } catch(Exception ex) {
-        //        Mediation.Logger.Error(ex);
-        //    }
-        //}
 
         void ReloadUsingMemory()
         {
@@ -364,14 +355,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     var filePath = dialog.FileName;
                     ExportPublicInformationFile(filePath);
                 } catch(Exception ex) {
-                    Mediation.Logger.Error(ex);
+                    Mediator.Logger.Error(ex);
                 }
             }
         }
 
         AppSettingModel StripCredentials(Stream settingStream)
         {
-            var stripSetting = SerializeUtility.LoadSetting<AppSettingModel>(settingStream, SerializeFileType.Json, Mediation.Logger);
+            var stripSetting = SerializeUtility.LoadSetting<AppSettingModel>(settingStream, SerializeFileType.Json, Mediator.Logger);
 
             stripSetting.ServiceSmileSetting.Account = new Model.Setting.Service.Smile.SmileUserAccountModel();
             stripSetting.RunningInformation.UserId = null;
@@ -381,9 +372,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         void ExportPublicInformationFile(string filePath)
         {
-            var baseSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+            var baseSetting = Mediator.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
             using(var baseSettingStream = GlobalManager.MemoryStream.GetStreamWidthAutoTag()) {
-                SerializeUtility.SaveSetting(baseSettingStream, baseSetting, SerializeFileType.Json, Mediation.Logger);
+                SerializeUtility.SaveSetting(baseSettingStream, baseSetting, SerializeFileType.Json, Mediator.Logger);
                 baseSettingStream.Position = 0;
 
                 var stripSetting = StripCredentials(baseSettingStream);
@@ -393,13 +384,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
                     var settingEntry = exportStream.CreateEntry(VariableConstants.SettingFileName);
                     using(var zipStream = settingEntry.Open()) {
-                        SerializeUtility.SaveSetting(zipStream, stripSetting, SerializeFileType.Json, Mediation.Logger);
+                        SerializeUtility.SaveSetting(zipStream, stripSetting, SerializeFileType.Json, Mediator.Logger);
                     }
 
                     var informationEntry = exportStream.CreateEntry(Constants.InformationFileName);
                     using(var zipStream = informationEntry.Open()) {
                         using(var streamWriter = new StreamWriter(zipStream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
-                            var info = new AppInformationCollection(Mediation);
+                            var info = new AppInformationCollection(Mediator);
                             info.WriteInformation(streamWriter);
                         }
                     }
