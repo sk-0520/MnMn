@@ -653,7 +653,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 ThrowNotGetthumbinfoSource();
-                return Thumb.ChannelId;
+
+                if(string.IsNullOrEmpty(Thumb.ChannelId)) {
+                    return string.Empty;
+                }
+
+                return SmileIdUtility.ConvertChannelId(Thumb.ChannelId, Mediator);
             }
         }
 

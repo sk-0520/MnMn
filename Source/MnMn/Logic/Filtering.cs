@@ -43,6 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public string Name { get { return Setting.Name ?? Setting.Source; } }
 
+        protected virtual string Source { get { return Setting.Source ?? string.Empty; } }
+
         #endregion
 
         #region function
@@ -123,7 +125,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             var notNullTarget = target ?? string.Empty;
-            var notNullSource = Setting.Source ?? string.Empty;
+            var notNullSource = Source;
 
             return CheckCore(notNullTarget, notNullSource, Setting.IgnoreCase);
         }

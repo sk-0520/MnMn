@@ -317,7 +317,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                         if(SelectedFinderItem.Information.IsChannelVideo) {
                             var text = isId
-                                ? SmileIdUtility.ConvertChannelId(SelectedFinderItem.Information.ChannelId, Mediator)
+                                ? SelectedFinderItem.Information.ChannelId
                                 : SelectedFinderItem.Information.ChannelName
                             ;
                             CopyInformationText(text);
@@ -392,7 +392,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             var information = finderItem.Information;
-            var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model));
+            var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model, Mediator));
             foreach(var filter in filters.AsParallel()) {
                 var param = new SmileVideoFinderFilteringParameterModel() {
                     VideoId = information.VideoId,

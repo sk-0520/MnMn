@@ -1766,7 +1766,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CacheSpan dataSpan;
             CacheSpan imageSpan;
             if(Information.IsChannelVideo) {
-                var channelId = SmileIdUtility.ConvertChannelId(Information.ChannelId, Mediator);
+                var channelId = Information.ChannelId;
                 PosterInformation = new SmileChannelInformationViewModel(Mediator, channelId);
                 dataSpan = Constants.ServiceSmileChannelDataCacheSpan;
                 imageSpan = Constants.ServiceSmileChannelImageCacheSpan;
