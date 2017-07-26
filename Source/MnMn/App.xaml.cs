@@ -665,7 +665,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            CatchUnhandleException((Exception)e.ExceptionObject, false);
+            if(!e.IsTerminating) {
+                CatchUnhandleException((Exception)e.ExceptionObject, false);
+            }
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
