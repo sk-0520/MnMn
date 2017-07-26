@@ -146,6 +146,14 @@
 					},
 					{
 						'revision': '',
+						'subject': '#692: クラッシュレポートより: System.InvalidOperationException: このオブジェクトは別のスレッドに所有されているため、呼び出しスレッドはこのオブジェクトにアクセスできません',
+						'comments': [
+							'ひとまず Window から Player の Loaded に処理回したけどわっかんねーよばーかばーか',
+							'再現できないんじゃ難しいねばーか'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

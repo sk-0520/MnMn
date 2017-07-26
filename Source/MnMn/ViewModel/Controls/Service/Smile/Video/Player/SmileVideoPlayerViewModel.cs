@@ -382,14 +382,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void StartIfAutoPlay()
         {
             if(IsAutoPlay && !UserOperationStop.Value && !IsViewClosed) {
-                View.Dispatcher.Invoke(() => {
-                    if(View.IsLoaded) {
+                Player.Dispatcher.Invoke(() => {
+                    if(Player.IsLoaded) {
                         SetMediaAndPlay();
                     } else {
-                        View.Loaded += View_LoadedAutoPlay;
-                        Mediator.Logger.Information("view: not loaded, event wait!!");
+                        Player.Loaded += Player_LoadedAutoPlay;
+                        Mediator.Logger.Information($"{VideoId}: player -> not loaded, event wait!!");
                     }
-                });
+                }, DispatcherPriority.ApplicationIdle);
             }
         }
 
@@ -1555,7 +1555,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(View != null) {
                 View.Loaded -= View_Loaded;
-                View.Loaded -= View_LoadedAutoPlay;
                 View.Activated -= View_Activated;
                 View.KeyDown -= View_KeyDown;
                 View.KeyUp -= View_KeyUp;
@@ -1569,6 +1568,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Player.SizeChanged -= Player_SizeChanged;
                 Player.StateChanged -= Player_StateChanged;
                 Player.MouseWheel -= Player_MouseWheel;
+                Player.Loaded -= Player_LoadedAutoPlay;
             }
             //if(Navigationbar != null) {
             //    DetachmentNavigationbarBaseEvent(Navigationbar);
@@ -2224,9 +2224,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             View.Loaded -= View_Loaded;
         }
 
-        void View_LoadedAutoPlay(object sender, RoutedEventArgs e)
+        void Player_LoadedAutoPlay(object sender, RoutedEventArgs e)
         {
-            View.Loaded -= View_LoadedAutoPlay;
+            Player.Loaded -= Player_LoadedAutoPlay;
 
             SetMediaAndPlay();
         }
