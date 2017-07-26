@@ -107,7 +107,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         bool IsEnabledCommandLine => VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
 
-        bool Catched { get; set; }
+        bool UnhandleExceptionCatched { get; set; }
+        object UnhandleExceptionLocker { get; } = new object();
 
         #endregion
 
@@ -122,10 +123,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
 
-            if(Catched) {
-                return;
+            lock(UnhandleExceptionLocker) {
+                if(UnhandleExceptionCatched) {
+                    return;
+                }
+                UnhandleExceptionCatched = true;
             }
-            Catched = true;
 
             Debug.WriteLine($"{nameof(callerUiThread)} = {callerUiThread}");
             if(Mediator != null && Mediator.Logger != null) {
