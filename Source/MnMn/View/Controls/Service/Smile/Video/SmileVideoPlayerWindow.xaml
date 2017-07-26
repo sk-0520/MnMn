@@ -347,6 +347,10 @@
       </StackPanel>
     </mamc:WindowCommands>
   </mamc:MetroWindow.RightWindowCommands>
+  <mamc:MetroWindow.TaskbarItemInfo>
+    <TaskbarItemInfo ThumbnailClipMargin="{Binding ThumbnailClipMargin, Mode=TwoWay}">
+    </TaskbarItemInfo>
+  </mamc:MetroWindow.TaskbarItemInfo>
 
   <DockPanel>
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">

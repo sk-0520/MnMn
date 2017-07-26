@@ -135,6 +135,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         InformationViewModelBase _posterInformation;
 
+        Thickness _thumbnailClipMargin;
+
         #endregion
     }
 }

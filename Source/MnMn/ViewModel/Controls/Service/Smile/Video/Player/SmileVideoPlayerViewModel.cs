@@ -1785,6 +1785,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             });
         }
 
+        Thickness GetTaskbarThumbnailThickness()
+        {
+            var result = new Thickness();
+            if(View == null || IsViewClosed) {
+                return result;
+            }
+
+            var viewLocation = View.PointToScreen(new Point(0, 0));
+            var layerLocation = View.layer.PointToScreen(new Point(0, 0));
+
+            result.Left = layerLocation.X - viewLocation.X;
+            result.Top = layerLocation.Y - viewLocation.Y;
+
+            result.Right = Width - BaseWidth - result.Left;
+            result.Bottom = Height - BaseHeight - result.Top;
+
+            return result;
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -2303,6 +2322,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ChangeBaseSize();
+
+            ThumbnailClipMargin = GetTaskbarThumbnailThickness();
         }
 
         private void Player_StateChanged(object sender, Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)

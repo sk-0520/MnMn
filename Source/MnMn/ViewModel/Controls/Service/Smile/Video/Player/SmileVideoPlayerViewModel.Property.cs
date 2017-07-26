@@ -1235,6 +1235,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public virtual ImageSource PosterThumbnailImage => PosterInformation?.ThumbnailImage;
 
+        public Thickness ThumbnailClipMargin
+        {
+            get { return this._thumbnailClipMargin; }
+            set { SetVariableValue(ref this._thumbnailClipMargin, value); }
+        }
+
         #endregion
     }
 }
