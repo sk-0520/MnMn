@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 
             if(!Mutex.WaitOne(TimeSpan.Parse(ConfigurationManager.AppSettings.Get("mutex-wait-time")), false)) {
                 Mutex = null;
+                Shutdown(2);
                 return;
             }
 
