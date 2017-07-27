@@ -431,6 +431,7 @@
     <Compile Include="Logic\Utility\UriUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\View\PointingGesture.cs" />
+    <Compile Include="Logic\View\TaskbarThumbnailCreatorBase.cs" />
     <Compile Include="Logic\View\WebNavigatorPointingGesture.cs" />
     <Compile Include="Logic\WebNavigatorBridge\SimleHtmlElementList.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
