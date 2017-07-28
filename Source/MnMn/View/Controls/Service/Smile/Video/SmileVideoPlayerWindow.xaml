@@ -81,6 +81,7 @@
       <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:KeyBindingToGestureTextConverter x:Key="KeyBindingToGestureTextConverter" />
+      <app_view_converter:BooleanToCustomVisibilityConverter x:Key="BooleanToCustomVisibilityHiddenConverter" FalseValue="Hidden" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
@@ -937,10 +938,10 @@
               </i:Interaction.Triggers>
             </vlc_wpf:VlcPlayer>
 
-            <Viewbox x:Name="layer" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
-              <Grid Width="{Binding CommentAreaWidth, Mode=OneWay}" Height="{Binding CommentAreaHeight, Mode=OneWay}" >
-                <Canvas x:Name="normalCommentArea" />
-                <Canvas x:Name="originalPosterCommentArea" />
+            <Viewbox x:Name="layer" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" >
+              <Grid Width="{Binding CommentAreaWidth, Mode=OneWay}" Height="{Binding CommentAreaHeight, Mode=OneWay}">
+                <Canvas x:Name="normalCommentArea" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToCustomVisibilityHiddenConverter}}" />
+                <Canvas x:Name="originalPosterCommentArea"  Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToCustomVisibilityHiddenConverter}}"/>
                 <Border
                   VerticalAlignment="Top"
                   Background="#80ffffff"
@@ -948,8 +949,21 @@
                   BorderThickness="4"
                   Width="{Binding CommentAreaWidth, Mode=OneWay}"
                   Height="{Binding CommentEnabledHeight}"
-                  Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
                 >
+                  <Border.Style>
+                    <Style TargetType="Border">
+                      <Style.Triggers>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding ShowEnabledCommentPreviewArea}" Value="True" />
+                            <Condition Binding="{Binding PlayerVisibleComment}" Value="True" />
+                          </MultiDataTrigger.Conditions>
+                          <Setter Property="Visibility" Value="Visible" />
+                        </MultiDataTrigger>
+                      </Style.Triggers>
+                      <Setter Property="Visibility" Value="Collapsed" />
+                    </Style>
+                  </Border.Style>
                   <TextBlock VerticalAlignment="Top" TextAlignment="Center" FontSize="40" Foreground="Black" Margin="{StaticResource TopMargin}">
                     <TextBlock.Effect>
                       <DropShadowEffect
