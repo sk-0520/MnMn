@@ -45,15 +45,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        protected DescriptionBase(IGetExpression convertCompatibility, ServiceType serviceType)
+        protected DescriptionBase(IExpressionGetter expressionGetter, ServiceType serviceType)
         {
-            ConvertCompatibility = convertCompatibility;
+            ExpressionGetter = expressionGetter;
             ServiceType = serviceType;
         }
 
         #region property
 
-        protected IGetExpression ConvertCompatibility { get; }
+        protected IExpressionGetter ExpressionGetter { get; }
         protected ServiceType ServiceType { get; }
 
         #endregion

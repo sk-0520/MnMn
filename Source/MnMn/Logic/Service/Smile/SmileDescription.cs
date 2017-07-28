@@ -34,11 +34,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 {
     public class SmileDescription: DescriptionBase
     {
-        protected SmileDescription(IGetExpression convertCompatibility, ServiceType serviceType)
+        protected SmileDescription(IExpressionGetter convertCompatibility, ServiceType serviceType)
             : base(convertCompatibility, serviceType)
         { }
 
-        public SmileDescription(IGetExpression convertCompatibility)
+        public SmileDescription(IExpressionGetter convertCompatibility)
             : this(convertCompatibility, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Smile)
         { }
 
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
                 var target = m.Groups["TARGET"].Value;
-                var mylistId = SmileIdUtility.GetMyListId(target, ConvertCompatibility);
+                var mylistId = SmileIdUtility.GetMyListId(target, ExpressionGetter);
                 if(!string.IsNullOrWhiteSpace(mylistId)) {
                     var link = (string)mylistId;
 
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
                 var target = m.Groups["TARGET"].Value;
-                var userId = SmileIdUtility.GetUserId(target, ConvertCompatibility);
+                var userId = SmileIdUtility.GetUserId(target, ExpressionGetter);
                 if(!string.IsNullOrWhiteSpace(userId)) {
                     var link = userId;
                     return MakeLinkCore(link, target, nameof(ISmileDescription.OpenUserIdLinkCommand), Enumerable.Empty<DescriptionContextMenuItem>());
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
                 var target = m.Groups["TARGET"].Value;
-                var videoId = SmileIdUtility.GetVideoId(target, ConvertCompatibility);
+                var videoId = SmileIdUtility.GetVideoId(target, ExpressionGetter);
                 if(!string.IsNullOrWhiteSpace(videoId)) {
                     var link = (string)videoId;
 

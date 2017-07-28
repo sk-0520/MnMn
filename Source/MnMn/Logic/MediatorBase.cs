@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IGetUri,
         IGetRequestHeader,
         IGetRequestParameter,
-        IGetExpression,
+        IExpressionGetter,
         ICommunication,
         IUriCompatibility,
         IRequestCompatibility,
@@ -150,12 +150,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected void ThrowNotSupportGetExpression(string key, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IExpressionGetter)} => {nameof(key)}: {key}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetExpression(string key, string id, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(id)}: {id}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IExpressionGetter)} => {nameof(key)}: {key}, {nameof(id)}: {id}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportConvertUri(string key, string uri, ServiceType serviceType)

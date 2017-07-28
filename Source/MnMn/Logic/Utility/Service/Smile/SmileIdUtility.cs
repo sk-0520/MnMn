@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static bool IsScrapingVideoId(string videoId, IGetExpression getExpression)
+        public static bool IsScrapingVideoId(string videoId, IExpressionGetter getExpression)
         {
             return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
         }
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetVideoId(string inputValue, IGetExpression getExpression)
+        public static string GetVideoId(string inputValue, IExpressionGetter getExpression)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetMyListId(string inputValue, IGetExpression getExpression)
+        public static string GetMyListId(string inputValue, IExpressionGetter getExpression)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetUserId(string inputValue, IGetExpression getExpression)
+        public static string GetUserId(string inputValue, IExpressionGetter getExpression)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
@@ -133,12 +133,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static bool NeedCorrectionVideoId(string videoId, IGetExpression getExpression)
+        public static bool NeedCorrectionVideoId(string videoId, IExpressionGetter getExpression)
         {
             return !string.IsNullOrEmpty(videoId) && char.IsDigit(videoId[0]);
         }
 
-        public static string ConvertChannelId(string rawChannelId, IGetExpression getExpression)
+        public static string ConvertChannelId(string rawChannelId, IExpressionGetter getExpression)
         {
             var normalization = getExpression.GetExpression("get-expression-channel-id", "normalization-id", ServiceType.Smile);
             if(normalization.Regex.IsMatch(rawChannelId)) {

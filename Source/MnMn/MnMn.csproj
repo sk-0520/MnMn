@@ -312,7 +312,7 @@
     <Compile Include="IF\ReadOnly\IReadOnlyDefinedKeyValuePair.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpression.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
-    <Compile Include="IF\IGetExpression.cs" />
+    <Compile Include="IF\IExpressionGetter.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyCData.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpressionElement.cs" />
