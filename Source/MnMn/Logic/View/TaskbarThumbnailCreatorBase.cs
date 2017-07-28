@@ -32,14 +32,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         {
             Element.SizeChanged += View_SizeChanged;
             Element.MouseLeave += View_MouseLeave;
-            Element.MouseMove += View_MouseMove;
         }
 
         protected virtual void DetachEvent()
         {
             Element.SizeChanged -= View_SizeChanged;
             Element.MouseLeave -= View_MouseLeave;
-            Element.MouseMove -= View_MouseMove;
         }
 
         protected abstract Thickness GetThickness();
@@ -80,11 +78,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         {
             ChangedThickness();
         }
-
-        private void View_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            ChangedThickness();
-        }
-
     }
 }
