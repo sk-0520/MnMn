@@ -225,6 +225,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
+                if(Information.InformationSource != SmileVideoInformationSource.Getthumbinfo) {
+                    Mediator.Logger.Error($"{VideoId}: {nameof(Information)}.{nameof(Information.InformationSource)} is {Information.InformationSource}");
+                    return null;
+                }
+
                 if(Information.MovieType == SmileVideoMovieType.Swf) {
                     if(VideoFile == null) {
                         return null;
