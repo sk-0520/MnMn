@@ -8,12 +8,12 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 {
-    public abstract class TaskbarThumbnailCreator<TView> : DisposeFinalizeBase
-        where TView: FrameworkElement
+    public abstract class TaskbarThumbnailCreatorBase<TElement> : DisposeFinalizeBase
+        where TElement: FrameworkElement
     {
-        public TaskbarThumbnailCreator(TView view, Action<Thickness> receiveMethod)
+        public TaskbarThumbnailCreatorBase(TElement element, Action<Thickness> receiveMethod)
         {
-            View = view;
+            Element = element;
             ReceiveMethod = receiveMethod;
 
             AttacheEvent();
@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 
         #region property
 
-        protected TView View { get; private set; }
+        protected TElement Element { get; private set; }
         Action<Thickness> ReceiveMethod { get; set; }
 
         #endregion
@@ -30,16 +30,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 
         protected void AttacheEvent()
         {
-            View.SizeChanged += View_SizeChanged;
-            View.MouseLeave += View_MouseLeave;
-            View.MouseMove += View_MouseMove;
+            Element.SizeChanged += View_SizeChanged;
+            Element.MouseLeave += View_MouseLeave;
+            Element.MouseMove += View_MouseMove;
         }
 
         void DetachEvent()
         {
-            View.SizeChanged -= View_SizeChanged;
-            View.MouseLeave -= View_MouseLeave;
-            View.MouseMove -= View_MouseMove;
+            Element.SizeChanged -= View_SizeChanged;
+            Element.MouseLeave -= View_MouseLeave;
+            Element.MouseMove -= View_MouseMove;
         }
 
         protected abstract Thickness GetThickness();
@@ -57,9 +57,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                if(View != null) {
+                if(Element != null) {
                     DetachEvent();
-                    View = null;
+                    Element = null;
                 }
                 if(ReceiveMethod != null) {
                     ReceiveMethod = null;
