@@ -350,6 +350,12 @@
   </mamc:MetroWindow.RightWindowCommands>
   <mamc:MetroWindow.TaskbarItemInfo>
     <TaskbarItemInfo ThumbnailClipMargin="{Binding ThumbnailClipMargin, Mode=TwoWay}">
+      <TaskbarItemInfo.ThumbButtonInfos>
+        <ThumbButtonInfo Command="{Binding LoadPrevPlayListItemCommand}" ImageSource="/View/Resources/Image/Player/Prev.png"  />
+        <ThumbButtonInfo Command="{Binding PlayCommand}" ImageSource="/View/Resources/Image/Player/Play.png" />
+        <ThumbButtonInfo Command="{Binding StopCommand}" ImageSource="/View/Resources/Image/Player/Stop.png"  />
+        <ThumbButtonInfo Command="{Binding LoadNextPlayListItemCommand}" ImageSource="/View/Resources/Image/Player/Next.png"  />
+      </TaskbarItemInfo.ThumbButtonInfos>
     </TaskbarItemInfo>
   </mamc:MetroWindow.TaskbarItemInfo>
 
