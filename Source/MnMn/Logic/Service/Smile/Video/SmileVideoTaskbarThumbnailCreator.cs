@@ -11,13 +11,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoTaskbarThumbnailCreator : TaskbarThumbnailCreatorBase<SmileVideoPlayerWindow>
     {
-        public SmileVideoTaskbarThumbnailCreator(SmileVideoPlayerWindow element, Action<Thickness> receiveMethod)
+        public SmileVideoTaskbarThumbnailCreator(SmileVideoPlayerWindow element, Action<Thickness> receiveMethod, double scale)
             : base(element, receiveMethod)
-        { }
+        {
+            Scale = scale;
+        }
 
         #region function
 
         Size Size { get; set; }
+        double Scale { get; set; }
+
         bool IsClosed { get; set; }
 
         #endregion
@@ -27,6 +31,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public void SetSize(Size size)
         {
             Size = size;
+        }
+
+        public void SetScale(double scale)
+        {
+            Scale = scale;
         }
 
         #endregion
@@ -60,8 +69,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             result.Left = layerLocation.X - viewLocation.X;
             result.Top = layerLocation.Y - viewLocation.Y;
 
-            result.Right = Element.ActualWidth - Size.Width - result.Left;
-            result.Bottom = Element.ActualHeight - Size.Height - result.Top;
+            result.Right = Element.ActualWidth - (Size.Width * Scale) - result.Left;
+            result.Bottom = Element.ActualHeight - (Size.Height * Scale) - result.Top;
 
             return result;
         }

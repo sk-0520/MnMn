@@ -245,7 +245,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public double ViewScale
         {
             get { return this._viewScale; }
-            set { SetVariableValue(ref this._viewScale, value); }
+            set
+            {
+                if(SetVariableValue(ref this._viewScale, value)) {
+                    PlayerTaskbarThumbnailCreator?.SetScale(ViewScale);
+                }
+            }
         }
 
         /// <summary>

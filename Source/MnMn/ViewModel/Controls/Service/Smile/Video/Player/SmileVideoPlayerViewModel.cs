@@ -2093,7 +2093,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ListPlaylist = View.listPlayList;
 
             PlayerCursorHider = new Logic.View.CursorHider(Player);
-            PlayerTaskbarThumbnailCreator = new SmileVideoTaskbarThumbnailCreator(View, ReceiveTaskbarThumbnailThickness);
+            PlayerTaskbarThumbnailCreator = new SmileVideoTaskbarThumbnailCreator(View, ReceiveTaskbarThumbnailThickness, ViewScale);
 
             // 初期設定
             Player.Volume = Volume;
