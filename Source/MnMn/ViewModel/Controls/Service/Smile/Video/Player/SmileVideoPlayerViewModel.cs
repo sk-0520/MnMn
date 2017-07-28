@@ -340,6 +340,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var resizePercent = Constants.ServiceSmileVideoPlayerCommentHeight / BaseHeight;
             CommentAreaWidth = resizePercent * BaseWidth;
 
+            PlayerTaskbarThumbnailCreator.SetSize(new Size(BaseWidth, BaseHeight));
+            Player.Dispatcher.BeginInvoke(new Action(() => {
+                PlayerTaskbarThumbnailCreator.Refresh();
+            }), DispatcherPriority.SystemIdle);
+
             ChangedEnabledCommentPercent();
         }
 
@@ -1785,6 +1790,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             });
         }
 
+        void ReceiveTaskbarThumbnailThickness(Thickness thickness)
+        {
+            Mediator.Logger.Debug(thickness.ToString());
+            ThumbnailClipMargin = thickness;
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1792,6 +1803,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public override Task LoadAsync(SmileVideoInformationViewModel videoInformation, bool forceEconomy, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             // TODO:forceEconomyは今のところ無効
+
+            PlayerTaskbarThumbnailCreator?.Reset();
 
             if(PlayListItems.All(i => i != videoInformation)) {
                 // プレイリストに存在しない動画は追加する
@@ -2054,6 +2067,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SetRelationVideoItems(Enumerable.Empty<SmileVideoInformationViewModel>());
             SetMarketItems(Enumerable.Empty<SmileMarketVideoRelationItemViewModel>());
             //TagItems.Clear();
+            PlayerTaskbarThumbnailCreator?.Reset();
         }
 
         protected override Task StopPrevProcessAsync()
@@ -2086,6 +2100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ListPlaylist = View.listPlayList;
 
             PlayerCursorHider = new Logic.View.CursorHider(Player);
+            PlayerTaskbarThumbnailCreator = new SmileVideoTaskbarThumbnailCreator(View, ReceiveTaskbarThumbnailThickness, ViewScale);
 
             // 初期設定
             Player.Volume = Volume;
@@ -2099,6 +2114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             Debug.WriteLine(View.IsInitialized);
         }
+
 
         #endregion
 
@@ -2201,6 +2217,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 if(PlayerCursorHider != null) {
                     PlayerCursorHider.Dispose();
                     PlayerCursorHider = null;
+                }
+
+                if(PlayerTaskbarThumbnailCreator != null) {
+                    PlayerTaskbarThumbnailCreator.Dispose();
+                    PlayerTaskbarThumbnailCreator = null;
                 }
 
                 View = null;
@@ -2318,6 +2339,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 case Meta.Vlc.Interop.Media.MediaState.Playing:
                     var prevState = PlayerState;
                     PlayerState = PlayerState.Playing;
+                    PlayerTaskbarThumbnailCreator.Refresh();
                     if(prevState == PlayerState.Pause) {
                         foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Resume();
