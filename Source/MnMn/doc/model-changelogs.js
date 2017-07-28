@@ -111,7 +111,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#696: 動画プレイヤーのタスクバーボタン実装'
 					},
 					{
 						'revision': '',
