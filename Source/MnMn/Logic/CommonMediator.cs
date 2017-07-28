@@ -5,49 +5,43 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
-using ContentTypeTextNet.MnMn.Library.Bridging.Model;
-using ContentTypeTextNet.MnMn.MnMn.Define.Service.IdleTalk.Mutter;
-using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
+namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class IdleTalkMutterMediator : CustomMediatorBase
+    public class CommonMediator : CustomMediatorBase
     {
-        public IdleTalkMutterMediator(Mediator mediator)
-            : base(mediator, Constants.IdleTalkMutterUriListPath, Constants.IdleTalkMutterUriParametersListPath, Constants.IdleTalkMutterRequestHeadersListPath, Constants.IdleTalkMutterRequestParametersListPath, Constants.IdleTalkMutterRequestMappingsListPath, Constants.IdleTalkMutterExpressionsPath)
+        public CommonMediator(Mediator mediator)
+            : base(mediator, Constants.CommonUriListPath, Constants.CommonUriParametersListPath, Constants.CommonRequestHeadersListPath, Constants.CommonRequestParametersListPath, Constants.CommonRequestMappingsListPath, Constants.CommonExpressionsPath)
         { }
 
+        #region CustomMediatorBase
 
-        #region MediatorCustomBase
-
-        protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceIdleTalkName, Constants.ServiceIdleTalkMutterName);
+        protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceCommonName);
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediatorKeys(typeof(IdleTalkMutterMediatorKey));
+            return GetMediatorKeys(typeof(CommonMediatorKey));
         }
 
-        internal override object RequestShowView(ShowViewRequestModel request)
+        internal override object RequestShowView(ShowViewRequestModel requet)
         {
-            CheckUtility.DebugEnforce(request.ServiceType == ServiceType.IdleTalkMutter);
-
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public override ResponseModel Request(RequestModel request)
         {
-            if(request.ServiceType != ServiceType.IdleTalkMutter) {
+            if(request.ServiceType != ServiceType.Common) {
                 ThrowNotSupportRequest(request);
             }
 
@@ -56,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
             }
 
@@ -65,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override string ConvertUri(string key, string uri, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportConvertUri(key, uri, serviceType);
             }
 
@@ -74,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
             }
 
@@ -83,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
             }
 
@@ -92,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
             }
 
@@ -101,7 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
             }
 
@@ -110,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override IReadOnlyExpression GetExpression(string key, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportGetExpression(key, serviceType);
             }
 
@@ -119,7 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportGetExpression(key, id, serviceType);
             }
 
@@ -128,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
             }
 
@@ -137,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 
         public override string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.IdleTalkMutter) {
+            if(serviceType != ServiceType.Common) {
                 ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
             }
 
@@ -163,6 +157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
         {
             return ConvertStringCore(key, uri, text, serviceType);
         }
+
 
         #endregion
     }

@@ -223,6 +223,7 @@
     <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
+    <Compile Include="Define\CommonMediatorKey.cs" />
     <Compile Include="Define\DownloadState.cs" />
     <Compile Include="Define\DownloadUnit.cs" />
     <Compile Include="Define\Event\PointingGestureChangedEventArgs.cs" />
@@ -372,6 +373,7 @@
     <Compile Include="IF\ReadOnly\WebNavigatorBridge\IReadOnlyWebNavigatorNavigatingItem.cs" />
     <Compile Include="IF\ReadOnly\WebNavigatorBridge\IReadOnlyWebNavigatorPageCondition.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
+    <Compile Include="Logic\CommonMediator.cs" />
     <Compile Include="Logic\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Logic\Extensions\HttpClientHandlerExtensions.cs" />
     <Compile Include="Logic\Extensions\IReadOnlyDefinedElementExtensions.cs" />
@@ -845,6 +847,28 @@
     <Content Include="etc\define\accept-version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\define\common\expressions.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\common\request-headers.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\common\request-mappings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\common\request-params.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\common\uri-list.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\common\uri-params.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\define\service\idle_talk\mutter\expressions.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1008,7 +1032,7 @@
     <Compile Include="Logic\Downloader.cs" />
     <Compile Include="Logic\Extensions\ICommunicationExtensions.cs" />
     <Compile Include="Logic\Filtering.cs" />
-    <Compile Include="Logic\MediatorCustomBase.cs" />
+    <Compile Include="Logic\CustomMediatorBase.cs" />
     <Compile Include="Logic\MultiStrings.cs" />
     <Compile Include="Logic\PlayListManager.cs" />
     <Compile Include="Logic\Service\SessionApiBase.cs" />

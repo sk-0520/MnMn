@@ -101,6 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             WebNavigatorContextMenuMap = WebNavigatorContextMenuItems.ToDictionary(i => i.Key, i => i);
 
             Setting = mainSettingModel;
+            Common = new CommonMediator(this);
             Smile = new SmileMediator(this, Setting.ServiceSmileSetting);
             IdleTalk = new IdleTalkMediator(this);
 
@@ -117,6 +118,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IReadOnlyList<WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingItems { get; }
         IReadOnlyList<WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
         IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuMap { get; }
+
+        CommonMediator Common { get; }
 
         /// <summary>
         /// ニコニコ関係。

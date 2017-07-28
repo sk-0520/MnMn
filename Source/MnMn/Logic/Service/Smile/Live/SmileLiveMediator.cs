@@ -40,7 +40,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
-    public class SmileLiveMediator: MediatorCustomBase
+    public class SmileLiveMediator: CustomMediatorBase
     {
         public SmileLiveMediator(Mediator mediator, SmileLiveSettingModel setting)
             : base(mediator, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileLiveRequestHeadersListPath, Constants.SmileLiveRequestParametersListPath, Constants.SmileLiveRequestMappingsListPath, Constants.SmileLiveExpressionsPath)
