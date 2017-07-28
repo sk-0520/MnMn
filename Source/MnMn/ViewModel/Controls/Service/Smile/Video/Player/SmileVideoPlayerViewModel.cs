@@ -341,7 +341,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentAreaWidth = resizePercent * BaseWidth;
 
             PlayerTaskbarThumbnailCreator.SetSize(new Size(BaseWidth, BaseHeight));
-            PlayerTaskbarThumbnailCreator.Refresh();
+            Player.Dispatcher.BeginInvoke(new Action(() => {
+                PlayerTaskbarThumbnailCreator.Refresh();
+            }), DispatcherPriority.SystemIdle);
 
             ChangedEnabledCommentPercent();
         }
@@ -1790,6 +1792,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ReceiveTaskbarThumbnailThickness(Thickness thickness)
         {
+            Mediator.Logger.Debug(thickness.ToString());
             ThumbnailClipMargin = thickness;
         }
 
