@@ -349,12 +349,12 @@
     </mamc:WindowCommands>
   </mamc:MetroWindow.RightWindowCommands>
   <mamc:MetroWindow.TaskbarItemInfo>
-    <TaskbarItemInfo ThumbnailClipMargin="{Binding ThumbnailClipMargin, Mode=TwoWay}">
+    <TaskbarItemInfo Description="{Binding Title, ElementName=root}" ThumbnailClipMargin="{Binding ThumbnailClipMargin, Mode=OneWay}">
       <TaskbarItemInfo.ThumbButtonInfos>
-        <ThumbButtonInfo Command="{Binding LoadPrevPlayListItemCommand}" ImageSource="/View/Resources/Image/Player/Prev.png"  />
-        <ThumbButtonInfo Command="{Binding PlayCommand}" ImageSource="/View/Resources/Image/Player/Play.png" />
-        <ThumbButtonInfo Command="{Binding StopCommand}" ImageSource="/View/Resources/Image/Player/Stop.png"  />
-        <ThumbButtonInfo Command="{Binding LoadNextPlayListItemCommand}" ImageSource="/View/Resources/Image/Player/Next.png"  />
+        <ThumbButtonInfo ImageSource="/View/Resources/Image/Player/Prev.png" Description="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" />
+        <ThumbButtonInfo ImageSource="/View/Resources/Image/Player/Play.png" Description="再生/一時停止" Command="{Binding PlayCommand}" />
+        <ThumbButtonInfo ImageSource="/View/Resources/Image/Player/Stop.png" Description="停止" Command="{Binding StopCommand}"  />
+        <ThumbButtonInfo ImageSource="/View/Resources/Image/Player/Next.png" Description="次の動画" Command="{Binding LoadNextPlayListItemCommand}"  />
       </TaskbarItemInfo.ThumbButtonInfos>
     </TaskbarItemInfo>
   </mamc:MetroWindow.TaskbarItemInfo>
