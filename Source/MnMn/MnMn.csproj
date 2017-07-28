@@ -307,13 +307,13 @@
     <Compile Include="IF\IDownloadItem.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
     <Compile Include="IF\IProcessLinkChildHost.cs" />
-    <Compile Include="IF\IReadOnlyCheckResult.cs" />
+    <Compile Include="IF\ReadOnly\IReadOnlyCheckResult.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyAcceptVersion.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyDefinedKeyValuePair.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpression.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IExpressionGetter.cs" />
-    <Compile Include="IF\IGetRequestHeader.cs" />
+    <Compile Include="IF\IRequestHeaderGetter.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyCData.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpressionElement.cs" />
     <Compile Include="IF\ReadOnly\IReadOnlyExpressionItem.cs" />
@@ -1501,8 +1501,8 @@
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\UriParameterType.cs" />
     <Compile Include="IF\IHttpUserAgentCreator.cs" />
-    <Compile Include="IF\IGetRequestParameter.cs" />
-    <Compile Include="IF\IGetUri.cs" />
+    <Compile Include="IF\IRequestParameterGetter.cs" />
+    <Compile Include="IF\IUriGetter.cs" />
     <Compile Include="IF\Control\ITreeNodeItem.cs" />
     <Compile Include="IF\ICommunication.cs" />
     <Compile Include="Logic\Attribute\NameAttributeUtility.cs" />

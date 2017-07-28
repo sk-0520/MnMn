@@ -44,9 +44,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public abstract class MediatorBase:
         DisposeFinalizeBase,
-        IGetUri,
-        IGetRequestHeader,
-        IGetRequestParameter,
+        IUriGetter,
+        IRequestHeaderGetter,
+        IRequestParameterGetter,
         IExpressionGetter,
         ICommunication,
         IUriCompatibility,
@@ -130,22 +130,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected void ThrowNotSupportGetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IUriGetter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetRequestHeader)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IRequestHeaderGetter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IRequestParameterGetter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IRequestParameterGetter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetExpression(string key, ServiceType serviceType)
