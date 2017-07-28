@@ -28,14 +28,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 
         #region function
 
-        protected void AttacheEvent()
+        protected virtual void AttacheEvent()
         {
             Element.SizeChanged += View_SizeChanged;
             Element.MouseLeave += View_MouseLeave;
             Element.MouseMove += View_MouseMove;
         }
 
-        void DetachEvent()
+        protected virtual void DetachEvent()
         {
             Element.SizeChanged -= View_SizeChanged;
             Element.MouseLeave -= View_MouseLeave;

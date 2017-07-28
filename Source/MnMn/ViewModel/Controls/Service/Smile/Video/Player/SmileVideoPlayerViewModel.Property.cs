@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.View;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -106,6 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         ItemsControl ListPlaylist { get; set; }
 
         CursorHider PlayerCursorHider { get; set; }
+        SmileVideoTaskbarThumbnailCreator PlayerTaskbarThumbnailCreator { get; set; }
 
         public int VolumeMinimum { get { return Constants.NavigatorVolumeRange.Head; } }
         public int VolumeMaximum { get { return Constants.NavigatorVolumeRange.Tail; } }

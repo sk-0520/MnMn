@@ -340,6 +340,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var resizePercent = Constants.ServiceSmileVideoPlayerCommentHeight / BaseHeight;
             CommentAreaWidth = resizePercent * BaseWidth;
 
+            PlayerTaskbarThumbnailCreator.SetSize(new Size(BaseWidth, BaseHeight));
+
             ChangedEnabledCommentPercent();
         }
 
@@ -1785,23 +1787,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             });
         }
 
-        Thickness GetTaskbarThumbnailThickness()
+        void ReceiveTaskbarThumbnailThickness(Thickness thickness)
         {
-            var result = new Thickness();
-            if(View == null || IsViewClosed) {
-                return result;
-            }
-
-            var viewLocation = View.PointToScreen(new Point(0, 0));
-            var layerLocation = View.layer.PointToScreen(new Point(0, 0));
-
-            result.Left = layerLocation.X - viewLocation.X;
-            result.Top = layerLocation.Y - viewLocation.Y;
-
-            result.Right = Width - BaseWidth - result.Left;
-            result.Bottom = Height - BaseHeight - result.Top;
-
-            return result;
+            ThumbnailClipMargin = thickness;
         }
 
         #endregion
@@ -2105,6 +2093,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ListPlaylist = View.listPlayList;
 
             PlayerCursorHider = new Logic.View.CursorHider(Player);
+            PlayerTaskbarThumbnailCreator = new SmileVideoTaskbarThumbnailCreator(View, ReceiveTaskbarThumbnailThickness);
 
             // 初期設定
             Player.Volume = Volume;
@@ -2118,6 +2107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             Debug.WriteLine(View.IsInitialized);
         }
+
 
         #endregion
 
@@ -2222,6 +2212,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     PlayerCursorHider = null;
                 }
 
+                if(PlayerTaskbarThumbnailCreator != null) {
+                    PlayerTaskbarThumbnailCreator.Dispose();
+                    PlayerTaskbarThumbnailCreator = null;
+                }
+
                 View = null;
                 Player = null;
                 Navigationbar = null;
@@ -2322,8 +2317,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ChangeBaseSize();
-
-            ThumbnailClipMargin = GetTaskbarThumbnailThickness();
         }
 
         private void Player_StateChanged(object sender, Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
