@@ -48,6 +48,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
             ReceiveMethod(thickness);
         }
 
+        public void Reset()
+        {
+            ReceiveMethod(new Thickness());
+        }
+
+        public void Refresh()
+        {
+            ChangedThickness();
+        }
+
         #endregion
 
         #region DisposeFinalizeBase

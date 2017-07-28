@@ -341,6 +341,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentAreaWidth = resizePercent * BaseWidth;
 
             PlayerTaskbarThumbnailCreator.SetSize(new Size(BaseWidth, BaseHeight));
+            PlayerTaskbarThumbnailCreator.Refresh();
 
             ChangedEnabledCommentPercent();
         }
@@ -1800,6 +1801,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             // TODO:forceEconomyは今のところ無効
 
+            PlayerTaskbarThumbnailCreator?.Reset();
+
             if(PlayListItems.All(i => i != videoInformation)) {
                 // プレイリストに存在しない動画は追加する
                 PlayListItems.Add(videoInformation);
@@ -2061,6 +2064,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SetRelationVideoItems(Enumerable.Empty<SmileVideoInformationViewModel>());
             SetMarketItems(Enumerable.Empty<SmileMarketVideoRelationItemViewModel>());
             //TagItems.Clear();
+            PlayerTaskbarThumbnailCreator?.Reset();
         }
 
         protected override Task StopPrevProcessAsync()
@@ -2332,6 +2336,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 case Meta.Vlc.Interop.Media.MediaState.Playing:
                     var prevState = PlayerState;
                     PlayerState = PlayerState.Playing;
+                    PlayerTaskbarThumbnailCreator.Refresh();
                     if(prevState == PlayerState.Pause) {
                         foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Resume();

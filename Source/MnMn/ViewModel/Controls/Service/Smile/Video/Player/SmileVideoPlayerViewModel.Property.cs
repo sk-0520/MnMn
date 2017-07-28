@@ -248,7 +248,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._viewScale, value)) {
-                    PlayerTaskbarThumbnailCreator?.SetScale(ViewScale);
+                    if(PlayerTaskbarThumbnailCreator != null) {
+                        PlayerTaskbarThumbnailCreator.SetScale(ViewScale);
+                        PlayerTaskbarThumbnailCreator.Refresh();
+                    }
                 }
             }
         }

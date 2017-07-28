@@ -63,6 +63,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 return result;
             }
 
+            if(Size.Width< 1 || Size.Height < 1) {
+                return result;
+            }
+
             var viewLocation = Element.PointToScreen(new Point(0, 0));
             var layerLocation = Element.layer.PointToScreen(new Point(0, 0));
 
