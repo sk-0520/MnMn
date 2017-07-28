@@ -479,7 +479,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public virtual SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
+        public virtual SmileVideoMovieType MovieType
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+                return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType);
+            }
+        }
         public bool IsCompatibleIssue665NA => this._force_Issue665NA || MovieType == SmileVideoMovieType.Swf;
 
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
