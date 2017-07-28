@@ -60,11 +60,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             result.Left = layerLocation.X - viewLocation.X;
             result.Top = layerLocation.Y - viewLocation.Y;
 
-            result.Right = Element.Width - Size.Width - result.Left;
-            result.Bottom = Element.Height - Size.Height - result.Top;
+            result.Right = Element.ActualWidth - Size.Width - result.Left;
+            result.Bottom = Element.ActualHeight - Size.Height - result.Top;
 
             return result;
         }
+
+        #endregion
 
         private void Element_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -72,6 +74,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             IsClosed = true;
         }
 
-        #endregion
     }
 }
