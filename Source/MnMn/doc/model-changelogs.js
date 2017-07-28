@@ -161,6 +161,13 @@
 					},
 					{
 						'revision': '',
+						'subject': '#699: クラッシュレポートより: 動画情報の動画種別取得時に NullReferenceException',
+						'comments': [
+							'死ぬんじゃなくて気絶するようにした'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
