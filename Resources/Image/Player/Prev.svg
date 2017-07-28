@@ -13,10 +13,10 @@
    viewBox="0 0 24 24"
    id="svg4"
    sodipodi:docname="Prev.svg"
-   inkscape:version="0.92.1 r15371"
    inkscape:export-filename="Prev.png"
-   inkscape:export-xdpi="64"
-   inkscape:export-ydpi="64">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="0.92.1 r15371">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -39,19 +39,22 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1200"
-     inkscape:window-height="729"
+     inkscape:window-width="986"
+     inkscape:window-height="571"
      id="namedview6"
      showgrid="false"
      inkscape:zoom="9.8333333"
-     inkscape:cx="17.135593"
-     inkscape:cy="12"
-     inkscape:window-x="25"
-     inkscape:window-y="14"
+     inkscape:cx="12"
+     inkscape:cy="12.109072"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4" />
   <path
-     d="M7,12L12,7V10H16V14H12V17L7,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12Z"
+     d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z"
      id="path2"
-     style="stroke:#ffffff;stroke-opacity:1" />
+     style="stroke:#ffffff;stroke-opacity:1"
+     inkscape:export-filename="Prev.png"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96" />
 </svg>

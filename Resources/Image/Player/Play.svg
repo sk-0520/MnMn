@@ -13,10 +13,10 @@
    viewBox="0 0 24 24"
    id="svg4"
    sodipodi:docname="Play.svg"
-   inkscape:version="0.92.1 r15371"
    inkscape:export-filename="Play.png"
-   inkscape:export-xdpi="64"
-   inkscape:export-ydpi="64">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="0.92.1 r15371">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -39,19 +39,19 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1118"
-     inkscape:window-height="685"
+     inkscape:window-width="872"
+     inkscape:window-height="603"
      id="namedview6"
      showgrid="false"
      inkscape:zoom="9.8333333"
-     inkscape:cx="-4.9830504"
+     inkscape:cx="12"
      inkscape:cy="12"
-     inkscape:window-x="528"
-     inkscape:window-y="106"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4" />
   <path
      d="M 3 5 L 3 19 L 11 12 L 3 5 z M 13 5 L 13 19 L 16 19 L 16 5 L 13 5 z M 18 5 L 18 19 L 21 19 L 21 5 L 18 5 z "
      id="path2"
-     style="stroke:#ffffff;stroke-opacity:1;fill:#008000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
+     style="stroke:#ffffff;stroke-opacity:1;fill:#008000" />
 </svg>

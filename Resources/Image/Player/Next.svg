@@ -13,10 +13,10 @@
    viewBox="0 0 24 24"
    id="svg4"
    sodipodi:docname="Next.svg"
+   inkscape:version="0.92.1 r15371"
    inkscape:export-filename="Next.png"
-   inkscape:export-xdpi="64"
-   inkscape:export-ydpi="64"
-   inkscape:version="0.92.1 r15371">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -39,19 +39,19 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1058"
-     inkscape:window-height="764"
+     inkscape:window-width="1207"
+     inkscape:window-height="687"
      id="namedview6"
      showgrid="false"
      inkscape:zoom="9.8333333"
-     inkscape:cx="-4.9322034"
-     inkscape:cy="12"
-     inkscape:window-x="540"
-     inkscape:window-y="94"
+     inkscape:cx="12"
+     inkscape:cy="-3.1525424"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4" />
   <path
-     d="M 12 2 A 10 10 0 0 0 2 12 A 10 10 0 0 0 12 22 A 10 10 0 0 0 22 12 A 10 10 0 0 0 12 2 z M 12 4 A 8 8 0 0 1 20 12 A 8 8 0 0 1 12 20 A 8 8 0 0 1 4 12 A 8 8 0 0 1 12 4 z M 12 7 L 12 10 L 8 10 L 8 14 L 12 14 L 12 17 L 17 12 L 12 7 z "
+     d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z"
      id="path2"
      style="stroke:#ffffff;stroke-opacity:1" />
 </svg>

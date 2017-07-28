@@ -13,10 +13,10 @@
    viewBox="0 0 24 24"
    id="svg4"
    sodipodi:docname="Stop.svg"
-   inkscape:version="0.92.1 r15371"
    inkscape:export-filename="Stop.png"
-   inkscape:export-xdpi="118.15385"
-   inkscape:export-ydpi="118.15385">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="0.92.1 r15371">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -39,19 +39,19 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1064"
-     inkscape:window-height="730"
+     inkscape:window-width="724"
+     inkscape:window-height="480"
      id="namedview6"
      showgrid="false"
      inkscape:zoom="9.8333333"
-     inkscape:cx="-38.79661"
-     inkscape:cy="24.966102"
-     inkscape:window-x="538"
-     inkscape:window-y="142"
+     inkscape:cx="12"
+     inkscape:cy="12"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4" />
   <path
+     d="M18,18H6V6H18V18Z"
      id="path2"
-     d="M 18,18 H 6 V 6 h 12 z"
      style="stroke:#ffffff;stroke-opacity:1" />
 </svg>
