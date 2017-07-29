@@ -193,5 +193,24 @@
 				]]>
 			</data>
 		</item>
+		<item id="is-premium" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					ID
+					\s*
+					:
+					\s*
+					\d+
+					\(
+					.+
+					\)
+					\s*
+					(?<ACCOUNT>
+							.*
+					)
+					\s*
+				]]>
+			</data>
+		</item>
 	</element>
 </expressions>

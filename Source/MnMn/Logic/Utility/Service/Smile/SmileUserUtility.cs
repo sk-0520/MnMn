@@ -84,24 +84,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static bool IsPremiumFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            var reg = new Regex(@"
-                ID
-                \s*
-                :
-                \s*
-                \d+
-                \(
-                .+
-                \)
-                \s*
-                (?<ACCOUNT>
-                    .*
-                )
-                \s*
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            );
-            var match = reg.Match(accountElementInnerText);
+            //var reg = new Regex(@"
+            //    ID
+            //    \s*
+            //    :
+            //    \s*
+            //    \d+
+            //    \(
+            //    .+
+            //    \)
+            //    \s*
+            //    (?<ACCOUNT>
+            //        .*
+            //    )
+            //    \s*
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+            //);
+            //var match = reg.Match(accountElementInnerText);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_isPremium, ServiceType.Smile);
+            var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
                 var s = match.Groups["ACCOUNT"].Value;
                 return s.IndexOf("プレミアム") != -1;
