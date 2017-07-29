@@ -240,5 +240,19 @@
 				]]>
 			</data>
 		</item>
+		<item id="location" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					地域
+					\s*
+					:
+					\s*
+					(?<LOCATION>
+						.*
+					)
+					\s*
+				]]>
+			</data>
+		</item>
 	</element>
 </expressions>

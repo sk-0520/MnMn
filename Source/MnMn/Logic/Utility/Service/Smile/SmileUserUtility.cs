@@ -172,19 +172,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static IReadOnlyCheckResult<string> GetLocationFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            var reg = new Regex(@"
-                地域
-                \s*
-                :
-                \s*
-                (?<LOCATION>
-                    .*
-                )
-                \s*
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            );
-            var match = reg.Match(accountElementInnerText);
+            //var reg = new Regex(@"
+            //    地域
+            //    \s*
+            //    :
+            //    \s*
+            //    (?<LOCATION>
+            //        .*
+            //    )
+            //    \s*
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+            //);
+            //var match = reg.Match(accountElementInnerText);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_location, ServiceType.Smile);
+            var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
                 var s = match.Groups["LOCATION"].Value;
                 if(s.IndexOf("非公開") == -1) {
