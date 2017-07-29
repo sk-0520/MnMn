@@ -1,9 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <expressions>
-	<element key="">
-		<item id="" kind="regex" regex-options="">
+	<element key="run-target">
+		<item id="" kind="regex" regex-options="IgnorePatternWhitespace ExplicitCapture">
 			<data>
 				<![CDATA[
+					(?<OPEN>
+						<Run>
+					)
+					(?<TARGET>
+						.+?
+					)
+					(?<CLOSE>
+						</Run>
+					)
 				]]>
 			</data>
 		</item>

@@ -9,6 +9,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
     internal static class CommonMediatorKey
     {
         #region define
+
+        public const string runTarget = "run-target";
+
         #endregion
     }
 }

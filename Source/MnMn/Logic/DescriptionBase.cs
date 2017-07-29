@@ -164,22 +164,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected string ConvertRunTarget(string flowDocumentSource, MatchEvaluator func)
         {
-            var regTarget = new Regex(
-                @"
-                (?<OPEN>
-                    <Run>
-                )
-                    (?<TARGET>
-                        .+?
-                    )
-                (?<CLOSE>
-                    </Run>
-                )
-                ",
-                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
-           );
+            // var regTarget = new Regex(
+            //     @"
+            //     (?<OPEN>
+            //         <Run>
+            //     )
+            //         (?<TARGET>
+            //             .+?
+            //         )
+            //     (?<CLOSE>
+            //         </Run>
+            //     )
+            //     ",
+            //     RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+            //);
+            var runExpression = ExpressionGetter.GetExpression(CommonMediatorKey.runTarget, ServiceType.Common);
 
-            var replacedSource = regTarget.Replace(flowDocumentSource, func);
+            var replacedSource = runExpression.Regex.Replace(flowDocumentSource, func);
 
             return replacedSource;
         }
