@@ -198,26 +198,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public string ConvertLinkFromPlainText(string flowDocumentSource, string commandName)
         {
-            var regLink = new Regex(
-                @"
-                (?<!Source="")
-                (?<SCHEME>
-                    h?
-                    ttp
-                    s?
-                    ://
-                )
-                (?<DOMAIN_PATH>
-                    [
-                        \w \. \- \( \) \?
-                        / _ # $ % & =
-                    ]*
-                )
-                ",
-                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
-            );
+            //var regLink = new Regex(
+            //    @"
+            //    (?<!Source="")
+            //    (?<SCHEME>
+            //        h?
+            //        ttp
+            //        s?
+            //        ://
+            //    )
+            //    (?<DOMAIN_PATH>
+            //        [
+            //            \w \. \- \( \) \?
+            //            / _ # $ % & =
+            //        ]*
+            //    )
+            //    ",
+            //    RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+            //);
+            var expression = ExpressionGetter.GetExpression(CommonMediatorKey.plaintTextLink, ServiceType.Common);
 
-            var replacedSource = regLink.Replace(flowDocumentSource, m => {
+            var replacedSource = expression.Regex.Replace(flowDocumentSource, m => {
                 var domainPath = (m.Groups["DOMAIN_PATH"].Value ?? string.Empty).Trim();
                 if(domainPath.StartsWith(skipDomainPath)) {
                     return m.Groups[0].Value;
@@ -245,7 +246,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return replacedSource;
         }
 
-        public string ConvertSafeXaml(string flowDocumentSource)
+        public static string ConvertSafeXaml(string flowDocumentSource)
         {
             //TODO: Run*てのがあることは考慮してない。
             return flowDocumentSource

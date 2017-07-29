@@ -11,6 +11,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         #region define
 
         public const string runTarget = "run-target";
+        public const string plaintTextLink = "plaint-text-link";
 
         #endregion
     }

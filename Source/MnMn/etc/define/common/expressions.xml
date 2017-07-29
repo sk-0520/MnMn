@@ -17,4 +17,25 @@
 			</data>
 		</item>
 	</element>
+	<element key="plaint-text-link">
+		<item id="" kind="regex" regex-options="IgnorePatternWhitespace ExplicitCapture">
+			<data>
+				<![CDATA[
+					(?<!Source="")
+					(?<SCHEME>
+						h?
+						ttp
+						s?
+						://
+					)
+					(?<DOMAIN_PATH>
+						[
+							\w \. \- \( \) \?
+							/ _ # $ % & =
+						]*
+					)
+				]]>
+			</data>
+		</item>
+	</element>
 </expressions>
