@@ -35,18 +35,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
     {
         public static string GetUserIdFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            //var reg = new Regex(@"
-            //    ID
-            //    \s*
-            //    :
-            //    \s*
-            //    (?<USER_ID>
-            //        \d+
-            //    )
-            //    ",
-            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            //);
-            //var match = reg.Match(accountElementInnerText);
             var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_userId, ServiceType.Smile);
             var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
@@ -58,21 +46,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static string GetVersionFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            //var reg = new Regex(@"
-            //    ID
-            //    \s*
-            //    :
-            //    \s*
-            //    \d+
-            //    \(
-            //    (?<VERSION>
-            //        .+
-            //    )
-            //    \)
-            //    ",
-            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            //);
-            //var match = reg.Match(accountElementInnerText);
             var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_version, ServiceType.Smile);
             var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
@@ -84,24 +57,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static bool IsPremiumFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            //var reg = new Regex(@"
-            //    ID
-            //    \s*
-            //    :
-            //    \s*
-            //    \d+
-            //    \(
-            //    .+
-            //    \)
-            //    \s*
-            //    (?<ACCOUNT>
-            //        .*
-            //    )
-            //    \s*
-            //    ",
-            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            //);
-            //var match = reg.Match(accountElementInnerText);
             var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_isPremium, ServiceType.Smile);
             var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
@@ -114,19 +69,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static IReadOnlyCheckResult<Gender> GetGenderFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            //var reg = new Regex(@"
-            //    性別
-            //    \s*
-            //    :
-            //    \s*
-            //    (?<GENDER>
-            //        .*
-            //    )
-            //    \s*
-            //    ",
-            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            //);
-            //var match = reg.Match(accountElementInnerText);
             var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_gender, ServiceType.Smile);
             var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
@@ -144,19 +86,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static IReadOnlyCheckResult<DateTime> GetBirthdayFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            //var reg = new Regex(@"
-            //    生年月日
-            //    \s*
-            //    :
-            //    \s*
-            //    (?<BIRTHDAY>
-            //        .*
-            //    )
-            //    \s*
-            //    ",
-            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            //);
-            //var match = reg.Match(accountElementInnerText);
             var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_birthday, ServiceType.Smile);
             var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
@@ -172,19 +101,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static IReadOnlyCheckResult<string> GetLocationFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            //var reg = new Regex(@"
-            //    地域
-            //    \s*
-            //    :
-            //    \s*
-            //    (?<LOCATION>
-            //        .*
-            //    )
-            //    \s*
-            //    ",
-            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            //);
-            //var match = reg.Match(accountElementInnerText);
             var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_location, ServiceType.Smile);
             var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
@@ -229,16 +145,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static int GetMyListCountFromPinpointHtmlSource(string innerText, IExpressionGetter expressionGetter)
         {
-            //var reg = new Regex(@"
-            //    (?<NUM>
-            //        [\d,]+
-            //    )
-            //    \s*
-            //    件
-            //    ",
-            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            //);
-            //var match = reg.Match(innerText);
             var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_mylistCount, ServiceType.Smile);
             var match = expression.Regex.Match(innerText);
             if(match.Success) {
