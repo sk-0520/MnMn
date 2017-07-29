@@ -85,24 +85,16 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.76.1',
-		'isRc': true,
+		'date': '2017/07/29',
+		'version': '0.77.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '私が見ている間はクラッシュレポートあんまり飛んでこないのに仕事行ったり遊んだり寝たりした後に確認したらやたらクラッシュレポート飛んできている謎'
 					}
 				]
 			},
@@ -110,16 +102,8 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '7e276ea35aaafa5a1399a483050ff7986ca7d5d3',
 						'subject': '#696: 動画プレイヤーのタスクバーボタン実装'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -127,7 +111,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '970a163cbba29a5e5ca4267d70ecff8930cadb54',
 						'subject': '#694: 色々な想定外でデバッグ版(ベータも含む)とリリース版が同時起動できない',
 						'comments': [
 							'消極的解決法',
@@ -135,7 +119,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'd4f0a37e4c40f83d70319200cd324017fdc63ea8',
 						'subject': '#693: チャンネルIDに対するファインダーのフィルタが ch の関係でボロボロ',
 						'comments': [
 							'とりあえず先頭の ch 有無は問わないようにしたけどあんまりいい処理じゃないので今後としちゃあ "ch" 付きの ID がチャンネル ID としたい',
@@ -145,7 +129,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'abdb69cb3505d1e9bb4023819049cb9a6fca5743',
 						'subject': '#692: クラッシュレポートより: System.InvalidOperationException: このオブジェクトは別のスレッドに所有されているため、呼び出しスレッドはこのオブジェクトにアクセスできません',
 						'comments': [
 							'ひとまず Window から Player の Loaded に処理回したけどわっかんねーよばーかばーか',
@@ -153,28 +137,28 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '34661fffcc8513e53790e2a2a7abc8ca6bb8c67f',
 						'subject': '#691: 同一秒内に未検出例外があった場合、クラッシュレポート用プログラムが裏で死んだままの場合がある',
 						'comments': [
 							'普段はまぁ別にいいんだけどアップデート前に裏で生きたままだとあれよね'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'c8c360e891373bc4c398ee1edf3e8498d6c88ab1',
 						'subject': '#699: クラッシュレポートより: 動画情報の動画種別取得時に NullReferenceException',
 						'comments': [
 							'死ぬんじゃなくて気絶するようにした'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '776a0d6bd546bd949c57ddf6931106d79fe2434e',
 						'subject': '#702: フィルタ登録 UI を整理したいね、少なくとも新規作成ボタンが下の方に消えていくのは何とかしてあげよう'
 					},
 					{
-						'revision': '',
+						'revision': '053d242fe5bffc4d8147a6e337b7a8ca6aa42f4d',
 						'subject': '#703: 動画再生が公式ですら死んでるやつあるね、怖いね',
 						'comments': [
-							'公式で DMC 形式が正式実装された後の動画にも関わらず HTML5 版だと再生に必要な情報がないにも関わらず再生しようとして失敗して後方互換のための Flash 版に手動遷移を促すにも関わらず Flash 版だと DMC 形式でデータが降ってくる動画が生息してるとか怖いとか以前に理解が追い付かないよね',
+							'公式で DMC 形式が正式実装された後の動画にも関わらず HTML5 版だと再生に必要な情報がないにも関わらず再生しようとして失敗して後方互換のための Flash 版に手動遷移を促すにも関わらず Flash 版だと DMC 形式でデータが降ってくるにも関わらずプレミアムと一般でこの辺りの切り替えが必要・不要な動画が生息してるとか怖い以前に理解が追い付かないよね',
 							'公式ェ……',
 							'#665 で消した処理とか復帰させたからもうグッチャグチャ、この辺りの後方互換の保守はさすがに厳しい',
 							'DMC 形式配信版は全部新しい方にきれいに移ったと思ってたんだけどこんなもん知るかよばーか',
@@ -182,15 +166,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'a8864311278aa149c628e6a5cd9a0979e41d1cf0',
 						'subject': '#704: クラッシュレポートより: 再生ウィンドウからマイリスト追加時にエラー(System.NullReferenceException )',
 						'comments': [
 							'クラッシュレポートに操作内容書いててくれたから調べるの楽だった。ありがとさん'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -198,16 +178,8 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'f1274ecd7ec7a56c5d704f2d34cc976610528a99',
 						'subject': '#700: 共通処理/サービスの正規表現を外部に退避'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
