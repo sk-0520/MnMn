@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expressions>
+	<element key="run-target">
+		<item id="" kind="regex" regex-options="IgnorePatternWhitespace ExplicitCapture">
+			<data>
+				<![CDATA[
+					(?<OPEN>
+						<Run>
+					)
+					(?<TARGET>
+						.+?
+					)
+					(?<CLOSE>
+						</Run>
+					)
+				]]>
+			</data>
+		</item>
+	</element>
+	<element key="plaint-text-link">
+		<item id="" kind="regex" regex-options="IgnorePatternWhitespace ExplicitCapture">
+			<data>
+				<![CDATA[
+					(?<!Source="")
+					(?<SCHEME>
+						h?
+						ttp
+						s?
+						://
+					)
+					(?<DOMAIN_PATH>
+						[
+							\w \. \- \( \) \?
+							/ _ # $ % & =
+						]*
+					)
+				]]>
+			</data>
+		</item>
+	</element>
+</expressions>

@@ -34,8 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 
         #endregion
 
-        public SmileLiveCategoryItemFinderViewModel(Mediation mediation, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category, int index)
-            : base(mediation, index * Constants.ServiceSmileLiveCategoryBaseCount)
+        public SmileLiveCategoryItemFinderViewModel(Mediator mediator, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category, int index)
+            : base(mediator, index * Constants.ServiceSmileLiveCategoryBaseCount)
         {
             CategoryDefine = categoryDefine;
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 
         protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            var category = new Logic.Service.Smile.Live.Api.Category(Mediation);
+            var category = new Logic.Service.Smile.Live.Api.Category(Mediator);
             return category.LoadAsync(Category.Key, Sort.Key, Order.Key, Index + 1).ContinueWith(t => {
                 var rss = t.Result;
                 TotalCount = RawValueUtility.ConvertInteger(rss.Channel.TotalCount);
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
                 return rss.Channel.Items;
             }).ContinueWith(t => {
                 var items = t.Result;
-                var list = items.Select(i => new SmileLiveInformationViewModel(Mediation, i));
+                var list = items.Select(i => new SmileLiveInformationViewModel(Mediator, i));
                 SetItemsAsync(list, informationCacheSpan);
             });
         }

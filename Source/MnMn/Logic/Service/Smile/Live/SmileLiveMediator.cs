@@ -40,10 +40,10 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
-    public class SmileLiveMediation: MediationCustomBase
+    public class SmileLiveMediator: CustomMediatorBase
     {
-        public SmileLiveMediation(Mediation mediation, SmileLiveSettingModel setting)
-            : base(mediation, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileLiveRequestHeadersListPath, Constants.SmileLiveRequestParametersListPath, Constants.SmileLiveRequestMappingsListPath, Constants.SmileLiveExpressionsPath)
+        public SmileLiveMediator(Mediator mediator, SmileLiveSettingModel setting)
+            : base(mediator, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileLiveRequestHeadersListPath, Constants.SmileLiveRequestParametersListPath, Constants.SmileLiveRequestMappingsListPath, Constants.SmileLiveExpressionsPath)
         {
             Setting = setting;
             Category = SerializeUtility.LoadXmlSerializeFromFile<SmileLiveCategoryModel>(Constants.SmileLiveCategoryPath);
@@ -94,13 +94,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         #endregion
 
-        #region MediationBase
+        #region MediatorBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileLiveName);
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(SmileLiveMediationKey));
+            return GetMediatorKeys(typeof(SmileLiveMediatorKey));
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)

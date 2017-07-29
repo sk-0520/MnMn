@@ -147,14 +147,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             OpenMyListIdCore((string)parameter, communicator);
         }
 
-        static async Task AddMyListBookmarkCoreAsync(string myListId, Mediation mediation)
+        static async Task AddMyListBookmarkCoreAsync(string myListId, Mediator mediator)
         {
-            var dirInfo = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var dirInfo = mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheDirectoryName);
             var cacheDirectory = RestrictUtility.Is(Directory.Exists(cachedDirPath), () => new DirectoryInfo(cachedDirPath), () => Directory.CreateDirectory(cachedDirPath));
             var cacheFile = new FileInfo(Path.Combine(cacheDirectory.FullName, PathUtility.CreateFileName(myListId, "xml")));
 
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(mediation);
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(mediator);
             FeedSmileVideoModel group = null;
             if(CacheImageUtility.ExistImage(cacheFile.FullName, Constants.ServiceSmileMyListCacheSpan)) {
                 using(var stream = new FileStream(cacheFile.FullName, FileMode.Open, FileAccess.Read)) {
@@ -166,16 +166,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             }
             if(group != null) {
                 SerializeUtility.SaveXmlSerializeToFile(cacheFile.FullName, group);
-                var finder = new SmileVideoMatchMyListFinderViewModel(mediation, group, myListId, false);
+                var finder = new SmileVideoMatchMyListFinderViewModel(mediator, group, myListId, false);
                 await finder.LoadDefaultCacheAsync();
-                mediation.Smile.VideoMediation.ManagerPack.MyListManager.AddBookmarkUserMyList(finder);
+                mediator.Smile.VideoMediator.ManagerPack.MyListManager.AddBookmarkUserMyList(finder);
             }
         }
 
-        public static Task AddMyListBookmarkAsync(object parameter, Mediation mediation)
+        public static Task AddMyListBookmarkAsync(object parameter, Mediator mediator)
         {
             var myListId = (string)parameter;
-            return AddMyListBookmarkCoreAsync(myListId, mediation);
+            return AddMyListBookmarkCoreAsync(myListId, mediator);
         }
 
         public static void CopyMyListId(object parameter, ILogger logger)
@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="communicator"></param>
         /// <param name="channelId"></param>
-        static void OpenChannelIdCore(string channelId, ICommunication communicator, IGetExpression getExpression)
+        static void OpenChannelIdCore(string channelId, ICommunication communicator, IExpressionGetter getExpression)
         {
             var parameter = new SmileOpenChannelIdParameterModel() {
                 ChannelId = SmileIdUtility.ConvertChannelId(channelId, getExpression),
@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="userId"></param>
-        public static void OpenChannelId(string parameter, ICommunication communicator, IGetExpression getExpression)
+        public static void OpenChannelId(string parameter, ICommunication communicator, IExpressionGetter getExpression)
         {
             OpenChannelIdCore((string)parameter, communicator, getExpression);
         }

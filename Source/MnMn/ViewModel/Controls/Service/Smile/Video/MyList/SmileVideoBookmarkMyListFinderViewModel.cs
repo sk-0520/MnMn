@@ -30,8 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public class SmileVideoBookmarkMyListFinderViewModel: SmileVideoItemsMyListFinderViewModel
     {
-        public SmileVideoBookmarkMyListFinderViewModel(Mediation mediation, SmileMyListBookmarkItemModel item)
-            : base(mediation, item)
+        public SmileVideoBookmarkMyListFinderViewModel(Mediator mediator, SmileMyListBookmarkItemModel item)
+            : base(mediator, item)
         {
             BookmarkItem = item;
         }
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             BookmarkItem.UpdateTimestamp = DateTime.Now;
 
             // 実は変わってるかもしれないので裏で読み直しておく
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediator);
 
             return mylist.LoadGroupAsync(MyListId).ContinueWith(t => {
                 if(t.IsFaulted) {
@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
                 var newTitle = rawMyList.Channel.Title;
                 if(BookmarkItem.MyListName != newTitle) {
-                    Mediation.Logger.Information($"changed mylist name: {BookmarkItem.MyListName} -> {newTitle}");
+                    Mediator.Logger.Information($"changed mylist name: {BookmarkItem.MyListName} -> {newTitle}");
                     BookmarkItem.MyListName = newTitle;
                     BookmarkItem.UpdateTimestamp = DateTime.Now;
 

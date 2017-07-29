@@ -36,15 +36,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
 {
     public class ContentsSearch: ApiBase
     {
-        public ContentsSearch(Mediation mediation)
-            : base(mediation)
+        public ContentsSearch(Mediator mediator)
+            : base(mediator)
         { }
 
         public async Task<RawSmileContentsSearchModel> SearchAsync(string searchService, string query, string searchType, string sortField, IEnumerable<string> getFilelds, string orderBy, int fromIndex, int getCount)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 
-            using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileMediationKey.contentsSearch, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediatorKey.contentsSearch, ServiceType.Smile)) {
                 page.ReplaceUriParameters["service"] = searchService;
                 page.ReplaceUriParameters["query"] = query;
                 page.ReplaceUriParameters["targets"] = searchType;

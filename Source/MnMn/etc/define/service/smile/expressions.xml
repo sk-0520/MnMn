@@ -68,7 +68,16 @@
 			</data>
 		</item>
 	</element>
-	<element key="get-expression-video-id">
+	<element key="is-scraping-video-id">
+		<item kind="regex" regex-options="ExplicitCapture IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					^so
+				]]>
+			</data>
+		</item>
+	</element>
+	<element key="get-video-id">
 		<item id="prefix-id" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase">
 			<data>
 				<![CDATA[
@@ -95,7 +104,7 @@
 			</data>
 		</item>
 	</element>
-	<element key="get-expression-channel-id">
+	<element key="convert-channel-id">
 		<item id="normalization-id" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase">
 			<data>
 				<![CDATA[
@@ -114,6 +123,145 @@
 						\d+
 					)
 					$
+				]]>
+			</data>
+		</item>
+	</element>
+	<element key="get-mylist-id">
+		<item id="" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase Singleline">
+			<data>
+				<![CDATA[
+					mylist
+					\/
+					(?<MYLIST_ID>
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+	</element>
+	<element key="get-user-id">
+		<item id="" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase Singleline">
+			<data>
+				<![CDATA[
+					user
+					\/
+					(?<USER_ID>
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+	</element>
+	<element key="need-correction-video-id">
+		<item id="" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase Singleline">
+			<data>
+				<![CDATA[
+					^[0-9]
+				]]>
+			</data>
+		</item>
+	</element>
+
+	<element key="user-information-from-html">
+		<item id="user-id" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					ID
+					\s*
+					:
+					\s*
+					(?<USER_ID>
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+		<item id="version" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					ID
+					\s*
+					:
+					\s*
+					\d+
+					\(
+					(?<VERSION>
+						.+
+					)
+					\)
+				]]>
+			</data>
+		</item>
+		<item id="is-premium" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					ID
+					\s*
+					:
+					\s*
+					\d+
+					\(
+					.+
+					\)
+					\s*
+					(?<ACCOUNT>
+						.*
+					)
+					\s*
+				]]>
+			</data>
+		</item>
+		<item id="gender" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					性別
+					\s*
+					:
+					\s*
+					(?<GENDER>
+						.*
+					)
+					\s*
+				]]>
+			</data>
+		</item>
+		<item id="birthday" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					生年月日
+					\s*
+					:
+					\s*
+					(?<BIRTHDAY>
+						.*
+					)
+					\s*
+				]]>
+			</data>
+		</item>
+		<item id="location" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					地域
+					\s*
+					:
+					\s*
+					(?<LOCATION>
+						.*
+					)
+					\s*
+				]]>
+			</data>
+		</item>
+		<item id="mylist-count" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					(?<NUM>
+						[\d,]+
+					)
+					\s*
+					件
 				]]>
 			</data>
 		</item>

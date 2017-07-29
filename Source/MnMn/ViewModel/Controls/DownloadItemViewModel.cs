@@ -35,9 +35,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public DownloadItemViewModel(Mediation mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
+        public DownloadItemViewModel(Mediator mediator, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
         {
-            Mediation = mediation;
+            Mediator = mediator;
 
             DownloadUri = uri;
             Downloader = new Downloader(DownloadUri, userAgentCreator);
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region property
 
-        protected Mediation Mediation { get; }
+        protected Mediator Mediator { get; }
 
         Downloader Downloader { get; }
         Stream WriteStream { get; set; }
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             return Task.Run(() => {
                 Application.Current.Dispatcher.Invoke(() => {
-                    var icon = IconUtility.Load(DownloadFile.FullName, ContentTypeTextNet.Library.SharedLibrary.Define.IconScale.Big, 0, Mediation.Logger);
+                    var icon = IconUtility.Load(DownloadFile.FullName, ContentTypeTextNet.Library.SharedLibrary.Define.IconScale.Big, 0, Mediator.Logger);
                     FreezableUtility.SafeFreeze(icon);
                     Image = icon;
                 });
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get
             {
                 return CreateCommand(
-                    o => ShellUtility.OpenFileInDirectory(DownloadFile, Mediation.Logger)
+                    o => ShellUtility.OpenFileInDirectory(DownloadFile, Mediator.Logger)
                 );
             }
         }
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get
             {
                 return CreateCommand(
-                    o => ShellUtility.ExecuteFile(DownloadFile, Mediation.Logger)
+                    o => ShellUtility.ExecuteFile(DownloadFile, Mediator.Logger)
                 );
             }
         }

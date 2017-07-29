@@ -39,8 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppHelpManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public AppHelpManagerViewModel(Mediator mediator)
+            : base(mediator)
         { }
 
         #region property
@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         var data = (WebNavigatorEventDataBase)o;
-                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                     }
                 );
             }

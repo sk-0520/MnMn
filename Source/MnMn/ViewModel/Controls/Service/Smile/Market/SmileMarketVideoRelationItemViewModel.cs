@@ -31,15 +31,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market
 
         #endregion
 
-        public SmileMarketVideoRelationItemViewModel(Mediation mediation, SmileMarketVideoItemModel model)
+        public SmileMarketVideoRelationItemViewModel(Mediator mediator, SmileMarketVideoItemModel model)
             : base(model)
         {
-            Mediation = mediation;
+            Mediator = mediator;
         }
 
         #region property
 
-        Mediation Mediation { get; set; }
+        Mediator Mediator { get; set; }
 
         public string Title => Model.Title;
 
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market
         {
             ThumbnailLoadState = LoadState.Preparation;
 
-            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var dirInfo = Mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMarketCacheDirectoryName);
             var marketDir = Directory.CreateDirectory(cachedDirPath);
             var thumbnaiImageFilePath = Path.Combine(marketDir.FullName, PathUtility.AppendExtension(PathUtility.ToSafeNameDefault(Id), "png"));
@@ -124,12 +124,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market
             }
 
             ThumbnailLoadState = LoadState.Loading;
-            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediator.Logger).ContinueWith(task => {
                 var image = task.Result;
                 if(image != null) {
                     //this._thumbnailImage = image;
                     SetThumbnaiImage(image);
-                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, thumbnaiImageFilePath, Mediation.Logger);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, thumbnaiImageFilePath, Mediator.Logger);
                     return true;
                 } else {
                     return false;

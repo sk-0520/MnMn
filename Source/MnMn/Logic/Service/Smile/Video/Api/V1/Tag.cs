@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class Tag: SessionApiBase<SmileSessionViewModel>
     {
-        public Tag(Mediation mediation)
-            : base(mediation, ServiceType.Smile)
+        public Tag(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region function
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         [Obsolete]
         public Task<RawSmileVideoTagListModel> LoadRelationTagListAsync(string tagName)
         {
-            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.tagRelation, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileVideoMediatorKey.tagRelation, ServiceType.SmileVideo);
             page.ReplaceRequestParameters["query"] = tagName;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Post).ContinueWith(task => {
@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         /// <returns></returns>
         public Task<RawSmileVideoTagListModel> LoadTrendTagListAsync()
         {
-            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.tagTrend, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileVideoMediatorKey.tagTrend, ServiceType.SmileVideo);
             return page.GetResponseTextAsync(PageLoaderMethod.Post).ContinueWith(task => {
                 page.Dispose();
                 var response = task.Result;
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         /// <returns></returns>
         Task<FeedSmileVideoModel> LoadTagFeedCoreAsync(string tag, string sort, string order, int pageNumber)
         {
-            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.tagFeed, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileVideoMediatorKey.tagFeed, ServiceType.SmileVideo);
             page.ReplaceUriParameters["query"] = tag;
             page.ReplaceUriParameters["sort"] = sort;
             page.ReplaceUriParameters["order"] = order;

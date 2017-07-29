@@ -41,8 +41,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
     /// </summary>
     public class SmileVideoRecommendationsFinderViewModel: SmileVideoNewArrivalsFinderViewModel
     {
-        public SmileVideoRecommendationsFinderViewModel(Mediation mediation)
-            : base(mediation, SmileVideoMediationKey.recommendation)
+        public SmileVideoRecommendationsFinderViewModel(Mediator mediator)
+            : base(mediator, SmileVideoMediatorKey.recommendation)
         { }
 
         #region function
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var rec = new Recommendations(Mediation);
+            var rec = new Recommendations(Mediator);
 
             var rawData = await rec.LoadAsync();
             if(!SmileVideoRecommendationsUtility.IsSuccessResponse(rawData)) {

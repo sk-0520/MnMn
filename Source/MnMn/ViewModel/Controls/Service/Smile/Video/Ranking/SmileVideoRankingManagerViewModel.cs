@@ -48,8 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #endregion
 
-        public SmileVideoRankingManagerViewModel(Mediation mediation, IReadOnlySmileVideoRanking rankingDefine)
-            : base(mediation)
+        public SmileVideoRankingManagerViewModel(Mediator mediator, IReadOnlySmileVideoRanking rankingDefine)
+            : base(mediator)
         {
             RankingDefine = rankingDefine;
 
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
             var targetCategory = CategoryItems.FirstOrDefault(c => c.DisplayText == parameter.CategoryName);
             if(targetCategory == null) {
-                Mediation.Logger.Warning($"not found: {parameter.CategoryName}");
+                Mediator.Logger.Warning($"not found: {parameter.CategoryName}");
                 return Task.CompletedTask;
             }
 
@@ -229,7 +229,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                     return viewModel;
                 },
                 () => {
-                    var viewModel = new SmileVideoRankingCategoryFinderViewModel(Mediation, RankingDefine, period, target, category);
+                    var viewModel = new SmileVideoRankingCategoryFinderViewModel(Mediator, RankingDefine, period, target, category);
                     RankingCategoryGroupItems.Add(viewModel);
 
                     return viewModel;

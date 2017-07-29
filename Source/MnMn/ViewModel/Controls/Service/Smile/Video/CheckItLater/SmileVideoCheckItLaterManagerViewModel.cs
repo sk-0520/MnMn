@@ -40,11 +40,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 {
     public class SmileVideoCheckItLaterManagerViewModel : SmileVideoCustomManagerViewModelBase
     {
-        public SmileVideoCheckItLaterManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public SmileVideoCheckItLaterManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
-            AllItemsFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
-            ManualOperationFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
+            AllItemsFinder = new SmileVideoCheckItLaterFinderViewModel(Mediator);
+            ManualOperationFinder = new SmileVideoCheckItLaterFinderViewModel(Mediator);
         }
 
         #region property
@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         IEnumerable<SmileVideoCheckItLaterFinderViewModel> BuildGroupFinders(SmileVideoCheckItLaterFrom checkItLaterFrom, IEnumerable<SmileVideoCheckItLaterModel> items)
         {
             //TODO: ローカライズ
-            var allFinder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
+            var allFinder = new SmileVideoCheckItLaterFinderViewModel(Mediator);
             allFinder.SetVideoItems(new SmileVideoCheckItLaterFromModel() { FromName = Properties.Resources.String_Service_Smile_SmileVideo_CheckItLater_Group_AllItems }, items);
             yield return allFinder;
 
@@ -185,7 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 .OrderBy(g => g.Key)
             ;
             foreach(var group in groups) {
-                var finder = new SmileVideoCheckItLaterFinderViewModel(Mediation);
+                var finder = new SmileVideoCheckItLaterFinderViewModel(Mediator);
                 finder.SetVideoItems(group.First(), group);
                 yield return finder;
             }
@@ -283,19 +283,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public override async Task InitializeAsync()
         {
             if(!NetworkUtility.IsNetworkAvailable) {
-                Mediation.Logger.Information("skip check it later");
+                Mediator.Logger.Information("skip check it later");
                 return;
             }
             // 動画IDの補正処理
             foreach(var item in Setting.CheckItLater) {
-                if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId, Mediation)) {
+                if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId, Mediator)) {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item.VideoId, Constants.ServiceSmileVideoThumbCacheSpan));
                     try {
-                        var info = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                        var info = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
                         item.VideoId = info.VideoId;
                     } catch(SmileVideoGetthumbinfoFailureException ex) {
                         // やっばいことになったら破棄
-                        Mediation.Logger.Warning(ex);
+                        Mediator.Logger.Warning(ex);
                         item.IsChecked = false;
                     }
                 }

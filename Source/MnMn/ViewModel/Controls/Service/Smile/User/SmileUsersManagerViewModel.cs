@@ -60,12 +60,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #endregion
 
-        public SmileUsersManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public SmileUsersManagerViewModel(Mediator mediator)
+            : base(mediator)
         {
             BindingOperations.EnableCollectionSynchronization(UserItems, new object());
 
-            Setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            Setting = Mediator.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
 
             UserBookmarkCollection = new MVMPairCreateDelegationCollection<SmileUserBookmarkItemModel, SmileUserBookmarkItemViewModel>(Setting.User.Bookmark, default(object), CreateBookmarkItem);
             UserBookmarkItems = CollectionViewSource.GetDefaultView(UserBookmarkCollection.ViewModelList);
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             UserHistoryCollection = new MVMPairCreateDelegationCollection<SmileUserItemModel, SmileUserHistoryItemViewModel>(Setting.User.History, default(object), CreateHistoryItem);
             UserHistoryItems = CollectionViewSource.GetDefaultView(UserHistoryCollection.ViewModelList);
 
-            // NOTE: Mediation を経由していない
+            // NOTE: Mediator を経由していない
             UserDefined = SerializeUtility.LoadXmlSerializeFromFile<SmileUserDefinedModel>(Constants.SmileUserInformationPath);
 
             CheckItLaterCheckTimer.Tick += CheckItLaterCheckTimer_Tick;
@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 SelectedUser = existUser;
                 return Task.CompletedTask;
             } else {
-                var user = new SmileUserInformationViewModel(Mediation, userId, isLoginUser);
+                var user = new SmileUserInformationViewModel(Mediator, userId, isLoginUser);
                 UserItems.Add(user);
                 if(LoginUser == null) {
                     LoadLoginUserAsync().ConfigureAwait(false);
@@ -230,9 +230,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         public Task LoadLoginUserAsync()
         {
-            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             if(session.LoginState == LoginState.LoggedIn) {
-                LoginUser = new SmileLoginUserInformationViewModel(Mediation, session.UserId);
+                LoginUser = new SmileLoginUserInformationViewModel(Mediator, session.UserId);
                 return LoginUser.LoadDefaultAsync().ContinueWith(_ => {
                     UserItems.Insert(0, LoginUser);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -343,7 +343,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 return Enumerable.Empty<SmileVideoVideoItemModel>();
             }
 
-            var user = new Logic.Service.Smile.HalfBakedApi.User(Mediation);
+            var user = new Logic.Service.Smile.HalfBakedApi.User(Mediator);
             var info = await user.LoadUserInformationAsync(userId);
             if(!info.IsPublicPost) {
                 return Enumerable.Empty<SmileVideoVideoItemModel>();
@@ -355,7 +355,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             var newViewModels = channelItems
                 .Select(item => {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
-                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    return Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 })
                 .ToEvaluatedSequence()
             ;
@@ -411,7 +411,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 var videoItems = postTask.Result;
 
                 foreach(var item in videoItems) {
-                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, Define.Service.Smile.Video.SmileVideoCheckItLaterFrom.UserBookmark)));
+                    Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, Define.Service.Smile.Video.SmileVideoCheckItLaterFrom.UserBookmark)));
                 }
             });
         }

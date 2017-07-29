@@ -45,15 +45,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        protected DescriptionBase(IGetExpression convertCompatibility, ServiceType serviceType)
+        protected DescriptionBase(IExpressionGetter expressionGetter, ServiceType serviceType)
         {
-            ConvertCompatibility = convertCompatibility;
+            ExpressionGetter = expressionGetter;
             ServiceType = serviceType;
         }
 
         #region property
 
-        protected IGetExpression ConvertCompatibility { get; }
+        protected IExpressionGetter ExpressionGetter { get; }
         protected ServiceType ServiceType { get; }
 
         #endregion
@@ -164,22 +164,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected string ConvertRunTarget(string flowDocumentSource, MatchEvaluator func)
         {
-            var regTarget = new Regex(
-                @"
-                (?<OPEN>
-                    <Run>
-                )
-                    (?<TARGET>
-                        .+?
-                    )
-                (?<CLOSE>
-                    </Run>
-                )
-                ",
-                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
-           );
+            var expression = ExpressionGetter.GetExpression(CommonMediatorKey.runTarget, ServiceType.Common);
 
-            var replacedSource = regTarget.Replace(flowDocumentSource, func);
+            var replacedSource = expression.Regex.Replace(flowDocumentSource, func);
 
             return replacedSource;
         }
@@ -197,26 +184,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public string ConvertLinkFromPlainText(string flowDocumentSource, string commandName)
         {
-            var regLink = new Regex(
-                @"
-                (?<!Source="")
-                (?<SCHEME>
-                    h?
-                    ttp
-                    s?
-                    ://
-                )
-                (?<DOMAIN_PATH>
-                    [
-                        \w \. \- \( \) \?
-                        / _ # $ % & =
-                    ]*
-                )
-                ",
-                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
-            );
+            var expression = ExpressionGetter.GetExpression(CommonMediatorKey.plaintTextLink, ServiceType.Common);
 
-            var replacedSource = regLink.Replace(flowDocumentSource, m => {
+            var replacedSource = expression.Regex.Replace(flowDocumentSource, m => {
                 var domainPath = (m.Groups["DOMAIN_PATH"].Value ?? string.Empty).Trim();
                 if(domainPath.StartsWith(skipDomainPath)) {
                     return m.Groups[0].Value;
@@ -244,7 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return replacedSource;
         }
 
-        public string ConvertSafeXaml(string flowDocumentSource)
+        public static string ConvertSafeXaml(string flowDocumentSource)
         {
             //TODO: Run*てのがあることは考慮してない。
             return flowDocumentSource

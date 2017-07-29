@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppFlashPlayerManagerViewModel: ManagerViewModelBase
     {
-        public AppFlashPlayerManagerViewModel(Mediation mediation) : base(mediation)
+        public AppFlashPlayerManagerViewModel(Mediator mediator) : base(mediator)
         { }
 
         #region property
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(
                     o => {
                         var data = (WebNavigatorEventDataBase)o;
-                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediator.Logger);
                     }
                 );
             }

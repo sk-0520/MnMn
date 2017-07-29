@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order.AppProcessLink;
@@ -91,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 橋渡し。
         /// </summary>
-        Mediation Mediation { get; set; }
+        Mediator Mediator { get; set; }
 
         /// <summary>
         /// メインウィンドウ。
@@ -105,7 +107,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         bool IsEnabledCommandLine => VariableConstants.HasOptionProcessLinkService && VariableConstants.HasOptionProcessLinkKey && VariableConstants.HasOptionProcessLinkKey;
 
-        bool Catched { get; set; }
+        bool UnhandleExceptionCatched { get; set; }
+        object UnhandleExceptionLocker { get; } = new object();
 
         #endregion
 
@@ -120,14 +123,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
 
-            if(Catched) {
-                return;
+            lock(UnhandleExceptionLocker) {
+                if(UnhandleExceptionCatched) {
+                    return;
+                }
+                UnhandleExceptionCatched = true;
             }
-            Catched = true;
 
             Debug.WriteLine($"{nameof(callerUiThread)} = {callerUiThread}");
-            if(Mediation != null && Mediation.Logger != null) {
-                Mediation.Logger.Fatal(exception);
+            if(Mediator != null && Mediator.Logger != null) {
+                Mediator.Logger.Fatal(exception);
             } else {
                 Debug.WriteLine(exception);
             }
@@ -252,7 +257,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 dir.Refresh();
                 if(dir.Exists) {
                     FileUtility.RotateFiles(dir.FullName, Constants.CrashReportSearchPattern, OrderBy.Descending, Constants.CrashReportCount, ex => {
-                        Mediation.Logger.Error(ex);
+                        Mediator.Logger.Error(ex);
                         return true;
                     });
                 }
@@ -268,7 +273,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             target.WakeUpTimestamp = WakeUpTimestamp;
             target.RunningTime = (DateTime.Now - WakeUpTimestamp).ToString();
 
-            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            var setting = Mediator.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
             //var cacheDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
             target.UserId = setting.RunningInformation.UserId;
 
@@ -283,7 +288,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             target.GeckoFxScanPlugin = setting.WebNavigator.GeckoFxScanPlugin;
 
             // セッション
-            var smileSession = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var smileSession = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             target.SmileSession.LoginState = smileSession.LoginState;
             if(smileSession.IsLoggedIn) {
                 target.SmileSession.Extension.Text = $"{nameof(smileSession.IsPremium)} = {smileSession.IsPremium}, {nameof(smileSession.IsOver18)} = {smileSession.IsOver18}";
@@ -335,7 +340,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 GetClone = true,
             };
 
-            var logs = Mediation.GetResultFromRequest<IEnumerable<LogItemModel>>(new AppLogingProcessRequestModel(logParam))
+            var logs = Mediator.GetResultFromRequest<IEnumerable<LogItemModel>>(new AppLogingProcessRequestModel(logParam))
                 .Select(i => $"[{i.Timestamp:yyyy-MM-ddTHH:mm:ss.fff}] {i.Message}:  {i.CallerMember} ({i.CallerLine})" + (i.HasDetail ? (Environment.NewLine + i.DetailText): string.Empty) )
             ;
 
@@ -392,7 +397,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             if(!AppUtility.ValidateUserId(setting.RunningInformation.UserId)) {
                 var userId = await Task.Run(() => {
-                    return AppUtility.CreateUserId(Mediation.Logger);
+                    return AppUtility.CreateUserId(Mediator.Logger);
                 });
                 setting.RunningInformation.UserId = userId;
             }
@@ -446,7 +451,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void SendProccessLinkIfEnabledCommandLine(bool useWCF)
         {
             if(!IsEnabledCommandLine) {
-                Mediation.Logger.Trace("process link skip");
+                Mediator.Logger.Trace("process link skip");
                 return;
             }
 
@@ -465,7 +470,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                     serviceType = EnumUtility.Parse<ServiceType>(rawService);
                 }
             } catch(Exception ex) {
-                Mediation.Logger.Error(ex);
+                Mediator.Logger.Error(ex);
                 return;
             }
 
@@ -473,7 +478,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var value = VariableConstants.OptionValueProcessLinkValue;
 
             if(useWCF) {
-                var client = new ProcessLinkClient(Mediation);
+                var client = new ProcessLinkClient(Mediator);
                 client.Execute(serviceType, key, value);
             } else {
                 var parameter = new ProcessLinkExecuteParameterModel() {
@@ -482,7 +487,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                     Value = value,
                 };
 
-                Mediation.Order(new AppProcessLinkParameterOrderModel(parameter));
+                Mediator.Order(new AppProcessLinkParameterOrderModel(parameter));
             }
         }
 
@@ -550,19 +555,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var setting = settingResult.Result;
             SetLanguage(setting.CultureName);
 
-            Mediation = new Mediation(setting, logger);
+            Mediator = new Mediator(setting, logger);
 
-            AppManager = new AppManagerViewModel(Mediation, logger);
+            AppManager = new AppManagerViewModel(Mediator, logger);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            WebNavigatorCore.Initialize(Mediation);
-            AppUtility.InitializeTheme(Mediation.Logger);
+            WebNavigatorCore.Initialize(Mediator);
+            AppUtility.InitializeTheme(Mediator.Logger);
             AppUtility.SetTheme(setting.Theme);
 
             // セーフモードの場合許諾ウィンドウは表示しない
             if(!VariableConstants.IsSafeModeExecute) {
                 var acceptVersion = SerializeUtility.LoadXmlSerializeFromFile<AcceptVersionModel>(Constants.ApplicationAcceptVersionPath);
                 if(!CheckAccept(setting.RunningInformation, acceptVersion, logger)) {
-                    var acceptViewModel = new AcceptViewModel(Mediation, acceptVersion);
+                    var acceptViewModel = new AcceptViewModel(Mediator, acceptVersion);
                     var acceptWindow = new AcceptWindow() {
                         DataContext = acceptViewModel,
                     };
@@ -626,7 +631,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Show();
 
             // ここで現在情報取得！
-            GlobalManager.SystemParameter = GetSystemParameter(Mediation.Logger);
+            GlobalManager.SystemParameter = GetSystemParameter(Mediator.Logger);
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -660,26 +665,28 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            CatchUnhandleException((Exception)e.ExceptionObject, false);
+            if(!e.IsTerminating) {
+                CatchUnhandleException((Exception)e.ExceptionObject, false);
+            }
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Mediation.Logger.Trace("start closing!");
+            Mediator.Logger.Trace("start closing!");
 
             var uninitTask = AppManager.UninitializeAsync();
             if(!uninitTask.Wait(Constants.UninitializeAsyncWaitTime)) {
-                Mediation.Logger.Fatal($"time out: {nameof(ManagerViewModelBase.UninitializeAsync)}");
+                Mediator.Logger.Fatal($"time out: {nameof(ManagerViewModelBase.UninitializeAsync)}");
             }
 
-            Mediation.Logger.Trace("end closing -> start close!");
+            Mediator.Logger.Trace("end closing -> start close!");
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             WebNavigatorCore.Uninitialize();
 
-            Mediation.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Shutdown));
+            Mediator.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Shutdown));
 
             AppManager.UninitializeView(View);
 
@@ -689,11 +696,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
                 var filePath = Path.Combine(dir.FullName, fileName);
                 if(File.Exists(filePath)) {
-                    ShellUtility.OpenFileInDirectory(new FileInfo(filePath), Mediation.Logger);
+                    ShellUtility.OpenFileInDirectory(new FileInfo(filePath), Mediator.Logger);
                 }
             }
 
-            RestoreSystemParameter(GlobalManager.SystemParameter, Mediation.Logger);
+            RestoreSystemParameter(GlobalManager.SystemParameter, Mediator.Logger);
         }
 
         private void App_Exit(object sender, ExitEventArgs e)
@@ -706,7 +713,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Loaded -= MainWindow_Loaded;
 
             // ホストを有効にする
-            Mediation.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Listening));
+            try {
+                Mediator.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Listening));
+            } catch(AddressAlreadyInUseException ex) {
+                // デバッグ時だったりβ版なりのリリース版と分けて起動可能な時しか来ないハズ
+                Mediator.Logger.Error(ex);
+            }
 
             // スプラッシュスクリーンさよなら～
             var hSplashWnd = HandleUtility.GetWindowHandle(SplashWindow);

@@ -45,20 +45,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
         #endregion
 
-        public LightweightUpdateDownloadItemViewModel(Mediation mediation, LightweightUpdateModel model)
+        public LightweightUpdateDownloadItemViewModel(Mediator mediator, LightweightUpdateModel model)
         {
-            Mediation = mediation;
+            Mediator = mediator;
             Model = model;
 
             var lightweightUpdateDir = VariableConstants.GetLightweightUpdateDirectory();
             ArchivePath = Path.Combine(lightweightUpdateDir.FullName, PathUtility.AppendExtension(Constants.GetTimestampFileName(Model.Timestamp), "zip"));
 
-            NetworkSetting = Mediation.GetNetworkSetting();
+            NetworkSetting = Mediator.GetNetworkSetting();
         }
 
         #region property
 
-        Mediation Mediation { get; }
+        Mediator Mediator { get; }
         LightweightUpdateModel Model { get; }
         IReadOnlyNetworkSetting NetworkSetting { get; }
 
@@ -77,17 +77,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                 foreach(var entry in archiveStream.Entries) {
                     var path = Path.Combine(Constants.AssemblyRootDirectoryPath, entry.FullName);
                     FileUtility.MakeFileParentDirectory(path);
-                    Mediation.Logger.Trace($"expand: {path}");
+                    Mediator.Logger.Trace($"expand: {path}");
                     using(var entryStream = entry.Open())
                     using(var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
                         entryStream.CopyTo(stream);
                     }
                 }
             }
-            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            var setting = Mediator.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
             setting.RunningInformation.LightweightUpdateTimestamp = Model.Timestamp;
 
-            Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
+            Mediator.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
 
         void SetDownloadTitle(string expandPath)
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
             DownloadingProgress?.Report(0);
             SetDownloadTitle(null);
 
-            using(var host = new HttpUserAgentHost(NetworkSetting, Mediation.Logger))
+            using(var host = new HttpUserAgentHost(NetworkSetting, Mediator.Logger))
             using(var userAgent = host.CreateHttpUserAgent()) {
                 userAgent.Timeout = Constants.ArchiveLightweightUpdateTimeout;
                 using(var archiveStream = new ZipArchive(new FileStream(ArchivePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                         SetDownloadTitle(expand);
                         var entry = archiveStream.CreateEntry(expand);
                         using(var entryStream = entry.Open()) {
-                            Mediation.Logger.Debug(DownloadUri.ToString());
+                            Mediator.Logger.Debug(DownloadUri.ToString());
                             var response = await userAgent.GetAsync(DownloadUri);
                             if(response.IsSuccessStatusCode) {
                                 var stream = await response.Content.ReadAsStreamAsync();
@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                                 DownloadedSize += 1;
                                 DownloadingProgress?.Report(DownloadedSize / (double)DownloadTotalSize);
                             } else {
-                                Mediation.Logger.Error(response.ToString());
+                                Mediator.Logger.Error(response.ToString());
                                 DownloadState = DownloadState.Failure;
                                 return;
                             }

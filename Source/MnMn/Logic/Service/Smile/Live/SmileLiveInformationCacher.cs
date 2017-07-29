@@ -10,8 +10,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
     public class SmileLiveInformationCacher: InformationCacherBase<SmileVideoInformationViewModel>
     {
-        public SmileLiveInformationCacher(Mediation mediation)
-            : base(mediation)
+        public SmileLiveInformationCacher(Mediator mediator)
+            : base(mediator)
         {}
 
 

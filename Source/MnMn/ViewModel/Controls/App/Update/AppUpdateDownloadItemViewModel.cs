@@ -27,8 +27,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 {
     public class AppUpdateDownloadItemViewModel : DownloadItemViewModel
     {
-        public AppUpdateDownloadItemViewModel(Mediation mediation, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
-            : base(mediation, uri, downloadFile, userAgentCreator)
+        public AppUpdateDownloadItemViewModel(Mediator mediator, Uri uri, FileInfo downloadFile, IHttpUserAgentCreator userAgentCreator)
+            : base(mediator, uri, downloadFile, userAgentCreator)
         { }
 
         #region function
@@ -41,12 +41,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                 myDirPath = myDirPath.Substring(0, myDirPath.Length - 1);
             }
             var pathValue = startInfo.Environment["PATH"];
-            Mediation.Logger.Information("default path", pathValue);
+            Mediator.Logger.Information("default path", pathValue);
             var pathItems = pathValue.Split(';')
                 .Where(s => !s.StartsWith(myDirPath, StringComparison.OrdinalIgnoreCase))
             ;
             var newPathValue = string.Join(";", pathItems);
-            Mediation.Logger.Information("update path", newPathValue);
+            Mediator.Logger.Information("update path", newPathValue);
             startInfo.Environment["PATH"] = newPathValue;
         }
 
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
 
             startInfo.UseShellExecute = false;
 
-            Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
+            Mediator.Logger.Information("update exec", process.StartInfo.Arguments);
 
             // 光り輝く #552!
             process.StartWithDllReset();
@@ -90,17 +90,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                 var handles = new[] { waitEvent, processEvent };
                 var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
 
-                Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
+                Mediator.Logger.Debug("WaitHandle.WaitAny", waitResult);
                 if(0 <= waitResult && waitResult < handles.Length) {
                     if(handles[waitResult] == waitEvent) {
                         // イベントが立てられたので終了
-                        Mediation.Logger.Information("exit", process.StartInfo.Arguments);
+                        Mediator.Logger.Information("exit", process.StartInfo.Arguments);
                         Application.Current.Dispatcher.Invoke(() => {
-                            Mediation.Order(new OrderModel(OrderKind.Exit, ServiceType.Application));
+                            Mediator.Order(new OrderModel(OrderKind.Exit, ServiceType.Application));
                         });
                     } else if(handles[waitResult] == processEvent) {
                         // Updaterがイベント立てる前に死んだ
-                        Mediation.Logger.Information("error-process", process.ExitCode);
+                        Mediator.Logger.Information("error-process", process.ExitCode);
                     }
                 } else {
                     // タイムアウト
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App.Update
                         // まだ生きてるなら強制的に殺す
                         process.Kill();
                     }
-                    Mediation.Logger.Information("error-timeout", process.ExitCode);
+                    Mediator.Logger.Information("error-timeout", process.ExitCode);
                 }
             });
         }

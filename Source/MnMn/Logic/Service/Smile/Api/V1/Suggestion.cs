@@ -14,15 +14,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 {
     public class Suggestion : ApiBase
     {
-        public Suggestion(Mediation mediation)
-            : base(mediation)
+        public Suggestion(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function
 
         public Task<SmileSuggestionCompleteCandidateModel> LoadCompleteAsync(string word)
         {
-            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileMediationKey.suggestionComplete, ServiceType.Smile);
+            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediatorKey.suggestionComplete, ServiceType.Smile);
             page.ReplaceUriParameters["word"] = word;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {

@@ -45,18 +45,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
             return result;
         }
 
-        public static DirectoryInfo GetCacheDirectory(Mediation mediation, string videoId)
+        public static DirectoryInfo GetCacheDirectory(Mediator mediator, string videoId)
         {
-            var parentDir = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileLive));
+            var parentDir = mediator.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileLive));
             var cachedDirPath = Path.Combine(parentDir.FullName, videoId);
 
             return new DirectoryInfo(cachedDirPath);
         }
 
 
-        public static FileInfo GetGetthumbinfoFile(Mediation mediation, string videoId)
+        public static FileInfo GetGetthumbinfoFile(Mediator mediator, string videoId)
         {
-            var cacheDir = GetCacheDirectory(mediation, videoId);
+            var cacheDir = GetCacheDirectory(mediator, videoId);
             var fileName = PathUtility.CreateFileName(videoId, "player-status", "xml");
             return new FileInfo(Path.Combine(cacheDir.FullName, fileName));
         }
@@ -73,10 +73,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
         }
 
 
-        public static async Task<RawSmileLiveGetPlayerStatusModel> LoadGetPlayerStatusAsync(Mediation mediation, string liveId, CacheSpan thumbCacheSpan)
+        public static async Task<RawSmileLiveGetPlayerStatusModel> LoadGetPlayerStatusAsync(Mediator mediator, string liveId, CacheSpan thumbCacheSpan)
         {
             RawSmileLiveGetPlayerStatusModel rawGetthumbinfo = null;
-            var cachedThumbFile = GetGetthumbinfoFile(mediation, liveId);
+            var cachedThumbFile = GetGetthumbinfoFile(mediator, liveId);
             if(cachedThumbFile.Exists) {
                 if(thumbCacheSpan.IsCacheTime(cachedThumbFile.LastWriteTime) && Constants.MinimumXmlFileSize <= cachedThumbFile.Length) {
                     rawGetthumbinfo = LoadGetthumbinfo(cachedThumbFile);
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
             }
             var isSave = false;
             if(rawGetthumbinfo == null || !SmileLiveGetPlayerStatusUtility.IsSuccessResponse(rawGetthumbinfo)) {
-                var getPlayerStatus = new GetPlayerStatus(mediation);
+                var getPlayerStatus = new GetPlayerStatus(mediator);
                 rawGetthumbinfo = await getPlayerStatus.LoadAsync(liveId);
                 isSave = true;
             }
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
                 try {
                     SerializeUtility.SaveXmlSerializeToFile(cachedThumbFile.FullName, rawGetthumbinfo);
                 } catch(Exception ex) {
-                    mediation.Logger.Warning(ex);
+                    mediator.Logger.Warning(ex);
                 }
             }
 

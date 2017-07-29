@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var videoInformation = (SmileVideoInformationViewModel)o;
-                        if(SmileVideoInformationUtility.CheckCanPlay(videoInformation, Mediation.Logger)) {
+                        if(SmileVideoInformationUtility.CheckCanPlay(videoInformation, Mediator.Logger)) {
                             LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
                         }
                     }
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var marketItem = (SmileMarketVideoRelationItemViewModel)o;
-                        ShellUtility.OpenUriInDefaultBrowser(marketItem.CashRegisterUri, Mediation.Logger);
+                        ShellUtility.OpenUriInDefaultBrowser(marketItem.CashRegisterUri, Mediator.Logger);
                     }
                 );
             }
@@ -89,14 +89,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                 break;
 
                             case PlayerState.Pause:
-                                Mediation.Logger.Debug("resume");
+                                Mediator.Logger.Debug("resume");
                                 View.Dispatcher.BeginInvoke(new Action(() => {
                                     Player.PauseOrResume();
                                 }));
                                 break;
 
                             case PlayerState.Buffering:
-                                Mediation.Logger.Debug("restart");
+                                Mediator.Logger.Debug("restart");
                                 ResumeBufferingStop();
                                 break;
 
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                             CategoryName = tag.TagName,
                         };
 
-                        Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+                        Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
                     },
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                             return false;
                         }
 
-                        var rankingDefine = Mediation.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+                        var rankingDefine = Mediator.GetResultFromRequest<IReadOnlySmileVideoRanking>(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
                         var rankingCategory = rankingDefine.Items
                             .SelectMany(i => i.Categories)
                             .FirstOrDefault(c => c.Words.Values.Any(s => string.Equals(s, tag.TagName, StringComparison.InvariantCultureIgnoreCase)))
@@ -178,8 +178,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
-                        var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
-                        ShellUtility.OpenUriInDefaultBrowser(pediaUri, Mediation.Logger);
+                        var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediator, tag.TagName);
+                        ShellUtility.OpenUriInDefaultBrowser(pediaUri, Mediator.Logger);
                     },
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
@@ -196,8 +196,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
-                        var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediation, tag.TagName);
-                        DescriptionUtility.OpenUriInAppBrowser(pediaUri, Mediation);
+                        var pediaUri = SmilePediaUtility.GetArticleUriFromWord(Mediator, tag.TagName);
+                        DescriptionUtility.OpenUriInAppBrowser(pediaUri, Mediator);
                     },
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var tag = (SmileVideoTagViewModel)o;
-                        ShellUtility.SetClipboard(tag.TagName, Mediation.Logger);
+                        ShellUtility.SetClipboard(tag.TagName, Mediator.Logger);
                     }
                 );
             }
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         if(Information.CacheDirectory.Exists) {
-                            ShellUtility.OpenDirectory(Information.CacheDirectory, Mediation.Logger);
+                            ShellUtility.OpenDirectory(Information.CacheDirectory, Mediator.Logger);
                         }
                     }
                 );
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var selectVideoInformation = o as SmileVideoInformationViewModel;
-                        if(SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediation.Logger)) {
+                        if(SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediator.Logger)) {
                             LoadAsync(selectVideoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
                         }
                     },
@@ -294,7 +294,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                             return true;
                         }
                         // よそで何かしているかもしれない
-                        return SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediation.Logger);
+                        return SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediator.Logger);
                     }
                 );
             }
@@ -515,7 +515,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var param = (SmileVideoChangeVideoPositionCommandParameterModel)o;
-                        Mediation.Logger.Information($"{param.PositionType}: {PlayerSetting.SeekOperationAbsoluteStep}");
+                        Mediator.Logger.Information($"{param.PositionType}: {PlayerSetting.SeekOperationAbsoluteStep}");
                         switch(param.PositionType) {
                             case SmileVideoChangeVideoPositionType.Setting:
                                 ChangeSeekVideoPosition(param.IsNext, PlayerSetting.SeekOperationIsPercent, PlayerSetting.SeekOperationIsPercent ? PlayerSetting.SeekOperationPercentStep : PlayerSetting.SeekOperationAbsoluteStep);
@@ -649,7 +649,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-                        ShellUtility.OpenUriInDefaultBrowser(Information.WatchUrl, Mediation.Logger);
+                        ShellUtility.OpenUriInDefaultBrowser(Information.WatchUrl, Mediator.Logger);
                     },
                     o => Information != null
                 );

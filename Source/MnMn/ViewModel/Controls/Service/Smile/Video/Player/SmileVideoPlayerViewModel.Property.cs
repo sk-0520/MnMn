@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.View;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -106,6 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         ItemsControl ListPlaylist { get; set; }
 
         CursorHider PlayerCursorHider { get; set; }
+        SmileVideoTaskbarThumbnailCreator PlayerTaskbarThumbnailCreator { get; set; }
 
         public int VolumeMinimum { get { return Constants.NavigatorVolumeRange.Head; } }
         public int VolumeMaximum { get { return Constants.NavigatorVolumeRange.Tail; } }
@@ -243,7 +245,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public double ViewScale
         {
             get { return this._viewScale; }
-            set { SetVariableValue(ref this._viewScale, value); }
+            set
+            {
+                if(SetVariableValue(ref this._viewScale, value)) {
+                    if(PlayerTaskbarThumbnailCreator != null) {
+                        PlayerTaskbarThumbnailCreator.SetScale(ViewScale);
+                        PlayerTaskbarThumbnailCreator.Refresh();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -711,7 +721,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 if(this._accountMyListItems == null) {
-                    var response = Mediation.Request(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.MyList));
+                    var response = Mediator.Request(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.MyList));
                     var result = (SmileVideoAccountMyListSettingResultModel)response.Result;
                     this._accountMyListItems = result.AccountMyList;
                 }
@@ -728,8 +738,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 if(this._bookmarkItems == null) {
-                    var result = Mediation.GetResultFromRequest<SmileVideoBookmarkResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Bookmark));
-                    //var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.UserNodes;
+                    var result = Mediator.GetResultFromRequest<SmileVideoBookmarkResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Bookmark));
                     this._bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(result.UserNodes);
                 }
 
@@ -1165,7 +1174,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public DescriptionBase DescriptionProcessor => new SmileDescription(Mediation);
+        public DescriptionBase DescriptionProcessor => new SmileDescription(Mediator);
 
         SmileVideoCommentViewModel CommentScriptDefault { get; set; }
 
@@ -1235,6 +1244,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         public virtual ImageSource PosterThumbnailImage => PosterInformation?.ThumbnailImage;
+
+        public Thickness ThumbnailClipMargin
+        {
+            get { return this._thumbnailClipMargin; }
+            set { SetVariableValue(ref this._thumbnailClipMargin, value); }
+        }
 
         #endregion
     }

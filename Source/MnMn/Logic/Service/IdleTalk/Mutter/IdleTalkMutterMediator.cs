@@ -17,20 +17,20 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk.Mutter
 {
-    public class IdleTalkMutterMediation : MediationCustomBase
+    public class IdleTalkMutterMediator : CustomMediatorBase
     {
-        public IdleTalkMutterMediation(Mediation mediation)
-            : base(mediation, Constants.IdleTalkMutterUriListPath, Constants.IdleTalkMutterUriParametersListPath, Constants.IdleTalkMutterRequestHeadersListPath, Constants.IdleTalkMutterRequestParametersListPath, Constants.IdleTalkMutterRequestMappingsListPath, Constants.IdleTalkMutterExpressionsPath)
+        public IdleTalkMutterMediator(Mediator mediator)
+            : base(mediator, Constants.IdleTalkMutterUriListPath, Constants.IdleTalkMutterUriParametersListPath, Constants.IdleTalkMutterRequestHeadersListPath, Constants.IdleTalkMutterRequestParametersListPath, Constants.IdleTalkMutterRequestMappingsListPath, Constants.IdleTalkMutterExpressionsPath)
         { }
 
 
-        #region MediationCustomBase
+        #region MediatorCustomBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceIdleTalkName, Constants.ServiceIdleTalkMutterName);
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(IdleTalkMutterMediationKey));
+            return GetMediatorKeys(typeof(IdleTalkMutterMediatorKey));
         }
 
         internal override object RequestShowView(ShowViewRequestModel request)

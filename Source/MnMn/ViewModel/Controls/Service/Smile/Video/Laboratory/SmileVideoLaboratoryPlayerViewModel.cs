@@ -25,10 +25,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 {
     public sealed class SmileVideoLaboratoryPlayerViewModel : SmileVideoPlayerViewModel
     {
-        public SmileVideoLaboratoryPlayerViewModel(Mediation mediation)
-            : base(mediation)
+        public SmileVideoLaboratoryPlayerViewModel(Mediator mediator)
+            : base(mediator)
         {
-            Information = new SmileVideoLaboratoryInformationViewModel(Mediation);
+            Information = new SmileVideoLaboratoryInformationViewModel(Mediator);
 
             // プレイヤー設定から UI 設定できない項目を引っ張ってくる
 
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             PlayerSetting.BackgroundColor = Setting.Player.BackgroundColor;
             PlayerSetting.BackgroundKind = Setting.Player.BackgroundKind;
 
-            GlobalCommentFilering = new SmileVideoFilteringViweModel(new SmileVideoCommentFilteringSettingModel(), null, Mediation.Smile.VideoMediation.Filtering);
+            GlobalCommentFilering = new SmileVideoFilteringViweModel(new SmileVideoCommentFilteringSettingModel(), null, Mediator.Smile.VideoMediator.Filtering);
         }
 
         #region property
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 
         void IgnoreLaboratory([CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumer = -1, [CallerMemberName] string callerMemberName = "")
         {
-            Mediation.Logger.Debug("ignore", null, 2, callerFilePath, callerLineNumer, callerMemberName);
+            Mediator.Logger.Debug("ignore", null, 2, callerFilePath, callerLineNumer, callerMemberName);
         }
 
         public Task LoadAsync(FileInfo videoFile, FileInfo msgFile)
@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 
                         VideoFile.Refresh();
                         if(VideoFile.Exists) {
-                            ShellUtility.OpenDirectory(VideoFile.Directory, Mediation.Logger);
+                            ShellUtility.OpenDirectory(VideoFile.Directory, Mediator.Logger);
                         }
                     },
                     o => VideoFile != null
@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             get
             {
                 return CreateCommand(
-                    o => Mediation.Logger.Debug("ついっついー"),
+                    o => Mediator.Logger.Debug("ついっついー"),
                     o => false
                 );
             }

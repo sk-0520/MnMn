@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Dmc: SessionApiBase<SmileSessionViewModel>
     {
-        public Dmc(Mediation mediation)
-            : base(mediation, ServiceType.Smile)
+        public Dmc(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region function
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         Task<RawSmileVideoDmcObjectModel> LoadCoreAsync(string key, Uri uri, string method, RawSmileVideoDmcObjectModel param)
         {
-            var page = new PageLoader(Mediation, Session, key, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediator, Session, key, ServiceType.SmileVideo);
 
             //page.ReplaceRequestHeaders["Referer"] = "http://res.nimg.jp/swf/player/nicoplayer.swf?ts=ec1c8439e4654d504a8da7c98f4dec24";
 
@@ -102,21 +102,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public Task<RawSmileVideoDmcObjectModel> LoadAsync(Uri uri, RawSmileVideoDmcObjectModel param)
         {
-            return LoadCoreAsync(SmileVideoMediationKey.dmc, uri, null, param);
+            return LoadCoreAsync(SmileVideoMediatorKey.dmc, uri, null, param);
         }
 
         public Task<RawSmileVideoDmcObjectModel> ReloadAsync(Uri uri, RawSmileVideoDmcObjectModel param)
         {
             // なんかダサいね！
             var targetUri = new Uri(uri.OriginalString + "/" + param.Data.Session.Id);
-            return LoadCoreAsync(SmileVideoMediationKey.dmcReload, targetUri, "PUT", param);
+            return LoadCoreAsync(SmileVideoMediatorKey.dmcReload, targetUri, "PUT", param);
         }
 
         public Task<RawSmileVideoDmcObjectModel> CloseAsync(Uri uri, RawSmileVideoDmcObjectModel param)
         {
             // なんかダサいね！2
             var targetUri = new Uri(uri.OriginalString + "/" + param.Data.Session.Id);
-            return LoadCoreAsync(SmileVideoMediationKey.dmcReload, targetUri, "DELETE", param);
+            return LoadCoreAsync(SmileVideoMediatorKey.dmcReload, targetUri, "DELETE", param);
         }
 
 

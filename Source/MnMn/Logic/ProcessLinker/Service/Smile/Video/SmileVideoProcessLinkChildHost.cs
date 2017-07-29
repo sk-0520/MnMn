@@ -13,24 +13,24 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile.Video
 {
     public class SmileVideoProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public SmileVideoProcessLinkChildHost(Mediation mediation)
-            : base(mediation)
+        public SmileVideoProcessLinkChildHost(Mediator mediator)
+            : base(mediator)
         { }
 
         #region function
 
         async Task<ProcessLinkResultModel> ExecuteCore_Show(IReadOnlyProcessLinkExecuteParameter parameter)
         {
-            var videoId = SmileIdUtility.GetVideoId(parameter.Value, Mediation);
+            var videoId = SmileIdUtility.GetVideoId(parameter.Value, Mediator);
 
             if(!string.IsNullOrWhiteSpace(videoId)) {
                 var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
 
-                var videoInformation = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                var videoInformation = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
 
                 await videoInformation.OpenVideoDefaultAsync(false);
 
@@ -42,15 +42,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Video
 
         async Task<ProcessLinkResultModel> ExecuteCore_AddBookmark(IReadOnlyProcessLinkExecuteParameter parameter)
         {
-            var videoId = SmileIdUtility.GetVideoId(parameter.Value, Mediation);
+            var videoId = SmileIdUtility.GetVideoId(parameter.Value, Mediator);
 
             if(!string.IsNullOrWhiteSpace(videoId)) {
                 var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
 
-                var videoInformation = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                var videoInformation = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
 
                 var item = videoInformation.ToVideoItemModel();
-                Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(item)));
+                Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(item)));
 
                 return new ProcessLinkResultModel(true, videoInformation.Title);
             }
@@ -60,15 +60,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Video
 
         async Task<ProcessLinkResultModel> ExecuteCore_AddCheckItLater(IReadOnlyProcessLinkExecuteParameter parameter)
         {
-            var videoId = SmileIdUtility.GetVideoId(parameter.Value, Mediation);
+            var videoId = SmileIdUtility.GetVideoId(parameter.Value, Mediator);
 
             if(!string.IsNullOrWhiteSpace(videoId)) {
                 var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
 
-                var videoInformation = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                var videoInformation = await Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
 
                 var item = videoInformation.ToVideoItemModel();
-                Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.ManualOperation, true)));
+                Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, SmileVideoCheckItLaterFrom.ManualOperation, true)));
                 return new ProcessLinkResultModel(true, videoInformation.Title);
             }
 

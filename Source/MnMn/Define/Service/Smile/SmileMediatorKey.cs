@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    internal static class SmileMediationKey
+    internal static class SmileMediatorKey
     {
         public const string webSite = "smile-web-site";
 
@@ -61,10 +61,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string mylist = "smile-video-mylist-user";
         public const string mylistSearch = "smile-video-mylist-search";
 
+        public const string isScrapingVideoId = "is-scraping-video-id";
+        public const string getVideoId = "get-video-id";
+        public const string convertChannelId = "convert-channel-id";
+        public const string getMylistId = "get-mylist-id";
+        public const string getUserId = "get-user-id";
+        public const string needCorrectionVideoId = "need-correction-video-id";
+
+
+        public const string userInformationFromHtml = "user-information-from-html";
+
         public static class Id
         {
             public const string videoLogin_userValue = "user-value";
             public const string videoLogin_userR18 = "user-r18";
+
+            public const string getVideoId_prefixId = "prefix-id";
+            public const string getVideoId_numberId = "number-id";
+
+            public const string convertChannelId_normalizationId = "normalization-id";
+            public const string convertChannelId_numberOnly = "number-only";
+
+            public const string userInformationFromHtml_userId = "user-id";
+            public const string userInformationFromHtml_version = "version";
+            public const string userInformationFromHtml_isPremium = "is-premium";
+            public const string userInformationFromHtml_gender = "gender";
+            public const string userInformationFromHtml_birthday = "birthday";
+            public const string userInformationFromHtml_location = "location";
+            public const string userInformationFromHtml_mylistCount = "mylist-count";
         }
 
     }

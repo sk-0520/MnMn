@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live
 {
-    internal static class SmileLiveMediationKey
+    internal static class SmileLiveMediatorKey
     {
         public const string watchPage = "live-watch-page";
         public const string broadcast = "live-broadcast";

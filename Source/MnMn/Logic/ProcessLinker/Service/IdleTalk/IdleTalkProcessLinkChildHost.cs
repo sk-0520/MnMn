@@ -7,16 +7,16 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
-using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk.Mutter;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.IdleTalk.Mutter;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.IdleTalk
 {
     public class IdleTalkProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public IdleTalkProcessLinkChildHost(Mediation mediation)
-            : base(mediation)
+        public IdleTalkProcessLinkChildHost(Mediator mediator)
+            : base(mediator)
         {
-            Mutter = new IdleTalkMutterProcessLinkChildHost(Mediation);
+            Mutter = new IdleTalkMutterProcessLinkChildHost(Mediator);
         }
 
         #region property

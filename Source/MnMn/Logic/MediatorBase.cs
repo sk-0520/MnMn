@@ -42,22 +42,22 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public abstract class MediationBase:
+    public abstract class MediatorBase:
         DisposeFinalizeBase,
-        IGetUri,
-        IGetRequestHeader,
-        IGetRequestParameter,
-        IGetExpression,
+        IUriGetter,
+        IRequestHeaderGetter,
+        IRequestParameterGetter,
+        IExpressionGetter,
         ICommunication,
         IUriCompatibility,
         IRequestCompatibility,
         IResponseCompatibility
     {
-        public MediationBase()
+        public MediatorBase()
             : this(null, null, null, null, null, null)
         { }
 
-        protected MediationBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
+        protected MediatorBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath, string expressionsPath)
         {
             UriList = LoadDefineModel<UrisModel>(uriListPath);
             UriParameterList = LoadDefineModel<ParametersModel>(uriParametersPath);
@@ -130,32 +130,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected void ThrowNotSupportGetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IUriGetter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetRequestHeader)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IRequestHeaderGetter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IRequestParameterGetter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IRequestParameterGetter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetExpression(string key, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IExpressionGetter)} => {nameof(key)}: {key}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetExpression(string key, string id, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IGetExpression)} => {nameof(key)}: {key}, {nameof(id)}: {id}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IExpressionGetter)} => {nameof(key)}: {key}, {nameof(id)}: {id}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportConvertUri(string key, string uri, ServiceType serviceType)

@@ -27,8 +27,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public class SmileVideoItemsMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
-        public SmileVideoItemsMyListFinderViewModel(Mediation mediation, SmileMyListItemModel item)
-            : base(mediation, false)
+        public SmileVideoItemsMyListFinderViewModel(Mediator mediator, SmileMyListItemModel item)
+            : base(mediator, false)
         {
             IgnoreAddHistory = false;
 

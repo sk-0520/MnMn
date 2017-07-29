@@ -7,18 +7,18 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
-using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Live;
-using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.Smile
 {
     public class SmileProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public SmileProcessLinkChildHost(Mediation mediation)
-            : base(mediation)
+        public SmileProcessLinkChildHost(Mediator mediator)
+            : base(mediator)
         {
-            Video = new SmileVideoProcessLinkChildHost(Mediation);
-            Live = new SmileLiveProcessLinkChildHost(Mediation);
+            Video = new SmileVideoProcessLinkChildHost(Mediator);
+            Live = new SmileLiveProcessLinkChildHost(Mediator);
         }
 
         #region property

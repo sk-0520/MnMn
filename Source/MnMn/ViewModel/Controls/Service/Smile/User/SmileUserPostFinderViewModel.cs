@@ -28,8 +28,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
     public class SmileUserPostFinderViewModel: SmileVideoFeedFinderViewModelBase
     {
-        public SmileUserPostFinderViewModel(Mediation mediation, string userId)
-            : base(mediation, 0)
+        public SmileUserPostFinderViewModel(Mediator mediator, string userId)
+            : base(mediator, 0)
         {
             UserId = userId;
         }
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var user = new ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi.User(Mediation);
+            var user = new ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi.User(Mediator);
             return user.LoadPostVideoAsync(UserId);
         }
 

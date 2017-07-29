@@ -7,12 +7,12 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker.Service.IdleTalk.Mutter
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink.Service.IdleTalk.Mutter
 {
     public class IdleTalkMutterProcessLinkChildHost : ProcessLinkChildHostBase
     {
-        public IdleTalkMutterProcessLinkChildHost(Mediation mediation)
-            : base(mediation)
+        public IdleTalkMutterProcessLinkChildHost(Mediator mediator)
+            : base(mediator)
         {
         }
 

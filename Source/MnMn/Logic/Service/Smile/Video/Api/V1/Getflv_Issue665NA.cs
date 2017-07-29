@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
@@ -45,8 +46,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Getflv_Issue665NA: SessionApiBase<SmileSessionViewModel>
     {
-        public Getflv_Issue665NA(Mediation mediation)
-            : base(mediation, ServiceType.Smile)
+        public Getflv_Issue665NA(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region property
@@ -62,17 +63,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return result;
         }
 
-        async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadScrapingAsync(Uri uri, SmileVideoMovieType movieType, bool usingDmc)
+        async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadScrapingAsync(Uri uri, SmileVideoMovieType movieType, bool usingDmc, bool forceFlashPage)
         {
             //var re = await GetNormalAsync(uri);
             // WEBから取得してみる
-            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvScraping, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.getflvScraping, ServiceType.SmileVideo)) {
                 var usingUri = movieType == SmileVideoMovieType.Swf
                     ? new Uri(uri.OriginalString + "?as3=1")
                     : uri
                 ;
                 page.ForceUri = usingUri;
-                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+
+                var restore = forceFlashPage
+                    ? Session.ForceFlashPage_Issue703()
+                    : RestoreDisposer.Empty
+                ;
+                IReadOnlyCheckResult<string> response;
+                using(restore) {
+                    response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                }
 
                 var json = SmileVideoWatchAPI_Issue665NA_Utility.ConvertJsonFromWatchPage(response.Result);
 
@@ -101,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadNormalAsync(Uri uri, SmileVideoMovieType movieType)
         {
-            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediator, SessionBase, SmileVideoMediatorKey.getflvNormal, ServiceType.SmileVideo)) {
                 var usingUri = movieType == SmileVideoMovieType.Swf
                     ? new Uri(uri.OriginalString + "?as3=1")
                     : uri
@@ -116,10 +125,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         bool IsScrapingPattern(string videoId)
         {
-            return SmileIdUtility.IsScrapingVideoId(videoId, Mediation);
+            return SmileIdUtility.IsScrapingVideoId(videoId, Mediator);
         }
 
-        public async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingDmc)
+        public async Task<RawSmileVideoGetflv_Issue665NA_Model> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingDmc, bool forceFlashPage)
         {
             await LoginIfNotLoginAsync();
 
@@ -127,7 +136,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 ? new Uri(watchUri.OriginalString + "?as3=1")
                 : watchUri
             ;
-            return await LoadScrapingAsync(usingUri, movieType, usingDmc);
+            return await LoadScrapingAsync(usingUri, movieType, usingDmc, forceFlashPage);
         }
 
 

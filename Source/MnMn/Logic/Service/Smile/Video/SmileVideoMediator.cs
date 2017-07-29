@@ -53,14 +53,14 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
-    public class SmileVideoMediation: MediationCustomBase
+    public class SmileVideoMediator: CustomMediatorBase
     {
-        public SmileVideoMediation(Mediation mediation, SmileVideoSettingModel setting)
-            : base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestHeadersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath, Constants.SmileVideoExpressionsPath)
+        public SmileVideoMediator(Mediator mediator, SmileVideoSettingModel setting)
+            : base(mediator, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestHeadersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath, Constants.SmileVideoExpressionsPath)
         {
             Setting = setting;
 
-            InformationCaching = new SmileVideoInformationCacher(Mediation);
+            InformationCaching = new SmileVideoInformationCacher(Mediator);
 
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark: {
                             var videoId = webProcessRequest.Parameter.ParameterVaule;
                             var videoInformationRequest = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
-                            Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(videoInformationRequest).ContinueWith(t => {
+                            Mediator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(videoInformationRequest).ContinueWith(t => {
                                 var videoInformation = t.Result;
 
                                 switch(webProcessRequest.Parameter.Key) {
@@ -230,11 +230,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                                         break;
 
                                     case WebNavigatorContextMenuKey.smileVideoAddCheckItlater:
-                                        Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(videoInformation.ToVideoItemModel(), SmileVideoCheckItLaterFrom.ManualOperation, true)));
+                                        Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(videoInformation.ToVideoItemModel(), SmileVideoCheckItLaterFrom.ManualOperation, true)));
                                         break;
 
                                     case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark:
-                                        Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(videoInformation.ToVideoItemModel())));
+                                        Mediator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessUnorganizedBookmarkParameterModel(videoInformation.ToVideoItemModel())));
                                         break;
 
                                     default:
@@ -291,13 +291,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #endregion
 
-        #region MediationBase
+        #region MediatorBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileVideoName);
 
         protected override IEnumerable<string> GetCustomKeys()
         {
-            return GetMediationKeys(typeof(SmileVideoMediationKey));
+            return GetMediatorKeys(typeof(SmileVideoMediatorKey));
         }
 
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)

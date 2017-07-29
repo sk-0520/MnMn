@@ -31,11 +31,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 {
     public abstract class SessionApiBase: ApiBase
     {
-        public SessionApiBase(Mediation mediation, ServiceType sessionServiceType)
-            : base(mediation)
+        public SessionApiBase(Mediator mediator, ServiceType sessionServiceType)
+            : base(mediator)
         {
             SessionServiceType = sessionServiceType;
-            SessionBase = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, SessionServiceType));
+            SessionBase = Mediator.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, SessionServiceType));
         }
 
         #region property
@@ -67,8 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
     public class SessionApiBase<TSessionViewModel>: SessionApiBase
         where TSessionViewModel : SessionViewModelBase
     {
-        public SessionApiBase(Mediation mediation, ServiceType sessionServiceType)
-           : base(mediation, sessionServiceType)
+        public SessionApiBase(Mediator mediator, ServiceType sessionServiceType)
+           : base(mediator, sessionServiceType)
         {
             Session = (TSessionViewModel)SessionBase;
         }

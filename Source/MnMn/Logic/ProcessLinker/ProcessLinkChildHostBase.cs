@@ -8,18 +8,18 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Model.ProcessLink;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.ProcessLink;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLinker
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.ProcessLink
 {
     public abstract class ProcessLinkChildHostBase : IProcessLinkChildHost
     {
-        public ProcessLinkChildHostBase(Mediation mediation)
+        public ProcessLinkChildHostBase(Mediator mediator)
         {
-            Mediation = mediation;
+            Mediator = mediator;
         }
 
         #region property
 
-        protected Mediation Mediation { get; }
+        protected Mediator Mediator { get; }
 
         #endregion
 

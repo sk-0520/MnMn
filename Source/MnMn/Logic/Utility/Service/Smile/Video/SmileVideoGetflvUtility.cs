@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
     {
         #region function
 
-        public static bool IsEconomyMode(string rawUri, IGetExpression getExpression)
+        public static bool IsEconomyMode(string rawUri, IExpressionGetter getExpression)
         {
             return rawUri.Trim().EndsWith("low", StringComparison.OrdinalIgnoreCase);
         }

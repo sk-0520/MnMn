@@ -20,12 +20,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     /// </summary>
     public class SmileVideoDmcLoader: DisposeFinalizeBase
     {
-        public SmileVideoDmcLoader(string videoId, Uri uri, Mediation mediation)
+        public SmileVideoDmcLoader(string videoId, Uri uri, Mediator mediator)
         {
             VideoId = videoId;
             ApiUri = uri;
-            Mediation = mediation;
-            Dmc = new Dmc(Mediation);
+            Mediator = mediator;
+            Dmc = new Dmc(Mediator);
         }
 
         #region property
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         public Uri ApiUri { get; }
 
-        Mediation Mediation { get; }
+        Mediator Mediator { get; }
 
         Dmc Dmc { get; }
 
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return new Uri(UsingData.Data.Session.ContentUri);
                 }
 
-                Mediation.Logger.Warning($"{VideoId}: {model.Meta.Status}, {model.Meta.Message}");
+                Mediator.Logger.Warning($"{VideoId}: {model.Meta.Status}, {model.Meta.Message}");
                 return null;
             });
         }
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 throw new InvalidOperationException(nameof(UsingData));
             }
 
-            Mediation.Logger.Information($"{VideoId}: polling {PollingCount++}");
+            Mediator.Logger.Information($"{VideoId}: polling {PollingCount++}");
 
             UsingData.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTime(DateTime.Now);
 
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 throw new InvalidOperationException(nameof(UsingData));
             }
 
-            Mediation.Logger.Information($"{VideoId}: start polling");
+            Mediator.Logger.Information($"{VideoId}: start polling");
 
             NowPolling = true;
 
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         public void StopPolling()
         {
-            Mediation.Logger.Information($"{VideoId}: stop polling");
+            Mediator.Logger.Information($"{VideoId}: stop polling");
 
             NowPolling = false;
             if(PollingTimer != null) {

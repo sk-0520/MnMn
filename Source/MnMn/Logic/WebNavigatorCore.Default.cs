@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         static void InitializeDefault()
         {
             var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
-            Mediation.Logger.Information("IE version: " + ieVersion);
+            Mediator.Logger.Information("IE version: " + ieVersion);
             SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
 
             if(NetworkSetting.BrowserUserAgent.UsingCustomUserAgent) {
@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Application.Current.Dispatcher.Invoke(() => {
                 browser = new WebBrowser() {
                     Tag = new WebNavigatorTagModel() {
-                        Mediation = Mediation,
+                        Mediator = Mediator,
                     },
                 };
             });

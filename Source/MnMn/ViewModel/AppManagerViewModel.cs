@@ -61,20 +61,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        public AppManagerViewModel(Mediation mediation, AppLogger appLogger)
-            : base(mediation)
+        public AppManagerViewModel(Mediator mediator, AppLogger appLogger)
+            : base(mediator)
         {
-            Setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+            Setting = Mediator.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
-            SmileManager = new SmileManagerViewModel(Mediation);
-            AppUpdateManager = new AppUpdateManagerViewModel(Mediation);
-            AppInformationManager = new AppInformationManagerViewModel(Mediation, appLogger);
-            AppBrowserManager = new AppBrowserManagerViewModel(Mediation);
-            AppDownloadManager = new AppDownloadManagerViewModel(Mediation);
+            SmileManager = new SmileManagerViewModel(Mediator);
+            AppUpdateManager = new AppUpdateManagerViewModel(Mediator);
+            AppInformationManager = new AppInformationManagerViewModel(Mediator, appLogger);
+            AppBrowserManager = new AppBrowserManagerViewModel(Mediator);
+            AppDownloadManager = new AppDownloadManagerViewModel(Mediator);
 
-            Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(this, SmileManager));
+            Mediator.SetManager(ServiceType.Application, new ApplicationManagerPackModel(this, SmileManager));
 
-            SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            SmileSession = Mediator.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             BackgroundAutoSaveTimer.Tick += AutoSaveTimer_Tick;
             BackgroundGarbageCollectionTimer.Tick += BackgroundGarbageCollectionTimer_Tick;
@@ -181,8 +181,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         IEnumerable<ViewModelBase> GetChildWindowViewModels()
         {
-            var videoPlayers = Mediation.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
-            var livePlayers = Mediation.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileLive));
+            var videoPlayers = Mediator.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+            var livePlayers = Mediator.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileLive));
 
             var windows = new[] {
                 videoPlayers,
@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         void OutputLogGarbageCollection(long gcSize)
         {
-            Mediation.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)}", $"{gcSize:n0} byte");
+            Mediator.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)}", $"{gcSize:n0} byte");
         }
 
         #endregion
@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 // GCは裏で走らせておく
                 GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime), false).ContinueWith(t => {
                     OutputLogGarbageCollection(t.Result);
-                    Mediation.Order(new AppCleanMemoryOrderModel(true, true));
+                    Mediator.Order(new AppCleanMemoryOrderModel(true, true));
                     BackgroundGarbageCollectionTimer.Start();
                 });
             } else {
@@ -258,7 +258,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             View.Closing += View_Closing;
             View.Closed += View_Closed;
 
-            Mediation.Order(new AppCleanMemoryOrderModel(false, false));
+            Mediator.Order(new AppCleanMemoryOrderModel(false, false));
         }
 
         public override void UninitializeView(MainWindow view)
@@ -285,7 +285,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 closeItem.Close();
             }
 
-            Mediation.Order(new AppSaveOrderModel(true));
+            Mediator.Order(new AppSaveOrderModel(true));
         }
 
 
@@ -306,10 +306,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         private void AutoSaveTimer_Tick(object sender, EventArgs e)
         {
-            Mediation.Logger.Debug($"timer: {sender}, {e}");
+            Mediator.Logger.Debug($"timer: {sender}, {e}");
             try {
                 BackgroundAutoSaveTimer.Stop();
-                Mediation.Order(new AppSaveOrderModel(false));
+                Mediator.Order(new AppSaveOrderModel(false));
             } finally {
                 BackgroundAutoSaveTimer.Start();
             }
@@ -317,14 +317,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         private async void BackgroundGarbageCollectionTimer_Tick(object sender, EventArgs e)
         {
-            Mediation.Logger.Debug($"timer: {sender}, {e}");
+            Mediator.Logger.Debug($"timer: {sender}, {e}");
             try {
                 BackgroundGarbageCollectionTimer.Stop();
 
                 var cacheSpan = new CacheSpan(DateTime.Now, Setting.CacheLifeTime);
                 var gcSize = await GarbageCollectionAsync(Constants.BackgroundGarbageCollectionLevel, cacheSpan, false);
                 OutputLogGarbageCollection(gcSize);
-                Mediation.Order(new AppCleanMemoryOrderModel(true, true));
+                Mediator.Order(new AppCleanMemoryOrderModel(true, true));
             } finally {
                 BackgroundGarbageCollectionTimer.Start();
             }
@@ -366,8 +366,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
 
             if(reboot) {
-                Mediation.Logger.Information("reboot!");
-                Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
+                Mediator.Logger.Information("reboot!");
+                Mediator.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
             }
         }
 

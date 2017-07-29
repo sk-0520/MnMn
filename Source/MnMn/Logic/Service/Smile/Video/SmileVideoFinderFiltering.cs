@@ -20,7 +20,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -30,15 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoFinderFiltering: Filtering
     {
-        public SmileVideoFinderFiltering(IReadOnlySmileVideoFinderFilteringItem setting)
+        public SmileVideoFinderFiltering(IReadOnlySmileVideoFinderFilteringItem setting, IExpressionGetter expressionGetter)
             : base(setting)
         {
             SubSetting = setting;
+            ExpressionGetter = expressionGetter;
         }
 
         #region property
 
         IReadOnlySmileVideoFinderFilteringItem SubSetting { get; }
+        IExpressionGetter ExpressionGetter { get; }
 
         #endregion
 
@@ -73,6 +77,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
+        #region Filtering
+
+        protected override string Source
+        {
+            get
+            {
+                if(SubSetting.Target == SmileVideoFinderFilteringTarget.ChannelId) {
+                    return SmileIdUtility.ConvertChannelId(SubSetting.Source, ExpressionGetter);
+                }
+
+                return base.Source;
             }
         }
 

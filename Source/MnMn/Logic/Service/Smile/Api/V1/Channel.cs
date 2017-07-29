@@ -20,15 +20,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
     /// </summary>
     public class Channel : SessionApiBase<SmileSessionViewModel>
     {
-        public Channel(Mediation mediation)
-            : base(mediation, ServiceType.Smile)
+        public Channel(Mediator mediator)
+            : base(mediator, ServiceType.Smile)
         { }
 
         #region function
 
         public Task<FeedSmileChannelModel> LoadVideoFeedAsync(string channelId, int pageNumber)
         {
-            var page = new PageLoader(Mediation, new HttpUserAgentHost(NetworkSetting, Mediation.Logger), SmileMediationKey.channelVideoFeed, ServiceType.Smile);
+            var page = new PageLoader(Mediator, new HttpUserAgentHost(NetworkSetting, Mediator.Logger), SmileMediatorKey.channelVideoFeed, ServiceType.Smile);
             page.ReplaceUriParameters["channel-id"] = channelId;
             page.ReplaceUriParameters["page"] = pageNumber == 1 ? string.Empty : pageNumber.ToString();
 
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
         public Task<SmileChannelInformationModel> LoadInformationAsync(string channelId)
         {
-            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileMediationKey.channelPage, ServiceType.Smile);
+            var page = new PageLoader(Mediator, HttpUserAgentHost, SmileMediatorKey.channelPage, ServiceType.Smile);
             page.ReplaceUriParameters["channel-id"] = channelId;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {

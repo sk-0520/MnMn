@@ -162,6 +162,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static long MinimumHtmlFileSize { get; } = "<!DOCTYPE html><title></title>h".Length;
 
+        public static string ServiceSmileVideoGetVideoError = "SERVICE:SMILE-VIDEO: GET ERROR";
+
         /// <summary>
         /// ニコニコ動画: ユーザーデータキャッシュ時間。
         /// </summary>
@@ -330,6 +332,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceName { get; } = "service";
         /// <summary>
+        ///
+        /// </summary>
+        public static string ServiceCommonName { get; } = "common";
+        /// <summary>
         /// サービス名: ニコニコ。
         /// </summary>
         public static string ServiceSmileName { get; } = "smile";
@@ -370,6 +376,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ApplicationThemeDefinePath { get; } = Path.Combine(DefineDirectoryPath, "theme.xml");
         public static string ApplicationWebNavigatorBridgePath { get; } = Path.Combine(DefineDirectoryPath, "web-navigator.xml");
         public static string ApplicationAcceptVersionPath { get; } = Path.Combine(DefineDirectoryPath, "accept-version.xml");
+
+        public static string DefineCommonDirectoryPath { get; } = Path.Combine(DefineDirectoryPath, ServiceCommonName);
+        public static string CommonUriListPath { get; } = Path.Combine(DefineCommonDirectoryPath, "uri-list.xml");
+        public static string CommonUriParametersListPath { get; } = Path.Combine(DefineCommonDirectoryPath, "uri-params.xml");
+        public static string CommonRequestHeadersListPath { get; } = Path.Combine(DefineCommonDirectoryPath, "request-headers.xml");
+        public static string CommonRequestParametersListPath { get; } = Path.Combine(DefineCommonDirectoryPath, "request-params.xml");
+        public static string CommonRequestMappingsListPath { get; } = Path.Combine(DefineCommonDirectoryPath, "request-mappings.xml");
+        public static string CommonExpressionsPath { get; } = Path.Combine(DefineCommonDirectoryPath, "expressions.xml");
 
         /// <summary>
         /// etc/define/service

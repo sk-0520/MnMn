@@ -22,6 +22,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
@@ -43,8 +44,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
     /// </summary>
     public class SmileSessionViewModel: SessionViewModelBase
     {
-        public SmileSessionViewModel(Mediation mediation, SmileUserAccountModel userAccountModel)
-            : base(mediation)
+        public SmileSessionViewModel(Mediator mediator, SmileUserAccountModel userAccountModel)
+            : base(mediator)
         {
             UserAccount = userAccountModel;
         }
@@ -104,6 +105,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             return Task.CompletedTask;
         }
 
+        public IDisposable ForceFlashPage_Issue703()
+        {
+            ClientHandler.CookieContainer.Add(new System.Net.Cookie("watch_html5", "0", "/", ".nicovideo.jp"));
+            ClientHandler.CookieContainer.Add(new System.Net.Cookie("watch_flash", "1", "/", ".nicovideo.jp"));
+
+            return new RestoreDisposer(() => {
+                ClientHandler.CookieContainer.Add(new System.Net.Cookie("watch_html5", "1", "/", ".nicovideo.jp"));
+                ClientHandler.CookieContainer.Add(new System.Net.Cookie("watch_flash", "0", "/", ".nicovideo.jp"));
+            });
+        }
+
         #endregion
 
         #region SessionViewModelBase
@@ -122,7 +134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             }
 
             LoginState = LoginState.In;
-            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, this, SmileMediatorKey.videoLogin, ServiceType.Smile)) {
                 //page.HeaderCheckOnly = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.Name;
@@ -155,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 if(response.IsSuccess) {
-                    var user = new User(Mediation);
+                    var user = new User(Mediator);
                     SimpleUserAccount = user.GetSimpleUserAccountModelFromHtmlSource(response.Result);
                 }
             }
@@ -168,13 +180,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 return;
             }
 
-            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogout, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, this, SmileMediatorKey.videoLogout, ServiceType.Smile)) {
                 page.HeaderCheckOnly = true;
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
                 };
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get).ConfigureAwait(false);
-                Mediation.Logger.Debug(response.DisplayText);
+                Mediator.Logger.Debug(response.DisplayText);
             }
         }
 
@@ -184,7 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 return false;
             }
 
-            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoCheck, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediator, this, SmileMediatorKey.videoCheck, ServiceType.Smile)) {
                 page.HeaderCheckOnly = true;
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers

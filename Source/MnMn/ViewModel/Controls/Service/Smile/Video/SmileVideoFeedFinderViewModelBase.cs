@@ -37,8 +37,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public abstract class SmileVideoFeedFinderViewModelBase: SmileVideoFinderViewModelBase
     {
-        public SmileVideoFeedFinderViewModelBase(Mediation mediation, int baseNumber)
-            : base(mediation, baseNumber)
+        public SmileVideoFeedFinderViewModelBase(Mediator mediator, int baseNumber)
+            : base(mediator, baseNumber)
         { }
 
         #region property
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return channelItems
                 .Select((item, index) => {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, InformationFlags));
-                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    return Mediator.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 })
             ;
         }

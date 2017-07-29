@@ -50,8 +50,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppLoggingManagerViewModel(Mediation mediation, AppLogger appLogge)
-            : base(mediation)
+        public AppLoggingManagerViewModel(Mediator mediator, AppLogger appLogge)
+            : base(mediator)
         {
             LogList = new FixedSizeCollectionModel<LogItemModel>(appLogge.StockItems, Constants.LogViewCount);
             BindingOperations.EnableCollectionSynchronization(LogList, new object());
@@ -89,9 +89,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 if(AttachmentOutputLogging) {
                     if(Writer != null) {
                         if(!VariableConstants.HasOptionLogDirectoryPath) {
-                            Mediation.Logger.LoggerConfig.PutsStream = false;
+                            Mediator.Logger.LoggerConfig.PutsStream = false;
                         }
-                        ((AppLogger)Mediation.Logger).DetachStream(Writer);
+                        ((AppLogger)Mediator.Logger).DetachStream(Writer);
                         Writer.Dispose();
                         Writer = null;
                     }
@@ -149,12 +149,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         void CopySingleLog(LogItemModel logItem)
         {
-            ShellUtility.SetClipboard(LogUtility.MakeLogDetailText(logItem), Mediation.Logger);
+            ShellUtility.SetClipboard(LogUtility.MakeLogDetailText(logItem), Mediator.Logger);
         }
 
         void CopyAllLog()
         {
-            ShellUtility.SetClipboard(GetTextAllLog(), Mediation.Logger);
+            ShellUtility.SetClipboard(GetTextAllLog(), Mediator.Logger);
         }
 
         void SaveAllLogFromDialog()
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         WriteLog(stream);
                     }
                 } catch(Exception ex) {
-                    Mediation.Logger.Error(ex);
+                    Mediator.Logger.Error(ex);
                 }
             }
         }
@@ -194,11 +194,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     Writer = new StreamWriter(dialog.OpenFile()) {
                         AutoFlush = true,
                     };
-                    Mediation.Logger.LoggerConfig.PutsStream = true;
-                    ((AppLogger)Mediation.Logger).AttachStream(Writer, true);
+                    Mediator.Logger.LoggerConfig.PutsStream = true;
+                    ((AppLogger)Mediator.Logger).AttachStream(Writer, true);
                     return true;
                 } catch(Exception ex) {
-                    Mediation.Logger.Error(ex);
+                    Mediator.Logger.Error(ex);
                 }
             }
 

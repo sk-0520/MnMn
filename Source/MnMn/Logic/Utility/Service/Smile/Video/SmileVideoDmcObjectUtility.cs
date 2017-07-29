@@ -36,6 +36,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return success.Any(s => string.Equals(rawModel.Meta.Status.Trim(), s, StringComparison.OrdinalIgnoreCase));
         }
 
+        public static bool IsSuccess( RawSmileVideoWatchDataDmcInfoModel rawModel)
+        {
+            var errorMessgae = (string)rawModel.error;
+            if(string.IsNullOrEmpty(errorMessgae)) {
+                return true;
+            }
+
+            return errorMessgae != "flv_get_error";
+        }
+
         public static DateTime ConvertSessionTime(string time)
         {
             return RawValueUtility.ConvertUnixTimeWithMilliseconds(time, 3);

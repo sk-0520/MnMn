@@ -43,10 +43,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #endregion
 
-        public SmileLiveFinderViewModelBase(Mediation mediation, int baseNumber)
-            : base(mediation, baseNumber)
+        public SmileLiveFinderViewModelBase(Mediator mediator, int baseNumber)
+            : base(mediator, baseNumber)
         {
-            Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
+            Setting = Mediator.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
 
             SortTypeItems = new CollectionModel<SmileLiveSortType>(EnumUtility.GetMembers<SmileLiveSortType>());
 
@@ -107,14 +107,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override Task LoadInformationAsync(IEnumerable<SmileLiveInformationViewModel> informationItems, CacheSpan informationCacheSpan)
         {
-            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var loader = new SmileLiveInformationLoader(informationItems, session);
             return loader.LoadInformationAsync(informationCacheSpan);
         }
 
         protected override Task LoadImageAsync(IEnumerable<SmileLiveInformationViewModel> informationItems, CacheSpan imageCacheSpan)
         {
-            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var session = Mediator.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var loader = new SmileLiveInformationLoader(informationItems, session);
             return loader.LoadThumbnaiImageAsync(imageCacheSpan);
         }

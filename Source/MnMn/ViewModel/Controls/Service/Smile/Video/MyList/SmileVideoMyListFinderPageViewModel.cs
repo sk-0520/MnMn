@@ -27,21 +27,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public class SmileVideoMyListFinderPageViewModel: ViewModelBase
     {
-        public SmileVideoMyListFinderPageViewModel(Mediation mediation, int pageNumber, string query)
+        public SmileVideoMyListFinderPageViewModel(Mediator mediator, int pageNumber, string query)
         {
-            Mediation = mediation;
+            Mediator = mediator;
             PageNumber = pageNumber;
             Query = query;
         }
-        public SmileVideoMyListFinderPageViewModel(Mediation mediation, IEnumerable<SmileVideoMyListFinderViewModelBase> items, string query)
-            :this(mediation, 1, query)
+        public SmileVideoMyListFinderPageViewModel(Mediator mediator, IEnumerable<SmileVideoMyListFinderViewModelBase> items, string query)
+            :this(mediator, 1, query)
         {
             Items.InitializeRange(items);
         }
 
         #region proeprty
 
-        public Mediation Mediation { get; }
+        public Mediator Mediator { get; }
 
         public int PageNumber { get; }
         public string Query { get; }
