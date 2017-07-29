@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// <returns></returns>
         public static bool IsScrapingVideoId(string videoId, IExpressionGetter expressionGetter)
         {
-            var expression = expressionGetter.GetExpression(SmileMediatorKey.ExpressionIsScrapingVideoId.key, ServiceType.Smile);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.isScrapingVideoId, ServiceType.Smile);
             return expression.Regex.IsMatch(videoId);
         }
 
@@ -55,12 +55,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 return null;
             }
 
-            var videoIdPrefix = expressionGetter.GetExpression(SmileMediatorKey.ExpressionGetVideoId.key, SmileMediatorKey.ExpressionGetVideoId.prefixId, ServiceType.Smile);
+            var videoIdPrefix = expressionGetter.GetExpression(SmileMediatorKey.getVideoId, SmileMediatorKey.Id.getVideoId_prefixId, ServiceType.Smile);
             var match = videoIdPrefix.Regex.Match(inputValue);
             if(match.Success) {
                 return match.Groups["VIDEO_ID"].Value;
             } else {
-                var videoIdNumber = expressionGetter.GetExpression(SmileMediatorKey.ExpressionGetVideoId.key, SmileMediatorKey.ExpressionGetVideoId.numberId, ServiceType.Smile);
+                var videoIdNumber = expressionGetter.GetExpression(SmileMediatorKey.getVideoId, SmileMediatorKey.Id.getVideoId_numberId, ServiceType.Smile);
                 var numberMatch = videoIdNumber.Regex.Match(inputValue);
                 if(numberMatch.Success) {
                     return numberMatch.Groups["VIDEO_ID"].Value;
@@ -142,12 +142,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static string ConvertChannelId(string rawChannelId, IExpressionGetter expressionGetter)
         {
-            var normalization = expressionGetter.GetExpression(SmileMediatorKey.ExpressionConvertChannelId.key, SmileMediatorKey.ExpressionConvertChannelId.normalizationId, ServiceType.Smile);
+            var normalization = expressionGetter.GetExpression(SmileMediatorKey.convertChannelId, SmileMediatorKey.Id.convertChannelId_normalizationId, ServiceType.Smile);
             if(normalization.Regex.IsMatch(rawChannelId)) {
                 return rawChannelId;
             }
 
-            var numberOnly = expressionGetter.GetExpression(SmileMediatorKey.ExpressionConvertChannelId.key, SmileMediatorKey.ExpressionConvertChannelId.numberOnly, ServiceType.Smile);
+            var numberOnly = expressionGetter.GetExpression(SmileMediatorKey.convertChannelId, SmileMediatorKey.Id.convertChannelId_numberOnly, ServiceType.Smile);
             if(numberOnly.Regex.IsMatch(rawChannelId)) {
                 // TODO: 即値
                 return "ch" + rawChannelId;

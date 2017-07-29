@@ -61,29 +61,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string mylist = "smile-video-mylist-user";
         public const string mylistSearch = "smile-video-mylist-search";
 
-        public static class ExpressionIsScrapingVideoId
-        {
-            public const string key = "expression:is-scraping-video-id";
-        }
-
-        public static class ExpressionGetVideoId
-        {
-            public const string key = "expression:get-video-id";
-            public const string prefixId = "prefix-id";
-            public const string numberId = "number-id";
-        }
-
-        public static class ExpressionConvertChannelId
-        {
-            public const string key = "expression:convert-channel-id";
-            public const string normalizationId = "normalization-id";
-            public const string numberOnly = "number-only";
-        }
+        public const string isScrapingVideoId = "is-scraping-video-id";
+        public const string getVideoId = "get-video-id";
+        public const string convertChannelId = "convert-channel-id";
 
         public static class Id
         {
             public const string videoLogin_userValue = "user-value";
             public const string videoLogin_userR18 = "user-r18";
+
+            public const string getVideoId_prefixId = "prefix-id";
+            public const string getVideoId_numberId = "number-id";
+
+            public const string convertChannelId_normalizationId = "normalization-id";
+            public const string convertChannelId_numberOnly = "number-only";
         }
 
     }
