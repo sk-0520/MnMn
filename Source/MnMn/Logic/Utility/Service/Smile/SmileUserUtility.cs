@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
     public static class SmileUserUtility
     {
-        public static string GetUserId(string accountElementInnerText)
+        public static string GetUserIdFromPinpointHtmlSource(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 ID
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return null;
         }
 
-        public static string GetVersion(string accountElementInnerText)
+        public static string GetVersionFromPinpointHtmlSource(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 ID
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return null;
         }
 
-        public static bool IsPremium(string accountElementInnerText)
+        public static bool IsPremiumFromPinpointHtmlSource(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 ID
@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return false;
         }
 
-        public static IReadOnlyCheckResult<Gender> GetGender(string accountElementInnerText)
+        public static IReadOnlyCheckResult<Gender> GetGenderFromPinpointHtmlSource(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 性別
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Failure<Gender>();
         }
 
-        public static IReadOnlyCheckResult<DateTime> GetBirthday(string accountElementInnerText)
+        public static IReadOnlyCheckResult<DateTime> GetBirthdayFromPinpointHtmlSource(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 生年月日
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Failure<DateTime>();
         }
 
-        public static IReadOnlyCheckResult<string> GetLocation(string accountElementInnerText)
+        public static IReadOnlyCheckResult<string> GetLocationFromPinpointHtmlSource(string accountElementInnerText)
         {
             var reg = new Regex(@"
                 地域
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Success(link);
         }
 
-        public static int GetMyListCount(string innerText)
+        public static int GetMyListCountFromPinpointHtmlSource(string innerText)
         {
             var reg = new Regex(@"
                 (?<NUM>

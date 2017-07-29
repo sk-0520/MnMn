@@ -136,22 +136,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
             var accountElementInnerText = accountElement.InnerText;
 
-            result.UserId = SmileUserUtility.GetUserId(accountElementInnerText);
-            result.IsPremium = SmileUserUtility.IsPremium(accountElementInnerText);
-            result.ResistedVersion = SmileUserUtility.GetVersion(accountElementInnerText);
-            var gender = SmileUserUtility.GetGender(accountElementInnerText);
+            result.UserId = SmileUserUtility.GetUserIdFromPinpointHtmlSource(accountElementInnerText);
+            result.IsPremium = SmileUserUtility.IsPremiumFromPinpointHtmlSource(accountElementInnerText);
+            result.ResistedVersion = SmileUserUtility.GetVersionFromPinpointHtmlSource(accountElementInnerText);
+            var gender = SmileUserUtility.GetGenderFromPinpointHtmlSource(accountElementInnerText);
             result.IsPublicGender = gender.IsSuccess;
             if(result.IsPublicGender) {
                 result.Gender = gender.Result;
             } else {
                 result.Gender = Gender.Unknown;
             }
-            var location = SmileUserUtility.GetLocation(accountElementInnerText);
+            var location = SmileUserUtility.GetLocationFromPinpointHtmlSource(accountElementInnerText);
             result.IsPublicLocation = location.IsSuccess;
             if(result.IsPublicLocation) {
                 result.Location = location.Result;
             }
-            var birthday = SmileUserUtility.GetBirthday(accountElementInnerText);
+            var birthday = SmileUserUtility.GetBirthdayFromPinpointHtmlSource(accountElementInnerText);
             result.IsPublicBirthday = birthday.IsSuccess;
             if(result.IsPublicBirthday) {
                 result.Birthday = birthday.Result;
@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
                 group.Title = titleElement.InnerText;
 
                 var countElement = headerElement.SelectSingleNode(".//*[@class='mylistNum']");
-                group.Count = SmileUserUtility.GetMyListCount(countElement.InnerText);
+                group.Count = SmileUserUtility.GetMyListCountFromPinpointHtmlSource(countElement.InnerText);
 
                 var descElement = groupElement.SelectNodes(".//*[@class='mylistDescription']");
                 if(descElement != null) {
