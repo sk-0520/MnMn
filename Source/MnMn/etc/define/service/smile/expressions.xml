@@ -254,5 +254,16 @@
 				]]>
 			</data>
 		</item>
+		<item id="mylist-count" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					(?<NUM>
+						[\d,]+
+					)
+					\s*
+					件
+				]]>
+			</data>
+		</item>
 	</element>
 </expressions>

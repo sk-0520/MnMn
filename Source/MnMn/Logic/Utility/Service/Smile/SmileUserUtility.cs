@@ -229,16 +229,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static int GetMyListCountFromPinpointHtmlSource(string innerText, IExpressionGetter expressionGetter)
         {
-            var reg = new Regex(@"
-                (?<NUM>
-                    [\d,]+
-                )
-                \s*
-                件
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            );
-            var match = reg.Match(innerText);
+            //var reg = new Regex(@"
+            //    (?<NUM>
+            //        [\d,]+
+            //    )
+            //    \s*
+            //    件
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+            //);
+            //var match = reg.Match(innerText);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_mylistCount, ServiceType.Smile);
+            var match = expression.Regex.Match(innerText);
             if(match.Success) {
                 return RawValueUtility.ConvertInteger(match.Groups["NUM"].Value);
             }

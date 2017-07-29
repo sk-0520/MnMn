@@ -88,6 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
             public const string userInformationFromHtml_gender = "gender";
             public const string userInformationFromHtml_birthday = "birthday";
             public const string userInformationFromHtml_location = "location";
+            public const string userInformationFromHtml_mylistCount = "mylist-count";
         }
 
     }
