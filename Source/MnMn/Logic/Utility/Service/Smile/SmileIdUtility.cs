@@ -125,7 +125,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// <returns></returns>
         public static bool NeedCorrectionVideoId(string videoId, IExpressionGetter expressionGetter)
         {
-            return !string.IsNullOrEmpty(videoId) && char.IsDigit(videoId[0]);
+            if(!string.IsNullOrEmpty(videoId)) {
+                var expression = expressionGetter.GetExpression(SmileMediatorKey.needCorrectionVideoId, ServiceType.Smile);
+                return expression.Regex.IsMatch(videoId);
+            }
+
+            return false;
         }
 
         public static string ConvertChannelId(string rawChannelId, IExpressionGetter expressionGetter)

@@ -66,6 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string convertChannelId = "convert-channel-id";
         public const string getMylistId = "get-mylist-id";
         public const string getUserId = "get-user-id";
+        public const string needCorrectionVideoId = "need-correction-video-id";
 
         public static class Id
         {
