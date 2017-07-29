@@ -164,23 +164,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected string ConvertRunTarget(string flowDocumentSource, MatchEvaluator func)
         {
-            // var regTarget = new Regex(
-            //     @"
-            //     (?<OPEN>
-            //         <Run>
-            //     )
-            //         (?<TARGET>
-            //             .+?
-            //         )
-            //     (?<CLOSE>
-            //         </Run>
-            //     )
-            //     ",
-            //     RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
-            //);
-            var runExpression = ExpressionGetter.GetExpression(CommonMediatorKey.runTarget, ServiceType.Common);
+            var expression = ExpressionGetter.GetExpression(CommonMediatorKey.runTarget, ServiceType.Common);
 
-            var replacedSource = runExpression.Regex.Replace(flowDocumentSource, func);
+            var replacedSource = expression.Regex.Replace(flowDocumentSource, func);
 
             return replacedSource;
         }
@@ -198,24 +184,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public string ConvertLinkFromPlainText(string flowDocumentSource, string commandName)
         {
-            //var regLink = new Regex(
-            //    @"
-            //    (?<!Source="")
-            //    (?<SCHEME>
-            //        h?
-            //        ttp
-            //        s?
-            //        ://
-            //    )
-            //    (?<DOMAIN_PATH>
-            //        [
-            //            \w \. \- \( \) \?
-            //            / _ # $ % & =
-            //        ]*
-            //    )
-            //    ",
-            //    RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
-            //);
             var expression = ExpressionGetter.GetExpression(CommonMediatorKey.plaintTextLink, ServiceType.Common);
 
             var replacedSource = expression.Regex.Replace(flowDocumentSource, m => {
