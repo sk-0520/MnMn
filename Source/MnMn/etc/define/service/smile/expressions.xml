@@ -226,5 +226,19 @@
 				]]>
 			</data>
 		</item>
+		<item id="birthday" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					生年月日
+					\s*
+					:
+					\s*
+					(?<BIRTHDAY>
+						.*
+					)
+					\s*
+				]]>
+			</data>
+		</item>
 	</element>
 </expressions>

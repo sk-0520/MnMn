@@ -86,6 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
             public const string userInformationFromHtml_version = "version";
             public const string userInformationFromHtml_isPremium = "is-premium";
             public const string userInformationFromHtml_gender = "gender";
+            public const string userInformationFromHtml_birthday = "birthday";
         }
 
     }

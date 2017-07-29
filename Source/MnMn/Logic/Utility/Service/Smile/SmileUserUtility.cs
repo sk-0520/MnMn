@@ -144,19 +144,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static IReadOnlyCheckResult<DateTime> GetBirthdayFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            var reg = new Regex(@"
-                生年月日
-                \s*
-                :
-                \s*
-                (?<BIRTHDAY>
-                    .*
-                )
-                \s*
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            );
-            var match = reg.Match(accountElementInnerText);
+            //var reg = new Regex(@"
+            //    生年月日
+            //    \s*
+            //    :
+            //    \s*
+            //    (?<BIRTHDAY>
+            //        .*
+            //    )
+            //    \s*
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+            //);
+            //var match = reg.Match(accountElementInnerText);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_birthday, ServiceType.Smile);
+            var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
                 var s = match.Groups["BIRTHDAY"].Value;
                 var d = RawValueUtility.ConvertDateTime(s);
