@@ -64,9 +64,11 @@
       </Grid>
     </Expander>
 
-    <Button Grid.Row="1" Margin="{StaticResource AllMargin}" Command="{Binding Filtering.AddCommentFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">新規フィルタの追加</Button>
+    <Grid Grid.Row="1" >
+      <Button Margin="{StaticResource AllMargin}" Click="AddFilter_Click" Command="{Binding Filtering.AddCommentFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">新規フィルタの追加</Button>
+    </Grid>
 
-    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="{StaticResource TopMargin}">
+    <ScrollViewer x:Name="scrollFiterItems" Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="{StaticResource TopMargin}">
       <ItemsControl ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Filtering.CommentFilterItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
