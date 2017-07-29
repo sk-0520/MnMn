@@ -164,9 +164,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             TextBoxTextChanged(sender, e);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void RemoveFilter_Click(object sender, RoutedEventArgs e)
         {
             ButtonClick(sender, e);
+        }
+
+        private void AddFilter_Click(object sender, RoutedEventArgs e)
+        {
+            this.scrollFiterItems.ScrollToEnd();
         }
     }
 }
