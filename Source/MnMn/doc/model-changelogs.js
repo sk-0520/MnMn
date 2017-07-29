@@ -183,6 +183,13 @@
 					},
 					{
 						'revision': '',
+						'subject': '#704: クラッシュレポートより: 再生ウィンドウからマイリスト追加時にエラー(System.NullReferenceException )',
+						'comments': [
+							'クラッシュレポートに操作内容書いててくれたから調べるの楽だった。ありがとさん'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

@@ -251,7 +251,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._descriptionHtmlSource, value); }
         }
 
-        public string PageVideoToken { get { return WatchData.RawData.Api.Context.CsrfToken; } }
+        public string PageVideoToken {
+            get
+            {
+                if(IsCompatibleIssue665NA) {
+                    return PageVideoToken_Issue665NA;
+                }
+
+                return WatchData.RawData.Api.Context.CsrfToken;
+            }
+        }
         public string PageVideoToken_Issue665NA { get; set; }
 
         /// <summary>
