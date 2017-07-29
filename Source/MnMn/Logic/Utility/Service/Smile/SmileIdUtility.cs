@@ -1,26 +1,11 @@
-﻿/*
-This file is part of MnMn.
-
-MnMn is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-MnMn is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
@@ -37,9 +22,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static bool IsScrapingVideoId(string videoId, IGetExpression getExpression)
+        public static bool IsScrapingVideoId(string videoId, IExpressionGetter expressionGetter)
         {
-            return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.isScrapingVideoId, ServiceType.Smile);
+            return expression.Regex.IsMatch(videoId);
         }
 
         /// <summary>
@@ -47,18 +33,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetVideoId(string inputValue, IGetExpression getExpression)
+        public static string GetVideoId(string inputValue, IExpressionGetter expressionGetter)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
             }
 
-            var videoIdPrefix = getExpression.GetExpression("get-expression-video-id", "prefix-id", ServiceType.Smile);
+            var videoIdPrefix = expressionGetter.GetExpression(SmileMediatorKey.getVideoId, SmileMediatorKey.Id.getVideoId_prefixId, ServiceType.Smile);
             var match = videoIdPrefix.Regex.Match(inputValue);
             if(match.Success) {
                 return match.Groups["VIDEO_ID"].Value;
             } else {
-                var videoIdNumber = getExpression.GetExpression("get-expression-video-id", "number-id", ServiceType.Smile);
+                var videoIdNumber = expressionGetter.GetExpression(SmileMediatorKey.getVideoId, SmileMediatorKey.Id.getVideoId_numberId, ServiceType.Smile);
                 var numberMatch = videoIdNumber.Regex.Match(inputValue);
                 if(numberMatch.Success) {
                     return numberMatch.Groups["VIDEO_ID"].Value;
@@ -73,23 +59,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetMyListId(string inputValue, IGetExpression getExpression)
+        public static string GetMyListId(string inputValue, IExpressionGetter expressionGetter)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
             }
 
-            var regFormat = new Regex(
-                @"
-                mylist
-                \/
-                (?<MYLIST_ID>
-                    \d+
-                )
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
-            );
-            var match = regFormat.Match(inputValue);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.getMylistId, ServiceType.Smile);
+            var match = expression.Regex.Match(inputValue);
             if(match.Success) {
                 return match.Groups["MYLIST_ID"].Value;
             } else {
@@ -102,23 +79,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetUserId(string inputValue, IGetExpression getExpression)
+        public static string GetUserId(string inputValue, IExpressionGetter expressionGetter)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
             }
 
-            var regFormat = new Regex(
-                @"
-                user
-                \/
-                (?<USER_ID>
-                    \d+
-                )
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
-            );
-            var match = regFormat.Match(inputValue);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.getUserId, ServiceType.Smile);
+            var match = expression.Regex.Match(inputValue);
             if(match.Success) {
                 return match.Groups["USER_ID"].Value;
             } else {
@@ -133,19 +101,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static bool NeedCorrectionVideoId(string videoId, IGetExpression getExpression)
+        public static bool NeedCorrectionVideoId(string videoId, IExpressionGetter expressionGetter)
         {
-            return !string.IsNullOrEmpty(videoId) && char.IsDigit(videoId[0]);
+            if(!string.IsNullOrEmpty(videoId)) {
+                var expression = expressionGetter.GetExpression(SmileMediatorKey.needCorrectionVideoId, ServiceType.Smile);
+                return expression.Regex.IsMatch(videoId);
+            }
+
+            return false;
         }
 
-        public static string ConvertChannelId(string rawChannelId, IGetExpression getExpression)
+        public static string ConvertChannelId(string rawChannelId, IExpressionGetter expressionGetter)
         {
-            var normalization = getExpression.GetExpression("get-expression-channel-id", "normalization-id", ServiceType.Smile);
+            var normalization = expressionGetter.GetExpression(SmileMediatorKey.convertChannelId, SmileMediatorKey.Id.convertChannelId_normalizationId, ServiceType.Smile);
             if(normalization.Regex.IsMatch(rawChannelId)) {
                 return rawChannelId;
             }
 
-            var numberOnly = getExpression.GetExpression("get-expression-channel-id", "number-only", ServiceType.Smile);
+            var numberOnly = expressionGetter.GetExpression(SmileMediatorKey.convertChannelId, SmileMediatorKey.Id.convertChannelId_numberOnly, ServiceType.Smile);
             if(numberOnly.Regex.IsMatch(rawChannelId)) {
                 // TODO: 即値
                 return "ch" + rawChannelId;

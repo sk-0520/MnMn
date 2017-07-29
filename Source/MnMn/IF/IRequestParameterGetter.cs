@@ -26,8 +26,9 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
-    public interface IGetUri
+    public interface IRequestParameterGetter
     {
-        IReadOnlyUriResult GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
+        IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
+        IReadOnlyMappingResult GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
     }
 }

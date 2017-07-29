@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="communicator"></param>
         /// <param name="channelId"></param>
-        static void OpenChannelIdCore(string channelId, ICommunication communicator, IGetExpression getExpression)
+        static void OpenChannelIdCore(string channelId, ICommunication communicator, IExpressionGetter getExpression)
         {
             var parameter = new SmileOpenChannelIdParameterModel() {
                 ChannelId = SmileIdUtility.ConvertChannelId(channelId, getExpression),
@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="userId"></param>
-        public static void OpenChannelId(string parameter, ICommunication communicator, IGetExpression getExpression)
+        public static void OpenChannelId(string parameter, ICommunication communicator, IExpressionGetter getExpression)
         {
             OpenChannelIdCore((string)parameter, communicator, getExpression);
         }

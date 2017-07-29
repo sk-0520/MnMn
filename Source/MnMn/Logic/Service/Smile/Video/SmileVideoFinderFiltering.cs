@@ -32,17 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoFinderFiltering: Filtering
     {
-        public SmileVideoFinderFiltering(IReadOnlySmileVideoFinderFilteringItem setting, IGetExpression getExpression)
+        public SmileVideoFinderFiltering(IReadOnlySmileVideoFinderFilteringItem setting, IExpressionGetter expressionGetter)
             : base(setting)
         {
             SubSetting = setting;
-            GetExpression = getExpression;
+            ExpressionGetter = expressionGetter;
         }
 
         #region property
 
         IReadOnlySmileVideoFinderFilteringItem SubSetting { get; }
-        IGetExpression GetExpression { get; }
+        IExpressionGetter ExpressionGetter { get; }
 
         #endregion
 
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             get
             {
                 if(SubSetting.Target == SmileVideoFinderFilteringTarget.ChannelId) {
-                    return SmileIdUtility.ConvertChannelId(SubSetting.Source, GetExpression);
+                    return SmileIdUtility.ConvertChannelId(SubSetting.Source, ExpressionGetter);
                 }
 
                 return base.Source;

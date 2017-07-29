@@ -18,7 +18,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.IdleTalk
 {
-    public class IdleTalkMediator: MediatorCustomBase
+    public class IdleTalkMediator: CustomMediatorBase
     {
         public IdleTalkMediator(Mediator mediator)
             : base(mediator, Constants.IdleTalkUriListPath, Constants.IdleTalkUriParametersListPath, Constants.IdleTalkRequestHeadersListPath, Constants.IdleTalkRequestParametersListPath, Constants.IdleTalkRequestMappingsListPath, Constants.IdleTalkExpressionsPath)

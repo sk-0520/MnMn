@@ -15,14 +15,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
     {
         #region function
 
-        static IReadOnlyUriResult GetUriModel(IGetUri getUri,string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        static IReadOnlyUriResult GetUriModel(IUriGetter uriGetter,string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            return getUri.GetUri(key, replaceMap, serviceType);
+            return uriGetter.GetUri(key, replaceMap, serviceType);
         }
 
-        public static Uri GetConvertedUri(IGetUri getUri, IUriCompatibility uriCompatibility, string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
+        public static Uri GetConvertedUri(IUriGetter uriGetter, IUriCompatibility uriCompatibility, string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            var uriResult = GetUriModel(getUri, key, replaceMap, serviceType);
+            var uriResult = GetUriModel(uriGetter, key, replaceMap, serviceType);
             var rawUri = uriCompatibility.ConvertUri(key, uriResult.Uri, serviceType);
 
             var uri = new Uri(rawUri);

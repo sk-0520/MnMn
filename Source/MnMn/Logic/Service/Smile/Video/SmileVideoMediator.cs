@@ -53,7 +53,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
-    public class SmileVideoMediator: MediatorCustomBase
+    public class SmileVideoMediator: CustomMediatorBase
     {
         public SmileVideoMediator(Mediator mediator, SmileVideoSettingModel setting)
             : base(mediator, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestHeadersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath, Constants.SmileVideoExpressionsPath)

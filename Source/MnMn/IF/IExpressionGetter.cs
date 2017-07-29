@@ -9,7 +9,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
-    public interface IGetExpression
+    public interface IExpressionGetter
     {
         IReadOnlyExpression GetExpression(string key, ServiceType serviceType);
         IReadOnlyExpression GetExpression(string key, string id, ServiceType serviceType);
