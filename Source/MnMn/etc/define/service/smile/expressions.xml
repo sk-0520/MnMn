@@ -140,4 +140,17 @@
 			</data>
 		</item>
 	</element>
+	<element key="get-user-id">
+		<item id="" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase Singleline">
+			<data>
+				<![CDATA[
+					user
+					\/
+					(?<USER_ID>
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+	</element>
 </expressions>

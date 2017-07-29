@@ -96,17 +96,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 return null;
             }
 
-            var regFormat = new Regex(
-                @"
-                user
-                \/
-                (?<USER_ID>
-                    \d+
-                )
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
-            );
-            var match = regFormat.Match(inputValue);
+            //var regFormat = new Regex(
+            //    @"
+            //    user
+            //    \/
+            //    (?<USER_ID>
+            //        \d+
+            //    )
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
+            //);
+            //var match = regFormat.Match(inputValue);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.getUserId, ServiceType.Smile);
+            var match = expression.Regex.Match(inputValue);
             if(match.Success) {
                 return match.Groups["USER_ID"].Value;
             } else {
