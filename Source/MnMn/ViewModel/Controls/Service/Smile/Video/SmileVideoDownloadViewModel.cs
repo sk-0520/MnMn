@@ -482,6 +482,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(!Information.IsDmc) {
                 return false;
             }
+            if(Information.DmcInfo2 != null) {
+                var result = SmileVideoDmcObjectUtility.IsSuccess(Information.DmcInfo2);
+                if(!result) {
+                    return false;
+                }
+            }
+
 
             VideoLoadState = LoadState.Preparation;
 
@@ -712,13 +719,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         InformationLoadState = LoadState.Failure;
                         return;
                     }
-
-                    if(Information.DmcInfo2 != null) {
-                        var result = SmileVideoDmcObjectUtility.IsSuccess(Information.DmcInfo2);
-                        if(!result) {
-                        }
-                    }
-
                 } catch(InvalidOperationException ex) {
                     // TODO: when(ex.Message == Constants.ServiceSmileVideoGetVideoError) への置き換え
                     if(ex.Message == Constants.ServiceSmileVideoGetVideoError) {
