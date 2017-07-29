@@ -177,7 +177,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#700: 共通処理/サービスの正規表現を外部に退避'
 					},
 					{
 						'revision': '',
