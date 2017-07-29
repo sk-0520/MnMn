@@ -136,22 +136,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
             var accountElementInnerText = accountElement.InnerText;
 
-            result.UserId = SmileUserUtility.GetUserIdFromPinpointHtmlSource(accountElementInnerText);
-            result.IsPremium = SmileUserUtility.IsPremiumFromPinpointHtmlSource(accountElementInnerText);
-            result.ResistedVersion = SmileUserUtility.GetVersionFromPinpointHtmlSource(accountElementInnerText);
-            var gender = SmileUserUtility.GetGenderFromPinpointHtmlSource(accountElementInnerText);
+            result.UserId = SmileUserUtility.GetUserIdFromPinpointHtmlSource(accountElementInnerText, Mediator);
+            result.IsPremium = SmileUserUtility.IsPremiumFromPinpointHtmlSource(accountElementInnerText, Mediator);
+            result.ResistedVersion = SmileUserUtility.GetVersionFromPinpointHtmlSource(accountElementInnerText, Mediator);
+            var gender = SmileUserUtility.GetGenderFromPinpointHtmlSource(accountElementInnerText, Mediator);
             result.IsPublicGender = gender.IsSuccess;
             if(result.IsPublicGender) {
                 result.Gender = gender.Result;
             } else {
                 result.Gender = Gender.Unknown;
             }
-            var location = SmileUserUtility.GetLocationFromPinpointHtmlSource(accountElementInnerText);
+            var location = SmileUserUtility.GetLocationFromPinpointHtmlSource(accountElementInnerText, Mediator);
             result.IsPublicLocation = location.IsSuccess;
             if(result.IsPublicLocation) {
                 result.Location = location.Result;
             }
-            var birthday = SmileUserUtility.GetBirthdayFromPinpointHtmlSource(accountElementInnerText);
+            var birthday = SmileUserUtility.GetBirthdayFromPinpointHtmlSource(accountElementInnerText, Mediator);
             result.IsPublicBirthday = birthday.IsSuccess;
             if(result.IsPublicBirthday) {
                 result.Birthday = birthday.Result;
@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
                 group.Title = titleElement.InnerText;
 
                 var countElement = headerElement.SelectSingleNode(".//*[@class='mylistNum']");
-                group.Count = SmileUserUtility.GetMyListCountFromPinpointHtmlSource(countElement.InnerText);
+                group.Count = SmileUserUtility.GetMyListCountFromPinpointHtmlSource(countElement.InnerText, Mediator);
 
                 var descElement = groupElement.SelectNodes(".//*[@class='mylistDescription']");
                 if(descElement != null) {

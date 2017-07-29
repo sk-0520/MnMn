@@ -22,6 +22,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using HtmlAgilityPack;
@@ -30,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
     public static class SmileUserUtility
     {
-        public static string GetUserIdFromPinpointHtmlSource(string accountElementInnerText)
+        public static string GetUserIdFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
             var reg = new Regex(@"
                 ID
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return null;
         }
 
-        public static string GetVersionFromPinpointHtmlSource(string accountElementInnerText)
+        public static string GetVersionFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
             var reg = new Regex(@"
                 ID
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return null;
         }
 
-        public static bool IsPremiumFromPinpointHtmlSource(string accountElementInnerText)
+        public static bool IsPremiumFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
             var reg = new Regex(@"
                 ID
@@ -103,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return false;
         }
 
-        public static IReadOnlyCheckResult<Gender> GetGenderFromPinpointHtmlSource(string accountElementInnerText)
+        public static IReadOnlyCheckResult<Gender> GetGenderFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
             var reg = new Regex(@"
                 性別
@@ -131,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Failure<Gender>();
         }
 
-        public static IReadOnlyCheckResult<DateTime> GetBirthdayFromPinpointHtmlSource(string accountElementInnerText)
+        public static IReadOnlyCheckResult<DateTime> GetBirthdayFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
             var reg = new Regex(@"
                 生年月日
@@ -157,7 +158,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Failure<DateTime>();
         }
 
-        public static IReadOnlyCheckResult<string> GetLocationFromPinpointHtmlSource(string accountElementInnerText)
+        public static IReadOnlyCheckResult<string> GetLocationFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
             var reg = new Regex(@"
                 地域
@@ -212,7 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Success(link);
         }
 
-        public static int GetMyListCountFromPinpointHtmlSource(string innerText)
+        public static int GetMyListCountFromPinpointHtmlSource(string innerText, IExpressionGetter expressionGetter)
         {
             var reg = new Regex(@"
                 (?<NUM>
