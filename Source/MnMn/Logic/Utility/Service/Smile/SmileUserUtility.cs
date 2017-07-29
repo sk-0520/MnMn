@@ -21,7 +21,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -33,18 +35,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
     {
         public static string GetUserIdFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            var reg = new Regex(@"
-                ID
-                \s*
-                :
-                \s*
-                (?<USER_ID>
-                    \d+
-                )
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            );
-            var match = reg.Match(accountElementInnerText);
+            //var reg = new Regex(@"
+            //    ID
+            //    \s*
+            //    :
+            //    \s*
+            //    (?<USER_ID>
+            //        \d+
+            //    )
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+            //);
+            //var match = reg.Match(accountElementInnerText);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_userId, ServiceType.Smile);
+            var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
                 return match.Groups["USER_ID"].Value;
             }

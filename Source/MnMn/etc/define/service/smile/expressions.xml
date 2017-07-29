@@ -162,4 +162,20 @@
 			</data>
 		</item>
 	</element>
+
+	<element key="user-information-from-html">
+		<item id="user-id" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					ID
+					\s*
+					:
+					\s*
+					(?<USER_ID>
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+	</element>
 </expressions>

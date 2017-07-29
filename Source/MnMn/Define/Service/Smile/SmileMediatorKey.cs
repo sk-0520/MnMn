@@ -68,6 +68,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string getUserId = "get-user-id";
         public const string needCorrectionVideoId = "need-correction-video-id";
 
+
+        public const string userInformationFromHtml = "user-information-from-html";
+
         public static class Id
         {
             public const string videoLogin_userValue = "user-value";
@@ -78,6 +81,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 
             public const string convertChannelId_normalizationId = "normalization-id";
             public const string convertChannelId_numberOnly = "number-only";
+
+            public const string userInformationFromHtml_userId = "user-id";
         }
 
     }
