@@ -391,8 +391,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        [Obsolete]
-        protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject()
+        protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject_Issue665NA()
         {
             var info = Information.DmcInfo_Issue665NA;
 
@@ -482,28 +481,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(!Information.IsDmc) {
                 return false;
             }
-            if(Information.DmcInfo2 != null) {
-                var result = SmileVideoDmcObjectUtility.IsSuccess(Information.DmcInfo2);
-                if(!result) {
-                    return false;
-                }
-            }
-
 
             VideoLoadState = LoadState.Preparation;
 
+            var tuple = Information.IsCompatibleIssue665NA
+                ? GetDmcObject_Issue665NA()
+                : GetDmcObject2()
+            ;
             //var dmc = new Dmc(Mediation);
-            var tuple = GetDmcObject2();
+            //var tuple = GetDmcObject2();
             //DmcApiUri = new Uri(tuple.Item1);
             var model = tuple.Item2;
-            var dmcInfo2 = Information.DmcInfo2;
 
             // 動画ソースを選りすぐる
-            var sendMux = model.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
-            var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(dmcInfo2.SessionApi.Videos, Setting.Download.VideoWeight);
-            sendMux.VideoSrcIds.InitializeRange(sendVideoWeights.ToEvaluatedSequence());
-            var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(dmcInfo2.SessionApi.Audios, Setting.Download.AudioWeight);
-            sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
+            if(Information.IsCompatibleIssue665NA) {
+                var sendMux = model.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
+                var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(sendMux.VideoSrcIds, Setting.Download.VideoWeight);
+                sendMux.VideoSrcIds.InitializeRange(sendVideoWeights.ToEvaluatedSequence());
+                var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(sendMux.AudioSrcIds, Setting.Download.AudioWeight);
+                sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
+            } else {
+                var dmcInfo2 = Information.DmcInfo2;
+
+                var sendMux = model.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
+                var sendVideoWeights = SmileVideoDmcObjectUtility.GetVideoWeights(dmcInfo2.SessionApi.Videos, Setting.Download.VideoWeight);
+                sendMux.VideoSrcIds.InitializeRange(sendVideoWeights.ToEvaluatedSequence());
+                var sendAudioWeights = SmileVideoDmcObjectUtility.GetAudioWeights(dmcInfo2.SessionApi.Audios, Setting.Download.AudioWeight);
+                sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
+            }
+
+
 
             DmcLoader = new SmileVideoDmcLoader(VideoId, new Uri(tuple.Item1), Mediator);
             var downloadUri = await DmcLoader.StartAsync(model, Information.DmcFile);
@@ -713,17 +720,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             } else {
                 await LoadWatchDataAsync();
-
+                var force_Issue665NA_forceFlashPage = false;
                 try {
                     if(Information.InformationLoadState == LoadState.Failure || Information.HasWatchDataError) {
                         InformationLoadState = LoadState.Failure;
                         return;
                     }
+
+                    if(Information.DmcInfo2 != null) {
+                        var result = SmileVideoDmcObjectUtility.IsSuccess(Information.DmcInfo2);
+                        if(!result) {
+                            // DMC配信でもなくDMC実装後なのにHTML5版に対応してないわけわからん動画用
+                            force_Issue665NA_forceFlashPage = true;
+                            throw new InvalidOperationException(Constants.ServiceSmileVideoGetVideoError);
+                        }
+                    }
+
                 } catch(InvalidOperationException ex) {
                     // TODO: when(ex.Message == Constants.ServiceSmileVideoGetVideoError) への置き換え
                     if(ex.Message == Constants.ServiceSmileVideoGetVideoError) {
                         // #665 対応がどうにもダメな場合はなけなしの力で#665非対応処理を強制実施
-                        Information.Force_Issue665NA();
+                        Information.Force_Issue665NA(force_Issue665NA_forceFlashPage);
                         goto RETRY_Issue665NA;
                     }
                 }

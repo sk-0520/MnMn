@@ -396,6 +396,7 @@
     <Compile Include="Logic\ProcessLinker\Service\Smile\Live\SmileLiveProcessLinkChildHost.cs" />
     <Compile Include="Logic\ProcessLinker\Service\Smile\SmileProcessLinkChildHost.cs" />
     <Compile Include="Logic\ProcessLinker\Service\Smile\Video\SmileVideoProcessLinkChildHost.cs" />
+    <Compile Include="Logic\RestoreDisposer.cs" />
     <Compile Include="Logic\Service\IdleTalk\IdleTalkMediator.cs" />
     <Compile Include="Logic\Service\IdleTalk\Mutter\IdleTalkMutterMediator.cs" />
     <Compile Include="Logic\Service\InformationCacherBase.cs" />

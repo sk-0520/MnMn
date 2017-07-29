@@ -22,6 +22,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
@@ -102,6 +103,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
             UserAccount = userAccount;
             return Task.CompletedTask;
+        }
+
+        public IDisposable ForceFlashPage_Issue703()
+        {
+            ClientHandler.CookieContainer.Add(new System.Net.Cookie("watch_html5", "0", "/", ".nicovideo.jp"));
+            ClientHandler.CookieContainer.Add(new System.Net.Cookie("watch_flash", "1", "/", ".nicovideo.jp"));
+
+            return new RestoreDisposer(() => {
+                ClientHandler.CookieContainer.Add(new System.Net.Cookie("watch_html5", "1", "/", ".nicovideo.jp"));
+                ClientHandler.CookieContainer.Add(new System.Net.Cookie("watch_flash", "0", "/", ".nicovideo.jp"));
+            });
         }
 
         #endregion
