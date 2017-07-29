@@ -1,20 +1,4 @@
-﻿/*
-This file is part of MnMn.
-
-MnMn is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-MnMn is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -81,17 +65,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 return null;
             }
 
-            var regFormat = new Regex(
-                @"
-                mylist
-                \/
-                (?<MYLIST_ID>
-                    \d+
-                )
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
-            );
-            var match = regFormat.Match(inputValue);
+            //var regFormat = new Regex(
+            //    @"
+            //    mylist
+            //    \/
+            //    (?<MYLIST_ID>
+            //        \d+
+            //    )
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
+            //);
+            //var match = regFormat.Match(inputValue);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.getMylistId, ServiceType.Smile);
+            var match = expression.Regex.Match(inputValue);
             if(match.Success) {
                 return match.Groups["MYLIST_ID"].Value;
             } else {

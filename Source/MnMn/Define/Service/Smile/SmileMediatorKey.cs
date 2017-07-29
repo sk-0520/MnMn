@@ -64,6 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string isScrapingVideoId = "is-scraping-video-id";
         public const string getVideoId = "get-video-id";
         public const string convertChannelId = "convert-channel-id";
+        public const string getMylistId = "get-mylist-id";
 
         public static class Id
         {

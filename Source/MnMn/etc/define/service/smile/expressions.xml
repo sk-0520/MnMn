@@ -127,4 +127,17 @@
 			</data>
 		</item>
 	</element>
+	<element key="get-mylist-id">
+		<item id="" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase Singleline">
+			<data>
+				<![CDATA[
+					mylist
+					\/
+					(?<MYLIST_ID>
+						\d+
+					)
+				]]>
+			</data>
+		</item>
+	</element>
 </expressions>
