@@ -30,10 +30,10 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-      <Button Margin="{StaticResource AllMargin}" Command="{Binding Filtering.AddFinderFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">新規フィルタの追加</Button>
+      <Button Margin="{StaticResource AllMargin}" Click="AddFilter_Click" Command="{Binding Filtering.AddFinderFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">新規フィルタの追加</Button>
     </Grid>
 
-    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer x:Name="scrollFiterItems" Grid.Row="1" VerticalScrollBarVisibility="Auto">
       <ItemsControl
         x:Name="filterItems"
         ScrollViewer.CanContentScroll="True"
@@ -116,7 +116,7 @@
                       </Style>
                     </ListBox.ItemContainerStyle>
                   </ListBox>
-                  <Button Margin="{StaticResource AllMargin}" Click="Button_Click">このフィルタを破棄</Button>
+                  <Button Margin="{StaticResource AllMargin}" Click="RemoveFilter_Click">このフィルタを破棄</Button>
                 </StackPanel>
 
               </Expander>
