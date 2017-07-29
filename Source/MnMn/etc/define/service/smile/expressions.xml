@@ -206,7 +206,21 @@
 					\)
 					\s*
 					(?<ACCOUNT>
-							.*
+						.*
+					)
+					\s*
+				]]>
+			</data>
+		</item>
+		<item id="gender" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					性別
+					\s*
+					:
+					\s*
+					(?<GENDER>
+						.*
 					)
 					\s*
 				]]>

@@ -114,19 +114,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static IReadOnlyCheckResult<Gender> GetGenderFromPinpointHtmlSource(string accountElementInnerText, IExpressionGetter expressionGetter)
         {
-            var reg = new Regex(@"
-                性別
-                \s*
-                :
-                \s*
-                (?<GENDER>
-                    .*
-                )
-                \s*
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
-            );
-            var match = reg.Match(accountElementInnerText);
+            //var reg = new Regex(@"
+            //    性別
+            //    \s*
+            //    :
+            //    \s*
+            //    (?<GENDER>
+            //        .*
+            //    )
+            //    \s*
+            //    ",
+            //    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+            //);
+            //var match = reg.Match(accountElementInnerText);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.userInformationFromHtml, SmileMediatorKey.Id.userInformationFromHtml_gender, ServiceType.Smile);
+            var match = expression.Regex.Match(accountElementInnerText);
             if(match.Success) {
                 var s = match.Groups["GENDER"].Value;
                 if(s.IndexOf("男") != -1) {
