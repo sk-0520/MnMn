@@ -21,6 +21,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
@@ -37,9 +38,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static bool IsScrapingVideoId(string videoId, IExpressionGetter getExpression)
+        public static bool IsScrapingVideoId(string videoId, IExpressionGetter expressionGetter)
         {
-            return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
+            var expression = expressionGetter.GetExpression(SmileMediatorKey.Expression.isScrapingVideoId, ServiceType.Smile);
+            return expression.Regex.IsMatch(videoId);
         }
 
         /// <summary>
@@ -47,18 +49,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetVideoId(string inputValue, IExpressionGetter getExpression)
+        public static string GetVideoId(string inputValue, IExpressionGetter expressionGetter)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
             }
 
-            var videoIdPrefix = getExpression.GetExpression("get-expression-video-id", "prefix-id", ServiceType.Smile);
+            var videoIdPrefix = expressionGetter.GetExpression("get-expression-video-id", "prefix-id", ServiceType.Smile);
             var match = videoIdPrefix.Regex.Match(inputValue);
             if(match.Success) {
                 return match.Groups["VIDEO_ID"].Value;
             } else {
-                var videoIdNumber = getExpression.GetExpression("get-expression-video-id", "number-id", ServiceType.Smile);
+                var videoIdNumber = expressionGetter.GetExpression("get-expression-video-id", "number-id", ServiceType.Smile);
                 var numberMatch = videoIdNumber.Regex.Match(inputValue);
                 if(numberMatch.Success) {
                     return numberMatch.Groups["VIDEO_ID"].Value;
@@ -73,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetMyListId(string inputValue, IExpressionGetter getExpression)
+        public static string GetMyListId(string inputValue, IExpressionGetter expressionGetter)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
@@ -102,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="inputValue"></param>
         /// <returns>null: とれんかった</returns>
-        public static string GetUserId(string inputValue, IExpressionGetter getExpression)
+        public static string GetUserId(string inputValue, IExpressionGetter expressionGetter)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
@@ -133,19 +135,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static bool NeedCorrectionVideoId(string videoId, IExpressionGetter getExpression)
+        public static bool NeedCorrectionVideoId(string videoId, IExpressionGetter expressionGetter)
         {
             return !string.IsNullOrEmpty(videoId) && char.IsDigit(videoId[0]);
         }
 
-        public static string ConvertChannelId(string rawChannelId, IExpressionGetter getExpression)
+        public static string ConvertChannelId(string rawChannelId, IExpressionGetter expressionGetter)
         {
-            var normalization = getExpression.GetExpression("get-expression-channel-id", "normalization-id", ServiceType.Smile);
+            var normalization = expressionGetter.GetExpression("get-expression-channel-id", "normalization-id", ServiceType.Smile);
             if(normalization.Regex.IsMatch(rawChannelId)) {
                 return rawChannelId;
             }
 
-            var numberOnly = getExpression.GetExpression("get-expression-channel-id", "number-only", ServiceType.Smile);
+            var numberOnly = expressionGetter.GetExpression("get-expression-channel-id", "number-only", ServiceType.Smile);
             if(numberOnly.Regex.IsMatch(rawChannelId)) {
                 // TODO: 即値
                 return "ch" + rawChannelId;

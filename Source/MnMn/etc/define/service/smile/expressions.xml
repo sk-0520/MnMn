@@ -68,6 +68,15 @@
 			</data>
 		</item>
 	</element>
+	<element key="expression-is-scraping-video-id">
+		<item kind="regex" regex-options="ExplicitCapture IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					^so
+				]]>
+			</data>
+		</item>
+	</element>
 	<element key="get-expression-video-id">
 		<item id="prefix-id" kind="regex" regex-options="ExplicitCapture IgnorePatternWhitespace IgnoreCase">
 			<data>

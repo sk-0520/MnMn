@@ -61,6 +61,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string mylist = "smile-video-mylist-user";
         public const string mylistSearch = "smile-video-mylist-search";
 
+        public static class Expression
+        {
+            public const string isScrapingVideoId = "expression-is-scraping-video-id";
+        }
+
         public static class Id
         {
             public const string videoLogin_userValue = "user-value";
