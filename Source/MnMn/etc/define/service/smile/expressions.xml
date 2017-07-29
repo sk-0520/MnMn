@@ -177,5 +177,21 @@
 				]]>
 			</data>
 		</item>
+		<item id="version" kind="regex" regex-options="ExplicitCapture Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					ID
+					\s*
+					:
+					\s*
+					\d+
+					\(
+					(?<VERSION>
+						.+
+					)
+					\)
+				]]>
+			</data>
+		</item>
 	</element>
 </expressions>
