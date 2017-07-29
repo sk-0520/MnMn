@@ -100,6 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         string _descriptionHtmlSource;
 
         bool _force_Issue665NA = false;
+        bool _force_Issue665NA_forceFlashPage = false;
 
         #endregion
 
@@ -899,7 +900,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return WatchData.RawData.Api.Video.DmcInfo != null;
             }
         }
-        [Obsolete("SWF形式への互換性を残す目的でGetflv経由のDMCはもう保守しない")]
+
+        //[Obsolete("SWF形式への互換性を残す目的でGetflv経由のDMCはもう保守しない")]
+        // #703 の影響で保守せざるを得ん
         public JObject DmcInfo_Issue665NA
         {
             get
@@ -1178,7 +1181,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ThrowHasNotWatchData()
         {
             if(!HasWatchData) {
-                throw new InvalidOperationException(nameof(SmileVideoWatchDataModel));
+                throw new InvalidOperationException(Constants.ServiceSmileVideoGetVideoError);
             }
         }
 
@@ -1223,7 +1226,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var getflv = new Getflv_Issue665NA(Mediator);
 
-            return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
+            return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc, this._force_Issue665NA_forceFlashPage).ContinueWith(t => {
                 PageHtmlLoadState = LoadState.Loaded;
                 var rawVideoGetflvModel = t.Result;
 
@@ -1493,10 +1496,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 早めに死んでほしい処理。
         /// </summary>
-        internal void Force_Issue665NA()
+        internal void Force_Issue665NA(bool forceFlashPage)
         {
             Mediator.Logger.Warning($"!!force!! [{VideoId}] #665");
             this._force_Issue665NA = true;
+            this._force_Issue665NA_forceFlashPage = forceFlashPage;
             CallOnPropertyChange(nameof(IsCompatibleIssue665NA));
         }
 
