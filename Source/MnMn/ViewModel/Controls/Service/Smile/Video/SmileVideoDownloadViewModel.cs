@@ -706,13 +706,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             } else {
                 await LoadWatchDataAsync();
+
                 try {
                     if(Information.InformationLoadState == LoadState.Failure || Information.HasWatchDataError) {
                         InformationLoadState = LoadState.Failure;
                         return;
                     }
+
+                    if(Information.DmcInfo2 != null) {
+                        var result = SmileVideoDmcObjectUtility.IsSuccess(Information.DmcInfo2);
+                        if(!result) {
+                        }
+                    }
+
                 } catch(InvalidOperationException ex) {
-                    if(ex.Message == nameof(SmileVideoWatchDataModel)) {
+                    // TODO: when(ex.Message == Constants.ServiceSmileVideoGetVideoError) への置き換え
+                    if(ex.Message == Constants.ServiceSmileVideoGetVideoError) {
                         // #665 対応がどうにもダメな場合はなけなしの力で#665非対応処理を強制実施
                         Information.Force_Issue665NA();
                         goto RETRY_Issue665NA;

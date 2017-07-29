@@ -1178,7 +1178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ThrowHasNotWatchData()
         {
             if(!HasWatchData) {
-                throw new InvalidOperationException(nameof(SmileVideoWatchDataModel));
+                throw new InvalidOperationException(Constants.ServiceSmileVideoGetVideoError);
             }
         }
 

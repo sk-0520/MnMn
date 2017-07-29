@@ -162,6 +162,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static long MinimumHtmlFileSize { get; } = "<!DOCTYPE html><title></title>h".Length;
 
+        public static string ServiceSmileVideoGetVideoError = "SERVICE:SMILE-VIDEO: GET ERROR";
+
         /// <summary>
         /// ニコニコ動画: ユーザーデータキャッシュ時間。
         /// </summary>
