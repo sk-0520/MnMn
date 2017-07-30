@@ -48,30 +48,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void OnPopupLoaded(object sender, RoutedEventArgs e)
         {
-            if(_alreadyLoaded)
+            if(this._alreadyLoaded) {
                 return;
+            }
 
-            _alreadyLoaded = true;
+            this._alreadyLoaded = true;
 
             if(Child != null) {
                 Child.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(OnChildPreviewMouseLeftButtonDown), true);
             }
 
-            _parentWindow = Window.GetWindow(this);
+            this._parentWindow = Window.GetWindow(this);
 
-            if(_parentWindow == null)
+            if(this._parentWindow == null) {
                 return;
+            }
 
-            _parentWindow.Activated += OnParentWindowActivated;
-            _parentWindow.Deactivated += OnParentWindowDeactivated;
+            this._parentWindow.Activated += OnParentWindowActivated;
+            this._parentWindow.Deactivated += OnParentWindowDeactivated;
         }
 
         private void OnPopupUnloaded(object sender, RoutedEventArgs e)
         {
-            if(_parentWindow == null)
+            if(this._parentWindow == null) {
                 return;
-            _parentWindow.Activated -= OnParentWindowActivated;
-            _parentWindow.Deactivated -= OnParentWindowDeactivated;
+            }
+
+            this._parentWindow.Activated -= OnParentWindowActivated;
+            this._parentWindow.Deactivated -= OnParentWindowDeactivated;
         }
 
         void OnParentWindowActivated(object sender, EventArgs e)
@@ -95,8 +99,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
             SetTopmostState(true);
 
-            if(!_parentWindow.IsActive && IsTopmost == false) {
-                _parentWindow.Activate();
+            if(!this._parentWindow.IsActive && IsTopmost == false) {
+                this._parentWindow.Activate();
                 Debug.WriteLine("Activating Parent from child Left Button Down");
             }
         }
@@ -117,23 +121,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void SetTopmostState(bool isTop)
         {
             // Don’t apply state if it’s the same as incoming state
-            if(_appliedTopMost.HasValue && _appliedTopMost == isTop) {
+            if(this._appliedTopMost.HasValue && this._appliedTopMost == isTop) {
                 return;
             }
 
-            if(Child == null)
+            if(Child == null) {
                 return;
+            }
 
             var hwndSource = (PresentationSource.FromVisual(Child)) as HwndSource;
 
-            if(hwndSource == null)
+            if(hwndSource == null) {
                 return;
+            }
+
             var hwnd = hwndSource.Handle;
 
             RECT rect;
 
-            if(!GetWindowRect(hwnd, out rect))
+            if(!GetWindowRect(hwnd, out rect)) {
                 return;
+            }
 
             Debug.WriteLine("setting z-order " + isTop);
 
@@ -149,7 +157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 SetWindowPos(hwnd, HWND_NOTOPMOST, rect.Left, rect.Top, (int)Width, (int)Height, TOPMOST_FLAGS);
             }
 
-            _appliedTopMost = isTop;
+            this._appliedTopMost = isTop;
         }
 
         #region P/Invoke imports & definitions
