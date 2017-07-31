@@ -728,6 +728,7 @@
     <Compile Include="View\Controls\KeywordTextBox.xaml.cs">
       <DependentUpon>KeywordTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\NonTopmostPopup.cs" />
     <Compile Include="View\Controls\ProxySetting.xaml.cs">
       <DependentUpon>ProxySetting.xaml</DependentUpon>
     </Compile>

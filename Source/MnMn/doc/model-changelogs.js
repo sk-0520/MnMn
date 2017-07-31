@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#707: 非 Tooltip の Popup 系コントロールを他ウィンドウより前面に表示させるべきじゃない'
 					},
 					{
 						'revision': '',
