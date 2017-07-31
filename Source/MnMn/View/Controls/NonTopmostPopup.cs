@@ -30,7 +30,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             new FrameworkPropertyMetadata(false, OnIsTopmostChanged)
         );
 
-        private bool? _appliedTopMost;
         private bool _alreadyLoaded;
         private Window _parentWindow;
 
@@ -127,11 +126,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void SetTopmostState(bool isTop)
         {
-            // Don’t apply state if it’s the same as incoming state
-            if(this._appliedTopMost.HasValue && this._appliedTopMost == isTop) {
-                return;
-            }
-
             if(Child == null) {
                 return;
             }
@@ -163,8 +157,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 NativeMethods.SetWindowPos(hwnd, HWND_TOP, rect.Left, rect.Top, (int)Width, (int)Height, TOPMOST_FLAGS);
                 NativeMethods.SetWindowPos(hwnd, HWND_NOTOPMOST, rect.Left, rect.Top, (int)Width, (int)Height, TOPMOST_FLAGS);
             }
-
-            this._appliedTopMost = isTop;
         }
 
         #region P/Invoke imports & definitions
