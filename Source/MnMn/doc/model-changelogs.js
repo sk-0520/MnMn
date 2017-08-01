@@ -132,7 +132,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#705: クラッシュレポートより: System.ArgumentOutOfRangeException: インデックスが範囲を超えています',
+						'comments': [
+							'再現手順の提供ありがとー'
+						]
 					},
 					{
 						'revision': '',
