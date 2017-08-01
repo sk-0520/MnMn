@@ -192,6 +192,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        void RefreshCurrentIndex()
+        {
+            CurrenIndex = Items.IndexOf(CurrenItem);
+        }
+
         #endregion
 
         #region CollectionModel
@@ -209,7 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         CurrenItem = this[index];
                     }
                 }
-                CurrenIndex = Items.IndexOf(CurrenItem);
+                RefreshCurrentIndex();
             }
 
             base.OnCollectionChanged(e);
@@ -220,7 +225,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             base.RemoveItem(index);
 
-            CurrenIndex = Items.IndexOf(CurrenItem);
+            RefreshCurrentIndex();
         }
 
 
