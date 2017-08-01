@@ -150,7 +150,8 @@ namespace MnMnTest.Logic
             Assert.IsTrue(list.ChangeNextItem() == nextItem);
         }
 
-        [TestMethod]
+        //[TestMethod]
+        [Obsolete]
         public void Issue705ReproduceTest()
         {
             {
@@ -188,7 +189,7 @@ namespace MnMnTest.Logic
             {
                 // 落ちるパターン
                 var list = new PlayListManager<Item>();
-                list.AddRange(Enumerable.Range(1, 4).Select(i => new Item(i)));
+                list.AddRange(Enumerable.Range(1, 5).Select(i => new Item(i)));
 
                 var num1 = list.CurrenItem;
                 var num2 = list.ChangeNextItem();
@@ -204,6 +205,59 @@ namespace MnMnTest.Logic
                 } catch {
                     Assert.IsTrue(true);
                 }
+            }
+        }
+
+        [TestMethod]
+        public void Issue705Test()
+        {
+            {
+                var list = new PlayListManager<Item>();
+                list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
+
+                var num1 = list.CurrenItem;
+                var num2 = list.ChangeNextItem();
+                var num3 = list.ChangeNextItem();
+                var num4 = list.ChangeNextItem();
+
+                // ここで古いのを破棄
+                list.Remove(num1);
+
+                var num5 = list.ChangeNextItem();
+                Assert.IsTrue(num5.Number == 5);
+            }
+            {
+                // 消した分だけずれる試験
+                var list = new PlayListManager<Item>();
+                list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
+
+                var num1 = list.CurrenItem;
+                var num2 = list.ChangeNextItem();
+                var num3 = list.ChangeNextItem();
+                var num4 = list.ChangeNextItem();
+
+                list.Remove(num1);
+                list.Remove(num2);
+                list.Remove(num3);
+
+                var num5 = list.ChangeNextItem();
+                Assert.IsTrue(num5.Number == 5);
+            }
+            {
+                // 落ちるパターン
+                var list = new PlayListManager<Item>();
+                list.AddRange(Enumerable.Range(1, 5).Select(i => new Item(i)));
+
+                var num1 = list.CurrenItem;
+                var num2 = list.ChangeNextItem();
+                var num3 = list.ChangeNextItem();
+
+                list.Remove(num1);
+                list.Remove(num2);
+                list.Remove(num3);
+
+                var num4 = list.ChangeNextItem();
+                Assert.IsTrue(num4.Number == 4);
             }
         }
     }
