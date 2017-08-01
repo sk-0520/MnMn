@@ -55,12 +55,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public FixedSizeCollectionModel<SmileVideoSearchHistoryModel> SearchHistoryItems { get; set; } = new FixedSizeCollectionModel<SmileVideoSearchHistoryModel>(Constants.ServiceSmileVideoSearchHistoryCount);
-        /// <summary>
-        /// ピン止め。
-        /// </summary>
-        [Obsolete]
-        [DataMember]
-        public CollectionModel<SmileVideoSearchPinModel> SearchPinItems { get; set; } = new CollectionModel<SmileVideoSearchPinModel>();
 
         /// <summary>
         /// 検索ブックマーク表示状態。
