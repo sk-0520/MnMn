@@ -12,6 +12,10 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
+    /// <summary>
+    /// GC 処理の共通化。
+    /// <para>基本的にこいつは例外を投げない。</para>
+    /// </summary>
     public static class GarbageCollectionUtility
     {
         static IReadOnlyCheckResult<long> RemoveFileCore(FileInfo file, bool judgeCreateTime, bool judgeWriteTime, bool judgeAccessTime, IEnumerable<DateTime> judgeTimestamps, CacheSpan cacheSpan, bool force)
@@ -78,6 +82,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             }
 
             return RemoveFileCore(file, true, true, false, new[] { addJudgeTimestamp }, cacheSpan, force);
+        }
+
+        public static IReadOnlyCheckResult<long> RemoveTemporaryFile(FileInfo file)
+        {
+            if(file == null) {
+                return CheckResultModel.Failure<long>("null file");
+            }
+
+            try {
+                file.Refresh();
+                if(file.Exists) {
+                    var size = file.Length;
+                    file.Delete();
+                    return CheckResultModel.Success(size);
+                }
+            } catch(Exception ex) {
+                return CheckResultModel.Failure<long>(ex.ToString());
+            }
+
+            return CheckResultModel.Success<long>(0);
         }
 
     }

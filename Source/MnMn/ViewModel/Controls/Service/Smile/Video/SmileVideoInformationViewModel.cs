@@ -1604,33 +1604,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return 0;
             }
 
-            try {
-                long size = 0;
+            var removeTarget = new[] {
+                WatchPageHtmlFile,
+                GetflvFile,
+                WatchDataFile,
+            };
+            var result = removeTarget
+                .Select(f => GarbageCollectionUtility.RemoveTemporaryFile(f))
+                .ToEvaluatedSequence()
+                .Where(c => c.IsSuccess)
+                .Sum(c => c.Result)
+            ;
 
-                WatchPageHtmlFile.Refresh();
-                if(WatchPageHtmlFile.Exists) {
-                    size += WatchPageHtmlFile.Length;
-                    WatchPageHtmlFile.Delete();
-                }
-
-                GetflvFile.Refresh();
-                if(GetflvFile.Exists) {
-                    size += GetflvFile.Length;
-                    GetflvFile.Delete();
-                }
-
-                WatchDataFile.Refresh();
-                if(WatchDataFile.Exists) {
-                    size += WatchDataFile.Length;
-                    WatchDataFile.Delete();
-                }
-
-                return size;
-            } catch(Exception ex) {
-                Mediator.Logger.Warning($"{ex.Message}", ex);
-            }
-
-            return 0;
+            return result;
         }
 
         long GarbageCollectionSmall(CacheSpan cacheSpan, bool force)
