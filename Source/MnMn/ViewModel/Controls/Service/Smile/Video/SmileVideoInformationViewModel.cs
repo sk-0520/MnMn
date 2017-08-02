@@ -1626,9 +1626,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return 0;
             }
 
+            var thumbFile = SmileVideoInformationUtility.GetGetthumbinfoFile(Mediator, VideoId);
+
             var removeTarget = new[] {
                 MsgFile,
                 MsgFile_Issue665NA,
+                thumbFile,
             };
             var result = removeTarget
                 .Select(f => GarbageCollectionFromFile(f, cacheSpan, force))
