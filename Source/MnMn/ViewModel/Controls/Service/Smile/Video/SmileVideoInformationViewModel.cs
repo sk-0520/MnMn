@@ -1631,7 +1631,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var removeTarget = new[] {
                 MsgFile,
                 MsgFile_Issue665NA,
-                thumbFile,
+                thumbFile, // こいつが要
+                IndividualVideoSettingFile,
             };
             var result = removeTarget
                 .Select(f => GarbageCollectionFromFile(f, cacheSpan, force))
