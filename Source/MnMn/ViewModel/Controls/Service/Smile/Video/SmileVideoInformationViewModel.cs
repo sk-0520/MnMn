@@ -1608,6 +1608,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 WatchPageHtmlFile,
                 GetflvFile,
                 WatchDataFile,
+                DmcFile,
             };
             var result = removeTarget
                 .Select(f => GarbageCollectionUtility.RemoveTemporaryFile(f))
