@@ -1625,25 +1625,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return 0;
             }
 
-            try {
-                long size = 0;
+            var removeTarget = new[] {
+                MsgFile,
+                MsgFile_Issue665NA,
+            };
+            var result = removeTarget
+                .Select(f => GarbageCollectionFromFile(f, cacheSpan, force))
+                .ToEvaluatedSequence()
+                .Where(c => c.IsSuccess)
+                .Sum(c => c.Result)
+            ;
 
-                var msgCheck = GarbageCollectionFromFile(MsgFile, cacheSpan, force);
-                var msgCheck_Issue665NA = GarbageCollectionFromFile(MsgFile_Issue665NA, cacheSpan, force);
-
-                if(msgCheck.IsSuccess) {
-                    size += msgCheck.Result;
-                }
-                if(msgCheck_Issue665NA.IsSuccess) {
-                    size += msgCheck_Issue665NA.Result;
-                }
-
-                return size;
-            } catch(Exception ex) {
-                Mediator.Logger.Warning($"{ex.Message}", ex);
-            }
-
-            return 0;
+            return result;
         }
 
         public IReadOnlyCheckResult<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
