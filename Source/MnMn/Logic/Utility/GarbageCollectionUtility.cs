@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
     public static class GarbageCollectionUtility
     {
-        static IReadOnlyCheckResult<long> RemoveFileCore(FileInfo file, bool judgeCreateTime, bool judgeWriteTime, bool judgeAccessTime, IEnumerable<DateTime> judgeTimestamps, CacheSpan cacheSpan, bool force, ILogger logger)
+        static IReadOnlyCheckResult<long> RemoveFileCore(FileInfo file, bool judgeCreateTime, bool judgeWriteTime, bool judgeAccessTime, IEnumerable<DateTime> judgeTimestamps, CacheSpan cacheSpan, bool force)
         {
             Debug.Assert(file != null);
 
@@ -44,22 +44,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                     }
                 }
             } catch(Exception ex) {
-                logger.Warning($"{file}: {ex.Message}", ex);
+                return CheckResultModel.Failure<long>(ex.ToString());
             }
 
-            return CheckResultModel.Failure<long>();
+            return CheckResultModel.Success<long>(0);
         }
 
-        public static IReadOnlyCheckResult<long> RemoveFile(FileInfo file, CacheSpan cacheSpan, bool force, ILogger logger)
+        public static IReadOnlyCheckResult<long> RemoveFile(FileInfo file, CacheSpan cacheSpan, bool force)
         {
             if(file == null) {
                 throw new ArgumentNullException(nameof(file));
             }
 
-            return RemoveFileCore(file, true, true, false, Enumerable.Empty<DateTime>(), cacheSpan, force, logger);
+            return RemoveFileCore(file, true, true, false, Enumerable.Empty<DateTime>(), cacheSpan, force);
         }
 
-        public static IReadOnlyCheckResult<long> RemoveFile(FileInfo file, IEnumerable<DateTime> addJudgeTimestamps, CacheSpan cacheSpan, bool force, ILogger logger)
+        public static IReadOnlyCheckResult<long> RemoveFile(FileInfo file, IEnumerable<DateTime> addJudgeTimestamps, CacheSpan cacheSpan, bool force)
         {
             if(file == null) {
                 throw new ArgumentNullException(nameof(file));
@@ -68,7 +68,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 throw new ArgumentNullException(nameof(addJudgeTimestamps));
             }
 
-            return RemoveFileCore(file, true, true, false, addJudgeTimestamps, cacheSpan, force, logger);
+            return RemoveFileCore(file, true, true, false, addJudgeTimestamps, cacheSpan, force);
+        }
+
+        public static IReadOnlyCheckResult<long> RemoveFile(FileInfo file, DateTime addJudgeTimestamp, CacheSpan cacheSpan, bool force)
+        {
+            if(file == null) {
+                throw new ArgumentNullException(nameof(file));
+            }
+
+            return RemoveFileCore(file, true, true, false, new[] { addJudgeTimestamp }, cacheSpan, force);
         }
 
     }

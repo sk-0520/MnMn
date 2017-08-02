@@ -1519,27 +1519,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         IReadOnlyCheckResult<long> GarbageCollectionFromFile(FileInfo file, CacheSpan cacheSpan, bool force)
         {
-            try {
-                file.Refresh();
-
-                if(file.Exists) {
-                    var timestamps = new[] {
-                        file.CreationTime,
-                        file.LastWriteTime,
-                        IndividualVideoSetting.LastShowTimestamp,
-                    };
-                    var timestamp = timestamps.Max();
-                    if(force || !cacheSpan.IsCacheTime(timestamp)) {
-                        var fileSize = file.Length;
-                        file.Delete();
-                        return CheckResultModel.Success(fileSize);
-                    }
-                }
-            } catch(Exception ex) {
-                Mediator.Logger.Warning($"{file}: {ex.Message}", ex);
+            var result = GarbageCollectionUtility.RemoveFile(file, IndividualVideoSetting.LastShowTimestamp, cacheSpan, force);
+            if(!result.IsSuccess) {
+                Mediator.Logger.Warning(file.Name, result.Message);
             }
-
-            return CheckResultModel.Failure<long>();
+            return result;
         }
 
         long GarbageCollectionLarge(CacheSpan cacheSpan, bool force)
