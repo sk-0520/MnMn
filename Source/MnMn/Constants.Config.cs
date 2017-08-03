@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
         public static Uri AppUriGeneralBrowserHome => new Uri(appConfig.Get("app-uri-general-browser"));
         public static Uri AppUriLightweightUpdate => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-lightweight-update")));
+        public static Uri AppUriCrashReceiveProgram => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-crash-receive-program")));
 
         public static Uri AppServiceUri => new Uri(ReplaceAppConfig(appConfig.Get("app-service-uri")));
         public static string AppServiceProcessLinkEndpoint => appConfig.Get("app-service-process-link-endpoint");

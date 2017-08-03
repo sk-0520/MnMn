@@ -164,6 +164,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public ICommand OpenCrashReportCommand
+        {
+            get
+            {
+                return CreateCommand(o => ShellUtility.OpenUriInDefaultBrowser(Constants.AppUriCrashReceiveProgram, Mediator.Logger));
+            }
+        }
+
         #endregion
 
         #region function
