@@ -115,9 +115,19 @@
               開発中のため設定ファイルのデータ構造、UIが割と頻繁に変わります。
             </Paragraph>
 
+            <Paragraph FontSize="16" FontWeight="Bold">
+              初期設定
+            </Paragraph>
+            <Paragraph>
+              <CheckBox FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=FlowDocument}}" IsChecked="{Binding AutoSendCrashReport}">クラッシュレポートを自動送信する</CheckBox>
+            </Paragraph>
+
             <Section x:Name="customSection" />
 
-            <Paragraph Margin="0,40" Cursor="Arrow">
+            <Paragraph Margin="0,40,0,8"  FontSize="16" FontWeight="Bold">
+              ユーザー確認
+            </Paragraph>
+            <Paragraph Cursor="Arrow">
               <CheckBox FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=FlowDocument}}" IsChecked="{Binding UserConfirmation}">本文書内容を理解した</CheckBox>
             </Paragraph>
           </FlowDocument>

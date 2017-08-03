@@ -72,6 +72,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             set { SetVariableValue(ref this._userConfirmation, value); }
         }
 
+        public bool AutoSendCrashReport
+        {
+            get { return Setting.RunningInformation.AutoSendCrashReport; }
+            set { SetPropertyValue(Setting.RunningInformation, value); }
+        }
+
         #endregion
 
         #region command
