@@ -86,6 +86,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public DateTime LightweightUpdateTimestamp { get; set; } = Constants.LightweightUpdateNone;
 
+        /// <summary>
+        /// クラッシュレポート自動送信。
+        /// </summary>
+        [DataMember]
+        public bool AutoSendCrashReport { get; set; } = true;
+
         #endregion
     }
 }
