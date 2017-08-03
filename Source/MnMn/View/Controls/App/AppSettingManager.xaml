@@ -86,6 +86,12 @@
           </Grid>
         </GroupBox>
 
+        <GroupBox mamc:ControlsHelper.ContentCharacterCasing="Normal" Header="MnMn">
+          <StackPanel>
+            <CheckBox IsChecked="{Binding RunningInformationAutoSendCrashReport}">クラッシュレポートを自動送信する</CheckBox>
+          </StackPanel>
+        </GroupBox>
+
         <GroupBox Header="システム制御">
           <StackPanel>
             <CheckBox IsChecked="{Binding SystemBreakSuppression}">非操作稼働中にスクリーンセーバー・ロックを抑制する</CheckBox>
