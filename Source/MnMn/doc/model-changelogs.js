@@ -157,6 +157,13 @@
 					},
 					{
 						'revision': '',
+						'subject': '#698: クラッシュレポートより: System.InvalidOperationException: ディスパッチャーの処理の中断中は、この操作を実行できません',
+						'comments': [
+							'追加情報ありがとさん'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

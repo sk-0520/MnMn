@@ -152,9 +152,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Channel
             var webNavigator = UIUtility.FindChildren<WebNavigator>(TabControl).FirstOrDefault();
 
             if(webNavigator != null && webNavigator.HomeSource != Uri) {
-                webNavigator.HomeSource = Uri;
-                webNavigator.Navigate(webNavigator.HomeSource);
-                webNavigator.CrearHistory();
+                webNavigator.Dispatcher.Invoke(() => {
+                    webNavigator.HomeSource = Uri;
+                    webNavigator.Navigate(webNavigator.HomeSource);
+                    webNavigator.CrearHistory();
+                }, System.Windows.Threading.DispatcherPriority.SystemIdle);
             }
         }
 
