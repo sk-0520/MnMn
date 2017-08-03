@@ -158,7 +158,7 @@
         <TextBlock FontWeight="Bold">自動送信待ちです...</TextBlock>
         <ProgressBar Minimum="0" Maximum="1" Value="{Binding WaitAutoSend}" />
         <TextBlock>追加情報等入力する場合は自動送信を停止してください。</TextBlock>
-        <Button Command="{Binding CancelAutoSendCommand}">自動送信を停止</Button>
+        <Button FontSize="15" Command="{Binding CancelAutoSendCommand}">自動送信を停止</Button>
       </StackPanel>
     </Border>
 

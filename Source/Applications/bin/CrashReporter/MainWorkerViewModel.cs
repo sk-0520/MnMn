@@ -337,6 +337,8 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
         void CancelAutoSend()
         {
             AutoSend = false;
+            AutoSendTimer.Stop();
+            AutoSendTimer.Tick -= AutoSendTimer_Tick;
         }
 
         #endregion
@@ -365,6 +367,8 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
                 AutoSend = false;
                 AutoSendTimer.Stop();
                 AutoSendTimer.Tick -= AutoSendTimer_Tick;
+
+                SendAsync().ConfigureAwait(false);
             } else {
                 WaitAutoSend = (current - AutoSendStartTime).TotalMilliseconds / AutoSendEndTimeSpan.TotalMilliseconds;
             }
