@@ -132,7 +132,7 @@
       <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" AcceptsReturn="True" Text="{Binding ReportFileData}" />
 
       <Label Grid.Row="3" Grid.Column="0" Content="追加情報" />
-      <TextBox Grid.Row="3" Grid.Column="1" mamc:TextBoxHelper.Watermark="追加情報があれば入力してください" AcceptsReturn="True" Text="{Binding ReportInformation}" />
+      <TextBox Grid.Row="3" Grid.Column="1" mamc:TextBoxHelper.Watermark="追加情報があれば入力してください。&#xD;&#xA;詳しい操作状況を入力してもらえると課題優先度がぐーんと上がります。&#xD;&#xA;(まぁ開発側再現出来れば)" AcceptsReturn="True" Text="{Binding ReportInformation}" />
 
       <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Content="連絡先" />
       <TextBox Grid.Row="4" Grid.Column="1" mamc:TextBoxHelper.Watermark="開発側から連絡をしてもよい場合に入力してください" Text="{Binding ContactAddress}" />
