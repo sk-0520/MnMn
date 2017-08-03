@@ -57,6 +57,20 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0" Margin="8" IsEnabled="{Binding IsBusy, Converter={StaticResource LogicalNotConverter}}">
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding AutoSend}" Value="True">
+              <Setter Property="Effect">
+                <Setter.Value>
+                  <BlurEffect  />
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
+
       <TextBlock FontSize="14" TextWrapping="Wrap">
         <Run FontSize="16" FontWeight="Bold">MnMn は死にました。</Run>
         <LineBreak />
@@ -71,6 +85,20 @@
     </Grid>
 
     <Grid Grid.Row="1" IsEnabled="{Binding IsBusy, Converter={StaticResource LogicalNotConverter}}">
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding AutoSend}" Value="True">
+              <Setter Property="Effect">
+                <Setter.Value>
+                  <BlurEffect  />
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
+
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
@@ -84,16 +112,16 @@
       </Grid.ColumnDefinitions>
 
       <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="クラッシュ内容" />
-      <TextBox 
-        Grid.Row="0" 
-        Grid.Column="1" 
-        mamc:TextBoxHelper.SelectAllOnFocus="True"  
-        IsReadOnly="True" 
+      <TextBox
+        Grid.Row="0"
+        Grid.Column="1"
+        mamc:TextBoxHelper.SelectAllOnFocus="True"
+        IsReadOnly="True"
         BorderThickness="0"
         Background="Transparent"
         FontSize="14"
         FontWeight="Bold"
-        Text="{Binding ReportMessage}" 
+        Text="{Binding ReportMessage}"
         Foreground="{DynamicResource TextBrush}"
       />
 
@@ -120,6 +148,20 @@
       <Button Grid.Column="1" Style="{StaticResource SquareButtonStyle}" Click="Close_Click">終了</Button>
     </Grid>
 
+    <Border Grid.Row="0" Grid.RowSpan="3" Visibility="{Binding AutoSend, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#80ff0000" TextElement.FontSize="16">
+      <Border.Style>
+        <Style TargetType="Border">
+          <Setter Property="Effect" Value="{x:Null}" />
+        </Style>
+      </Border.Style>
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock FontWeight="Bold">自動送信待ちです...</TextBlock>
+        <ProgressBar Minimum="0" Maximum="1" Value="{Binding WaitAutoSend}" />
+        <TextBlock>追加情報等入力する場合は自動送信を停止してください。</TextBlock>
+        <Button Command="{Binding CancelAutoSendCommand}">自動送信を停止</Button>
+      </StackPanel>
+    </Border>
+
     <Border Grid.Row="0" Grid.RowSpan="3" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#80ffffff" TextElement.FontSize="16">
       <!-- 状態持たすのかったるいのね -->
       <Border BorderBrush="{DynamicResource AccentColorBrush3}" BorderThickness="5" Background="White" VerticalAlignment="Center" Margin="20" Padding="20">
@@ -142,5 +184,6 @@
         </StackPanel>
       </Border>
     </Border>
+
   </Grid>
 </mamc:MetroWindow>
