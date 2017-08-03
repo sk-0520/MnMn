@@ -192,6 +192,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        void RefreshCurrentIndex()
+        {
+            CurrenIndex = Items.IndexOf(CurrenItem);
+        }
 
         #endregion
 
@@ -210,12 +214,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         CurrenItem = this[index];
                     }
                 }
-                CurrenIndex = Items.IndexOf(CurrenItem);
+                RefreshCurrentIndex();
             }
 
             base.OnCollectionChanged(e);
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanItemChange)));
         }
+
+        protected override void RemoveItem(int index)
+        {
+            base.RemoveItem(index);
+
+            RefreshCurrentIndex();
+        }
+
 
         #endregion
     }

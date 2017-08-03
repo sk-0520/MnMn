@@ -10,6 +10,7 @@
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_data_browser="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -198,13 +199,13 @@
       </Border>
     </Popup>
 
-    <Popup x:Name="popupLinkState" AllowsTransparency="True" Placement="Bottom"  >
+    <app_view_controls:NonTopmostPopup x:Name="popupLinkState" AllowsTransparency="True" Placement="Bottom"  >
       <Border x:Name="contentLinkState" MouseEnter="contentLinkState_MouseEnter" TextElement.Foreground="{DynamicResource LabelTextBrush}" CornerRadius="3" Padding="3" BorderThickness="1" Background="{DynamicResource ControlBackgroundBrush}">
         <Border.BorderBrush>
           <SolidColorBrush Color="{DynamicResource MenuShadowColor}" />
         </Border.BorderBrush>
         <TextBlock x:Name="showLinkState" />
       </Border>
-    </Popup>
+    </app_view_controls:NonTopmostPopup>
   </Grid>
 </UserControl>

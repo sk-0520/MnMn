@@ -173,6 +173,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetPropertyValue(AppSetting.WebNavigator, value, nameof(AppSetting.WebNavigator.GeckoFxScanPlugin)); }
         }
 
+        public bool RunningInformationAutoSendCrashReport
+        {
+            get { return AppSetting.RunningInformation.AutoSendCrashReport; }
+            set { SetPropertyValue(AppSetting.RunningInformation, value, nameof(AppSetting.RunningInformation.AutoSendCrashReport)); }
+        }
+
         #endregion
 
         #region command

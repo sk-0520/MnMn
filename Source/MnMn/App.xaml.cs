@@ -153,6 +153,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
                     var arg = AppUtility.GetEscapedCommandLine();
                     args += $" /reboot-arg=\"{arg}\"";
                 }
+
+                var setting = Mediator.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+                if(setting.RunningInformation.AutoSendCrashReport) {
+                    args += " /auto-send";
+                }
+
+
                 Process.Start(Constants.CrashReporterApplicationPath, args);
             }
 

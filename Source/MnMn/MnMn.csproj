@@ -418,6 +418,7 @@
     <Compile Include="Logic\SpaghettiScript.cs" />
     <Compile Include="Logic\Utility\DescriptionUtility.cs" />
     <Compile Include="Logic\Utility\FinderUtility.cs" />
+    <Compile Include="Logic\Utility\GarbageCollectionUtility.cs" />
     <Compile Include="Logic\Utility\HtmlUtility.cs" />
     <Compile Include="Logic\Utility\NetworkUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileChannelUtility.cs" />
@@ -728,6 +729,7 @@
     <Compile Include="View\Controls\KeywordTextBox.xaml.cs">
       <DependentUpon>KeywordTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\NonTopmostPopup.cs" />
     <Compile Include="View\Controls\ProxySetting.xaml.cs">
       <DependentUpon>ProxySetting.xaml</DependentUpon>
     </Compile>

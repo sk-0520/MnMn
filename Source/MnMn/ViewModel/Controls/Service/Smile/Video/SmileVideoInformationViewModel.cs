@@ -1519,27 +1519,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         IReadOnlyCheckResult<long> GarbageCollectionFromFile(FileInfo file, CacheSpan cacheSpan, bool force)
         {
-            try {
-                file.Refresh();
-
-                if(file.Exists) {
-                    var timestamps = new[] {
-                        file.CreationTime,
-                        file.LastWriteTime,
-                        IndividualVideoSetting.LastShowTimestamp,
-                    };
-                    var timestamp = timestamps.Max();
-                    if(force || !cacheSpan.IsCacheTime(timestamp)) {
-                        var fileSize = file.Length;
-                        file.Delete();
-                        return CheckResultModel.Success(fileSize);
-                    }
-                }
-            } catch(Exception ex) {
-                Mediator.Logger.Warning($"{file}: {ex.Message}", ex);
+            var result = GarbageCollectionUtility.RemoveFile(file, IndividualVideoSetting.LastShowTimestamp, cacheSpan, force);
+            if(!result.IsSuccess) {
+                Mediator.Logger.Warning(file.Name, result.Message);
             }
-
-            return CheckResultModel.Failure<long>();
+            return result;
         }
 
         long GarbageCollectionLarge(CacheSpan cacheSpan, bool force)
@@ -1620,33 +1604,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return 0;
             }
 
-            try {
-                long size = 0;
+            var removeTarget = new[] {
+                WatchPageHtmlFile,
+                GetflvFile,
+                WatchDataFile,
+                DmcFile,
+            };
+            var result = removeTarget
+                .Select(f => GarbageCollectionUtility.RemoveTemporaryFile(f))
+                .ToEvaluatedSequence()
+                .Where(c => c.IsSuccess)
+                .Sum(c => c.Result)
+            ;
 
-                WatchPageHtmlFile.Refresh();
-                if(WatchPageHtmlFile.Exists) {
-                    size += WatchPageHtmlFile.Length;
-                    WatchPageHtmlFile.Delete();
-                }
-
-                GetflvFile.Refresh();
-                if(GetflvFile.Exists) {
-                    size += GetflvFile.Length;
-                    GetflvFile.Delete();
-                }
-
-                WatchDataFile.Refresh();
-                if(WatchDataFile.Exists) {
-                    size += WatchDataFile.Length;
-                    WatchDataFile.Delete();
-                }
-
-                return size;
-            } catch(Exception ex) {
-                Mediator.Logger.Warning($"{ex.Message}", ex);
-            }
-
-            return 0;
+            return result;
         }
 
         long GarbageCollectionSmall(CacheSpan cacheSpan, bool force)
@@ -1655,25 +1626,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return 0;
             }
 
-            try {
-                long size = 0;
+            var thumbFile = SmileVideoInformationUtility.GetGetthumbinfoFile(Mediator, VideoId);
 
-                var msgCheck = GarbageCollectionFromFile(MsgFile, cacheSpan, force);
-                var msgCheck_Issue665NA = GarbageCollectionFromFile(MsgFile_Issue665NA, cacheSpan, force);
+            var removeTarget = new[] {
+                MsgFile,
+                MsgFile_Issue665NA,
+                thumbFile, // こいつが要
+                IndividualVideoSettingFile,
+            };
+            var result = removeTarget
+                .Select(f => GarbageCollectionFromFile(f, cacheSpan, force))
+                .ToEvaluatedSequence()
+                .Where(c => c.IsSuccess)
+                .Sum(c => c.Result)
+            ;
 
-                if(msgCheck.IsSuccess) {
-                    size += msgCheck.Result;
-                }
-                if(msgCheck_Issue665NA.IsSuccess) {
-                    size += msgCheck_Issue665NA.Result;
-                }
-
-                return size;
-            } catch(Exception ex) {
-                Mediator.Logger.Warning($"{ex.Message}", ex);
-            }
-
-            return 0;
+            return result;
         }
 
         public IReadOnlyCheckResult<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)

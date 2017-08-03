@@ -115,9 +115,30 @@
               開発中のため設定ファイルのデータ構造、UIが割と頻繁に変わります。
             </Paragraph>
 
+            <Paragraph FontSize="16" FontWeight="Bold">
+              初期設定
+            </Paragraph>
+            <Paragraph>
+              <CheckBox FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=FlowDocument}}" IsChecked="{Binding AutoSendCrashReport}">クラッシュレポートを自動送信する</CheckBox>
+              <LineBreak />
+              <StackPanel Margin="{StaticResource IndependentMargin}">
+                <TextBlock>キミの個人情報を売れるなら売りたいわ、売り場教えてくれ(どうせ端金な悲しみ)。</TextBlock>
+                <TextBlock>
+                  個人情報云々気になるなら MnMn のソース確認してくれ、送信先の Google Script は<Button Style="{StaticResource Hyperlink}" Command="{Binding OpenCrashReportCommand}">こちら</Button>。
+                  <LineBreak />
+                  ログでも(非 safety-* とかの)制御できない項目以外には一切含んでないよ。
+                  <LineBreak />
+                  私は責任を取らないから極力責任に関係しそうなものは取得してない、そんな関係。
+                </TextBlock>
+              </StackPanel>
+            </Paragraph>
+
             <Section x:Name="customSection" />
 
-            <Paragraph Margin="0,40" Cursor="Arrow">
+            <Paragraph Margin="0,40,0,8"  FontSize="16" FontWeight="Bold">
+              ユーザー確認
+            </Paragraph>
+            <Paragraph Cursor="Arrow">
               <CheckBox FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=FlowDocument}}" IsChecked="{Binding UserConfirmation}">本文書内容を理解した</CheckBox>
             </Paragraph>
           </FlowDocument>

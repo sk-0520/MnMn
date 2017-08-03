@@ -199,7 +199,7 @@
                       <Label>登録</Label>
                       <Grid>
                         <TextBox x:Name="showVersion" Text="{Binding ResistedVersion, Mode=OneWay}" />
-                        <Popup Placement="Left" PlacementTarget="{Binding ElementName=showVersion}" IsOpen="{Binding IsKeyboardFocused,ElementName=showVersion, Mode=OneWay}">
+                        <app_view_controls:NonTopmostPopup Placement="Left" PlacementTarget="{Binding ElementName=showVersion}" IsOpen="{Binding IsKeyboardFocused,ElementName=showVersion, Mode=OneWay}">
                           <Border>
                             <ListBox
                               SelectedValuePath="Key"
@@ -221,7 +221,7 @@
                               </ListBox.ItemTemplate>
                             </ListBox>
                           </Border>
-                        </Popup>
+                        </app_view_controls:NonTopmostPopup>
                       </Grid>
 
                       <Label>会員情報</Label>
