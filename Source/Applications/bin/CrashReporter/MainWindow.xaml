@@ -57,6 +57,20 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0" Margin="8" IsEnabled="{Binding IsBusy, Converter={StaticResource LogicalNotConverter}}">
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding AutoSend}" Value="True">
+              <Setter Property="Effect">
+                <Setter.Value>
+                  <BlurEffect  />
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
+
       <TextBlock FontSize="14" TextWrapping="Wrap">
         <Run FontSize="16" FontWeight="Bold">MnMn は死にました。</Run>
         <LineBreak />
@@ -71,6 +85,20 @@
     </Grid>
 
     <Grid Grid.Row="1" IsEnabled="{Binding IsBusy, Converter={StaticResource LogicalNotConverter}}">
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding AutoSend}" Value="True">
+              <Setter Property="Effect">
+                <Setter.Value>
+                  <BlurEffect  />
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
+
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
@@ -84,16 +112,16 @@
       </Grid.ColumnDefinitions>
 
       <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="クラッシュ内容" />
-      <TextBox 
-        Grid.Row="0" 
-        Grid.Column="1" 
-        mamc:TextBoxHelper.SelectAllOnFocus="True"  
-        IsReadOnly="True" 
+      <TextBox
+        Grid.Row="0"
+        Grid.Column="1"
+        mamc:TextBoxHelper.SelectAllOnFocus="True"
+        IsReadOnly="True"
         BorderThickness="0"
         Background="Transparent"
         FontSize="14"
         FontWeight="Bold"
-        Text="{Binding ReportMessage}" 
+        Text="{Binding ReportMessage}"
         Foreground="{DynamicResource TextBrush}"
       />
 
@@ -104,7 +132,7 @@
       <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" AcceptsReturn="True" Text="{Binding ReportFileData}" />
 
       <Label Grid.Row="3" Grid.Column="0" Content="追加情報" />
-      <TextBox Grid.Row="3" Grid.Column="1" mamc:TextBoxHelper.Watermark="追加情報があれば入力してください" AcceptsReturn="True" Text="{Binding ReportInformation}" />
+      <TextBox Grid.Row="3" Grid.Column="1" mamc:TextBoxHelper.Watermark="追加情報があれば入力してください。&#xD;&#xA;詳しい操作状況を入力してもらえると課題優先度がぐーんと上がります。&#xD;&#xA;(まぁ開発側再現出来れば)" AcceptsReturn="True" Text="{Binding ReportInformation}" />
 
       <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Content="連絡先" />
       <TextBox Grid.Row="4" Grid.Column="1" mamc:TextBoxHelper.Watermark="開発側から連絡をしてもよい場合に入力してください" Text="{Binding ContactAddress}" />
@@ -119,6 +147,20 @@
       <Button Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding SendCommand}">レポートを送信</Button>
       <Button Grid.Column="1" Style="{StaticResource SquareButtonStyle}" Click="Close_Click">終了</Button>
     </Grid>
+
+    <Border Grid.Row="0" Grid.RowSpan="3" Visibility="{Binding AutoSend, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#80ff0000" TextElement.FontSize="16">
+      <Border.Style>
+        <Style TargetType="Border">
+          <Setter Property="Effect" Value="{x:Null}" />
+        </Style>
+      </Border.Style>
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock FontWeight="Bold">自動送信待ちです...</TextBlock>
+        <ProgressBar Minimum="0" Maximum="1" Value="{Binding WaitAutoSend}" />
+        <TextBlock>追加情報等入力する場合は自動送信を停止してください。</TextBlock>
+        <Button FontSize="15" Command="{Binding CancelAutoSendCommand}">自動送信を停止</Button>
+      </StackPanel>
+    </Border>
 
     <Border Grid.Row="0" Grid.RowSpan="3" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#80ffffff" TextElement.FontSize="16">
       <!-- 状態持たすのかったるいのね -->
@@ -142,5 +184,6 @@
         </StackPanel>
       </Border>
     </Border>
+
   </Grid>
 </mamc:MetroWindow>

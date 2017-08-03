@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.ReadOnly;
@@ -35,6 +36,9 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
 
         string _rebootApplicationPath;
         string _rebootApplicationCommandLine;
+
+        bool _autoSend;
+        double _waitAutoSend;
 
         #endregion
 
@@ -119,6 +123,23 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
             set { SetVariableValue(ref this._rebootApplicationCommandLine, value); }
         }
 
+        public bool AutoSend
+        {
+            get { return this._autoSend; }
+            set { SetVariableValue(ref this._autoSend, value); }
+        }
+
+        public double WaitAutoSend
+        {
+            get { return this._waitAutoSend; }
+            set { SetVariableValue(ref this._waitAutoSend, value); }
+        }
+
+        DispatcherTimer AutoSendTimer { get; set; }
+        DateTime AutoSendStartTime { get; set; }
+        DateTime AutoSendEndTime { get; set; }
+        TimeSpan AutoSendEndTimeSpan { get; } = TimeSpan.Parse(ConfigurationManager.AppSettings.Get("auto-send-wait-time"));
+
         #endregion
 
         #region command
@@ -174,6 +195,16 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
             }
         }
 
+        public ICommand CancelAutoSendCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => CancelAutoSend()
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -181,6 +212,8 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
         public void SetView(MainWindow view)
         {
             View = view;
+
+            View.Loaded += View_Loaded;
         }
 
         void InitializeCrash(CommandLine commandLine)
@@ -217,6 +250,8 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
                 var rebootAppArg = commandLine.GetValue(rebootArgOption);
                 RebootApplicationCommandLine = rebootAppArg;
             }
+
+            AutoSend = commandLine.HasOption("auto-send");
         }
 
         public void Initialize()
@@ -299,6 +334,44 @@ namespace ContentTypeTextNet.MnMn.Applications.CrashReporter
             View.Close();
         }
 
+        void CancelAutoSend()
+        {
+            AutoSend = false;
+            AutoSendTimer.Stop();
+            AutoSendTimer.Tick -= AutoSendTimer_Tick;
+        }
+
         #endregion
+
+        void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            View.Loaded -= View_Loaded;
+
+            if(AutoSend) {
+                AutoSendTimer = new DispatcherTimer() {
+                    Interval = TimeSpan.Parse(ConfigurationManager.AppSettings.Get("auto-send-polling"))
+                };
+                AutoSendTimer.Tick += AutoSendTimer_Tick;
+
+                AutoSendStartTime = DateTime.Now;
+                AutoSendEndTime = AutoSendStartTime + AutoSendEndTimeSpan;
+                AutoSendTimer.Start();
+            }
+        }
+
+        private void AutoSendTimer_Tick(object sender, EventArgs e)
+        {
+            var current = DateTime.Now;
+            if(AutoSendEndTime < current) {
+                WaitAutoSend = 1;
+                AutoSend = false;
+                AutoSendTimer.Stop();
+                AutoSendTimer.Tick -= AutoSendTimer_Tick;
+
+                SendAsync().ConfigureAwait(false);
+            } else {
+                WaitAutoSend = (current - AutoSendStartTime).TotalMilliseconds / AutoSendEndTimeSpan.TotalMilliseconds;
+            }
+        }
     }
 }

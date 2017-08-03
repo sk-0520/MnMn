@@ -59,6 +59,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Setting
         /// </summary>
         DateTime LightweightUpdateTimestamp { get; }
 
+        /// <summary>
+        /// クラッシュレポート自動送信。
+        /// </summary>
+        bool AutoSendCrashReport { get; }
+
         #endregion
     }
 }

@@ -72,6 +72,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             set { SetVariableValue(ref this._userConfirmation, value); }
         }
 
+        public bool AutoSendCrashReport
+        {
+            get { return Setting.RunningInformation.AutoSendCrashReport; }
+            set { SetPropertyValue(Setting.RunningInformation, value); }
+        }
+
         #endregion
 
         #region command
@@ -155,6 +161,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 return CreateCommand(o => {
                     ShellUtility.SetClipboard(DevelopmentUri.OriginalString, Mediator.Logger);
                 });
+            }
+        }
+
+        public ICommand OpenCrashReportCommand
+        {
+            get
+            {
+                return CreateCommand(o => ShellUtility.OpenUriInDefaultBrowser(Constants.AppUriCrashReceiveProgram, Mediator.Logger));
             }
         }
 
