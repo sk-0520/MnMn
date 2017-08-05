@@ -1521,7 +1521,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var result = GarbageCollectionUtility.RemoveFile(file, IndividualVideoSetting.LastShowTimestamp, cacheSpan, force);
             if(!result.IsSuccess) {
-                Mediator.Logger.Warning(file.Name, result.Message);
+                if(string.IsNullOrEmpty(result.Message)) {
+                    Mediator.Logger.Warning(file.Name, result.Message);
+                }
             }
             return result;
         }
