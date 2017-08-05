@@ -168,11 +168,16 @@
     <Border Background="#80cccccc" Grid.Row="1" Visibility="{Binding ConfirmProcessClose, Converter={StaticResource BooleanToVisibilityConverter}}">
       <Grid Margin="40,100" Background="White">
         <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
           <RowDefinition Height="*" />
           <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0" ItemsSource="{Binding ProcessItems}">
+        <TextBlock Grid.Row="0" TextAlignment="Center" Margin="5" FontSize="15" FontWeight="Bold" Foreground="Red">
+          他のプログラムが継続を妨げています
+        </TextBlock>
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding ProcessItems}">
           <ListBox.ItemTemplate>
             <DataTemplate>
               <WrapPanel Orientation="Horizontal">
@@ -193,11 +198,15 @@
           </ListBox.ItemTemplate>
         </ListBox>
 
-        <Grid Grid.Row="1">
-          <StackPanel>
-            <Button Command="{Binding CloseOtherProcessCommand}">死んでいただく</Button>
-            <Button Command="{Binding KillOtherProcessCommand}">殺す</Button>
-          </StackPanel>
+        <Grid Grid.Row="2">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Button Grid.Column="0" Command="{Binding CloseOtherProcessCommand}">死んでいただく</Button>
+          <Button Grid.Column="1" Command="{Binding KillOtherProcessCommand}">殺す</Button>
+          <Button Grid.Column="2" Command="{Binding ExecuteTaskManagerCommand}">タスクマネージャ</Button>
         </Grid>
       </Grid>
     </Border>

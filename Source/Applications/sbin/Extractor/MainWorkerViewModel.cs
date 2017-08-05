@@ -192,6 +192,20 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             get { return CreateCommand(o => ShutdownProcessAndRestart(true)); }
         }
 
+        public ICommand ExecuteTaskManagerCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    try {
+                        Process.Start("taskmgr");
+                    } catch(Exception ex) {
+                        AddWarningLog(ex.Message, ex.ToString());
+                    }
+                });
+            }
+        }
+
         #endregion
 
         #region function
