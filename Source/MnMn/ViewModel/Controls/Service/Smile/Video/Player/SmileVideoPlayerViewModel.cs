@@ -1811,6 +1811,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PlayListItems.Add(videoInformation);
                 //#371
                 CanPlayNextVideo.Value = false;
+                if(PlayListItems.Count == 1) {
+                    // 初回再生であればプレイリストを初期化
+                    PlayListItems.GetFirstItem();
+                }
             } else {
                 // プレイリストに存在するのであればカレントを設定
                 PlayListItems.ChangeCurrentItem(videoInformation);

@@ -86,12 +86,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        protected bool CalledFirstItem { get; set; }
+
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 一番最初に呼び出す必要あり。
+        /// </summary>
+        /// <returns></returns>
         public TModel GetFirstItem()
         {
+            CalledFirstItem = true;
+
             var index = 0;
             if(IsRandom) {
                 var random = new Random(Seed);
@@ -140,6 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public TModel ChangeNextItem()
         {
             CheckUtility.Enforce(CanItemChange);
+            CheckUtility.Enforce(CalledFirstItem);
 
             if(Count == PlayedItems.Count) {
                 // 初期化！
@@ -176,6 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public TModel ChangePrevItem()
         {
             CheckUtility.Enforce(CanItemChange);
+            CheckUtility.Enforce(CalledFirstItem);
 
             var index = CurrenIndex;
             if(index == 0) {
@@ -201,6 +211,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public void ChangeCurrentItem(TModel item)
         {
+            CheckUtility.Enforce(CalledFirstItem);
+
             var index = Items.IndexOf(item);
             if(index != -1) {
                 ChangeItem(index);
