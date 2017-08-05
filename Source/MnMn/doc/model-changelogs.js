@@ -140,6 +140,14 @@
 					},
 					{
 						'revision': '',
+						'subject': '#717: #715 をもうちっと消極的にする',
+						'comments': [
+							'file.size == totalsize -> totalsize <= file.size',
+							'このソフトいい感じにクソだろ'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

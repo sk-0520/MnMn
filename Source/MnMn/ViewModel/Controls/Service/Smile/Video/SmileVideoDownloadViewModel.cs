@@ -538,7 +538,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SmileVideoDmcItemModel dmcItem;
             if(Information.DmcItems.TryGetValue(role, out dmcItem)) {
                 if(dmcItem.IsLoaded && downloadFile.Exists) {
-                    if(dmcItem.Length == downloadFile.Length) {
+                    if(dmcItem.Length <= downloadFile.Length) {
                         LoadVideoFromCache(downloadFile);
                         var task = DmcLoader.StopAsync();
                         return true;
@@ -681,7 +681,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected static long GetDownloadHeadPosition(FileInfo fileInfo, long completeSize)
         {
             if(fileInfo.Exists) {
-                if(fileInfo.Length == completeSize) {
+                if(completeSize <= fileInfo.Length) {
                     return isDownloaded;
                 } else {
                     // 途中からダウンロード
