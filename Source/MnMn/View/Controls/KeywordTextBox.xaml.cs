@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             var senderElement = (FrameworkElement)sender;
             var keywordTextItem = (IReadOnlyKeywordTextItem)senderElement.DataContext;
-            SetKeyword(keywordTextItem.RawValue);
+            SetKeyword(keywordTextItem.Keyword);
         }
 
         private void inputValue_LostFocus(object sender, RoutedEventArgs e)

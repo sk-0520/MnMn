@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region IReadOnlyKeywordTextItem
 
-        public string RawValue
+        public string Keyword
         {
             get { return this._keyword; }
             set { SetVariableValue(ref this._keyword, value); }
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region IReadOnlyKeywordTextItem
 
-        public string RawValue => Model.Extends["raw-value"];
+        public string Keyword => Model.Extends["keyword"];
 
         public string Value => Model.Key;
 

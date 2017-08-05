@@ -5,7 +5,7 @@
 			<word key="ja-jp" value="${video-id}" />
 		</words>
 		<extends>
-			<extend key="raw-value" value="${video-id}" />
+			<extend key="keyword" value="${video-id}" />
 			<extend key="tooltip" value="" />
 
 			<extend key="property" value="VideoId" />
@@ -19,7 +19,7 @@
 			<word key="ja-jp" value="${video-title}" />
 		</words>
 		<extends>
-			<extend key="raw-value" value="${video-title}" />
+			<extend key="keyword" value="${video-title}" />
 			<extend key="tooltip" value="" />
 
 			<extend key="property" value="Title" />
@@ -33,7 +33,7 @@
 			<word key="ja-jp" value="${video-page}" />
 		</words>
 		<extends>
-			<extend key="raw-value" value="${video-page}" />
+			<extend key="keyword" value="${video-page}" />
 			<extend key="tooltip" value="" />
 
 			<extend key="property" value="WatchUrlString" />
