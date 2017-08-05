@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected CancellationTokenSource DownloadCancel { get; set; }
 
-        protected FileInfo PlayFile
+        protected virtual FileInfo PlayFile
         {
             get
             {

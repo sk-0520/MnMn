@@ -99,6 +99,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 
         public override ImageSource PosterThumbnailImage => new BitmapImage(SharedConstants.GetPackUri("/Resources/MnMn-Header.png"));
 
+        protected override FileInfo PlayFile
+        {
+            get { return VideoFile; }
+        }
+
         protected override void AddHistory(SmileVideoInformationViewModel information)
         {
             IgnoreLaboratory();

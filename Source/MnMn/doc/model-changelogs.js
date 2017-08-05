@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#722: ラボが死んでてボクも死んでる'
 					},
 					{
 						'revision': '',
