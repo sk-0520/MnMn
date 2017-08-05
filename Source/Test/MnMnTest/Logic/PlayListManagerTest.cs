@@ -260,5 +260,23 @@ namespace MnMnTest.Logic
                 Assert.IsTrue(num4.Number == 4);
             }
         }
+
+        [TestMethod]
+        public void IsLastItemTest()
+        {
+            var list = new PlayListManager<Item>();
+            list.AddRange(Enumerable.Range(1, 3).Select(i => new Item(i)));
+
+            Assert.IsFalse(list.IsLastItem);
+
+            list.ChangeNextItem();
+            Assert.IsFalse(list.IsLastItem);
+
+            list.ChangeNextItem();
+            Assert.IsTrue(list.IsLastItem);
+
+            list.ChangeNextItem();
+            Assert.IsFalse(list.IsLastItem);
+        }
     }
 }

@@ -71,6 +71,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected Dictionary<int, TModel> PlayedItems { get; } = new Dictionary<int, TModel>();
 
+        /// <summary>
+        /// 現在アイテムはプレイリスト内で最終アイテムか。
+        /// </summary>
+        public bool IsLastItem { get { return Count - 1 == PlayedItems.Count; } }
+
         #endregion
 
         #region function
