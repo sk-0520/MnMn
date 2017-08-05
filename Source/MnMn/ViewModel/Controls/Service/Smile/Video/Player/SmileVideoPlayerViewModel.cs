@@ -1623,20 +1623,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
+            var skipReplayProcess = false;
             if(CanPlayNextVideo.Value && PlayListItems.Skip(1).Any()) {
-                // 次のプレイリストへ遷移
-                Mediator.Logger.Debug("next playlist item");
-                LoadNextPlayListItemAsync();
-                return;
+                if(LastPlayListItemIsStop && PlayListItems.IsLastItem) {
+                    skipReplayProcess = true;
+                } else {
+                    // 次のプレイリストへ遷移
+                    Mediator.Logger.Debug("next playlist item");
+                    LoadNextPlayListItemAsync();
+                    return;
+                }
             }
 
-            if(ReplayVideo) {
-                // リプレイ
-                Mediator.Logger.Debug("replay");
-                StopMovie(true);
-                PlayMovie();
+            if(!skipReplayProcess) {
+                if(ReplayVideo) {
+                    // リプレイ
+                    Mediator.Logger.Debug("replay");
+                    StopMovie(true);
+                    PlayMovie();
 
-                return;
+                    return;
+                }
             }
 
             // 普通の停止
