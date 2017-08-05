@@ -71,12 +71,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected Dictionary<int, TModel> PlayedItems { get; } = new Dictionary<int, TModel>();
 
+        /// <summary>
+        /// 現在アイテムはプレイリスト内で最終アイテムか。
+        /// </summary>
+        public bool IsLastItem
+        {
+            get
+            {
+                if(!CanItemChange) {
+                    throw new InvalidOperationException(nameof(CanItemChange));
+                }
+
+                if(IsRandom) {
+                    return Count == PlayedItems.Count;
+                } else {
+                    return CurrenItem.Equals(Items.Last());
+                }
+
+            }
+        }
+
+        protected bool CalledFirstItem { get; set; }
+
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 一番最初に呼び出す必要あり。
+        /// </summary>
+        /// <returns></returns>
         public TModel GetFirstItem()
         {
+            CalledFirstItem = true;
+
             var index = 0;
             if(IsRandom) {
                 var random = new Random(Seed);
@@ -125,6 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public TModel ChangeNextItem()
         {
             CheckUtility.Enforce(CanItemChange);
+            CheckUtility.Enforce(CalledFirstItem);
 
             if(Count == PlayedItems.Count) {
                 // 初期化！
@@ -161,6 +190,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public TModel ChangePrevItem()
         {
             CheckUtility.Enforce(CanItemChange);
+            CheckUtility.Enforce(CalledFirstItem);
 
             var index = CurrenIndex;
             if(index == 0) {
@@ -186,6 +216,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public void ChangeCurrentItem(TModel item)
         {
+            CheckUtility.Enforce(CalledFirstItem);
+
             var index = Items.IndexOf(item);
             if(index != -1) {
                 ChangeItem(index);
@@ -223,7 +255,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected override void RemoveItem(int index)
         {
+            var targetItem = Items[index];
+
             base.RemoveItem(index);
+
+            PlayedItems.Remove(index);
 
             RefreshCurrentIndex();
         }

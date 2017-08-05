@@ -132,6 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _isNewBookmark = true;
 
         SmileVideoInformationViewModel _selectedPlayListItem;
+        bool _lastPlayListItemIsStop;
 
         InformationViewModelBase _posterInformation;
 
