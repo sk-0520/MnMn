@@ -121,6 +121,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             set { SetVariableValue(ref this._confirmProcessClose, value); }
         }
 
+        CollectionModel<Process> ProcessItems { get; set; } = new CollectionModel<Process>();
+
         #endregion
 
         #region command
@@ -290,6 +292,32 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 AddInformationLog($"Wait: sleep({closedWaitTime})");
                 Thread.Sleep((int)this.closedWaitTime.TotalMilliseconds);
             }
+        }
+
+        void CloseOtherProcess()
+        {
+            var myProcess = Process.GetCurrentProcess(); ;
+            var myPath = Assembly.GetExecutingAssembly().Location;
+            var rootDirPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(myPath), "..", ".."));
+
+            var appProcessList = new List<Process>();
+            foreach(var process in Process.GetProcesses()) {
+                try {
+                    var processPath = process.MainModule.FileName;
+                    Debug.WriteLine(processPath);
+                    if(processPath.StartsWith(rootDirPath, StringComparison.OrdinalIgnoreCase)) {
+                        // 自分自身は除外
+                        if(myProcess.ProcessName != process.ProcessName) {
+                            appProcessList.Add(process);
+                        }
+                    }
+                } catch(Exception ex) {
+                    Debug.WriteLine(ex);
+                }
+            }
+
+            ProcessItems.InitializeRange(appProcessList);
+            ConfirmProcessClose = ProcessItems.Any();
         }
 
         void ExpandEntry(ZipArchiveEntry entry, string expandPath)
@@ -509,6 +537,10 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
             return Task.Run(() => {
                 CloseProcess();
+                CloseOtherProcess();
+                if(ConfirmProcessClose) {
+                    throw new Exception($"ConfirmProcess");
+                }
             }).ContinueWith(t => {
                 if(!t.IsFaulted) {
                     ExpandArchive();
