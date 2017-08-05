@@ -85,6 +85,81 @@
 	},
 	*/
 	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.78.2',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/08/05',
 		'version': '0.78.1',
 		'isRc': false,
@@ -303,60 +378,6 @@
 					{
 						'revision': 'f1274ecd7ec7a56c5d704f2d34cc976610528a99',
 						'subject': '#700: 共通処理/サービスの正規表現を外部に退避'
-					}
-				]
-			}
-		]
-	},
-	{
-		'date': '2017/07/23',
-		'version': '0.76.0',
-		'isRc': false,
-		'contents': [
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': 'e602ada0ad65ccf853fbf622724902b2f54767bd',
-						'subject': '#687: プレイヤーに投稿者のサムネイルも表示する'
-					},
-					{
-						'revision': '0e354b3b11bc9a7b0b84614637c2a5c894bba69a',
-						'subject': '#148: コマンドラインオプションから動画再生やその他操作を行う',
-						'comments': [
-							'まぁダメなんじゃないかな',
-							'非同期操作を同期操作で UI スレッドデッドロック無視するためのブン投げドロドロで処理するからめっちゃくちゃ',
-							'詳細はヘルプを参照のこと'
-						]
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '5bd4bfb51f654277694581c47790cd15ab46db2f',
-						'subject': '#686: ターゲット配列の長さが足りません',
-						'comments': [
-							'調査した限り大問題で今までうまくいってたのがむしろ奇跡',
-							'あとで見るの件数取得という感覚的には安全極まりない処理に悪魔が潜んでいた'
-						]
-					},
-					{
-						'revision': '5274c2e3d3502a2921df59d5bb1f4a5809d73517',
-						'subject': '#688: 灰色テーマのスクロールバーが視認出来たもんじゃない',
-						'comments': [
-							'背景を少し濃くした投げやり対応'
-						]
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '8bd3433b711dd48d82ee67774d9531bd851e8a5c',
-						'subject': '#690: ソース整理'
 					}
 				]
 			}
