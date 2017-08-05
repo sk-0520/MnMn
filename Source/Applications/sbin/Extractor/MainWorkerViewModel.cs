@@ -48,6 +48,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         bool _canExecute;
 
+        bool _confirmProcessClose;
+
         #endregion
 
         public MainWorkerViewModel()
@@ -113,6 +115,14 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             set { SetVariableValue(ref this._canExecute, value); }
         }
 
+        public bool ConfirmProcessClose
+        {
+            get { return this._confirmProcessClose; }
+            set { SetVariableValue(ref this._confirmProcessClose, value); }
+        }
+
+        public CollectionModel<Process> ProcessItems { get; } = new CollectionModel<Process>();
+
         #endregion
 
         #region command
@@ -134,7 +144,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             {
                 return CreateCommand(
                     o => ExecuteAsync(),
-                    o => CanInput && !string.IsNullOrWhiteSpace(ArchiveFilePath) && !string.IsNullOrWhiteSpace(ExpandDirectoryPath)
+                    o => CanInput && !string.IsNullOrWhiteSpace(ArchiveFilePath) && !string.IsNullOrWhiteSpace(ExpandDirectoryPath) && !ConfirmProcessClose
                 );
             }
         }
@@ -169,6 +179,30 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     o => ExecuteApplication(),
                     o => CanExecute && File.Exists(RebootApplicationPath)
                 );
+            }
+        }
+
+        public ICommand CloseOtherProcessCommand
+        {
+            get { return CreateCommand(o => ShutdownProcessAndRestart(false)); }
+        }
+
+        public ICommand KillOtherProcessCommand
+        {
+            get { return CreateCommand(o => ShutdownProcessAndRestart(true)); }
+        }
+
+        public ICommand ExecuteTaskManagerCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    try {
+                        Process.Start("taskmgr");
+                    } catch(Exception ex) {
+                        AddWarningLog(ex.Message, ex.ToString());
+                    }
+                });
             }
         }
 
@@ -282,6 +316,34 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                 AddInformationLog($"Wait: sleep({closedWaitTime})");
                 Thread.Sleep((int)this.closedWaitTime.TotalMilliseconds);
             }
+        }
+
+        void CloseOtherProcess()
+        {
+            var myProcess = Process.GetCurrentProcess(); ;
+            var myPath = Assembly.GetExecutingAssembly().Location;
+            var rootDirPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(myPath), "..", ".."));
+
+            var appProcessList = new List<Process>();
+            foreach(var process in Process.GetProcesses()) {
+                try {
+                    var processPath = process.MainModule.FileName;
+                    Debug.WriteLine(processPath);
+                    if(processPath.StartsWith(rootDirPath, StringComparison.OrdinalIgnoreCase)) {
+                        // 自分自身は除外
+                        if(myProcess.Id != process.Id) {
+                            appProcessList.Add(process);
+                        }
+                    }
+                } catch(Exception) {
+                    //Debug.WriteLine(ex);
+                }
+            }
+
+            Application.Current.Dispatcher.Invoke(() => {
+                ProcessItems.InitializeRange(appProcessList);
+                ConfirmProcessClose = ProcessItems.Any();
+            });
         }
 
         void ExpandEntry(ZipArchiveEntry entry, string expandPath)
@@ -501,6 +563,10 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
             return Task.Run(() => {
                 CloseProcess();
+                CloseOtherProcess();
+                if(ConfirmProcessClose) {
+                    throw new Exception($"ConfirmProcess");
+                }
             }).ContinueWith(t => {
                 if(!t.IsFaulted) {
                     ExpandArchive();
@@ -617,8 +683,6 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
-        #region function
-
         void AddInformationLog(string message, string detail = null)
         {
             var log = new LogItemViewModel(LogKind.Information, message, detail);
@@ -658,7 +722,32 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }));
         }
 
-        #endregion
+        void ShutdownProcess(IEnumerable<Process> processItems, bool kill)
+        {
+            foreach(var process in processItems) {
+                try {
+                    if(kill) {
+                        process.Kill();
+                    } else {
+                        if(!process.CloseMainWindow()) {
+                            process.Close();
+                        }
+                    }
+                } catch(Exception ex) {
+                    AddWarningLog($"{process.ProcessName} - {ex.Message}", ex.ToString());
+                }
+            }
+        }
+
+        void ShutdownProcessAndRestart(bool kill)
+        {
+            ShutdownProcess(ProcessItems, kill);
+
+            ProcessItems.Clear();
+            ConfirmProcessClose = false;
+
+            ExecuteAsync();
+        }
 
         #endregion
 

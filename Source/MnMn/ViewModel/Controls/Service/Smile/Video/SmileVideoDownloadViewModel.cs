@@ -342,12 +342,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 VideoStream.Flush();
                                 VideoFile.Refresh();
                                 // 理屈で言えばここは絶対に存在する
-                                Information.SetDmcLoaded(DmcLoader.VideoSource, DmcLoader.AudioSource, VideoFile.Length == Information.DmcItems[role].Length);
+                                // #715 で消極的に読み込み済み印を設定
+                                Information.SetDmcLoaded(DmcLoader.VideoSource, DmcLoader.AudioSource, Information.DmcItems[role].Length <= VideoFile.Length);
                                 if(Information.DmcItems[role].IsLoaded) {
                                     VideoLoadState = LoadState.Loaded;
                                     DownloadState = DownloadState.Completed;
                                 } else {
-                                    Mediator.Logger.Debug($"{VideoId}: LoadState.Failure, {DmcLoader.VideoSource}, {DmcLoader.AudioSource}, {VideoFile.Length == Information.DmcItems[role].Length}, {role}");
+                                    Mediator.Logger.Debug($"{VideoId}: LoadState.Failure, {DmcLoader.VideoSource}, {DmcLoader.AudioSource}, {Information.DmcItems[role].Length <= VideoFile.Length}, {role}");
                                     VideoLoadState = LoadState.Failure;
                                     DownloadState = DownloadState.Failure;
                                 }
@@ -510,12 +511,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
             }
 
-
-
             DmcLoader = new SmileVideoDmcLoader(VideoId, new Uri(tuple.Item1), Mediator);
             var downloadUri = await DmcLoader.StartAsync(model, Information.DmcFile);
 
             if(downloadUri == null) {
+                return false;
+            }
+            if(DmcLoader == null) {
                 return false;
             }
 
@@ -536,7 +538,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SmileVideoDmcItemModel dmcItem;
             if(Information.DmcItems.TryGetValue(role, out dmcItem)) {
                 if(dmcItem.IsLoaded && downloadFile.Exists) {
-                    if(dmcItem.Length == downloadFile.Length) {
+                    if(dmcItem.Length <= downloadFile.Length) {
                         LoadVideoFromCache(downloadFile);
                         var task = DmcLoader.StopAsync();
                         return true;
@@ -679,7 +681,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected static long GetDownloadHeadPosition(FileInfo fileInfo, long completeSize)
         {
             if(fileInfo.Exists) {
-                if(fileInfo.Length == completeSize) {
+                if(completeSize <= fileInfo.Length) {
                     return isDownloaded;
                 } else {
                     // 途中からダウンロード

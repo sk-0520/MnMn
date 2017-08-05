@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         }
 
 
-        public string Tooltip
+        public string ToolTip
         {
             get { return this._tooltip; }
             set { SetVariableValue(ref this._tooltip, value); }
@@ -51,11 +51,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region IReadOnlyKeywordTextItem
 
-        public string Keyword => Model.DisplayText;
+        public string Keyword => Model.Extends["keyword"];
 
         public string Value => Model.Key;
 
-        public string Tooltip => Model.Extends["tooltip"];
+        public string ToolTip => Model.Extends["tooltip"];
 
         #endregion
     }
