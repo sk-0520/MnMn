@@ -128,15 +128,6 @@
         </xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
           <StackPanel>
-            <MenuItem Header="連続再生 - 最終アイテムで停止(_S)" Command="{Binding ContinuousPlaybackLastItemIsStopCommand}">
-              <MenuItem.Icon>
-                <Viewbox Style="{StaticResource SmallIconBox}">
-                  <Canvas Style="{StaticResource IconCanvas-24x24}">
-                    <Path Data="{StaticResource Image_Play-Sequential}" Style="{StaticResource SmallDefaultIconPath}" />
-                  </Canvas>
-                </Viewbox>
-              </MenuItem.Icon>
-            </MenuItem>
             <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
@@ -146,7 +137,39 @@
                 </Viewbox>
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="ブックマーク追加" MouseEnter="MenuItem_MouseEnter" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" FontSize="{StaticResource FontSmallSize}">最終アイテムまで</Label>
+
+              <MenuItem Grid.Row="0" Grid.Column="1" Header="連続再生(_S)" Command="{Binding ContinuousPlaybackLastItemIsStopCommand}">
+                <MenuItem.Icon>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Play-Sequential}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Grid.Row="1" Grid.Column="1" Header="ランダム(_T)" Command="{Binding RandomContinuousPlaybackLastItemIsStopCommand}">
+                <MenuItem.Icon>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Play-Random}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </MenuItem.Icon>
+              </MenuItem>
+
+            </Grid>
+            <MenuItem Header="ブックマーク追加" MouseEnter="BookmarkMenuItem_MouseEnter" PreviewMouseLeftButtonDown="BookmarkMenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
               <MenuItem.Resources>
                 <StackPanel x:Key="Content" Orientation="Horizontal">
                   <Border>

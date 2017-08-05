@@ -208,6 +208,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return CreateCommand(o => ContinuousPlaybackAsync(true, false)); }
         }
+        public ICommand RandomContinuousPlaybackLastItemIsStopCommand
+        {
+            get { return CreateCommand(o => ContinuousPlaybackAsync(true, true)); }
+        }
 
         public ICommand ChangedFilteringCommand
         {

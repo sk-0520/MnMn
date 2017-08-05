@@ -140,13 +140,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
             e.Handled = true;
         }
 
-        private void MenuItem_MouseEnter(object sender, MouseEventArgs e)
+        private void BookmarkMenuItem_MouseEnter(object sender, MouseEventArgs e)
         {
             var menuItem = (MenuItem)sender;
             OpenSubMenu(menuItem);
         }
 
-        private void MenuItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BookmarkMenuItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var menuItem = (MenuItem)sender;
             OpenSubMenu(menuItem);
