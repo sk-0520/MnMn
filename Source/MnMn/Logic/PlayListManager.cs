@@ -82,7 +82,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     throw new InvalidOperationException(nameof(CanItemChange));
                 }
 
-                return Count == PlayedItems.Count;
+                if(IsRandom) {
+                    return Count == PlayedItems.Count;
+                } else {
+                    return CurrenItem.Equals(Items.Last());
+                }
+
             }
         }
 
