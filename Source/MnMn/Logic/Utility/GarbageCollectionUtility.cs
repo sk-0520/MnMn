@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 return CheckResultModel.Failure<long>(ex.ToString());
             }
 
-            return CheckResultModel.Success<long>(0);
+            return CheckResultModel.Failure<long>();
         }
 
         public static IReadOnlyCheckResult<long> RemoveFile(FileInfo file, CacheSpan cacheSpan, bool force)
