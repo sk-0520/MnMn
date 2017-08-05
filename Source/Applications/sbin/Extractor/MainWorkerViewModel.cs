@@ -182,6 +182,16 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
+        public ICommand CloseOtherProcessCommand
+        {
+            get { return CreateCommand(o => ShutdownProcessAndRestart(false)); }
+        }
+
+        public ICommand KillOtherProcessCommand
+        {
+            get { return CreateCommand(o => ShutdownProcessAndRestart(true)); }
+        }
+
         #endregion
 
         #region function
@@ -657,8 +667,6 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }
         }
 
-        #region function
-
         void AddInformationLog(string message, string detail = null)
         {
             var log = new LogItemViewModel(LogKind.Information, message, detail);
@@ -698,7 +706,32 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             }));
         }
 
-        #endregion
+        void ShutdownProcess(IEnumerable<Process> processItems, bool kill)
+        {
+            foreach(var process in processItems) {
+                try {
+                    if(kill) {
+                        process.Kill();
+                    } else {
+                        if(!process.CloseMainWindow()) {
+                            process.Close();
+                        }
+                    }
+                } catch(Exception ex) {
+                    AddWarningLog($"{process.ProcessName} - {ex.Message}", ex.ToString());
+                }
+            }
+        }
+
+        void ShutdownProcessAndRestart(bool kill)
+        {
+            ShutdownProcess(ProcessItems, kill);
+
+            ProcessItems.Clear();
+            ConfirmProcessClose = false;
+
+            ExecuteAsync();
+        }
 
         #endregion
 

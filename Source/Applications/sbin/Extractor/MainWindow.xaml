@@ -176,8 +176,8 @@
 
         <Grid Grid.Row="1">
           <StackPanel>
-            <Button>死んでいただく</Button>
-            <Button>殺す</Button>
+            <Button Command="{Binding CloseOtherProcessCommand}">死んでいただく</Button>
+            <Button Command="{Binding KillOtherProcessCommand}">殺す</Button>
           </StackPanel>
         </Grid>
       </Grid>
