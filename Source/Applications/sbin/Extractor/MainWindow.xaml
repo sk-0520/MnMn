@@ -166,13 +166,32 @@
     </Grid>
 
     <Border Background="#80cccccc" Grid.Row="1" Visibility="{Binding ConfirmProcessClose, Converter={StaticResource BooleanToVisibilityConverter}}">
-      <Grid Margin="16" Background="White">
+      <Grid Margin="40,100" Background="White">
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
           <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0"></ListBox>
+        <ListBox Grid.Row="0" ItemsSource="{Binding ProcessItems}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <WrapPanel Orientation="Horizontal">
+                <WrapPanel.Resources>
+                  <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Margin" Value="12, 3" />
+                  </Style>
+                </WrapPanel.Resources>
+                <TextBlock>
+                  <Run>PID:</Run>
+                  <Run Text="{Binding Id, Mode=OneTime}" />
+                </TextBlock>
+                <TextBlock>
+                  <Run Text="{Binding ProcessName, Mode=OneTime}" />
+                </TextBlock>
+              </WrapPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
 
         <Grid Grid.Row="1">
           <StackPanel>

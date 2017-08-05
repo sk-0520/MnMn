@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             set { SetVariableValue(ref this._confirmProcessClose, value); }
         }
 
-        CollectionModel<Process> ProcessItems { get; set; } = new CollectionModel<Process>();
+        public CollectionModel<Process> ProcessItems { get; } = new CollectionModel<Process>();
 
         #endregion
 
@@ -317,17 +317,19 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
                     Debug.WriteLine(processPath);
                     if(processPath.StartsWith(rootDirPath, StringComparison.OrdinalIgnoreCase)) {
                         // 自分自身は除外
-                        if(myProcess.ProcessName != process.ProcessName) {
+                        if(myProcess.Id != process.Id) {
                             appProcessList.Add(process);
                         }
                     }
-                } catch(Exception ex) {
-                    Debug.WriteLine(ex);
+                } catch(Exception) {
+                    //Debug.WriteLine(ex);
                 }
             }
 
-            ProcessItems.InitializeRange(appProcessList);
-            ConfirmProcessClose = ProcessItems.Any();
+            Application.Current.Dispatcher.Invoke(() => {
+                ProcessItems.InitializeRange(appProcessList);
+                ConfirmProcessClose = ProcessItems.Any();
+            });
         }
 
         void ExpandEntry(ZipArchiveEntry entry, string expandPath)
