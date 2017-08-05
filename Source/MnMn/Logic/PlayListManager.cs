@@ -74,7 +74,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// 現在アイテムはプレイリスト内で最終アイテムか。
         /// </summary>
-        public bool IsLastItem { get { return Count - 1 == PlayedItems.Count; } }
+        public bool IsLastItem
+        {
+            get
+            {
+                if(!CanItemChange) {
+                    throw new InvalidOperationException(nameof(CanItemChange));
+                }
+
+                return Count == PlayedItems.Count;
+            }
+        }
 
         #endregion
 
@@ -228,7 +238,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected override void RemoveItem(int index)
         {
+            var targetItem = Items[index];
+
             base.RemoveItem(index);
+
+            PlayedItems.Remove(index);
 
             RefreshCurrentIndex();
         }
