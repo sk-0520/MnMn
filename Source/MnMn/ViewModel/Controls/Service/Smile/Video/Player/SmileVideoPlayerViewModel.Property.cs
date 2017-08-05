@@ -136,6 +136,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         public FewViewModel<bool> CanPlayNextVideo { get; } = new FewViewModel<bool>(false);
+        public bool LastPlayListItemIsStop
+        {
+            get { return this._lastPlayListItemIsStop; }
+            set { SetVariableValue(ref this._lastPlayListItemIsStop, value); }
+        }
 
         public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
 

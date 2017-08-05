@@ -514,6 +514,7 @@
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource {x:Type MenuItem}}" />
               <MenuItem Header="次動画へ自動遷移" IsCheckable="True" IsChecked="{Binding CanPlayNextVideo.Value}" InputGestureText="{Binding Source={StaticResource SwitchPlayNextVideo}, Converter={StaticResource KeyBindingToGestureTextConverter}}" Style="{StaticResource {x:Type MenuItem}}" />
+              <MenuItem Header="最終アイテムで停止" IsCheckable="True" IsChecked="{Binding LastPlayListItemIsStop}" Style="{StaticResource {x:Type MenuItem}}" />
               <Separator Style="{StaticResource {x:Type Separator}}" />
               <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
             </CompositeCollection>
@@ -1925,6 +1926,7 @@
                   <RowDefinition />
                   <RowDefinition />
                   <RowDefinition />
+                  <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="5*" />
@@ -1983,6 +1985,9 @@
 
                 <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="ランダム再生" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource VerticalCheckBox}" />
                 <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="次動画へ自動遷移" IsChecked="{Binding CanPlayNextVideo.Value}" Style="{StaticResource VerticalCheckBox}" />
+
+                <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="最終アイテムで停止" IsChecked="{Binding LastPlayListItemIsStop}" Style="{StaticResource VerticalCheckBox}" />
+
 
               </Grid>
 
