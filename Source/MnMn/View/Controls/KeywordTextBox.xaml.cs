@@ -149,11 +149,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddKeywordButton_Click(object sender, RoutedEventArgs e)
         {
             var senderElement = (FrameworkElement)sender;
             var keywordTextItem = (IReadOnlyKeywordTextItem)senderElement.DataContext;
-            SetKeyword(keywordTextItem.Value);
+            SetKeyword(keywordTextItem.Keyword);
         }
 
         private void inputValue_LostFocus(object sender, RoutedEventArgs e)
