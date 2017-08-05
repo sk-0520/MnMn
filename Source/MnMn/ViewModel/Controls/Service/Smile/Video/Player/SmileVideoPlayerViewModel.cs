@@ -341,7 +341,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentAreaWidth = resizePercent * BaseWidth;
 
             PlayerTaskbarThumbnailCreator.SetSize(new Size(BaseWidth, BaseHeight));
-            Player.Dispatcher.BeginInvoke(new Action(() => {
+            Player?.Dispatcher.BeginInvoke(new Action(() => {
                 PlayerTaskbarThumbnailCreator.Refresh();
             }), DispatcherPriority.SystemIdle);
 

@@ -511,12 +511,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 sendMux.AudioSrcIds.InitializeRange(sendAudioWeights.ToEvaluatedSequence());
             }
 
-
-
             DmcLoader = new SmileVideoDmcLoader(VideoId, new Uri(tuple.Item1), Mediator);
             var downloadUri = await DmcLoader.StartAsync(model, Information.DmcFile);
 
             if(downloadUri == null) {
+                return false;
+            }
+            if(DmcLoader == null) {
                 return false;
             }
 

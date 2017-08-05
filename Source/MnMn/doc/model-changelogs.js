@@ -132,7 +132,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#710: クラッシュレポートより: 動画プレイヤーを開いた瞬間に閉じると NullReferenceException'
 					},
 					{
 						'revision': '',
