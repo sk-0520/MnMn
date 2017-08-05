@@ -44,7 +44,7 @@
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <Separator x:Name="separator" Style="{StaticResource SmallIndent}" />
-              <Button Click="Button_Click" Content="{Binding Keyword}" Style="{StaticResource Hyperlink}"/>
+              <Button Click="Button_Click" Content="{Binding DisplayText}" Style="{StaticResource Hyperlink}"/>
             </StackPanel>
             <DataTemplate.Triggers>
               <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">

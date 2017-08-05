@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
     {
         #region property
 
-        string Keyword { get; }
+        string RawValue { get; }
         string Value { get; }
         string Tooltip { get; }
 
