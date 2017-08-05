@@ -194,16 +194,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region command
 
-        [Obsolete]
         public ICommand ContinuousPlaybackCommand
         {
-            get { return CreateCommand(o => ContinuousPlaybackAsync(false)); }
+            get { return CreateCommand(o => ContinuousPlaybackAsync(false, false)); }
         }
 
-        [Obsolete]
+        public ICommand ContinuousPlaybackLastItemIsStopCommand
+        {
+            get { return CreateCommand(o => ContinuousPlaybackAsync(false, true)); }
+        }
+
         public ICommand RandomContinuousPlaybackCommand
         {
-            get { return CreateCommand(o => ContinuousPlaybackAsync(true)); }
+            get { return CreateCommand(o => ContinuousPlaybackAsync(true, false)); }
         }
 
         public ICommand ChangedFilteringCommand
@@ -440,7 +443,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        internal virtual Task ContinuousPlaybackAsync(bool isRandom, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
+        internal virtual Task ContinuousPlaybackAsync(bool isRandom,bool lastItemIsStop, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
             ShowContinuousPlaybackMenu = false;
 
@@ -461,6 +464,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var vm = new SmileVideoPlayerViewModel(Mediator);
             vm.IsRandomPlay = isRandom;
+            vm.LastPlayListItemIsStop = lastItemIsStop;
 
             try {
                 var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
@@ -672,10 +676,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             switch(checkedProcessType) {
                 case CheckedProcessType.SequencePlay:
-                    return ContinuousPlaybackAsync(false);
+                    return ContinuousPlaybackAsync(false, false);
 
                 case CheckedProcessType.RandomPlay:
-                    return ContinuousPlaybackAsync(true);
+                    return ContinuousPlaybackAsync(true, false);
 
                 default:
                     throw new NotImplementedException();
