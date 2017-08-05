@@ -342,12 +342,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 VideoStream.Flush();
                                 VideoFile.Refresh();
                                 // 理屈で言えばここは絶対に存在する
-                                Information.SetDmcLoaded(DmcLoader.VideoSource, DmcLoader.AudioSource, VideoFile.Length == Information.DmcItems[role].Length);
+                                // #715 で消極的に読み込み済み印を設定
+                                Information.SetDmcLoaded(DmcLoader.VideoSource, DmcLoader.AudioSource, Information.DmcItems[role].Length <= VideoFile.Length);
                                 if(Information.DmcItems[role].IsLoaded) {
                                     VideoLoadState = LoadState.Loaded;
                                     DownloadState = DownloadState.Completed;
                                 } else {
-                                    Mediator.Logger.Debug($"{VideoId}: LoadState.Failure, {DmcLoader.VideoSource}, {DmcLoader.AudioSource}, {VideoFile.Length == Information.DmcItems[role].Length}, {role}");
+                                    Mediator.Logger.Debug($"{VideoId}: LoadState.Failure, {DmcLoader.VideoSource}, {DmcLoader.AudioSource}, {Information.DmcItems[role].Length <= VideoFile.Length}, {role}");
                                     VideoLoadState = LoadState.Failure;
                                     DownloadState = DownloadState.Failure;
                                 }
