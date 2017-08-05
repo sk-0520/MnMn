@@ -165,5 +165,23 @@
       <Button Grid.Column="1" Content="終了" Command="{Binding CloseCommand}" />
     </Grid>
 
+    <Border Background="#80cccccc" Grid.Row="1" Visibility="{Binding ConfirmProcessClose, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <Grid Margin="16" Background="White">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListBox Grid.Row="0"></ListBox>
+
+        <Grid Grid.Row="1">
+          <StackPanel>
+            <Button>死んでいただく</Button>
+            <Button>殺す</Button>
+          </StackPanel>
+        </Grid>
+      </Grid>
+    </Border>
+
   </Grid>
 </Window>

@@ -48,6 +48,8 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
 
         bool _canExecute;
 
+        bool _confirmProcessClose;
+
         #endregion
 
         public MainWorkerViewModel()
@@ -113,6 +115,12 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             set { SetVariableValue(ref this._canExecute, value); }
         }
 
+        public bool ConfirmProcessClose
+        {
+            get { return this._confirmProcessClose; }
+            set { SetVariableValue(ref this._confirmProcessClose, value); }
+        }
+
         #endregion
 
         #region command
@@ -134,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.SystemApplications.Extractor
             {
                 return CreateCommand(
                     o => ExecuteAsync(),
-                    o => CanInput && !string.IsNullOrWhiteSpace(ArchiveFilePath) && !string.IsNullOrWhiteSpace(ExpandDirectoryPath)
+                    o => CanInput && !string.IsNullOrWhiteSpace(ArchiveFilePath) && !string.IsNullOrWhiteSpace(ExpandDirectoryPath) && !ConfirmProcessClose
                 );
             }
         }
