@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 
         string Keyword { get; }
         string Value { get; }
-        string Tooltip { get; }
+        string ToolTip { get; }
 
         #endregion
     }

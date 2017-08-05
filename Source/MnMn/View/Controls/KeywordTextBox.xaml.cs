@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddKeywordButton_Click(object sender, RoutedEventArgs e)
         {
             var senderElement = (FrameworkElement)sender;
             var keywordTextItem = (IReadOnlyKeywordTextItem)senderElement.DataContext;

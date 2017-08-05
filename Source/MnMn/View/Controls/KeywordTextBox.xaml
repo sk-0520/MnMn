@@ -4,11 +4,16 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignWidth="300"
   d:DesignHeight="300"
 >
+  <UserControl.Resources>
+    <cttn_sl_view_converter:HasTextLengthConverter x:Key="HasTextLengthConverter" />
+  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -44,7 +49,17 @@
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <Separator x:Name="separator" Style="{StaticResource SmallIndent}" />
-              <Button Click="Button_Click" Content="{Binding DisplayText}" Style="{StaticResource Hyperlink}"/>
+              <Button Click="AddKeywordButton_Click" Content="{Binding DisplayText}">
+                <Button.Style>
+                  <Style TargetType="Button" BasedOn="{StaticResource Hyperlink}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding ToolTip, Mode=OneTime, Converter={StaticResource HasTextLengthConverter}}" Value="True">
+                        <Setter Property="ToolTip" Value="{Binding ToolTip}" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </Button.Style>
+              </Button>
             </StackPanel>
             <DataTemplate.Triggers>
               <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
