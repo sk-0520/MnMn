@@ -601,7 +601,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         RelationVideoLoadState = LoadState.Loaded;
                     });
                 }
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            }).Unwrap();
         }
 
         void SetRelationVideoItems(IEnumerable<SmileVideoInformationViewModel> items)
