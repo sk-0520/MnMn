@@ -790,6 +790,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._isSelectedInformation; }
             set { SetVariableValue(ref this._isSelectedInformation, value); }
         }
+
+        public bool IsSelectedRelationVideo
+        {
+            get { return this._isSelectedRelationVideo; }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedRelationVideo, value)) {
+                    if(IsSelectedRelationVideo && RelationVideoLoadState == LoadState.None) {
+                        LoadRelationVideoAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+
         public bool IsSelectedMarket
         {
             get { return this._isSelectedMarket; }

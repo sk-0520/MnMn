@@ -601,7 +601,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         RelationVideoLoadState = LoadState.Loaded;
                     });
                 }
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            }).Unwrap();
         }
 
         void SetRelationVideoItems(IEnumerable<SmileVideoInformationViewModel> items)
@@ -2007,8 +2007,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             TagItems.InitializeRange(Information.TagList);
 
-            LoadRelationVideoAsync();
-
             var propertyNames = new[] {
                 nameof(VideoId),
                 nameof(Title),
@@ -2057,6 +2055,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SafeShowTime = TimeSpan.Zero;
             SafeDownloadedSize = 0;
             CommentScriptDefault = null;
+            RelationVideoLoadState = LoadState.None;
             MarketLoadState = LoadState.None;
             ForceNavigatorbarOperation = false;
             PosterInformation = null;
