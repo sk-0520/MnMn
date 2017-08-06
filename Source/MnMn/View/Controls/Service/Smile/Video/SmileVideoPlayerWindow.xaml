@@ -2495,7 +2495,7 @@
             </Grid>
           </Grid>
         </TabItem>
-        <TabItem Header="関連動画">
+        <TabItem Header="関連動画" IsSelected="{Binding IsSelectedRelationVideo}">
           <ScrollViewer>
             <ItemsControl ItemsSource="{Binding RelationVideoItems}">
               <ItemsControl.ItemsPanel>

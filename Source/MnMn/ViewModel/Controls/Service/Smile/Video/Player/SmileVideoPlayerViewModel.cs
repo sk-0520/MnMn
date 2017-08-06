@@ -2007,8 +2007,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             TagItems.InitializeRange(Information.TagList);
 
-            LoadRelationVideoAsync();
-
             var propertyNames = new[] {
                 nameof(VideoId),
                 nameof(Title),

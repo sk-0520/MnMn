@@ -99,6 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _isOpenCommentDetail;
         bool _isSelectedInformation;
+        bool _isSelectedRelationVideo;
         bool _isSelectedMarket;
         bool _isSettedMedia;
 
