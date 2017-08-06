@@ -389,6 +389,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         bool OrderCore_Exit(OrderModel order)
         {
+            Logger.Trace("exit");
+
             WebNavigatorCore.Uninitialize();
 
             Application.Current.Dispatcher.Invoke(() => {
@@ -399,6 +401,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         private bool OrderCore_Reboot(OrderModel order)
         {
+            Logger.Trace("reboot");
+
             WebNavigatorCore.Uninitialize();
 
             Process.Start(Constants.AssemblyPath, Environment.CommandLine);

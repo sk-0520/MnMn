@@ -686,15 +686,21 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 Mediator.Logger.Fatal($"time out: {nameof(ManagerViewModelBase.UninitializeAsync)}");
             }
 
+            Mediator.Logger.LoggerConfig.PutsCustom = false;
+
             Mediator.Logger.Trace("end closing -> start close!");
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
+            Mediator.Logger.Trace("start close!");
+
+            Mediator.Logger.Trace($"{nameof(WebNavigatorCore)}.{nameof(WebNavigatorCore.Uninitialize)}");
             WebNavigatorCore.Uninitialize();
 
             Mediator.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Shutdown));
 
+            Mediator.Logger.Trace($"{nameof(AppManager)}.{nameof(AppManager.UninitializeView)}");
             AppManager.UninitializeView(View);
 
             if(VariableConstants.IsSafeModeExecute) {
@@ -708,6 +714,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
 
             RestoreSystemParameter(GlobalManager.SystemParameter, Mediator.Logger);
+
+            Mediator.Logger.Trace("end close!");
         }
 
         private void App_Exit(object sender, ExitEventArgs e)
