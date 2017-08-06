@@ -696,7 +696,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
             Mediator.Logger.Trace("start close!");
 
             Mediator.Logger.Trace($"{nameof(WebNavigatorCore)}.{nameof(WebNavigatorCore.Uninitialize)}");
-            WebNavigatorCore.Uninitialize();
+            // #724
+            try {
+                WebNavigatorCore.Uninitialize();
+            } catch(System.Runtime.InteropServices.InvalidComObjectException ex) {
+                Mediator.Logger.Error(ex);
+            }
 
             Mediator.Order(new AppProcessLinkStateChangeOrderModel(ProcessLinkState.Shutdown));
 

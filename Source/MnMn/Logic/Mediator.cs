@@ -391,7 +391,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             Logger.Trace("exit");
 
-            WebNavigatorCore.Uninitialize();
+            // #724
+            try {
+                WebNavigatorCore.Uninitialize();
+            } catch(System.Runtime.InteropServices.InvalidComObjectException ex) {
+                Logger.Error(ex);
+            }
 
             Application.Current.Dispatcher.Invoke(() => {
                 Application.Current.Shutdown();
@@ -403,7 +408,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             Logger.Trace("reboot");
 
-            WebNavigatorCore.Uninitialize();
+            // #724
+            try {
+                WebNavigatorCore.Uninitialize();
+            } catch(System.Runtime.InteropServices.InvalidComObjectException ex) {
+                Logger.Error(ex);
+            }
 
             Process.Start(Constants.AssemblyPath, Environment.CommandLine);
             //var processStartInfo = new ProcessStartInfo() {

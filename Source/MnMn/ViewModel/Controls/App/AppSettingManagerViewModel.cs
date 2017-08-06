@@ -278,6 +278,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             Mediator.Order(new AppSaveOrderModel(true));
 
+            // ここは死んでもらう
             WebNavigatorCore.Uninitialize();
 
             try {

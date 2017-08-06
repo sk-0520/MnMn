@@ -143,6 +143,13 @@
 					},
 					{
 						'revision': '',
+						'subject': '#724: クラッシュレポートより: System.Runtime.InteropServices.InvalidComObjectException: 基になる RCW から分割された COM オブジェクトを使うことはできません',
+						'comments': [
+							'再現不可のため隠蔽'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
