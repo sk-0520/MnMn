@@ -797,7 +797,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._isSelectedRelationVideo, value)) {
-                    if(IsSelectedRelationVideo && RelationVideoLoadState != LoadState.Loaded) {
+                    if(IsSelectedRelationVideo && RelationVideoLoadState == LoadState.None) {
                         LoadRelationVideoAsync().ConfigureAwait(false);
                     }
                 }

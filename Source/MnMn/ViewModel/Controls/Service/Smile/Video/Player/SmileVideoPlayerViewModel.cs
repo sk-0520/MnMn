@@ -2055,6 +2055,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SafeShowTime = TimeSpan.Zero;
             SafeDownloadedSize = 0;
             CommentScriptDefault = null;
+            RelationVideoLoadState = LoadState.None;
             MarketLoadState = LoadState.None;
             ForceNavigatorbarOperation = false;
             PosterInformation = null;
