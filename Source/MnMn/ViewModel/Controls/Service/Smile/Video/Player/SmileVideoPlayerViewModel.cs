@@ -1400,6 +1400,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(View == null) {
                 return;
             }
+            if(IsViewClosed) {
+                Mediator.Logger.Debug("view: closed");
+                return;
+            }
 
             // 経験則上これが一番確実という悲しさ
             if(!View.Topmost) {
@@ -1416,6 +1420,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ChangeTopmostState()
         {
             if(View == null) {
+                return;
+            }
+            if(IsViewClosed) {
+                Mediator.Logger.Debug("view: closed");
                 return;
             }
 
@@ -2316,6 +2324,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !Navigationbar.ChangingVideoPosition) {
+                if(NormalCommentArea == null || OriginalPosterCommentArea == null) {
+                    Mediator.Logger.Warning("comment area is null", $"{nameof(NormalCommentArea)}: {NormalCommentArea}{Environment.NewLine}{nameof(OriginalPosterCommentArea)}: {OriginalPosterCommentArea}");
+                    return;
+                }
+
                 if(WaitingFirstPlay.Value) {
                     SetVideoDataInformation();
                     WaitingFirstPlay.Value = false;
