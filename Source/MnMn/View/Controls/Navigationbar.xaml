@@ -39,6 +39,7 @@
       IsEnabled="{Binding CanSeek, RelativeSource={RelativeSource AncestorType=UserControl}}"
       Command="{Binding PlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
       CommandParameter="{Binding PlayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      ToolTip="{Binding PlayToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
     >
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -80,6 +81,7 @@
       IsEnabled="{Binding CanSeek, RelativeSource={RelativeSource AncestorType=UserControl}}"
       Command="{Binding StopCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
       CommandParameter="{Binding StopCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      ToolTip="{Binding StopToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
     >
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -228,6 +230,7 @@
         IsChecked="{Binding IsReplayChecked, RelativeSource={RelativeSource AncestorType=UserControl}}"
         Command="{Binding ReplayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
         CommandParameter="{Binding ReplayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        ToolTip="{Binding ReplayToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
       >
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -256,6 +259,7 @@
               <ToggleButton
                 x:Name="PART_AudioMute"
                 IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LogicalNotConverter}}"
+                ToolTip="{Binding VolumeToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
               >
                 <Grid>
                   <Viewbox Style="{StaticResource SmallIconBox}">

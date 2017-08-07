@@ -1162,6 +1162,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   再生/一時停止 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Navigationbar_Play {
+            get {
+                return ResourceManager.GetString("String_App_Navigationbar_Play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   リピートON/OFF に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Navigationbar_Replay {
+            get {
+                return ResourceManager.GetString("String_App_Navigationbar_Replay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   停止 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Navigationbar_Stop {
+            get {
+                return ResourceManager.GetString("String_App_Navigationbar_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ミュートON/OFF に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Navigationbar_Volume {
+            get {
+                return ResourceManager.GetString("String_App_Navigationbar_Volume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   報告用設定・情報データファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Setting_PublicExportFileName {
