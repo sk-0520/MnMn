@@ -213,7 +213,7 @@
                   <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
-              <TextBlock>本体</TextBlock>
+              <AccessText>本体(_M)</AccessText>
             </StackPanel>
           </Button>
           <Button Command="{Binding OpenSettingDirectoryCommand}">
@@ -223,7 +223,7 @@
                   <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
-              <TextBlock>データ</TextBlock>
+              <AccessText>データ(_D)</AccessText>
             </StackPanel>
           </Button>
           <Button Command="{Binding OpenCacheDirectoryCommand}">
@@ -233,7 +233,7 @@
                   <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
-              <TextBlock>キャッシュ</TextBlock>
+              <AccessText>キャッシュ(_C)</AccessText>
             </StackPanel>
           </Button>
           <Button Command="{Binding ExportPublicInformationFileCommand}">
@@ -243,7 +243,7 @@
                   <Path Data="{StaticResource Image_Export}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
-              <TextBlock x:Name="commandExportPublic">報告用データ出力</TextBlock>
+              <AccessText x:Name="commandExportPublic">報告用データ出力(_O)</AccessText>
             </StackPanel>
           </Button>
 
@@ -260,8 +260,8 @@
             </xctk:DropDownButton.Content>
             <xctk:DropDownButton.DropDownContent>
               <StackPanel>
-                <MenuItem Header="設定保存(そのまま)" Command="{Binding SettingSaveCommand}" CommandParameter="False" />
-                <MenuItem Header="設定保存(アーカイブ)" Command="{Binding SettingSaveCommand}" CommandParameter="True" />
+                <MenuItem Header="設定保存: そのまま" Command="{Binding SettingSaveCommand}" CommandParameter="False" />
+                <MenuItem Header="設定保存: アーカイブ" Command="{Binding SettingSaveCommand}" CommandParameter="True" />
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -292,14 +292,14 @@
     <TabItem Header="ログ" DataContext="{Binding AppLoggingManager}" Style="{StaticResource SectionTabItem}">
       <DockPanel>
         <ToolBar DockPanel.Dock="Top">
-          <Button Command="{Binding SaveAllLogCommand}">全件保存</Button>
-          <Button Command="{Binding CopyAllLogCommand}">全件コピー</Button>
+          <Button Command="{Binding SaveAllLogCommand}">全件保存(_S)</Button>
+          <Button Command="{Binding CopyAllLogCommand}">全件コピー(_C)</Button>
           <Separator />
-          <Button Command="{Binding CopySelectedLogCommand}">選択ログをコピー</Button>
+          <Button Command="{Binding CopySelectedLogCommand}">選択ログをコピー(_T)</Button>
           <Separator />
-          <Button Command="{Binding ClearAllLogCommand}">クリア</Button>
+          <Button Command="{Binding ClearAllLogCommand}">クリア(_E)</Button>
           <Separator />
-          <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力</ToggleButton>
+          <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力(O)</ToggleButton>
         </ToolBar>
 
         <ListView x:Name="listLog" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Item" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding LogItems, Mode=OneTime}" SelectedItem="{Binding SelectedLogItem}">
@@ -443,10 +443,10 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
-              <RadioButton Grid.Column="0" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Demand}}" Style="{StaticResource HorizontalRadioButton}">要望</RadioButton>
-              <RadioButton Grid.Column="1" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Question}}" Style="{StaticResource HorizontalRadioButton}">質問</RadioButton>
-              <RadioButton Grid.Column="2" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Bug}}" Style="{StaticResource HorizontalRadioButton}">不具合</RadioButton>
-              <RadioButton Grid.Column="3" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Other}}" Style="{StaticResource HorizontalRadioButton}">その他</RadioButton>
+              <RadioButton Grid.Column="0" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Demand}}" Style="{StaticResource HorizontalRadioButton}">要望(_D)</RadioButton>
+              <RadioButton Grid.Column="1" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Question}}" Style="{StaticResource HorizontalRadioButton}">質問(_Q)</RadioButton>
+              <RadioButton Grid.Column="2" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Bug}}" Style="{StaticResource HorizontalRadioButton}">不具合(_B)</RadioButton>
+              <RadioButton Grid.Column="3" IsChecked="{Binding QuestionnaireKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_app:QuestionnaireKind.Other}}" Style="{StaticResource HorizontalRadioButton}">その他(_O)</RadioButton>
               <TextBox Grid.Column="4" mamc:TextBoxHelper.Watermark="その他の場合に入力してください" MaxLength="20" Text="{Binding KindOther}">
                 <TextBox.Style>
                   <Style TargetType="TextBox" BasedOn="{StaticResource VerticalTextBox}">
@@ -461,14 +461,14 @@
               </TextBox>
             </Grid>
 
-            <Label Grid.Row="1" Grid.Column="0">要約</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" MaxLength="100" Style="{StaticResource VerticalTextBox}" Text="{Binding Subject}" />
+            <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=inputSubject}">要約(_S)</Label>
+            <TextBox x:Name="inputSubject" Grid.Row="1" Grid.Column="1" MaxLength="100" Style="{StaticResource VerticalTextBox}" Text="{Binding Subject}" />
 
-            <Label Grid.Row="2" Grid.Column="0">内容</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" MaxLength="10000" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" TextWrapping="WrapWithOverflow" AcceptsReturn="True" MinLines="3" MaxLines="3" Style="{StaticResource VerticalTextBox}" Text="{Binding Message}" />
+            <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=inputMessage}">内容(_E)</Label>
+            <TextBox x:Name="inputMessage" Grid.Row="2" Grid.Column="1" MaxLength="10000" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" TextWrapping="WrapWithOverflow" AcceptsReturn="True" MinLines="3" MaxLines="3" Style="{StaticResource VerticalTextBox}" Text="{Binding Message}" />
 
             <Label Grid.Row="3" Grid.Column="0">投稿</Label>
-            <Button Grid.Row="3" Grid.Column="1" Command="{Binding SubmitCommand}" HorizontalAlignment="Left">入力内容を投稿する</Button>
+            <Button Grid.Row="3" Grid.Column="1" Command="{Binding SubmitCommand}" HorizontalAlignment="Left">入力内容を投稿する(_P)</Button>
 
           </Grid>
         </Expander>

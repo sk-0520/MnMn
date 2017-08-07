@@ -158,7 +158,7 @@
                                 </MultiBinding>
                               </DataTrigger.Binding>
                               <Setter Property="Command" Value="{Binding DataContext.RemoveBookmarkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                              <Setter Property="Content" Value="ブックマークから削除" />
+                              <Setter Property="Content" Value="ブックマークから削除(_D)" />
                             </DataTrigger>
                             <DataTrigger Value="False">
                               <DataTrigger.Binding>
@@ -170,7 +170,7 @@
                                 </MultiBinding>
                               </DataTrigger.Binding>
                               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                              <Setter Property="Content" Value="ブックマークに追加" />
+                              <Setter Property="Content" Value="ブックマークに追加(_A)" />
                             </DataTrigger>
                           </Style.Triggers>
                         </Style>

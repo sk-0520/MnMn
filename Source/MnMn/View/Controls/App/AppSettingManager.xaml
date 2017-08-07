@@ -54,7 +54,7 @@
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0">ディレクトリ</Label>
+            <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=inputCacheDirectory}">ディレクトリ(_D)</Label>
             <Grid Grid.Row="0" Grid.Column="1">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -62,19 +62,19 @@
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding CacheDirectoryPath}"/>
-              <Button Grid.Column="1" Style="{StaticResource VerticalButton}" Command="{Binding SelectCacheDirectoryCommand}">選択</Button>
-              <Button Grid.Column="2" Style="{StaticResource VerticalButton}" Command="{Binding SetDefaultCacheDirectoryCommand}" >規定値に戻す</Button>
+              <TextBox x:Name="inputCacheDirectory" Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding CacheDirectoryPath}"/>
+              <Button Grid.Column="1" Style="{StaticResource VerticalButton}" Command="{Binding SelectCacheDirectoryCommand}">選択(_S)</Button>
+              <Button Grid.Column="2" Style="{StaticResource VerticalButton}" Command="{Binding SetDefaultCacheDirectoryCommand}" >規定値に戻す(_F)</Button>
             </Grid>
 
-            <Label Grid.Row="1" Grid.Column="0">期限</Label>
+            <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=inputCacheLifeTime}">期限(_C)</Label>
             <Grid Grid.Row="1" Grid.Column="1">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <mamc:NumericUpDown Grid.Column="0" Style="{StaticResource VerticalNumericUpDown}" Value="{Binding CacheLifeTime, Converter={StaticResource TimeSpanToHourConverter}}" />
+              <mamc:NumericUpDown x:Name="inputCacheLifeTime" Grid.Column="0" Style="{StaticResource VerticalNumericUpDown}" Value="{Binding CacheLifeTime, Converter={StaticResource TimeSpanToHourConverter}}" />
               <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}">時間</TextBlock>
             </Grid>
 
@@ -88,19 +88,19 @@
 
         <GroupBox mamc:ControlsHelper.ContentCharacterCasing="Normal" Header="MnMn">
           <StackPanel>
-            <CheckBox IsChecked="{Binding RunningInformationAutoSendCrashReport}">クラッシュレポートを自動送信する</CheckBox>
+            <CheckBox IsChecked="{Binding RunningInformationAutoSendCrashReport}">クラッシュレポートを自動送信する(_O)</CheckBox>
           </StackPanel>
         </GroupBox>
 
         <GroupBox Header="システム制御">
           <StackPanel>
-            <CheckBox IsChecked="{Binding SystemBreakSuppression}">非操作稼働中にスクリーンセーバー・ロックを抑制する</CheckBox>
+            <CheckBox IsChecked="{Binding SystemBreakSuppression}">非操作稼働中にスクリーンセーバー・ロックを抑制する(_L)</CheckBox>
           </StackPanel>
         </GroupBox>
 
         <GroupBox Header="テーマ">
           <StackPanel>
-            <CheckBox Grid.Column="0" IsChecked="{Binding IsRandomTheme}" Style="{StaticResource VerticalCheckBox}">ランダム</CheckBox>
+            <CheckBox Grid.Column="0" IsChecked="{Binding IsRandomTheme}" Style="{StaticResource VerticalCheckBox}">ランダム(_R)</CheckBox>
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -109,11 +109,11 @@
                 <ColumnDefinition Width="7*" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0">基本テーマ</Label>
-              <ComboBox Grid.Column="1" SelectedValuePath="Key" ItemTemplate="{StaticResource ThemeSelectItem}" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=selectBaseTheme}">基本テーマ(_B)</Label>
+              <ComboBox x:Name="selectBaseTheme" Grid.Column="1" SelectedValuePath="Key" ItemTemplate="{StaticResource ThemeSelectItem}" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}" />
 
-              <Label Grid.Column="2" Margin="{StaticResource LeftMargin}">アクセント</Label>
-              <ComboBox Grid.Column="3" SelectedValuePath="Key" ItemTemplate="{StaticResource ThemeSelectItem}" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}" />
+              <Label Grid.Column="2" Target="{Binding ElementName=selectAccent}" Margin="{StaticResource LeftMargin}">アクセント(_A)</Label>
+              <ComboBox x:Name="selectAccent" Grid.Column="3" SelectedValuePath="Key" ItemTemplate="{StaticResource ThemeSelectItem}" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}" />
             </Grid>
             <TextBlock Margin="{StaticResource TopMargin}">*テーマは再起動後にきちんと反映されます*</TextBlock>
           </StackPanel>
@@ -132,7 +132,7 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}" Margin="{StaticResource RightMargin}">通信UA変更</CheckBox>
+                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding LogicUsingCustomUserAgent}" Margin="{StaticResource RightMargin}">通信UA変更(_T)</CheckBox>
                   <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="通信処理のユーザーエージェントを変更する場合に入力してください" Text="{Binding LogicUserAgentFormat}" Style="{StaticResource VerticalTextBox}" />
                 </Grid>
 
@@ -153,7 +153,7 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}" Margin="{StaticResource RightMargin}">内蔵ブラウザUA変更 (要再起動)</CheckBox>
+                  <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding BrowserUsingCustomUserAgent}" Margin="{StaticResource RightMargin}">内蔵ブラウザUA変更: 要再起動(_W)</CheckBox>
                   <TextBox Grid.Row="0" Grid.Column="1" mamc:TextBoxHelper.Watermark="内蔵ブラウザのユーザーエージェントを変更する場合に入力してください" Text="{Binding BrowserCustomUserAgentFormat}" Style="{StaticResource VerticalTextBox}"/>
                 </Grid>
 
