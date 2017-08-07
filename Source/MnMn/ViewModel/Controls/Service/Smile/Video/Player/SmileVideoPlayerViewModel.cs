@@ -2287,6 +2287,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             Information.IsPlaying = false;
 
+            DetachEvent();
+
             InitializeStatus();
 
             try {
