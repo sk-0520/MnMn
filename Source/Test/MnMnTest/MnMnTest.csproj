@@ -87,6 +87,10 @@
       <Project>{922d77b4-f3b7-4685-b6dc-6ecb0f4bbe8f}</Project>
       <Name>Package</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Library\SharedLibrary\SharedLibrary.csproj">
+      <Project>{9E8E373E-CD97-411D-8C45-10AC4A86CAE8}</Project>
+      <Name>SharedLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MnMn\MnMn.csproj">
       <Project>{96623185-24f0-4a71-8429-560ac8a5f172}</Project>
       <Name>MnMn</Name>

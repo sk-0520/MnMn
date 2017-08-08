@@ -20,14 +20,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Model
 {
-    [TestFixture]
+    [TestClass]
     class FontModelTest
     {
-        [Test]
+        [TestMethod]
         public void DeepCloneTest()
         {
             var src = new FontModel() {

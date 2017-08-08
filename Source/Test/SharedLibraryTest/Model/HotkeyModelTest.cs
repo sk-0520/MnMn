@@ -21,14 +21,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Model
 {
-    [TestFixture]
+    [TestClass]
     class HotkeyModelTest
     {
-        [Test]
+        [TestMethod]
         public void DeepCloneTest()
         {
             var src = new HotKeyModel() {

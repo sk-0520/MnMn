@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
+﻿using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

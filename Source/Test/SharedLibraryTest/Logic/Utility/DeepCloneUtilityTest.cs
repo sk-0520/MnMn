@@ -22,11 +22,11 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
 {
-    [TestFixture]
+    [TestClass]
     class DeepCloneUtilityTest
     {
         struct PlainStruct:IDeepClone
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
             }
         }
 
-        [Test]
+        [TestMethod]
         public void DeepCopy_PlainStruct_Test()
         {
             var s = new PlainStruct();
@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
                 return DeepCloneUtility.Copy(this);
             }
         }
-        [Test]
+        [TestMethod]
         public void DeepCopy_PlainClass_Test()
         {
             var s = new PlainClass();
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
                 return DeepCloneUtility.Copy(this);
             }
         }
-        [Test]
+        [TestMethod]
         public void DeepCopy_PropertyStruct_Test()
         {
             var s = new PropertyStruct();
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
                 return DeepCloneUtility.Copy(this);
             }
         }
-        [Test]
+        [TestMethod]
         public void DeepCopy_NestStruct_Test()
         {
             var s = new NestStruct();
@@ -174,8 +174,8 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
         {
             public NestClass()
             {
-                plainClass_target = new PlainClass();
-                plainClass_untarget = new PlainClass();
+                this.plainClass_target = new PlainClass();
+                this.plainClass_untarget = new PlainClass();
             }
 #pragma warning disable 649
             [IsDeepClone]
@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
                 return DeepCloneUtility.Copy(this);
             }
         }
-        [Test]
+        [TestMethod]
         public void DeepCopy_NestClass_Test()
         {
             var s = new NestClass();

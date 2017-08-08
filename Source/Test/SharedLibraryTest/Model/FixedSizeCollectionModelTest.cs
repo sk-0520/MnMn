@@ -20,23 +20,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Model
 {
-    [TestFixture]
+    [TestClass]
     class FixedSizeCollectionModelTest
     {
-        [Test]
+        [TestMethod]
         public void CtorListTest()
         {
             var values = new[] { 1, 2, 3 };
             var list = new FixedSizeCollectionModel<int>(values, values.Length);
             Assert.AreEqual(values.Length, list.Count, list.LimitSize);
-            Assert.True(list.IsFIFO);
+            Assert.IsTrue(list.IsFIFO);
         }
 
-        [Test]
+        [TestMethod]
         public void CtorListAndLimitTest()
         {
             var limit = 2;
@@ -46,31 +46,31 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Model
             Assert.AreEqual(list.Count, limit);
         }
 
-        [TestCase(3, new[] { 0 }, new[] { 0 })]
-        [TestCase(3, new[] { 1, 2 }, new[] { 1, 2 })]
-        [TestCase(3, new[] { 1, 2, 3 }, new[] { 1, 2, 3 })]
-        [TestCase(3, new[] { 2, 3, 4 }, new[] { 1, 2, 3, 4 })]
-        [TestCase(3, new[] { 4, 5, 6 }, new[] { 1, 2, 3, 4, 5, 6 })]
-        public void CtroLimitFifo(int limit, int[] tests, int[] values)
-        {
-            var list = new FixedSizeCollectionModel<int>(values, limit, true);
-            for(var i = 0; i < list.Count; i++) {
-                Assert.AreEqual(list[i], tests[i]);
-            }
-        }
+        //[TestCase(3, new[] { 0 }, new[] { 0 })]
+        //[TestCase(3, new[] { 1, 2 }, new[] { 1, 2 })]
+        //[TestCase(3, new[] { 1, 2, 3 }, new[] { 1, 2, 3 })]
+        //[TestCase(3, new[] { 2, 3, 4 }, new[] { 1, 2, 3, 4 })]
+        //[TestCase(3, new[] { 4, 5, 6 }, new[] { 1, 2, 3, 4, 5, 6 })]
+        //public void CtroLimitFifo(int limit, int[] tests, int[] values)
+        //{
+        //    var list = new FixedSizeCollectionModel<int>(values, limit, true);
+        //    for(var i = 0; i < list.Count; i++) {
+        //        Assert.AreEqual(list[i], tests[i]);
+        //    }
+        //}
 
-        [TestCase(3, new[] { 0 }, new[] { 0 })]
-        [TestCase(3, new[] { 1, 2 }, new[] { 1, 2 })]
-        [TestCase(3, new[] { 1, 2, 3 }, new[] { 1, 2, 3 })]
-        [TestCase(3, new[] { 1, 2, 3 }, new[] { 1, 2, 3, 4 })]
-        [TestCase(3, new[] { 1, 2, 3 }, new[] { 1, 2, 3, 4, 5, 6 })]
-        public void CtroLimitLifo(int limit, int[] tests, int[] values)
-        {
-            var list = new FixedSizeCollectionModel<int>(values, limit, false);
-            for(var i = 0; i < list.Count; i++) {
-                Assert.AreEqual(list[i], tests[i]);
-            }
-        }
+        //[TestCase(3, new[] { 0 }, new[] { 0 })]
+        //[TestCase(3, new[] { 1, 2 }, new[] { 1, 2 })]
+        //[TestCase(3, new[] { 1, 2, 3 }, new[] { 1, 2, 3 })]
+        //[TestCase(3, new[] { 1, 2, 3 }, new[] { 1, 2, 3, 4 })]
+        //[TestCase(3, new[] { 1, 2, 3 }, new[] { 1, 2, 3, 4, 5, 6 })]
+        //public void CtroLimitLifo(int limit, int[] tests, int[] values)
+        //{
+        //    var list = new FixedSizeCollectionModel<int>(values, limit, false);
+        //    for(var i = 0; i < list.Count; i++) {
+        //        Assert.AreEqual(list[i], tests[i]);
+        //    }
+        //}
 
         public FixedSizeCollectionModel<int> GetList()
         {
@@ -78,36 +78,36 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Model
             return new FixedSizeCollectionModel<int>(values, values.Length);
         }
 
-        [TestCase(10, 20)]
-        [TestCase(10, 20, 30)]
-        public void AddFifoTest(params int[] values)
-        {
-            var list = GetList();
-            foreach(var value in values) {
-                list.Add(value);
-            }
-            var test = GetList();
-            for(var i = 0; i < values.Length; i++) {
-                Assert.AreEqual(list[i], test[i + values.Length]);
-            }
-        }
+        //[TestCase(10, 20)]
+        //[TestCase(10, 20, 30)]
+        //public void AddFifoTest(params int[] values)
+        //{
+        //    var list = GetList();
+        //    foreach(var value in values) {
+        //        list.Add(value);
+        //    }
+        //    var test = GetList();
+        //    for(var i = 0; i < values.Length; i++) {
+        //        Assert.AreEqual(list[i], test[i + values.Length]);
+        //    }
+        //}
 
-        [TestCase(10, 20)]
-        [TestCase(10, 20, 30)]
-        public void AddLifoTest(params int[] values)
-        {
-            var list = GetList();
-            list.IsFIFO = false;
-            foreach(var value in values) {
-                list.Add(value);
-            }
-            var test = GetList();
-            for(var i = 0; i < values.Length; i++) {
-                Assert.AreEqual(list[i], test[i]);
-            }
-        }
+        //[TestCase(10, 20)]
+        //[TestCase(10, 20, 30)]
+        //public void AddLifoTest(params int[] values)
+        //{
+        //    var list = GetList();
+        //    list.IsFIFO = false;
+        //    foreach(var value in values) {
+        //        list.Add(value);
+        //    }
+        //    var test = GetList();
+        //    for(var i = 0; i < values.Length; i++) {
+        //        Assert.AreEqual(list[i], test[i]);
+        //    }
+        //}
 
-        [Test]
+        [TestMethod]
         public void InsertFifoTest1()
         {
             var list = GetList();
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Model
             Assert.AreEqual(list[8], 9);
         }
 
-        [Test]
+        [TestMethod]
         public void InsertFifoTest2()
         {
             var list = GetList();
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Model
             Assert.AreEqual(list[8], 9);
         }
 
-        [Test]
+        [TestMethod]
         public void InsertLifoTest1()
         {
             var list = GetList();
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Model
             Assert.AreEqual(list[8], 8);
         }
 
-        [Test]
+        [TestMethod]
         public void InsertLifoTest2()
         {
             var list = GetList();
