@@ -51,7 +51,7 @@
       <TabControl.LayoutTransform>
         <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}" />
       </TabControl.LayoutTransform>
-      <TabItem Header="使用許諾分" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
+      <TabItem Header="使用許諾分(_M)" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
         <FlowDocumentScrollViewer>
           <FlowDocument FontSize="14">
             <Paragraph FontWeight="Bold" FontSize="18">
@@ -119,7 +119,7 @@
               初期設定
             </Paragraph>
             <Paragraph>
-              <CheckBox FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=FlowDocument}}" IsChecked="{Binding AutoSendCrashReport}">クラッシュレポートを自動送信する</CheckBox>
+              <CheckBox FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=FlowDocument}}" IsChecked="{Binding AutoSendCrashReport}">クラッシュレポートを自動送信する(_C)</CheckBox>
               <LineBreak />
               <StackPanel Margin="{StaticResource IndependentMargin}">
                 <TextBlock>キミの個人情報を売れるなら売りたいわ、売り場教えてくれ(どうせ端金な悲しみ)。</TextBlock>
@@ -144,10 +144,10 @@
           </FlowDocument>
         </FlowDocumentScrollViewer>
       </TabItem>
-      <TabItem Header="GPLv3(日本語訳)" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
+      <TabItem Header="GPLv3(日本語訳)(_L)" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
         <app_view_controls:WebNavigator x:Name="docCultureLicense" ServiceType="Application" />
       </TabItem>
-      <TabItem Header="GPLv3(原文)" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
+      <TabItem Header="GPLv3(原文)(_G)" mamc:ControlsHelper.HeaderFontSize="{StaticResource FontBigSize}">
         <app_view_controls:WebNavigator x:Name="docOriginalLicense" ServiceType="Application" />
       </TabItem>
     </TabControl>
@@ -162,7 +162,7 @@
       </Grid.ColumnDefinitions>
 
       <Button Grid.Column="0" Margin="3" Command="{Binding AcceptCommand}" Style="{StaticResource AccentedSquareButtonStyle}">使用する</Button>
-      <Button Grid.Column="1" Margin="3" IsCancel="True" Command="{Binding CancelCommand}" Style="{DynamicResource SquareButtonStyle}">使用しない</Button>
+      <Button Grid.Column="1" Margin="3" IsCancel="True" Command="{Binding CancelCommand}" Style="{DynamicResource SquareButtonStyle}">使用しない(_N)</Button>
     </Grid>
 
     <StatusBar Grid.Row="2">

@@ -389,7 +389,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         bool OrderCore_Exit(OrderModel order)
         {
-            WebNavigatorCore.Uninitialize();
+            Logger.Trace("exit");
+
+            // #724
+            try {
+                WebNavigatorCore.Uninitialize();
+            } catch(System.Runtime.InteropServices.InvalidComObjectException ex) {
+                Logger.Error(ex);
+            }
 
             Application.Current.Dispatcher.Invoke(() => {
                 Application.Current.Shutdown();
@@ -399,7 +406,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         private bool OrderCore_Reboot(OrderModel order)
         {
-            WebNavigatorCore.Uninitialize();
+            Logger.Trace("reboot");
+
+            // #724
+            try {
+                WebNavigatorCore.Uninitialize();
+            } catch(System.Runtime.InteropServices.InvalidComObjectException ex) {
+                Logger.Error(ex);
+            }
 
             Process.Start(Constants.AssemblyPath, Environment.CommandLine);
             //var processStartInfo = new ProcessStartInfo() {

@@ -53,11 +53,11 @@
                 <ColumnDefinition />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Row="0" Grid.Column="0">メールアドレスまたは電話番号</Label>
-              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding EditingAccountName}" Style="{StaticResource VerticalTextBox}" />
+              <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=inputAccountName}">メールアドレスまたは電話番号(_T)</Label>
+              <TextBox x:Name="inputAccountName" Grid.Row="0" Grid.Column="1" Text="{Binding EditingAccountName}" Style="{StaticResource VerticalTextBox}" />
 
-              <Label Grid.Row="1" Grid.Column="0">パスワード</Label>
-              <PasswordBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource VerticalPasswordBox}" >
+              <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=inputPassword}">パスワード(_P)</Label>
+              <PasswordBox x:Name="inputPassword" Grid.Row="1" Grid.Column="1" Style="{StaticResource VerticalPasswordBox}" >
                 <i:Interaction.Behaviors>
                   <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding EditingAccountPassword, Mode=TwoWay}" />
                 </i:Interaction.Behaviors>
@@ -74,7 +74,7 @@
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding LoginCommand}">
                   <StackPanel Orientation="Horizontal">
-                    <TextBlock>ログインチェック:</TextBlock>
+                    <AccessText>ログインチェック(L):</AccessText>
                     <TextBlock Text="{Binding Session.LoginState, Converter={StaticResource EnumDisplayConverter}}" />
                   </StackPanel>
                 </Button>
@@ -87,7 +87,7 @@
 
               <StackPanel Grid.Row="4" Grid.Column="1">
 
-                <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding EnabledStartupAutoLogin}">起動時に自動ログインする</CheckBox>
+                <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding EnabledStartupAutoLogin}">起動時に自動ログインする(_A)</CheckBox>
               </StackPanel>
             </Grid>
           </StackPanel>
@@ -105,7 +105,7 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource KeywordTextLabel}" >カスタムコピー書式</Label>
+              <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource KeywordTextLabel}" >カスタムコピー書式(_C)</Label>
               <app_view_controls:KeywordTextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" KeywordItemsSource="{Binding CommonCustomCopyList}" />
 
             </Grid>
@@ -114,9 +114,9 @@
 
         <GroupBox Header="動画再生方法">
           <StackPanel>
-            <RadioButton Content="プレイヤーで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
-            <RadioButton Content="標準ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
-            <RadioButton Content="外部プログラムで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
+            <RadioButton Content="プレイヤーで開く(_P)" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
+            <RadioButton Content="標準ブラウザで開く(_D)" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
+            <RadioButton Content="外部プログラムで開く(_O)" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
 
             <GroupBox Header="外部プログラム設定">
               <Grid>
@@ -131,9 +131,9 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="プログラム"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="プログラム(_L)" />
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LauncherPath, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
-                <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}" Style="{StaticResource VerticalButton}" Content="開く" />
+                <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}" Style="{StaticResource VerticalButton}" Content="開く(_O)" />
 
                 <Label Grid.Row="1" Grid.Column="0" Content="パラメータ" Style="{StaticResource KeywordTextLabel}" />
                 <app_view_controls:KeywordTextBox Grid.Row="1" Grid.Column="1" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" KeywordItemsSource="{Binding LauncherParameterList}" />
@@ -154,7 +154,7 @@
 
         <GroupBox Header="ダウンロード">
           <StackPanel>
-            <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding UsingDmc}">DMC形式を使用</CheckBox>
+            <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding UsingDmc}">DMC形式を使用(_D)</CheckBox>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition />
@@ -202,23 +202,23 @@
 
         <GroupBox Header="プレイヤー">
           <StackPanel>
-            <CheckBox IsChecked="{Binding OpenPlayerInNewWindow}" Style="{StaticResource VerticalCheckBox}">常に新規プレイヤーで動画再生を行う</CheckBox>
-            <CheckBox IsChecked="{Binding IsAutoPlay}" Style="{StaticResource VerticalCheckBox}">動画を自動的に再生する</CheckBox>
-            <CheckBox IsChecked="{Binding DisbaledAutoScrollCommentListOverCursor}" Style="{StaticResource VerticalCheckBox}">自動スクロール設定が有効でもコメントリストにマウスカーソルがある場合はスクロールを抑制する</CheckBox>
-            <CheckBox IsChecked="{Binding CanChangeCommentEnabledArea}" Style="{StaticResource VerticalCheckBox}">コメント有効領域の設定を可能にする</CheckBox>
-            <CheckBox IsChecked="{Binding ShowNavigatorFullScreen}" Style="{StaticResource VerticalCheckBox}">フルスクリーン時にナビゲータを常に表示する</CheckBox>
-            <CheckBox IsChecked="{Binding InactiveIsFullScreenRestore}" Style="{StaticResource VerticalCheckBox}">フルスクリーン時に非アクティブで通常ウィンドウに戻す</CheckBox>
+            <CheckBox IsChecked="{Binding OpenPlayerInNewWindow}" Style="{StaticResource VerticalCheckBox}">常に新規プレイヤーで動画再生を行う(_N)</CheckBox>
+            <CheckBox IsChecked="{Binding IsAutoPlay}" Style="{StaticResource VerticalCheckBox}">動画を自動的に再生する(_Y)</CheckBox>
+            <CheckBox IsChecked="{Binding DisbaledAutoScrollCommentListOverCursor}" Style="{StaticResource VerticalCheckBox}">自動スクロール設定が有効でもコメントリストにマウスカーソルがある場合はスクロールを抑制する(_M)</CheckBox>
+            <CheckBox IsChecked="{Binding CanChangeCommentEnabledArea}" Style="{StaticResource VerticalCheckBox}">コメント有効領域の設定を可能にする(_A)</CheckBox>
+            <CheckBox IsChecked="{Binding ShowNavigatorFullScreen}" Style="{StaticResource VerticalCheckBox}">フルスクリーン時にナビゲータを常に表示する(_N)</CheckBox>
+            <CheckBox IsChecked="{Binding InactiveIsFullScreenRestore}" Style="{StaticResource VerticalCheckBox}">フルスクリーン時に非アクティブで通常ウィンドウに戻す(_R)</CheckBox>
             <StackPanel Orientation="Horizontal" IsEnabled="{Binding InactiveIsFullScreenRestore, Mode=OneWay}">
               <Separator Style="{StaticResource NormalIndent}" />
-              <CheckBox IsChecked="{Binding InactiveIsFullScreenRestorePrimaryDisplayOnly}" Style="{StaticResource VerticalCheckBox}">メインディスプレイに限定する</CheckBox>
+              <CheckBox IsChecked="{Binding InactiveIsFullScreenRestorePrimaryDisplayOnly}" Style="{StaticResource VerticalCheckBox}">メインディスプレイに限定する(D)</CheckBox>
             </StackPanel>
-            <CheckBox IsChecked="{Binding StopFullScreenRestore}" Style="{StaticResource VerticalCheckBox}">再生終了時にフルスクリーンを解除する</CheckBox>
+            <CheckBox IsChecked="{Binding StopFullScreenRestore}" Style="{StaticResource VerticalCheckBox}">再生終了時にフルスクリーンを解除する(_F)</CheckBox>
             <StackPanel Orientation="Horizontal" IsEnabled="{Binding StopFullScreenRestore, Mode=OneWay}">
               <Separator Style="{StaticResource NormalIndent}" />
-              <CheckBox IsChecked="{Binding StopFullScreenRestorePrimaryDisplayOnly}" Style="{StaticResource VerticalCheckBox}">メインディスプレイに限定する</CheckBox>
+              <CheckBox IsChecked="{Binding StopFullScreenRestorePrimaryDisplayOnly}" Style="{StaticResource VerticalCheckBox}">メインディスプレイに限定する(_I)</CheckBox>
             </StackPanel>
-            <CheckBox IsChecked="{Binding KeySpaceToPause}" Style="{StaticResource VerticalCheckBox}">スペースキーで一時停止</CheckBox>
-            <CheckBox IsChecked="{Binding MoseClickToPause}" Style="{StaticResource VerticalCheckBox}">クリックで一時停止</CheckBox>
+            <CheckBox IsChecked="{Binding KeySpaceToPause}" Style="{StaticResource VerticalCheckBox}">スペースキーで一時停止(_S)</CheckBox>
+            <CheckBox IsChecked="{Binding MoseClickToPause}" Style="{StaticResource VerticalCheckBox}">クリックで一時停止(_C)</CheckBox>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition />
@@ -365,8 +365,8 @@
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding AutoInputVideoTitle}">視聴動画タイトルを付与する</CheckBox>
-            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding AutoInputWatchPageUri}">視聴ページ URI を付与する</CheckBox>
+            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding AutoInputVideoTitle}">視聴動画タイトルを付与する(_T)</CheckBox>
+            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding AutoInputWatchPageUri}">視聴ページ URI を付与する(_U)</CheckBox>
 
             <Label Grid.Row="2" Grid.Column="0">ハッシュタグ</Label>
             <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource VerticalTextBox}" Text="{Binding AutoInputHashTags, UpdateSourceTrigger=PropertyChanged}" />

@@ -143,6 +143,7 @@ namespace MnMnTest.Logic
             var selectItem = list[5];
             var nextItem = list[6];
 
+            list.GetFirstItem();
             list.ChangeCurrentItem(selectItem);
             Assert.IsTrue(list.CurrenItem == selectItem);
             Assert.IsTrue(list.ChangePrevItem() == prevItem);
@@ -158,7 +159,7 @@ namespace MnMnTest.Logic
                 var list = new PlayListManager<Item>();
                 list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
 
-                var num1 = list.CurrenItem;
+                var num1 = list.GetFirstItem();
                 var num2 = list.ChangeNextItem();
                 var num3 = list.ChangeNextItem();
                 var num4 = list.ChangeNextItem();
@@ -174,7 +175,7 @@ namespace MnMnTest.Logic
                 var list = new PlayListManager<Item>();
                 list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
 
-                var num1 = list.CurrenItem;
+                var num1 = list.GetFirstItem();
                 var num2 = list.ChangeNextItem();
                 var num3 = list.ChangeNextItem();
                 var num4 = list.ChangeNextItem();
@@ -191,7 +192,7 @@ namespace MnMnTest.Logic
                 var list = new PlayListManager<Item>();
                 list.AddRange(Enumerable.Range(1, 5).Select(i => new Item(i)));
 
-                var num1 = list.CurrenItem;
+                var num1 = list.GetFirstItem();
                 var num2 = list.ChangeNextItem();
                 var num3 = list.ChangeNextItem();
 
@@ -215,7 +216,7 @@ namespace MnMnTest.Logic
                 var list = new PlayListManager<Item>();
                 list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
 
-                var num1 = list.CurrenItem;
+                var num1 = list.GetFirstItem();
                 var num2 = list.ChangeNextItem();
                 var num3 = list.ChangeNextItem();
                 var num4 = list.ChangeNextItem();
@@ -231,7 +232,7 @@ namespace MnMnTest.Logic
                 var list = new PlayListManager<Item>();
                 list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
 
-                var num1 = list.CurrenItem;
+                var num1 = list.GetFirstItem();
                 var num2 = list.ChangeNextItem();
                 var num3 = list.ChangeNextItem();
                 var num4 = list.ChangeNextItem();
@@ -248,7 +249,7 @@ namespace MnMnTest.Logic
                 var list = new PlayListManager<Item>();
                 list.AddRange(Enumerable.Range(1, 5).Select(i => new Item(i)));
 
-                var num1 = list.CurrenItem;
+                var num1 = list.GetFirstItem();
                 var num2 = list.ChangeNextItem();
                 var num3 = list.ChangeNextItem();
 
@@ -259,6 +260,48 @@ namespace MnMnTest.Logic
                 var num4 = list.ChangeNextItem();
                 Assert.IsTrue(num4.Number == 4);
             }
+        }
+
+        [TestMethod]
+        public void IsLastItemTest()
+        {
+            var list = new PlayListManager<Item>();
+            list.AddRange(Enumerable.Range(1, 3).Select(i => new Item(i)));
+
+            list.GetFirstItem();
+            Assert.IsFalse(list.IsLastItem);
+
+            list.ChangeNextItem();
+            Assert.IsFalse(list.IsLastItem);
+
+            list.ChangeNextItem();
+            Assert.IsTrue(list.IsLastItem);
+
+            list.ChangeNextItem();
+            Assert.IsFalse(list.IsLastItem);
+        }
+
+        [TestMethod]
+        public void RemoveTest()
+        {
+            var list = new PlayListManager<Item>();
+            list.AddRange(Enumerable.Range(1, 3).Select(i => new Item(i)));
+
+            var num1 = list.GetFirstItem();
+            var num2 = list.ChangeNextItem();
+            var num3 = list.ChangeNextItem();
+
+            Assert.IsTrue(list.IsLastItem);
+
+            list.Remove(num1);
+
+            Assert.IsTrue(list.IsLastItem);
+
+            list.ChangeNextItem();
+            Assert.IsFalse(list.IsLastItem);
+
+            list.ChangeNextItem();
+            Assert.IsTrue(list.IsLastItem);
         }
     }
 }

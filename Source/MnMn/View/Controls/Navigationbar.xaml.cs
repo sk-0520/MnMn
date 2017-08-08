@@ -512,6 +512,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region PlayToolTipProperty
+
+        public static readonly DependencyProperty PlayToolTipProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(PlayToolTipProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(Properties.Resources.String_App_Navigationbar_Play, new PropertyChangedCallback(OnPlayToolTipChanged))
+        );
+
+        private static void OnPlayToolTipChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.PlayToolTip = e.NewValue;
+            }
+        }
+
+        public object PlayToolTip
+        {
+            get { return GetValue(PlayToolTipProperty); }
+            set { SetValue(PlayToolTipProperty, value); }
+        }
+
+        #endregion
+
         #endregion
 
         #region StopCommand
@@ -562,6 +587,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get { return GetValue(StopCommandParameterProperty); }
             set { SetValue(StopCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #region StopToolTipProperty
+
+        public static readonly DependencyProperty StopToolTipProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(StopToolTipProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(Properties.Resources.String_App_Navigationbar_Stop, new PropertyChangedCallback(OnStopToolTipChanged))
+        );
+
+        private static void OnStopToolTipChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.StopToolTip = e.NewValue;
+            }
+        }
+
+        public object StopToolTip
+        {
+            get { return GetValue(StopToolTipProperty); }
+            set { SetValue(StopToolTipProperty, value); }
         }
 
         #endregion
@@ -620,7 +670,58 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region ReplayToolTipProperty
+
+        public static readonly DependencyProperty ReplayToolTipProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(ReplayToolTipProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(Properties.Resources.String_App_Navigationbar_Replay, new PropertyChangedCallback(OnReplayToolTipChanged))
+        );
+
+        private static void OnReplayToolTipChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.ReplayToolTip = e.NewValue;
+            }
+        }
+
+        public object ReplayToolTip
+        {
+            get { return GetValue(ReplayToolTipProperty); }
+            set { SetValue(ReplayToolTipProperty, value); }
+        }
+
         #endregion
+
+        #endregion
+
+        #region VolumeToolTipProperty
+
+        public static readonly DependencyProperty VolumeToolTipProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(VolumeToolTipProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(Properties.Resources.String_App_Navigationbar_Volume, new PropertyChangedCallback(OnVolumeToolTipChanged))
+        );
+
+        private static void OnVolumeToolTipChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.VolumeToolTip = e.NewValue;
+            }
+        }
+
+        public object VolumeToolTip
+        {
+            get { return GetValue(VolumeToolTipProperty); }
+            set { SetValue(VolumeToolTipProperty, value); }
+        }
+
+        #endregion
+
 
         #region ExstendsContentProperty
 

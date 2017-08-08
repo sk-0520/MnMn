@@ -224,13 +224,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return CheckResultModel.Success(param);
         }
 
-        internal override Task ContinuousPlaybackAsync(bool isRandom, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
+        internal override Task ContinuousPlaybackAsync(bool isRandom, bool lastItemIsStop, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
             if(playerPreparationAction != null) {
                 throw new ArgumentException($"{nameof(playerPreparationAction)} is not null!!");
             }
 
-            return base.ContinuousPlaybackAsync(isRandom, vm => {
+            return base.ContinuousPlaybackAsync(isRandom, lastItemIsStop, vm => {
                 // 通常状態でのブックマーク内全選択であればこのブックマークを選択状態にする
                 if(SelectedSortType == SmileVideoSortType.Number && IsAscending) {
                     if(vm.PlayListItems.Count == FinderItemsViewer.Count) {

@@ -108,7 +108,7 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <Button Grid.Column="0" Command="{Binding AllCheckCommand}">
+      <Button Grid.Column="0" ToolTip="全チェック切り替え" Command="{Binding AllCheckCommand}">
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Check-On}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -137,7 +137,39 @@
                 </Viewbox>
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="ブックマーク追加" MouseEnter="MenuItem_MouseEnter" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" FontSize="{StaticResource FontSmallSize}">最終アイテムまで</Label>
+
+              <MenuItem Grid.Row="0" Grid.Column="1" Header="連続再生(_S)" Command="{Binding ContinuousPlaybackLastItemIsStopCommand}">
+                <MenuItem.Icon>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Play-Sequential}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Grid.Row="1" Grid.Column="1" Header="ランダム(_T)" Command="{Binding RandomContinuousPlaybackLastItemIsStopCommand}">
+                <MenuItem.Icon>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Play-Random}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </MenuItem.Icon>
+              </MenuItem>
+
+            </Grid>
+            <MenuItem Header="ブックマーク追加" MouseEnter="BookmarkMenuItem_MouseEnter" PreviewMouseLeftButtonDown="BookmarkMenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
               <MenuItem.Resources>
                 <StackPanel x:Key="Content" Orientation="Horizontal">
                   <Border>
@@ -180,10 +212,10 @@
 
       <TextBox Grid.Column="2" mamc:TextBoxHelper.ClearTextButton="True" mamc:TextBoxHelper.Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
 
-      <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}" Margin="{StaticResource RightMargin}">除外</ToggleButton>
+      <ToggleButton Grid.Column="3" ToolTip="タイトルフィルタに一致するもの除外する" IsChecked="{Binding IsBlacklist}" Margin="{StaticResource RightMargin}">除外(_B)</ToggleButton>
 
       <Label Grid.Column="4" >並べ替え</Label>
-      <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}" Style="{StaticResource OrderAscendingButton}" />
+      <ToggleButton Grid.Column="5" ToolTip="昇順・降順切り替え" IsChecked="{Binding IsAscending}" Style="{StaticResource OrderAscendingButton}" />
 
       <ComboBox Grid.Column="6" MinWidth="100" VerticalContentAlignment="Center" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
         <ComboBox.ItemTemplate>
@@ -267,7 +299,7 @@
             <ContextMenu.Resources>
               <CollectionViewSource x:Key="TagList" Source="{Binding SelectedFinderItem.Information.TagList}" />
             </ContextMenu.Resources>
-            <MenuItem Header="メインプレイヤーで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
+            <MenuItem Header="メインプレイヤーで開く(_P)" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
               <MenuItem.Style>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Style.Triggers>
@@ -301,7 +333,7 @@
                 </MultiBinding>
               </MenuItem.CommandParameter>
             </MenuItem>
-            <MenuItem Header="新規プレイヤーで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
+            <MenuItem Header="新規プレイヤーで開く(_N)" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
               <MenuItem.Style>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Style.Triggers>
@@ -335,7 +367,7 @@
                 </MultiBinding>
               </MenuItem.CommandParameter>
             </MenuItem>
-            <MenuItem Header="標準ブラウザで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+            <MenuItem Header="標準ブラウザで開く(_D)" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
               <MenuItem.Style>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Style.Triggers>
@@ -359,7 +391,7 @@
                 </MultiBinding>
               </MenuItem.CommandParameter>
             </MenuItem>
-            <MenuItem Header="外部プログラムで開く"  Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+            <MenuItem Header="外部プログラムで開く(_L)"  Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
               <MenuItem.Style>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                   <Style.Triggers>
@@ -381,7 +413,7 @@
               </MenuItem.CommandParameter>
             </MenuItem>
             <Separator />
-            <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}">
+            <MenuItem Header="あとで見る(_I)" Command="{Binding AddCheckItLaterCommand}">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -391,7 +423,7 @@
               </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem Header="ご飯食べたらすぐ見る" Visibility="{Binding ShowDownloadMenu, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding AddDownloadManagerCommand}">
+            <MenuItem Header="ご飯食べたらすぐ見る(_E)" Visibility="{Binding ShowDownloadMenu, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding AddDownloadManagerCommand}">
               <MenuItem.Icon>
                 <Canvas Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}">
                   <Viewbox Canvas.Left="0" Canvas.Top="0" Style="{StaticResource MinimumIconBox}">
@@ -408,7 +440,7 @@
               </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}">
+            <MenuItem Header="未整理のブックマークに入れておく(_B)" Command="{Binding AddUnorganizedBookmarkCommand}">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -420,7 +452,7 @@
 
             <Separator />
 
-            <MenuItem Header="メインプレイヤーのプレイリストに追加" Command="{Binding AddPlayListCommand}">
+            <MenuItem Header="メインプレイヤーのプレイリストに追加(_A)" Command="{Binding AddPlayListCommand}">
               <MenuItem.Icon>
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
                   <Path Data="{StaticResource Image_Playlist-Add}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -440,7 +472,7 @@
 
             <Separator />
 
-            <MenuItem Header="クリップボードにコピー" SubmenuOpened="CopyMenuItem_SubmenuOpened">
+            <MenuItem Header="クリップボードにコピー(_C)" SubmenuOpened="CopyMenuItem_SubmenuOpened">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -460,14 +492,14 @@
 
               <MenuItem.ItemsSource>
                 <CompositeCollection>
-                  <MenuItem Header="カスタム" Command="{Binding CopyCustomInformationCommand}" Style="{StaticResource {x:Type MenuItem}}" />
-                  <MenuItem Header="動画ID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.VideoId}"  Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="タイトル" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.Title}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="カスタム(_C)" Command="{Binding CopyCustomInformationCommand}" Style="{StaticResource {x:Type MenuItem}}" />
+                  <MenuItem Header="動画ID(_I)" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.VideoId}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="タイトル(_T)" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.Title}"  Style="{StaticResource {x:Type MenuItem}}"/>
 
-                  <MenuItem Header="投稿者ID" Command="{Binding CopyInformationPosterTextCommand}" CommandParameter="{StaticResource Type_Boolean-True}" Style="{StaticResource {x:Type MenuItem}}"/>
-                  <MenuItem Header="投稿者名" Command="{Binding CopyInformationPosterTextCommand}" CommandParameter="{StaticResource Type_Boolean-False}" Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="投稿者ID(_P)" Command="{Binding CopyInformationPosterTextCommand}" CommandParameter="{StaticResource Type_Boolean-True}" Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="投稿者名(_N)" Command="{Binding CopyInformationPosterTextCommand}" CommandParameter="{StaticResource Type_Boolean-False}" Style="{StaticResource {x:Type MenuItem}}"/>
 
-                  <MenuItem Header="視聴ページ" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.WatchUrlString}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="視聴ページ(_W)" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.WatchUrlString}"  Style="{StaticResource {x:Type MenuItem}}"/>
 
                   <Separator Style="{StaticResource TagSeparator}" />
                   <CollectionContainer Collection="{Binding Source={StaticResource TagList}}" />
@@ -477,7 +509,7 @@
 
 
             </MenuItem>
-            <MenuItem Header="検索" IsEnabled="{Binding SelectedFinderItem.Information.TagList, Converter={StaticResource IsNotEmptyCollectionConverter}}">
+            <MenuItem Header="検索(_S)" IsEnabled="{Binding SelectedFinderItem.Information.TagList, Converter={StaticResource IsNotEmptyCollectionConverter}}">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -497,7 +529,7 @@
 
               <MenuItem.ItemsSource>
                 <CompositeCollection>
-                  <MenuItem Header="投稿者を検索" Command="{Binding ShowPosterCommand}" Style="{StaticResource {x:Type MenuItem}}">
+                  <MenuItem Header="投稿者を検索(_P)" Command="{Binding ShowPosterCommand}" Style="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.Icon>
                       <Canvas Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}">
                         <Viewbox Canvas.Left="0" Canvas.Top="0" Style="{StaticResource MinimumIconBox}">
@@ -525,7 +557,7 @@
 
             </MenuItem>
             <Separator />
-            <MenuItem Header="フィルタ追加" IsEnabled="{Binding IsUsingFinderFilter}" SubmenuOpened="FilterMenuItem_SubmenuOpened">
+            <MenuItem Header="フィルタ追加(_F)" IsEnabled="{Binding IsUsingFinderFilter}" SubmenuOpened="FilterMenuItem_SubmenuOpened">
               <MenuItem.Icon>
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -552,7 +584,7 @@
 
               <MenuItem.ItemsSource>
                 <CompositeCollection>
-                  <MenuItem Header="動画ID" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
+                  <MenuItem Header="動画ID(_I)" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.CommandParameter>
                       <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
                         <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.VideoId}" />
@@ -560,7 +592,7 @@
                       </MultiBinding>
                     </MenuItem.CommandParameter>
                   </MenuItem>
-                  <MenuItem Header="タイトル" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
+                  <MenuItem Header="タイトル(_T)" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.CommandParameter>
                       <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
                         <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.Title}" />
@@ -568,7 +600,8 @@
                       </MultiBinding>
                     </MenuItem.CommandParameter>
                   </MenuItem>
-                  <MenuItem Header="ユーザーID" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
+                  <!-- これも統一した方がいいんじゃねーの -->
+                  <MenuItem Header="ユーザーID(_U)" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.CommandParameter>
                       <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
                         <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.UserId}" />
@@ -576,7 +609,7 @@
                       </MultiBinding>
                     </MenuItem.CommandParameter>
                   </MenuItem>
-                  <MenuItem Header="ユーザー名" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
+                  <MenuItem Header="ユーザー名(_U)" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.CommandParameter>
                       <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
                         <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.UserName}" />
@@ -584,7 +617,7 @@
                       </MultiBinding>
                     </MenuItem.CommandParameter>
                   </MenuItem>
-                  <MenuItem Header="チャンネルID" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
+                  <MenuItem Header="チャンネルID(_C)" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.CommandParameter>
                       <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
                         <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.ChannelId}" />
@@ -592,7 +625,7 @@
                       </MultiBinding>
                     </MenuItem.CommandParameter>
                   </MenuItem>
-                  <MenuItem Header="チャンネル名" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
+                  <MenuItem Header="チャンネル名(_C)" Command="{Binding AddFinderFilteringCommand}" Style="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.CommandParameter>
                       <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
                         <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.ChannelName}" />
@@ -618,7 +651,7 @@
               </MenuItem.ItemsSource>
             </MenuItem>
             <Separator />
-            <MenuItem Header="キャッシュ破棄" Command="{Binding SelectedFinderItem.Information.ClearCacheCommand}" />
+            <MenuItem Header="キャッシュ破棄(_R)" Command="{Binding SelectedFinderItem.Information.ClearCacheCommand}" />
           </ContextMenu>
         </ListBox.ContextMenu>
         <ListBox.ItemTemplate>
@@ -1155,7 +1188,7 @@
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する</CheckBox>
+        <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する(_F)</CheckBox>
         <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="FilteringChanged">

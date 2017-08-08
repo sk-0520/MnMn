@@ -601,7 +601,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         RelationVideoLoadState = LoadState.Loaded;
                     });
                 }
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            }).Unwrap();
         }
 
         void SetRelationVideoItems(IEnumerable<SmileVideoInformationViewModel> items)
@@ -1400,6 +1400,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(View == null) {
                 return;
             }
+            if(IsViewClosed) {
+                Mediator.Logger.Debug("view: closed");
+                return;
+            }
 
             // 経験則上これが一番確実という悲しさ
             if(!View.Topmost) {
@@ -1416,6 +1420,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ChangeTopmostState()
         {
             if(View == null) {
+                return;
+            }
+            if(IsViewClosed) {
+                Mediator.Logger.Debug("view: closed");
                 return;
             }
 
@@ -1623,20 +1631,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
+            var skipReplayProcess = false;
             if(CanPlayNextVideo.Value && PlayListItems.Skip(1).Any()) {
-                // 次のプレイリストへ遷移
-                Mediator.Logger.Debug("next playlist item");
-                LoadNextPlayListItemAsync();
-                return;
+                if(LastPlayListItemIsStop && PlayListItems.IsLastItem) {
+                    skipReplayProcess = true;
+                } else {
+                    // 次のプレイリストへ遷移
+                    Mediator.Logger.Debug("next playlist item");
+                    LoadNextPlayListItemAsync();
+                    return;
+                }
             }
 
-            if(ReplayVideo) {
-                // リプレイ
-                Mediator.Logger.Debug("replay");
-                StopMovie(true);
-                PlayMovie();
+            if(!skipReplayProcess) {
+                if(ReplayVideo) {
+                    // リプレイ
+                    Mediator.Logger.Debug("replay");
+                    StopMovie(true);
+                    PlayMovie();
 
-                return;
+                    return;
+                }
             }
 
             // 普通の停止
@@ -1811,6 +1826,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PlayListItems.Add(videoInformation);
                 //#371
                 CanPlayNextVideo.Value = false;
+                if(PlayListItems.Count == 1) {
+                    // 初回再生であればプレイリストを初期化
+                    PlayListItems.GetFirstItem();
+                }
             } else {
                 // プレイリストに存在するのであればカレントを設定
                 PlayListItems.ChangeCurrentItem(videoInformation);
@@ -1996,8 +2015,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             TagItems.InitializeRange(Information.TagList);
 
-            LoadRelationVideoAsync();
-
             var propertyNames = new[] {
                 nameof(VideoId),
                 nameof(Title),
@@ -2046,6 +2063,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SafeShowTime = TimeSpan.Zero;
             SafeDownloadedSize = 0;
             CommentScriptDefault = null;
+            RelationVideoLoadState = LoadState.None;
             MarketLoadState = LoadState.None;
             ForceNavigatorbarOperation = false;
             PosterInformation = null;
@@ -2277,6 +2295,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             Information.IsPlaying = false;
 
+            DetachEvent();
+
             InitializeStatus();
 
             try {
@@ -2304,6 +2324,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !Navigationbar.ChangingVideoPosition) {
+                if(NormalCommentArea == null || OriginalPosterCommentArea == null) {
+                    Mediator.Logger.Warning("comment area is null", $"{nameof(NormalCommentArea)}: {NormalCommentArea}{Environment.NewLine}{nameof(OriginalPosterCommentArea)}: {OriginalPosterCommentArea}");
+                    return;
+                }
+
                 if(WaitingFirstPlay.Value) {
                     SetVideoDataInformation();
                     WaitingFirstPlay.Value = false;

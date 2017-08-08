@@ -531,9 +531,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             DoSearchAction(nameof(SwitchShowFilter));
         }
 
-        internal override Task ContinuousPlaybackAsync(bool isRandom, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
+        internal override Task ContinuousPlaybackAsync(bool isRandom, bool lastItemIsStop, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
-            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom, playerPreparationAction);
+            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom, lastItemIsStop, playerPreparationAction);
         }
 
         public override bool IsAscending

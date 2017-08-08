@@ -40,6 +40,7 @@
 
     <RepeatButton
       Grid.Column="0"
+      ToolTip="ページ一覧を前にスクロール"
       CommandTarget="{Binding ElementName=PART_ScrollViewer}"
       Command="ScrollBar.LineLeftCommand"
       Style="{StaticResource ScrollButton}"
@@ -51,14 +52,14 @@
       </Viewbox>
     </RepeatButton>
 
-    <Button Grid.Column="1" Click="PrevButton_Click">
+    <Button Grid.Column="1" Click="PrevButton_Click" ToolTip="前のページ">
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
         </Canvas>
       </Viewbox>
     </Button>
-    <Button Grid.Column="2" Click="NextButton_Click">
+    <Button Grid.Column="2" Click="NextButton_Click" ToolTip="次のページ">
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -95,6 +96,7 @@
 
     <RepeatButton
       Grid.Column="4"
+      ToolTip="ページ一覧を後にスクロール"
       CommandTarget="{Binding ElementName=PART_ScrollViewer}"
       Command="ScrollBar.LineRightCommand"
       Style="{StaticResource ScrollButton}"

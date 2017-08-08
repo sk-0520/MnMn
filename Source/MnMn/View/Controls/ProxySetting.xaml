@@ -30,9 +30,9 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
-    <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding UsingCustomProxy}" Margin="{StaticResource VerticalContrlMargin}">プロキシサーバーを経由する</CheckBox>
+    <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding UsingCustomProxy}" Margin="{StaticResource VerticalContrlMargin}">プロキシサーバーを経由する(_X)</CheckBox>
 
-    <Label Grid.Row="1" Grid.Column="0">サーバーアドレス</Label>
+    <Label Grid.Row="1" Grid.Column="0">サーバーアドレス(_E)</Label>
     <Grid Grid.Row="1" Grid.Column="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="7*" />
@@ -40,16 +40,16 @@
         <ColumnDefinition Width="3*" />
       </Grid.ColumnDefinitions>
       <TextBox Grid.Column="0" Text="{Binding ServerAddress}" Style="{StaticResource VerticalTextBox}" />
-      <Label Grid.Column="1" Margin="{StaticResource LeftMargin}">ポート</Label>
+      <Label Grid.Column="1" Margin="{StaticResource LeftMargin}">ポート(_T)</Label>
       <mamc:NumericUpDown Grid.Column="2" Minimum="0" Maximum="65535" HasDecimals="False" Value="{Binding ServerPort}" Margin="{StaticResource VerticalContrlMargin}" />
     </Grid>
 
-    <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding UsingAuth}" Margin="{StaticResource VerticalContrlMargin}">経由に認証が必要</CheckBox>
+    <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding UsingAuth}" Margin="{StaticResource VerticalContrlMargin}">経由に認証が必要(_C)</CheckBox>
 
-    <Label Grid.Row="3" Grid.Column="0">ユーザー名</Label>
+    <Label Grid.Row="3" Grid.Column="0">ユーザー名(_U)</Label>
     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserName}" Style="{StaticResource VerticalTextBox}" />
 
-    <Label Grid.Row="4" Grid.Column="0">パスワード</Label>
+    <Label Grid.Row="4" Grid.Column="0">パスワード(_P)</Label>
     <PasswordBox Grid.Row="4" Grid.Column="1"  Style="{StaticResource VerticalPasswordBox}" >
       <i:Interaction.Behaviors>
         <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding Password, Mode=TwoWay}" />

@@ -1043,13 +1043,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        bool CanExecuteLauncherMode
+        {
+            get
+            {
+                var items = new[] {
+                    Setting.Execute.LauncherPath,
+                    Setting.Execute.LauncherParameter,
+                };
+                return items.All(s => !string.IsNullOrWhiteSpace(s));
+            }
+        }
+
+
         #endregion
 
         #region command
 
         public ICommand OpenVideoDefaultCommand
         {
-            get { return CreateCommand(o => { OpenVideoDefaultAsync(false); }); }
+            get
+            {
+                return CreateCommand(
+                    o => { OpenVideoDefaultAsync(false); },
+                    o => {
+                        if(Setting.Execute.OpenMode == ExecuteOrOpenMode.Launcher) {
+                            return CanExecuteLauncherMode;
+                        } else {
+                            return true;
+                        }
+                    }
+                );
+            }
         }
 
         public ICommand OpenEconomyVideoDefaultCommand
@@ -1069,11 +1094,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     o => {
                         var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
                         if(commandParameter.OpenMode == ExecuteOrOpenMode.Launcher) {
-                            var items = new[] {
-                                Setting.Execute.LauncherPath,
-                                Setting.Execute.LauncherParameter,
-                            };
-                            return items.All(s => !string.IsNullOrWhiteSpace(s));
+                            return CanExecuteLauncherMode;
                         } else {
                             return true;
                         }
@@ -1521,7 +1542,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var result = GarbageCollectionUtility.RemoveFile(file, IndividualVideoSetting.LastShowTimestamp, cacheSpan, force);
             if(!result.IsSuccess) {
-                if(string.IsNullOrEmpty(result.Message)) {
+                if(!string.IsNullOrEmpty(result.Message)) {
                     Mediator.Logger.Warning(file.Name, result.Message);
                 }
             }
