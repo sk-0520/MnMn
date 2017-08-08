@@ -53,10 +53,6 @@
       <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6412.27961, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.113\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>False</Private>
@@ -162,6 +158,11 @@
     <ProjectReference Include="..\..\..\Library\Bridging\Bridging.csproj">
       <Project>{89A67E67-827B-44D6-A237-BE50813883AC}</Project>
       <Name>Bridging</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Library\SharedLibrary\SharedLibrary.csproj">
+      <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
+      <Name>SharedLibrary</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

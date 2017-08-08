@@ -145,7 +145,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#729: 我が家のあの共通ロジックを MnMn に統合してあれしたい'
 					},
 					{
 						'revision': '',

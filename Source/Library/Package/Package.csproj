@@ -39,9 +39,6 @@
       <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6412.27961, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.113\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Geckofx-Core, Version=45.0.32.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <HintPath>..\..\packages\Geckofx45.45.0.32\lib\net45\Geckofx-Core.dll</HintPath>
     </Reference>
@@ -1177,6 +1174,10 @@
       <Project>{89a67e67-827b-44d6-a237-be50813883ac}</Project>
       <Name>Bridging</Name>
       <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj">
+      <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
+      <Name>SharedLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\SpaghettiAssembly\SpaghettiAssembly.csproj">
       <Project>{cde064a0-0133-4c6b-ad46-32e9429d4715}</Project>
