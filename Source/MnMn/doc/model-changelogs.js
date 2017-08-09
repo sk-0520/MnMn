@@ -132,7 +132,11 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#723: クラッシュレポートより: プログラム終了時に NullReferenceException',
+						'comments': [
+							'これ: System.Windows.DeferredAppResourceReference.GetValue',
+							'再現出来てないから発生しないことを祈っとく'
+						]
 					},
 					{
 						'revision': '',
