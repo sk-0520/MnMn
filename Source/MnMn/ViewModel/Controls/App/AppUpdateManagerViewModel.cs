@@ -311,7 +311,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     { "NEW-VERSION", ArchiveVersion.ToString() },
                     { "NOW-VERSION", Constants.ApplicationVersionNumber.ToString() },
                 };
-                UpdateText = AppUtility.ReplaceString(Properties.Resources.String_App_Update_Format, map);
+                var updateTextFormat = IsForceUpdate
+                    ? Properties.Resources.String_App_Update_Force_Format
+                    : Properties.Resources.String_App_Update_Format
+                ;
+                UpdateText = AppUtility.ReplaceString(updateTextFormat, map);
 
                 UpdateCheckState = UpdateCheckState.CurrentIsOld;
             } catch(Exception ex) {
