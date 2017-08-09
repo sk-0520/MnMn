@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.View.Converter
 {
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.View.Converter
 
             foreach(var b in values) {
                 try {
-                    if(System.Convert.ToBoolean(b)) {
+                    if(CastUtility.GetCastWPFValue<bool>(b, false)) {
                         return true;
                     }
                 }catch(Exception ex) {

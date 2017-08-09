@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             LoggerConfig = new LoggerConfigModel();
         }
 
-        #region property 
+        #region property
 
         #endregion
 
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             var putsList = new[] {
                 new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsStream, PutsStream),
                 new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsConsole, PutsConsole),
-#if DEBUG
+#if false //DEBUG
                 new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsDebug, PutsDebug),
 #endif
                 new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsCustom, PutsCustom),
