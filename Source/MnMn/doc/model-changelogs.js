@@ -111,7 +111,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#730: 更新履歴でアホみたいなことしてみたい',
+						'comments': [
+							'インフラだけ整えた'
+						]
 					},
 					{
 						'revision': '',
