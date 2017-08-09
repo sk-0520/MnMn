@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         bool _hasLightweightUpdate;
         bool _ruuningUpdate;
 
-        bool _useOldUpdateIssue518;
+        bool _useOldUpdate_Issue518;
 
         #endregion
 
@@ -140,10 +140,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._ruuningUpdate, value); }
         }
 
-        public bool UseOldUpdateIssue518
+        public bool UseOldUpdate_Issue518
         {
-            get { return this._useOldUpdateIssue518; }
-            set { SetVariableValue(ref this._useOldUpdateIssue518, value); }
+            get { return this._useOldUpdate_Issue518; }
+            set { SetVariableValue(ref this._useOldUpdate_Issue518, value); }
         }
 
         public bool IsEnabledUpdate
@@ -411,7 +411,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return process;
         }
 
-        Task<UpdatedResult> AppUpdateExecuteAsync()
+        Task<UpdatedResult> AppUpdateExecute_Issue518_Async()
         {
             var eventName = "mnmn-event";
 
@@ -476,7 +476,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             Task<UpdatedResult> task;
             if(HasUpdate) {
-                if(!UseOldUpdateIssue518) {
+                if(!UseOldUpdate_Issue518) {
                     var archiveDir = VariableConstants.GetArchiveDirectory();
                     var archivePath = Path.Combine(archiveDir.FullName, ArchiveUri.Segments.Last());
                     var archiveFile = new FileInfo(archivePath);
@@ -494,7 +494,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         return UpdatedResult.None;
                     });
                 } else {
-                    task = AppUpdateExecuteAsync();
+                    task = AppUpdateExecute_Issue518_Async();
                 }
             } else if(HasLightweightUpdate) {
                 //task =  EazyUpdateExecuteAsync();
