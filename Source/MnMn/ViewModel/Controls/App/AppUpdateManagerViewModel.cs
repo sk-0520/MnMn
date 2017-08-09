@@ -399,6 +399,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             BackgroundUpdateCheckTimer.Stop();
 
             return CheckVersionAsync().ContinueWith(t => {
+                if(IsForceUpdate) {
+                    UpdateExecuteCommand.TryExecute(null);
+                }
                 return LoadChangelogAsync().ContinueWith(_ => {
                     BackgroundUpdateCheckTimer.Start();
                 });
@@ -584,6 +587,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             if(NetworkUtility.IsNetworkAvailable) {
                 return CheckVersionAsync().ContinueWith(t => {
+                    if(IsForceUpdate) {
+                        UpdateExecuteCommand.TryExecute(null);
+                    }
                     BackgroundUpdateCheckTimer.Start();
                 });
             } else {
