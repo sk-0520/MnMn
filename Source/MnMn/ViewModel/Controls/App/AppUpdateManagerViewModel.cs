@@ -59,6 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         string _updateText;
         bool _hasUpdate;
         bool _hasLightweightUpdate;
+        bool _isForceUpdate;
         bool _ruuningUpdate;
 
         bool _useOldUpdate_Issue518;
@@ -124,6 +125,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return this._hasLightweightUpdate; }
             set { SetVariableValue(ref this._hasLightweightUpdate, value); }
+        }
+
+        public bool IsForceUpdate
+        {
+            get { return this._isForceUpdate; }
+            set { SetVariableValue(ref this._isForceUpdate, value); }
         }
 
         public string UpdateText
@@ -241,6 +248,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             ArchiveVersion = null;
             ArchiveUri = null;
+            IsForceUpdate = false;
             UpdateText = string.Empty;
 
             LightweightUpdateModel = null;
@@ -268,6 +276,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                             Version = new Version(x.Attribute("version").Value),
                             //IsRC = x.Attribute("type").Value == "rc",
                             ArchiveElements = x.Elements(),
+                            IsForce = RawValueUtility.ConvertBoolean(x.Attribute("force")?.Value)
                         }
                     )
                     .Where(x => Constants.ApplicationVersionNumber <= x.Version)
@@ -296,6 +305,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
                 ArchiveUri = archive.Uri;
                 ArchiveVersion = archive.Version;
+                IsForceUpdate = item.IsForce;
 
                 var map = new Dictionary<string, string>() {
                     { "NEW-VERSION", ArchiveVersion.ToString() },
