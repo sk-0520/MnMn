@@ -579,7 +579,7 @@ MnMn 終了時に専用設定ファイルが開かれます。</value>
     <value>ミュートON/OFF</value>
   </data>
   <data name="String_App_Update_Force_Format" xml:space="preserve">
-    <value>強制アップデート対象の新バージョン(${NEW-VERSION})がリリースされているため自動的にダウンロード・インストールを実施します。
+    <value>強制アップデート対象の新バージョン(${NEW-VERSION})がリリースされているためキャンセルしない限り自動的にダウンロード・インストール工程を進めます。
 本処理において(一応)旧アップデート処理は使用できません ;-p</value>
   </data>
 </root>

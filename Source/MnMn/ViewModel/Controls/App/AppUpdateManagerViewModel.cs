@@ -489,6 +489,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         async Task UpdateExecuteAsync()
         {
+            var a = true; if(a) { return; }
+
             RuuningUpdate = true;
 
             Task<UpdatedResult> task;
