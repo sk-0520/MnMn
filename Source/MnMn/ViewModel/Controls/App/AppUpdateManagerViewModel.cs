@@ -167,7 +167,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public ICommand UpdateCheckCommand
         {
-            get { return CreateCommand(o => UpdateCheckAsync().ConfigureAwait(false)); }
+            get
+            {
+                return CreateCommand(
+                    o => UpdateCheckAsync().ConfigureAwait(false),
+                    o => !RuuningUpdate
+                );
+            }
         }
 
         public ICommand UpdateExecuteCommand
@@ -400,12 +406,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             return CheckVersionAsync().ContinueWith(t => {
                 if(IsForceUpdate) {
-                    UpdateExecuteCommand.TryExecute(null);
+                    Application.Current.Dispatcher.Invoke(() => {
+                        UpdateForceExecuteAsync().ConfigureAwait(false);
+                    });
                 }
                 return LoadChangelogAsync().ContinueWith(_ => {
                     BackgroundUpdateCheckTimer.Start();
                 });
             }, TaskContinuationOptions.AttachedToParent);
+        }
+
+        /// <summary>
+        /// </summary>
+        Task UpdateForceExecuteAsync()
+        {
+            //ウィンドウがきちんと立ち上がっている状態で実施する。
+
+            Mediator.Order(new AppSaveOrderModel(true));
+            return UpdateExecuteAsync();
         }
 
         Process CreateProcess(Dictionary<string, string> map)
@@ -489,7 +507,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         async Task UpdateExecuteAsync()
         {
-            var a = true; if(a) { return; }
+            //var a = true; if(a) { return; }
 
             RuuningUpdate = true;
 
@@ -590,7 +608,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             if(NetworkUtility.IsNetworkAvailable) {
                 return CheckVersionAsync().ContinueWith(t => {
                     if(IsForceUpdate) {
-                        UpdateExecuteCommand.TryExecute(null);
+                        UpdateForceExecuteAsync().ConfigureAwait(false);
                     }
                     BackgroundUpdateCheckTimer.Start();
                 });
