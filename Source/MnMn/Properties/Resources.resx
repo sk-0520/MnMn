@@ -578,4 +578,8 @@ MnMn 終了時に専用設定ファイルが開かれます。</value>
   <data name="String_App_Navigationbar_Volume" xml:space="preserve">
     <value>ミュートON/OFF</value>
   </data>
+  <data name="String_App_Update_Force_Format" xml:space="preserve">
+    <value>強制アップデート対象の新バージョン(${NEW-VERSION})がリリースされているためキャンセルしない限り自動的にダウンロード・インストール工程を進めます。
+本処理において(一応)旧アップデート処理は使用できません ;-p</value>
+  </data>
 </root>

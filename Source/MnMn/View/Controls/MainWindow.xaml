@@ -208,6 +208,9 @@
                 <TextBlock.Style>
                   <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                     <Style.Triggers>
+                      <DataTrigger Binding="{Binding IsForceUpdate}" Value="True">
+                        <Setter Property="Text" Value="強制" />
+                      </DataTrigger>
                       <DataTrigger Binding="{Binding HasLightweightUpdate}" Value="True">
                         <Setter Property="Text" Value="簡易" />
                       </DataTrigger>
@@ -244,7 +247,7 @@
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding UpdateText}">
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="{Binding UpdateText}">
               <TextBlock.Margin>
                 <Thickness Left="{StaticResource HalfMarginWidth}" Top="{StaticResource HalfMarginWidth}" Right="{StaticResource HalfMarginWidth}" Bottom="{StaticResource HalfMarginWidth}" />
               </TextBlock.Margin>
@@ -259,7 +262,7 @@
               </Grid.ColumnDefinitions>
 
               <Button Grid.Column="0" Margin="{StaticResource LeftMargin}" Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding UpdateExecuteCommand}">アップデートを行う</Button>
-              <CheckBox Grid.Column="1" IsEnabled="{Binding HasUpdate}" IsChecked="{Binding UseOldUpdateIssue518}" Margin="{StaticResource LeftMargin}" >
+              <CheckBox Grid.Column="1" IsEnabled="{Binding HasUpdate}" IsChecked="{Binding UseOldUpdate_Issue518}" Margin="{StaticResource LeftMargin}" >
                 <CheckBox.ToolTip>
                   <TextBlock>
                     アップデートがうまくいかない場合にチェックしてください。
