@@ -1118,7 +1118,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                return CreateCommand(o => { });
+                return CreateCommand(
+                    o => {
+                        try {
+                            CacheDirectory.Refresh();
+                            if(CacheDirectory.Exists) {
+                                ShellUtility.OpenDirectory(CacheDirectory, Mediator.Logger);
+                            }
+                        } catch(IOException ex) {
+                            Mediator.Logger.Warning(ex);
+                        }
+                    },
+                    o => {
+                        try {
+                            CacheDirectory.Refresh();
+                            return CacheDirectory.Exists;
+                        } catch(Exception ex) {
+                            Mediator.Logger.Warning(ex);
+                        }
+                        return false;
+                    }
+                );
             }
         }
 

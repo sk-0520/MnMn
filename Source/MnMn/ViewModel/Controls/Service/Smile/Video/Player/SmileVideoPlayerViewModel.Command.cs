@@ -240,13 +240,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get
             {
-                return CreateCommand(
-                    o => {
-                        if(Information.CacheDirectory.Exists) {
-                            ShellUtility.OpenDirectory(Information.CacheDirectory, Mediator.Logger);
-                        }
-                    }
-                );
+                return Information.OpenCacheDirectoryCommand;
             }
         }
 

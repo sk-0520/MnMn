@@ -654,18 +654,11 @@
 
             <MenuItem Header="キャッシュを開く(_I)" Visibility="{Binding ShowOpenCacheDirectoryMenu, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding SelectedFinderItem.Information.OpenCacheDirectoryCommand}">
               <MenuItem.Icon>
-                <Canvas Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}">
-                  <Viewbox Canvas.Left="0" Canvas.Top="0" Style="{StaticResource MinimumIconBox}">
-                    <Canvas Style="{StaticResource IconCanvas-24x24}">
-                      <Path Data="{StaticResource Image_CheckItLater}" Style="{StaticResource MinimumDefaultIconPath}" />
-                    </Canvas>
-                  </Viewbox>
-                  <Viewbox Canvas.Right="0" Canvas.Bottom="0" Style="{StaticResource MinimumIconBox}">
-                    <Canvas Style="{StaticResource IconCanvas-24x24}">
-                      <Path Data="{StaticResource Image_Download}" Style="{StaticResource MinimumDefaultIconPath}" />
-                    </Canvas>
-                  </Viewbox>
-                </Canvas>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
               </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="キャッシュ破棄(_R)" Command="{Binding SelectedFinderItem.Information.ClearCacheCommand}" />
