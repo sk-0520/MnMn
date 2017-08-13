@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live
     /// <summary>
     /// SmileLivePlayerWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class SmileLivePlayerWindow: MetroWindow
+    public partial class SmileLivePlayerWindow: ApplicationWindow
     {
         public SmileLivePlayerWindow()
         {

@@ -1,4 +1,4 @@
-﻿<mamc:MetroWindow
+﻿<app_view_controls:ApplicationWindow
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -31,21 +31,21 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
-  <mamc:MetroWindow.Resources>
+  <app_view_controls:ApplicationWindow.Resources>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
-  </mamc:MetroWindow.Resources>
+  </app_view_controls:ApplicationWindow.Resources>
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="Application" Title="メインウィンドウ" />
     <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
   </i:Interaction.Behaviors>
-  <mamc:MetroWindow.Style>
+  <app_view_controls:ApplicationWindow.Style>
     <!-- 大元のスタイルが適用されない対応 -->
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}" />
-  </mamc:MetroWindow.Style>
+  </app_view_controls:ApplicationWindow.Style>
 
   <DockPanel>
     <StatusBar DockPanel.Dock="Bottom">
@@ -345,4 +345,4 @@
 
     </TabControl>
   </DockPanel>
-</mamc:MetroWindow>
+</app_view_controls:ApplicationWindow>
