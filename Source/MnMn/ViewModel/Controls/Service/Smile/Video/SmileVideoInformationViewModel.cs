@@ -1114,6 +1114,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand OpenCacheDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        try {
+                            CacheDirectory.Refresh();
+                            if(CacheDirectory.Exists) {
+                                ShellUtility.OpenDirectory(CacheDirectory, Mediator.Logger);
+                            }
+                        } catch(IOException ex) {
+                            Mediator.Logger.Warning(ex);
+                        }
+                    },
+                    o => {
+                        try {
+                            CacheDirectory.Refresh();
+                            return CacheDirectory.Exists;
+                        } catch(Exception ex) {
+                            Mediator.Logger.Warning(ex);
+                        }
+                        return false;
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function

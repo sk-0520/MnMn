@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.10
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MnMn", "MnMn\MnMn.csproj", "{96623185-24F0-4A71-8429-560AC8A5F172}"
 EndProject
@@ -33,6 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{DD2C6E
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extractor", "Applications\sbin\Extractor\Extractor.csproj", "{A25878F7-06EC-497F-9153-7F53FC3A460B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibrary", "Library\SharedLibrary\SharedLibrary.csproj", "{9E8E373E-CD97-411D-8C45-10AC4A86CAE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibraryTest", "Test\SharedLibraryTest\SharedLibraryTest.csproj", "{832871FC-65A1-432E-AEB0-1085AAD4F9D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +76,14 @@ Global
 		{A25878F7-06EC-497F-9153-7F53FC3A460B}.Debug|x86.Build.0 = Debug|x86
 		{A25878F7-06EC-497F-9153-7F53FC3A460B}.Release|x86.ActiveCfg = Release|x86
 		{A25878F7-06EC-497F-9153-7F53FC3A460B}.Release|x86.Build.0 = Release|x86
+		{9E8E373E-CD97-411D-8C45-10AC4A86CAE8}.Debug|x86.ActiveCfg = Debug|x86
+		{9E8E373E-CD97-411D-8C45-10AC4A86CAE8}.Debug|x86.Build.0 = Debug|x86
+		{9E8E373E-CD97-411D-8C45-10AC4A86CAE8}.Release|x86.ActiveCfg = Release|x86
+		{9E8E373E-CD97-411D-8C45-10AC4A86CAE8}.Release|x86.Build.0 = Release|x86
+		{832871FC-65A1-432E-AEB0-1085AAD4F9D3}.Debug|x86.ActiveCfg = Debug|x86
+		{832871FC-65A1-432E-AEB0-1085AAD4F9D3}.Debug|x86.Build.0 = Debug|x86
+		{832871FC-65A1-432E-AEB0-1085AAD4F9D3}.Release|x86.ActiveCfg = Release|x86
+		{832871FC-65A1-432E-AEB0-1085AAD4F9D3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,5 +98,7 @@ Global
 		{2F06848C-2B2E-4029-BA62-6A817F8ED50C} = {9D022224-AAB5-4AFB-BC66-436F7B63FA8E}
 		{F8C7551B-E65E-41FA-BF14-D52C1B23F247} = {2F06848C-2B2E-4029-BA62-6A817F8ED50C}
 		{A25878F7-06EC-497F-9153-7F53FC3A460B} = {426124A9-57B3-4D86-B8E4-C6FC04A8165A}
+		{9E8E373E-CD97-411D-8C45-10AC4A86CAE8} = {C2E8C451-56CD-4526-8AC1-43942317175C}
+		{832871FC-65A1-432E-AEB0-1085AAD4F9D3} = {97053CFE-6538-44F1-A837-18EA9FE8E7B8}
 	EndGlobalSection
 EndGlobal

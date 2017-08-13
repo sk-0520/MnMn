@@ -79,10 +79,6 @@
       <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6412.27961, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.113\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Geckofx-Core, Version=45.0.32.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <HintPath>..\packages\Geckofx45.45.0.32\lib\net45\Geckofx-Core.dll</HintPath>
       <Private>False</Private>
@@ -719,6 +715,7 @@
     <Compile Include="View\Attachment\HtmlDescriptionBehavior.cs" />
     <Compile Include="View\Attachment\MenuTabItemBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\ApplicationWindow.cs" />
     <Compile Include="View\Controls\App\AppDownloadManager.xaml.cs">
       <DependentUpon>AppDownloadManager.xaml</DependentUpon>
     </Compile>
@@ -1876,6 +1873,11 @@
     <ProjectReference Include="..\Library\Package\Package.csproj">
       <Project>{922d77b4-f3b7-4685-b6dc-6ecb0f4bbe8f}</Project>
       <Name>Package</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\SharedLibrary\SharedLibrary.csproj">
+      <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
+      <Name>SharedLibrary</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

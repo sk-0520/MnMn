@@ -1,4 +1,4 @@
-﻿<mamc:MetroWindow
+﻿<app_view_controls:ApplicationWindow
   x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoPlayerWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -49,7 +49,7 @@
     <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
     <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
   </i:Interaction.Behaviors>
-  <mamc:MetroWindow.Resources>
+  <app_view_controls:ApplicationWindow.Resources>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
@@ -194,8 +194,8 @@
       </Storyboard>
 
     </ResourceDictionary>
-  </mamc:MetroWindow.Resources>
-  <mamc:MetroWindow.InputBindings>
+  </app_view_controls:ApplicationWindow.Resources>
+  <app_view_controls:ApplicationWindow.InputBindings>
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" CommandParameter="{StaticResource False}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
     <KeyBinding Key="F11" Command="{Binding SwitchFullScreenCommand}" />
@@ -297,8 +297,8 @@
 
     <KeyBinding Key="F7" Command="{Binding SwitchMuteCommand}" />
     <KeyBinding Key="F12" Command="{Binding SwitchGlobalCommentFilering}" />
-  </mamc:MetroWindow.InputBindings>
-  <mamc:MetroWindow.Style>
+  </app_view_controls:ApplicationWindow.InputBindings>
+  <app_view_controls:ApplicationWindow.Style>
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Style.Triggers>
 
@@ -312,8 +312,8 @@
       <Setter Property="ShowMaxRestoreButton" Value="{Binding IsNormalWindow}" />
       <Setter Property="ShowMinButton" Value="{Binding IsNormalWindow}" />
     </Style>
-  </mamc:MetroWindow.Style>
-  <mamc:MetroWindow.RightWindowCommands>
+  </app_view_controls:ApplicationWindow.Style>
+  <app_view_controls:ApplicationWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
         <Button Cursor="Hand" Command="{Binding OpenIdleTalkMutterCommand}" CommandParameter="{StaticResource True}">
@@ -347,8 +347,8 @@
         <Button Cursor="Hand" Command="{Binding OpenDefaultBrowserCommand}">視聴ページ</Button>
       </StackPanel>
     </mamc:WindowCommands>
-  </mamc:MetroWindow.RightWindowCommands>
-  <mamc:MetroWindow.TaskbarItemInfo>
+  </app_view_controls:ApplicationWindow.RightWindowCommands>
+  <app_view_controls:ApplicationWindow.TaskbarItemInfo>
     <TaskbarItemInfo Description="{Binding Title, ElementName=root}" ThumbnailClipMargin="{Binding ThumbnailClipMargin, Mode=OneWay}">
       <TaskbarItemInfo.ThumbButtonInfos>
         <ThumbButtonInfo ImageSource="/View/Resources/Image/Player/Prev.png" Description="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" />
@@ -357,7 +357,7 @@
         <ThumbButtonInfo ImageSource="/View/Resources/Image/Player/Next.png" Description="次の動画" Command="{Binding LoadNextPlayListItemCommand}"  />
       </TaskbarItemInfo.ThumbButtonInfos>
     </TaskbarItemInfo>
-  </mamc:MetroWindow.TaskbarItemInfo>
+  </app_view_controls:ApplicationWindow.TaskbarItemInfo>
 
   <DockPanel>
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -2575,4 +2575,4 @@
       </TabControl>
     </Grid>
   </DockPanel>
-</mamc:MetroWindow>
+</app_view_controls:ApplicationWindow>

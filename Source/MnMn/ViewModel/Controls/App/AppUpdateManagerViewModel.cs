@@ -59,9 +59,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         string _updateText;
         bool _hasUpdate;
         bool _hasLightweightUpdate;
+        bool _isForceUpdate;
         bool _ruuningUpdate;
 
-        bool _useOldUpdateIssue518;
+        bool _useOldUpdate_Issue518;
 
         #endregion
 
@@ -126,6 +127,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._hasLightweightUpdate, value); }
         }
 
+        public bool IsForceUpdate
+        {
+            get { return this._isForceUpdate; }
+            set { SetVariableValue(ref this._isForceUpdate, value); }
+        }
+
         public string UpdateText
         {
             get { return this._updateText; }
@@ -140,10 +147,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._ruuningUpdate, value); }
         }
 
-        public bool UseOldUpdateIssue518
+        public bool UseOldUpdate_Issue518
         {
-            get { return this._useOldUpdateIssue518; }
-            set { SetVariableValue(ref this._useOldUpdateIssue518, value); }
+            get { return this._useOldUpdate_Issue518; }
+            set { SetVariableValue(ref this._useOldUpdate_Issue518, value); }
         }
 
         public bool IsEnabledUpdate
@@ -160,7 +167,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public ICommand UpdateCheckCommand
         {
-            get { return CreateCommand(o => UpdateCheckAsync().ConfigureAwait(false)); }
+            get
+            {
+                return CreateCommand(
+                    o => UpdateCheckAsync().ConfigureAwait(false),
+                    o => !RuuningUpdate
+                );
+            }
         }
 
         public ICommand UpdateExecuteCommand
@@ -241,6 +254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             ArchiveVersion = null;
             ArchiveUri = null;
+            IsForceUpdate = false;
             UpdateText = string.Empty;
 
             LightweightUpdateModel = null;
@@ -268,6 +282,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                             Version = new Version(x.Attribute("version").Value),
                             //IsRC = x.Attribute("type").Value == "rc",
                             ArchiveElements = x.Elements(),
+                            IsForce = RawValueUtility.ConvertBoolean(x.Attribute("force")?.Value)
                         }
                     )
                     .Where(x => Constants.ApplicationVersionNumber <= x.Version)
@@ -296,12 +311,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
                 ArchiveUri = archive.Uri;
                 ArchiveVersion = archive.Version;
+                IsForceUpdate = item.IsForce;
 
                 var map = new Dictionary<string, string>() {
                     { "NEW-VERSION", ArchiveVersion.ToString() },
                     { "NOW-VERSION", Constants.ApplicationVersionNumber.ToString() },
                 };
-                UpdateText = AppUtility.ReplaceString(Properties.Resources.String_App_Update_Format, map);
+                var updateTextFormat = IsForceUpdate
+                    ? Properties.Resources.String_App_Update_Force_Format
+                    : Properties.Resources.String_App_Update_Format
+                ;
+                UpdateText = AppUtility.ReplaceString(updateTextFormat, map);
 
                 UpdateCheckState = UpdateCheckState.CurrentIsOld;
             } catch(Exception ex) {
@@ -385,10 +405,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             BackgroundUpdateCheckTimer.Stop();
 
             return CheckVersionAsync().ContinueWith(t => {
+                if(IsForceUpdate) {
+                    Application.Current.Dispatcher.Invoke(() => {
+                        UpdateForceExecuteAsync().ConfigureAwait(false);
+                    });
+                }
                 return LoadChangelogAsync().ContinueWith(_ => {
                     BackgroundUpdateCheckTimer.Start();
                 });
             }, TaskContinuationOptions.AttachedToParent);
+        }
+
+        /// <summary>
+        /// </summary>
+        Task UpdateForceExecuteAsync()
+        {
+            //ウィンドウがきちんと立ち上がっている状態で実施する。
+
+            Mediator.Order(new AppSaveOrderModel(true));
+            return UpdateExecuteAsync();
         }
 
         Process CreateProcess(Dictionary<string, string> map)
@@ -411,7 +446,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return process;
         }
 
-        Task<UpdatedResult> AppUpdateExecuteAsync()
+        Task<UpdatedResult> AppUpdateExecute_Issue518_Async()
         {
             var eventName = "mnmn-event";
 
@@ -472,11 +507,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         async Task UpdateExecuteAsync()
         {
+            //var a = true; if(a) { return; }
+
             RuuningUpdate = true;
 
             Task<UpdatedResult> task;
             if(HasUpdate) {
-                if(!UseOldUpdateIssue518) {
+                if(!UseOldUpdate_Issue518) {
                     var archiveDir = VariableConstants.GetArchiveDirectory();
                     var archivePath = Path.Combine(archiveDir.FullName, ArchiveUri.Segments.Last());
                     var archiveFile = new FileInfo(archivePath);
@@ -494,7 +531,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         return UpdatedResult.None;
                     });
                 } else {
-                    task = AppUpdateExecuteAsync();
+                    task = AppUpdateExecute_Issue518_Async();
                 }
             } else if(HasLightweightUpdate) {
                 //task =  EazyUpdateExecuteAsync();
@@ -570,6 +607,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             if(NetworkUtility.IsNetworkAvailable) {
                 return CheckVersionAsync().ContinueWith(t => {
+                    if(IsForceUpdate) {
+                        UpdateForceExecuteAsync().ConfigureAwait(false);
+                    }
                     BackgroundUpdateCheckTimer.Start();
                 });
             } else {

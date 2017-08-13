@@ -1,4 +1,4 @@
-﻿<mamc:MetroWindow
+﻿<app_view_controls:ApplicationWindow
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live.SmileLivePlayerWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -29,7 +29,7 @@
     <app_view_attachment:WindowTitleBehavior Service="SmileLive" Title="{Binding Information.Title, Mode=OneWay}" />
     <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
   </i:Interaction.Behaviors>
-  <mamc:MetroWindow.Resources>
+  <app_view_controls:ApplicationWindow.Resources>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -44,19 +44,19 @@
       <Style x:Key="DummyMenu" TargetType="Menu"/>
 
     </ResourceDictionary>
-  </mamc:MetroWindow.Resources>
+  </app_view_controls:ApplicationWindow.Resources>
   <Window.Style>
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Setter Property="Topmost" Value="{Binding Topmost}" />
     </Style>
   </Window.Style>
-  <mamc:MetroWindow.RightWindowCommands>
+  <app_view_controls:ApplicationWindow.RightWindowCommands>
     <mamc:WindowCommands>
       <StackPanel Orientation="Horizontal">
         <app_view_controls:ScaleSlider Value="{Binding ViewScale}" />
       </StackPanel>
     </mamc:WindowCommands>
-  </mamc:MetroWindow.RightWindowCommands>
+  </app_view_controls:ApplicationWindow.RightWindowCommands>
 
   <DockPanel>
     <!--<ToolBar DockPanel.Dock="Top" />-->
@@ -167,4 +167,4 @@
     </Grid>
 
   </DockPanel>
-</mamc:MetroWindow>
+</app_view_controls:ApplicationWindow>

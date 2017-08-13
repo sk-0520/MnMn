@@ -688,6 +688,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             Mediator.Logger.LoggerConfig.PutsCustom = false;
 
+            View.DataContext = null;
+
             Mediator.Logger.Trace("end closing -> start close!");
         }
 

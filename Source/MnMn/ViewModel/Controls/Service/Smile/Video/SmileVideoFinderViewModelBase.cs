@@ -71,6 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _showContinuousPlaybackMenu;
 
         bool _showDownloadMenu;
+        bool _showOpenCacheDirectoryMenu;
 
         #endregion
 
@@ -188,6 +189,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._showDownloadMenu; }
             set { SetVariableValue(ref this._showDownloadMenu, value); }
+        }
+        public bool ShowOpenCacheDirectoryMenu
+        {
+            get { return this._showOpenCacheDirectoryMenu; }
+            set { SetVariableValue(ref this._showOpenCacheDirectoryMenu, value); }
         }
 
         #endregion
@@ -613,7 +619,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(value) {
-                    ShowDownloadMenu = AppUtility.MoreOptionsShowable;
+                    var moreOptionsShowable = AppUtility.MoreOptionsShowable;
+                    ShowDownloadMenu = moreOptionsShowable;
+                    ShowOpenCacheDirectoryMenu = moreOptionsShowable;
                 }
 
                 base.IsOpenContextMenu = value;

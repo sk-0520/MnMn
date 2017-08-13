@@ -1225,6 +1225,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   強制アップデート対象の新バージョン(${NEW-VERSION})がリリースされているためキャンセルしない限り自動的にダウンロード・インストール工程を進めます。
+        ///本処理において(一応)旧アップデート処理は使用できません ;-p に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Update_Force_Format {
+            get {
+                return ResourceManager.GetString("String_App_Update_Force_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新バージョン(${NEW-VERSION})がリリースされています。
         ///現バージョン(${NOW-VERSION})から更新を行いますか。 に類似しているローカライズされた文字列を検索します。
         /// </summary>

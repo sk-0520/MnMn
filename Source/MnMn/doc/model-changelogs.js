@@ -85,6 +85,85 @@
 	},
 	*/
 	{
+		'date': '2017/08/13',
+		'version': '0.81.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'class': 'notice',
+						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
+						'comments': [
+							'次回リリース予定の 0.82.0 で 4.7 を対象とします',
+							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
+							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '3238b103cf26ad7c0193ac62f1a9fcfe53286661',
+						'subject': '#730: 更新履歴でアホみたいなことしてみたい',
+						'comments': [
+							'インフラだけ整えた'
+						]
+					},
+					{
+						'revision': 'a489a28aa29d0b0327958af3f3a0391931a450de',
+						'subject': '#622: アップデート処理を開発側で強制できる下準備だけしておく'
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '273844a628ed062af4715fbfcabaae5a504659bd',
+						'subject': '#733: データダウンロード中のダウンロードアイテムの文字見切れてるね わびさびだね'
+					},
+					{
+						'revision': '',
+						'subject': '#723: クラッシュレポートより: プログラム終了時に NullReferenceException',
+						'comments': [
+							'これ: System.Windows.DeferredAppResourceReference.GetValue',
+							'再現出来てないから発生しないことを祈っとく'
+						]
+					},
+					{
+						'revision': 'c3116408922a5b37ecf05bcbb6077818c5a4ea84',
+						'subject': '#736: コマンドライン・WCFでの指示はもう投げっぱなしでいいと思う',
+						'comments': [
+							'待機時間なしはそれはそれで再試験したくないし 3 秒待機から 0.5 秒待機に変更'
+						]
+					},
+					{
+						'revision': 'ca72c1ea1e52cda870609ab1495c993e07b99807',
+						'subject': '#732: ずいぶん前から知ってて起票しなかったけどフルスクリーン・最大化から通常ウィンドウに戻したらウィンドウの境界線なくなるよね'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '5ceb21bb1c2d14f2881ced78ed86f50803597860',
+						'subject': '#729: 我が家のあの共通ロジックを MnMn に統合してあれしたい'
+					},
+					{
+						'revision': 'e22eb59bfa1e6535885f14dcbf3c540f52e3726c',
+						'subject': '#735: 開発用にファインダーからキャッシュディレクトリ開けるようにしておきたいね'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/08/08',
 		'version': '0.80.0',
 		'isRc': false,
@@ -275,95 +354,6 @@
 						'subject': '#714: #708 で動画に対する設定も GC 対象にしたけどそれはそれでキャッシュ状態のフラグが狂うっていうかバグってる',
 						'comments': [
 							'んふふふ'
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		'date': '2017/08/03',
-		'version': '0.78.0',
-		'isRc': false,
-		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'class': 'notice',
-						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
-						'comments': [
-							'ver 0.80.0 以降で 2017/08/16 以降になったら 4.7 を対象にします',
-							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
-							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
-						]
-					},
-					{
-						'revision': '',
-						'subject': '機能実装の前に修正えんやこらさっさー'
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '9afaf8c66aead706c6da0176a26976c8155246fb',
-						'subject': '#713: クラッシュレポート自動送信させたくね？ させたいよね！',
-						'comments': [
-							'クラッシュレポートってすっごい大事なんよ',
-							'とりあえず嫌がらせのように初期値は真にしといた',
-							'自動送信の場合は送信前に 7 秒待つ',
-							'個人情報保護とか小難しい意見をメールでもらうけどそういう人に対しては実装見てないんだろなぁとほのぼのしながら文面眺めてからゴミ箱に入れてるからそんな感じ',
-							'そもそもクラッシュレポートの送信内容はおめーの PC のストレージに保存されてるからそれ見て判断しろよと言いたいね'
-						]
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '05c5f77ad6945b5eb5be10f28f1e851778962620',
-						'subject': '#707: 非 Tooltip の Popup 系コントロールを他ウィンドウより前面に表示させるべきじゃない'
-					},
-					{
-						'revision': '222a468c56d2adee0425f19e32fad1fa76abfc49',
-						'subject': '#705: クラッシュレポートより: System.ArgumentOutOfRangeException: インデックスが範囲を超えています',
-						'comments': [
-							'再現手順の提供ありがとー'
-						]
-					},
-					{
-						'revision': 'd14c7bfd67fc0fbe13a5fd87c51cb2a46c64db94',
-						'subject': '#640: #619 で捨てたピン留めのデータを完全破棄する',
-						'comments': [
-							'設定ファイルからデータ消えます',
-							'ばいばい (^_^)/~~~'
-						]
-					},
-					{
-						'revision': '485268ece8b7c552761bd4b351240328d6882062',
-						'subject': '#708: 動画キャッシュのGCにおいて破棄すらしていないファイルがある'
-					},
-					{
-						'revision': '980127cabb5837f1412a39ec1cde7695269ba9a2',
-						'subject': '#698: クラッシュレポートより: System.InvalidOperationException: ディスパッチャーの処理の中断中は、この操作を実行できません',
-						'comments': [
-							'追加情報ありがとさん'
-						]
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '01550588d2d65cc00c564f36738851a81e54a2b6',
-						'subject': '#604: シーケンシャル移動のプレイリストの次・前アイテムの選定に現在アイテムインデックスを再調査する',
-						'comments': [
-							'#705 対応でうまくいったと思うので処理だけ共通化してこの課題は無効とした'
 						]
 					}
 				]

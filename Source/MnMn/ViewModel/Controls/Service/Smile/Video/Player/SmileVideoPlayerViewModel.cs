@@ -342,7 +342,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             PlayerTaskbarThumbnailCreator.SetSize(new Size(BaseWidth, BaseHeight));
             Player?.Dispatcher.BeginInvoke(new Action(() => {
-                PlayerTaskbarThumbnailCreator.Refresh();
+                PlayerTaskbarThumbnailCreator?.Refresh();
             }), DispatcherPriority.SystemIdle);
 
             ChangedEnabledCommentPercent();
