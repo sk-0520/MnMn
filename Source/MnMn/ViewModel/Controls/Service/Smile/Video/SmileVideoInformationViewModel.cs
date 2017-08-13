@@ -1114,6 +1114,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand OpenCacheDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => { });
+            }
+        }
+
         #endregion
 
         #region function
