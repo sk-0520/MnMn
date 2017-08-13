@@ -94,7 +94,13 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'notice',
+						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
+						'comments': [
+							'次回リリース予定の 0.82.0 で 4.7 を対象とします',
+							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
+							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
+						]
 					},
 					{
 						'revision': '',
