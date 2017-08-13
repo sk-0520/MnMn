@@ -715,6 +715,7 @@
     <Compile Include="View\Attachment\HtmlDescriptionBehavior.cs" />
     <Compile Include="View\Attachment\MenuTabItemBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\ApplicationWindow.cs" />
     <Compile Include="View\Controls\App\AppDownloadManager.xaml.cs">
       <DependentUpon>AppDownloadManager.xaml</DependentUpon>
     </Compile>

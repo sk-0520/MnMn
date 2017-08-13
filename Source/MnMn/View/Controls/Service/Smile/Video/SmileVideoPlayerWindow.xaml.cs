@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
     /// <summary>
     /// SmileVideoPlayerWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class SmileVideoPlayerWindow: MetroWindow
+    public partial class SmileVideoPlayerWindow: ApplicationWindow
     {
         public SmileVideoPlayerWindow()
         {
