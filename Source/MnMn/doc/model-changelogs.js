@@ -85,9 +85,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.80.1',
-		'isRc': true,
+		'date': '2017/08/13',
+		'version': '0.81.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -101,14 +101,6 @@
 							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
 							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -116,19 +108,15 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '3238b103cf26ad7c0193ac62f1a9fcfe53286661',
 						'subject': '#730: 更新履歴でアホみたいなことしてみたい',
 						'comments': [
 							'インフラだけ整えた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'a489a28aa29d0b0327958af3f3a0391931a450de',
 						'subject': '#622: アップデート処理を開発側で強制できる下準備だけしておく'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -136,7 +124,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '273844a628ed062af4715fbfcabaae5a504659bd',
 						'subject': '#733: データダウンロード中のダウンロードアイテムの文字見切れてるね わびさびだね'
 					},
 					{
@@ -148,14 +136,14 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'c3116408922a5b37ecf05bcbb6077818c5a4ea84',
 						'subject': '#736: コマンドライン・WCFでの指示はもう投げっぱなしでいいと思う',
 						'comments': [
 							'待機時間なしはそれはそれで再試験したくないし 3 秒待機から 0.5 秒待機に変更'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'ca72c1ea1e52cda870609ab1495c993e07b99807',
 						'subject': '#732: ずいぶん前から知ってて起票しなかったけどフルスクリーン・最大化から通常ウィンドウに戻したらウィンドウの境界線なくなるよね'
 					}
 				]
@@ -164,16 +152,12 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '5ceb21bb1c2d14f2881ced78ed86f50803597860',
 						'subject': '#729: 我が家のあの共通ロジックを MnMn に統合してあれしたい'
 					},
 					{
-						'revision': '',
+						'revision': 'e22eb59bfa1e6535885f14dcbf3c540f52e3726c',
 						'subject': '#735: 開発用にファインダーからキャッシュディレクトリ開けるようにしておきたいね'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
