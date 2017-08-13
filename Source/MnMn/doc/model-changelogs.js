@@ -85,6 +85,81 @@
 	},
 	*/
 	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.81.1',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/08/13',
 		'version': '0.81.0',
 		'isRc': false,
@@ -321,40 +396,6 @@
 					{
 						'revision': '3e67dafcab4ab287c019bca0660d256c4f1e1f56',
 						'subject': '#719: あっれー、キャッシュ状態本格的にバグってない？'
-					}
-				]
-			}
-		]
-	},
-	{
-		'date': '2017/08/05',
-		'version': '0.78.1',
-		'isRc': false,
-		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'class': 'notice',
-						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
-						'comments': [
-							'ver 0.80.0 以降で 2017/08/16 以降になったら 4.7 を対象にします',
-							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
-							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
-						]
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '',
-						'subject': '#714: #708 で動画に対する設定も GC 対象にしたけどそれはそれでキャッシュ状態のフラグが狂うっていうかバグってる',
-						'comments': [
-							'んふふふ'
-						]
 					}
 				]
 			}
