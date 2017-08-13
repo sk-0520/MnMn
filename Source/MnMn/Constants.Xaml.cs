@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -14,6 +15,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public const string xamlGridSplitterLength = "GridSplitterLength";
 
         public const string xamlStyle_SmallDefaultIconPath = "SmallDefaultIconPath";
+
+        public static Thickness WindowDefaultThickness { get{ return new Thickness(1); } }
 
         /// <summary>
         /// コピー。

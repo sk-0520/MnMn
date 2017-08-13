@@ -259,7 +259,7 @@
     <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
     <!--<Setter Property="AllowsTransparency" Value="False" />-->
     <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{Binding Source={x:Static app:Constants.WindowDefaultThickness}}" />
     <Setter Property="FontSize" Value="{StaticResource FontBaseSize}" />
     <Setter Property="TitleCharacterCasing" Value="Normal" />
   </Style>
