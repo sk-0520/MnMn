@@ -151,7 +151,7 @@
 						'subject': '#732: ずいぶん前から知ってて起票しなかったけどフルスクリーン・最大化から通常ウィンドウに戻したらウィンドウの境界線なくなるよね'
 					},
 					{
-						'revision': 'ca72c1ea1e52cda870609ab1495c993e07b99807',
+						'revision': '9fd647210cfcfb50e666986bd8e590bd786ebca2',
 						'subject': "#737: クラッシュレポートより: System.InvalidCastException: 型 'MS.Internal.NamedObject' のオブジェクトを型 'System.ComponentModel.ICollectionView' にキャストできません",
 						'comments': [
 							'ふひゅー'
