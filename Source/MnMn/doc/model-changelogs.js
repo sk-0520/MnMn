@@ -160,8 +160,8 @@
 		]
 	},
 	{
-		'date': '2017/08/13',
-		'version': '0.81.0',
+		'date': '2017/08/14',
+		'version': '0.81.1',
 		'isRc': false,
 		'contents': [
 			{
@@ -176,6 +176,10 @@
 							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
 							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
 						]
+					},
+					{
+						'revision': '',
+						'subject': '0.81.0 でやたらクラッシュレポートが飛んできたため #737 で 0.81.1 として緊急リリース'
 					}
 				]
 			},
@@ -220,6 +224,13 @@
 					{
 						'revision': 'ca72c1ea1e52cda870609ab1495c993e07b99807',
 						'subject': '#732: ずいぶん前から知ってて起票しなかったけどフルスクリーン・最大化から通常ウィンドウに戻したらウィンドウの境界線なくなるよね'
+					},
+					{
+						'revision': '9fd647210cfcfb50e666986bd8e590bd786ebca2',
+						'subject': "#737: クラッシュレポートより: System.InvalidCastException: 型 'MS.Internal.NamedObject' のオブジェクトを型 'System.ComponentModel.ICollectionView' にキャストできません",
+						'comments': [
+							'ふひゅー'
+						]
 					}
 				]
 			},
