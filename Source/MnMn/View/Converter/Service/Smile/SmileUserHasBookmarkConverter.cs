@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
 
@@ -33,12 +34,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var information = (SmileUserInformationViewModel)values[0];
+            var information = values[0] as SmileUserInformationViewModel;
             if(information == null) {
                 return false;
             }
 
-            var items = (ICollectionView)values[1];
+            var items = CastUtility.GetCastWPFValue<ICollectionView>(values[1], default(ICollectionView));
+            if(items == null) {
+                return false;
+            }
 
             return items.SourceCollection
                 .Cast<SmileUserBookmarkItemViewModel>()
