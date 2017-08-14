@@ -8,6 +8,7 @@ MnMn は Windows 上で動作するWebサービス専用ブラウザです。
 
 # ダウンロード
 
+ * 実行環境: [.NET Framework 4.7](https://www.microsoft.com/ja-JP/download/details.aspx?id=55170)
  * インストーラー: [自動セットアップ](https://bitbucket.org/sk_0520/mnmn/downloads/MnMn-Setup.exe)
  * アーカイブ手動展開: [ダウンロード](https://bitbucket.org/sk_0520/mnmn/downloads/)を参照。
 
