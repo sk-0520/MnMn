@@ -26,7 +26,7 @@ rem )
 set MB=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe
 
 echo build x86
-"%MB%" Source\MnMn.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x86 /t:Rebuild /m /p:TargetFrameworkVersion=v4.6
+"%MB%" Source\MnMn.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x86 /t:Rebuild /m /p:TargetFrameworkVersion=v4.7
 set ERROR_X86=%ERRORLEVEL%
 
 rem echo build x64
