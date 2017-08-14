@@ -94,7 +94,12 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'warning',
+						'subject': '本バージョンから実行環境は .Net Framework 4.7 が必要になります(#706)',
+						'comments': [
+							'.Net Framework 4.7: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
+							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
+						]
 					},
 					{
 						'revision': '',
@@ -145,7 +150,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#706: 動作基盤を .Net Framework 4.7 にアップグレードする'
 					},
 					{
 						'revision': '',
