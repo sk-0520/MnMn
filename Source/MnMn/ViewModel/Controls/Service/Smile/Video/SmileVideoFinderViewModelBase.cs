@@ -219,6 +219,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return CreateCommand(o => ContinuousPlaybackAsync(true, true)); }
         }
 
+        public ICommand ClearCheckedCacheCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => throw new NotImplementedException(),
+                    o => GetCheckedItems().Any()
+                );
+            }
+        }
+
         public ICommand ChangedFilteringCommand
         {
             get { return CreateCommand(o => ChangedFiltering()); }

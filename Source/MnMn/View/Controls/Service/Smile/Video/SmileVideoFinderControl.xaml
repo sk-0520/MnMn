@@ -175,6 +175,9 @@
               </MenuItem>
 
             </Grid>
+            <Separator/>
+            <MenuItem Header="キャッシュ破棄(_R)" Command="{Binding ClearCheckedCacheCommand}" />
+            <Separator/>
             <MenuItem Header="ブックマーク追加" MouseEnter="BookmarkMenuItem_MouseEnter" PreviewMouseLeftButtonDown="BookmarkMenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
               <MenuItem.Resources>
                 <StackPanel x:Key="Content" Orientation="Horizontal">
