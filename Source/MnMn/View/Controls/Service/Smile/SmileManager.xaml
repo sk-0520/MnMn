@@ -173,7 +173,19 @@
       <TabItem Header="ラボ" DataContext="{Binding VideoManager.LaboratoryManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoLaboratoryManager />
       </TabItem>
-      <TabItem Header="設定" DataContext="{Binding SettingManager}"  Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding SettingManager}"  Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Viewbox Style="{StaticResource NormalIconBox}">
+            <Viewbox.ToolTip>
+              <ToolTip Style="{StaticResource NormalSelectionTabToolTip}">
+                <TextBlock Text="設定" />
+              </ToolTip>
+            </Viewbox.ToolTip>
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Setting}" Style="{StaticResource NormalDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </TabItem.Header>
         <app_view_controls_service_smile_setting:SmileSettingManager />
       </TabItem>
     </TabControl>
