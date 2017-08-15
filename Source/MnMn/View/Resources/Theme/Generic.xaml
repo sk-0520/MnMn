@@ -539,11 +539,11 @@
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TabPanel>
+            <TabPanel Margin="1,0">
               <ScrollViewer
                 Name="PART_ScrollViewer"
                 Grid.Column="0"
-                Padding="1"
+                Padding="0"
                 CanContentScroll="True"
                 IsDeferredScrollingEnabled="False"
                 SnapsToDevicePixels="True"
