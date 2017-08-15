@@ -530,6 +530,59 @@
 
   <Style x:Key="SectionTabControl" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
     <Setter Property="TabStripPlacement" Value="Left" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="TabControl">
+          <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TabPanel Margin="1,0">
+              <ScrollViewer
+                Name="PART_ScrollViewer"
+                Grid.Column="0"
+                Padding="0"
+                CanContentScroll="True"
+                IsDeferredScrollingEnabled="False"
+                SnapsToDevicePixels="True"
+                HorizontalScrollBarVisibility="Hidden"
+                VerticalScrollBarVisibility="Disabled"
+              >
+                <VirtualizingStackPanel
+                  x:Name="HeaderPanel"
+                  Margin="1"
+                  Panel.ZIndex="1"
+                  Orientation="Vertical"
+                  IsItemsHost="true"
+                 />
+              </ScrollViewer>
+            </TabPanel>
+
+            <Border
+              Name="ContentPanel"
+              Grid.Column="1"
+              BorderThickness="{TemplateBinding Border.BorderThickness}"
+              BorderBrush="{TemplateBinding Border.BorderBrush}"
+              Background="{TemplateBinding Panel.Background}"
+              KeyboardNavigation.TabIndex="2"
+              KeyboardNavigation.TabNavigation="Local"
+              KeyboardNavigation.DirectionalNavigation="Contained"
+            >
+              <ContentPresenter
+                ContentSource="PART_SelectedContentHost"
+                Content="{TemplateBinding TabControl.SelectedContent}"
+                ContentTemplate="{TemplateBinding TabControl.SelectedContentTemplate}"
+                ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
+                Margin="{TemplateBinding Control.Padding}"
+                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+              />
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 
   <Style TargetType="TabPanel">
