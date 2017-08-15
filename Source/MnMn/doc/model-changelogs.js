@@ -85,9 +85,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.81.1',
-		'isRc': true,
+		'date': '2017/08/15',
+		'version': '0.82.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -103,45 +103,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '他の機能追加・修正に影響を与えないため本バージョンアップはこんだけです'
 					}
 				]
 			},
@@ -151,14 +113,6 @@
 					{
 						'revision': '',
 						'subject': '#706: 動作基盤を .Net Framework 4.7 にアップグレードする'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
