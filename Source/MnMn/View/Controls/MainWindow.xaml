@@ -48,7 +48,7 @@
   </app_view_controls:ApplicationWindow.Style>
 
   <DockPanel>
-    <StatusBar DockPanel.Dock="Bottom">
+    <StatusBar DockPanel.Dock="Bottom" Panel.ZIndex="255">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
         <StatusBarItem.Style>
           <Style TargetType="StatusBarItem">
