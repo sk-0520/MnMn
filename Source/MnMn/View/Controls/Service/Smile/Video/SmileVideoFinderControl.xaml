@@ -176,7 +176,15 @@
 
             </Grid>
             <Separator/>
-            <MenuItem Header="キャッシュ破棄(_R)" Command="{Binding ClearCheckedCacheCommand}" />
+            <MenuItem Header="キャッシュ破棄(_R)" Command="{Binding ClearCheckedCacheCommand}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_GarbageCollection}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+            </MenuItem>
             <Separator/>
             <MenuItem Header="ブックマーク追加" MouseEnter="BookmarkMenuItem_MouseEnter" PreviewMouseLeftButtonDown="BookmarkMenuItem_PreviewMouseLeftButtonDown" IsEnabled="{Binding IsEnabledBookmarkMenu}" ItemsSource="{Binding BookmarkItems}">
               <MenuItem.Resources>
@@ -670,7 +678,15 @@
                 </Viewbox>
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="キャッシュ破棄(_R)" Command="{Binding SelectedFinderItem.Information.ClearCacheCommand}" />
+            <MenuItem Header="キャッシュ破棄(_R)" Command="{Binding SelectedFinderItem.Information.ClearCacheCommand}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_GarbageCollection}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+            </MenuItem>
 
           </ContextMenu>
         </ListBox.ContextMenu>
