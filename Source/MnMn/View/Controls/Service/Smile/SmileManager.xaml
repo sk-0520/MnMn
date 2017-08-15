@@ -137,7 +137,6 @@
             </Canvas>
           </Viewbox>
         </TabItem.Header>
-
         <app_view_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />
       </TabItem>
       <TabItem DataContext="{Binding VideoManager.CheckItLaterManager}" Style="{StaticResource SectionTabItem}">
@@ -153,7 +152,17 @@
                 <Setter Property="Badge" Value="{Binding ItemCount}" />
               </Style>
             </mamc:Badged.Style>
-            <TextBlock FontSize="{StaticResource FontLargeSize}" Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>
+            <!--<TextBlock FontSize="{StaticResource FontLargeSize}" Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>-->
+            <Viewbox Style="{StaticResource NormalIconBox}">
+              <Viewbox.ToolTip>
+                <ToolTip Style="{StaticResource NormalSelectionTabToolTip}">
+                  <TextBlock Text="あとで見る" />
+                </ToolTip>
+              </Viewbox.ToolTip>
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_CheckItLater}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
           </mamc:Badged>
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />
