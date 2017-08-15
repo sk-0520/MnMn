@@ -130,7 +130,19 @@
         </TabItem.Header>
         <app_view_controls_service_smile:SmileChannelManager x:Name="channel" />
       </TabItem>
-      <TabItem Header="生放送" DataContext="{Binding LiveManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding LiveManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Viewbox Style="{StaticResource NormalIconBox}">
+            <Viewbox.ToolTip>
+              <ToolTip Style="{StaticResource NormalSelectionTabToolTip}">
+                <TextBlock Text="生放送" />
+              </ToolTip>
+            </Viewbox.ToolTip>
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Live}" Style="{StaticResource NormalDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </TabItem.Header>
         <app_view_controls_service_smile_live:SmileLiveManager />
       </TabItem>
       <TabItem DataContext="{Binding WebSiteManager}" Style="{StaticResource SectionTabItem}">
