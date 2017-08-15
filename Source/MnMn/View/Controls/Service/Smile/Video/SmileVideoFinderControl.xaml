@@ -147,7 +147,13 @@
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" FontSize="{StaticResource FontSmallSize}">最終アイテムまで</Label>
+              <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" FontSize="{StaticResource FontSmallSize}">
+                <TextBlock>
+                  最終<LineBreak/>
+                  アイテム<LineBreak/>
+                  まで
+                </TextBlock>
+              </Label>
 
               <MenuItem Grid.Row="0" Grid.Column="1" Header="連続再生(_S)" Command="{Binding ContinuousPlaybackLastItemIsStopCommand}">
                 <MenuItem.Icon>

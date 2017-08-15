@@ -128,7 +128,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#738: HTML で言うところの "最終<br />アイテム<br />まで" の方がメニューがシュッとする'
 					},
 					{
 						'revision': '',
