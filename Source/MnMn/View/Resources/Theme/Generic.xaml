@@ -383,6 +383,10 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="TextAlignment" Value="Left" />
       </Style>
+      <Style TargetType="Label"  BasedOn="{StaticResource {x:Type Label}}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+      </Style>
     </Style.Resources>
     <Setter Property="Orientation" Value="Horizontal" />
     <Setter Property="VerticalAlignment" Value="Center" />
