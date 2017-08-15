@@ -85,8 +85,42 @@
 	},
 	*/
 	{
-		'date': '2017/08/13',
-		'version': '0.81.0',
+		'date': '2017/08/15',
+		'version': '0.82.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'class': 'warning',
+						'subject': '本バージョンから実行環境は .Net Framework 4.7 が必要になります(#706)',
+						'comments': [
+							'.Net Framework 4.7: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
+							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '他の機能追加・修正に影響を与えないため本バージョンアップはこんだけです'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#706: 動作基盤を .Net Framework 4.7 にアップグレードする'
+					}
+				]
+			}
+		]
+	},
+	{
+		'date': '2017/08/14',
+		'version': '0.81.1',
 		'isRc': false,
 		'contents': [
 			{
@@ -332,40 +366,6 @@
 					{
 						'revision': '3e67dafcab4ab287c019bca0660d256c4f1e1f56',
 						'subject': '#719: あっれー、キャッシュ状態本格的にバグってない？'
-					}
-				]
-			}
-		]
-	},
-	{
-		'date': '2017/08/05',
-		'version': '0.78.1',
-		'isRc': false,
-		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'class': 'notice',
-						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
-						'comments': [
-							'ver 0.80.0 以降で 2017/08/16 以降になったら 4.7 を対象にします',
-							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
-							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
-						]
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '',
-						'subject': '#714: #708 で動画に対する設定も GC 対象にしたけどそれはそれでキャッシュ状態のフラグが狂うっていうかバグってる',
-						'comments': [
-							'んふふふ'
-						]
 					}
 				]
 			}
