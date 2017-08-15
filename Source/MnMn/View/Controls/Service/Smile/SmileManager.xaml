@@ -88,7 +88,19 @@
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoMyListManager />
       </TabItem>
-      <TabItem Header="ユーザー" DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Viewbox Style="{StaticResource NormalIconBox}">
+            <Viewbox.ToolTip>
+              <ToolTip Style="{StaticResource NormalSelectionTabToolTip}">
+                <TextBlock Text="ユーザー" />
+              </ToolTip>
+            </Viewbox.ToolTip>
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_User}" Style="{StaticResource NormalDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </TabItem.Header>
         <app_view_controls_service_smile:SmileUsersManager />
       </TabItem>
       <TabItem Header="チャンネル" DataContext="{Binding ChannelManager}" Style="{StaticResource SectionTabItem}">
