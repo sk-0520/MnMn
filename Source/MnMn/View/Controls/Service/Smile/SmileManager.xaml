@@ -73,7 +73,19 @@
       <TabItem Header="新着とか" DataContext="{Binding VideoManager.NewArrivalsManager}"  Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoNewArrivalsManager />
       </TabItem>
-      <TabItem Header="マイリスト" DataContext="{Binding VideoManager.MyListManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding VideoManager.MyListManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <Viewbox Style="{StaticResource NormalIconBox}">
+            <Viewbox.ToolTip>
+              <ToolTip Style="{StaticResource NormalSelectionTabToolTip}">
+                <TextBlock Text="マイリスト" />
+              </ToolTip>
+            </Viewbox.ToolTip>
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource NormalAccentIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoMyListManager />
       </TabItem>
       <TabItem Header="ユーザー" DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
