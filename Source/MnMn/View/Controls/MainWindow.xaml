@@ -48,7 +48,7 @@
   </app_view_controls:ApplicationWindow.Style>
 
   <DockPanel>
-    <StatusBar DockPanel.Dock="Bottom">
+    <StatusBar DockPanel.Dock="Bottom" Panel.ZIndex="255">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
         <StatusBarItem.Style>
           <Style TargetType="StatusBarItem">
@@ -92,7 +92,7 @@
         <TabItem.Header>
           <Viewbox Style="{StaticResource BigIconBox}">
             <Viewbox.ToolTip>
-              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+              <ToolTip Style="{StaticResource BigSelectionTabToolTip}">
                 <TextBlock Text="ニコニコ" />
               </ToolTip>
             </Viewbox.ToolTip>
@@ -107,7 +107,7 @@
         <TabItem.Header>
           <Image Source="/Resources/MnMn-Header.png" Width="{StaticResource BigIconWidth}" Height="{StaticResource BigIconHeight}">
             <Image.ToolTip>
-              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+              <ToolTip Style="{StaticResource BigSelectionTabToolTip}">
                 <TextBlock Text="{x:Static app:Constants.ApplicationName}" />
               </ToolTip>
             </Image.ToolTip>
@@ -119,7 +119,7 @@
         <TabItem.Header>
           <StackPanel>
             <StackPanel.ToolTip>
-              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+              <ToolTip Style="{StaticResource BigSelectionTabToolTip}">
                 <TextBlock Text="アップデート" />
               </ToolTip>
             </StackPanel.ToolTip>
@@ -281,7 +281,7 @@
         <TabItem.Header>
           <Viewbox Style="{StaticResource BigIconBox}">
             <Viewbox.ToolTip>
-              <ToolTip Style="{StaticResource SelectionTabToolTip}">
+              <ToolTip Style="{StaticResource BigSelectionTabToolTip}">
                 <TextBlock Text="ブラウザ" />
               </ToolTip>
             </Viewbox.ToolTip>
@@ -328,7 +328,7 @@
             </mamc:Badged.Style>
             <Grid>
               <Grid.ToolTip>
-                <ToolTip Style="{StaticResource SelectionTabToolTip}">
+                <ToolTip Style="{StaticResource BigSelectionTabToolTip}">
                   <TextBlock Text="ダウンロード" />
                 </ToolTip>
               </Grid.ToolTip>

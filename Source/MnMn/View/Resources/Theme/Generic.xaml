@@ -383,6 +383,10 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="TextAlignment" Value="Left" />
       </Style>
+      <Style TargetType="Label"  BasedOn="{StaticResource {x:Type Label}}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+      </Style>
     </Style.Resources>
     <Setter Property="Orientation" Value="Horizontal" />
     <Setter Property="VerticalAlignment" Value="Center" />
@@ -647,9 +651,8 @@
     <Setter Property="ToolTipService.InitialShowDelay" Value="10" />
     <Setter Property="ToolTipService.ShowDuration" Value="10" />
     <Setter Property="ToolTipService.BetweenShowDelay" Value="10" />
+    <Setter Property="Padding" Value="2,2,20,4" />
     <Setter Property="HasDropShadow" Value="True" />
-    <Setter Property="FontSize" Value="14" />
-    <Setter Property="MinHeight" Value="{StaticResource BigIconHeight}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
     <Setter Property="Background">
       <Setter.Value>
@@ -665,7 +668,6 @@
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Placement" Value="Right" />
     <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="Padding" Value="4,4,20,4" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="ToolTip">
@@ -684,6 +686,16 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+  </Style>
+  <Style x:Key="NormalSelectionTabToolTip" TargetType="ToolTip" BasedOn="{StaticResource SelectionTabToolTip}">
+    <Setter Property="ToolTipService.VerticalOffset" Value="1" />
+    <Setter Property="FontSize" Value="{StaticResource FontBaseSize}" />
+    <Setter Property="MinHeight" Value="{StaticResource NormalIconHeight}" />
+  </Style>
+  <Style x:Key="BigSelectionTabToolTip" TargetType="ToolTip" BasedOn="{StaticResource SelectionTabToolTip}">
+    <Setter Property="ToolTipService.VerticalOffset" Value="2" />
+    <Setter Property="FontSize" Value="{StaticResource FontBigSize}" />
+    <Setter Property="MinHeight" Value="{StaticResource BigIconHeight}" />
   </Style>
 
   <Style x:Key="ParentItemLikeText" TargetType="TextBlock">
