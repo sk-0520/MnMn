@@ -118,7 +118,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#739: ファインダーから複数アイテムのGCを実行'
 					},
 					{
 						'revision': '',
