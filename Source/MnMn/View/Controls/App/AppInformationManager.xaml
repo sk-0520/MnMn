@@ -299,7 +299,7 @@
           <Separator />
           <Button Command="{Binding ClearAllLogCommand}">クリア(_E)</Button>
           <Separator />
-          <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力(O)</ToggleButton>
+          <ToggleButton IsChecked="{Binding AttachOutputLogging}">ログを継続出力(O)</ToggleButton>
         </ToolBar>
 
         <ListView x:Name="listLog" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Item" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding LogItems, Mode=OneTime}" SelectedItem="{Binding SelectedLogItem}">
