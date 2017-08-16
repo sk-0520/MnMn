@@ -139,6 +139,14 @@
 					},
 					{
 						'revision': '',
+						'class': 'reopen',
+						'subject': '#723: クラッシュレポートより: プログラム終了時に NullReferenceException',
+						'comments': [
+							'わかんねーなぁ、再現手法だれかおせーて'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
