@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 return CreateCommand(
-                    o => throw new NotImplementedException(),
+                    o => ClearCheckedCache(),
                     o => GetCheckedItems().Any()
                 );
             }
@@ -464,7 +464,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        internal virtual Task ContinuousPlaybackAsync(bool isRandom,bool lastItemIsStop, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
+        internal virtual Task ContinuousPlaybackAsync(bool isRandom, bool lastItemIsStop, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
             ShowContinuousPlaybackMenu = false;
 
@@ -618,6 +618,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             };
 
             Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+        }
+
+        void ClearCheckedCache()
+        {
+            var items = GetCheckedItems().ToEvaluatedSequence();
+            long gcSize = 0;
+            foreach(var item in items) {
+                try {
+                    var checkResult = item.Information.GarbageCollection(GarbageCollectionLevel.All, CacheSpan.NoCache, true);
+                    if(checkResult.IsSuccess) {
+                        gcSize += checkResult.Result;
+                    } else {
+                        Mediator.Logger.Warning($"{item.Information.VideoId}: GC fail", checkResult.Detail);
+                    }
+                } catch(Exception ex) {
+                    Mediator.Logger.Error(ex);
+                }
+            }
+
+            if(0 < gcSize) {
+                Mediator.Logger.Information($"GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)}", gcSize);
+            }
         }
 
         #endregion
