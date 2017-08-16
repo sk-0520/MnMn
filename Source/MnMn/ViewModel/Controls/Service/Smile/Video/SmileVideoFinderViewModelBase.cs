@@ -622,12 +622,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void ClearCheckedCache()
         {
+            ShowContinuousPlaybackMenu = false;
+
             var items = GetCheckedItems().ToEvaluatedSequence();
             long gcSize = 0;
             foreach(var item in items) {
                 try {
                     var checkResult = item.Information.GarbageCollection(GarbageCollectionLevel.All, CacheSpan.NoCache, true);
                     if(checkResult.IsSuccess) {
+                        item.IsChecked = false;
                         gcSize += checkResult.Result;
                     } else {
                         Mediator.Logger.Warning($"{item.Information.VideoId}: GC fail", checkResult.Detail);
