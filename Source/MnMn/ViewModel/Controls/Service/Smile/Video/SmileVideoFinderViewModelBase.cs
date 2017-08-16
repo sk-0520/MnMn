@@ -219,6 +219,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return CreateCommand(o => ContinuousPlaybackAsync(true, true)); }
         }
 
+        public ICommand ClearCheckedCacheCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ClearCheckedCache(),
+                    o => GetCheckedItems().Any()
+                );
+            }
+        }
+
         public ICommand ChangedFilteringCommand
         {
             get { return CreateCommand(o => ChangedFiltering()); }
@@ -453,7 +464,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        internal virtual Task ContinuousPlaybackAsync(bool isRandom,bool lastItemIsStop, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
+        internal virtual Task ContinuousPlaybackAsync(bool isRandom, bool lastItemIsStop, Action<SmileVideoPlayerViewModel> playerPreparationAction = null)
         {
             ShowContinuousPlaybackMenu = false;
 
@@ -607,6 +618,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             };
 
             Mediator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+        }
+
+        void ClearCheckedCache()
+        {
+            ShowContinuousPlaybackMenu = false;
+
+            var items = GetCheckedItems().ToEvaluatedSequence();
+            long gcSize = 0;
+            foreach(var item in items) {
+                try {
+                    var checkResult = item.Information.GarbageCollection(GarbageCollectionLevel.All, CacheSpan.NoCache, true);
+                    if(checkResult.IsSuccess) {
+                        item.IsChecked = false;
+                        gcSize += checkResult.Result;
+                    } else {
+                        Mediator.Logger.Warning($"{item.Information.VideoId}: GC fail", checkResult.Detail);
+                    }
+                } catch(Exception ex) {
+                    Mediator.Logger.Error(ex);
+                }
+            }
+
+            if(0 < gcSize) {
+                Mediator.Logger.Information($"GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)}", gcSize);
+            }
         }
 
         #endregion

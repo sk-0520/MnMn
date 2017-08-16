@@ -1149,7 +1149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ClearCache()
         {
             try {
-                var checkResult = GarbageCollection(GarbageCollectionLevel.Large | GarbageCollectionLevel.Small | GarbageCollectionLevel.Temporary, CacheSpan.NoCache, true);
+                var checkResult = GarbageCollection(GarbageCollectionLevel.All, CacheSpan.NoCache, true);
                 if(checkResult.IsSuccess) {
                     Mediator.Logger.Information($"cache clear: [{VideoId}] {RawValueUtility.ConvertHumanLikeByte(checkResult.Result)}");
                 } else {
