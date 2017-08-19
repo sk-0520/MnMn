@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <mappings>
+	<!-- auto generated 2017-08-19 19:09:36Z -->
 
 	<mapping key="video-msg_Issue665NA" content-type="text/xml">
 		<item key="thread-id" type="simple" value="${thread-id}"  />

@@ -1,4 +1,4 @@
-﻿var changelogs = [
+var changelogs = [
 	/*
 						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning' 'open' 'reopen',
 						'comments': [
@@ -165,7 +165,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#742: T4 生成物はタイムスタンプ付けておきたい'
 					},
 					{
 						'revision': '',
