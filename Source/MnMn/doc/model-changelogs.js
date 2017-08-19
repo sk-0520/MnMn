@@ -147,6 +147,15 @@
 					},
 					{
 						'revision': '',
+						'subject': '#576: getthumbinfo が使えない動画情報は HTML から取得する',
+						'comments': [
+							'getthumbinfo からデータを取得した際に so ならセッション無し視聴ページのコメント数とかを取得するようにした',
+							'取得したデータは getthumbinfo に再設定するので他ツールとかへの連携にも使えると思う',
+							'データ取得時なので本バージョン未満で生成した getthumbinfo キャッシュがある場合はその限りではない'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
