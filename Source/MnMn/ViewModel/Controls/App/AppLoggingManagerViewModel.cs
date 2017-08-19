@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region variable
 
         LogItemModel _selectedLogItem;
-        bool _attachmentOutputLogging;
+        bool _attachOutputLogging;
 
         #endregion
 
@@ -81,12 +81,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         }
 
         TextWriter Writer { get; set; }
-        public bool AttachmentOutputLogging
+        public bool AttachOutputLogging
         {
-            get { return this._attachmentOutputLogging; }
+            get { return this._attachOutputLogging; }
             set
             {
-                if(AttachmentOutputLogging) {
+                if(AttachOutputLogging) {
                     if(Writer != null) {
                         if(!VariableConstants.HasOptionLogDirectoryPath) {
                             Mediator.Logger.LoggerConfig.PutsStream = false;
@@ -95,10 +95,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         Writer.Dispose();
                         Writer = null;
                     }
-                    SetVariableValue(ref this._attachmentOutputLogging, value);
+                    SetVariableValue(ref this._attachOutputLogging, value);
                 } else {
                     var result = AttachmentOutputLoggingFromDialog();
-                    SetVariableValue(ref this._attachmentOutputLogging, result);
+                    SetVariableValue(ref this._attachOutputLogging, result);
                 }
             }
         }
@@ -239,6 +239,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override Task UninitializeAsync()
         {
+            LogListBox = null;
+
             return Task.CompletedTask;
         }
 
@@ -248,7 +250,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         }
 
         public override void UninitializeView(MainWindow view)
-        { }
+        {
+            LogListBox = null;
+        }
 
         #endregion
 

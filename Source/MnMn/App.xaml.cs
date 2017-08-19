@@ -681,14 +681,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             Mediator.Logger.Trace("start closing!");
 
+            Mediator.Logger.LoggerConfig.PutsCustom = false;
+            View.DataContext = null;
+
+            Mediator.Logger.Trace("uninitialize start!");
             var uninitTask = AppManager.UninitializeAsync();
-            if(!uninitTask.Wait(Constants.UninitializeAsyncWaitTime)) {
+            if(uninitTask.Wait(Constants.UninitializeAsyncWaitTime)) {
+                Mediator.Logger.Trace("uninitialize end!");
+            }else {
                 Mediator.Logger.Fatal($"time out: {nameof(ManagerViewModelBase.UninitializeAsync)}");
             }
-
-            Mediator.Logger.LoggerConfig.PutsCustom = false;
-
-            View.DataContext = null;
 
             Mediator.Logger.Trace("end closing -> start close!");
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly
 
         ExpressionItemKind Kind { get; }
 
+        string Word { get; }
         Regex Regex { get; }
         string XPath { get; }
 

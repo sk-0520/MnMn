@@ -63,5 +63,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string dmcReload = "video-dmc-reload";
 
         public const string search = "video-search";
+
+        public const string watchPage = "video-watch-page";
+
+        public static class Id
+        {
+            public const string watchPage_count = "count";
+            public const string watchPage_attribute = "attribute";
+            public const string watchPage_number= "number";
+        }
     }
 }

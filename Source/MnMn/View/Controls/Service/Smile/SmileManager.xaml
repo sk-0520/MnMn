@@ -40,31 +40,121 @@
       </TextBox>
     </ToolBar>
     <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
-      <TabItem Header="検索" DataContext="{Binding VideoManager.SearchManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding VideoManager.SearchManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Search}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="検索" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoSearchManager x:Name="search" />
       </TabItem>
-      <TabItem Header="ランキング" DataContext="{Binding VideoManager.RankingManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding VideoManager.RankingManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Ranking}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="ランキング" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoRankingManager />
       </TabItem>
-      <TabItem Header="新着とか" DataContext="{Binding VideoManager.NewArrivalsManager}"  Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding VideoManager.NewArrivalsManager}"  Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_News}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="新着とか" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoNewArrivalsManager />
       </TabItem>
-      <TabItem Header="マイリスト" DataContext="{Binding VideoManager.MyListManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding VideoManager.MyListManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource NormalAccentIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="マイリスト" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoMyListManager />
       </TabItem>
-      <TabItem Header="ユーザー" DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_User}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="ユーザー" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile:SmileUsersManager />
       </TabItem>
-      <TabItem Header="チャンネル" DataContext="{Binding ChannelManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding ChannelManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Smile_Channel}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="チャンネル" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile:SmileChannelManager x:Name="channel" />
       </TabItem>
-      <TabItem Header="生放送" DataContext="{Binding LiveManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding LiveManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Live}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="生放送" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_live:SmileLiveManager />
       </TabItem>
-      <TabItem Header="公式サイト" DataContext="{Binding WebSiteManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding WebSiteManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Browser}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="公式サイト" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile:SmileWebSiteManager x:Name="webSite" />
       </TabItem>
-      <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding VideoManager.BookmarkManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Bookmark}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="ブックマーク" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />
       </TabItem>
       <TabItem DataContext="{Binding VideoManager.CheckItLaterManager}" Style="{StaticResource SectionTabItem}">
@@ -80,18 +170,55 @@
                 <Setter Property="Badge" Value="{Binding ItemCount}" />
               </Style>
             </mamc:Badged.Style>
-            <TextBlock FontSize="{StaticResource FontLargeSize}" Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>
+            <StackPanel Style="{StaticResource ItemPanel}">
+              <Viewbox Style="{StaticResource NormalItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_CheckItLater}" Style="{StaticResource NormalDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+              <Label Content="あとで見る" />
+            </StackPanel>
           </mamc:Badged>
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />
       </TabItem>
-      <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding VideoManager.HistoryManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_History}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="履歴" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoHistoryManager />
       </TabItem>
-      <TabItem Header="ラボ" DataContext="{Binding VideoManager.LaboratoryManager}" Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding VideoManager.LaboratoryManager}" Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Laboratory}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="ラボ" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoLaboratoryManager />
       </TabItem>
-      <TabItem Header="設定" DataContext="{Binding SettingManager}"  Style="{StaticResource SectionTabItem}">
+      <TabItem DataContext="{Binding SettingManager}"  Style="{StaticResource SectionTabItem}">
+        <TabItem.Header>
+          <StackPanel Style="{StaticResource ItemPanel}">
+            <Viewbox Style="{StaticResource NormalItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Setting}" Style="{StaticResource NormalDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+            <Label Content="設定" />
+          </StackPanel>
+        </TabItem.Header>
         <app_view_controls_service_smile_setting:SmileSettingManager />
       </TabItem>
     </TabControl>

@@ -1,4 +1,77 @@
 ﻿var archive_changelogs = [
+
+	{
+		'date': '2017/08/05',
+		'version': '0.79.1',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '0.78.1 ? なにそれ'
+					},
+					{
+						'revision': '',
+						'subject': '0.79.0 ? 知らないバージョンだね'
+					},
+					{
+						'revision': '',
+						'class': 'notice',
+						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
+						'comments': [
+							'ver 0.80.0 以降で 2017/08/16 以降になったら 4.7 を対象にします',
+							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
+							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '5ec481c8c3f83355d59a1fd390a866b84da034c7',
+						'subject': '#697: アップデート時に MnMn インストールディレクトリ以下にあるプログラムが稼働していれば終了できるようにする'
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': 'b0d710f00996ce99693b6f28712c45d7a2a970c3',
+						'subject': '#715: バグの温床になりそうだけど一致ではなく消極的な動画サイズチェックを行う'
+					},
+					{
+						'revision': '3a6b57ce642debb4b348a02367479c72c69e624f',
+						'subject': '#710: クラッシュレポートより: 動画プレイヤーを開いた瞬間に閉じると NullReferenceException'
+					},
+					{
+						'revision': '8c2359f4d99403709a4c479b07e9717c3b0f0049',
+						'subject': '#716: マウスホイールで切り替え可能なタブが全て選択できない場合にフリーズする'
+					},
+					{
+						'revision': '97db8458788cedb9149522112fc61094c72d21b0',
+						'subject': '#717: #715 をもうちっと消極的にする',
+						'comments': [
+							'file.size == totalsize -> totalsize <= file.size',
+							'このソフトいい感じにクソだろ'
+						]
+					},
+					{
+						'revision': 'a87d7b594f436650710cd80270ae55df2cf3e130',
+						'subject': '#718: 外部プログラム・カスタムコピーの書式置き換えが動いていない'
+					},
+					{
+						'revision': '3e67dafcab4ab287c019bca0660d256c4f1e1f56',
+						'subject': '#719: あっれー、キャッシュ状態本格的にバグってない？'
+					}
+				]
+			}
+		]
+	},
 	{
 		'date': '2017/08/05',
 		'version': '0.78.1',

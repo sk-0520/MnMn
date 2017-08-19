@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <web-navigator>
+	<!-- auto generated 2017-08-19 19:09:09Z -->
 	<navigating>
 		<element key="smile-video-open-player" allow-service="*" send-service="smile-video">
 			<conditions>

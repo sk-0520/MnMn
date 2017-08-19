@@ -409,6 +409,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\WatchData.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Search.cs" />
+    <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\WatchPage.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDmcLoader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoTaskbarThumbnailCreator.cs" />
     <Compile Include="Logic\SpaghettiScript.cs" />
@@ -921,6 +922,8 @@
     <Content Include="etc\define\web-navigator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>web-navigator.xml</LastGenOutput>
+      <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
+&lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
     </Content>
     <Content Include="etc\define\web-navigator.xml">
       <AutoGen>True</AutoGen>

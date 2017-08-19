@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
@@ -15,7 +16,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         #region variable
 
+        string _word;
         Regex _regex;
+        string _xpath;
 
         #endregion
 
@@ -32,6 +35,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
+        #region function
+
+        string GetSimpleValue()
+        {
+            return Item.Data.Text
+                .SplitLines()
+                .Select(s => s.Trim())
+                .FirstOrDefault(s => 0 < s.Length)
+                ?? string.Empty
+            ;
+        }
+
+        #endregion
+
         #region IExpression
 
         public string Key => Element.Key;
@@ -39,6 +56,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public string Id => Item.Id;
 
         public ExpressionItemKind Kind => Item.Kind;
+
+        public string Word
+        {
+            get
+            {
+                if(Kind != ExpressionItemKind.Word) {
+                    throw new InvalidOperationException($"Kind == {Kind}");
+                }
+
+                if(this._word == null) {
+                    this._word = GetSimpleValue();
+                }
+
+                return this._word;
+            }
+        }
 
         public Regex Regex
         {
@@ -60,7 +93,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             get
             {
-                throw new NotImplementedException();
+                if(Kind != ExpressionItemKind.XPath) {
+                    throw new InvalidOperationException($"Kind == {Kind}");
+                }
+
+                if(this._xpath == null) {
+                    this._xpath = GetSimpleValue();
+                }
+
+                return this._xpath;
             }
         }
 

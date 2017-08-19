@@ -1,4 +1,4 @@
-﻿var changelogs = [
+var changelogs = [
 	/*
 						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning' 'open' 'reopen',
 						'comments': [
@@ -84,6 +84,80 @@
 		]
 	},
 	*/
+	{
+		'date': '2017/08/19',
+		'version': '0.83.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '公開から一周年だね',
+						'comments': [
+							'くっそおもんねーわ この実装'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '6a8af9c6ff32a3681f6f55145d815e33d276c24d',
+						'subject': '#689: 表示領域に収まりきらない縦タブのタブアイテムが自己主張強すぎる',
+						'comments': [
+							'縦タブをマウスホイールでスクロール'
+						]
+					},
+					{
+						'revision': 'ef7762174dbd42d59cbbd90f8a3ac02d1106aabb',
+						'subject': '#739: ファインダーから複数アイテムのGCを実行'
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': 'a3521fe71b46f6342ab7f46ad9bfeacf207a8e3d',
+						'subject': '#738: HTML で言うところの "最終<br />アイテム<br />まで" の方がメニューがシュッとする'
+					},
+					{
+						'revision': '7e373b8d873d181ef67ccc43b6427ca124687fb9',
+						'subject': '#675: そろそろニコニコのサービスタブにアイコン付けないと目が滑る'
+					},
+					{
+						'revision': '5c1da5287f2c221d37781f63d4e951e1b2f14dc5',
+						'class': 'reopen',
+						'subject': '#723: クラッシュレポートより: プログラム終了時に NullReferenceException',
+						'comments': [
+							'わかんねーなぁ、再現手法だれかおせーて'
+						]
+					},
+					{
+						'revision': '15d8d5f86dbe75fbcac0ba3334feb2b6ec8629d0',
+						'subject': '#576: getthumbinfo が使えない動画情報は HTML から取得する',
+						'comments': [
+							'getthumbinfo からデータを取得した際に so ならセッション無し視聴ページのコメント数とかを取得するようにした',
+							'取得したデータは getthumbinfo に再設定するので他ツールとかへの連携にも使えると思う',
+							'データ取得時なので本バージョン未満で生成した getthumbinfo キャッシュがある場合はその限りではない'
+						]
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '9553e5d59ad73e1674e58b343577bf30d6d00dc4',
+						'subject': '#742: T4 生成物はタイムスタンプ付けておきたい'
+					}
+				]
+			}
+		]
+	},
 	{
 		'date': '2017/08/15',
 		'version': '0.82.0',
@@ -294,78 +368,6 @@
 					{
 						'revision': 'cd19a9b23e9dfeeff6f3158fdf714c09c0283b8b',
 						'subject': '若干気になったのでプレイヤーの破棄だけじゃなくプレイヤー終了時にもイベント解除した'
-					}
-				]
-			}
-		]
-	},
-	{
-		'date': '2017/08/05',
-		'version': '0.79.1',
-		'isRc': false,
-		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': '0.78.1 ? なにそれ'
-					},
-					{
-						'revision': '',
-						'subject': '0.79.0 ? 知らないバージョンだね'
-					},
-					{
-						'revision': '',
-						'class': 'notice',
-						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
-						'comments': [
-							'ver 0.80.0 以降で 2017/08/16 以降になったら 4.7 を対象にします',
-							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
-							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
-						]
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '5ec481c8c3f83355d59a1fd390a866b84da034c7',
-						'subject': '#697: アップデート時に MnMn インストールディレクトリ以下にあるプログラムが稼働していれば終了できるようにする'
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': 'b0d710f00996ce99693b6f28712c45d7a2a970c3',
-						'subject': '#715: バグの温床になりそうだけど一致ではなく消極的な動画サイズチェックを行う'
-					},
-					{
-						'revision': '3a6b57ce642debb4b348a02367479c72c69e624f',
-						'subject': '#710: クラッシュレポートより: 動画プレイヤーを開いた瞬間に閉じると NullReferenceException'
-					},
-					{
-						'revision': '8c2359f4d99403709a4c479b07e9717c3b0f0049',
-						'subject': '#716: マウスホイールで切り替え可能なタブが全て選択できない場合にフリーズする'
-					},
-					{
-						'revision': '97db8458788cedb9149522112fc61094c72d21b0',
-						'subject': '#717: #715 をもうちっと消極的にする',
-						'comments': [
-							'file.size == totalsize -> totalsize <= file.size',
-							'このソフトいい感じにクソだろ'
-						]
-					},
-					{
-						'revision': 'a87d7b594f436650710cd80270ae55df2cf3e130',
-						'subject': '#718: 外部プログラム・カスタムコピーの書式置き換えが動いていない'
-					},
-					{
-						'revision': '3e67dafcab4ab287c019bca0660d256c4f1e1f56',
-						'subject': '#719: あっれー、キャッシュ状態本格的にバグってない？'
 					}
 				]
 			}
