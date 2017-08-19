@@ -85,24 +85,19 @@ var changelogs = [
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.82.1',
-		'isRc': true,
+		'date': '2017/08/19',
+		'version': '0.83.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '公開から一周年だね',
+						'comments': [
+							'くっそおもんねーわ この実装'
+						]
 					}
 				]
 			},
@@ -110,19 +105,15 @@ var changelogs = [
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '6a8af9c6ff32a3681f6f55145d815e33d276c24d',
 						'subject': '#689: 表示領域に収まりきらない縦タブのタブアイテムが自己主張強すぎる',
 						'comments': [
 							'縦タブをマウスホイールでスクロール'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'ef7762174dbd42d59cbbd90f8a3ac02d1106aabb',
 						'subject': '#739: ファインダーから複数アイテムのGCを実行'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -130,15 +121,15 @@ var changelogs = [
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'a3521fe71b46f6342ab7f46ad9bfeacf207a8e3d',
 						'subject': '#738: HTML で言うところの "最終<br />アイテム<br />まで" の方がメニューがシュッとする'
 					},
 					{
-						'revision': '',
+						'revision': '7e373b8d873d181ef67ccc43b6427ca124687fb9',
 						'subject': '#675: そろそろニコニコのサービスタブにアイコン付けないと目が滑る'
 					},
 					{
-						'revision': '',
+						'revision': '5c1da5287f2c221d37781f63d4e951e1b2f14dc5',
 						'class': 'reopen',
 						'subject': '#723: クラッシュレポートより: プログラム終了時に NullReferenceException',
 						'comments': [
@@ -146,17 +137,13 @@ var changelogs = [
 						]
 					},
 					{
-						'revision': '',
+						'revision': '15d8d5f86dbe75fbcac0ba3334feb2b6ec8629d0',
 						'subject': '#576: getthumbinfo が使えない動画情報は HTML から取得する',
 						'comments': [
 							'getthumbinfo からデータを取得した際に so ならセッション無し視聴ページのコメント数とかを取得するようにした',
 							'取得したデータは getthumbinfo に再設定するので他ツールとかへの連携にも使えると思う',
 							'データ取得時なので本バージョン未満で生成した getthumbinfo キャッシュがある場合はその限りではない'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -164,16 +151,8 @@ var changelogs = [
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '9553e5d59ad73e1674e58b343577bf30d6d00dc4',
 						'subject': '#742: T4 生成物はタイムスタンプ付けておきたい'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
