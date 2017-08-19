@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
             }
 
             var attributeExpression = Mediator.GetExpression(SmileVideoMediatorKey.watchPage, SmileVideoMediatorKey.Id.watchPage_attribute, Library.Bridging.Define.ServiceType.SmileVideo);
-            var attribute = element.Attributes[attributeExpression.XPath];
+            var attribute = element.Attributes[attributeExpression.Word];
             if(attribute == null) {
                 Mediator.Logger.Warning("not fount attribute");
                 return null;

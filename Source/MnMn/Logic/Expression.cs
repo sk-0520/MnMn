@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         #region variable
 
+        string _word;
         Regex _regex;
         string _xpath;
 
@@ -34,6 +35,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
+        #region function
+
+        string GetSimpleValue()
+        {
+            return Item.Data.Text
+                .SplitLines()
+                .Select(s => s.Trim())
+                .FirstOrDefault(s => 0 < s.Length)
+                ?? string.Empty
+            ;
+        }
+
+        #endregion
+
         #region IExpression
 
         public string Key => Element.Key;
@@ -41,6 +56,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public string Id => Item.Id;
 
         public ExpressionItemKind Kind => Item.Kind;
+
+        public string Word
+        {
+            get
+            {
+                if(Kind != ExpressionItemKind.Word) {
+                    throw new InvalidOperationException($"Kind == {Kind}");
+                }
+
+                if(this._word == null) {
+                    this._word = GetSimpleValue();
+                }
+
+                return this._word;
+            }
+        }
 
         public Regex Regex
         {
@@ -67,12 +98,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
 
                 if(this._xpath == null) {
-                    this._xpath = Item.Data.Text
-                        .SplitLines()
-                        .Select(s => s.Trim())
-                        .FirstOrDefault(s => 0 < s.Length)
-                        ?? string.Empty
-                    ;
+                    this._xpath = GetSimpleValue();
                 }
 
                 return this._xpath;
