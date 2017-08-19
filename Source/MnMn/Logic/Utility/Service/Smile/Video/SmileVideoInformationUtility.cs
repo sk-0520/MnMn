@@ -133,8 +133,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
                 if(SmileIdUtility.IsScrapingVideoId(rawGetthumbinfo.Thumb.VideoId, mediator)) {
                     // getthumbinfo で取得できない部分を補完する
+                    mediator.Logger.Trace("HTML thumb");
+
                     var watchPage = new WatchPage(mediator);
-                    watchPage.LoadGetthumbinfoAsync(rawGetthumbinfo.Thumb.WatchUrl);
+                    var thumb = await watchPage.LoadGetthumbinfoAsync(rawGetthumbinfo.Thumb.WatchUrl);
+                    if(thumb != null) {
+                        mediator.Logger.Trace("HTML thumb OK", thumb);
+
+                        rawGetthumbinfo.Thumb.ViewCounter = thumb.ViewCounter;
+                        rawGetthumbinfo.Thumb.CommentNum = thumb.CommentNum;
+                    } else {
+                        mediator.Logger.Warning("HTML thumb NG");
+                    }
                 }
 
                 isSave = true;

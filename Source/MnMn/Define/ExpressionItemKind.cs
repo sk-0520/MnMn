@@ -14,5 +14,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         [XmlEnum("regex")]
         Regex,
+        /// <summary>
+        /// XPath。
+        /// </summary>
+        [XmlEnum("xpath")]
+        XPath,
     }
 }

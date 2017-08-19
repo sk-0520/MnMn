@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
@@ -16,6 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region variable
 
         Regex _regex;
+        string _xpath;
 
         #endregion
 
@@ -60,7 +62,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             get
             {
-                throw new NotImplementedException();
+                if(Kind != ExpressionItemKind.XPath) {
+                    throw new InvalidOperationException($"Kind == {Kind}");
+                }
+
+                if(this._xpath == null) {
+                    this._xpath = Item.Data.Text
+                        .SplitLines()
+                        .Select(s => s.Trim())
+                        .FirstOrDefault(s => 0 < s.Length)
+                        ?? string.Empty
+                    ;
+                }
+
+                return this._xpath;
             }
         }
 
