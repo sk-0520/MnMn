@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -129,6 +130,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
                 var getthumbinfo = new Getthumbinfo(mediator);
                 rawGetthumbinfo = await getthumbinfo.LoadAsync(videoId);
+
+                if(SmileIdUtility.IsScrapingVideoId(rawGetthumbinfo.Thumb.VideoId, mediator)) {
+                    // getthumbinfo で取得できない部分を補完する
+                    mediator.Logger.Trace("HTML thumb");
+
+                    var watchPage = new WatchPage(mediator);
+                    var thumb = await watchPage.LoadGetthumbinfoAsync(rawGetthumbinfo.Thumb.WatchUrl);
+                    if(thumb != null) {
+                        mediator.Logger.Trace("HTML thumb OK", thumb);
+
+                        rawGetthumbinfo.Thumb.ViewCounter = thumb.ViewCounter;
+                        rawGetthumbinfo.Thumb.CommentNum = thumb.CommentNum;
+                    } else {
+                        mediator.Logger.Warning("HTML thumb NG");
+                    }
+                }
+
                 isSave = true;
             }
 

@@ -1,11 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <expressions>
-	<element key="">
-		<item id="" kind="regex" regex-options="">
+	<element key="video-watch-page">
+		<item id="count" kind="xpath">
 			<data>
 				<![CDATA[
+					//*[@id='PAGEBODY']/*/meta[@itemprop='interactionCount']
 				]]>
 			</data>
 		</item>
+		<item id="attribute" kind="xpath">
+			<data>
+				<![CDATA[
+					content
+				]]>
+			</data>
+		</item>
+		<item id="number" kind="regex" regex-options="ExplicitCapture  Multiline IgnoreCase IgnorePatternWhitespace">
+			<data>
+				<![CDATA[
+					(
+						(?<VIEW>
+							\d+
+						)
+						\s*
+						UserPlays
+					)
+					.*?
+					(
+						(?<COMMENT>
+							\d+
+						)
+						\s*
+						UserComments
+					)
+				]]>
+			</data>
+		</item>
+
 	</element>
 </expressions>
