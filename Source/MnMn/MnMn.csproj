@@ -409,6 +409,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\WatchData.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Search.cs" />
+    <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\WatchPage.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDmcLoader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoTaskbarThumbnailCreator.cs" />
     <Compile Include="Logic\SpaghettiScript.cs" />
