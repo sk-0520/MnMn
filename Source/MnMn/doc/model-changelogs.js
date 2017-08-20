@@ -154,7 +154,7 @@ var changelogs = [
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#747: 自動セットアップも .NET Framework 4.7 に準拠する'
 					},
 					{
 						'revision': '',
