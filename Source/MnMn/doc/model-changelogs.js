@@ -128,7 +128,12 @@ var changelogs = [
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'compatibility',
+						'subject': '#744: 全体フィルタ設定の設定名称が typo ってるから血を流そう',
+						'comments': [
+							'動画に対するコメント全体フィルタの使用状態をリセット',
+							'XAML 側もいじったからもっかしバインドミスってるかもね'
+						]
 					},
 					{
 						'revision': '',

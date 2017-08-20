@@ -985,10 +985,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool LoadedDmcVideos => DmcItems.Any(i => i.Value.IsLoaded);
 
 
-        public bool IsEnabledGlobalCommentFilering
+        public bool IsEnabledGlobalCommentFiltering
         {
-            get { return IndividualVideoSetting.IsEnabledGlobalCommentFilering; }
-            set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.IsEnabledGlobalCommentFilering)); }
+            get { return IndividualVideoSetting.IsEnabledGlobalCommentFiltering; }
+            set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.IsEnabledGlobalCommentFiltering)); }
         }
 
         /// <summary>

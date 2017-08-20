@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -348,7 +348,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 投稿者コメントもフィルタリング対象とするか。
         /// </summary>
-        public static bool SettingServiceSmileVideoCommentIsEnabledOriginalPosterFilering => appConfig.Get("setting-service-smile-smilevideo-comment-is-enabled-op-filering", bool.Parse);
+        public static bool SettingServiceSmileVideoCommentIsEnabledOriginalPosterFiltering => appConfig.Get("setting-service-smile-smilevideo-comment-is-enabled-op-filtering", bool.Parse);
         /// <summary>
         /// 検索で一度に取得する数。
         /// </summary>
@@ -503,7 +503,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 全体フィルタリングを有効にするか。
         /// </summary>
-        public static bool SettingServiceSmileVideoGlobalCommentFileringIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-global-comment-filtering-is-enabled", bool.Parse);
+        public static bool SettingServiceSmileVideoGlobalCommentFilteringIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-global-comment-filtering-is-enabled", bool.Parse);
 
         public static int SettingServiceSmileVideoPlayerCommentFps => appConfig.Get("setting-service-smile-smilevideo-player-comment-fps", int.Parse);
 

@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SortTypeItems = new CollectionModel<SmileVideoSortType>(EnumUtility.GetMembers<SmileVideoSortType>());
 
             var filteringResult = Mediator.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
-            FinderFilering = filteringResult.Filtering;
+            FinderFiltering = filteringResult.Filtering;
 
             FinderItems.Filter = FilterItems;
 
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// フィルタリング。
         /// </summary>
-        public SmileVideoFilteringViweModel FinderFilering { get; }
+        public SmileVideoFilteringViweModel FinderFiltering { get; }
 
         /// <summary>
         /// ソート方法。
@@ -411,12 +411,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return true;
             }
 
-            if(!FinderFilering.FinderFilterList.Any()) {
+            if(!FinderFiltering.FinderFilterList.Any()) {
                 return true;
             }
 
             var information = finderItem.Information;
-            var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model, Mediator));
+            var filters = FinderFiltering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model, Mediator));
             foreach(var filter in filters.AsParallel()) {
                 var param = new SmileVideoFinderFilteringParameterModel() {
                     VideoId = information.VideoId,
@@ -512,7 +512,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediator.Logger.Debug($"{target}: {source}");
 
             // 同一っぽいデータがある場合は無視する
-            if(FinderFilering.FinderFilterList.Any(i => i.Model.Target == target && i.Model.Source == source)) {
+            if(FinderFiltering.FinderFilterList.Any(i => i.Model.Target == target && i.Model.Source == source)) {
                 return;
             }
 
@@ -523,7 +523,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 IgnoreCase = true,
                 IsEnabled = true,
             };
-            FinderFilering.AddFinderFilter(model);
+            FinderFiltering.AddFinderFilter(model);
         }
 
         void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)

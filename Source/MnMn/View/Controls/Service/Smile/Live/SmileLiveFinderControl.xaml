@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   呼び出し元から DataContext を設定して使用。
 -->
 <UserControl

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -673,13 +673,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand SwitchGlobalCommentFilering
+        public ICommand SwitchGlobalCommentFiltering
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        IsEnabledGlobalCommentFilering = !IsEnabledGlobalCommentFilering;
+                        IsEnabledGlobalCommentFiltering = !IsEnabledGlobalCommentFiltering;
                     },
                     o => Information != null
                 );
