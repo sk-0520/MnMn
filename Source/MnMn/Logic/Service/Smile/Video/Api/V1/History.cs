@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -73,8 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             // 動画IDと実際の視聴データのIDは異なる(公式とかとか)
             var map = model.History.ToDictionary(h => h.VideoId, h => h.ItemId);
 
-            string targetId;
-            if(map.TryGetValue(videoId, out targetId)) {
+            if(map.TryGetValue(videoId, out var targetId)) {
                 using(var page = new PageLoader(Mediator, Session, SmileVideoMediatorKey.historyRemove, ServiceType.SmileVideo)) {
                     page.ReplaceRequestParameters["video-id"] = targetId;
                     page.ReplaceRequestParameters["token"] = model.Token;

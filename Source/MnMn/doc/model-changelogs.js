@@ -145,7 +145,7 @@ var changelogs = [
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#746: C#7.0 的なコードに一部書き換えたい'
 					},
 					{
 						'revision': '',

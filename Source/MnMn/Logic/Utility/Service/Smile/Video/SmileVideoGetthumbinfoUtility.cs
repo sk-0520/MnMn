@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -70,8 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static SmileVideoMovieType ConvertMovieType(string s)
         {
-            SmileVideoMovieType result;
-            if(Enum.TryParse<SmileVideoMovieType>(s, true, out result)) {
+            if(Enum.TryParse<SmileVideoMovieType>(s, true, out var result)) {
                 return result;
             }
 
@@ -80,8 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static SmileVideoThumbType ConvertThumbType(string s)
         {
-            SmileVideoThumbType result;
-            if(Enum.TryParse<SmileVideoThumbType>(s, out result)) {
+            if(Enum.TryParse<SmileVideoThumbType>(s, out var result)) {
                 return result;
             }
 

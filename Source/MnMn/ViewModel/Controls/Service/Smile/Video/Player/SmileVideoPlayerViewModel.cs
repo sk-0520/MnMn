@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -686,8 +686,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     var tagName = tagItem.Value<string>("tag");
                     var hasDic = tagItem.Value<string>("dic");
                     if(RawValueUtility.ConvertBoolean(hasDic)) {
-                        SmileVideoTagViewModel tag;
-                        if(map.TryGetValue(tagName, out tag)) {
+                        if(map.TryGetValue(tagName, out var tag)) {
                             tag.ExistPedia = true;
                         }
                     }
@@ -712,8 +711,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(Information.WatchTagItems.Any()) {
                 var map = TagItems.ToDictionary(tk => tk.TagName, tv => tv);
                 foreach(var tagItem in Information.WatchTagItems) {
-                    SmileVideoTagViewModel tag;
-                    if(map.TryGetValue(tagItem.Name, out tag)) {
+                    if(map.TryGetValue(tagItem.Name, out var tag)) {
                         tag.ExistPedia = RawValueUtility.ConvertBoolean(tagItem.IsDictionaryExists);
                     }
                 }
@@ -1707,8 +1705,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var rawUri = Mediator.GetUri(key, map, serviceType);
             var convertedUri = Mediator.ConvertUri(key, rawUri.Uri, serviceType);
-            Uri uri;
-            if(Uri.TryCreate(convertedUri, UriKind.RelativeOrAbsolute, out uri)) {
+            if(Uri.TryCreate(convertedUri, UriKind.RelativeOrAbsolute, out var uri)) {
                 if(openDefaultBrowser) {
                     ShellUtility.OpenUriInDefaultBrowser(uri, Mediator.Logger);
                 } else {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -98,8 +98,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Market
 
         Uri MakeUri(string uri)
         {
-            Uri outUri;
-            if(Uri.TryCreate(uri, UriKind.RelativeOrAbsolute, out outUri)) {
+            if(Uri.TryCreate(uri, UriKind.RelativeOrAbsolute, out var outUri)) {
                 return outUri;
             }
 
