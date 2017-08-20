@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -113,8 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         {
             get
             {
-                string resultValue;
-                if(Words.TryGetValue(AppUtility.GetCultureName(), out resultValue)) {
+                if(Words.TryGetValue(AppUtility.GetCultureName(), out var resultValue)) {
                     return resultValue;
                 }
 

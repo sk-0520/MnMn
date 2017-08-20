@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -90,8 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var usingVideoId = videoId;
 
-            SmileVideoInformationViewModel result;
-            if(TryGetValue(usingVideoId, out result)) {
+            if(TryGetValue(usingVideoId, out var result)) {
                 result.IncrementReference();
                 return Task.FromResult(result);
             }
@@ -105,9 +104,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                 var createdInformation = new SmileVideoInformationViewModel(Mediator, rawGetthumbinfo.Thumb, UnOrdered);
                 lock(this.checker) {
-                    if(TryGetValue(usingVideoId, out result)) {
-                        result.IncrementReference();
-                        return result;
+                    if(TryGetValue(usingVideoId, out var result2)) {
+                        result2.IncrementReference();
+                        return result2;
                     }
                     createdInformation.IncrementReference();
                     Add(usingVideoId, createdInformation);

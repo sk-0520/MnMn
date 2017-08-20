@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -127,8 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 { "6", SmileVideoUserKind.Official },
             };
 
-            SmileVideoUserKind result;
-            if(map.TryGetValue(s, out result)) {
+            if(map.TryGetValue(s, out var result)) {
                 return result;
             }
 
@@ -180,8 +179,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             foreach(var command in commands) {
                 foreach(var pair in map) {
-                    SmileVideoCommentVertical resultValue;
-                    if(map.TryGetValue(command, out resultValue)) {
+                    if(map.TryGetValue(command, out var resultValue)) {
                         return resultValue;
                     }
                 }
@@ -211,8 +209,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             foreach(var command in commands) {
                 foreach(var pair in map) {
-                    SmileVideoCommentSize resultValue;
-                    if(map.TryGetValue(command, out resultValue)) {
+                    if(map.TryGetValue(command, out var resultValue)) {
                         return resultValue;
                     }
                 }
@@ -289,8 +286,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
 
             foreach(var command in commands) {
-                Color resultColor;
-                if(colorMap.TryGetValue(command, out resultColor)) {
+                if(colorMap.TryGetValue(command, out var resultColor)) {
                     return resultColor;
                 }
                 if(regColorCode != null) {
@@ -348,8 +344,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 }
             }
 
-            string result;
-            if(colorMap.TryGetValue(color, out result)) {
+            if(colorMap.TryGetValue(color, out var result)) {
                 return result;
             }
 
@@ -387,8 +382,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 { "6", SmileVideoCommentResultStatus.Readonly  },
                 { "7", SmileVideoCommentResultStatus.TooLong  },
             };
-            SmileVideoCommentResultStatus result;
-            if(map.TryGetValue(rawStatus, out result)) {
+            if(map.TryGetValue(rawStatus, out var result)) {
                 return result;
             }
             return SmileVideoCommentResultStatus.Unknown;

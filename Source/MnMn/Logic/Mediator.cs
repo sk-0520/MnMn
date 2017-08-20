@@ -255,7 +255,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         WebNavigatorContextMenuItemResultModel Request_WebNavigatorFromContextMenuItem(WebNavigatorRequestModel request, WebNavigatorContextMenuItemParameterModel parameter)
         {
-            //WebNavigatorContextMenuItemViewModel menuItemResult;
             if(WebNavigatorContextMenuMap.TryGetValue(parameter.Key, out var menuItemResult)) {
                 if(!menuItemResult.Conditions.Any()) {
                     return new WebNavigatorContextMenuItemResultModel(false, true, true, null);

@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -535,8 +535,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             UsingDmc.Value = true;
 
             var role = SmileVideoInformationUtility.GetDmcRoleKey(video, audio);
-            SmileVideoDmcItemModel dmcItem;
-            if(Information.DmcItems.TryGetValue(role, out dmcItem)) {
+            if(Information.DmcItems.TryGetValue(role, out var dmcItem)) {
                 if(dmcItem.IsLoaded && downloadFile.Exists) {
                     if(dmcItem.Length <= downloadFile.Length) {
                         LoadVideoFromCache(downloadFile);
