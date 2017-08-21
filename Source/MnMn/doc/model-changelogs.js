@@ -158,6 +158,10 @@ var changelogs = [
 					},
 					{
 						'revision': '',
+						'subject': '#750: 短い情報で取得する CRL バージョンのリビジョンを取得しないと .NET 4.6-7 あたりわかんなくね？'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
