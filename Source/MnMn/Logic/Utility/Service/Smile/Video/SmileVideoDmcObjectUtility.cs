@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
@@ -191,6 +192,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             var cmp = new NaturalStringComparer();
             return cmp.Compare(a2, b2);
+        }
+
+        /// <summary>
+        /// 高品質順にデータを並び替える。
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static IEnumerable<SmileVideoDmcItemModel> GetHighQualityItems(IEnumerable<SmileVideoDmcItemModel> items)
+        {
+            var result = items
+                .Select(i => new { Source = i, VideoMatch = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(i.Video), AudioMatch = Constants.ServiceSmileVideoDownloadDmcWeightAudioSort.Match(i.Audio) })
+                .Where(i => i.VideoMatch.Success)
+                .Select(i => new { Source = i.Source, VideoBs = i.VideoMatch.Groups["BS"].Value, VideoScan = i.VideoMatch.Groups["SCAN"].Value, AudioBs = i.AudioMatch.Groups["BS"].Value })
+                .OrderByDescending(i => i.VideoBs, new NaturalStringComparer())
+                .ThenByDescending(i => i.VideoScan, new NaturalStringComparer())
+                .ThenByDescending(i => i.AudioBs, new NaturalStringComparer())
+                .Select(i => i.Source)
+                .ToEvaluatedSequence()
+            ;
+
+            return result;
         }
     }
 }
