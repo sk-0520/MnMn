@@ -534,10 +534,48 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             UsingDmc.Value = true;
 
+            // ソース品質でキャッシュ判定
+            if(Information.DmcItems.Any()) {
+                var cachedItems = Information.DmcItems
+                    .Where(i => i.Value.IsLoaded)
+                    .Select(i => i.Value)
+                ;
+                if(cachedItems.Any()) {
+                    Mediator.Logger.Information("cache check");
+                    var highQualityItems = SmileVideoDmcObjectUtility.GetHighQualityItems(cachedItems);
+
+                    var topQualityItem = highQualityItems.First();
+                    var cmpVideo = SmileVideoDmcObjectUtility.CompareVideo(video, topQualityItem.Video);
+                    if(0 <= cmpVideo) {
+                        // キャッシュ動画ソースは提供ソースより高品質
+                        Mediator.Logger.Information("service video <= cache video");
+
+                        var cmpAudio = SmileVideoDmcObjectUtility.CompareAudio(audio, topQualityItem.Audio);
+                        if(0 <= cmpAudio) {
+                            // キャッシュ音声ソースは提供ソースより高品質
+                            Mediator.Logger.Information("service audio <= cache audio");
+
+                            var cacheRole = SmileVideoInformationUtility.GetDmcRoleKey(topQualityItem.Video, topQualityItem.Audio);
+
+                            var cachePath = Information.GetDmcVideoFileName(topQualityItem.Video, topQualityItem.Audio, ext);
+                            var cacheFile = new FileInfo(cachePath);
+                            cacheFile.Refresh();
+                            if(cacheFile.Exists && cacheFile.Length <= topQualityItem.Length) {
+                                Mediator.Logger.Information("enabled cache: high quality");
+                                LoadVideoFromCache(cacheFile);
+                                var task = DmcLoader.StopAsync();
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
             var role = SmileVideoInformationUtility.GetDmcRoleKey(video, audio);
             if(Information.DmcItems.TryGetValue(role, out var dmcItem)) {
                 if(dmcItem.IsLoaded && downloadFile.Exists) {
                     if(dmcItem.Length <= downloadFile.Length) {
+                        Mediator.Logger.Information("simple cache: high quality");
                         LoadVideoFromCache(downloadFile);
                         var task = DmcLoader.StopAsync();
                         return true;

@@ -137,7 +137,7 @@ var changelogs = [
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#748: DMC 形式のキャッシュ判定に保持しているソースの優先度を使用する'
 					},
 					{
 						'revision': '',
