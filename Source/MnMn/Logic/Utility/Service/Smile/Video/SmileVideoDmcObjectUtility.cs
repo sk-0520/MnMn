@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -140,6 +140,57 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static IEnumerable<string> GetAudioWeights(IEnumerable<string> values, int threshold)
         {
             return GetWeights(GetSortedAudioWeights, values, threshold);
+        }
+
+        public static int CompareVideo(string a, string b)
+        {
+            if(string.IsNullOrWhiteSpace(a)) {
+                throw new ArgumentException(nameof(a));
+            }
+            if(string.IsNullOrWhiteSpace(b)) {
+                throw new ArgumentException(nameof(b));
+            }
+
+            (string bs, string scan) GetWeight(string s)
+            {
+                var match = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(s);
+                return (
+                    bs: match.Groups["KBS"].Value,
+                    scan: match.Groups["SCAN"].Value
+                );
+            }
+
+            var pairA = GetWeight(a);
+            var pairB = GetWeight(b);
+
+            var cmp = new NaturalStringComparer();
+            var comBs = cmp.Compare(pairA.bs, pairB.bs);
+            if(comBs != 0) {
+                return comBs;
+            }
+            return cmp.Compare(pairA.scan, pairB.scan);
+        }
+
+        public static int CompareAudio(string a, string b)
+        {
+            if(string.IsNullOrWhiteSpace(a)) {
+                throw new ArgumentException(nameof(a));
+            }
+            if(string.IsNullOrWhiteSpace(b)) {
+                throw new ArgumentException(nameof(b));
+            }
+
+            string GetWeight(string s)
+            {
+                var match = Constants.ServiceSmileVideoDownloadDmcWeightAudioSort.Match(s);
+                return match.Groups["KBS"].Value;
+            }
+
+            var a2 = GetWeight(a);
+            var b2 = GetWeight(b);
+
+            var cmp = new NaturalStringComparer();
+            return cmp.Compare(a2, b2);
         }
     }
 }
