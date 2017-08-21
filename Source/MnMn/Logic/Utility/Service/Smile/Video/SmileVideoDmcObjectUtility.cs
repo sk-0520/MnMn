@@ -75,8 +75,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var items = videos
                 .Select(s => new { Source = s, Match = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(s) })
                 .Where(b => b.Match.Success)
-                .Select(b => new { Source = b.Source, Kbs = b.Match.Groups["KBS"].Value, Scan = b.Match.Groups["SCAN"].Value })
-                .OrderBy(b => b.Kbs, new NaturalStringComparer())
+                .Select(b => new { Source = b.Source, Bs = b.Match.Groups["BS"].Value, Scan = b.Match.Groups["SCAN"].Value })
+                .OrderBy(b => b.Bs, new NaturalStringComparer())
                 .ThenBy(b => b.Scan, new NaturalStringComparer())
                 .Select(b => b.Source)
             ;
@@ -89,8 +89,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var items = videos
                 .Select(s => new { Source = s, Match = Constants.ServiceSmileVideoDownloadDmcWeightAudioSort.Match(s) })
                 .Where(b => b.Match.Success)
-                .Select(b => new { Source = b.Source, Kbs = b.Match.Groups["KBS"].Value })
-                .OrderBy(b => b.Kbs, new NaturalStringComparer())
+                .Select(b => new { Source = b.Source, Bs = b.Match.Groups["BS"].Value })
+                .OrderBy(b => b.Bs, new NaturalStringComparer())
                 .Select(b => b.Source)
             ;
 
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             {
                 var match = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(s);
                 return (
-                    bs: match.Groups["KBS"].Value,
+                    bs: match.Groups["BS"].Value,
                     scan: match.Groups["SCAN"].Value
                 );
             }
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             string GetWeight(string s)
             {
                 var match = Constants.ServiceSmileVideoDownloadDmcWeightAudioSort.Match(s);
-                return match.Groups["KBS"].Value;
+                return match.Groups["BS"].Value;
             }
 
             var a2 = GetWeight(a);
