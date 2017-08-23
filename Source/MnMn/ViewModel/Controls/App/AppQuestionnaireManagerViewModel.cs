@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 ["platform"] = (Environment.Is64BitOperatingSystem ? "64" : "32"),
                 ["memory"] = totalMemoryByte.ToString(),
                 ["os"] = Environment.OSVersion.ToString(),
-                ["clr"] = System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion(),
+                ["clr"] = Environment.Version.ToString(),
                 ["user_id"] = setting.RunningInformation.UserId,
                 ["subject"] = Subject,
                 ["kind"] = QuestionnaireKind.ToString().ToLower(),

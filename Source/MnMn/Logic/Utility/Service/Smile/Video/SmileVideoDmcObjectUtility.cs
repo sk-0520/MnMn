@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
@@ -75,8 +76,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var items = videos
                 .Select(s => new { Source = s, Match = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(s) })
                 .Where(b => b.Match.Success)
-                .Select(b => new { Source = b.Source, Kbs = b.Match.Groups["KBS"].Value, Scan = b.Match.Groups["SCAN"].Value })
-                .OrderBy(b => b.Kbs, new NaturalStringComparer())
+                .Select(b => new { Source = b.Source, Bs = b.Match.Groups["BS"].Value, Scan = b.Match.Groups["SCAN"].Value })
+                .OrderBy(b => b.Bs, new NaturalStringComparer())
                 .ThenBy(b => b.Scan, new NaturalStringComparer())
                 .Select(b => b.Source)
             ;
@@ -89,8 +90,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var items = videos
                 .Select(s => new { Source = s, Match = Constants.ServiceSmileVideoDownloadDmcWeightAudioSort.Match(s) })
                 .Where(b => b.Match.Success)
-                .Select(b => new { Source = b.Source, Kbs = b.Match.Groups["KBS"].Value })
-                .OrderBy(b => b.Kbs, new NaturalStringComparer())
+                .Select(b => new { Source = b.Source, Bs = b.Match.Groups["BS"].Value })
+                .OrderBy(b => b.Bs, new NaturalStringComparer())
                 .Select(b => b.Source)
             ;
 
@@ -140,6 +141,78 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static IEnumerable<string> GetAudioWeights(IEnumerable<string> values, int threshold)
         {
             return GetWeights(GetSortedAudioWeights, values, threshold);
+        }
+
+        public static int CompareVideo(string a, string b)
+        {
+            if(string.IsNullOrWhiteSpace(a)) {
+                throw new ArgumentException(nameof(a));
+            }
+            if(string.IsNullOrWhiteSpace(b)) {
+                throw new ArgumentException(nameof(b));
+            }
+
+            (string bs, string scan) GetWeight(string s)
+            {
+                var match = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(s);
+                return (
+                    bs: match.Groups["BS"].Value,
+                    scan: match.Groups["SCAN"].Value
+                );
+            }
+
+            var pairA = GetWeight(a);
+            var pairB = GetWeight(b);
+
+            var cmp = new NaturalStringComparer();
+            var comBs = cmp.Compare(pairA.bs, pairB.bs);
+            if(comBs != 0) {
+                return comBs;
+            }
+            return cmp.Compare(pairA.scan, pairB.scan);
+        }
+
+        public static int CompareAudio(string a, string b)
+        {
+            if(string.IsNullOrWhiteSpace(a)) {
+                throw new ArgumentException(nameof(a));
+            }
+            if(string.IsNullOrWhiteSpace(b)) {
+                throw new ArgumentException(nameof(b));
+            }
+
+            string GetWeight(string s)
+            {
+                var match = Constants.ServiceSmileVideoDownloadDmcWeightAudioSort.Match(s);
+                return match.Groups["BS"].Value;
+            }
+
+            var a2 = GetWeight(a);
+            var b2 = GetWeight(b);
+
+            var cmp = new NaturalStringComparer();
+            return cmp.Compare(a2, b2);
+        }
+
+        /// <summary>
+        /// 高品質順にデータを並び替える。
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static IEnumerable<SmileVideoDmcItemModel> GetHighQualityItems(IEnumerable<SmileVideoDmcItemModel> items)
+        {
+            var result = items
+                .Select(i => new { Source = i, VideoMatch = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(i.Video), AudioMatch = Constants.ServiceSmileVideoDownloadDmcWeightAudioSort.Match(i.Audio) })
+                .Where(i => i.VideoMatch.Success)
+                .Select(i => new { Source = i.Source, VideoBs = i.VideoMatch.Groups["BS"].Value, VideoScan = i.VideoMatch.Groups["SCAN"].Value, AudioBs = i.AudioMatch.Groups["BS"].Value })
+                .OrderByDescending(i => i.VideoBs, new NaturalStringComparer())
+                .ThenByDescending(i => i.VideoScan, new NaturalStringComparer())
+                .ThenByDescending(i => i.AudioBs, new NaturalStringComparer())
+                .Select(i => i.Source)
+                .ToEvaluatedSequence()
+            ;
+
+            return result;
         }
     }
 }

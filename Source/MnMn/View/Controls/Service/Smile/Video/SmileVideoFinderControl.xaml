@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   呼び出し元から DataContext を設定して使用。
 -->
 <UserControl
@@ -1225,7 +1225,7 @@
         </Grid.RowDefinitions>
 
         <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する(_F)</CheckBox>
-        <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
+        <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFiltering}">
           <i:Interaction.Triggers>
             <i:EventTrigger EventName="FilteringChanged">
               <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />

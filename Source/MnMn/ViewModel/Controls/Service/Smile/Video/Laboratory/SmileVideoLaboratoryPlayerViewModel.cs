@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             PlayerSetting.BackgroundColor = Setting.Player.BackgroundColor;
             PlayerSetting.BackgroundKind = Setting.Player.BackgroundKind;
 
-            GlobalCommentFilering = new SmileVideoFilteringViweModel(new SmileVideoCommentFilteringSettingModel(), null, Mediator.Smile.VideoMediator.Filtering);
+            GlobalCommentFiltering = new SmileVideoFilteringViweModel(new SmileVideoCommentFilteringSettingModel(), null, Mediator.Smile.VideoMediator.Filtering);
         }
 
         #region property

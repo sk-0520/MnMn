@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentItems.Filter = FilterCommentItems;
 
             var filteringResult = Mediator.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
-            GlobalCommentFilering = filteringResult.Filtering;
+            GlobalCommentFiltering = filteringResult.Filtering;
 
             ImportSetting();
         }
@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             IsEnabledSharedNoGood = Setting.Comment.IsEnabledSharedNoGood;
             SharedNoGoodScore = Setting.Comment.SharedNoGoodScore;
             CommentStyleSetting = (SmileVideoCommentStyleSettingModel)Setting.Comment.StyleSetting.DeepClone();
-            IsEnabledOriginalPosterFilering = Setting.Comment.IsEnabledOriginalPosterFilering;
+            IsEnabledOriginalPosterFiltering = Setting.Comment.IsEnabledOriginalPosterFiltering;
             FillBackgroundOriginalPoster = Setting.Comment.FillBackgroundOriginalPoster;
 
             CanChangeCommentEnabledArea = Setting.Player.CanChangeCommentEnabledArea;
@@ -211,7 +211,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Comment.IsEnabledSharedNoGood = IsEnabledSharedNoGood;
             Setting.Comment.SharedNoGoodScore = SharedNoGoodScore;
             Setting.Comment.StyleSetting = (SmileVideoCommentStyleSettingModel)CommentStyleSetting.DeepClone();
-            Setting.Comment.IsEnabledOriginalPosterFilering = IsEnabledOriginalPosterFilering;
+            Setting.Comment.IsEnabledOriginalPosterFiltering = IsEnabledOriginalPosterFiltering;
             Setting.Comment.FillBackgroundOriginalPoster = FillBackgroundOriginalPoster;
         }
 
@@ -686,8 +686,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     var tagName = tagItem.Value<string>("tag");
                     var hasDic = tagItem.Value<string>("dic");
                     if(RawValueUtility.ConvertBoolean(hasDic)) {
-                        SmileVideoTagViewModel tag;
-                        if(map.TryGetValue(tagName, out tag)) {
+                        if(map.TryGetValue(tagName, out var tag)) {
                             tag.ExistPedia = true;
                         }
                     }
@@ -712,8 +711,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(Information.WatchTagItems.Any()) {
                 var map = TagItems.ToDictionary(tk => tk.TagName, tv => tv);
                 foreach(var tagItem in Information.WatchTagItems) {
-                    SmileVideoTagViewModel tag;
-                    if(map.TryGetValue(tagItem.Name, out tag)) {
+                    if(map.TryGetValue(tagItem.Name, out var tag)) {
                         tag.ExistPedia = RawValueUtility.ConvertBoolean(tagItem.IsDictionaryExists);
                     }
                 }
@@ -949,15 +947,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            var comments = IsEnabledOriginalPosterFilering ? CommentList : NormalCommentList;
+            var comments = IsEnabledOriginalPosterFiltering ? CommentList : NormalCommentList;
 
             ApprovalCommentSet(CommentList, true, string.Empty, string.Empty);
 
             ApprovalCommentSharedNoGood(comments);
 
-            ApprovalCommentCustom(comments, false, LocalCommentFilering);
-            if(IsEnabledGlobalCommentFilering) {
-                ApprovalCommentCustom(comments, true, GlobalCommentFilering);
+            ApprovalCommentCustom(comments, false, LocalCommentFiltering);
+            if(IsEnabledGlobalCommentFiltering) {
+                ApprovalCommentCustom(comments, true, GlobalCommentFiltering);
             }
         }
 
@@ -1336,7 +1334,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetLocalFiltering()
         {
             if(View != null) {
-                View.localFilter.Filtering = LocalCommentFilering;
+                View.localFilter.Filtering = LocalCommentFiltering;
             }
         }
 
@@ -1497,8 +1495,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Mediator.Logger.Debug($"{target}: {source}, global: {setGlobalSetting}");
 
             var usingFilter = setGlobalSetting
-                ? GlobalCommentFilering
-                : LocalCommentFilering
+                ? GlobalCommentFiltering
+                : LocalCommentFiltering
             ;
 
             //同一っぽいデータがある場合は無視する
@@ -1707,8 +1705,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var rawUri = Mediator.GetUri(key, map, serviceType);
             var convertedUri = Mediator.ConvertUri(key, rawUri.Uri, serviceType);
-            Uri uri;
-            if(Uri.TryCreate(convertedUri, UriKind.RelativeOrAbsolute, out uri)) {
+            if(Uri.TryCreate(convertedUri, UriKind.RelativeOrAbsolute, out var uri)) {
                 if(openDefaultBrowser) {
                     ShellUtility.OpenUriInDefaultBrowser(uri, Mediator.Logger);
                 } else {
@@ -2023,13 +2020,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(UserName),
                 nameof(ChannelName),
                 nameof(IsChannelVideo),
-                nameof(IsEnabledGlobalCommentFilering),
+                nameof(IsEnabledGlobalCommentFiltering),
                 nameof(PosterInformation),
                 nameof(PosterThumbnailImage),
+                nameof(OpenCacheDirectoryCommand)
             };
             CallOnPropertyChange(propertyNames);
 
-            LocalCommentFilering = new SmileVideoFilteringViweModel(Information.Filtering, null, Mediator.Smile.VideoMediator.Filtering);
+            LocalCommentFiltering = new SmileVideoFilteringViweModel(Information.Filtering, null, Mediator.Smile.VideoMediator.Filtering);
             SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();

@@ -85,6 +85,75 @@ var changelogs = [
 	},
 	*/
 	{
+		'date': '2017/08/23',
+		'version': '0.84.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '357d2c6185f857340a06abfa2920965462c1070e',
+						'class': 'warning',
+						'subject': '#752: コメントを蓄積する設定の追加',
+						'comments': [
+							'わっけ分からんから XML 形式のコメントじゃなくて Json 形式のコメントに限定した',
+							'さらっと流してるけどすっごい影響ありな課題ね！',
+							'ニコニコ -> 設定 -> ダウンロード -> 「Json 形式のコメントを蓄積する」で切り替え',
+							'初期値は真',
+							'コメントがどんどんたまる！',
+							'それもデバッグが甘い！',
+							'すまん、デバッグするには工数が多すぎるからデバッグ頼むわ ;-) よろぴく',
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '0b1e6eb9eba5b4a93a71d747acee3e8b3c4e4f2d',
+						'class': 'compatibility',
+						'subject': '#744: 全体フィルタ設定の設定名称が typo ってるから血を流そう',
+						'comments': [
+							'動画に対するコメント全体フィルタの使用状態をリセット',
+							'XAML 側もいじったからもっかしバインドミスってるかもね'
+						]
+					},
+					{
+						'revision': 'a39abf602515c4f4a2c71eff814688a46514db65',
+						'subject': '#748: DMC 形式のキャッシュ判定に保持しているソースの優先度を使用する'
+					},
+					{
+						'revision': '1e9ca78703230da7defca68b6db8e4cf0018d25e',
+						'subject': '#751: プレイリストで遷移した際にキャッシュディレクトリを開くと動画情報が古い'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': 'd269f08ad7b13ed198bceefae928a800cee866e9',
+						'subject': '#746: C#7.0 的なコードに一部書き換えたい'
+					},
+					{
+						'revision': '9f997218d434ce0e086548b87d38917d005250ed',
+						'subject': '#747: 自動セットアップも .NET Framework 4.7 に準拠する',
+						'comments': [
+							'tag: setup-1.40',
+							'実稼働: 2017/08/20'
+						]
+					},
+					{
+						'revision': '2a34dd4416d27b35d697af4ad60f757ff786a4e4',
+						'subject': '#750: 短い情報で取得する CRL バージョンのリビジョンを取得しないと .NET 4.6-7 あたりわかんなくね？'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/08/19',
 		'version': '0.83.0',
 		'isRc': false,
@@ -277,97 +346,6 @@ var changelogs = [
 					{
 						'revision': 'e22eb59bfa1e6535885f14dcbf3c540f52e3726c',
 						'subject': '#735: 開発用にファインダーからキャッシュディレクトリ開けるようにしておきたいね'
-					}
-				]
-			}
-		]
-	},
-	{
-		'date': '2017/08/08',
-		'version': '0.80.0',
-		'isRc': false,
-		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'class': 'notice',
-						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
-						'comments': [
-							'2017/08/16 以降になったら 4.7 を対象にします',
-							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
-							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
-						]
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': 'f906cda80dc5264601fd9384ea55ed293b4d68e1',
-						'subject': '#720: 連続再生をプレイリスト内の項目数だけに限定した挙動を追加する',
-						'comments': [
-							'ちょっくら色々あって順序入れ替えたり削除した場合の試験してないからデバッグよろしくね'
-						]
-					},
-					{
-						'revision': '14db48fc117ce74aae74468fb0fb0b0be7b683ea',
-						'subject': '#602: 各種コントロールにショートカットキー(昔でいうキーボードアクセラレータ)を付与する',
-						'comments': [
-							'軽いだろと思ってたけど予想以上に作業量多かったから諦めた',
-							'今後は起票せずゆっくりぼちぼち進めていくことにした'
-						]
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '22507cbd6b7343652c85f0cae67e5b6e16434619',
-						'subject': '#722: ラボが死んでてボクも死んでる'
-					},
-					{
-						'revision': '2887d6d6587a62a16a4990bb3c58bca016da4435',
-						'subject': '#725: GC 未実施ログ出力で正常にスキップしたものが警告表示されてる',
-						'comments': [
-							'あまりにも不可解なクラッシュレポートが飛んできてるけど多分これのせいだと思う',
-							'-> ArgumentOutOfRangeException: インデックスが範囲を超えています',
-							'他のレポートも同じようなタイミングだったからこれだじゃないかなぁという思いでリリース'
-						]
-					},
-					{
-						'revision': '192062ff5842e14c9d135f86ecb10038e6dd280c',
-						'subject': '#721: 関連動画の読み込みはタブ選択まで遅延させる'
-					},
-					{
-						'revision': '0c6ba743262e5884f3faa1ad2a05f722b7271e45',
-						'subject': '#724: クラッシュレポートより: System.Runtime.InteropServices.InvalidComObjectException: 基になる RCW から分割された COM オブジェクトを使うことはできません',
-						'comments': [
-							'再現不可のため隠蔽'
-						]
-					},
-					{
-						'revision': 'ac920f9aae834005e0609c4ed542668ca1591a48',
-						'subject': '#727: 動画再生方法が「外部プログラムで開く」でプログラム・パスを設定せずに動画を開こうとすると開けないんだけど内部的にエラー連鎖しててダメだろこれ'
-					},
-					{
-						'revision': 'b83c8a27dac1cfcf96e8bf1461b46d23c24abfc6',
-						'subject': '#728: クラッシュレポートより: (内部的な)コメント描画領域が設定されていない状態でプレイヤーの再生位置が変わると NullReferenceException',
-						'comments': [
-							'課題件名の時点で矛盾だらけなんだけどログはそう言ってる'
-						]
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': 'cd19a9b23e9dfeeff6f3158fdf714c09c0283b8b',
-						'subject': '若干気になったのでプレイヤーの破棄だけじゃなくプレイヤー終了時にもイベント解除した'
 					}
 				]
 			}

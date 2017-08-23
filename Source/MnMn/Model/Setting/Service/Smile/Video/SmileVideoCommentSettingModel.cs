@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 投稿者コメントもフィルタリング対象にするか。
         /// </summary>
         [DataMember]
-        public bool IsEnabledOriginalPosterFilering { get; set; } = Constants.SettingServiceSmileVideoCommentIsEnabledOriginalPosterFilering;
+        public bool IsEnabledOriginalPosterFiltering { get; set; } = Constants.SettingServiceSmileVideoCommentIsEnabledOriginalPosterFiltering;
 
         /// <summary>
         /// 投稿者コメントの塗りつぶし。

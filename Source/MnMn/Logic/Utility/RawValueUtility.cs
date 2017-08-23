@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -53,8 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         static T ConvertT<T>(string s, ConvertTryPaese<T> parse, T resultFailValue)
         {
-            T result;
-            if(parse(s, out result)) {
+            if(parse(s, out var result)) {
                 return result;
             } else {
                 return resultFailValue;
@@ -108,8 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static Uri ConvertUri(string s)
         {
-            Uri result;
-            if(Uri.TryCreate(s, UriKind.RelativeOrAbsolute, out result)) {
+            if(Uri.TryCreate(s, UriKind.RelativeOrAbsolute, out var result)) {
                 return result;
             } else {
                 return null;
@@ -142,8 +140,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             var result = new TResultModel();
             var map = NameAttributeUtility.GetNames(result);
             foreach(var pair in map) {
-                string value;
-                if(parameters.TryGetValue(pair.Key, out value)) {
+                if(parameters.TryGetValue(pair.Key, out var value)) {
                     pair.Value.SetValue(result, value);
                 }
             }

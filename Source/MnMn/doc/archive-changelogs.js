@@ -1,5 +1,95 @@
-﻿var archive_changelogs = [
-
+var archive_changelogs = [
+	{
+		'date': '2017/08/08',
+		'version': '0.80.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'class': 'notice',
+						'subject': '必要環境の .Net Framework を 4.6 から 4.7 に変更します(#706)',
+						'comments': [
+							'2017/08/16 以降になったら 4.7 を対象にします',
+							'ダウンロードページ: https://www.microsoft.com/ja-JP/download/details.aspx?id=55170',
+							'Windows 7 を使用している場合は一部注意が必要かもです(#651)'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': 'f906cda80dc5264601fd9384ea55ed293b4d68e1',
+						'subject': '#720: 連続再生をプレイリスト内の項目数だけに限定した挙動を追加する',
+						'comments': [
+							'ちょっくら色々あって順序入れ替えたり削除した場合の試験してないからデバッグよろしくね'
+						]
+					},
+					{
+						'revision': '14db48fc117ce74aae74468fb0fb0b0be7b683ea',
+						'subject': '#602: 各種コントロールにショートカットキー(昔でいうキーボードアクセラレータ)を付与する',
+						'comments': [
+							'軽いだろと思ってたけど予想以上に作業量多かったから諦めた',
+							'今後は起票せずゆっくりぼちぼち進めていくことにした'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '22507cbd6b7343652c85f0cae67e5b6e16434619',
+						'subject': '#722: ラボが死んでてボクも死んでる'
+					},
+					{
+						'revision': '2887d6d6587a62a16a4990bb3c58bca016da4435',
+						'subject': '#725: GC 未実施ログ出力で正常にスキップしたものが警告表示されてる',
+						'comments': [
+							'あまりにも不可解なクラッシュレポートが飛んできてるけど多分これのせいだと思う',
+							'-> ArgumentOutOfRangeException: インデックスが範囲を超えています',
+							'他のレポートも同じようなタイミングだったからこれだじゃないかなぁという思いでリリース'
+						]
+					},
+					{
+						'revision': '192062ff5842e14c9d135f86ecb10038e6dd280c',
+						'subject': '#721: 関連動画の読み込みはタブ選択まで遅延させる'
+					},
+					{
+						'revision': '0c6ba743262e5884f3faa1ad2a05f722b7271e45',
+						'subject': '#724: クラッシュレポートより: System.Runtime.InteropServices.InvalidComObjectException: 基になる RCW から分割された COM オブジェクトを使うことはできません',
+						'comments': [
+							'再現不可のため隠蔽'
+						]
+					},
+					{
+						'revision': 'ac920f9aae834005e0609c4ed542668ca1591a48',
+						'subject': '#727: 動画再生方法が「外部プログラムで開く」でプログラム・パスを設定せずに動画を開こうとすると開けないんだけど内部的にエラー連鎖しててダメだろこれ'
+					},
+					{
+						'revision': 'b83c8a27dac1cfcf96e8bf1461b46d23c24abfc6',
+						'subject': '#728: クラッシュレポートより: (内部的な)コメント描画領域が設定されていない状態でプレイヤーの再生位置が変わると NullReferenceException',
+						'comments': [
+							'課題件名の時点で矛盾だらけなんだけどログはそう言ってる'
+						]
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': 'cd19a9b23e9dfeeff6f3158fdf714c09c0283b8b',
+						'subject': '若干気になったのでプレイヤーの破棄だけじゃなくプレイヤー終了時にもイベント解除した'
+					}
+				]
+			}
+		]
+	},
 	{
 		'date': '2017/08/05',
 		'version': '0.79.1',

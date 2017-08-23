@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     //list.Add("Process: " + Constants.BuildProcess);
                     list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64" : "32"));
                     list.Add("OS: " + System.Environment.OSVersion);
-                    list.Add("CLR: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
+                    list.Add("CLR: " + Environment.Version);
                     var setting = Mediator.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
                     list.Add("Lightweight: " + setting.RunningInformation.LightweightUpdateTimestamp.ToString("u"));
                     var text = Environment.NewLine + separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine;

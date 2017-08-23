@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -985,10 +985,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool LoadedDmcVideos => DmcItems.Any(i => i.Value.IsLoaded);
 
 
-        public bool IsEnabledGlobalCommentFilering
+        public bool IsEnabledGlobalCommentFiltering
         {
-            get { return IndividualVideoSetting.IsEnabledGlobalCommentFilering; }
-            set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.IsEnabledGlobalCommentFilering)); }
+            get { return IndividualVideoSetting.IsEnabledGlobalCommentFiltering; }
+            set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.IsEnabledGlobalCommentFiltering)); }
         }
 
         /// <summary>
@@ -1622,8 +1622,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     var check = GarbageCollectionFromFile(dmcFile, cacheSpan, force);
                     if(check.IsSuccess) {
                         var role = Regex.Replace(dmcFile.Name, @".*-video\.(\[.*\])\.dmc\..*", "$1");
-                        SmileVideoDmcItemModel item;
-                        if(IndividualVideoSetting.DmcItems.TryGetValue(role, out item)) {
+                        if(IndividualVideoSetting.DmcItems.TryGetValue(role, out var item)) {
                             item.IsLoaded = false;
                         }
                         needSave = true;

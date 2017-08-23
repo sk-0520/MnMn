@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -255,8 +255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         WebNavigatorContextMenuItemResultModel Request_WebNavigatorFromContextMenuItem(WebNavigatorRequestModel request, WebNavigatorContextMenuItemParameterModel parameter)
         {
-            WebNavigatorContextMenuItemViewModel menuItemResult;
-            if(WebNavigatorContextMenuMap.TryGetValue(parameter.Key, out menuItemResult)) {
+            if(WebNavigatorContextMenuMap.TryGetValue(parameter.Key, out var menuItemResult)) {
                 if(!menuItemResult.Conditions.Any()) {
                     return new WebNavigatorContextMenuItemResultModel(false, true, true, null);
                 }

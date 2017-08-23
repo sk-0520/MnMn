@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _showCommentChart;
 
-        bool _isEnabledOriginalPosterFilering;
+        bool _isEnabledOriginalPosterFiltering;
 
         bool _fillBackgroundOriginalPoster;
 

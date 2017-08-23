@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -349,7 +349,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._isEnabledSharedNoGood, value)) {
-                    if(LocalCommentFilering != null) {
+                    if(LocalCommentFiltering != null) {
                         ApprovalComment();
                     }
                 }
@@ -364,7 +364,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._sharedNoGoodScore, value)) {
-                    if(LocalCommentFilering != null) {
+                    if(LocalCommentFiltering != null) {
                         ApprovalComment();
                     }
                 }
@@ -495,11 +495,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 動画に対するフィルタ設定。
         /// </summary>
-        public SmileVideoFilteringViweModel LocalCommentFilering { get; set; }
+        public SmileVideoFilteringViweModel LocalCommentFiltering { get; set; }
         /// <summary>
         /// 全体に対するフィルタ設定。
         /// </summary>
-        public SmileVideoFilteringViweModel GlobalCommentFilering { get; protected set; }
+        public SmileVideoFilteringViweModel GlobalCommentFiltering { get; protected set; }
 
         ///// <summary>
         ///// 動画再生位置を変更中か。
@@ -1099,16 +1099,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 全体フィルタ使用状態。
         /// </summary>
-        public bool IsEnabledGlobalCommentFilering
+        public bool IsEnabledGlobalCommentFiltering
         {
-            get { return Information?.IsEnabledGlobalCommentFilering ?? Constants.SettingServiceSmileVideoGlobalCommentFileringIsEnabled; }
+            get { return Information?.IsEnabledGlobalCommentFiltering ?? Constants.SettingServiceSmileVideoGlobalCommentFilteringIsEnabled; }
             set
             {
                 if(Information != null) {
-                    if(Information.IsEnabledGlobalCommentFilering != value) {
-                        Information.IsEnabledGlobalCommentFilering = value;
+                    if(Information.IsEnabledGlobalCommentFiltering != value) {
+                        Information.IsEnabledGlobalCommentFiltering = value;
                         ApprovalComment();
-                        CallOnPropertyChange(nameof(IsEnabledGlobalCommentFilering));
+                        CallOnPropertyChange(nameof(IsEnabledGlobalCommentFiltering));
                     }
                 }
             }
@@ -1171,12 +1171,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.BackgroundColor; }
         }
 
-        public bool IsEnabledOriginalPosterFilering
+        public bool IsEnabledOriginalPosterFiltering
         {
-            get { return this._isEnabledOriginalPosterFilering; }
+            get { return this._isEnabledOriginalPosterFiltering; }
             set
             {
-                if(SetVariableValue(ref this._isEnabledOriginalPosterFilering, value)) {
+                if(SetVariableValue(ref this._isEnabledOriginalPosterFiltering, value)) {
                     ApprovalComment();
                 }
             }

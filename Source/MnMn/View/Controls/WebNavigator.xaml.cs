@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -745,8 +745,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             {
                 return new DelegateCommand(
                     o => {
-                        Uri inputUri;
-                        if(Uri.TryCreate(this.location.Text, UriKind.Absolute, out inputUri)) {
+                        if(Uri.TryCreate(this.location.Text, UriKind.Absolute, out var inputUri)) {
                             Navigate(inputUri);
                         }
                     },
@@ -1379,8 +1378,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
             if(BridgeNewWindow) {
                 // 先に内部制御を試す
-                Uri nextUri;
-                if(Uri.TryCreate(e.Uri, UriKind.RelativeOrAbsolute, out nextUri)) {
+                if(Uri.TryCreate(e.Uri, UriKind.RelativeOrAbsolute, out var nextUri)) {
                     var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
                         NextUri = nextUri,
                     };

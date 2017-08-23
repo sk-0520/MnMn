@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -88,8 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static void OpenUriInAppBrowser(object parameter, ICommunication communication)
         {
-            Uri uri;
-            if(Uri.TryCreate((string)parameter, UriKind.RelativeOrAbsolute, out uri)) {
+            if(Uri.TryCreate((string)parameter, UriKind.RelativeOrAbsolute, out var uri)) {
                 OpenUriInAppBrowserCore(uri, communication);
             }
         }

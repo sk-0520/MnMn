@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -406,9 +406,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         static T ConvertFromDefinedToEnum<T>(IReadOnlyDictionary<string, string> map, string key, T failResult)
         {
-            string value;
-
-            if(map.TryGetValue(key, out value)) {
+            if(map.TryGetValue(key, out var value)) {
                 return EnumUtility.Parse<T>(map[key], false);
             }
 
