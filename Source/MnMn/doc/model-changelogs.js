@@ -85,32 +85,15 @@ var changelogs = [
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.83.1',
-		'isRc': true,
+		'date': '2017/08/23',
+		'version': '0.84.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '357d2c6185f857340a06abfa2920965462c1070e',
 						'class': 'warning',
 						'subject': '#752: コメントを蓄積する設定の追加',
 						'comments': [
@@ -122,14 +105,6 @@ var changelogs = [
 							'それもデバッグが甘い！',
 							'すまん、デバッグするには工数が多すぎるからデバッグ頼むわ ;-) よろぴく',
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -137,7 +112,7 @@ var changelogs = [
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '0b1e6eb9eba5b4a93a71d747acee3e8b3c4e4f2d',
 						'class': 'compatibility',
 						'subject': '#744: 全体フィルタ設定の設定名称が typo ってるから血を流そう',
 						'comments': [
@@ -146,16 +121,12 @@ var changelogs = [
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'a39abf602515c4f4a2c71eff814688a46514db65',
 						'subject': '#748: DMC 形式のキャッシュ判定に保持しているソースの優先度を使用する'
 					},
 					{
-						'revision': '',
+						'revision': '1e9ca78703230da7defca68b6db8e4cf0018d25e',
 						'subject': '#751: プレイリストで遷移した際にキャッシュディレクトリを開くと動画情報が古い'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -163,20 +134,20 @@ var changelogs = [
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'd269f08ad7b13ed198bceefae928a800cee866e9',
 						'subject': '#746: C#7.0 的なコードに一部書き換えたい'
 					},
 					{
-						'revision': '',
-						'subject': '#747: 自動セットアップも .NET Framework 4.7 に準拠する'
+						'revision': '9f997218d434ce0e086548b87d38917d005250ed',
+						'subject': '#747: 自動セットアップも .NET Framework 4.7 に準拠する',
+						'comments': [
+							'tag: setup-1.40',
+							'実稼働: 2017/08/20'
+						]
 					},
 					{
-						'revision': '',
+						'revision': '2a34dd4416d27b35d697af4ad60f757ff786a4e4',
 						'subject': '#750: 短い情報で取得する CRL バージョンのリビジョンを取得しないと .NET 4.6-7 あたりわかんなくね？'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
