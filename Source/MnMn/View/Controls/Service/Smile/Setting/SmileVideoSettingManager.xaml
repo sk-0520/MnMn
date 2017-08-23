@@ -154,7 +154,7 @@
 
         <GroupBox Header="ダウンロード">
           <StackPanel>
-            <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding StackComments}">コメントを蓄積する(_K)</CheckBox>
+            <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding StackComments}">Json 形式のコメントを蓄積する(_K)</CheckBox>
             <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding UsingDmc}">DMC形式を使用(_D)</CheckBox>
             <Grid>
               <Grid.RowDefinitions>

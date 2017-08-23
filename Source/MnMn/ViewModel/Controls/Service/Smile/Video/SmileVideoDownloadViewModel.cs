@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Input;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -628,6 +629,66 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             );
         }
 
+        IDictionary<SmileVideoMsgPacketId, IList<RawSmileVideoMsgResultItemModel>> GetMsgMap(SmileVideoMsgPackSettingModel msg)
+        {
+            var result = new Dictionary<SmileVideoMsgPacketId, IList<RawSmileVideoMsgResultItemModel>>();
+
+            var members = EnumUtility.GetMembers<SmileVideoMsgPacketId>();
+            var items = msg.Items.ToEvaluatedSequence();
+            foreach(var member in members) {
+                if(msg.PacketId.TryGetValue(member, out var index)) {
+                    var head = $"ps:{index}";
+                    var tail = $"pf:{index}";
+
+                    var headSequence = items.SkipWhile(i => i.Ping == null || (i.Ping != null && i.Ping.Content != head)).Skip(1);
+                    var sequence = headSequence.TakeWhile(i => i.Ping == null || (i.Ping != null && i.Ping.Content != tail));
+
+                    var list = sequence.Where(i => i.Chat != null).ToEvaluatedSequence();
+                    result.Add(member, list);
+                } else {
+                    // null なんか返そうもんなら死ぬ
+                    result.Add(member, new List<RawSmileVideoMsgResultItemModel>());
+                }
+            }
+
+            return result;
+        }
+
+        protected SmileVideoMsgPackSettingModel MergeMsg(SmileVideoMsgPackSettingModel newMsg, SmileVideoMsgPackSettingModel oldMsg)
+        {
+            var newMap = GetMsgMap(newMsg);
+            var oldMap = GetMsgMap(oldMsg);
+
+            var msg = new SmileVideoMsgPackSettingModel();
+            var members = EnumUtility.GetMembers<SmileVideoMsgPacketId>();
+            foreach(var item in members.SelectValueIndex()) {
+                var newItems = newMap[item.Value];
+                var oldItems = oldMap[item.Value];
+
+                var mergeItems = newItems
+                    .Concat(oldItems)
+                    .Where(i => i.Chat != null)
+                    .GroupBy(i => i.Chat.No)
+                    .Select(g => g.First())
+                ;
+
+                msg.PacketId[item.Value] = item.Index;
+                msg.Items.Add(new RawSmileVideoMsgResultItemModel() {
+                    Ping = new RawSmileVideoMsgPingModel() {
+                        Content = $"ps:{item.Index}"
+                    }
+                });
+                msg.Items.AddRange(mergeItems);
+                msg.Items.Add(new RawSmileVideoMsgResultItemModel() {
+                    Ping = new RawSmileVideoMsgPingModel() {
+                        Content = $"pf:{item.Index}"
+                    }
+                });
+            }
+
+            return msg;
+        }
+
         protected async Task<RawSmileVideoMsgPacket_Issue665NA_Model> LoadMsg_Issue665NA_Async(CacheSpan msgCacheSpan)
         {
             OnLoadMsgStart();
@@ -673,8 +734,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             //TODO; キャッシュチェック時のファイル処理関係は共通化可能
             var cacheFilePath = Information.MsgFile.FullName;
             // #665 除外
-            if(File.Exists(cacheFilePath)) {
-                var fileInfo = new FileInfo(cacheFilePath);
+            var fileInfo = new FileInfo(cacheFilePath);
+            fileInfo.Refresh();
+            if(fileInfo.Exists) {
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
                     CommentLoadState = LoadState.Loading;
                     var result = Msg.ConvertMsgSettingModel(fileInfo);
@@ -687,6 +749,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var rawMessagePacket = await LoadMsgCoreAsync(1000, new SmileVideoMsgRangeModel(0, (int)Information.Length.TotalMinutes, 100, 1000));
             // #665 除外
             //ImportCommentThread(rawMessagePacket);
+            if(Setting.Download.StackComments) {
+                Mediator.Logger.Debug(nameof(Setting.Download.StackComments));
+
+                if(fileInfo.Exists && Constants.MinimumJsonFileSize <= fileInfo.Length) {
+                    Mediator.Logger.Debug("start merge");
+
+                    var cacheComment = Msg.ConvertMsgSettingModel(fileInfo);
+                    rawMessagePacket = MergeMsg(rawMessagePacket, cacheComment);
+
+                    Mediator.Logger.Debug("end merge");
+                }
+            }
 
             // キャッシュ構築
             if(rawMessagePacket.Items.Any(i => i.Chat != null)) {
@@ -694,8 +768,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     // #665
                     //SerializeUtility.SaveXmlSerializeToFile(cacheFilePath, rawMessagePacket);
                     SerializeUtility.SaveJsonDataToFile(cacheFilePath, rawMessagePacket);
-                } catch(FileNotFoundException) {
+                } catch(FileNotFoundException ex) {
                     // BUGS: いかんのう
+                    Mediator.Logger.Error(ex);
                 }
             }
 
