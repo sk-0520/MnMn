@@ -2023,6 +2023,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(IsEnabledGlobalCommentFiltering),
                 nameof(PosterInformation),
                 nameof(PosterThumbnailImage),
+                nameof(OpenCacheDirectoryCommand)
             };
             CallOnPropertyChange(propertyNames);
 

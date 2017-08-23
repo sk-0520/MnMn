@@ -141,6 +141,10 @@ var changelogs = [
 					},
 					{
 						'revision': '',
+						'subject': '#751: プレイリストで遷移した際にキャッシュディレクトリを開くと動画情報が古い'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
