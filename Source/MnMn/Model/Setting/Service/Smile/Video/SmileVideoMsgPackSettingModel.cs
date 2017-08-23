@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -16,10 +16,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         #region property
 
         [DataMember]
-        public Dictionary<SmileVideoMsgPacketId, int> PacketId { get; set; }
+        public Dictionary<SmileVideoMsgPacketId, int> PacketId { get; set; } = new Dictionary<SmileVideoMsgPacketId, int>();
 
         [DataMember]
-        public CollectionModel<RawSmileVideoMsgResultItemModel> Items { get; set; }
+        public CollectionModel<RawSmileVideoMsgResultItemModel> Items { get; set; } = new CollectionModel<RawSmileVideoMsgResultItemModel>();
 
         #endregion
     }

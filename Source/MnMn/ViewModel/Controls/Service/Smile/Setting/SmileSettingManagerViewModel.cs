@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -294,6 +294,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         {
             get { return Setting.Video.Download.AudioWeight; }
             set { SetPropertyValue(Setting.Video.Download, value, nameof(Setting.Video.Download.AudioWeight)); }
+        }
+
+        public bool StackComments
+        {
+            get { return Setting.Video.Download.StackComments; }
+            set { SetPropertyValue(Setting.Video.Download, value, nameof(Setting.Video.Download.StackComments)); }
         }
 
         public BackgroundKind BackgroundKind

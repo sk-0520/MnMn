@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -44,6 +44,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public int AudioWeight { get; set; } = Constants.SettingServiceSmileVideoDownloadDmcAudioWeight;
+
+        /// <summary>
+        /// コメントを蓄積するか。
+        /// </summary>
+        [DataMember]
+        public bool StackComments { get; set; } = true;
 
         #endregion
     }
